@@ -1,0 +1,37 @@
+﻿Ã¯Â»Â¿{
+  "productId": 98,
+  "productName": "Pizza VegetarianÃ„ÂƒÃ†Â’",
+  "productCategory": "Pizza",
+  "ingredients": [
+    {
+      "ingredientId": 3,
+      "ingredientName": "mozzarella",
+      "ingredientCategory": "General",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 604,
+      "ingredientName": "Blat de pizza (standard)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 250,
+      "unit": "buc",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 626,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

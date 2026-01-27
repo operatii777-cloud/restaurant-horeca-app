@@ -1,0 +1,101 @@
+{
+  "product": {
+    "id": 51,
+    "name": "Pui Crispy cu Salată Coleslaw",
+    "name_en": "Crispy Chicken with Coleslaw",
+    "category": "Fel Principal",
+    "category_en": "Main Course",
+    "price": 49,
+    "description": "Piept de pui, ou, pesmet panko, cartofi prăjiți",
+    "description_en": "Chicken breast, egg, panko breadcrumbs, french fries",
+    "weight": "200/200G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": "ouă, gluten, lapte",
+    "allergens_en": "eggs, gluten, milk"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 535,
+        "name": "Pané Crispy (Fulgi de porumb)",
+        "category": "General",
+        "quantity": 30,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 363,
+        "name": "Piept de pui",
+        "category": "General",
+        "quantity": 180,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 11.147430571690123,
+        "totalCost": "2006.54",
+        "totalCostWithWaste": "2006.54",
+        "supplier": "Metro Cash & Carry",
+        "currentStock": 114355.14519450802,
+        "minStock": 0.01,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 23,
+        "name": "morcovi",
+        "category": "General",
+        "quantity": 150,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 9.564774813926666,
+        "totalCost": "1434.72",
+        "totalCostWithWaste": "1434.72",
+        "supplier": null,
+        "currentStock": 50667.5,
+        "minStock": 0.8,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "3441.25",
+    "totalCostWithWaste": "3441.25",
+    "sellingPrice": 49,
+    "profitMargin": -3392.25,
+    "markup": -6922.97,
+    "foodCostPercentage": "7022.97"
+  },
+  "stats": {
+    "totalIngredients": 3,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

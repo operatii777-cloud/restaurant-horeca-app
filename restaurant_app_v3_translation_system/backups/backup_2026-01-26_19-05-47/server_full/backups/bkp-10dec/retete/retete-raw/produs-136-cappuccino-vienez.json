@@ -1,0 +1,53 @@
+{
+  "productId": 136,
+  "productName": "Cappuccino Vienez",
+  "productCategory": "Cafea/Ciocolată/Ceai",
+  "ingredients": [
+    {
+      "ingredientId": 53,
+      "ingredientName": "lapte",
+      "ingredientCategory": "General",
+      "quantityNeeded": 120,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 240,
+      "ingredientName": "Espresso",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 251,
+      "ingredientName": "Frișcă bătută",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 252,
+      "ingredientName": "Pudră de cacao/Scorțișoară",
+      "ingredientCategory": "General",
+      "quantityNeeded": 1,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 673,
+      "ingredientName": "Frișcă",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

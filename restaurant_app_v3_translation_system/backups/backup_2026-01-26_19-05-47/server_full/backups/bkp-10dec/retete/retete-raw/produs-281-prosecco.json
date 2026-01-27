@@ -1,0 +1,17 @@
+{
+  "productId": 281,
+  "productName": "Prosecco",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 269,
+      "ingredientName": "Prosecco",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

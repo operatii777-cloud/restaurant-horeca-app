@@ -1,0 +1,34 @@
+{
+  "job": {
+    "id": "order_145",
+    "data": {
+      "orderId": 145,
+      "finalItems": [
+        {
+          "itemId": "it_1762803277709_3815781",
+          "productId": 5,
+          "name": "B52 Shot",
+          "quantity": 1,
+          "finalPrice": 18,
+          "isFree": false,
+          "customizations": [],
+          "status": "pending",
+          "station": "bar"
+        }
+      ],
+      "orderType": {
+        "type": "individual",
+        "isTogether": false
+      }
+    },
+    "priority": 1,
+    "retries": 3,
+    "addedAt": 1762803277760,
+    "status": "waiting"
+  },
+  "error": {
+    "message": "Stoc insuficient pentru Triple Sec: necesar 20 ml, disponibil 0 ml",
+    "stack": "Error: Stoc insuficient pentru Triple Sec: necesar 20 ml, disponibil 0 ml\n    at Statement.<anonymous> (C:\\restaurant_app\\restaurant_app_v3_translation_system\\server\\database.js:2948:35)\n    at Statement.replacement (C:\\restaurant_app\\restaurant_app_v3_translation_system\\server\\node_modules\\sqlite3\\lib\\trace.js:25:27)\n    at Statement.replacement (C:\\restaurant_app\\restaurant_app_v3_translation_system\\server\\node_modules\\sqlite3\\lib\\trace.js:25:27)"
+  },
+  "failedAt": "2025-11-10T19:34:38.019Z"
+}

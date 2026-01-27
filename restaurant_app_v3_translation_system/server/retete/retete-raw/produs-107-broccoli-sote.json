@@ -1,0 +1,37 @@
+﻿Ã¯Â»Â¿{
+  "productId": 107,
+  "productName": "Broccoli Sote",
+  "productCategory": "Garnituri",
+  "ingredients": [
+    {
+      "ingredientId": 800,
+      "ingredientName": "Sos Usturoi Shaorma",
+      "ingredientCategory": "Sosuri",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 821,
+      "ingredientName": "Ulei vegetal",
+      "ingredientCategory": "Uleiuri ÃƒÂˆÃ¢Â„Â¢i GrÃ„ÂƒÃ†Â’simi",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 544,
+      "ingredientName": "Broccoli (bucheÃƒÂˆÃ¢Â€Âºele)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

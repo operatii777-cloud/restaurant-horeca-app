@@ -1,0 +1,91 @@
+﻿Ã¯Â»Â¿{
+  "productId": 227,
+  "productName": "Mici cu Cartofi PrÃ„ÂƒÃ†Â’jiÃƒÂˆÃ¢Â€Âºi",
+  "productCategory": "Fel Principal",
+  "price": 39,
+  "description": "Mici 3 buc, cartofi prÃ„ÂƒÃ†Â’jiÃƒÂˆÃ¢Â€Âºi, muÃƒÂˆÃ¢Â„Â¢tar",
+  "ingredients": [
+    {
+      "ingredientId": 145,
+      "ingredientName": "Carne tocatÃ„ÂƒÃ†Â’ porc",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 120,
+      "unit": "g",
+      "wastePercentage": 5
+    },
+    {
+      "ingredientId": 146,
+      "ingredientName": "Carne tocatÃ„ÂƒÃ†Â’ vitÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 5
+    },
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 15
+    },
+    {
+      "ingredientId": 147,
+      "ingredientName": "Bicarbonat de sodiu",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 65,
+      "ingredientName": "Sare",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 3,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 32,
+      "ingredientName": "Piper negru",
+      "ingredientCategory": "Condimente ÃƒÂˆÃ¢Â„Â¢i Sosuri",
+      "quantityNeeded": 2,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 148,
+      "ingredientName": "Chimion",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 57,
+      "ingredientName": "Cimbru",
+      "ingredientCategory": "Condimente ÃƒÂˆÃ¢Â„Â¢i Sosuri",
+      "quantityNeeded": 1,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 67,
+      "ingredientName": "Cartofi",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 250,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 31,
+      "ingredientName": "Ulei de floarea-soarelui",
+      "ingredientCategory": "Condimente ÃƒÂˆÃ¢Â„Â¢i Sosuri",
+      "quantityNeeded": 50,
+      "unit": "l",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

@@ -1,0 +1,104 @@
+# Environment Variables
+.env
+.env.local
+.env.production
+.env.*.local
+server/.env
+server/admin-vite/.env
+server/admin-vite/.env.production
+
+# Database Files
+*.db
+*.db-shm
+*.db-wal
+server/database.db
+server/restaurant.db
+server/orders.db
+server/database/*.db
+
+# Logs
+logs/
+*.log
+server/logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Node Modules
+node_modules/
+server/node_modules/
+server/admin-vite/node_modules/
+
+# Build Output
+server/admin-vite/dist/
+server/admin-vite/.vite/
+server/admin-vite/build/
+dist/
+build/
+
+# Backups
+server/backups/
+*.backup
+*.old
+*.BACKUP
+*.bak
+
+# OS Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Test Results
+test-results/
+coverage/
+playwright-report/
+
+# Temporary Files
+*.tmp
+temp/
+tmp/
+
+# Development Files (non-production)
+Dev-Files/
+# Rapoarte și documentație development
+*-REPORT*.md
+*-REPORT*.txt
+*-ANALYSIS*.md
+*-ANALYSIS*.txt
+*-FIX*.md
+*-PROGRESS*.md
+*-STATUS*.md
+*-TEST*.md
+*-TESTING*.md
+*-RESULTS*.md
+*-SUMMARY*.md
+*-AUDIT*.md
+*-BUG*.md
+*-COMPREHENSIVE*.md
+*-STABILITY*.md
+*-EXECUTION*.md
+*-IMPLEMENTATION*.md
+*-DOCUMENTATION*.md
+*-QUICK*.md
+*-GUIDE*.md
+*-START*.md
+*-APPLIED*.md
+*-RETEST*.md
+*-FINAL*.md
+ARBORE-*.md
+PROGRES-*.md
+REZULTATE-*.md
+REZUMAT-*.md
+TESTARE-*.md
+generate-tree.ps1
+npm-audit-results.json
+railway-logs-extracted.txt
+railway-variables.png
+erver

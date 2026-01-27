@@ -1,0 +1,67 @@
+{
+  "product": {
+    "id": 281,
+    "name": "Prosecco",
+    "name_en": "Prosecco",
+    "category": "Băuturi și Coctailuri",
+    "category_en": "Drinks & Cocktails",
+    "price": 23,
+    "description": "Spumant italian",
+    "description_en": "Italian sparkling wine",
+    "weight": "150ML",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 269,
+        "name": "Prosecco",
+        "category": "General",
+        "quantity": 150,
+        "unit": "ml",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 1570,
+        "minStock": 10,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "0.00",
+    "totalCostWithWaste": "0.00",
+    "sellingPrice": 23,
+    "profitMargin": 23,
+    "markup": 100,
+    "foodCostPercentage": "0.00"
+  },
+  "stats": {
+    "totalIngredients": 1,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

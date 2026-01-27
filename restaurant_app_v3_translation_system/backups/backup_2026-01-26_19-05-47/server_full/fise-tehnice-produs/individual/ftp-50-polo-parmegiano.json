@@ -1,0 +1,84 @@
+{
+  "product": {
+    "id": 50,
+    "name": "Polo Parmegiano",
+    "name_en": "Polo Parmigiano",
+    "category": "Fel Principal",
+    "category_en": "Main Course",
+    "price": 55,
+    "description": "Piept de pui, ou, pesmet panko, făină, sos de roșii, mozzarella, cartofi zdrobiți",
+    "description_en": "Chicken breast, egg, panko breadcrumbs, flour, tomato sauce, mozzarella, smashed potatoes",
+    "weight": "400G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": "ouă, gluten, lapte",
+    "allergens_en": "eggs, gluten, milk"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 363,
+        "name": "Piept de pui",
+        "category": "General",
+        "quantity": 180,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 11.147430571690123,
+        "totalCost": "2006.54",
+        "totalCostWithWaste": "2006.54",
+        "supplier": "Metro Cash & Carry",
+        "currentStock": 114355.14519450802,
+        "minStock": 0.01,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 48,
+        "name": "parmezan",
+        "category": "General",
+        "quantity": 40,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 1.416717300680602,
+        "totalCost": "56.67",
+        "totalCostWithWaste": "56.67",
+        "supplier": null,
+        "currentStock": 20050,
+        "minStock": 0.4,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "2063.21",
+    "totalCostWithWaste": "2063.21",
+    "sellingPrice": 55,
+    "profitMargin": -2008.21,
+    "markup": -3651.28,
+    "foodCostPercentage": "3751.28"
+  },
+  "stats": {
+    "totalIngredients": 2,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

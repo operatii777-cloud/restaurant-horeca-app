@@ -1,0 +1,89 @@
+{
+  "productId": 78,
+  "productName": "Quesadilla de Vită",
+  "productCategory": "Burgeri",
+  "ingredients": [
+    {
+      "ingredientId": 815,
+      "ingredientName": "Ceapă tocată",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 15,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 169,
+      "ingredientName": "Sare de mare",
+      "ingredientCategory": "General",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 117,
+      "ingredientName": "Piper negru",
+      "ingredientCategory": "Condimente și Sosuri",
+      "quantityNeeded": 1,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 88,
+      "ingredientName": "Ardei gras",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 15,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 235,
+      "ingredientName": "Tortilla (2 buc.)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 634,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 238,
+      "ingredientName": "Sos salsa",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 130,
+      "ingredientName": "Smântână",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 126,
+      "ingredientName": "Burtă de vită fiartă și tăiată",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

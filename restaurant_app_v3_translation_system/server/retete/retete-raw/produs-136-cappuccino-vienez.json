@@ -1,0 +1,55 @@
+﻿Ã¯Â»Â¿{
+  "productId": 136,
+  "productName": "Cappuccino Vienez",
+  "productCategory": "Cafea/CiocolatÃ„ÂƒÃ†Â’/Ceai",
+  "ingredients": [
+    {
+      "ingredientId": 53,
+      "ingredientName": "lapte",
+      "ingredientCategory": "General",
+      "quantityNeeded": 120,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 240,
+      "ingredientName": "Espresso",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 251,
+      "ingredientName": "FriÃƒÂˆÃ¢Â„Â¢cÃ„ÂƒÃ†Â’ bÃ„ÂƒÃ†Â’tutÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 252,
+      "ingredientName": "PudrÃ„ÂƒÃ†Â’ de cacao/ScorÃƒÂˆÃ¢Â€ÂºiÃƒÂˆÃ¢Â„Â¢oarÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "General",
+      "quantityNeeded": 1,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 673,
+      "ingredientName": "FriÃƒÂˆÃ¢Â„Â¢cÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

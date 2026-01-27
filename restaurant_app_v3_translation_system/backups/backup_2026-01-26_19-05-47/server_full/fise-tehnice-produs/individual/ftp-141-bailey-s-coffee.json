@@ -1,0 +1,118 @@
+{
+  "product": {
+    "id": 141,
+    "name": "Bailey's Coffee",
+    "name_en": "Bailey's Coffee",
+    "category": "Cafea/Ciocolată/Ceai",
+    "category_en": "Coffee/Chocolate/Tea",
+    "price": 22,
+    "description": "Espresso, Baileys, zahăr brun, frișcă",
+    "description_en": "Espresso, Baileys, brown sugar, whipped cream",
+    "weight": "230ML",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 241,
+        "name": "Bailey's (lichior)",
+        "category": "General",
+        "quantity": 40,
+        "unit": "ml",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 1960,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 240,
+        "name": "Espresso",
+        "category": "General",
+        "quantity": 30,
+        "unit": "ml",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 1640,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 278,
+        "name": "Sirop de Zahăr",
+        "category": "General",
+        "quantity": 5,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.16027284697733232,
+        "totalCost": "0.80",
+        "totalCostWithWaste": "0.80",
+        "supplier": null,
+        "currentStock": 19730,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 53,
+        "name": "lapte",
+        "category": "General",
+        "quantity": 50,
+        "unit": "ml",
+        "unitStock": "l",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 4.3131870672107615,
+        "totalCost": "215.66",
+        "totalCostWithWaste": "215.66",
+        "supplier": null,
+        "currentStock": 23357,
+        "minStock": 0.4,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "216.46",
+    "totalCostWithWaste": "216.46",
+    "sellingPrice": 22,
+    "profitMargin": -194.46,
+    "markup": -883.91,
+    "foodCostPercentage": "983.91"
+  },
+  "stats": {
+    "totalIngredients": 4,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

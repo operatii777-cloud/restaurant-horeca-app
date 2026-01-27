@@ -1,0 +1,37 @@
+﻿Ã¯Â»Â¿{
+  "productId": 102,
+  "productName": "Cartofi PrÃ„ÂƒÃ†Â’jiÃƒÂˆÃ¢Â€Âºi",
+  "productCategory": "Garnituri",
+  "ingredients": [
+    {
+      "ingredientId": 169,
+      "ingredientName": "Sare de mare",
+      "ingredientCategory": "General",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 32,
+      "ingredientName": "cartofi",
+      "ingredientCategory": "General",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 821,
+      "ingredientName": "Ulei vegetal",
+      "ingredientCategory": "Uleiuri ÃƒÂˆÃ¢Â„Â¢i GrÃ„ÂƒÃ†Â’simi",
+      "quantityNeeded": 1,
+      "unit": "cantitate necesarÃ„ÂƒÃ†Â’",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

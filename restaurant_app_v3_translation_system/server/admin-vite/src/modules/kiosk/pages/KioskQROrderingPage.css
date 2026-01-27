@@ -1,0 +1,87 @@
+.kiosk-qr-ordering-page {
+  padding: 24px;
+  background: var(--navy-black, #020617);
+  min-height: 100vh;
+}
+
+.kiosk-qr-ordering-page .page-header {
+  margin-bottom: 24px;
+}
+
+.kiosk-qr-ordering-page .page-header h1 {
+  color: #fde047 !important;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.kiosk-qr-ordering-page .page-header p {
+  color: #f1f5f9 !important;
+  margin-top: 8px;
+}
+
+.kiosk-qr-ordering-page .card {
+  background: var(--navy-deep, #0f172a) !important;
+  border: 1px solid var(--slate-navy, #1e293b) !important;
+  color: #fde047 !important;
+}
+
+.kiosk-qr-ordering-page .card-header {
+  background: var(--slate-navy, #1e293b) !important;
+  border-bottom: 1px solid var(--slate, #334155) !important;
+  color: #fde047 !important;
+}
+
+.kiosk-qr-ordering-page .card-body {
+  color: #f1f5f9 !important;
+}
+
+.kiosk-qr-ordering-page .form-label {
+  color: #fde047 !important;
+  font-weight: 600;
+}
+
+.kiosk-qr-ordering-page .form-control,
+.kiosk-qr-ordering-page .form-select {
+  background: var(--slate-navy, #1e293b) !important;
+  border: 1px solid var(--slate, #334155) !important;
+  color: #f1f5f9 !important;
+}
+
+.kiosk-qr-ordering-page .form-control:focus,
+.kiosk-qr-ordering-page .form-select:focus {
+  background: var(--navy-deep, #0f172a) !important;
+  border-color: #3b82f6 !important;
+  color: #f1f5f9 !important;
+}
+
+.kiosk-qr-ordering-page .qr-display {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.kiosk-qr-ordering-page .qr-image {
+  display: block;
+  margin: 0 auto;
+}
+
+.kiosk-qr-ordering-page .info-item strong {
+  color: #fde047 !important;
+}
+
+.kiosk-qr-ordering-page .info-item small {
+  color: #f1f5f9 !important;
+}
+
+.kiosk-qr-ordering-page code {
+  background: var(--slate-navy, #1e293b) !important;
+  color: #fde047 !important;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+

@@ -1,0 +1,19 @@
+﻿Ã¯Â»Â¿{
+  "productId": 210,
+  "productName": "Shaorma de VitÃ„ÂƒÃ†Â’ - Mare",
+  "productCategory": "Fast Food",
+  "price": 35,
+  "description": "Shaorma de vitÃ„ÂƒÃ†Â’ cu legume proaspete, sos usturoi - porÃƒÂˆÃ¢Â€Âºie mare",
+  "ingredients": [
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

@@ -1,0 +1,25 @@
+{
+  "productId": 215,
+  "productName": "Carcalete",
+  "productCategory": "Fel Principal",
+  "price": 52,
+  "description": "Ceafă de porc, cartofi prăjiți, telemea, ou",
+  "ingredients": [
+    {
+      "ingredientId": 67,
+      "ingredientName": "Cartofi",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 200,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 96,
+      "ingredientName": "Ou",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "wastePercentage": 0
+    }
+  ]
+}

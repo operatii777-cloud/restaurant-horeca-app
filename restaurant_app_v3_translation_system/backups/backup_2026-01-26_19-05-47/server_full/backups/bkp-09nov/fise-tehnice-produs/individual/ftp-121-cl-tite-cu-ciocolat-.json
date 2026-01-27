@@ -1,0 +1,101 @@
+{
+  "product": {
+    "id": 121,
+    "name": "Clătite cu Ciocolată",
+    "name_en": "Pancakes with Chocolate",
+    "category": "Deserturi",
+    "category_en": "Desserts",
+    "price": 30,
+    "description": "Clătite clasice umplute cu cremă de ciocolată",
+    "description_en": "Classic pancakes filled with chocolate",
+    "weight": "170G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 1,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": "gluten, ouă, lapte",
+    "allergens_en": "gluten, eggs, milk"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 480,
+        "name": "Banane (caramelizate/sotate)",
+        "category": "General",
+        "quantity": 30,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 5670,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 401,
+        "name": "Clătite (aluat)",
+        "category": "General",
+        "quantity": 2,
+        "unit": "buc",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 53,
+        "name": "lapte",
+        "category": "General",
+        "quantity": 40,
+        "unit": "g",
+        "unitStock": "l",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 4.3131870672107615,
+        "totalCost": "172.53",
+        "totalCostWithWaste": "172.53",
+        "supplier": null,
+        "currentStock": 23357,
+        "minStock": 0.4,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "172.53",
+    "totalCostWithWaste": "172.53",
+    "sellingPrice": 30,
+    "profitMargin": -142.53,
+    "markup": -475.09,
+    "foodCostPercentage": "575.09"
+  },
+  "stats": {
+    "totalIngredients": 3,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

@@ -1,0 +1,28 @@
+[
+  {
+    "id": 794,
+    "name": "Drojdie proaspătă",
+    "category": "Condimente",
+    "unit": "g",
+    "current_stock": 1045,
+    "min_stock": 10,
+    "cost_per_unit": 0.5,
+    "supplier": "Furnizor General",
+    "is_available": 1,
+    "created_at": "2025-10-01 14:54:42",
+    "last_updated": "2025-10-10 17:50:54"
+  },
+  {
+    "id": 69,
+    "name": "cuișoare",
+    "category": "Condimente",
+    "unit": "kg",
+    "current_stock": 4,
+    "min_stock": 0.05,
+    "cost_per_unit": 11.32,
+    "supplier": "Metro",
+    "is_available": 1,
+    "created_at": "2025-09-18 14:21:20",
+    "last_updated": "2025-09-18 14:34:49"
+  }
+]

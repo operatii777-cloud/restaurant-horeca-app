@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="ro" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Despre noi - Trattoria</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
+    <style>
+        /* Language Switcher Styles */
+        .language-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 5px;
+            border-radius: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .lang-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: #333;
+            cursor: pointer;
+            border-radius: 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .lang-btn:hover {
+            background: #f0f0f0;
+        }
+        
+        .lang-btn.active {
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            color: white;
+        }
+    </style>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .content-section {
+            background: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .content-section h2 {
+            color: #ff6b35;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .content-section h3 {
+            color: #333;
+            margin: 1.5rem 0 1rem 0;
+            font-size: 1.3rem;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin: 2rem 0;
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+        }
+        
+        .highlight h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #ff6b35;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+        
+        .cta-button:hover {
+            background: #e05a2a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+        }
+        
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        /* ==================== MEDIA QUERIES PENTRU DESIGN RESPONSIVE ==================== */
+        
+        /* Ecrane foarte mari (4K, ultra-wide) */
+        @media (min-width: 1920px) {
+            .container {
+                max-width: 1400px;
+                padding: 20px 40px;
+            }
+            
+            .header h1 {
+                font-size: 3rem;
+            }
+            
+            .header p {
+                font-size: 1.4rem;
+            }
+            
+            .content-section {
+                padding: 40px;
+            }
+            
+            .content-section h2 {
+                font-size: 2.2rem;
+            }
+            
+            .content-section h3 {
+                font-size: 1.6rem;
+            }
+            
+            .content-section p {
+                font-size: 1.2rem;
+                line-height: 1.8;
+            }
+            
+            .highlight {
+                padding: 40px;
+            }
+            
+            .highlight h3 {
+                font-size: 1.8rem;
+            }
+            
+            .highlight p {
+                font-size: 1.2rem;
+            }
+            
+            .cta-button {
+                padding: 15px 30px;
+                font-size: 1.2rem;
+            }
+        }
+        
+        /* Laptopuri mari */
+        @media (min-width: 1440px) and (max-width: 1919px) {
+            .container {
+                max-width: 1200px;
+                padding: 15px 30px;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header p {
+                font-size: 1.2rem;
+            }
+            
+            .content-section {
+                padding: 35px;
+            }
+            
+            .content-section h2 {
+                font-size: 2rem;
+            }
+            
+            .content-section h3 {
+                font-size: 1.4rem;
+            }
+            
+            .content-section p {
+                font-size: 1.1rem;
+            }
+            
+            .highlight {
+                padding: 35px;
+            }
+            
+            .highlight h3 {
+                font-size: 1.6rem;
+            }
+            
+            .highlight p {
+                font-size: 1.1rem;
+            }
+            
+            .cta-button {
+                padding: 14px 28px;
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* Laptopuri standard */
+        @media (max-width: 1400px) {
+            .container {
+                padding: 12px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .header p {
+                font-size: 1.1rem;
+            }
+            
+            .content-section {
+                padding: 30px;
+            }
+            
+            .content-section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .content-section h3 {
+                font-size: 1.3rem;
+            }
+            
+            .content-section p {
+                font-size: 1rem;
+            }
+            
+            .highlight {
+                padding: 30px;
+            }
+            
+            .highlight h3 {
+                font-size: 1.5rem;
+            }
+            
+            .highlight p {
+                font-size: 1rem;
+            }
+            
+            .cta-button {
+                padding: 13px 26px;
+                font-size: 1rem;
+            }
+        }
+        
+        /* Tablete mari */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 10px 15px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .content-section {
+                padding: 25px;
+            }
+            
+            .content-section h2 {
+                font-size: 1.6rem;
+            }
+            
+            .content-section h3 {
+                font-size: 1.2rem;
+            }
+            
+            .content-section p {
+                font-size: 0.95rem;
+            }
+            
+            .highlight {
+                padding: 25px;
+            }
+            
+            .highlight h3 {
+                font-size: 1.4rem;
+            }
+            
+            .highlight p {
+                font-size: 0.95rem;
+            }
+            
+            .cta-button {
+                padding: 12px 24px;
+                font-size: 0.95rem;
+            }
+        }
+        
+        /* Tablete mici */
+        @media (max-width: 992px) {
+            .container {
+                padding: 8px 12px;
+            }
+            
+            .header {
+                padding: 1.5rem 0;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header p {
+                font-size: 0.95rem;
+            }
+            
+            .content-section {
+                padding: 22px;
+            }
+            
+            .content-section h2 {
+                font-size: 1.5rem;
+            }
+            
+            .content-section h3 {
+                font-size: 1.1rem;
+            }
+            
+            .content-section p {
+                font-size: 0.9rem;
+            }
+            
+            .highlight {
+                padding: 22px;
+            }
+            
+            .highlight h3 {
+                font-size: 1.3rem;
+            }
+            
+            .highlight p {
+                font-size: 0.9rem;
+            }
+            
+            .cta-button {
+                padding: 11px 22px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Telefoane mari */
+        @media (max-width: 768px) {
+            .container {
+                padding: 6px 10px;
+            }
+            
+            .header {
+                padding: 1.2rem 0;
+            }
+            
+            .header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .header p {
+                font-size: 0.9rem;
+            }
+            
+            .back-btn {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .content-section {
+                padding: 18px;
+            }
+            
+            .content-section h2 {
+                font-size: 1.4rem;
+            }
+            
+            .content-section h3 {
+                font-size: 1rem;
+            }
+            
+            .content-section p {
+                font-size: 0.85rem;
+            }
+            
+            .highlight {
+                padding: 18px;
+            }
+            
+            .highlight h3 {
+                font-size: 1.2rem;
+            }
+            
+            .highlight p {
+                font-size: 0.85rem;
+            }
+            
+            .cta-button {
+                padding: 10px 20px;
+                font-size: 0.85rem;
+            }
+            
+            .footer {
+                padding: 1.5rem;
+            }
+            
+            .footer p {
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Telefoane mici */
+        @media (max-width: 576px) {
+            .container {
+                padding: 5px 8px;
+            }
+            
+            .header {
+                padding: 1rem 0;
+            }
+            
+            .header h1 {
+                font-size: 1.4rem;
+            }
+            
+            .header p {
+                font-size: 0.85rem;
+            }
+            
+            .back-btn {
+                padding: 6px 10px;
+                font-size: 0.8rem;
+            }
+            
+            .content-section {
+                padding: 15px;
+            }
+            
+            .content-section h2 {
+                font-size: 1.3rem;
+            }
+            
+            .content-section h3 {
+                font-size: 0.95rem;
+            }
+            
+            .content-section p {
+                font-size: 0.8rem;
+            }
+            
+            .highlight {
+                padding: 15px;
+            }
+            
+            .highlight h3 {
+                font-size: 1.1rem;
+            }
+            
+            .highlight p {
+                font-size: 0.8rem;
+            }
+            
+            .cta-button {
+                padding: 8px 16px;
+                font-size: 0.8rem;
+            }
+            
+            .footer {
+                padding: 1.2rem;
+            }
+            
+            .footer p {
+                font-size: 0.8rem;
+            }
+        }
+        
+        /* Orientare landscape pe telefoane */
+        @media (max-height: 600px) and (orientation: landscape) {
+            .header {
+                padding: 0.8rem 0;
+            }
+            
+            .header h1 {
+                font-size: 1.2rem;
+            }
+            
+            .header p {
+                font-size: 0.8rem;
+            }
+            
+            .content-section {
+                padding: 12px;
+            }
+            
+            .highlight {
+                padding: 12px;
+            }
+            
+            .footer {
+                padding: 1rem;
+            }
+        }
+        
+        /* Ecrane ultra-wide */
+        @media (min-aspect-ratio: 21/9) {
+            .container {
+                max-width: 1600px;
+                padding: 25px 50px;
+            }
+            
+            .header h1 {
+                font-size: 3.2rem;
+            }
+            
+            .header p {
+                font-size: 1.5rem;
+            }
+            
+            .content-section {
+                padding: 50px;
+            }
+            
+            .content-section h2 {
+                font-size: 2.4rem;
+            }
+            
+            .content-section h3 {
+                font-size: 1.8rem;
+            }
+            
+            .content-section p {
+                font-size: 1.3rem;
+                line-height: 1.9;
+            }
+            
+            .highlight {
+                padding: 50px;
+            }
+            
+            .highlight h3 {
+                font-size: 2rem;
+            }
+            
+            .highlight p {
+                font-size: 1.3rem;
+            }
+            
+            .cta-button {
+                padding: 18px 36px;
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button class="lang-btn active" data-lang="ro" id="langBtnRo">RO</button>
+        <button class="lang-btn" data-lang="en" id="langBtnEn">EN</button>
+    </div>
+
+    <div class="header">
+        <button class="back-btn" id="backButton">
+            <i class="fas fa-arrow-left"></i> <span id="backBtn">Înapoi</span>
+        </button>
+        <h1 id="headerTitle">🍝 Trattoria</h1>
+        <p id="headerSubtitle">Gustul Autentic al Italiei, Aducând Oamenii laolaltă</p>
+    </div>
+
+    <div class="container">
+        <div class="content-section">
+            <h2 id="section1Title">🇮🇹 O Pasiune Italiană</h2>
+            <p id="section1P1">Încă din prima zi în care am deschis ușile, ne-am propus să oferim mai mult decât o masă; ne-am dorit să creăm un loc unde aromele Italiei să se întâlnească cu inima ospitalității românești.</p>
+            
+            <p id="section1P2">De-a lungul anilor, <strong>Trattoria</strong> a devenit pentru noi un colț de casă, acel spațiu plin de viață unde echipa noastră de pasionați lucrează zi de zi pentru a reproduce acele senzații culinare care transformă o simplă cină într-o amintire.</p>
+            
+            <p id="section1P3">Încrederea pe care ne-ați acordat-o, atât nouă, cât și în preparatele noastre, ne-a inspirat să facem pasul firesc: să aducem aceeași experiență și în confortul casei tale.</p>
+            
+            <p id="section1P4">Fie că ne vizitezi la masă, fie că ne comanzi acasă, promitem să punem aceeași grijă și același respect pentru ingrediente în fiecare farfurie.</p>
+        </div>
+
+        <div class="content-section">
+            <h2 id="section2Title">🍅 Inspirați de Mesele Simple și Gustoase ale Familiei</h2>
+            <h3 id="section2Subtitle">Rețetele Veritabile din Inima Peninsulei</h3>
+            
+            <p id="section2P1">Sursa de inspirație a meniului nostru nu e un chef celebru, ci bucătăria simplă și veritabilă a Italiei. Ne ghidăm după lecțiile primite de la nonne (bunici) și de la micile taverne de cartier: mâncarea trebuie să fie onestă, bazată pe ingrediente de cea mai bună calitate și gătită fără artificii.</p>
+            
+            <p id="section2P2">La noi, nu vei găsi complexitate inutilă, ci așa arată mâncarea italiană autentică: un sos de roșii copt lent, aluatul de pizza lăsat să crească ore întregi, paste proaspete făcute cu migală și ingrediente naturale.</p>
+            
+            <p id="section2P3">Ne dorim ca fiecare porție să fie generoasă, hrănitoare și, cel mai important, să-ți aducă bucuria meselor de familie, acolo unde a doua porție este cerută din pură poftă!</p>
+        </div>
+
+        <div class="content-section">
+            <h2 id="section3Title">🌍 Mâncarea, Limbajul Universal al Bucuriei</h2>
+            <h3 id="section3Subtitle">Dincolo de Italia: Explorăm Aromele Mediteraneene</h3>
+            
+            <p id="section3P1">Deși suntem profund dedicați tradiției italiene, ne lăsăm inspirați și de aromele intense ale întregului bazin mediteraneean. Credem cu tărie că arta culinară are puterea magică de a uni oamenii, indiferent de cultură sau de locul de proveniență.</p>
+            
+            <p id="section3P2">Mâncarea este, în esență, un povestitor tăcut. De aceea, la <strong>Trattoria</strong> tratăm fiecare ingredient cu respect și fiecare rețetă ca pe o mică poveste pe care merită să o asculți cu toate simțurile.</p>
+            
+            <p id="section3P3">Vrem ca tu să te bucuri de preparatele noastre alături de cei dragi și să creați împreună o nouă poveste gustoasă.</p>
+        </div>
+
+        <div class="highlight">
+            <h3 id="ctaTitle">🍽️ Vino să descoperi gustul autentic al Italiei!</h3>
+            <p id="ctaText">Rezervă o masă sau comandă acasă pentru a experimenta tradiția culinară italiană în cea mai autentică formă.</p>
+            <a href="comanda.html" class="cta-button" id="ctaButton">Comandă Acum</a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p id="footerCopyright">&copy; 2024 Trattoria. Toate drepturile rezervate.</p>
+        <p id="footerTagline">Gustul autentic al Italiei, aducând oamenii laolaltă.</p>
+    </div>
+
+    <script>
+        // Sincronizare cu limba din comanda.html
+        let currentLang = localStorage.getItem('selectedLanguage') || 'ro';
+
+        // Event listeners pentru butoane (în loc de inline handlers)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Buton înapoi
+            const backButton = document.getElementById('backButton');
+            if (backButton) {
+                backButton.addEventListener('click', function() {
+                    window.history.back();
+                });
+            }
+            
+            // Butoane schimbare limbă
+            const langBtnRo = document.getElementById('langBtnRo');
+            const langBtnEn = document.getElementById('langBtnEn');
+            
+            if (langBtnRo) {
+                langBtnRo.addEventListener('click', function() {
+                    changeLanguage('ro');
+                });
+            }
+            
+            if (langBtnEn) {
+                langBtnEn.addEventListener('click', function() {
+                    changeLanguage('en');
+                });
+            }
+        });
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('selectedLanguage', lang);
+            document.getElementById('htmlRoot').lang = lang;
+            
+            // Update button states
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+            
+            applyTranslations();
+        }
+
+        function applyTranslations() {
+            const isEn = currentLang === 'en';
+            
+            // Page title
+            document.getElementById('pageTitle').textContent = isEn ? 'About Us - Trattoria' : 'Despre noi - Trattoria';
+            
+            // Header
+            document.getElementById('backBtn').textContent = isEn ? 'Back' : 'Înapoi';
+            document.getElementById('headerSubtitle').textContent = isEn ? 
+                'The Authentic Taste of Italy, Bringing People Together' : 
+                'Gustul Autentic al Italiei, Aducând Oamenii laolaltă';
+            
+            // Section 1
+            document.getElementById('section1Title').textContent = isEn ? '🇮🇹 An Italian Passion' : '🇮🇹 O Pasiune Italiană';
+            document.getElementById('section1P1').textContent = isEn ?
+                'From the very first day we opened our doors, we set out to offer more than just a meal; we wanted to create a place where the flavors of Italy meet the heart of Romanian hospitality.' :
+                'Încă din prima zi în care am deschis ușile, ne-am propus să oferim mai mult decât o masă; ne-am dorit să creăm un loc unde aromele Italiei să se întâlnească cu inima ospitalității românești.';
+            
+            document.getElementById('section1P2').innerHTML = isEn ?
+                'Over the years, <strong>Trattoria</strong> has become a home away from home for us, a vibrant space where our passionate team works every day to recreate those culinary sensations that transform a simple dinner into a memory.' :
+                'De-a lungul anilor, <strong>Trattoria</strong> a devenit pentru noi un colț de casă, acel spațiu plin de viață unde echipa noastră de pasionați lucrează zi de zi pentru a reproduce acele senzații culinare care transformă o simplă cină într-o amintire.';
+            
+            document.getElementById('section1P3').textContent = isEn ?
+                'The trust you have placed in us and in our dishes has inspired us to take the natural next step: bringing the same experience to the comfort of your home.' :
+                'Încrederea pe care ne-ați acordat-o, atât nouă, cât și în preparatele noastre, ne-a inspirat să facem pasul firesc: să aducem aceeași experiență și în confortul casei tale.';
+            
+            document.getElementById('section1P4').textContent = isEn ?
+                'Whether you visit us at our table or order at home, we promise to put the same care and respect for ingredients into every dish.' :
+                'Fie că ne vizitezi la masă, fie că ne comanzi acasă, promitem să punem aceeași grijă și același respect pentru ingrediente în fiecare farfurie.';
+            
+            // Section 2
+            document.getElementById('section2Title').textContent = isEn ? 
+                '🍅 Inspired by Simple and Tasty Family Meals' : 
+                '🍅 Inspirați de Mesele Simple și Gustoase ale Familiei';
+            
+            document.getElementById('section2Subtitle').textContent = isEn ?
+                'Authentic Recipes from the Heart of the Peninsula' :
+                'Rețetele Veritabile din Inima Peninsulei';
+            
+            document.getElementById('section2P1').textContent = isEn ?
+                'The inspiration for our menu is not a famous chef, but the simple and authentic cuisine of Italy. We follow the lessons learned from nonnas (grandmothers) and small neighborhood taverns: food must be honest, based on the highest quality ingredients and cooked without artifice.' :
+                'Sursa de inspirație a meniului nostru nu e un chef celebru, ci bucătăria simplă și veritabilă a Italiei. Ne ghidăm după lecțiile primite de la nonne (bunici) și de la micile taverne de cartier: mâncarea trebuie să fie onestă, bazată pe ingrediente de cea mai bună calitate și gătită fără artificii.';
+            
+            document.getElementById('section2P2').textContent = isEn ?
+                'You won\'t find unnecessary complexity here, but this is what authentic Italian food looks like: a slowly cooked tomato sauce, pizza dough left to rise for hours, fresh pasta made with care and natural ingredients.' :
+                'La noi, nu vei găsi complexitate inutilă, ci așa arată mâncarea italiană autentică: un sos de roșii copt lent, aluatul de pizza lăsat să crească ore întregi, paste proaspete făcute cu migală și ingrediente naturale.';
+            
+            document.getElementById('section2P3').textContent = isEn ?
+                'We want every portion to be generous, nourishing and, most importantly, to bring you the joy of family meals, where a second helping is requested out of pure appetite!' :
+                'Ne dorim ca fiecare porție să fie generoasă, hrănitoare și, cel mai important, să-ți aducă bucuria meselor de familie, acolo unde a doua porție este cerută din pură poftă!';
+            
+            // Section 3
+            document.getElementById('section3Title').textContent = isEn ?
+                '🌍 Food, The Universal Language of Joy' :
+                '🌍 Mâncarea, Limbajul Universal al Bucuriei';
+            
+            document.getElementById('section3Subtitle').textContent = isEn ?
+                'Beyond Italy: Exploring Mediterranean Flavors' :
+                'Dincolo de Italia: Explorăm Aromele Mediteraneene';
+            
+            document.getElementById('section3P1').textContent = isEn ?
+                'Although we are deeply dedicated to Italian tradition, we are also inspired by the intense flavors of the entire Mediterranean basin. We strongly believe that culinary art has the magical power to unite people, regardless of culture or place of origin.' :
+                'Deși suntem profund dedicați tradiției italiene, ne lăsăm inspirați și de aromele intense ale întregului bazin mediteraneean. Credem cu tărie că arta culinară are puterea magică de a uni oamenii, indiferent de cultură sau de locul de proveniență.';
+            
+            document.getElementById('section3P2').innerHTML = isEn ?
+                'Food is, in essence, a silent storyteller. That\'s why at <strong>Trattoria</strong> we treat every ingredient with respect and every recipe as a little story worth listening to with all your senses.' :
+                'Mâncarea este, în esență, un povestitor tăcut. De aceea, la <strong>Trattoria</strong> tratăm fiecare ingredient cu respect și fiecare rețetă ca pe o mică poveste pe care merită să o asculți cu toate simțurile.';
+            
+            document.getElementById('section3P3').textContent = isEn ?
+                'We want you to enjoy our dishes with your loved ones and create together a new delicious story.' :
+                'Vrem ca tu să te bucuri de preparatele noastre alături de cei dragi și să creați împreună o nouă poveste gustoasă.';
+            
+            // CTA
+            document.getElementById('ctaTitle').textContent = isEn ?
+                '🍽️ Come discover the authentic taste of Italy!' :
+                '🍽️ Vino să descoperi gustul autentic al Italiei!';
+            
+            document.getElementById('ctaText').textContent = isEn ?
+                'Book a table or order at home to experience Italian culinary tradition in its most authentic form.' :
+                'Rezervă o masă sau comandă acasă pentru a experimenta tradiția culinară italiană în cea mai autentică formă.';
+            
+            document.getElementById('ctaButton').textContent = isEn ? 'Order Now' : 'Comandă Acum';
+            
+            // Footer
+            document.getElementById('footerCopyright').textContent = isEn ?
+                '© 2024 Trattoria. All rights reserved.' :
+                '© 2024 Trattoria. Toate drepturile rezervate.';
+            
+            document.getElementById('footerTagline').textContent = isEn ?
+                'The authentic taste of Italy, bringing people together.' :
+                'Gustul autentic al Italiei, aducând oamenii laolaltă.';
+        }
+
+        // Apply translations on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            changeLanguage(currentLang);
+        });
+    </script>
+</body>
+</html>

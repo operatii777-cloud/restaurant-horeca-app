@@ -1,0 +1,25 @@
+{
+  "productId": 214,
+  "productName": "Antricot de Vită la Grătar",
+  "productCategory": "Fel Principal",
+  "price": 92,
+  "description": "Antricot de vită, cartofi la cuptor, ciuperci sote",
+  "ingredients": [
+    {
+      "ingredientId": 92,
+      "ingredientName": "Ciuperci",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 60,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 67,
+      "ingredientName": "Cartofi",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 200,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}

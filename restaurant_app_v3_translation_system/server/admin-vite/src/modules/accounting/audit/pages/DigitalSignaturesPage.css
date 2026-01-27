@@ -1,0 +1,24 @@
+.digital-signatures-page {
+  padding: 1.5rem;
+}
+
+.digital-signatures-page .page-header {
+  margin-bottom: 2rem;
+}
+
+.digital-signatures-page .page-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.digital-signatures-page .page-header p {
+  color: #6c757d;
+  margin-bottom: 0;
+}
+
+.digital-signatures-page .font-monospace {
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+}
+

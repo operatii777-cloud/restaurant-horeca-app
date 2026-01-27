@@ -1,0 +1,144 @@
+/**
+ * Receipt Template Editor Styles
+ */
+
+.receipt-template-editor {
+  padding: 20px;
+}
+
+.element-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.element-btn {
+  min-width: 90px;
+}
+
+.variable-badge {
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.variable-badge:hover {
+  transform: scale(1.05);
+  opacity: 0.8;
+}
+
+.element-actions {
+  display: flex;
+  gap: 0;
+}
+
+.element-actions .btn {
+  padding: 2px 6px;
+  font-size: 14px;
+}
+
+.receipt-preview {
+  min-height: 400px;
+  margin: 0 auto;
+  background: #fff;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  padding: 16px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.preview-element {
+  margin-bottom: 2px;
+}
+
+/* List group styling */
+.list-group-item.active {
+  background-color: #e3f2fd;
+  border-color: #2196f3;
+  color: #1565c0;
+}
+
+/* Card styling */
+.card-header {
+  font-weight: 600;
+  background-color: #f8f9fa;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .receipt-template-editor .row {
+    flex-direction: column;
+  }
+  
+  .receipt-preview {
+    margin: 20px auto;
+  }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .receipt-preview {
+    background: #1a1a1a;
+    color: #fff;
+    border-color: #333;
+  }
+  
+  .list-group-item.active {
+    background-color: #1565c0;
+    border-color: #2196f3;
+    color: #fff;
+  }
+}
+
+/* Inline style replacements */
+.preview-element-text {
+  font-family: monospace;
+}
+
+.preview-element-flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.preview-element-center {
+  text-align: center;
+  padding: 8px;
+}
+
+.preview-element-line {
+  height: 16px;
+}
+
+.preview-scrollable {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.element-list-scrollable {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.preview-element-barcode {
+  height: 40px;
+  background: repeating-linear-gradient(90deg, #000 0, #000 2px, #fff 2px, #fff 4px);
+  margin: 0 auto;
+  max-width: 200px;
+}
+
+.preview-element-logo {
+  width: 100px;
+  height: 50px;
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+

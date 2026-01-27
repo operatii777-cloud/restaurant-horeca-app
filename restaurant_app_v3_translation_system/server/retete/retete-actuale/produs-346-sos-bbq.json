@@ -1,0 +1,51 @@
+﻿Ã¯Â»Â¿{
+  "productId": 346,
+  "productName": "Sos BBQ",
+  "productCategory": "Sosuri ÃƒÂˆÃ¢Â„Â¢i PÃƒÂ¢ine",
+  "price": 3,
+  "description": "Sos BBQ picant-dulce",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 81,
+      "ingredientName": "ZahÃ„ÂƒÃ†Â’r brun",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 50,
+      "ingredientName": "OÃƒÂˆÃ¢Â€Âºet",
+      "ingredientCategory": "Condimente ÃƒÂˆÃ¢Â„Â¢i Sosuri",
+      "quantityNeeded": 30,
+      "unit": "l",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 216,
+      "ingredientName": "Paprika",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

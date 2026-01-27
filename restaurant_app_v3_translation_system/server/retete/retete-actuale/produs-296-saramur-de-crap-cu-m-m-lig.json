@@ -1,0 +1,35 @@
+﻿Ã¯Â»Â¿{
+  "productId": 296,
+  "productName": "SaramurÃ„ÂƒÃ†Â’ de Crap cu MÃ„ÂƒÃ†Â’mÃ„ÂƒÃ†Â’ligÃ„ÂƒÃ†Â’",
+  "productCategory": "Peste ÃƒÂˆÃ¢Â„Â¢i Fructe de Mare",
+  "price": 55,
+  "description": "Crap ÃƒÂ®n saramurÃ„ÂƒÃ†Â’ cu mÃ„ÂƒÃ†Â’mÃ„ÂƒÃ†Â’ligÃ„ÂƒÃ†Â’",
+  "ingredients": [
+    {
+      "ingredientId": 155,
+      "ingredientName": "MÃ„ÂƒÃ†Â’lai",
+      "ingredientCategory": "Cereale ÃƒÂˆÃ¢Â„Â¢i Paste",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 156,
+      "ingredientName": "ApÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 300,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 65,
+      "ingredientName": "Sare",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 5,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

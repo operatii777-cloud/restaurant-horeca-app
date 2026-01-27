@@ -1,0 +1,31 @@
+{
+  "job": {
+    "id": "order_182",
+    "data": {
+      "orderId": 182,
+      "finalItems": [
+        {
+          "itemId": "it_1763047669835_353981675",
+          "productId": 156,
+          "name": "Brânză Feta la Cuptor",
+          "quantity": 1,
+          "finalPrice": 46,
+          "isFree": false,
+          "customizations": [],
+          "status": "pending",
+          "station": "kitchen"
+        }
+      ],
+      "orderType": "here"
+    },
+    "priority": 1,
+    "retries": 3,
+    "addedAt": 1763047669848,
+    "status": "waiting"
+  },
+  "error": {
+    "message": "Stoc insuficient pentru Măsline: necesar 20 kg, disponibil 10 kg",
+    "stack": "Error: Stoc insuficient pentru Măsline: necesar 20 kg, disponibil 10 kg\n    at Statement.<anonymous> (C:\\restaurant_app\\restaurant_app_v3_translation_system\\server\\database.js:3164:35)\n    at Statement.replacement (C:\\restaurant_app\\restaurant_app_v3_translation_system\\server\\node_modules\\sqlite3\\lib\\trace.js:25:27)\n    at Statement.replacement (C:\\restaurant_app\\restaurant_app_v3_translation_system\\server\\node_modules\\sqlite3\\lib\\trace.js:25:27)"
+  },
+  "failedAt": "2025-11-13T15:27:50.374Z"
+}

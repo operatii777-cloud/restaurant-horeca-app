@@ -1,0 +1,25 @@
+{
+  "productId": 175,
+  "productName": "Ciorbă de Fasole în Pâine",
+  "productCategory": "Ciorbe",
+  "price": 30,
+  "description": "Ciorbă de fasole servită în pâine evidată, cu afumătură și smântână",
+  "ingredients": [
+    {
+      "ingredientId": 113,
+      "ingredientName": "Smântână",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 117,
+      "ingredientName": "Pâine",
+      "ingredientCategory": "Panificație",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

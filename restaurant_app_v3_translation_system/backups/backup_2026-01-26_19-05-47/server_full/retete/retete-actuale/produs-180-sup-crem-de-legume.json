@@ -1,0 +1,51 @@
+﻿Ã¯Â»Â¿{
+  "productId": 180,
+  "productName": "SupÃ„ÂƒÃ†Â’ CremÃ„ÂƒÃ†Â’ de Legume",
+  "productCategory": "Ciorbe",
+  "price": 25,
+  "description": "Morcov, ÃƒÂˆÃ¢Â€ÂºelinÃ„ÂƒÃ†Â’, ardei kapia, ceapÃ„ÂƒÃ†Â’ albÃ„ÂƒÃ†Â’, dovlecel, cartofi, cremÃ„ÂƒÃ†Â’ vegetalÃ„ÂƒÃ†Â’, crutoane",
+  "ingredients": [
+    {
+      "ingredientId": 94,
+      "ingredientName": "CeapÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Fructe ÃƒÂˆÃ¢Â„Â¢i Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 109,
+      "ingredientName": "Ardei kapia",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 111,
+      "ingredientName": "Morcov",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 67,
+      "ingredientName": "Cartofi",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 200,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 121,
+      "ingredientName": "CremÃ„ÂƒÃ†Â’ vegetalÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

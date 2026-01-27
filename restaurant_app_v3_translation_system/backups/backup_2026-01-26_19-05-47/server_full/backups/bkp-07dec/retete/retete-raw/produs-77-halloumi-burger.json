@@ -1,0 +1,71 @@
+{
+  "productId": 77,
+  "productName": "Halloumi Burger",
+  "productCategory": "Burgeri",
+  "ingredients": [
+    {
+      "ingredientId": 32,
+      "ingredientName": "cartofi",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 215,
+      "ingredientName": "Chiflă de burger",
+      "ingredientCategory": "General",
+      "quantityNeeded": 1,
+      "unit": "bucăți",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 216,
+      "ingredientName": "Roșie (felie)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 50,
+      "ingredientName": "brânză feta",
+      "ingredientCategory": "General",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 648,
+      "ingredientName": "Dressing Ranch/Iaurt",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 797,
+      "ingredientName": "Salată Verde Shaorma",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 233,
+      "ingredientName": "Castravete",
+      "ingredientCategory": "General",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

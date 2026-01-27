@@ -1,0 +1,12 @@
+# Ignore logs and temporary files
+logs/
+*.log
+checkpoints/
+exports/
+recovery-plan.md
+
+# Keep structure but ignore large files
+sessions/**/*.md
+sessions/**/*.json
+index.json
+

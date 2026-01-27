@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Coduri QR pentru Mese - Restaurant App</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        .config-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .config-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        #qrGrid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .qr-card {
+            background: white;
+            border: 3px solid #667eea;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            page-break-inside: avoid;
+        }
+
+        .qr-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .qr-card h3 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .qr-card canvas {
+            margin: 15px auto;
+            border: 2px solid #f0f0f0;
+            border-radius: 8px;
+        }
+
+        .qr-card .url {
+            font-size: 0.8rem;
+            color: #666;
+            word-break: break-all;
+            margin-top: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .qr-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .qr-actions button {
+            flex: 1;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        .help-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .help-box h3 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+
+        .help-box ul {
+            margin-left: 20px;
+            color: #856404;
+        }
+
+        .help-box li {
+            margin-bottom: 10px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+
+            .config-section,
+            .help-box,
+            button {
+                display: none !important;
+            }
+
+            #qrGrid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+            }
+
+            .qr-card {
+                border: 2px solid #333;
+                page-break-inside: avoid;
+            }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-card .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-card .label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍽️ Generator Coduri QR pentru Mese</h1>
+        <p class="subtitle">Generează coduri QR statice pentru mesele restaurantului</p>
+
+        <div class="config-section">
+            <h2>⚙️ Configurare</h2>
+            
+            <div class="form-group">
+                <label for="baseUrl">🌐 URL Restaurant (Production sau Localhost):</label>
+                <input type="text" id="baseUrl" value="http://localhost:3001" placeholder="https://restaurant.yourdomain.com">
+                <small style="color: #666; display: block; margin-top: 5px;">
+                    💡 Pentru localhost: http://localhost:3001<br>
+                    💡 Pentru Contabo: https://restaurant.yourdomain.com
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="startTable">📍 Masă Start:</label>
+                <input type="number" id="startTable" value="1" min="1" max="200">
+            </div>
+
+            <div class="form-group">
+                <label for="endTable">📍 Masă End:</label>
+                <input type="number" id="endTable" value="20" min="1" max="200">
+            </div>
+
+            <div class="form-group">
+                <label for="qrSize">📏 Dimensiune QR Code (px):</label>
+                <select id="qrSize">
+                    <option value="200">Mică (200x200px) - Pentru preview</option>
+                    <option value="300" selected>Medie (300x300px) - Recomandat</option>
+                    <option value="400">Mare (400x400px) - Pentru print A4</option>
+                    <option value="600">Extra Mare (600x600px) - High quality print</option>
+                </select>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-primary" onclick="generateQRCodes()">
+                    🎨 Generează Coduri QR
+                </button>
+                <button class="btn-secondary" onclick="downloadAllQRCodes()">
+                    💾 Descarcă Toate (ZIP)
+                </button>
+                <button class="btn-danger" onclick="clearQRCodes()">
+                    🗑️ Șterge Tot
+                </button>
+            </div>
+
+            <div class="stats" id="stats" style="display: none;">
+                <div class="stat-card">
+                    <div class="number" id="statTotal">0</div>
+                    <div class="label">Coduri Generate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number" id="statRange">-</div>
+                    <div class="label">Interval Mese</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number" id="statSize">-</div>
+                    <div class="label">Dimensiune</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="qrGrid"></div>
+
+        <div class="help-box">
+            <h3>📖 Instrucțiuni de Utilizare</h3>
+            <ul>
+                <li><strong>Setează URL-ul:</strong> Pentru localhost: <code>http://localhost:3001</code>, Pentru Contabo: <code>https://restaurant.yourdomain.com</code></li>
+                <li><strong>Alege intervalul:</strong> De exemplu, Masă 1-20 pentru 20 de mese</li>
+                <li><strong>Generează:</strong> Click pe butonul "Generează Coduri QR"</li>
+                <li><strong>Descarcă:</strong> Click pe "💾 Descarcă" sub fiecare QR code pentru salvare individuală</li>
+                <li><strong>Descarcă tot:</strong> Click pe "💾 Descarcă Toate (ZIP)" pentru descărcare în masă</li>
+                <li><strong>Print:</strong> Click pe "🖨️ Print" pentru tipărire directă (4 QR codes per pagină A4)</li>
+                <li><strong>Tipărire profesională:</strong> Salvează QR codes și du-le la tipografie pentru laminare</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let generatedQRCodes = [];
+
+        function generateQRCodes() {
+            const baseUrl = document.getElementById('baseUrl').value.trim();
+            const startTable = parseInt(document.getElementById('startTable').value);
+            const endTable = parseInt(document.getElementById('endTable').value);
+            const qrSize = parseInt(document.getElementById('qrSize').value);
+
+            // Validare
+            if (!baseUrl) {
+                alert('❌ Introdu URL-ul restaurantului!');
+                return;
+            }
+
+            if (startTable > endTable) {
+                alert('❌ Masa Start trebuie să fie mai mică sau egală cu Masa End!');
+                return;
+            }
+
+            if (endTable - startTable > 200) {
+                alert('❌ Maxim 200 de mese pot fi generate simultan!');
+                return;
+            }
+
+            // Clear previous
+            clearQRCodes();
+
+            const grid = document.getElementById('qrGrid');
+            generatedQRCodes = [];
+
+            // Show loading
+            grid.innerHTML = '<div class="loading">⏳ Generare coduri QR...</div>';
+
+            // Generate with small delay for UI responsiveness
+            setTimeout(() => {
+                grid.innerHTML = '';
+
+                for (let i = startTable; i <= endTable; i++) {
+                    const url = `${baseUrl}/comanda.html?table=${i}`;
+                    
+                    const card = document.createElement('div');
+                    card.className = 'qr-card';
+                    card.innerHTML = `
+                        <h3>🍽️ Masa ${i}</h3>
+                        <canvas id="qr-${i}"></canvas>
+                        <div class="url">${url}</div>
+                        <div class="qr-actions">
+                            <button class="btn-primary" onclick="downloadQRCode(${i})">💾 Descarcă</button>
+                            <button class="btn-secondary" onclick="printSingleQR(${i})">🖨️ Print</button>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+
+                    // Generate QR Code
+                    const canvas = document.getElementById(`qr-${i}`);
+                    QRCode.toCanvas(canvas, url, {
+                        width: qrSize,
+                        margin: 2,
+                        color: {
+                            dark: '#000000',
+                            light: '#FFFFFF'
+                        },
+                        errorCorrectionLevel: 'H'
+                    }, function (error) {
+                        if (error) console.error('Error generating QR:', error);
+                    });
+
+                    generatedQRCodes.push({ table: i, url: url, canvas: canvas });
+                }
+
+                // Update stats
+                document.getElementById('stats').style.display = 'grid';
+                document.getElementById('statTotal').textContent = endTable - startTable + 1;
+                document.getElementById('statRange').textContent = `${startTable}-${endTable}`;
+                document.getElementById('statSize').textContent = `${qrSize}x${qrSize}px`;
+
+                console.log(`✅ ${generatedQRCodes.length} coduri QR generate cu succes!`);
+            }, 100);
+        }
+
+        function downloadQRCode(tableNumber) {
+            const canvas = document.getElementById(`qr-${tableNumber}`);
+            const url = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.download = `QR-Masa-${tableNumber}.png`;
+            link.href = url;
+            link.click();
+            console.log(`💾 QR Code pentru Masa ${tableNumber} descărcat`);
+        }
+
+        async function downloadAllQRCodes() {
+            if (generatedQRCodes.length === 0) {
+                alert('❌ Generează coduri QR mai întâi!');
+                return;
+            }
+
+            alert(`📦 Se pregătește descărcarea pentru ${generatedQRCodes.length} coduri QR...\n\nApasă OK și așteaptă descărcarea fiecărui fișier.`);
+
+            for (let qr of generatedQRCodes) {
+                await new Promise(resolve => setTimeout(resolve, 100)); // Small delay between downloads
+                downloadQRCode(qr.table);
+            }
+
+            console.log(`✅ Toate ${generatedQRCodes.length} codurile QR au fost descărcate!`);
+        }
+
+        function printSingleQR(tableNumber) {
+            const card = document.querySelector(`#qr-${tableNumber}`).closest('.qr-card');
+            const printWindow = window.open('', '', 'width=800,height=600');
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Print QR Code - Masa ${tableNumber}</title>
+                    <style>
+                        body {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            min-height: 100vh;
+                            margin: 0;
+                            font-family: Arial, sans-serif;
+                        }
+                        .qr-card {
+                            text-align: center;
+                            border: 3px solid #333;
+                            padding: 30px;
+                            border-radius: 15px;
+                        }
+                        h3 {
+                            font-size: 3rem;
+                            margin-bottom: 20px;
+                        }
+                        canvas {
+                            border: 2px solid #f0f0f0;
+                        }
+                        .url {
+                            margin-top: 20px;
+                            font-size: 0.9rem;
+                            color: #666;
+                        }
+                    </style>
+                </head>
+                <body>
+                    ${card.outerHTML}
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            setTimeout(() => {
+                printWindow.print();
+            }, 500);
+        }
+
+        function clearQRCodes() {
+            document.getElementById('qrGrid').innerHTML = '';
+            generatedQRCodes = [];
+            document.getElementById('stats').style.display = 'none';
+            console.log('🗑️ Coduri QR șterse');
+        }
+
+        // Auto-generate on load pentru demo
+        window.addEventListener('load', function() {
+            console.log('🎨 Generator Coduri QR încărcat cu succes!');
+            console.log('💡 Setează URL-ul și intervalul meselor, apoi generează codurile QR.');
+        });
+    </script>
+</body>
+</html>
+

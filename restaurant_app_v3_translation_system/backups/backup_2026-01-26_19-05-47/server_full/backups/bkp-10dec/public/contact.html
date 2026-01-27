@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="ro" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Contact - Trattoria</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .language-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 5px;
+            border-radius: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .lang-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: #333;
+            cursor: pointer;
+            border-radius: 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        .lang-btn:hover { background: #f0f0f0; }
+        .lang-btn.active {
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            color: white;
+        }
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .content-section {
+            background: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .content-section h2 {
+            color: #ff6b35;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .contact-info {
+            padding: 1.5rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0.5rem 0;
+        }
+        
+        .contact-item i {
+            width: 40px;
+            height: 40px;
+            background: #ff6b35;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .contact-item div h4 {
+            margin-bottom: 0.25rem;
+            color: #333;
+        }
+        
+        .contact-item div p {
+            color: #666;
+            margin: 0;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link.facebook {
+            background: #1877F2;
+            color: white;
+        }
+        
+        .social-link.instagram {
+            background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+            color: white;
+        }
+        
+        .social-link.tiktok {
+            background: #000000;
+            color: white;
+        }
+        
+        .social-link.youtube {
+            background: #FF0000;
+            color: white;
+        }
+        
+        .social-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+        
+        .contact-form {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff6b35;
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .submit-btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            background: #e05a2a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+        }
+        
+        .services-section {
+            margin-top: 2rem;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .service-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .service-item:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+        
+        .service-item i {
+            width: 40px;
+            height: 40px;
+            background: #ff6b35;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .service-item div h4 {
+            margin-bottom: 0.25rem;
+            color: #333;
+        }
+        
+        .service-item div p {
+            color: #666;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+        
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        /* ==================== MEDIA QUERIES PENTRU DESIGN RESPONSIVE ==================== */
+        
+        /* Ecrane foarte mari (4K, ultra-wide) */
+        @media (min-width: 1920px) {
+            .container {
+                max-width: 1400px;
+                padding: 20px 40px;
+            }
+            
+            .header h1 {
+                font-size: 3rem;
+            }
+            
+            .header p {
+                font-size: 1.4rem;
+            }
+            
+            .content-section {
+                padding: 40px;
+            }
+            
+            .contact-grid {
+                gap: 30px;
+            }
+            
+            .contact-item {
+                padding: 25px;
+            }
+            
+            .form-group input,
+            .form-group textarea {
+                padding: 15px;
+                font-size: 1.1rem;
+            }
+            
+            .submit-btn {
+                padding: 15px 30px;
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* Laptopuri mari */
+        @media (min-width: 1440px) and (max-width: 1919px) {
+            .container {
+                max-width: 1200px;
+                padding: 15px 30px;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header p {
+                font-size: 1.2rem;
+            }
+            
+            .content-section {
+                padding: 35px;
+            }
+            
+            .contact-grid {
+                gap: 25px;
+            }
+            
+            .contact-item {
+                padding: 22px;
+            }
+        }
+        
+        /* Laptopuri standard */
+        @media (max-width: 1400px) {
+            .container {
+                padding: 12px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .header p {
+                font-size: 1.1rem;
+            }
+            
+            .content-section {
+                padding: 30px;
+            }
+            
+            .contact-grid {
+                gap: 20px;
+            }
+            
+            .contact-item {
+                padding: 20px;
+            }
+        }
+        
+        /* Tablete mari */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 10px 15px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .content-section {
+                padding: 25px;
+            }
+            
+            .contact-grid {
+                gap: 18px;
+            }
+            
+            .contact-item {
+                padding: 18px;
+            }
+        }
+        
+        /* Tablete mici */
+        @media (max-width: 992px) {
+            .container {
+                padding: 8px 12px;
+            }
+            
+            .header {
+                padding: 1.5rem 0;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header p {
+                font-size: 0.95rem;
+            }
+            
+            .content-section {
+                padding: 22px;
+            }
+            
+            .contact-grid {
+                gap: 16px;
+            }
+            
+            .contact-item {
+                padding: 16px;
+            }
+            
+            .form-group input,
+            .form-group textarea {
+                padding: 12px;
+                font-size: 0.95rem;
+            }
+            
+            .submit-btn {
+                padding: 12px 24px;
+                font-size: 0.95rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+        
+        /* Telefoane mari */
+        @media (max-width: 768px) {
+            .container {
+                padding: 6px 10px;
+            }
+            
+            .header {
+                padding: 1.2rem 0;
+            }
+            
+            .header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .header p {
+                font-size: 0.9rem;
+            }
+            
+            .back-btn {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .content-section {
+                padding: 18px;
+            }
+            
+            .content-section h2 {
+                font-size: 1.5rem;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+            
+            .contact-item {
+                padding: 14px;
+            }
+            
+            .contact-item i {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+            
+            .contact-item h4 {
+                font-size: 1.1rem;
+            }
+            
+            .contact-item p {
+                font-size: 0.9rem;
+            }
+            
+            .form-group {
+                margin-bottom: 15px;
+            }
+            
+            .form-group input,
+            .form-group textarea {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+            
+            .submit-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .service-item {
+                padding: 12px;
+            }
+            
+            .service-item i {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+            
+            .service-item h4 {
+                font-size: 1rem;
+            }
+            
+            .service-item p {
+                font-size: 0.85rem;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+            
+            .footer {
+                padding: 1.5rem;
+            }
+            
+            .footer p {
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Telefoane mici */
+        @media (max-width: 576px) {
+            .container {
+                padding: 5px 8px;
+            }
+            
+            .header {
+                padding: 1rem 0;
+            }
+            
+            .header h1 {
+                font-size: 1.4rem;
+            }
+            
+            .header p {
+                font-size: 0.85rem;
+            }
+            
+            .back-btn {
+                padding: 6px 10px;
+                font-size: 0.8rem;
+            }
+            
+            .content-section {
+                padding: 15px;
+            }
+            
+            .content-section h2 {
+                font-size: 1.3rem;
+            }
+            
+            .contact-grid {
+                gap: 12px;
+            }
+            
+            .contact-item {
+                padding: 12px;
+            }
+            
+            .contact-item i {
+                width: 30px;
+                height: 30px;
+                font-size: 0.9rem;
+            }
+            
+            .contact-item h4 {
+                font-size: 1rem;
+            }
+            
+            .contact-item p {
+                font-size: 0.85rem;
+            }
+            
+            .form-group {
+                margin-bottom: 12px;
+            }
+            
+            .form-group label {
+                font-size: 0.9rem;
+            }
+            
+            .form-group input,
+            .form-group textarea {
+                padding: 8px;
+                font-size: 0.85rem;
+            }
+            
+            .submit-btn {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+            
+            .services-grid {
+                gap: 10px;
+            }
+            
+            .service-item {
+                padding: 10px;
+            }
+            
+            .service-item i {
+                width: 30px;
+                height: 30px;
+                font-size: 0.9rem;
+            }
+            
+            .service-item h4 {
+                font-size: 0.95rem;
+            }
+            
+            .service-item p {
+                font-size: 0.8rem;
+            }
+            
+            .footer {
+                padding: 1.2rem;
+            }
+            
+            .footer p {
+                font-size: 0.8rem;
+            }
+        }
+        
+        /* Orientare landscape pe telefoane */
+        @media (max-height: 600px) and (orientation: landscape) {
+            .header {
+                padding: 0.8rem 0;
+            }
+            
+            .header h1 {
+                font-size: 1.2rem;
+            }
+            
+            .header p {
+                font-size: 0.8rem;
+            }
+            
+            .content-section {
+                padding: 12px;
+            }
+            
+            .contact-item {
+                padding: 10px;
+            }
+            
+            .service-item {
+                padding: 8px;
+            }
+            
+            .footer {
+                padding: 1rem;
+            }
+        }
+        
+        /* Ecrane ultra-wide */
+        @media (min-aspect-ratio: 21/9) {
+            .container {
+                max-width: 1600px;
+                padding: 25px 50px;
+            }
+            
+            .header h1 {
+                font-size: 3.2rem;
+            }
+            
+            .header p {
+                font-size: 1.5rem;
+            }
+            
+            .content-section {
+                padding: 50px;
+            }
+            
+            .contact-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 35px;
+            }
+            
+            .contact-item {
+                padding: 30px;
+            }
+            
+            .services-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="language-switcher">
+        <button class="lang-btn active" onclick="changeLanguage('ro')" data-lang="ro">RO</button>
+        <button class="lang-btn" onclick="changeLanguage('en')" data-lang="en">EN</button>
+    </div>
+    
+    <div class="header">
+        <button class="back-btn" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i> <span id="backBtn">Înapoi</span>
+        </button>
+        <h1 id="headerTitle">📞 Contact</h1>
+        <p id="headerSubtitle">Trattoria - Suntem aici pentru tine!</p>
+    </div>
+
+    <div class="container">
+        <div class="content-section">
+            <h2 id="contactInfoTitle">📍 Informații de contact</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4 id="addressLabel">Adresa</h4>
+                            <p>Prelungirea Ghencea, Bragadiru<br>Jud. Ilfov, România</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4 id="phoneLabel">Telefon</h4>
+                            <p>07xxxxxxxx</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4 id="emailLabel">Email</h4>
+                            <p>trattoriamia@gmail.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4 id="scheduleLabel">Program</h4>
+                            <p id="scheduleText">Luni - Duminică: 11:00 - 23:00</p>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link facebook" title="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link instagram" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link tiktok" title="TikTok">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="#" class="social-link youtube" title="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3 id="formTitle">💬 Trimite-ne un mesaj</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name" id="nameLabel">Nume complet *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email" id="emailFormLabel">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject" id="subjectLabel">Subiect *</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message" id="messageLabel">Mesaj *</label>
+                            <textarea id="message" name="message" required placeholder="Spune-ne cum te putem ajuta..." id="messagePlaceholder"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn" id="submitBtn">TRIMITE</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section services-section">
+            <h2 id="whyContactTitle">🛎️ De ce să ne contactezi?</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <i class="fas fa-utensils"></i>
+                    <div>
+                        <h4 id="service1Title">Întrebări despre meniu</h4>
+                        <p id="service1Text">Informații despre ingrediente, alergeni sau preparate speciale</p>
+                    </div>
+                </div>
+                
+                <div class="service-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <div>
+                        <h4 id="service2Title">Rezervări</h4>
+                        <p id="service2Text">Rezervă o masă pentru tine și cei dragi</p>
+                    </div>
+                </div>
+                
+                <div class="service-item">
+                    <i class="fas fa-truck"></i>
+                    <div>
+                        <h4 id="service3Title">Livrare</h4>
+                        <p id="service3Text">Informații despre livrare și timpii de așteptare</p>
+                    </div>
+                </div>
+                
+                <div class="service-item">
+                    <i class="fas fa-champagne-glasses"></i>
+                    <div>
+                        <h4 id="service4Title">Evenimente speciale</h4>
+                        <p id="service4Text">Organizare de evenimente private sau corporative</p>
+                    </div>
+                </div>
+                
+                <div class="service-item">
+                    <i class="fas fa-comments"></i>
+                    <div>
+                        <h4 id="service5Title">Feedback</h4>
+                        <p id="service5Text">Împărtășește experiența ta sau sugestiile tale</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p id="footerText1">&copy; 2024 Trattoria. Toate drepturile rezervate.</p>
+        <p id="footerText2">Gustul autentic al Italiei, aducând oamenii laolaltă.</p>
+    </div>
+
+    <script>
+        let currentLang = localStorage.getItem('selectedLanguage') || 'ro';
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('selectedLanguage', lang);
+            document.getElementById('htmlRoot').lang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+            applyTranslations();
+        }
+
+        function applyTranslations() {
+            const isEn = currentLang === 'en';
+            
+            document.getElementById('pageTitle').textContent = isEn ? 'Contact - Trattoria' : 'Contact - Trattoria';
+            document.getElementById('backBtn').textContent = isEn ? 'Back' : 'Înapoi';
+            document.getElementById('headerSubtitle').textContent = isEn ? 'Trattoria - We are here for you!' : 'Trattoria - Suntem aici pentru tine!';
+            
+            document.getElementById('contactInfoTitle').textContent = isEn ? '📍 Contact Information' : '📍 Informații de contact';
+            document.getElementById('addressLabel').textContent = isEn ? 'Address' : 'Adresa';
+            document.getElementById('phoneLabel').textContent = isEn ? 'Phone' : 'Telefon';
+            document.getElementById('emailLabel').textContent = isEn ? 'Email' : 'Email';
+            document.getElementById('scheduleLabel').textContent = isEn ? 'Schedule' : 'Program';
+            document.getElementById('scheduleText').textContent = isEn ? 'Monday - Sunday: 11:00 AM - 11:00 PM' : 'Luni - Duminică: 11:00 - 23:00';
+            
+            document.getElementById('formTitle').textContent = isEn ? '💬 Send us a message' : '💬 Trimite-ne un mesaj';
+            document.getElementById('nameLabel').textContent = isEn ? 'Full Name *' : 'Nume complet *';
+            document.getElementById('emailFormLabel').textContent = isEn ? 'Email *' : 'Email *';
+            document.getElementById('subjectLabel').textContent = isEn ? 'Subject *' : 'Subiect *';
+            document.getElementById('messageLabel').textContent = isEn ? 'Message *' : 'Mesaj *';
+            document.getElementById('messagePlaceholder').placeholder = isEn ? 'Tell us how we can help you...' : 'Spune-ne cum te putem ajuta...';
+            document.getElementById('submitBtn').textContent = isEn ? 'SEND' : 'TRIMITE';
+            
+            document.getElementById('whyContactTitle').textContent = isEn ? '🛎️ Why contact us?' : '🛎️ De ce să ne contactezi?';
+            document.getElementById('service1Title').textContent = isEn ? 'Menu Questions' : 'Întrebări despre meniu';
+            document.getElementById('service1Text').textContent = isEn ? 'Information about ingredients, allergens or special dishes' : 'Informații despre ingrediente, alergeni sau preparate speciale';
+            document.getElementById('service2Title').textContent = isEn ? 'Reservations' : 'Rezervări';
+            document.getElementById('service2Text').textContent = isEn ? 'Book a table for you and your loved ones' : 'Rezervă o masă pentru tine și cei dragi';
+            document.getElementById('service3Title').textContent = isEn ? 'Delivery' : 'Livrare';
+            document.getElementById('service3Text').textContent = isEn ? 'Information about delivery and waiting times' : 'Informații despre livrare și timpii de așteptare';
+            document.getElementById('service4Title').textContent = isEn ? 'Special Events' : 'Evenimente speciale';
+            document.getElementById('service4Text').textContent = isEn ? 'Organization of private or corporate events' : 'Organizare de evenimente private sau corporative';
+            document.getElementById('service5Title').textContent = isEn ? 'Feedback' : 'Feedback';
+            document.getElementById('service5Text').textContent = isEn ? 'Share your experience or suggestions' : 'Împărtășește experiența ta sau sugestiile tale';
+            
+            document.getElementById('footerText1').textContent = isEn ? '© 2024 Trattoria. All rights reserved.' : '© 2024 Trattoria. Toate drepturile rezervate.';
+            document.getElementById('footerText2').textContent = isEn ? 'The authentic taste of Italy, bringing people together.' : 'Gustul autentic al Italiei, aducând oamenii laolaltă.';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            changeLanguage(currentLang);
+        });
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            const isEn = currentLang === 'en';
+            
+            submitBtn.textContent = isEn ? 'Sending...' : 'Se trimite...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                submitBtn.textContent = isEn ? 'Message sent successfully!' : 'Mesaj trimis cu succes!';
+                submitBtn.style.background = '#28a745';
+                
+                setTimeout(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.style.background = '#ff6b35';
+                    submitBtn.disabled = false;
+                    document.getElementById('contactForm').reset();
+                }, 2000);
+            }, 1500);
+        });
+    </script>
+</body>
+    <script src="/branding/qroms-badge.js"></script>
+</html>

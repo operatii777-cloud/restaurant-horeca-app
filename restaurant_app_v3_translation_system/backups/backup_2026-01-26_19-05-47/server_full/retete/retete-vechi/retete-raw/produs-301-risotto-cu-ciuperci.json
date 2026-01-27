@@ -1,0 +1,55 @@
+﻿Ã¯Â»Â¿{
+  "productId": 301,
+  "productName": "Risotto cu Ciuperci",
+  "productCategory": "Paste",
+  "ingredients": [
+    {
+      "ingredientId": 814,
+      "ingredientName": "Orez pentru sarmale",
+      "ingredientCategory": "Cereale ÃƒÂˆÃ¢Â„Â¢i Paste",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 351,
+      "ingredientName": "Ciuperci (Champignon/Hribi)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 120,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 48,
+      "ingredientName": "parmezan",
+      "ingredientCategory": "General",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 353,
+      "ingredientName": "Stock de legume",
+      "ingredientCategory": "General",
+      "quantityNeeded": 300,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 354,
+      "ingredientName": "Vin Alb sec",
+      "ingredientCategory": "General",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

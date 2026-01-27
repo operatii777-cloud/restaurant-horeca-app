@@ -1,0 +1,49 @@
+{
+  "productId": 170,
+  "productName": "Borș de Găină",
+  "productCategory": "Ciorbe",
+  "price": 25,
+  "description": "Pui, ceapă, morcov, țelină, ardei kapia, tăiței de casă, borș, pătrunjel",
+  "ingredients": [
+    {
+      "ingredientId": 94,
+      "ingredientName": "Ceapă",
+      "ingredientCategory": "Fructe și Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 109,
+      "ingredientName": "Ardei kapia",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 111,
+      "ingredientName": "Morcov",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 112,
+      "ingredientName": "Pătrunjel",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 107,
+      "ingredientName": "Pui",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "product": {
+    "id": 299,
+    "name": "Fettuccine Alfredo",
+    "name_en": "Fettuccine Alfredo",
+    "category": "Paste",
+    "category_en": "Pasta",
+    "price": 26,
+    "description": "Fettuccine Alfredo cu smântână",
+    "description_en": "Fettuccine Alfredo with smântână",
+    "weight": null,
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 344,
+        "name": "Fettuccine",
+        "category": "General",
+        "quantity": 120,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 346,
+        "name": "Nucșoară (pudră)",
+        "category": "General",
+        "quantity": 1,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 130,
+        "name": "Smântână",
+        "category": "Lactate",
+        "quantity": 80,
+        "unit": "ml",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.045203957751608605,
+        "totalCost": "3.62",
+        "totalCostWithWaste": "3.62",
+        "supplier": "Furnizor Lactate",
+        "currentStock": 69364.21052631579,
+        "minStock": 500,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 48,
+        "name": "parmezan",
+        "category": "General",
+        "quantity": 30,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 1.416717300680602,
+        "totalCost": "42.50",
+        "totalCostWithWaste": "42.50",
+        "supplier": null,
+        "currentStock": 20050,
+        "minStock": 0.4,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "46.12",
+    "totalCostWithWaste": "46.12",
+    "sellingPrice": 26,
+    "profitMargin": -20.12,
+    "markup": -77.38,
+    "foodCostPercentage": "177.38"
+  },
+  "stats": {
+    "totalIngredients": 4,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

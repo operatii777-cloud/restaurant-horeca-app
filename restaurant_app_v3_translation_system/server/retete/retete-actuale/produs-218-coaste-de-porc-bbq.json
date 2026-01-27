@@ -1,0 +1,35 @@
+﻿Ã¯Â»Â¿{
+  "productId": 218,
+  "productName": "Coaste de Porc BBQ",
+  "productCategory": "Fel Principal",
+  "price": 74,
+  "description": "Coaste de porc, sos bbq, usturoi, cimbru, boia, cartofi cu parmesan ÃƒÂˆÃ¢Â„Â¢i usturoi, salatÃ„ÂƒÃ†Â’ coleslaw",
+  "ingredients": [
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 103,
+      "ingredientName": "SalatÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 67,
+      "ingredientName": "Cartofi",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 200,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

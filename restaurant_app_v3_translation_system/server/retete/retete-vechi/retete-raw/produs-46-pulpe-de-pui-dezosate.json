@@ -1,0 +1,28 @@
+﻿Ã¯Â»Â¿{
+  "productId": 46,
+  "productName": "Pulpe de Pui Dezosate",
+  "productCategory": "Fel Principal",
+  "ingredients": [
+    {
+      "ingredientId": 379,
+      "ingredientName": "Condimente",
+      "ingredientCategory": "General",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 363,
+      "ingredientName": "Piept de pui",
+      "ingredientCategory": "General",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

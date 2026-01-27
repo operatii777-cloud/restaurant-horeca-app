@@ -1,0 +1,37 @@
+﻿Ã¯Â»Â¿{
+  "productId": 63,
+  "productName": "PastramÃ„ÂƒÃ†Â’ de Oaie la Tigaie",
+  "productCategory": "Fel Principal",
+  "ingredients": [
+    {
+      "ingredientId": 811,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 61,
+      "ingredientName": "vin roÃƒÂˆÃ¢Â„Â¢u",
+      "ingredientCategory": "General",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 525,
+      "ingredientName": "MÃ„ÂƒÃ†Â’mÃ„ÂƒÃ†Â’ligÃ„ÂƒÃ†Â’ (servire)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

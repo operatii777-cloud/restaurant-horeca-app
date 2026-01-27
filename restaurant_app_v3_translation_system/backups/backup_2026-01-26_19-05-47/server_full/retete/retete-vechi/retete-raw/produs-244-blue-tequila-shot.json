@@ -1,0 +1,37 @@
+﻿Ã¯Â»Â¿{
+  "productId": 244,
+  "productName": "Blue Tequila Shot",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 441,
+      "ingredientName": "Curacao Albastru",
+      "ingredientCategory": "General",
+      "quantityNeeded": 10,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 442,
+      "ingredientName": "Tequila Blanco (Lunazul)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 40,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 443,
+      "ingredientName": "Lime (suc)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 5,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

@@ -1,0 +1,711 @@
+/* ============================================
+   GLOBAL REPORTS DARK THEME
+   Aplică tema dark pentru TOATE paginile de rapoarte
+   Consistent cu AG Grid dark theme
+   ============================================ */
+
+/* Layout Pages - ZERO PADDING/MARGIN - FĂRĂ SPAȚIU DE SUS */
+/* SOLUȚIE: Conținutul începe din partea de sus */
+[class*="-reports-page"],
+[class*="-report-page"],
+.reports-page,
+.report-page {
+  padding: 0 !important;
+  padding-top: 0 !important;
+  margin: 0 !important;
+  margin-top: 0 !important;
+  background-color: #0f1419 !important;
+  min-height: calc(100vh - 120px); /* Minus navbar height (aproximativ) */
+  color: #ffffff;
+  position: relative;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important; /* Conținutul începe de sus */
+}
+
+/* Container principal - elimină padding-ul implicit */
+[class*="-reports-page"] > *:first-child,
+[class*="-report-page"] > *:first-child {
+  margin-top: 0 !important;
+}
+
+/* ============================================
+   PAGE HEADERS - TOATE RAPOARTELE - ULTRA COMPACT - ZERO MARGIN
+   POZIȚIONAT EXACT ÎN PARTEA DE SUS - FĂRĂ SPAȚIU GOL
+   ============================================ */
+
+[class*="-reports-page"] .page-header,
+[class*="-report-page"] .page-header,
+[class*="-reports-page"] .page-header-container,
+[class*="-report-page"] .page-header-container {
+  background-color: #1e2742 !important;
+  padding: 12px 24px !important;
+  margin: 0 !important;
+  margin-top: 0 !important;
+  border-bottom: 1px solid #3a4563 !important;
+  position: relative;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Page header content (text) */
+[class*="-reports-page"] .page-header > div,
+[class*="-report-page"] .page-header > div {
+  flex: 1;
+}
+
+/* OVERRIDE LAYOUT PENTRU RAPOARTE - Elimină spațiul de deasupra */
+.layout__main:has([class*="-reports-page"]),
+.layout__main:has([class*="-report-page"]) {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.layout__main-wrapper:has([class*="-reports-page"]),
+.layout__main-wrapper:has([class*="-report-page"]) {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+[class*="-reports-page"] .page-header h1,
+[class*="-report-page"] .page-header h1,
+[class*="-reports-page"] .page-header .h1,
+[class*="-report-page"] .page-header .h1,
+[class*="-reports-page"] .page-header-container h1,
+[class*="-report-page"] .page-header-container h1 {
+  color: #ffffff !important;
+  font-size: 24px !important; /* REDUS de la 28px la 24px */
+  font-weight: 600;
+  margin: 0 !important;
+  line-height: 1.2;
+}
+
+[class*="-reports-page"] .page-header p,
+[class*="-report-page"] .page-header p,
+[class*="-reports-page"] .page-header-container p,
+[class*="-report-page"] .page-header-container p {
+  color: #e0e0e0 !important;
+  font-size: 13px !important; /* REDUS de la 14px la 13px */
+  margin: 4px 0 0 0 !important; /* REDUS de la 8px la 4px */
+  line-height: 1.3;
+}
+
+/* ============================================
+   CARDS - TOATE RAPOARTELE - ZERO MARGIN TOP
+   ============================================ */
+
+[class*="-reports-page"] .card,
+[class*="-report-page"] .card {
+  background-color: #1e2742 !important;
+  border: 1px solid #3a4563 !important;
+  border-radius: 0 !important; /* ELIMINĂ border-radius pentru aspect edge-to-edge */
+  margin: 0 !important; /* ZERO MARGIN - card lipit de header */
+  color: #ffffff !important;
+}
+
+/* Card imediat după header - elimină complet spațiul */
+[class*="-reports-page"] .page-header + .card,
+[class*="-report-page"] .page-header + .card,
+[class*="-reports-page"] .page-header-container + .card,
+[class*="-report-page"] .page-header-container + .card {
+  margin-top: 0 !important;
+  border-top: none !important;
+}
+
+[class*="-reports-page"] .card-header,
+[class*="-report-page"] .card-header {
+  background-color: #2d3654 !important;
+  border-bottom: 2px solid #3a4563 !important;
+  padding: 10px 24px !important; /* REDUS de la 12px la 10px */
+  color: #ffffff !important;
+}
+
+[class*="-reports-page"] .card-header h5,
+[class*="-report-page"] .card-header h5,
+[class*="-reports-page"] .card-header h6,
+[class*="-report-page"] .card-header h6 {
+  color: #ffffff !important;
+  font-weight: 600;
+  margin: 0 !important;
+  font-size: 16px !important;
+}
+
+[class*="-reports-page"] .card-body,
+[class*="-report-page"] .card-body {
+  background-color: #1e2742 !important;
+  padding: 0 !important;
+  color: #ffffff !important;
+}
+
+/* Card body rows - compact */
+[class*="-reports-page"] .card-body .row,
+[class*="-report-page"] .card-body .row {
+  padding: 10px 24px !important; /* REDUS pentru spațiere compactă */
+}
+
+/* ============================================
+   BOOTSTRAP TABLES - FIX FUNDAL ALB/GRI - TEXT ALB PE FUNDAL ALBASTRU ÎNCHIS
+   ============================================ */
+
+[class*="-reports-page"] .table-responsive,
+[class*="-report-page"] .table-responsive {
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: #0f1419 !important;
+  border-radius: 0;
+}
+
+[class*="-reports-page"] .table,
+[class*="-report-page"] .table {
+  width: 100% !important;
+  margin: 0 !important;
+  border-collapse: collapse !important;
+  background-color: #0f1419 !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+}
+
+/* HEADER */
+[class*="-reports-page"] .table thead,
+[class*="-report-page"] .table thead {
+  background-color: #2d3654 !important;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+[class*="-reports-page"] .table thead th,
+[class*="-report-page"] .table thead th {
+  padding: 14px !important; /* REDUS de la 16px */
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 13px !important;
+  border-bottom: 2px solid #3a4563 !important;
+  border-right: 1px solid #3a4563 !important;
+  background-color: #2d3654 !important;
+  text-align: left;
+}
+
+[class*="-reports-page"] .table thead th:last-child,
+[class*="-report-page"] .table thead th:last-child {
+  border-right: none !important;
+}
+
+/* BODY - FUNDAL ALBASTRU ÎNCHIS FORȚAT!!! */
+[class*="-reports-page"] .table tbody,
+[class*="-report-page"] .table tbody {
+  background-color: #0f1419 !important;
+}
+
+[class*="-reports-page"] .table tbody tr,
+[class*="-report-page"] .table tbody tr {
+  background-color: #1a2235 !important; /* Fundal albastru închis default */
+  transition: background-color 0.15s ease;
+  cursor: pointer;
+}
+
+/* RÂNDURI ALTERNATIVE - FUNDAL ALBASTRU ÎNCHIS!!! */
+[class*="-reports-page"] .table tbody tr:nth-child(odd),
+[class*="-report-page"] .table tbody tr:nth-child(odd),
+[class*="-reports-page"] .table-striped tbody tr:nth-of-type(odd),
+[class*="-report-page"] .table-striped tbody tr:nth-of-type(odd),
+[class*="-reports-page"] .table.table-striped tbody tr:nth-of-type(odd),
+[class*="-report-page"] .table.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #1a2235 !important;
+}
+
+[class*="-reports-page"] .table tbody tr:nth-child(even),
+[class*="-report-page"] .table tbody tr:nth-child(even),
+[class*="-reports-page"] .table-striped tbody tr:nth-of-type(even),
+[class*="-report-page"] .table-striped tbody tr:nth-of-type(even),
+[class*="-reports-page"] .table.table-striped tbody tr:nth-of-type(even),
+[class*="-report-page"] .table.table-striped tbody tr:nth-of-type(even) {
+  background-color: #1f2740 !important;
+}
+
+/* CELULE - TEXT ALB PE FUNDAL ALBASTRU!!! */
+[class*="-reports-page"] .table tbody td,
+[class*="-report-page"] .table tbody td {
+  padding: 14px !important; /* REDUS de la 16px */
+  color: #ffffff !important;
+  border-bottom: 1px solid #3a4563 !important;
+  border-right: 1px solid #3a4563 !important;
+  line-height: 1.5;
+  background-color: transparent !important; /* Lasă rândul să determine fundalul */
+}
+
+[class*="-reports-page"] .table tbody td:last-child,
+[class*="-report-page"] .table tbody td:last-child {
+  border-right: none !important;
+}
+
+/* TEXT ÎN CELULE - ÎNTOTDEAUNA ALB!!! TOATE ELEMENTELE */
+[class*="-reports-page"] .table tbody td,
+[class*="-reports-page"] .table tbody td *,
+[class*="-reports-page"] .table tbody td strong,
+[class*="-reports-page"] .table tbody td span,
+[class*="-reports-page"] .table tbody td div,
+[class*="-report-page"] .table tbody td,
+[class*="-report-page"] .table tbody td *,
+[class*="-report-page"] .table tbody td strong,
+[class*="-report-page"] .table tbody td span,
+[class*="-report-page"] .table tbody td div {
+  color: #ffffff !important;
+}
+
+/* SUCCESS/DANGER COLORS - PĂSTREAZĂ DAR CU CONTRAST */
+[class*="-reports-page"] .table .text-success,
+[class*="-reports-page"] .table tbody td .text-success,
+[class*="-reports-page"] .table tbody td strong.text-success,
+[class*="-report-page"] .table .text-success,
+[class*="-report-page"] .table tbody td .text-success,
+[class*="-report-page"] .table tbody td strong.text-success {
+  color: #10b981 !important;
+  font-weight: 600;
+}
+
+[class*="-reports-page"] .table .text-danger,
+[class*="-reports-page"] .table tbody td .text-danger,
+[class*="-reports-page"] .table tbody td strong.text-danger,
+[class*="-report-page"] .table .text-danger,
+[class*="-report-page"] .table tbody td .text-danger,
+[class*="-report-page"] .table tbody td strong.text-danger {
+  color: #ef4444 !important;
+  font-weight: 600;
+}
+
+[class*="-reports-page"] .table .text-muted,
+[class*="-reports-page"] .table tbody td .text-muted,
+[class*="-report-page"] .table .text-muted,
+[class*="-report-page"] .table tbody td .text-muted {
+  color: #e0e0e0 !important;
+}
+
+/* HOVER EFFECT - CA AG GRID */
+[class*="-reports-page"] .table tbody tr:hover,
+[class*="-reports-page"] .table tbody tr:hover td,
+[class*="-report-page"] .table tbody tr:hover,
+[class*="-report-page"] .table tbody tr:hover td {
+  background-color: #2a3654 !important;
+}
+
+/* ELIMINĂ STILURILE BOOTSTRAP STRIPED DEFAULT */
+[class*="-reports-page"] .table-striped > tbody > tr:nth-of-type(odd) > *,
+[class*="-report-page"] .table-striped > tbody > tr:nth-of-type(odd) > * {
+  background-color: transparent !important;
+  color: #ffffff !important;
+}
+
+[class*="-reports-page"] .table-hover > tbody > tr:hover > *,
+[class*="-report-page"] .table-hover > tbody > tr:hover > * {
+  background-color: transparent !important;
+  color: #ffffff !important;
+}
+
+/* ============================================
+   FORMS & INPUTS - COMPACT
+   ============================================ */
+
+[class*="-reports-page"] .form-label,
+[class*="-report-page"] .form-label {
+  color: #ffffff !important;
+  font-weight: 500;
+  margin-bottom: 4px !important; /* REDUS de la 8px */
+  font-size: 13px !important; /* REDUS de la 14px */
+}
+
+[class*="-reports-page"] .form-control,
+[class*="-reports-page"] .form-select,
+[class*="-report-page"] .form-control,
+[class*="-report-page"] .form-select {
+  background-color: #0f1419 !important;
+  color: #ffffff !important;
+  border: 1px solid #3a4563 !important;
+  border-radius: 4px;
+  padding: 6px 10px !important; /* REDUS de la 8px 12px */
+  font-size: 14px !important;
+}
+
+[class*="-reports-page"] .form-control::placeholder,
+[class*="-reports-page"] .form-select option,
+[class*="-report-page"] .form-control::placeholder,
+[class*="-report-page"] .form-select option {
+  color: #e0e0e0 !important;
+}
+
+[class*="-reports-page"] .form-control:focus,
+[class*="-reports-page"] .form-select:focus,
+[class*="-report-page"] .form-control:focus,
+[class*="-report-page"] .form-select:focus {
+  background-color: #0f1419 !important;
+  color: #ffffff !important;
+  border-color: #3b82f6 !important;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+}
+
+/* ============================================
+   TABS - ZERO MARGIN - LIPIT DE HEADER
+   ============================================ */
+
+[class*="-reports-page"] .nav-tabs,
+[class*="-report-page"] .nav-tabs {
+  background-color: #1e2742 !important;
+  border-bottom: 2px solid #3a4563 !important;
+  padding: 0 24px !important;
+  margin: 0 !important;
+}
+
+/* Tabs imediat după header - elimină complet spațiul */
+[class*="-reports-page"] .page-header + .nav-tabs,
+[class*="-report-page"] .page-header + .nav-tabs,
+[class*="-reports-page"] .page-header-container + .nav-tabs,
+[class*="-report-page"] .page-header-container + .nav-tabs,
+[class*="-reports-page"] .page-header + * > .nav-tabs,
+[class*="-report-page"] .page-header + * > .nav-tabs {
+  margin-top: 0 !important;
+  border-top: none !important;
+}
+
+[class*="-reports-page"] .nav-tabs .nav-link,
+[class*="-report-page"] .nav-tabs .nav-link {
+  color: #e0e0e0 !important;
+  border: none !important;
+  padding: 10px 16px !important; /* REDUS de la 12px 20px */
+  margin: 0 4px !important;
+  border-bottom: 3px solid transparent !important;
+  background: transparent !important;
+  font-size: 14px !important;
+}
+
+[class*="-reports-page"] .nav-tabs .nav-link:hover,
+[class*="-report-page"] .nav-tabs .nav-link:hover {
+  color: #ffffff !important;
+  background-color: rgba(59, 130, 246, 0.1) !important;
+  border-bottom-color: #3b82f6 !important;
+}
+
+[class*="-reports-page"] .nav-tabs .nav-link.active,
+[class*="-report-page"] .nav-tabs .nav-link.active {
+  color: #ffffff !important;
+  background-color: transparent !important;
+  border-bottom-color: #3b82f6 !important;
+  font-weight: 600;
+}
+
+[class*="-reports-page"] .tab-content,
+[class*="-report-page"] .tab-content {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+[class*="-reports-page"] .tab-pane,
+[class*="-report-page"] .tab-pane {
+  padding: 0 !important;
+}
+
+/* ============================================
+   BADGES
+   ============================================ */
+
+[class*="-reports-page"] .badge,
+[class*="-report-page"] .badge {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+[class*="-reports-page"] .badge.bg-info,
+[class*="-report-page"] .badge.bg-info {
+  background-color: #3b82f6 !important;
+  color: #ffffff !important;
+}
+
+[class*="-reports-page"] .badge.bg-success,
+[class*="-report-page"] .badge.bg-success {
+  background-color: #10b981 !important;
+  color: #ffffff !important;
+}
+
+[class*="-reports-page"] .badge.bg-warning,
+[class*="-report-page"] .badge.bg-warning {
+  background-color: #f59e0b !important;
+  color: #ffffff !important;
+}
+
+[class*="-reports-page"] .badge.bg-danger,
+[class*="-report-page"] .badge.bg-danger {
+  background-color: #ef4444 !important;
+  color: #ffffff !important;
+}
+
+/* ============================================
+   BUTTONS - COMPACT
+   ============================================ */
+
+[class*="-reports-page"] .btn,
+[class*="-report-page"] .btn {
+  padding: 8px 16px !important; /* REDUS de la 10px 20px */
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 14px !important;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+[class*="-reports-page"] .btn-success,
+[class*="-report-page"] .btn-success {
+  background-color: #10b981 !important;
+  color: #ffffff !important;
+}
+
+[class*="-reports-page"] .btn-success:hover,
+[class*="-report-page"] .btn-success:hover {
+  background-color: #059669 !important;
+}
+
+[class*="-reports-page"] .btn-primary,
+[class*="-report-page"] .btn-primary {
+  background-color: #3b82f6 !important;
+  color: #ffffff !important;
+}
+
+[class*="-reports-page"] .btn-primary:hover,
+[class*="-report-page"] .btn-primary:hover {
+  background-color: #2563eb !important;
+}
+
+[class*="-reports-page"] .btn-danger,
+[class*="-report-page"] .btn-danger {
+  background-color: #ef4444 !important;
+  color: #ffffff !important;
+}
+
+[class*="-reports-page"] .btn-danger:hover,
+[class*="-report-page"] .btn-danger:hover {
+  background-color: #dc2626 !important;
+}
+
+/* ============================================
+   ALERTS - ZERO MARGIN TOP
+   ============================================ */
+
+[class*="-reports-page"] .alert,
+[class*="-report-page"] .alert {
+  border-radius: 6px;
+  padding: 12px 16px !important;
+  margin: 0 24px 8px 24px !important; /* ZERO margin top */
+  border: 1px solid;
+}
+
+/* Alert imediat după header */
+[class*="-reports-page"] .page-header + .alert,
+[class*="-report-page"] .page-header + .alert,
+[class*="-reports-page"] .page-header-container + .alert,
+[class*="-report-page"] .page-header-container + .alert {
+  margin-top: 8px !important; /* Minim spațiu pentru alertă */
+}
+
+[class*="-reports-page"] .alert-info,
+[class*="-report-page"] .alert-info {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+  border-color: #3b82f6 !important;
+  color: #ffffff !important;
+}
+
+[class*="-reports-page"] .alert-danger,
+[class*="-report-page"] .alert-danger {
+  background-color: rgba(239, 68, 68, 0.1) !important;
+  border-color: #ef4444 !important;
+  color: #ffffff !important;
+}
+
+[class*="-reports-page"] .alert-warning,
+[class*="-report-page"] .alert-warning {
+  background-color: rgba(245, 158, 11, 0.1) !important;
+  border-color: #f59e0b !important;
+  color: #ffffff !important;
+}
+
+/* ============================================
+   SPINNER - LOADING STATE
+   ============================================ */
+
+[class*="-reports-page"] .spinner-border,
+[class*="-report-page"] .spinner-border {
+  color: #3b82f6 !important;
+  width: 3rem;
+  height: 3rem;
+}
+
+[class*="-reports-page"] .text-center.py-5,
+[class*="-report-page"] .text-center.py-5 {
+  background-color: #1e2742 !important;
+  padding: 40px 0 !important; /* REDUS de la 60px */
+}
+
+/* ============================================
+   SUMMARY CARDS (în tab-uri) - COMPACT
+   ============================================ */
+
+[class*="-reports-page"] .row.mb-4,
+[class*="-report-page"] .row.mb-4 {
+  padding: 0 24px !important;
+  margin-bottom: 16px !important; /* REDUS de la 24px */
+}
+
+[class*="-reports-page"] .row.mb-4 .card,
+[class*="-report-page"] .row.mb-4 .card {
+  background-color: #2d3654 !important;
+  border: 1px solid #3a4563 !important;
+  margin: 0 !important;
+}
+
+[class*="-reports-page"] .row.mb-4 .card-body,
+[class*="-report-page"] .row.mb-4 .card-body {
+  background-color: #2d3654 !important;
+  padding: 16px !important; /* REDUS de la 20px */
+}
+
+[class*="-reports-page"] .row.mb-4 .card h6,
+[class*="-report-page"] .row.mb-4 .card h6 {
+  color: #e0e0e0 !important;
+  font-size: 13px !important; /* REDUS de la 14px */
+  margin-bottom: 10px !important; /* REDUS de la 12px */
+}
+
+[class*="-reports-page"] .row.mb-4 .card h4,
+[class*="-report-page"] .row.mb-4 .card h4 {
+  color: #ffffff !important;
+  font-size: 22px !important; /* REDUS de la 24px */
+  font-weight: 600;
+  margin: 0 !important;
+}
+
+[class*="-reports-page"] .row.mb-4 .card .text-muted,
+[class*="-report-page"] .row.mb-4 .card .text-muted {
+  color: #e0e0e0 !important;
+}
+
+/* ============================================
+   CHARTS - BACKGROUND DARK
+   ============================================ */
+
+[class*="-reports-page"] .mb-4[style*="height"],
+[class*="-report-page"] .mb-4[style*="height"] {
+  background-color: #1e2742 !important;
+  padding: 20px !important; /* REDUS de la 24px */
+  border-radius: 6px;
+  margin: 16px 24px !important; /* REDUS de la 24px */
+}
+
+/* ============================================
+   SCROLLBAR - CUSTOM DARK
+   ============================================ */
+
+[class*="-reports-page"] .table-responsive::-webkit-scrollbar,
+[class*="-report-page"] .table-responsive::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+  background-color: #1e2742;
+}
+
+[class*="-reports-page"] .table-responsive::-webkit-scrollbar-thumb,
+[class*="-report-page"] .table-responsive::-webkit-scrollbar-thumb {
+  background-color: #3a4563;
+  border-radius: 6px;
+  border: 2px solid #1e2742;
+}
+
+[class*="-reports-page"] .table-responsive::-webkit-scrollbar-thumb:hover,
+[class*="-report-page"] .table-responsive::-webkit-scrollbar-thumb:hover {
+  background-color: #4a5573;
+}
+
+/* ============================================
+   CHART.JS - DARK THEME TOOLTIPS
+   ============================================ */
+
+.chartjs-tooltip {
+  background-color: #1e2742 !important;
+  color: #ffffff !important;
+  border: 1px solid #3a4563 !important;
+}
+
+.chartjs-tooltip-header {
+  background-color: #2d3654 !important;
+  border-bottom: 1px solid #3a4563 !important;
+  color: #ffffff !important;
+}
+
+.chartjs-tooltip-body {
+  color: #ffffff !important;
+}
+
+[class*="-reports-page"] .chart-container,
+[class*="-report-page"] .chart-container {
+  background-color: #1e2742 !important;
+  border-radius: 8px;
+  padding: 20px !important;
+  margin-bottom: 20px !important;
+}
+
+[class*="-reports-page"] .chart-container canvas,
+[class*="-report-page"] .chart-container canvas {
+  background-color: #1e2742 !important;
+}
+
+/* ============================================
+   RESPONSIVE - MOBILE/TABLET
+   ============================================ */
+
+@media (max-width: 768px) {
+  [class*="-reports-page"] .page-header,
+  [class*="-report-page"] .page-header,
+  [class*="-reports-page"] .page-header-container,
+  [class*="-report-page"] .page-header-container {
+    padding: 10px 16px !important;
+  }
+  
+  [class*="-reports-page"] .page-header h1,
+  [class*="-report-page"] .page-header h1,
+  [class*="-reports-page"] .page-header-container h1,
+  [class*="-report-page"] .page-header-container h1 {
+    font-size: 20px !important;
+  }
+  
+  [class*="-reports-page"] .card-header h5,
+  [class*="-report-page"] .card-header h5 {
+    font-size: 16px !important;
+  }
+  
+  [class*="-reports-page"] .table thead th,
+  [class*="-report-page"] .table thead th {
+    padding: 10px 6px !important;
+    font-size: 12px !important;
+  }
+  
+  [class*="-reports-page"] .table tbody td,
+  [class*="-report-page"] .table tbody td {
+    padding: 10px 6px !important;
+  }
+  
+  [class*="-reports-page"] .nav-tabs,
+  [class*="-report-page"] .nav-tabs {
+    padding: 0 8px !important;
+  }
+  
+  [class*="-reports-page"] .nav-tabs .nav-link,
+  [class*="-report-page"] .nav-tabs .nav-link {
+    padding: 8px 12px !important;
+    font-size: 13px !important;
+  }
+}
+
+

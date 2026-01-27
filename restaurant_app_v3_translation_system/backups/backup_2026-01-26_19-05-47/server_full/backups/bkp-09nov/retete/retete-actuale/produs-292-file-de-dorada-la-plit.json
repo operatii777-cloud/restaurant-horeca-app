@@ -1,0 +1,25 @@
+{
+  "productId": 292,
+  "productName": "File de Dorada la Plită",
+  "productCategory": "Peste și Fructe de Mare",
+  "price": 68,
+  "description": "File de dorada, piure cu ceapă, legume la grătar, lămâie",
+  "ingredients": [
+    {
+      "ingredientId": 94,
+      "ingredientName": "Ceapă",
+      "ingredientCategory": "Fructe și Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 154,
+      "ingredientName": "Lămâie",
+      "ingredientCategory": "Legume și Fructe",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

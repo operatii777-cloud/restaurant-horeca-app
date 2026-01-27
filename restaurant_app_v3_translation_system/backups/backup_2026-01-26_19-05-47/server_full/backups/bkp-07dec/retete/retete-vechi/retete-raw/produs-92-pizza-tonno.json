@@ -1,0 +1,44 @@
+{
+  "productId": 92,
+  "productName": "Pizza Tonno",
+  "productCategory": "Pizza",
+  "ingredients": [
+    {
+      "ingredientId": 604,
+      "ingredientName": "Blat de pizza (standard)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 250,
+      "unit": "buc",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 815,
+      "ingredientName": "Ceapă tocată",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 15,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 3,
+      "ingredientName": "mozzarella",
+      "ingredientCategory": "General",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 623,
+      "ingredientName": "Ton în conservă",
+      "ingredientCategory": "General",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

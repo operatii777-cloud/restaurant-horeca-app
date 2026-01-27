@@ -1,0 +1,749 @@
+/**
+ * NORDIC LUXURY THEME - PDF MENIURI
+ * 
+ * Design luxos inspirat din tema Christmas/Nordic Luxury din comanda.html
+ * Gradient: Roșu (Crimson) → Verde (Forest Green) → Auriu (Gold)
+ */
+
+/* ==================== NORDIC LUXURY THEME ==================== */
+
+:root {
+  /* Gradient de fundal principal */
+  --pdf-gradient-start: #DC143C;    /* Crimson roșu */
+  --pdf-gradient-middle: #228B22;   /* Forest Green */
+  --pdf-gradient-end: #FFD700;      /* Gold auriu */
+  
+  /* Culori accent */
+  --pdf-accent-primary: #DC143C;    /* Roșu */
+  --pdf-accent-secondary: #228B22;  /* Verde */
+  --pdf-accent-tertiary: #FFD700;   /* Auriu */
+  
+  /* Text colors */
+  --pdf-text-dark: #1A472A;         /* Verde închis */
+  --pdf-text-light: #FFFFFF;
+  --pdf-text-muted: #5A7A5E;
+  
+  /* Backgrounds */
+  --pdf-bg-card: rgba(255, 255, 255, 0.95);
+  --pdf-bg-header: rgba(255, 255, 255, 0.98);
+}
+
+/* ==================== GLOBAL ==================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  /* Gradient Nordic Luxury ca fundal */
+  background: linear-gradient(135deg, 
+    var(--pdf-gradient-start) 0%, 
+    var(--pdf-gradient-middle) 50%, 
+    var(--pdf-gradient-end) 100%
+  );
+  
+  color: var(--pdf-text-dark);
+  font-family: 'Lora', 'Georgia', serif;
+  font-size: 11pt; /* ULTRA-COMPACT: 12pt → 11pt */
+  line-height: 1.5; /* ULTRA-COMPACT: 1.6 → 1.5 */
+  
+  /* Print-friendly */
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  
+  /* ELIMINAT orice min-height fix - lasă conținutul să dicteze */
+}
+
+.menu-container {
+  padding: 8px; /* PAGINI SCURTE: 15px → 8px */
+  max-width: 800px;
+  margin: 0 auto;
+  /* FĂRĂ min-height - paginile se limitează la produsele afișate */
+}
+
+/* ==================== HEADER ==================== */
+
+.menu-header {
+  background: var(--pdf-bg-header);
+  border-radius: 10px;
+  padding: 20px; /* PAGINI SCURTE: 30px → 20px */
+  margin-bottom: 15px; /* PAGINI SCURTE: 30px → 15px */
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.18);
+  text-align: center;
+  border: 2px solid var(--pdf-accent-tertiary);
+  page-break-after: avoid;
+  position: relative;  /* Permite poziționarea branding-ului relativ la header */
+}
+
+/* ==================== BRANDING QrOMS ==================== */
+
+.qroms-branding-first-page {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 10000;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 4px 8px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Asigură că apare DOAR pe prima pagină (header) */
+  page-break-inside: avoid !important;
+  page-break-after: avoid !important;
+}
+
+/* Branding badge injectat prin JavaScript - DOAR pe prima pagină */
+.qroms-branding-badge {
+  /* DOAR în header-ul primei pagini */
+  position: absolute !important;
+  /* NU fixed - ca să nu apară pe toate paginile */
+}
+
+/* ASCUNDE BRANDING-UL PE TOATE PAGINILE ÎNAINTE DE PRINT - DOAR HEADER */
+/* Branding-ul trebuie să fie DOAR în .menu-header (prima pagină) */
+.category-section .qroms-branding-badge,
+.category-section .qroms-branding-first-page,
+.last-page-info .qroms-branding-badge,
+body > .qroms-branding-badge:not(.menu-header .qroms-branding-badge) {
+  display: none !important;
+}
+
+@media print {
+  /* Branding-ul apare DOAR în header (prima pagină) */
+  body > .qroms-branding-badge:not(.menu-header .qroms-branding-badge),
+  .category-section .qroms-branding-badge,
+  .category-section .qroms-branding-first-page,
+  .last-page-info .qroms-branding-badge,
+  .products-list .qroms-branding-badge {
+    display: none !important;
+    visibility: hidden !important;
+  }
+  
+  /* Doar în menu-header (prima pagină) */
+  .menu-header .qroms-branding-badge,
+  .menu-header .qroms-branding-first-page {
+    display: flex !important;
+    visibility: visible !important;
+  }
+}
+
+.qroms-logo {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: block;
+}
+
+.qroms-text {
+  font-size: 7.5pt;
+  font-weight: 600;
+  color: #0a2540 !important;  /* Albastru închis pentru contrast - forțat */
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/* Asigură branding-ul apare doar în header (prima pagină) */
+.menu-header .qroms-branding-first-page {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.restaurant-logo {
+  font-size: 48pt;
+  margin-bottom: 15px;
+  line-height: 1;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.restaurant-name {
+  font-family: 'Cinzel', 'Georgia', serif;
+  font-size: 32pt;
+  font-weight: 700;
+  color: var(--pdf-accent-primary);
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.menu-title {
+  font-family: 'Cinzel', serif;
+  font-size: 24pt;
+  font-weight: 600;
+  color: var(--pdf-accent-secondary);
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.menu-subtitle {
+  font-size: 12pt;
+  color: var(--pdf-text-muted);
+  font-style: italic;
+}
+
+.generated-date {
+  font-size: 10pt;
+  color: var(--pdf-text-muted);
+  margin-top: 15px;
+}
+
+/* ==================== FISCAL RECEIPT INFO PAGE ==================== */
+
+.fiscal-info-page {
+  background: var(--pdf-bg-card) !important; /* FUNDAL OPAC COMPLET */
+  border-radius: 12px;
+  padding: 18px 25px; /* ULTRA-COMPACT: 20px 30px → 18px 25px */
+  margin: 12px 0; /* ULTRA-COMPACT: 15px → 12px */
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.13);
+  page-break-after: always !important;
+  page-break-inside: avoid !important;
+  page-break-before: auto !important;
+  border: 2px solid var(--pdf-accent-tertiary);
+  position: relative;
+  z-index: 1;
+  /* Asigură că nu se suprapune cu categorii */
+  overflow: hidden;
+  /* ELIMINAT min-height/max-height - lasă conținutul să dicteze */
+  /* ASIGURĂ FUNDAL OPAC - ACOPERĂ COMPLET TEXTUL DE PE FUNDAL */
+  background-color: rgba(255, 255, 255, 0.98) !important;
+}
+
+.fiscal-header {
+  text-align: center;
+  margin-bottom: 20px; /* Redus din 35px */
+  padding-bottom: 12px; /* Redus din 20px */
+  border-bottom: 3px solid var(--pdf-accent-tertiary);
+}
+
+.fiscal-title {
+  font-family: 'Cinzel', serif;
+  font-size: 20pt; /* Redus din 22pt */
+  font-weight: 700;
+  color: var(--pdf-accent-primary);
+  margin-bottom: 8px; /* Redus din 10px */
+}
+
+.fiscal-subtitle {
+  font-size: 11pt; /* Redus din 12pt */
+  color: var(--pdf-text-muted);
+  font-style: italic;
+}
+
+.fiscal-content {
+  margin: 20px 0; /* Redus din 30px */
+}
+
+.fiscal-point {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px; /* Redus din 20px */
+  margin-bottom: 18px; /* Redus din 25px */
+  padding: 12px; /* Redus din 15px */
+  background: rgba(34, 139, 34, 0.05);
+  border-radius: 10px;
+  border-left: 4px solid var(--pdf-accent-secondary);
+}
+
+.point-number {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--pdf-accent-secondary), var(--pdf-accent-primary));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18pt;
+  font-weight: 700;
+  box-shadow: 0 3px 10px rgba(34, 139, 34, 0.3);
+}
+
+.point-text {
+  flex: 1;
+  font-size: 10pt; /* Redus din 11pt */
+  line-height: 1.5; /* Redus din 1.6 */
+  color: var(--pdf-text-dark);
+}
+
+.point-text strong {
+  color: var(--pdf-accent-primary);
+}
+
+.highlight-phone {
+  color: var(--pdf-accent-secondary);
+  font-size: 13pt; /* Redus din 14pt */
+  background: rgba(255, 215, 0, 0.2);
+  padding: 2px 6px; /* Redus din 2px 8px */
+  border-radius: 4px;
+}
+
+.fiscal-footer {
+  margin-top: 20px; /* Redus din 30px */
+  padding-top: 12px; /* Redus din 20px */
+  border-top: 2px solid var(--pdf-accent-tertiary);
+  text-align: center;
+}
+
+.fiscal-legal {
+  font-size: 9pt;
+  color: var(--pdf-text-muted);
+  line-height: 1.4; /* Redus din 1.5 */
+  font-style: italic;
+}
+
+.fiscal-legal strong {
+  color: var(--pdf-accent-primary);
+  font-style: normal;
+}
+
+.divider-small {
+  height: 1px; /* Redus din 2px */
+  background: linear-gradient(90deg, 
+    transparent 0%,
+    var(--pdf-accent-tertiary) 50%,
+    transparent 100%
+  );
+  margin: 12px 0; /* Redus din 20px */
+}
+
+.legal-allergens {
+  font-size: 9pt; /* Redus din 10pt */
+  color: var(--pdf-text-muted);
+  line-height: 1.5; /* Redus din 1.6 */
+  text-align: center;
+  padding: 8px 15px; /* Redus din 10px 20px */
+}
+
+.legal-allergens strong {
+  color: var(--pdf-accent-primary);
+}
+
+.contact-info-page2 {
+  font-size: 10pt; /* Redus din 11pt */
+  color: var(--pdf-text-dark);
+  text-align: center;
+  margin-top: 10px; /* Redus din 15px */
+  line-height: 1.4; /* Adăugat pentru compactare */
+}
+
+.contact-info-page2 a {
+  color: var(--pdf-accent-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* ==================== LAST PAGE INFO ==================== */
+
+.last-page-info {
+  background: var(--pdf-bg-card);
+  border-radius: 12px;
+  padding: 30px 25px;
+  margin: 20px 0;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.13);
+  page-break-before: always !important;
+  page-break-inside: avoid !important;
+  border: 2px solid var(--pdf-accent-tertiary);
+  text-align: center;
+}
+
+.last-page-info h3 {
+  font-size: 16pt;
+  color: var(--pdf-accent-primary);
+  margin-bottom: 20px;
+  font-family: 'Cinzel', serif;
+}
+
+/* ==================== CATEGORY SECTION ==================== */
+
+.category-section {
+  background: var(--pdf-bg-card);
+  border-radius: 6px;
+  padding: 6px 10px; /* PAGINI SCURTE: 8px 12px → 6px 10px */
+  margin-bottom: 4px; /* PAGINI SCURTE: 6px → 4px */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  page-break-inside: avoid;
+  page-break-after: auto;
+  orphans: 3;
+  widows: 3;
+  
+  /* ⚠️ REGULĂ CRITICĂ: Fiecare categorie începe pe pagină NOUĂ */
+  /* Produsele din categorii diferite NU pot fi pe aceeași pagină! */
+  page-break-before: always;
+}
+
+/* EXCEPȚIE: Prima categorie (după pagina fiscală) NU trebuie să forțeze break */
+.category-section:first-of-type {
+  page-break-before: auto;
+}
+
+/* Forțează pagină nouă după această categorie (configurabil din PDF Builder) */
+.category-section.force-page-break {
+  page-break-after: always !important;
+}
+
+/* Category Header WITH Image - ULTRA-COMPACT */
+.category-image-container {
+  position: relative;
+  width: 100%;
+  height: 100px; /* ULTRA-COMPACT: 120px → 100px */
+  margin-bottom: 8px; /* ULTRA-COMPACT: 12px → 8px */
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  /* Asigură că nu apare text de pe fundal */
+  z-index: 10;
+  background: var(--pdf-bg-card);
+}
+
+/* Asigură că overlay-ul categoriei acoperă complet fundalul */
+.category-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Fundal OPAC pentru a acoperi COMPLET textul de pe fundal */
+  background: linear-gradient(
+    to bottom,
+    rgba(26, 71, 42, 0.7) 0%,
+    rgba(26, 71, 42, 0.95) 100%
+  ) !important;
+  z-index: 5;
+}
+
+.category-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+
+.category-title-overlay {
+  position: absolute;
+  bottom: 15px;
+  left: 20px;
+  right: 20px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  /* Asigură că textul apare deasupra overlay-ului */
+}
+
+.category-title-overlay .category-icon {
+  font-size: 36pt;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.category-title-overlay .category-name {
+  font-family: 'Cinzel', serif;
+  font-size: 24pt;
+  font-weight: 700;
+  color: #FFFFFF !important;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 1), -1px -1px 2px rgba(0, 0, 0, 0.8);
+  margin: 0;
+  /* Asigură că textul apare clar peste fundal */
+  position: relative;
+  z-index: 25;
+  background: transparent;
+}
+
+/* Category Header WITHOUT Image (fallback) - ULTRA-COMPACT */
+.category-header {
+  background: linear-gradient(90deg, 
+    var(--pdf-accent-secondary) 0%, 
+    var(--pdf-accent-primary) 100%
+  );
+  color: var(--pdf-text-light);
+  padding: 6px 12px; /* ULTRA-COMPACT: 8px 15px → 6px 12px */
+  border-radius: 6px;
+  margin-bottom: 6px; /* ULTRA-COMPACT: 10px → 6px */
+  display: flex;
+  align-items: center;
+  gap: 6px; /* ULTRA-COMPACT: 8px → 6px */
+  position: relative;
+  z-index: 10;
+  /* Asigură fundal opac pentru a acoperi textul de pe fundal */
+  background: linear-gradient(90deg, 
+    var(--pdf-accent-secondary) 0%, 
+    var(--pdf-accent-primary) 100%
+  ) !important;
+}
+
+.category-icon {
+  font-size: 24pt; /* BALANS: 24pt (vizibil, nu prea mare) */
+  line-height: 1;
+}
+
+.category-name {
+  font-family: 'Cinzel', serif;
+  font-size: 18pt; /* BALANS: 18pt (evident dar nu prea mare) */
+  font-weight: 700;
+  margin: 0;
+}
+
+/* ==================== PRODUCTS LIST ==================== */
+
+.products-list {
+  padding: 0;
+  /* ELIMINAT: centrare verticală - lasă produsele să se aranjeze natural */
+  /* Fără min-height pentru a evita overflow */
+}
+
+.product-item {
+  margin-bottom: 3px; /* PAGINI SCURTE: 4px → 3px */
+  padding: 4px 6px; /* PAGINI SCURTE: 5px 7px → 4px 6px */
+  border-bottom: 1px solid rgba(90, 122, 94, 0.1);
+  page-break-inside: avoid !important;
+  page-break-before: auto;
+  page-break-after: auto;
+  width: 100%;
+  /* ZERO min-height - paginile se limitează STRICT la produsele afișate */
+  /* ELIMINAT orphans/widows: Cauza produselor singure pe pagină */
+  display: block;
+}
+
+/* REGULĂ: ÎMPĂRȚIRE ECHILIBRATĂ - DINAMIC BAZAT PE SPLIT INFO */
+/* Produsele cu clasa .break-after vor forța page break */
+.product-item.break-after {
+  page-break-after: always !important;
+}
+
+.product-item:last-child {
+  border-bottom: none;
+}
+
+.product-image-container {
+  float: right;
+  margin: 0 0 10px 15px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.product-image-thumb {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  display: block;
+}
+
+.product-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2px; /* ULTRA-COMPACT: 3px → 2px */
+  gap: 8px; /* ULTRA-COMPACT: 10px → 8px */
+}
+
+.product-name {
+  font-family: 'Merriweather', serif;
+  font-size: 11.5pt; /* ULTRA-COMPACT: 13pt → 11.5pt */
+  font-weight: 700;
+  color: var(--pdf-text-dark);
+  flex: 1;
+  line-height: 1.25; /* ULTRA-COMPACT: 1.35 → 1.25 */
+}
+
+.product-price {
+  font-size: 11.5pt; /* ULTRA-COMPACT: 13pt → 11.5pt (consistent cu numele) */
+  font-weight: 700;
+  color: var(--pdf-accent-primary);
+  white-space: nowrap;
+}
+
+.product-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* REDUS: 15px → 10px */
+  margin-bottom: 3px; /* REDUS: 5px → 3px */
+  flex-wrap: wrap;
+}
+
+.product-portion {
+  font-size: 10pt; /* BALANS: 10pt (lizibil) */
+  font-weight: 600;
+  color: var(--pdf-accent-secondary);
+  padding: 2px 7px; /* BALANS: Decent padding */
+  background: rgba(34, 139, 34, 0.1);
+  border-radius: 4px;
+}
+
+.product-allergens {
+  font-size: 8pt; /* REDUS: 10pt → 8pt */
+  color: var(--pdf-text-muted);
+  font-style: italic;
+  line-height: 1.2; /* Adăugat pentru compactare */
+}
+
+.product-additives {
+  font-size: 8pt;
+  color: var(--pdf-text-muted);
+  font-style: italic;
+  line-height: 1.2;
+}
+
+.allergen-icon {
+  font-size: 11pt;
+}
+
+.no-allergens {
+  color: var(--pdf-accent-tertiary);
+}
+
+.product-description {
+  font-size: 10pt; /* BALANS: 10pt (lizibil) */
+  color: var(--pdf-text-muted);
+  line-height: 1.4; /* BALANS: Lizibilitate bună */
+  margin-top: 4px; /* BALANS: Decent spacing */
+}
+
+/* ==================== FOOTER ==================== */
+
+.menu-footer {
+  background: var(--pdf-bg-header);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 30px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  border-top: 3px solid var(--pdf-accent-tertiary);
+}
+
+.legal-notice {
+  font-size: 9pt;
+  color: var(--pdf-text-muted);
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.contact-info {
+  font-size: 10pt;
+  color: var(--pdf-text-dark);
+  margin-top: 10px;
+}
+
+.contact-info a {
+  color: var(--pdf-accent-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* ==================== BILINGUAL SUPPORT ==================== */
+
+.bilingual-item {
+  margin-bottom: 20px;
+}
+
+.lang-ro {
+  margin-bottom: 5px;
+}
+
+.lang-en {
+  color: var(--pdf-text-muted);
+  font-size: 11pt;
+}
+
+/* ==================== PAGE BREAKS ==================== */
+
+@media print {
+  /* ================================================================ */
+  /* PAGINI FIXE: Header și Fiscal Info                               */
+  /* ================================================================ */
+  .menu-header {
+    page-break-after: always !important;
+  }
+  
+  .fiscal-info-page {
+    page-break-after: always !important;
+    page-break-before: auto !important;
+  }
+  
+  .last-page-info {
+    page-break-before: always !important;
+    page-break-inside: avoid !important;
+  }
+  
+  /* ================================================================ */
+  /* REGULĂ PRINCIPALĂ: .break-after CONTROLEAZĂ page breaks         */
+  /* Prioritate MAXIMĂ - suprascrie ORICE altă regulă!               */
+  /* ================================================================ */
+  .product-item.break-after {
+    page-break-after: always !important;
+    page-break-inside: auto !important;
+  }
+  
+  /* Produsul DUPĂ break trebuie să accepte page-break-before */
+  .product-item.break-after + .product-item {
+    page-break-before: auto !important; /* Permite break-ul să funcționeze */
+  }
+  
+  /* ================================================================ */
+  /* ANTI-ORPHAN: Header + primul produs împreună                     */
+  /* DAR NU pentru produsele după .break-after!                       */
+  /* ================================================================ */
+  .category-header,
+  .category-image-container {
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+  }
+  
+  /* DOAR primul produs DIN CATEGORIE rămâne cu header-ul */
+  /* NU primul produs după un break! */
+  .category-section > .products-list > .product-item:first-child {
+    page-break-before: avoid !important;
+  }
+  
+  /* ================================================================ */
+  /* CATEGORII SINGLE-PAGE (≤7 produse) rămân complet împreună       */
+  /* ================================================================ */
+  .category-section.split-1 {
+    page-break-inside: avoid !important;
+  }
+  
+  /* ================================================================ */
+  /* PRODUSE: Nu se rup în interior, dar FĂRĂ page breaks forțate    */
+  /* ================================================================ */
+  .product-item {
+    page-break-inside: avoid !important;
+    page-break-before: auto;
+    page-break-after: auto;
+    /* ELIMINAT orphans/widows: Cauza produselor singure pe pagină */
+  }
+  
+  /* ================================================================ */
+  /* FORCE PAGE BREAK pentru categorii marcate manual                 */
+  /* ================================================================ */
+  .category-section.force-page-break {
+    page-break-after: always !important;
+  }
+}
+
+/* ==================== DECORATIVE ELEMENTS ==================== */
+
+.divider {
+  height: 3px;
+  background: linear-gradient(90deg, 
+    transparent 0%,
+    var(--pdf-accent-tertiary) 50%,
+    transparent 100%
+  );
+  margin: 25px 0;
+}
+
+.accent-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--pdf-accent-tertiary);
+  margin: 0 8px;
+}
+

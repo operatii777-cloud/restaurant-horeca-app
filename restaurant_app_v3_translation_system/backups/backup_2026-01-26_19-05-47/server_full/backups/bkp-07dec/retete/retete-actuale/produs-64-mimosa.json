@@ -1,0 +1,33 @@
+{
+  "productId": 64,
+  "productName": "Mimosa",
+  "productCategory": "Băuturi și Coctailuri",
+  "price": 31,
+  "description": "Coctail clasic - Prosecco, fresh de portocale, triplu sec",
+  "ingredients": [
+    {
+      "ingredientId": 198,
+      "ingredientName": "Prosecco",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 100,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 46,
+      "ingredientName": "Suc de portocale",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 100,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 73,
+      "ingredientName": "Triple Sec",
+      "ingredientCategory": "Băuturi Alcoolice",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}

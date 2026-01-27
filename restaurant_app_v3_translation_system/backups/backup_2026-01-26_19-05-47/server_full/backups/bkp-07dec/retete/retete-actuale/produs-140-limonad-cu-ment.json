@@ -1,0 +1,49 @@
+{
+  "productId": 140,
+  "productName": "Limonadă cu Mentă",
+  "productCategory": "Răcoritoare",
+  "price": 25,
+  "description": "Limonadă cu mentă proaspătă",
+  "ingredients": [
+    {
+      "ingredientId": 200,
+      "ingredientName": "Mentă",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 154,
+      "ingredientName": "Lămâie",
+      "ingredientCategory": "Legume și Fructe",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 33,
+      "ingredientName": "Zahăr",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 50,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 27,
+      "ingredientName": "Apă minerală",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 250,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "Gheață",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

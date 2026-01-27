@@ -1,0 +1,175 @@
+.feedback-page {
+  padding: 1.5rem;
+}
+
+.feedback-page .metric-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  border: none;
+  border-radius: 12px;
+}
+
+.feedback-page .metric-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.feedback-page .metric-card h4 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.feedback-page .metric-card small {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.feedback-page .table-responsive {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.feedback-page .feedback-row {
+  transition: background-color 0.2s;
+}
+
+.feedback-page .feedback-row:hover {
+  background-color: rgba(0, 123, 255, 0.05);
+}
+
+.feedback-page .card {
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.feedback-page .card-header {
+  border-radius: 12px 12px 0 0;
+  font-weight: 600;
+}
+
+.feedback-page .btn-group .btn {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.feedback-page .btn-group .btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.feedback-page .btn-group .btn.btn-light {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Stiluri pentru dropdown perioadă în header dark */
+.feedback-page .card-header.bg-dark .form-select-sm,
+.feedback-page .card-header.bg-dark .feedback-period-select {
+  background-color: #343a40 !important;
+  color: white !important;
+  border-color: #6c757d !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 0.5rem center !important;
+  background-size: 1rem 1rem !important;
+  padding-right: 2rem !important;
+  text-overflow: ellipsis !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+}
+
+.feedback-page .card-header.bg-dark .form-select-sm:focus,
+.feedback-page .card-header.bg-dark .feedback-period-select:focus {
+  background-color: #343a40 !important;
+  color: white !important;
+  border-color: #6c757d !important;
+  box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25);
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e") !important;
+}
+
+.feedback-page .card-header.bg-dark .form-select-sm option,
+.feedback-page .card-header.bg-dark .feedback-period-select option {
+  background-color: #343a40 !important;
+  color: white !important;
+}
+
+/* Stiluri pentru butoane rating în header dark */
+.feedback-page .card-header.bg-dark .btn-group .btn {
+  color: white !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.feedback-page .card-header.bg-dark .btn-group .btn.btn-outline-light {
+  color: white !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  background-color: transparent !important;
+}
+
+.feedback-page .card-header.bg-dark .btn-group .btn.btn-outline-light:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  color: white !important;
+}
+
+.feedback-page .card-header.bg-dark .btn-group .btn.btn-light {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  color: white !important;
+}
+
+.feedback-page .card-header.bg-dark .btn-group .btn.btn-light:hover {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+  color: white !important;
+}
+
+/* Elimină hașuratul peste text - selectorii foarte specifici */
+.feedback-page .card-header.bg-dark .form-select-sm,
+.feedback-page .card-header.bg-dark .feedback-period-select,
+.feedback-page .card-header.bg-dark .form-select-sm *,
+.feedback-page .card-header.bg-dark .feedback-period-select * {
+  text-decoration: none !important;
+  text-decoration-line: none !important;
+  text-decoration-style: none !important;
+  text-decoration-color: transparent !important;
+}
+
+.feedback-page .card-header.bg-dark .btn-group .btn,
+.feedback-page .card-header.bg-dark .btn-group .btn * {
+  text-decoration: none !important;
+  text-decoration-line: none !important;
+  text-decoration-style: none !important;
+  text-decoration-color: transparent !important;
+}
+
+/* Colorează simbolurile din carduri - selectorii foarte specifici */
+.feedback-page .metric-card.bg-warning .card-body .fas.fa-comment-dots,
+.feedback-page .metric-card.bg-warning i.fas.fa-comment-dots {
+  color: #ffc107 !important;
+  -webkit-text-fill-color: #ffc107 !important;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.feedback-page .metric-card.bg-success .card-body .fas.fa-star,
+.feedback-page .metric-card.bg-success i.fas.fa-star {
+  color: #ffd700 !important;
+  -webkit-text-fill-color: #ffd700 !important;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.feedback-page .metric-card.bg-danger .card-body .fas.fa-exclamation-triangle,
+.feedback-page .metric-card.bg-danger i.fas.fa-exclamation-triangle {
+  color: #ff6b6b !important;
+  -webkit-text-fill-color: #ff6b6b !important;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.feedback-page .metric-card.bg-info .card-body .fas.fa-heart,
+.feedback-page .metric-card.bg-info i.fas.fa-heart {
+  color: #ff69b4 !important;
+  -webkit-text-fill-color: #ff69b4 !important;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}

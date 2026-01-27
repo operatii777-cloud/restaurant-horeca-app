@@ -1,0 +1,19 @@
+.documentation-page {
+  padding: 20px;
+  height: 100%;
+}
+
+.documentation-container {
+  margin-top: 20px;
+  background: white;
+  border-radius: 8px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.documentation-iframe {
+  display: block;
+  width: 100%;
+  min-height: 600px;
+}
+

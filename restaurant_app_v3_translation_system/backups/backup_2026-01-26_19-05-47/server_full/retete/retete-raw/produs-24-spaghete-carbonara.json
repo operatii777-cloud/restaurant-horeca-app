@@ -1,0 +1,55 @@
+﻿Ã¯Â»Â¿{
+  "productId": 24,
+  "productName": "Spaghete Carbonara",
+  "productCategory": "Paste Fresca",
+  "ingredients": [
+    {
+      "ingredientId": 573,
+      "ingredientName": "Spaghete (paste proaspete)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 340,
+      "ingredientName": "Ou (gÃ„ÂƒÃ†Â’lbenuÃƒÂˆÃ¢Â„Â¢)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 2,
+      "unit": "buc",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 343,
+      "ingredientName": "Pecorino Romano (ras)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 342,
+      "ingredientName": "Guanciale/Pancetta",
+      "ingredientCategory": "General",
+      "quantityNeeded": 60,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 117,
+      "ingredientName": "Piper negru",
+      "ingredientCategory": "Condimente ÃƒÂˆÃ¢Â„Â¢i Sosuri",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

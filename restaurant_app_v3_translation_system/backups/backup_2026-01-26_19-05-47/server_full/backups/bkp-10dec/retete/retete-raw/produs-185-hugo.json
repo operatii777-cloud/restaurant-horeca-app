@@ -1,0 +1,62 @@
+{
+  "productId": 185,
+  "productName": "Hugo",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 273,
+      "ingredientName": "Apă Minerală/Sifon",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 270,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 269,
+      "ingredientName": "Prosecco",
+      "ingredientCategory": "General",
+      "quantityNeeded": 100,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 282,
+      "ingredientName": "Felie de Lime",
+      "ingredientCategory": "General",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 454,
+      "ingredientName": "Sirop de Soc",
+      "ingredientCategory": "General",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 415,
+      "ingredientName": "Frunze de mentă",
+      "ingredientCategory": "General",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

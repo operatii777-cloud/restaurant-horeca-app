@@ -1,0 +1,37 @@
+﻿Ã¯Â»Â¿{
+  "productId": 113,
+  "productName": "SalatÃ„ÂƒÃ†Â’ AsortatÃ„ÂƒÃ†Â’ de VarÃ„ÂƒÃ†Â’",
+  "productCategory": "Salate ÃƒÂƒÃ…Â½nsoÃƒÂˆÃ¢Â€Âºitoare",
+  "ingredients": [
+    {
+      "ingredientId": 815,
+      "ingredientName": "CeapÃ„ÂƒÃ†Â’ tocatÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 15,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 655,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 821,
+      "ingredientName": "Ulei vegetal",
+      "ingredientCategory": "Uleiuri ÃƒÂˆÃ¢Â„Â¢i GrÃ„ÂƒÃ†Â’simi",
+      "quantityNeeded": 10,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

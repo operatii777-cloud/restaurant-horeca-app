@@ -1,0 +1,35 @@
+{
+  "productId": 116,
+  "productName": "Salată de Roșii",
+  "productCategory": "Salate Însoțitoare",
+  "ingredients": [
+    {
+      "ingredientId": 798,
+      "ingredientName": "Roșii Shaorma",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 821,
+      "ingredientName": "Ulei vegetal",
+      "ingredientCategory": "Uleiuri și Grăsimi",
+      "quantityNeeded": 10,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 815,
+      "ingredientName": "Ceapă tocată",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

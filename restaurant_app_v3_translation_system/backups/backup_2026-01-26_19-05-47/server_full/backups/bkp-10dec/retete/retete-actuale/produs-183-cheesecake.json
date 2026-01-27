@@ -1,0 +1,49 @@
+{
+  "productId": 183,
+  "productName": "Cheesecake",
+  "productCategory": "Deserturi",
+  "price": 31,
+  "description": "Cheesecake clasic",
+  "ingredients": [
+    {
+      "ingredientId": 123,
+      "ingredientName": "Brânză Philadelphia",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 124,
+      "ingredientName": "Biscuiți",
+      "ingredientCategory": "Panificație",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 33,
+      "ingredientName": "Zahăr",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 80,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 8,
+      "ingredientName": "Ouă",
+      "ingredientCategory": "Ouă și lactate",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 60,
+      "ingredientName": "Unt",
+      "ingredientCategory": "Lactate și Brânzeturi",
+      "quantityNeeded": 50,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}

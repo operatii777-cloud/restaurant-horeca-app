@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Management System v4.0</title>
+    <!-- Translation System -->
+    <script src="/translation/translation.js"></script>
+    <script src="/js/saga-export.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+            --light-bg: #f8f9fa;
+            --dark-bg: #2c3e50;
+            --white: #ffffff;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --border-color: #dee2e6;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 4px 20px rgba(102, 126, 234, 0.3);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+        }
+
+        /* ==================== TOP HEADER ==================== */
+        .top-header {
+            background: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .lang-switch {
+            display: flex;
+            gap: 5px;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: 2px solid var(--primary-color);
+            background: var(--white);
+            color: var(--primary-color);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .lang-btn.active {
+            background: var(--primary-color);
+            color: var(--white);
+            font-weight: 700;
+        }
+
+        .lang-btn:hover:not(.active) {
+            background: var(--light-bg);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 16px;
+            background: var(--light-bg);
+            border-radius: 25px;
+        }
+
+        .logout-btn {
+            padding: 8px 20px;
+            background: var(--danger-color);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .logout-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* ==================== MAIN NAVIGATION TABS ==================== */
+        .main-nav {
+            background: var(--dark-bg);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            padding: 0 20px;
+            gap: 5px;
+        }
+
+        .main-tab {
+            padding: 15px 25px;
+            color: var(--white);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .main-tab:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .main-tab.active {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .main-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary-color);
+        }
+
+        /* ==================== SUBMENU BAR ==================== */
+        .submenu-bar {
+            background: var(--light-bg);
+            border-bottom: 1px solid var(--border-color);
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        .submenu-bar.active {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .submenu-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 15px 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .submenu-btn {
+            padding: 10px 20px;
+            background: var(--white);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .submenu-btn:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .submenu-btn.active {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        /* ==================== MAIN CONTENT AREA ==================== */
+        .main-content {
+            max-width: 1600px;
+            margin: 30px auto;
+            padding: 0 30px;
+        }
+
+        .content-panel {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .content-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .panel-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+
+        /* ==================== DUAL PANEL (for Catalog Produse) ==================== */
+        .dual-panel {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+            height: calc(100vh - 300px);
+        }
+
+        .left-panel, .right-panel {
+            background: var(--white);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-toolbar {
+            background: var(--light-bg);
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .toolbar-btn {
+            padding: 8px 15px;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .toolbar-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .toolbar-btn.danger {
+            background: var(--danger-color);
+        }
+
+        .toolbar-btn.success {
+            background: var(--success-color);
+        }
+
+        .panel-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        /* Categories List */
+        .category-list {
+            list-style: none;
+        }
+
+        .category-item {
+            padding: 12px 15px;
+            cursor: pointer;
+            border-radius: 6px;
+            margin-bottom: 5px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .category-item:hover {
+            background: var(--light-bg);
+        }
+
+        .category-item.active {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        /* Products Table */
+        .products-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .products-table th {
+            background: var(--light-bg);
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .products-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .products-table tr:hover {
+            background: var(--light-bg);
+        }
+
+        /* ==================== WELCOME SCREEN ==================== */
+        .welcome-screen {
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .welcome-screen h2 {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+
+        .welcome-screen p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 40px;
+        }
+
+        .feature-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .feature-card .icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 1024px) {
+            .dual-panel {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-container {
+                overflow-x: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .main-tab {
+                padding: 12px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- TOP HEADER -->
+    <div class="top-header">
+        <div class="header-container">
+            <div class="logo-section">
+                <h1>🏠 <span id="app-title">Restaurant Management System v4.0</span></h1>
+            </div>
+            <div class="header-actions">
+                <div class="lang-switch">
+                    <button class="lang-btn active" data-lang="ro" onclick="switchLanguage('ro')">RO</button>
+                    <button class="lang-btn" data-lang="en" onclick="switchLanguage('en')">EN</button>
+                </div>
+                <div class="user-info">
+                    <span>👤</span>
+                    <span id="username">Admin</span>
+                </div>
+                <button class="logout-btn" onclick="logout()">
+                    <span id="logout-text">🔓 Deconectare</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN NAVIGATION TABS -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <button class="main-tab active" data-tab="welcome" onclick="switchMainTab('welcome')">
+                🏠 <span class="tab-text">Acasă</span>
+            </button>
+            <button class="main-tab" data-tab="administrare" onclick="switchMainTab('administrare')">
+                📋 <span class="tab-text">Administrare</span>
+            </button>
+            <button class="main-tab" data-tab="stocuri" onclick="switchMainTab('stocuri')">
+                📦 <span class="tab-text">Stocuri</span>
+            </button>
+            <button class="main-tab" data-tab="financiar" onclick="switchMainTab('financiar')">
+                💰 <span class="tab-text">Financiar</span>
+            </button>
+            <button class="main-tab" data-tab="parteneri" onclick="switchMainTab('parteneri')">
+                🤝 <span class="tab-text">Parteneri</span>
+            </button>
+            <button class="main-tab" data-tab="import-export" onclick="switchMainTab('import-export')">
+                📥📤 <span class="tab-text">Import/Export</span>
+            </button>
+            <button class="main-tab" data-tab="nomenclatoare" onclick="switchMainTab('nomenclatoare')">
+                📚 <span class="tab-text">Nomenclatoare</span>
+            </button>
+            <button class="main-tab" data-tab="ajutor" onclick="switchMainTab('ajutor')">
+                ❓ <span class="tab-text">Ajutor</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- SUBMENU BAR (ADMINISTRARE) -->
+    <div id="submenu-administrare" class="submenu-bar">
+        <div class="submenu-container">
+            <button class="submenu-btn" onclick="showContent('catalog-produse')">📁 <span>Catalog Produse</span></button>
+            <button class="submenu-btn" onclick="showContent('plan-locatie')">🗺️ <span>Plan Locație</span></button>
+            <button class="submenu-btn" onclick="showContent('personal')">👥 <span>Personal</span></button>
+            <button class="submenu-btn" onclick="showContent('terminale')">🖥️ <span>Terminale</span></button>
+            <button class="submenu-btn" onclick="showContent('organizare')">⚙️ <span>Organizare</span></button>
+            <button class="submenu-btn" onclick="showContent('valori')">💳 <span>Valori</span></button>
+            <button class="submenu-btn" onclick="showContent('promotii')">🎁 <span>Promoții</span></button>
+            <button class="submenu-btn" onclick="showContent('comunicare')">💬 <span>Comunicare</span></button>
+            <button class="submenu-btn" onclick="showContent('traduceri')">🌐 <span>Traduceri</span></button>
+            <button class="submenu-btn" onclick="showContent('automatizari')">🤖 <span>Automatizări</span></button>
+            <button class="submenu-btn" onclick="showContent('rapoarte-admin')">📊 <span>Rapoarte</span></button>
+            <button class="submenu-btn" onclick="showContent('tipizate')">📄 <span>Tipizate</span></button>
+            <button class="submenu-btn" onclick="showContent('etichete')">🏷️ <span>Etichete</span></button>
+        </div>
+    </div>
+
+    <!-- SUBMENU BAR (STOCURI) -->
+    <div id="submenu-stocuri" class="submenu-bar">
+        <div class="submenu-container">
+            <button class="submenu-btn" onclick="showContent('ingrediente')">📦 <span>Ingrediente</span></button>
+            <button class="submenu-btn" onclick="showContent('produse-finite')">🥫 <span>Produse Finite</span></button>
+            <button class="submenu-btn" onclick="showContent('retete')">📋 <span>Rețete</span></button>
+            <button class="submenu-btn" onclick="showContent('miscari-stoc')">📊 <span>Mișcări Stoc</span></button>
+            <button class="submenu-btn" onclick="showContent('transferuri')">🔄 <span>Transferuri</span></button>
+            <button class="submenu-btn" onclick="showContent('inventar')">📝 <span>Inventar Fizic</span></button>
+            <button class="submenu-btn" onclick="showContent('batches')">🏷️ <span>Batches & Traceability</span></button>
+            <button class="submenu-btn" onclick="showContent('alerte-stoc')">⚠️ <span>Alerte Stoc</span></button>
+            <button class="submenu-btn" onclick="showContent('import-export-stocuri')">📥📤 <span>Import/Export</span></button>
+        </div>
+    </div>
+
+    <!-- SUBMENU BAR (FINANCIAR) -->
+    <div id="submenu-financiar" class="submenu-bar">
+        <div class="submenu-container">
+            <button class="submenu-btn" onclick="showContent('comenzi-vanzari')">🍽️ <span>Comenzi & Vânzări</span></button>
+            <button class="submenu-btn" onclick="showContent('bonuri-fiscale')">📄 <span>Bonuri Fiscale</span></button>
+            <button class="submenu-btn" onclick="showContent('facturi')">📋 <span>Facturi</span></button>
+            <button class="submenu-btn" onclick="showContent('anaf')">🏛️ <span>ANAF Integration</span></button>
+            <button class="submenu-btn" onclick="showContent('registru-casa')">💵 <span>Registru de Casă</span></button>
+            <button class="submenu-btn" onclick="showContent('conturi-plati')">💳 <span>Conturi & Plăți</span></button>
+            <button class="submenu-btn" onclick="showContent('rapoarte-fiscale')">📊 <span>Rapoarte Fiscale</span></button>
+            <button class="submenu-btn" onclick="showContent('rapoarte-avansate')">📈 <span>Rapoarte Avansate</span></button>
+            <button class="submenu-btn" onclick="showContent('analytics-predictiv')">🔮 <span>Analytics Predictiv</span></button>
+            <button class="submenu-btn" onclick="showContent('export-rapoarte')">📤 <span>Export Rapoarte</span></button>
+        </div>
+    </div>
+
+    <!-- SUBMENU BAR (PARTENERI) -->
+    <div id="submenu-parteneri" class="submenu-bar">
+        <div class="submenu-container">
+            <button class="submenu-btn" onclick="showContent('furnizori')">🚚 <span>Furnizori</span></button>
+            <button class="submenu-btn" onclick="showContent('clienti')">👥 <span>Clienți</span></button>
+            <button class="submenu-btn" onclick="showContent('program-loialitate')">🎁 <span>Program Loialitate</span></button>
+        </div>
+    </div>
+
+    <!-- SUBMENU BAR (IMPORT/EXPORT) -->
+    <div id="submenu-import-export" class="submenu-bar">
+        <div class="submenu-container">
+            <button class="submenu-btn" onclick="showContent('import-date')">📥 <span>Import Date</span></button>
+            <button class="submenu-btn" onclick="showContent('export-date')">📤 <span>Export Date</span></button>
+            <button class="submenu-btn" onclick="showContent('integrare-externa')">🔗 <span>Integrare Sisteme Externe</span></button>
+            <button class="submenu-btn" onclick="showContent('backup-restore')">💾 <span>Backup & Restore</span></button>
+        </div>
+    </div>
+
+    <!-- SUBMENU BAR (NOMENCLATOARE) -->
+    <div id="submenu-nomenclatoare" class="submenu-bar">
+        <div class="submenu-container">
+            <button class="submenu-btn" onclick="showContent('unitati-masura')">📏 <span>Unități de Măsură</span></button>
+            <button class="submenu-btn" onclick="showContent('cote-tva')">💹 <span>Cote TVA</span></button>
+            <button class="submenu-btn" onclick="showContent('tipuri-documente')">📄 <span>Tipuri Documente</span></button>
+            <button class="submenu-btn" onclick="showContent('monede')">💱 <span>Monede</span></button>
+            <button class="submenu-btn" onclick="showContent('tari')">🌍 <span>Țări</span></button>
+            <button class="submenu-btn" onclick="showContent('judete')">🗺️ <span>Județe/Regiuni</span></button>
+            <button class="submenu-btn" onclick="showContent('banci')">🏦 <span>Bănci</span></button>
+            <button class="submenu-btn" onclick="showContent('titluri')">👔 <span>Titluri Personale</span></button>
+        </div>
+    </div>
+
+    <!-- SUBMENU BAR (AJUTOR) -->
+    <div id="submenu-ajutor" class="submenu-bar">
+        <div class="submenu-container">
+            <button class="submenu-btn" onclick="showContent('documentatie')">📖 <span>Documentație</span></button>
+            <button class="submenu-btn" onclick="showContent('despre-program')">ℹ️ <span>Despre Program</span></button>
+            <button class="submenu-btn" onclick="showContent('suport')">📞 <span>Suport</span></button>
+            <button class="submenu-btn" onclick="showContent('licenta')">🔑 <span>Licență & Actualizări</span></button>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="main-content">
+        <!-- WELCOME SCREEN -->
+        <div id="content-welcome" class="content-panel active">
+            <div class="welcome-screen">
+                <h2><span id="welcome-title">Bun venit la Restaurant Management System v4.0</span></h2>
+                <p><span id="welcome-subtitle">Selectează un modul din navigation bar pentru a începe</span></p>
+                
+                <div class="feature-cards">
+                    <div class="feature-card">
+                        <div class="icon">📋</div>
+                        <h3><span>Administrare</span></h3>
+                        <p><span>Catalog produse, personal, terminale, organizare, promoții</span></p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">📦</div>
+                        <h3><span>Stocuri</span></h3>
+                        <p><span>Ingrediente, rețete, mișcări stoc, inventar, traceability</span></p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">💰</div>
+                        <h3><span>Financiar</span></h3>
+                        <p><span>Comenzi, facturare, rapoarte fiscale, analytics predictiv</span></p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">🤝</div>
+                        <h3><span>Parteneri</span></h3>
+                        <p><span>Furnizori, clienți, program loialitate</span></p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">📥📤</div>
+                        <h3><span>Import/Export</span></h3>
+                        <p><span>Import date, export rapoarte, integrare sisteme externe</span></p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">📚</div>
+                        <h3><span>Nomenclatoare</span></h3>
+                        <p><span>Unități măsură, TVA, documente, monede, țări</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CATALOG PRODUSE (DUAL PANEL) -->
+        <div id="content-catalog-produse" class="content-panel">
+            <h2 class="panel-title">📁 <span>Catalog Produse</span></h2>
+            <div class="dual-panel">
+                <!-- LEFT PANEL: Categories -->
+                <div class="left-panel">
+                    <div class="panel-toolbar">
+                        <button class="toolbar-btn success" onclick="addCategory()">🟢 <span>Adaugă</span></button>
+                        <button class="toolbar-btn" onclick="editCategory()">✏️ <span>Modifică</span></button>
+                        <button class="toolbar-btn danger" onclick="deleteCategory()">🗑️ <span>Șterge</span></button>
+                    </div>
+                    <div class="panel-content">
+                        <ul class="category-list" id="categoryList">
+                            <li class="category-item active" data-category="all">
+                                <span>📂</span> <span>Toate Produsele</span>
+                            </li>
+                            <!-- Categories will be loaded dynamically -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- RIGHT PANEL: Products -->
+                <div class="right-panel">
+                    <div class="panel-toolbar">
+                        <button class="toolbar-btn success" onclick="addProduct()">🟢 <span>Adaugă</span></button>
+                        <button class="toolbar-btn" onclick="editProduct()">✏️ <span>Modifică</span></button>
+                        <button class="toolbar-btn danger" onclick="deleteProduct()">🗑️ <span>Șterge</span></button>
+                        <button class="toolbar-btn" onclick="refreshProducts()">🔄 <span>Reîncarcă</span></button>
+                        <button class="toolbar-btn" onclick="exportProducts()">📤 <span>Exportă</span></button>
+                    </div>
+                    <div class="panel-content">
+                        <table class="products-table" id="productsTable">
+                            <thead>
+                                <tr>
+                                    <th><span>Nume</span></th>
+                                    <th><span>Preț</span></th>
+                                    <th><span>Categorie</span></th>
+                                    <th><span>Status</span></th>
+                                    <th><span>Acțiuni</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Products will be loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PLAN LOCATIE (Mese) -->
+        <div id="content-plan-locatie" class="content-panel">
+            <h2 class="panel-title">🗺️ <span>Plan Locație (Mese)</span></h2>
+            <div class="panel-toolbar">
+                <button class="toolbar-btn success" onclick="addTable()">🟢 <span>Adaugă Masă</span></button>
+                <button class="toolbar-btn" onclick="editTable()">✏️ <span>Modifică</span></button>
+                <button class="toolbar-btn danger" onclick="deleteTable()">🗑️ <span>Șterge</span></button>
+                <button class="toolbar-btn" onclick="refreshTables()">🔄 <span>Reîncarcă</span></button>
+            </div>
+            <div id="tablesContainer" class="panel-content"></div>
+        </div>
+
+        <!-- PERSONAL -->
+        <div id="content-personal" class="content-panel">
+            <h2 class="panel-title">👥 <span>Gestionare Personal & PIN-uri</span></h2>
+            <div class="panel-toolbar">
+                <button class="toolbar-btn success" onclick="addUser()">🟢 <span>Adaugă Utilizator</span></button>
+                <button class="toolbar-btn" onclick="managePins()">🔐 <span>Gestionare PIN-uri</span></button>
+                <button class="toolbar-btn" onclick="manageRoles()">👤 <span>Roluri</span></button>
+            </div>
+            <div id="usersContainer" class="panel-content"></div>
+        </div>
+
+        <!-- TERMINALE -->
+        <div id="content-terminale" class="content-panel">
+            <h2 class="panel-title">🖥️ <span>Configurare Terminale</span></h2>
+            <p><span>Configurare terminale și imprimante (coming soon)</span></p>
+        </div>
+
+        <!-- ORGANIZARE -->
+        <div id="content-organizare" class="content-panel">
+            <h2 class="panel-title">⚙️ <span>Organizare</span></h2>
+            <div class="feature-cards">
+                <div class="feature-card" onclick="showContent('gestiuni')">
+                    <div class="icon">🏪</div>
+                    <h3><span>Gestiuni (Depozite)</span></h3>
+                </div>
+                <div class="feature-card" onclick="showContent('sectii-preparare')">
+                    <div class="icon">👨‍🍳</div>
+                    <h3><span>Secții de Preparare</span></h3>
+                </div>
+                <div class="feature-card" onclick="showContent('clasificari')">
+                    <div class="icon">📂</div>
+                    <h3><span>Clasificări</span></h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- VALORI -->
+        <div id="content-valori" class="content-panel">
+            <h2 class="panel-title">💳 <span>Bonuri Valorice, Vouchere, Discounturi</span></h2>
+            <p><span>Gestionare valori (coming soon)</span></p>
+        </div>
+
+        <!-- PROMOTII -->
+        <div id="content-promotii" class="content-panel">
+            <h2 class="panel-title">🎁 <span>Promoții</span></h2>
+            <div class="feature-cards">
+                <div class="feature-card" onclick="showContent('happy-hour')">
+                    <div class="icon">🍹</div>
+                    <h3><span>Happy Hour</span></h3>
+                </div>
+                <div class="feature-card" onclick="showContent('meniul-zilei')">
+                    <div class="icon">🍲</div>
+                    <h3><span>Meniul Zilei</span></h3>
+                </div>
+                <div class="feature-card" onclick="showContent('oferta-zilei')">
+                    <div class="icon">🎯</div>
+                    <h3><span>Oferta Zilei</span></h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMUNICARE -->
+        <div id="content-comunicare" class="content-panel">
+            <h2 class="panel-title">💬 <span>Mesaje Predefinite între Stații</span></h2>
+            <p><span>Gestionare mesaje (coming soon)</span></p>
+        </div>
+
+        <!-- TRADUCERI -->
+        <div id="content-traduceri" class="content-panel">
+            <h2 class="panel-title">🌐 <span>Traduceri în Așteptare</span></h2>
+            <div class="panel-toolbar">
+                <button class="toolbar-btn" onclick="loadMissingTranslations()">🔄 <span>Reîncarcă Lista</span></button>
+            </div>
+            <div id="translationsContainer" class="panel-content"></div>
+        </div>
+
+        <!-- AUTOMATIZARI -->
+        <div id="content-automatizari" class="content-panel">
+            <h2 class="panel-title">🤖 <span>Automatizări</span></h2>
+            <div class="feature-cards">
+                <div class="feature-card" onclick="showContent('arhivare-comenzi')">
+                    <div class="icon">🗂️</div>
+                    <h3><span>Arhivare Comenzi</span></h3>
+                </div>
+                <div class="feature-card" onclick="showContent('backup-db')">
+                    <div class="icon">💾</div>
+                    <h3><span>Backup Bază Date</span></h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- RAPOARTE ADMIN -->
+        <div id="content-rapoarte-admin" class="content-panel">
+            <h2 class="panel-title">📊 <span>Rapoarte Dashboard</span></h2>
+            <div class="feature-cards">
+                <div class="feature-card" onclick="showContent('dashboard-live')">
+                    <div class="icon">📊</div>
+                    <h3><span>Dashboard Live</span></h3>
+                </div>
+                <div class="feature-card" onclick="showContent('analiza-anulari')">
+                    <div class="icon">📈</div>
+                    <h3><span>Analiza Anulări</span></h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- TIPIZATE -->
+        <div id="content-tipizate" class="content-panel">
+            <h2 class="panel-title">📄 <span>Tipizate & Template-uri</span></h2>
+            <p><span>Template-uri documente (coming soon)</span></p>
+        </div>
+
+        <!-- ETICHETE -->
+        <div id="content-etichete" class="content-panel">
+            <h2 class="panel-title">🏷️ <span>Etichete & QR Codes</span></h2>
+            <p><span>Generare etichete (coming soon)</span></p>
+        </div>
+
+        <!-- ==================== STOCURI TAB ==================== -->
+        
+        <!-- INGREDIENTE -->
+        <div id="content-ingrediente" class="content-panel">
+            <h2 class="panel-title">📦 <span>Ingrediente</span></h2>
+            <div class="panel-toolbar">
+                <button class="toolbar-btn success" onclick="addIngredient()">🟢 <span>Adaugă</span></button>
+                <button class="toolbar-btn" onclick="editIngredient()">✏️ <span>Modifică</span></button>
+                <button class="toolbar-btn danger" onclick="deleteIngredient()">🗑️ <span>Șterge</span></button>
+                <button class="toolbar-btn" onclick="ajustareStoc()">📊 <span>Ajustare Stoc</span></button>
+                <button class="toolbar-btn" onclick="refreshIngredients()">🔄 <span>Reîncarcă</span></button>
+            </div>
+            <div id="ingredientsContainer" class="panel-content"></div>
+        </div>
+
+        <!-- PRODUSE FINITE -->
+        <div id="content-produse-finite" class="content-panel">
+            <h2 class="panel-title">🥫 <span>Produse Finite (Semi-fabricate)</span></h2>
+            <div class="panel-toolbar">
+                <button class="toolbar-btn success" onclick="addFinishedProduct()">🟢 <span>Adaugă</span></button>
+                <button class="toolbar-btn" onclick="refreshFinishedProducts()">🔄 <span>Reîncarcă</span></button>
+            </div>
+            <div id="finishedProductsContainer" class="panel-content"></div>
+        </div>
+
+        <!-- RETETE -->
+        <div id="content-retete" class="content-panel">
+            <h2 class="panel-title">📋 <span>Rețete & Fișe Tehnice Produs</span></h2>
+            <div class="panel-toolbar">
+                <button class="toolbar-btn success" onclick="createRecipe()">➕ <span>Creează Rețetă</span></button>
+                <button class="toolbar-btn" onclick="createFTP()">📋 <span>Fișă Tehnică Produs</span></button>
+                <button class="toolbar-btn" onclick="refreshRecipes()">🔄 <span>Reîncarcă</span></button>
+            </div>
+            <div id="recipesContainer" class="panel-content"></div>
+        </div>
+
+        <!-- MISCARI STOC -->
+        <div id="content-miscari-stoc" class="content-panel">
+            <h2 class="panel-title">📊 <span>Mișcări Stoc</span></h2>
+            <div class="panel-toolbar">
+                <button class="toolbar-btn" onclick="filterStockMovements()">🔍 <span>Filtrare</span></button>
+                <button class="toolbar-btn" onclick="refreshStockMovements()">🔄 <span>Reîncarcă</span></button>
+                <button class="toolbar-btn" onclick="exportStockMovements()">📤 <span>Export</span></button>
+            </div>
+            <div id="stockMovementsContainer" class="panel-content"></div>
+        </div>
+
+        <!-- TRANSFERURI -->
+        <div id="content-transferuri" class="content-panel">
+            <h2 class="panel-title">🔄 <span>Transferuri între Gestiuni</span></h2>
+            <div class="panel-toolbar">
+                <button class="toolbar-btn success" onclick="createTransfer()">🟢 <span>Transfer Nou</span></button>
+                <button class="toolbar-btn" onclick="refreshTransfers()">🔄 <span>Reîncarcă</span></button>
+            </div>
+            <div id="transfersContainer" class="panel-content"></div>
+        </div>
+
+        <!-- INVENTAR -->
+        <div id="content-inventar" class="content-panel">
+            <h2 class="panel-title">📝 <span>Inventar Fizic</span></h2>
+            <div class="panel-toolbar">
+                <button class="toolbar-btn success" onclick="startInventory()">🆕 <span>Start Inventar</span></button>
+                <button class="toolbar-btn" onclick="viewInventoryHistory()">📊 <span>Istoric</span></button>
+            </div>
+            <div id="inventoryContainer" class="panel-content"></div>
+        </div>
+
+        <!-- BATCHES -->
+        <div id="content-batches" class="content-panel">
+            <h2 class="panel-title">🏷️ <span>Batches & Traceability</span></h2>
+            <div class="panel-toolbar">
+                <button class="toolbar-btn success" onclick="addBatch()">🟢 <span>Adaugă Lot</span></button>
+                <button class="toolbar-btn" onclick="traceIngredient()">🔍 <span>Trasabilitate</span></button>
+            </div>
+            <div id="batchesContainer" class="panel-content"></div>
+        </div>
+
+        <!-- ALERTE STOC -->
+        <div id="content-alerte-stoc" class="content-panel">
+            <h2 class="panel-title">⚠️ <span>Alerte Stoc</span></h2>
+            <div id="alertsContainer" class="panel-content"></div>
+        </div>
+
+        <!-- IMPORT/EXPORT STOCURI -->
+        <div id="content-import-export-stocuri" class="content-panel">
+            <h2 class="panel-title">📥📤 <span>Import/Export Stocuri</span></h2>
+            <div class="panel-toolbar">
+                <button class="toolbar-btn" onclick="importStocks()">📥 <span>Import Excel</span></button>
+                <button class="toolbar-btn" onclick="exportStocks()">📤 <span>Export Excel</span></button>
+                <button class="toolbar-btn" onclick="downloadTemplate()">📋 <span>Template</span></button>
+            </div>
+        </div>
+
+        <!-- ==================== FINANCIAR TAB ==================== -->
+        
+        <!-- COMENZI & VANZARI -->
+        <div id="content-comenzi-vanzari" class="content-panel">
+            <h2 class="panel-title">🍽️ <span>Comenzi & Vânzări</span></h2>
+            <div class="panel-toolbar">
+                <button class="toolbar-btn" onclick="viewActiveOrders()">📋 <span>Comenzi Active</span></button>
+                <button class="toolbar-btn" onclick="viewArchivedOrders()">📦 <span>Arhivă</span></button>
+                <button class="toolbar-btn" onclick="exportOrders()">📤 <span>Export CSV</span></button>
+            </div>
+            <div id="ordersContainer" class="panel-content"></div>
+        </div>
+
+        <!-- BONURI FISCALE -->
+        <div id="content-bonuri-fiscale" class="content-panel">
+            <h2 class="panel-title">📄 <span>Bonuri Fiscale</span></h2>
+            <div class="panel-toolbar">
+                <button class="toolbar-btn" onclick="viewReceipts()">📋 <span>Lista Bonuri</span></button>
+                <button class="toolbar-btn" onclick="searchReceipt()">🔍 <span>Căutare</span></button>
+            </div>
+            <div id="receiptsContainer" class="panel-content"></div>
+        </div>
+
+        <!-- FACTURI -->
+        <div id="content-facturi" class="content-panel">
+            <h2 class="panel-title">📋 <span>Facturi</span></h2>
+            <div class="panel-toolbar">
+                <button class="toolbar-btn success" onclick="generateInvoice()">🟢 <span>Generează Factură</span></button>
+                <button class="toolbar-btn" onclick="viewInvoices()">📋 <span>Lista Facturi</span></button>
+            </div>
+            <div id="invoicesContainer" class="panel-content"></div>
+        </div>
+
+        <!-- ANAF -->
+        <div id="content-anaf" class="content-panel">
+            <h2 class="panel-title">🏛️ <span>ANAF Integration</span></h2>
+            <p><span>Transmisie către ANAF (coming soon)</span></p>
+        </div>
+
+        <!-- REGISTRU CASA -->
+        <div id="content-registru-casa" class="content-panel">
+            <h2 class="panel-title">💵 <span>Registru de Casă</span></h2>
+            <div class="panel-toolbar">
+                <button class="toolbar-btn success" onclick="openCash()">💵 <span>Deschide Casă</span></button>
+                <button class="toolbar-btn danger" onclick="closeCash()">🔒 <span>Închide Casă</span></button>
+                <button class="toolbar-btn" onclick="viewCashHistory()">📊 <span>Istoric</span></button>
+            </div>
+            <div id="cashRegisterContainer" class="panel-content"></div>
+        </div>
+
+        <!-- CONTURI & PLATI -->
+        <div id="content-conturi-plati" class="content-panel">
+            <h2 class="panel-title">💳 <span>Conturi & Plăți</span></h2>
+            <div class="panel-toolbar">
+                <button class="toolbar-btn success" onclick="addAccount()">🟢 <span>Adaugă Cont</span></button>
+                <button class="toolbar-btn" onclick="viewAccounts()">📊 <span>Sold Conturi</span></button>
+            </div>
+            <div id="accountsContainer" class="panel-content"></div>
+        </div>
+
+        <!-- RAPOARTE FISCALE -->
+        <div id="content-rapoarte-fiscale" class="content-panel">
+            <h2 class="panel-title">📊 <span>Rapoarte Fiscale</span></h2>
+            <div class="feature-cards">
+                <div class="feature-card" onclick="generateXReport()">
+                    <div class="icon">📄</div>
+                    <h3><span>Raport X</span></h3>
+                    <p><span>Intermediar, nefiscal</span></p>
+                </div>
+                <div class="feature-card" onclick="generateZReport()">
+                    <div class="icon">📋</div>
+                    <h3><span>Raport Z</span></h3>
+                    <p><span>Fiscal, închidere zi</span></p>
+                </div>
+                <div class="feature-card" onclick="viewMonthlyReports()">
+                    <div class="icon">📅</div>
+                    <h3><span>Rapoarte Lunare</span></h3>
+                </div>
+                <div class="feature-card" onclick="viewZHistory()">
+                    <div class="icon">📊</div>
+                    <h3><span>Istoric Z</span></h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- RAPOARTE AVANSATE -->
+        <div id="content-rapoarte-avansate" class="content-panel">
+            <h2 class="panel-title">📈 <span>Rapoarte Avansate</span></h2>
+            <div class="feature-cards">
+                <div class="feature-card" onclick="viewSalesReport()">
+                    <div class="icon">📊</div>
+                    <h3><span>Vânzări Detaliate</span></h3>
+                </div>
+                <div class="feature-card" onclick="viewProfitabilityReport()">
+                    <div class="icon">💹</div>
+                    <h3><span>Profitabilitate</span></h3>
+                </div>
+                <div class="feature-card" onclick="viewCustomerBehavior()">
+                    <div class="icon">👥</div>
+                    <h3><span>Comportament Clienți</span></h3>
+                </div>
+                <div class="feature-card" onclick="viewTimeTrends()">
+                    <div class="icon">⏰</div>
+                    <h3><span>Tendințe Temporale</span></h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- ANALYTICS PREDICTIV -->
+        <div id="content-analytics-predictiv" class="content-panel">
+            <h2 class="panel-title">🔮 <span>Analytics Predictiv</span></h2>
+            <div class="feature-cards">
+                <div class="feature-card" onclick="viewPredictiveAnalytics()">
+                    <div class="icon">📊</div>
+                    <h3><span>Predicție Anulări</span></h3>
+                </div>
+                <div class="feature-card" onclick="viewCorrelationAnalysis()">
+                    <div class="icon">🎯</div>
+                    <h3><span>Corelație Stoc-Anulări</span></h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXPORT RAPOARTE -->
+        <div id="content-export-rapoarte" class="content-panel">
+            <h2 class="panel-title">📤 <span>Export Rapoarte</span></h2>
+            <div class="panel-toolbar">
+                <button class="toolbar-btn" onclick="exportExcel()">📊 <span>Export Excel</span></button>
+                <button class="toolbar-btn" onclick="exportPDF()">📄 <span>Export PDF</span></button>
+            </div>
+            <div class="panel-content">
+                <div class="form-grid">
+                    <div>
+                        <label>Unitate</label>
+                        <input type="text" id="v4SagaBrandName" placeholder="SC RESTAURANT SRL">
+                    </div>
+                    <div>
+                        <label>CUI</label>
+                        <input type="text" id="v4SagaBrandCui" placeholder="RO12345678">
+                    </div>
+                    <div>
+                        <label>Adresă</label>
+                        <input type="text" id="v4SagaBrandAddress" placeholder="Adresă completă">
+                    </div>
+                    <div>
+                        <label>Gestiune</label>
+                        <input type="text" id="v4SagaBrandGestion" placeholder="Bucătărie">
+                    </div>
+                </div>
+                <div class="form-grid">
+                    <div>
+                        <label>Data început</label>
+                        <input type="date" id="v4SagaStartDate">
+                    </div>
+                    <div>
+                        <label>Data sfârșit</label>
+                        <input type="date" id="v4SagaEndDate">
+                    </div>
+                    <div>
+                        <label>Tip export</label>
+                        <select id="v4SagaType">
+                            <option value="nir">NIR-uri (Intrări)</option>
+                            <option value="sales">Vânzări (Comenzi)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Cotă TVA (%)</label>
+                        <input type="number" id="v4SagaVat" value="9" min="0" step="0.1">
+                    </div>
+                    <div>
+                        <label>Cont Debit</label>
+                        <input type="text" id="v4SagaDebit" value="371">
+                    </div>
+                    <div>
+                        <label>Cont Credit</label>
+                        <input type="text" id="v4SagaCredit" value="401">
+                    </div>
+                </div>
+                <div class="form-grid">
+                    <button class="toolbar-btn success" onclick="handleSagaExportV4()">⬇️ <span>Exportă Saga CSV</span></button>
+                </div>
+                <div class="alert-info" id="v4SagaStatus" style="display:none;"></div>
+                <div class="table-wrapper mt-3">
+                    <div class="table-header d-flex justify-content-between align-items-center">
+                        <h3><span>Istoric Exporturi Saga</span></h3>
+                        <small id="v4SagaHistoryCount" class="text-muted"></small>
+                    </div>
+                    <table class="table" id="v4SagaHistoryTable">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Tip</th>
+                                <th>Perioadă</th>
+                                <th>Rânduri</th>
+                                <th>Conturi</th>
+                                <th>Utilizator</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="6" class="text-center">Nu există exporturi încă.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== PARTENERI TAB ==================== -->
+        
+        <!-- FURNIZORI -->
+        <div id="content-furnizori" class="content-panel">
+            <h2 class="panel-title">🚚 <span>Furnizori</span></h2>
+            <div class="panel-toolbar">
+                <button class="toolbar-btn success" onclick="addSupplier()">🟢 <span>Adaugă Furnizor</span></button>
+                <button class="toolbar-btn" onclick="editSupplier()">✏️ <span>Modifică</span></button>
+                <button class="toolbar-btn danger" onclick="deleteSupplier()">🗑️ <span>Șterge</span></button>
+                <button class="toolbar-btn" onclick="refreshSuppliers()">🔄 <span>Reîncarcă</span></button>
+            </div>
+            <div id="suppliersContainer" class="panel-content"></div>
+        </div>
+
+        <!-- CLIENTI -->
+        <div id="content-clienti" class="content-panel">
+            <h2 class="panel-title">👥 <span>Clienți</span></h2>
+            <div class="panel-toolbar">
+                <button class="toolbar-btn success" onclick="addCustomer()">🟢 <span>Adaugă Client</span></button>
+                <button class="toolbar-btn" onclick="viewCustomerHistory()">📊 <span>Istoric</span></button>
+                <button class="toolbar-btn" onclick="refreshCustomers()">🔄 <span>Reîncarcă</span></button>
+            </div>
+            <div id="customersContainer" class="panel-content"></div>
+        </div>
+
+        <!-- PROGRAM LOIALITATE -->
+        <div id="content-program-loialitate" class="content-panel">
+            <h2 class="panel-title">🎁 <span>Program Loialitate</span></h2>
+            <div class="panel-toolbar">
+                <button class="toolbar-btn success" onclick="addLoyaltyReward()">➕ <span>Adaugă Recompensă</span></button>
+                <button class="toolbar-btn" onclick="viewLoyaltyStats()">📊 <span>Statistici</span></button>
+            </div>
+            <div id="loyaltyContainer" class="panel-content"></div>
+        </div>
+
+        <!-- ==================== IMPORT/EXPORT TAB ==================== -->
+        
+        <!-- IMPORT DATE -->
+        <div id="content-import-date" class="content-panel">
+            <h2 class="panel-title">📥 <span>Import Date</span></h2>
+            <div class="feature-cards">
+                <div class="feature-card" onclick="importIngredientsExcel()">
+                    <div class="icon">📦</div>
+                    <h3><span>Import Ingrediente</span></h3>
+                </div>
+                <div class="feature-card" onclick="importProductsExcel()">
+                    <div class="icon">🍕</div>
+                    <h3><span>Import Produse</span></h3>
+                </div>
+                <div class="feature-card" onclick="importRecipesExcel()">
+                    <div class="icon">📋</div>
+                    <h3><span>Import Rețete</span></h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXPORT DATE -->
+        <div id="content-export-date" class="content-panel">
+            <h2 class="panel-title">📤 <span>Export Date</span></h2>
+            <div class="feature-cards">
+                <div class="feature-card" onclick="exportAllExcel()">
+                    <div class="icon">📊</div>
+                    <h3><span>Export Excel Complet</span></h3>
+                </div>
+                <div class="feature-card" onclick="exportCSV()">
+                    <div class="icon">📄</div>
+                    <h3><span>Export CSV</span></h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- INTEGRARE EXTERNA -->
+        <div id="content-integrare-externa" class="content-panel">
+            <h2 class="panel-title">🔗 <span>Integrare Sisteme Externe</span></h2>
+            <div class="feature-cards">
+                <div class="feature-card" onclick="configureWizOne()">
+                    <div class="icon">🔄</div>
+                    <h3><span>WizOne Mentor</span></h3>
+                </div>
+                <div class="feature-card" onclick="configureMODERN()">
+                    <div class="icon">🔄</div>
+                    <h3><span>MODERN/MODERNci</span></h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- BACKUP & RESTORE -->
+        <div id="content-backup-restore" class="content-panel">
+            <h2 class="panel-title">💾 <span>Backup & Restore</span></h2>
+            <div class="panel-toolbar">
+                <button class="toolbar-btn success" onclick="createBackup()">💾 <span>Creează Backup</span></button>
+                <button class="toolbar-btn" onclick="viewBackups()">📋 <span>Lista Backup-uri</span></button>
+                <button class="toolbar-btn" onclick="restoreBackup()">🔄 <span>Restaurează</span></button>
+            </div>
+            <div id="backupContainer" class="panel-content"></div>
+        </div>
+
+        <!-- ==================== NOMENCLATOARE TAB ==================== -->
+        
+        <!-- UNITATI MASURA -->
+        <div id="content-unitati-masura" class="content-panel">
+            <h2 class="panel-title">📏 <span>Unități de Măsură</span></h2>
+            <div class="panel-toolbar">
+                <button class="toolbar-btn success" onclick="addUnit()">🟢 <span>Adaugă</span></button>
+                <button class="toolbar-btn" onclick="manageConversions()">🔄 <span>Conversii</span></button>
+            </div>
+            <div id="unitsContainer" class="panel-content"></div>
+        </div>
+
+        <!-- COTE TVA -->
+        <div id="content-cote-tva" class="content-panel">
+            <h2 class="panel-title">💹 <span>Cote TVA</span></h2>
+            <div class="panel-toolbar">
+                <button class="toolbar-btn success" onclick="addVATRate()">🟢 <span>Adaugă Cotă</span></button>
+            </div>
+            <div id="vatContainer" class="panel-content"></div>
+        </div>
+
+        <!-- TIPURI DOCUMENTE -->
+        <div id="content-tipuri-documente" class="content-panel">
+            <h2 class="panel-title">📄 <span>Tipuri Documente</span></h2>
+            <div id="documentTypesContainer" class="panel-content"></div>
+        </div>
+
+        <!-- MONEDE -->
+        <div id="content-monede" class="content-panel">
+            <h2 class="panel-title">💱 <span>Monede & Cursuri Valutar</span></h2>
+            <div class="panel-toolbar">
+                <button class="toolbar-btn" onclick="updateExchangeRates()">🔄 <span>Actualizează Cursuri</span></button>
+            </div>
+            <div id="currenciesContainer" class="panel-content"></div>
+        </div>
+
+        <!-- TARI -->
+        <div id="content-tari" class="content-panel">
+            <h2 class="panel-title">🌍 <span>Țări</span></h2>
+            <div id="countriesContainer" class="panel-content"></div>
+        </div>
+
+        <!-- JUDETE -->
+        <div id="content-judete" class="content-panel">
+            <h2 class="panel-title">🗺️ <span>Județe/Regiuni</span></h2>
+            <div id="regionsContainer" class="panel-content"></div>
+        </div>
+
+        <!-- BANCI -->
+        <div id="content-banci" class="content-panel">
+            <h2 class="panel-title">🏦 <span>Bănci</span></h2>
+            <div id="banksContainer" class="panel-content"></div>
+        </div>
+
+        <!-- TITLURI -->
+        <div id="content-titluri" class="content-panel">
+            <h2 class="panel-title">👔 <span>Titluri Personale</span></h2>
+            <div id="titlesContainer" class="panel-content"></div>
+        </div>
+
+        <!-- ==================== AJUTOR TAB ==================== -->
+        
+        <!-- DOCUMENTATIE -->
+        <div id="content-documentatie" class="content-panel">
+            <h2 class="panel-title">📖 <span>Documentație</span></h2>
+            <div class="feature-cards">
+                <div class="feature-card">
+                    <div class="icon">📖</div>
+                    <h3><span>Manual Utilizare</span></h3>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🎥</div>
+                    <h3><span>Video Tutoriale</span></h3>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">❓</div>
+                    <h3><span>FAQ</span></h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESPRE PROGRAM -->
+        <div id="content-despre-program" class="content-panel">
+            <h2 class="panel-title">ℹ️ <span>Despre Program</span></h2>
+            <div class="panel-content">
+                <h3><span>Restaurant Management System v4.0</span></h3>
+                <p><span>Versiune: 4.0.0</span></p>
+                <p><span>Data release: Octombrie 2025</span></p>
+                <p><span>© 2025 Restaurant App. Toate drepturile rezervate.</span></p>
+            </div>
+        </div>
+
+        <!-- SUPORT -->
+        <div id="content-suport" class="content-panel">
+            <h2 class="panel-title">📞 <span>Suport</span></h2>
+            <div class="panel-content">
+                <p><span>Email: support@restaurant-app.com</span></p>
+                <p><span>Telefon: +40 XXX XXX XXX</span></p>
+            </div>
+        </div>
+
+        <!-- LICENTA -->
+        <div id="content-licenta" class="content-panel">
+            <h2 class="panel-title">🔑 <span>Licență & Actualizări</span></h2>
+            <div class="panel-toolbar">
+                <button class="toolbar-btn" onclick="checkUpdates()">⬆️ <span>Verifică Actualizări</span></button>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        // ==================== GLOBAL STATE ====================
+        let currentLang = 'ro';
+        let currentMainTab = 'welcome';
+        let currentContent = 'welcome';
+
+        // ==================== TRANSLATIONS ====================
+        const translations = {
+            ro: {
+                appTitle: 'Restaurant Management System v4.0',
+                logout: '🔓 Deconectare',
+                welcomeTitle: 'Bun venit la Restaurant Management System v4.0',
+                welcomeSubtitle: 'Selectează un modul din navigation bar pentru a începe',
+                // Add more translations here...
+            },
+            en: {
+                appTitle: 'Restaurant Management System v4.0',
+                logout: '🔓 Logout',
+                welcomeTitle: 'Welcome to Restaurant Management System v4.0',
+                welcomeSubtitle: 'Select a module from the navigation bar to begin',
+                // Add more translations here...
+            }
+        };
+
+        // ==================== LANGUAGE SWITCH ====================
+        function switchLanguage(lang) {
+            currentLang = lang;
+            
+            // Update button states
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+
+            // Update translations
+            updateTranslations();
+        }
+
+        function updateTranslations() {
+            const t = translations[currentLang];
+            
+            // Update header
+            document.getElementById('app-title').textContent = t.appTitle;
+            document.getElementById('logout-text').textContent = t.logout;
+            
+            // Update welcome screen
+            document.getElementById('welcome-title').textContent = t.welcomeTitle;
+            document.getElementById('welcome-subtitle').textContent = t.welcomeSubtitle;
+        }
+
+        // ==================== MAIN TAB SWITCHING ====================
+        function switchMainTab(tabName) {
+            currentMainTab = tabName;
+            
+            // Update tab states
+            document.querySelectorAll('.main-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.tab === tabName);
+            });
+
+            // Hide all submenus
+            document.querySelectorAll('.submenu-bar').forEach(submenu => {
+                submenu.classList.remove('active');
+            });
+
+            // Show corresponding submenu (if not welcome)
+            if (tabName !== 'welcome') {
+                const submenu = document.getElementById(`submenu-${tabName}`);
+                if (submenu) {
+                    submenu.classList.add('active');
+                }
+            }
+
+            // Show content
+            if (tabName === 'welcome') {
+                showContent('welcome');
+            }
+        }
+
+        // ==================== CONTENT SWITCHING ====================
+        function showContent(contentId) {
+            currentContent = contentId;
+            
+            // Hide all content panels
+            document.querySelectorAll('.content-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+
+            // Update submenu button states
+            document.querySelectorAll('.submenu-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected content
+            const content = document.getElementById(`content-${contentId}`);
+            if (content) {
+                content.classList.add('active');
+            }
+
+            // If dual panel, load data
+            if (contentId === 'catalog-produse') {
+                loadCategories();
+                loadProducts();
+            }
+        }
+
+        // ==================== DATA LOADING ====================
+        async function loadCategories() {
+            try {
+                const response = await fetch('/api/admin/categories');
+                const data = await response.json();
+                
+                const categoryList = document.getElementById('categoryList');
+                // Keep "All Products" and add categories
+                data.categories.forEach(cat => {
+                    const li = document.createElement('li');
+                    li.className = 'category-item';
+                    li.dataset.category = cat.id;
+                    li.innerHTML = `<span>📁</span> <span>${cat.name}</span>`;
+                    li.onclick = () => selectCategory(cat.id);
+                    categoryList.appendChild(li);
+                });
+            } catch (error) {
+                console.error('Error loading categories:', error);
+            }
+        }
+
+        async function loadProducts(categoryId = null) {
+            try {
+                const response = await fetch('/api/admin/menu');
+                const data = await response.json();
+                
+                const tbody = document.querySelector('#productsTable tbody');
+                tbody.innerHTML = '';
+                
+                let products = data.menu || [];
+                if (categoryId && categoryId !== 'all') {
+                    products = products.filter(p => p.category_id === categoryId);
+                }
+                
+                products.forEach(product => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${product.name}</td>
+                        <td>${product.price} RON</td>
+                        <td>${product.category}</td>
+                        <td>${product.is_sellable ? '✅ Activ' : '❌ Inactiv'}</td>
+                        <td>
+                            <button class="toolbar-btn" onclick="editProduct(${product.id})">✏️</button>
+                            <button class="toolbar-btn danger" onclick="deleteProduct(${product.id})">🗑️</button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (error) {
+                console.error('Error loading products:', error);
+            }
+        }
+
+        function selectCategory(categoryId) {
+            document.querySelectorAll('.category-item').forEach(item => {
+                item.classList.toggle('active', item.dataset.category === categoryId);
+            });
+            loadProducts(categoryId);
+        }
+
+        // ==================== PLACEHOLDER FUNCTIONS ====================
+        // Categories
+        function addCategory() { alert('Add Category - To be implemented'); }
+        function editCategory() { alert('Edit Category - To be implemented'); }
+        function deleteCategory() { alert('Delete Category - To be implemented'); }
+        
+        // Products
+        function addProduct() { alert('Add Product - To be implemented'); }
+        function editProduct(id) { alert(`Edit Product ${id} - To be implemented`); }
+        function deleteProduct(id) { alert(`Delete Product ${id} - To be implemented`); }
+        function refreshProducts() { loadProducts(); }
+        function exportProducts() { alert('Export Products - To be implemented'); }
+        
+        // Tables
+        function addTable() { alert('Add Table - To be implemented'); }
+        function editTable() { alert('Edit Table - To be implemented'); }
+        function deleteTable() { alert('Delete Table - To be implemented'); }
+        function refreshTables() { alert('Refresh Tables - To be implemented'); }
+        
+        // Users & Personal
+        function addUser() { alert('Add User - To be implemented'); }
+        function managePins() { alert('Manage PINs - To be implemented'); }
+        function manageRoles() { alert('Manage Roles - To be implemented'); }
+        
+        // Ingredients
+        function addIngredient() { alert('Add Ingredient - To be implemented'); }
+        function editIngredient() { alert('Edit Ingredient - To be implemented'); }
+        function deleteIngredient() { alert('Delete Ingredient - To be implemented'); }
+        function ajustareStoc() { alert('Adjust Stock - To be implemented'); }
+        function refreshIngredients() { alert('Refresh Ingredients - To be implemented'); }
+        
+        // Finished Products
+        function addFinishedProduct() { alert('Add Finished Product - To be implemented'); }
+        function refreshFinishedProducts() { alert('Refresh - To be implemented'); }
+        
+        // Recipes
+        function createRecipe() { alert('Create Recipe - To be implemented'); }
+        function createFTP() { alert('Create FTP - To be implemented'); }
+        function refreshRecipes() { alert('Refresh Recipes - To be implemented'); }
+        
+        // Stock Movements
+        function filterStockMovements() { alert('Filter - To be implemented'); }
+        function refreshStockMovements() { alert('Refresh - To be implemented'); }
+        function exportStockMovements() { alert('Export - To be implemented'); }
+        
+        // Transfers
+        function createTransfer() { alert('Create Transfer - To be implemented'); }
+        function refreshTransfers() { alert('Refresh - To be implemented'); }
+        
+        // Inventory
+        function startInventory() { alert('Start Inventory - To be implemented'); }
+        function viewInventoryHistory() { alert('View History - To be implemented'); }
+        
+        // Batches
+        function addBatch() { alert('Add Batch - To be implemented'); }
+        function traceIngredient() { alert('Trace - To be implemented'); }
+        
+        // Import/Export Stocks
+        function importStocks() { alert('Import - To be implemented'); }
+        function exportStocks() { alert('Export - To be implemented'); }
+        function downloadTemplate() { alert('Download Template - To be implemented'); }
+        
+        // Orders
+        function viewActiveOrders() { alert('View Active Orders - To be implemented'); }
+        function viewArchivedOrders() { alert('View Archived Orders - To be implemented'); }
+        function exportOrders() { alert('Export Orders - To be implemented'); }
+        
+        // Receipts
+        function viewReceipts() { alert('View Receipts - To be implemented'); }
+        function searchReceipt() { alert('Search Receipt - To be implemented'); }
+        
+        // Invoices
+        function generateInvoice() { alert('Generate Invoice - To be implemented'); }
+        function viewInvoices() { alert('View Invoices - To be implemented'); }
+        
+        // Cash Register
+        function openCash() { alert('Open Cash - To be implemented'); }
+        function closeCash() { alert('Close Cash - To be implemented'); }
+        function viewCashHistory() { alert('View History - To be implemented'); }
+        
+        // Accounts
+        function addAccount() { alert('Add Account - To be implemented'); }
+        function viewAccounts() { alert('View Accounts - To be implemented'); }
+        
+        // Fiscal Reports
+        function generateXReport() { alert('Generate X Report - To be implemented'); }
+        function generateZReport() { alert('Generate Z Report - To be implemented'); }
+        function viewMonthlyReports() { alert('View Monthly Reports - To be implemented'); }
+        function viewZHistory() { alert('View Z History - To be implemented'); }
+        
+        // Advanced Reports
+        function viewSalesReport() { alert('View Sales Report - To be implemented'); }
+        function viewProfitabilityReport() { alert('View Profitability - To be implemented'); }
+        function viewCustomerBehavior() { alert('View Customer Behavior - To be implemented'); }
+        function viewTimeTrends() { alert('View Time Trends - To be implemented'); }
+        
+        // Predictive Analytics
+        function viewPredictiveAnalytics() { alert('View Predictive Analytics - To be implemented'); }
+        function viewCorrelationAnalysis() { alert('View Correlation - To be implemented'); }
+        
+        // Export
+        function exportExcel() { alert('Export Excel - To be implemented'); }
+        function exportPDF() { alert('Export PDF - To be implemented'); }
+        
+        // Suppliers
+        function addSupplier() { alert('Add Supplier - To be implemented'); }
+        function editSupplier() { alert('Edit Supplier - To be implemented'); }
+        function deleteSupplier() { alert('Delete Supplier - To be implemented'); }
+        function refreshSuppliers() { alert('Refresh Suppliers - To be implemented'); }
+        
+        // Customers
+        function addCustomer() { alert('Add Customer - To be implemented'); }
+        function viewCustomerHistory() { alert('View History - To be implemented'); }
+        function refreshCustomers() { alert('Refresh - To be implemented'); }
+        
+        // Loyalty
+        function addLoyaltyReward() { alert('Add Reward - To be implemented'); }
+        function viewLoyaltyStats() { alert('View Stats - To be implemented'); }
+        
+        // Import/Export
+        function importIngredientsExcel() { alert('Import Ingredients - To be implemented'); }
+        function importProductsExcel() { alert('Import Products - To be implemented'); }
+        function importRecipesExcel() { alert('Import Recipes - To be implemented'); }
+        function exportAllExcel() { alert('Export All - To be implemented'); }
+        function exportCSV() { alert('Export CSV - To be implemented'); }
+        
+        // External Systems
+        function configureWizOne() { alert('Configure WizOne - To be implemented'); }
+        function configureMODERN() { alert('Configure MODERN - To be implemented'); }
+        
+        // Backup
+        function createBackup() { alert('Create Backup - To be implemented'); }
+        function viewBackups() { alert('View Backups - To be implemented'); }
+        function restoreBackup() { alert('Restore Backup - To be implemented'); }
+        
+        // Nomenclatoare
+        function addUnit() { alert('Add Unit - To be implemented'); }
+        function manageConversions() { alert('Manage Conversions - To be implemented'); }
+        function addVATRate() { alert('Add VAT Rate - To be implemented'); }
+        function updateExchangeRates() { alert('Update Exchange Rates - To be implemented'); }
+        
+        // Help
+        function checkUpdates() { alert('Check Updates - To be implemented'); }
+        
+        // ==================== EXPORT SAGA (ADMIN V4) ====================
+        function setV4SagaStatus(message, type = 'info') {
+            const status = document.getElementById('v4SagaStatus');
+            if (!status) return;
+            if (!message) {
+                status.style.display = 'none';
+                status.textContent = '';
+                return;
+            }
+            status.className = `alert-${type}`;
+            status.textContent = message;
+            status.style.display = 'block';
+        }
+
+        function getV4SagaBrandInfo() {
+            return {
+                unitName: document.getElementById('v4SagaBrandName')?.value?.trim() || '',
+                cui: document.getElementById('v4SagaBrandCui')?.value?.trim() || '',
+                address: document.getElementById('v4SagaBrandAddress')?.value?.trim() || '',
+                gestion: document.getElementById('v4SagaBrandGestion')?.value?.trim() || ''
+            };
+        }
+
+        function renderV4SagaHistory() {
+            const tableBody = document.querySelector('#v4SagaHistoryTable tbody');
+            if (!tableBody || typeof SagaExporter === 'undefined') return;
+            const counter = document.getElementById('v4SagaHistoryCount');
+            const history = SagaExporter.getAuditHistory('admin-v4');
+            if (counter) {
+                counter.textContent = history.length ? `${history.length} exporturi` : 'Fără exporturi';
+            }
+            if (!history.length) {
+                tableBody.innerHTML = '<tr><td colspan="6" class="text-center">Nu există exporturi încă.</td></tr>';
+                return;
+            }
+            tableBody.innerHTML = history.slice(0, 10).map(entry => {
+                const period = entry.startDate && entry.endDate ? `${entry.startDate} → ${entry.endDate}` : 'Toată perioada';
+                const timestamp = new Date(entry.timestamp).toLocaleString('ro-RO');
+                return `
+                    <tr>
+                        <td>${timestamp}</td>
+                        <td>${entry.type.toUpperCase()}</td>
+                        <td>${period}</td>
+                        <td>${entry.rows}</td>
+                        <td>${entry.debitAccount} / ${entry.creditAccount}</td>
+                        <td>${entry.exportedBy || 'admin'}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        async function handleSagaExportV4() {
+            if (typeof SagaExporter === 'undefined') {
+                alert('SagaExporter nu este disponibil.');
+                return;
+            }
+            try {
+                setV4SagaStatus('Se pregătește exportul...', 'info');
+                const brand = getV4SagaBrandInfo();
+                const result = await SagaExporter.exportSaga({
+                    type: document.getElementById('v4SagaType').value,
+                    startDate: document.getElementById('v4SagaStartDate').value,
+                    endDate: document.getElementById('v4SagaEndDate').value,
+                    debitAccount: document.getElementById('v4SagaDebit').value.trim() || '371',
+                    creditAccount: document.getElementById('v4SagaCredit').value.trim() || '401',
+                    defaultVatRate: parseFloat(document.getElementById('v4SagaVat').value) || 9,
+                    brand,
+                    exportedBy: localStorage.getItem('adminUsername') || 'admin',
+                    context: 'admin-v4',
+                    authToken: localStorage.getItem('adminToken') || sessionStorage.getItem('restaurantAuth')
+                });
+                setV4SagaStatus(`✅ Export complet (${result.rowsCount} linii)`, 'success');
+                renderV4SagaHistory();
+            } catch (error) {
+                console.error('Saga export v4 error:', error);
+                setV4SagaStatus(`❌ ${error.message || 'Eroare la export.'}`, 'danger');
+            }
+        }
+
+        function initV4SagaExport() {
+            const startInput = document.getElementById('v4SagaStartDate');
+            const endInput = document.getElementById('v4SagaEndDate');
+            if (!startInput || !endInput) return;
+            const today = new Date();
+            const isoToday = today.toISOString().slice(0, 10);
+            const lastMonth = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+            if (!startInput.value) startInput.value = lastMonth;
+            if (!endInput.value) endInput.value = isoToday;
+            setV4SagaStatus('');
+            renderV4SagaHistory();
+        }
+
+        // Translations
+        async function loadMissingTranslations() {
+            alert('Load Missing Translations - To be implemented');
+        }
+        
+        function logout() { window.location.href = '/'; }
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🚀 Admin v4.0 initialized');
+            updateTranslations();
+            initV4SagaExport();
+        });
+    </script>
+</body>
+    <script src="/branding/qroms-badge.js"></script>
+</html>
+

@@ -1,0 +1,67 @@
+﻿Ã¯Â»Â¿{
+  "productId": 278,
+  "productName": "Linguini AOP cu CreveÃƒÂˆÃ¢Â€Âºi",
+  "productCategory": "Paste",
+  "price": 59,
+  "description": "Paste fresh, creveÃƒÂˆÃ¢Â€Âºi, ardei iute, roÃƒÂˆÃ¢Â„Â¢ii cherry, usturoi, unt, pÃ„ÂƒÃ†Â’trunjel",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 16,
+      "ingredientName": "Ardei iute",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 112,
+      "ingredientName": "PÃ„ÂƒÃ†Â’trunjel",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 137,
+      "ingredientName": "CreveÃƒÂˆÃ¢Â€Âºi",
+      "ingredientCategory": "Peste Fructe de Mare",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 60,
+      "ingredientName": "Unt",
+      "ingredientCategory": "Lactate ÃƒÂˆÃ¢Â„Â¢i BrÃƒÂ¢nzeturi",
+      "quantityNeeded": 20,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 64,
+      "ingredientName": "Paste",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 200,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

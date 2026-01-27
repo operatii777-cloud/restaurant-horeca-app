@@ -1,0 +1,17 @@
+{
+  "productId": 225,
+  "productName": "Iahnie de Fasole",
+  "productCategory": "Fel Principal",
+  "price": 24,
+  "description": "Iahnie tradițională de fasole cu ceapă călită, boia de ardei și condimente",
+  "ingredients": [
+    {
+      "ingredientId": 94,
+      "ingredientName": "Ceapă",
+      "ingredientCategory": "Fructe și Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "productId": 277,
+  "productName": "Tortellini Panna e Prosciutto",
+  "productCategory": "Paste",
+  "price": 32,
+  "description": "Tortellini cu smântână și prosciutto",
+  "ingredients": [
+    {
+      "ingredientId": 99,
+      "ingredientName": "Prosciutto",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 113,
+      "ingredientName": "Smântână",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+﻿Ã¯Â»Â¿{
+  "productId": 1052,
+  "productName": "PÃ„ÂƒÃ†Â’lincÃ„ÂƒÃ†Â’ (50ml)",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 834,
+      "ingredientName": "PÃ„ÂƒÃ†Â’lincÃ„ÂƒÃ†Â’ de prune",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": [
+    {
+      "ingredientId": 835,
+      "ingredientName": "Pahar shot",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "itemType": "packaging_restaurant"
+    }
+  ]
+}
+
+

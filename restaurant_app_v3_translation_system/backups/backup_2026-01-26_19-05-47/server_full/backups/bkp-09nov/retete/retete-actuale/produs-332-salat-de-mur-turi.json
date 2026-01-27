@@ -1,0 +1,41 @@
+{
+  "productId": 332,
+  "productName": "Salată de Murături",
+  "productCategory": "Salate Însoțitoare",
+  "price": 18,
+  "description": "Murături asortate",
+  "ingredients": [
+    {
+      "ingredientId": 173,
+      "ingredientName": "Castraveți murați",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 174,
+      "ingredientName": "Morcovi murați",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 94,
+      "ingredientName": "Ceapă",
+      "ingredientCategory": "Fructe și Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 31,
+      "ingredientName": "Ulei de floarea-soarelui",
+      "ingredientCategory": "Condimente și Sosuri",
+      "quantityNeeded": 20,
+      "unit": "l",
+      "wastePercentage": 0
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+﻿Ã¯Â»Â¿{
+  "productId": 269,
+  "productName": "Sarica Aniversarium RoÃƒÂˆÃ¢Â„Â¢u",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 768,
+      "ingredientName": "Sarica Aniversarium RoÃƒÂˆÃ¢Â„Â¢u",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

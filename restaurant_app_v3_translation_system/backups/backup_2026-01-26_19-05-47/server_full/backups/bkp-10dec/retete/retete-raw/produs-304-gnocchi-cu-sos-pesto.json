@@ -1,0 +1,35 @@
+{
+  "productId": 304,
+  "productName": "Gnocchi cu Sos Pesto",
+  "productCategory": "Paste",
+  "ingredients": [
+    {
+      "ingredientId": 32,
+      "ingredientName": "cartofi",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 48,
+      "ingredientName": "parmezan",
+      "ingredientCategory": "General",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 798,
+      "ingredientName": "Roșii Shaorma",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

@@ -1,0 +1,57 @@
+/**
+ * AgGridTable Styles
+ * Standardizare stiluri pentru wrapper-ul AG Grid
+ */
+
+.ag-grid-table-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+/* Ensure AG Grid theme is applied */
+.ag-grid-table-wrapper .ag-theme-alpine-dark {
+  width: 100%;
+  height: 100%;
+}
+
+/* Dark mode styles for AG Grid Alpine theme */
+.dark .ag-theme-alpine-dark,
+.ag-theme-alpine-dark {
+  --ag-background-color: #0f172a;
+  --ag-header-background-color: #1e293b;
+  --ag-odd-row-background-color: #1e293b;
+  --ag-row-hover-color: #334155;
+  --ag-selected-row-background-color: #3b82f6;
+  --ag-header-foreground-color: #f1f5f9;
+  --ag-foreground-color: #f1f5f9;
+  --ag-border-color: #334155;
+  --ag-row-border-color: #334155;
+  --ag-header-cell-hover-background-color: #334155;
+  --ag-range-selection-background-color: rgba(59, 130, 246, 0.2);
+  --ag-range-selection-border-color: #3b82f6;
+  --ag-input-focus-border-color: #3b82f6;
+  --ag-checkbox-checked-color: #3b82f6;
+  --ag-checkbox-unchecked-color: #64748b;
+  --ag-checkbox-background-color: #1e293b;
+  --ag-menu-background-color: #1e293b;
+  --ag-menu-foreground-color: #f1f5f9;
+  --ag-tooltip-background-color: #1e293b;
+  --ag-tooltip-foreground-color: #f1f5f9;
+  --ag-popup-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --ag-selected-tab-underline-color: #3b82f6;
+  --ag-range-selection-chart-background-color: rgba(59, 130, 246, 0.1);
+  --ag-range-selection-chart-category-background-color: rgba(59, 130, 246, 0.2);
+}
+
+/* Loading overlay styling */
+.ag-grid-table-wrapper .ag-overlay-loading-center {
+  color: #f1f5f9;
+  font-size: 1rem;
+}
+
+/* No rows overlay styling */
+.ag-grid-table-wrapper .ag-overlay-no-rows-center {
+  color: #94a3b8;
+  font-size: 1rem;
+}
+

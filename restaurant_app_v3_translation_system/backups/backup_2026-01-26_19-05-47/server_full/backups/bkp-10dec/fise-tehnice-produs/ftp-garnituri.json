@@ -1,0 +1,1045 @@
+[
+  {
+    "product": {
+      "id": 107,
+      "name": "Broccoli Sote",
+      "name_en": "Sautéed Broccoli",
+      "category": "Garnituri",
+      "category_en": "Side Dishes",
+      "price": 21,
+      "description": "Broccoli sote în unt",
+      "description_en": "Broccoli sautéed in butter",
+      "weight": "200G",
+      "prep_time": null,
+      "spice_level": 0,
+      "is_vegetarian": 1,
+      "is_spicy": 0,
+      "is_takeout_only": 0,
+      "allergens": "lapte",
+      "allergens_en": "milk"
+    },
+    "nutrition": {
+      "calories": null,
+      "protein": null,
+      "carbs": null,
+      "fat": null,
+      "fiber": null,
+      "sodium": null,
+      "sugar": null,
+      "salt": null
+    },
+    "recipe": {
+      "ingredients": [
+        {
+          "id": 544,
+          "name": "Broccoli (buchețele)",
+          "category": "General",
+          "quantity": 150,
+          "unit": "g",
+          "unitStock": "g",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0,
+          "totalCost": "0.00",
+          "totalCostWithWaste": "0.00",
+          "supplier": null,
+          "currentStock": 2000,
+          "minStock": 10,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 800,
+          "name": "Sos Usturoi Shaorma",
+          "category": "Sosuri",
+          "quantity": 2,
+          "unit": "g",
+          "unitStock": "ml",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 1.1303157632422682,
+          "totalCost": "2.26",
+          "totalCostWithWaste": "2.26",
+          "supplier": "Furnizor Test",
+          "currentStock": 64752.76470588235,
+          "minStock": 100,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 821,
+          "name": "Ulei vegetal",
+          "category": "Uleiuri și Grăsimi",
+          "quantity": 10,
+          "unit": "g",
+          "unitStock": "ml",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.36491973522575893,
+          "totalCost": "3.65",
+          "totalCostWithWaste": "3.65",
+          "supplier": "Uleiuri SRL",
+          "currentStock": 71910,
+          "minStock": 5000,
+          "stockStatus": "OK"
+        }
+      ],
+      "packagingRestaurant": [],
+      "packagingDelivery": []
+    },
+    "costs": {
+      "totalIngredientsCost": "5.91",
+      "totalCostWithWaste": "5.91",
+      "sellingPrice": 21,
+      "profitMargin": 15.09,
+      "markup": 71.86,
+      "foodCostPercentage": "28.14"
+    },
+    "stats": {
+      "totalIngredients": 3,
+      "totalPackagingItems": 0,
+      "hasNutritionalInfo": false,
+      "lowStockIngredients": 0
+    }
+  },
+  {
+    "product": {
+      "id": 316,
+      "name": "Cartofi La Cuptor",
+      "name_en": "Potatoes oven-baked",
+      "category": "Garnituri",
+      "category_en": "Garnituri",
+      "price": 10,
+      "description": "Cartofi la cuptor cu rozmarin",
+      "description_en": "Potatoes oven-baked with rozmarin",
+      "weight": null,
+      "prep_time": null,
+      "spice_level": 0,
+      "is_vegetarian": 0,
+      "is_spicy": 0,
+      "is_takeout_only": 0,
+      "allergens": null,
+      "allergens_en": ""
+    },
+    "nutrition": {
+      "calories": null,
+      "protein": null,
+      "carbs": null,
+      "fat": null,
+      "fiber": null,
+      "sodium": null,
+      "sugar": null,
+      "salt": null
+    },
+    "recipe": {
+      "ingredients": [
+        {
+          "id": 830,
+          "name": "Rozmarin",
+          "category": "Sosuri și Condimente",
+          "quantity": 5,
+          "unit": "g",
+          "unitStock": "g",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.03998665331998665,
+          "totalCost": "0.20",
+          "totalCostWithWaste": "0.20",
+          "supplier": "Spice World SRL",
+          "currentStock": 8991,
+          "minStock": 200,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 169,
+          "name": "Sare de mare",
+          "category": "General",
+          "quantity": 2,
+          "unit": "g",
+          "unitStock": "g",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.0001243382635146494,
+          "totalCost": "0.00",
+          "totalCostWithWaste": "0.00",
+          "supplier": null,
+          "currentStock": 157634.5,
+          "minStock": 10,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 821,
+          "name": "Ulei vegetal",
+          "category": "Uleiuri și Grăsimi",
+          "quantity": 10,
+          "unit": "ml",
+          "unitStock": "ml",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.36491973522575893,
+          "totalCost": "3.65",
+          "totalCostWithWaste": "3.65",
+          "supplier": "Uleiuri SRL",
+          "currentStock": 71910,
+          "minStock": 5000,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 32,
+          "name": "cartofi",
+          "category": "General",
+          "quantity": 200,
+          "unit": "g",
+          "unitStock": "kg",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 7.749966000239362,
+          "totalCost": "1549.99",
+          "totalCostWithWaste": "1549.99",
+          "supplier": null,
+          "currentStock": 76675,
+          "minStock": 2,
+          "stockStatus": "OK"
+        }
+      ],
+      "packagingRestaurant": [],
+      "packagingDelivery": []
+    },
+    "costs": {
+      "totalIngredientsCost": "1553.84",
+      "totalCostWithWaste": "1553.84",
+      "sellingPrice": 10,
+      "profitMargin": -1543.84,
+      "markup": -15438.43,
+      "foodCostPercentage": "15538.43"
+    },
+    "stats": {
+      "totalIngredients": 4,
+      "totalPackagingItems": 0,
+      "hasNutritionalInfo": false,
+      "lowStockIngredients": 0
+    }
+  },
+  {
+    "product": {
+      "id": 101,
+      "name": "Cartofi Trattoria",
+      "name_en": "Trattoria Potatoes",
+      "category": "Garnituri",
+      "category_en": "Side Dishes",
+      "price": 26,
+      "description": "Cartofi, bacon, ou, sos ceddar, roșii, ceapă verde",
+      "description_en": "Potatoes, bacon, egg, cheddar sauce, tomatoes, green onion",
+      "weight": "300G",
+      "prep_time": null,
+      "spice_level": 0,
+      "is_vegetarian": 0,
+      "is_spicy": 0,
+      "is_takeout_only": 0,
+      "allergens": "ouă, lapte",
+      "allergens_en": "eggs, milk"
+    },
+    "nutrition": {
+      "calories": null,
+      "protein": null,
+      "carbs": null,
+      "fat": null,
+      "fiber": null,
+      "sodium": null,
+      "sugar": null,
+      "salt": null
+    },
+    "recipe": {
+      "ingredients": [
+        {
+          "id": 830,
+          "name": "Rozmarin",
+          "category": "Sosuri și Condimente",
+          "quantity": 5,
+          "unit": "g",
+          "unitStock": "g",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.03998665331998665,
+          "totalCost": "0.20",
+          "totalCostWithWaste": "0.20",
+          "supplier": "Spice World SRL",
+          "currentStock": 8991,
+          "minStock": 200,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 800,
+          "name": "Sos Usturoi Shaorma",
+          "category": "Sosuri",
+          "quantity": 5,
+          "unit": "g",
+          "unitStock": "ml",
+          "wastePercentage": 15,
+          "variableConsumption": null,
+          "costPerUnit": 1.1303157632422682,
+          "totalCost": "5.65",
+          "totalCostWithWaste": "6.50",
+          "supplier": "Furnizor Test",
+          "currentStock": 64752.76470588235,
+          "minStock": 100,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 821,
+          "name": "Ulei vegetal",
+          "category": "Uleiuri și Grăsimi",
+          "quantity": 15,
+          "unit": "ml",
+          "unitStock": "ml",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.36491973522575893,
+          "totalCost": "5.47",
+          "totalCostWithWaste": "5.47",
+          "supplier": "Uleiuri SRL",
+          "currentStock": 71910,
+          "minStock": 5000,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 32,
+          "name": "cartofi",
+          "category": "General",
+          "quantity": 200,
+          "unit": "g",
+          "unitStock": "kg",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 7.749966000239362,
+          "totalCost": "1549.99",
+          "totalCostWithWaste": "1549.99",
+          "supplier": null,
+          "currentStock": 76675,
+          "minStock": 2,
+          "stockStatus": "OK"
+        }
+      ],
+      "packagingRestaurant": [],
+      "packagingDelivery": []
+    },
+    "costs": {
+      "totalIngredientsCost": "1561.32",
+      "totalCostWithWaste": "1562.17",
+      "sellingPrice": 26,
+      "profitMargin": -1536.17,
+      "markup": -5908.33,
+      "foodCostPercentage": "6008.33"
+    },
+    "stats": {
+      "totalIngredients": 4,
+      "totalPackagingItems": 0,
+      "hasNutritionalInfo": false,
+      "lowStockIngredients": 0
+    }
+  },
+  {
+    "product": {
+      "id": 104,
+      "name": "Cartofi Zdrobiți",
+      "name_en": "Smashed Potatoes",
+      "category": "Garnituri",
+      "category_en": "Side Dishes",
+      "price": 18,
+      "description": "Cartofi zdrobiți cu ierburi",
+      "description_en": "Smashed potatoes with herbs",
+      "weight": "200G",
+      "prep_time": null,
+      "spice_level": 0,
+      "is_vegetarian": 1,
+      "is_spicy": 0,
+      "is_takeout_only": 0,
+      "allergens": "lapte",
+      "allergens_en": "milk"
+    },
+    "nutrition": {
+      "calories": null,
+      "protein": null,
+      "carbs": null,
+      "fat": null,
+      "fiber": null,
+      "sodium": null,
+      "sugar": null,
+      "salt": null
+    },
+    "recipe": {
+      "ingredients": [
+        {
+          "id": 830,
+          "name": "Rozmarin",
+          "category": "Sosuri și Condimente",
+          "quantity": 5,
+          "unit": "g",
+          "unitStock": "g",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.03998665331998665,
+          "totalCost": "0.20",
+          "totalCostWithWaste": "0.20",
+          "supplier": "Spice World SRL",
+          "currentStock": 8991,
+          "minStock": 200,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 821,
+          "name": "Ulei vegetal",
+          "category": "Uleiuri și Grăsimi",
+          "quantity": 10,
+          "unit": "ml",
+          "unitStock": "ml",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.36491973522575893,
+          "totalCost": "3.65",
+          "totalCostWithWaste": "3.65",
+          "supplier": "Uleiuri SRL",
+          "currentStock": 71910,
+          "minStock": 5000,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 32,
+          "name": "cartofi",
+          "category": "General",
+          "quantity": 200,
+          "unit": "g",
+          "unitStock": "kg",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 7.749966000239362,
+          "totalCost": "1549.99",
+          "totalCostWithWaste": "1549.99",
+          "supplier": null,
+          "currentStock": 76675,
+          "minStock": 2,
+          "stockStatus": "OK"
+        }
+      ],
+      "packagingRestaurant": [],
+      "packagingDelivery": []
+    },
+    "costs": {
+      "totalIngredientsCost": "1553.84",
+      "totalCostWithWaste": "1553.84",
+      "sellingPrice": 18,
+      "profitMargin": -1535.84,
+      "markup": -8532.46,
+      "foodCostPercentage": "8632.46"
+    },
+    "stats": {
+      "totalIngredients": 3,
+      "totalPackagingItems": 0,
+      "hasNutritionalInfo": false,
+      "lowStockIngredients": 0
+    }
+  },
+  {
+    "product": {
+      "id": 315,
+      "name": "Legume Sote",
+      "name_en": "Legume sautéed",
+      "category": "Garnituri",
+      "category_en": "Garnituri",
+      "price": 12,
+      "description": "Legume sote",
+      "description_en": "Legume sautéed",
+      "weight": null,
+      "prep_time": null,
+      "spice_level": 0,
+      "is_vegetarian": 0,
+      "is_spicy": 0,
+      "is_takeout_only": 0,
+      "allergens": null,
+      "allergens_en": ""
+    },
+    "nutrition": {
+      "calories": null,
+      "protein": null,
+      "carbs": null,
+      "fat": null,
+      "fiber": null,
+      "sodium": null,
+      "sugar": null,
+      "salt": null
+    },
+    "recipe": {
+      "ingredients": [
+        {
+          "id": 800,
+          "name": "Sos Usturoi Shaorma",
+          "category": "Sosuri",
+          "quantity": 2,
+          "unit": "g",
+          "unitStock": "ml",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 1.1303157632422682,
+          "totalCost": "2.26",
+          "totalCostWithWaste": "2.26",
+          "supplier": "Furnizor Test",
+          "currentStock": 64752.76470588235,
+          "minStock": 100,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 821,
+          "name": "Ulei vegetal",
+          "category": "Uleiuri și Grăsimi",
+          "quantity": 10,
+          "unit": "g",
+          "unitStock": "ml",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.36491973522575893,
+          "totalCost": "3.65",
+          "totalCostWithWaste": "3.65",
+          "supplier": "Uleiuri SRL",
+          "currentStock": 71910,
+          "minStock": 5000,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 23,
+          "name": "morcovi",
+          "category": "General",
+          "quantity": 150,
+          "unit": "g",
+          "unitStock": "kg",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 9.564774813926666,
+          "totalCost": "1434.72",
+          "totalCostWithWaste": "1434.72",
+          "supplier": null,
+          "currentStock": 50667.5,
+          "minStock": 0.8,
+          "stockStatus": "OK"
+        }
+      ],
+      "packagingRestaurant": [],
+      "packagingDelivery": []
+    },
+    "costs": {
+      "totalIngredientsCost": "1440.63",
+      "totalCostWithWaste": "1440.63",
+      "sellingPrice": 12,
+      "profitMargin": -1428.63,
+      "markup": -11905.22,
+      "foodCostPercentage": "12005.22"
+    },
+    "stats": {
+      "totalIngredients": 3,
+      "totalPackagingItems": 0,
+      "hasNutritionalInfo": false,
+      "lowStockIngredients": 0
+    }
+  },
+  {
+    "product": {
+      "id": 102,
+      "name": "Cartofi Prăjiți",
+      "name_en": "French Fries",
+      "category": "Garnituri",
+      "category_en": "Side Dishes",
+      "price": 16,
+      "description": "Cartofi prăjiți clasici",
+      "description_en": "Classic french fries",
+      "weight": "200G",
+      "prep_time": null,
+      "spice_level": 0,
+      "is_vegetarian": 1,
+      "is_spicy": 0,
+      "is_takeout_only": 0,
+      "allergens": null,
+      "allergens_en": ""
+    },
+    "nutrition": {
+      "calories": null,
+      "protein": null,
+      "carbs": null,
+      "fat": null,
+      "fiber": null,
+      "sodium": null,
+      "sugar": null,
+      "salt": null
+    },
+    "recipe": {
+      "ingredients": [
+        {
+          "id": 169,
+          "name": "Sare de mare",
+          "category": "General",
+          "quantity": 2,
+          "unit": "g",
+          "unitStock": "g",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.0001243382635146494,
+          "totalCost": "0.00",
+          "totalCostWithWaste": "0.00",
+          "supplier": null,
+          "currentStock": 157634.5,
+          "minStock": 10,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 821,
+          "name": "Ulei vegetal",
+          "category": "Uleiuri și Grăsimi",
+          "quantity": 1,
+          "unit": "cantitate necesară",
+          "unitStock": "ml",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.36491973522575893,
+          "totalCost": "0.36",
+          "totalCostWithWaste": "0.36",
+          "supplier": "Uleiuri SRL",
+          "currentStock": 71910,
+          "minStock": 5000,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 32,
+          "name": "cartofi",
+          "category": "General",
+          "quantity": 200,
+          "unit": "g",
+          "unitStock": "kg",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 7.749966000239362,
+          "totalCost": "1549.99",
+          "totalCostWithWaste": "1549.99",
+          "supplier": null,
+          "currentStock": 76675,
+          "minStock": 2,
+          "stockStatus": "OK"
+        }
+      ],
+      "packagingRestaurant": [],
+      "packagingDelivery": []
+    },
+    "costs": {
+      "totalIngredientsCost": "1550.36",
+      "totalCostWithWaste": "1550.36",
+      "sellingPrice": 16,
+      "profitMargin": -1534.36,
+      "markup": -9589.74,
+      "foodCostPercentage": "9689.74"
+    },
+    "stats": {
+      "totalIngredients": 3,
+      "totalPackagingItems": 0,
+      "hasNutritionalInfo": false,
+      "lowStockIngredients": 0
+    }
+  },
+  {
+    "product": {
+      "id": 317,
+      "name": "Mămăligă",
+      "name_en": "Mămăligă",
+      "category": "Garnituri",
+      "category_en": "Garnituri",
+      "price": 8,
+      "description": "Mămăligă (porție)",
+      "description_en": "Mămăligă (porție)",
+      "weight": null,
+      "prep_time": null,
+      "spice_level": 0,
+      "is_vegetarian": 0,
+      "is_spicy": 0,
+      "is_takeout_only": 0,
+      "allergens": null,
+      "allergens_en": ""
+    },
+    "nutrition": {
+      "calories": null,
+      "protein": null,
+      "carbs": null,
+      "fat": null,
+      "fiber": null,
+      "sodium": null,
+      "sugar": null,
+      "salt": null
+    },
+    "recipe": {
+      "ingredients": [
+        {
+          "id": 395,
+          "name": "Mălai",
+          "category": "General",
+          "quantity": 100,
+          "unit": "g",
+          "unitStock": "g",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0,
+          "totalCost": "0.00",
+          "totalCostWithWaste": "0.00",
+          "supplier": null,
+          "currentStock": 19400,
+          "minStock": 10,
+          "stockStatus": "OK"
+        }
+      ],
+      "packagingRestaurant": [],
+      "packagingDelivery": []
+    },
+    "costs": {
+      "totalIngredientsCost": "0.00",
+      "totalCostWithWaste": "0.00",
+      "sellingPrice": 8,
+      "profitMargin": 8,
+      "markup": 100,
+      "foodCostPercentage": "0.00"
+    },
+    "stats": {
+      "totalIngredients": 1,
+      "totalPackagingItems": 0,
+      "hasNutritionalInfo": false,
+      "lowStockIngredients": 0
+    }
+  },
+  {
+    "product": {
+      "id": 106,
+      "name": "Orez Sălbatic",
+      "name_en": "Wild Rice",
+      "category": "Garnituri",
+      "category_en": "Side Dishes",
+      "price": 18,
+      "description": "Orez sălbatic aromat",
+      "description_en": "Aromatic wild rice",
+      "weight": "200G",
+      "prep_time": null,
+      "spice_level": 0,
+      "is_vegetarian": 1,
+      "is_spicy": 0,
+      "is_takeout_only": 0,
+      "allergens": null,
+      "allergens_en": ""
+    },
+    "nutrition": {
+      "calories": null,
+      "protein": null,
+      "carbs": null,
+      "fat": null,
+      "fiber": null,
+      "sodium": null,
+      "sugar": null,
+      "salt": null
+    },
+    "recipe": {
+      "ingredients": [
+        {
+          "id": 814,
+          "name": "Orez pentru sarmale",
+          "category": "Cereale și Paste",
+          "quantity": 80,
+          "unit": "g",
+          "unitStock": "g",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.1660575228298032,
+          "totalCost": "13.28",
+          "totalCostWithWaste": "13.28",
+          "supplier": "Cereale SRL",
+          "currentStock": 16194.489795918369,
+          "minStock": 2000,
+          "stockStatus": "OK"
+        }
+      ],
+      "packagingRestaurant": [],
+      "packagingDelivery": []
+    },
+    "costs": {
+      "totalIngredientsCost": "13.28",
+      "totalCostWithWaste": "13.28",
+      "sellingPrice": 18,
+      "profitMargin": 4.72,
+      "markup": 26.2,
+      "foodCostPercentage": "73.80"
+    },
+    "stats": {
+      "totalIngredients": 1,
+      "totalPackagingItems": 0,
+      "hasNutritionalInfo": false,
+      "lowStockIngredients": 0
+    }
+  },
+  {
+    "product": {
+      "id": 108,
+      "name": "Legume la Grătar",
+      "name_en": "Grilled Vegetables",
+      "category": "Garnituri",
+      "category_en": "Side Dishes",
+      "price": 19,
+      "description": "Vinete, dovlecel, roșii, ciuperci, ceapă roșie",
+      "description_en": "Eggplant, zucchini, tomatoes, mushrooms, red onion",
+      "weight": "200G",
+      "prep_time": null,
+      "spice_level": 0,
+      "is_vegetarian": 1,
+      "is_spicy": 0,
+      "is_takeout_only": 0,
+      "allergens": null,
+      "allergens_en": ""
+    },
+    "nutrition": {
+      "calories": null,
+      "protein": null,
+      "carbs": null,
+      "fat": null,
+      "fiber": null,
+      "sodium": null,
+      "sugar": null,
+      "salt": null
+    },
+    "recipe": {
+      "ingredients": [
+        {
+          "id": 821,
+          "name": "Ulei vegetal",
+          "category": "Uleiuri și Grăsimi",
+          "quantity": 5,
+          "unit": "ml",
+          "unitStock": "ml",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.36491973522575893,
+          "totalCost": "1.82",
+          "totalCostWithWaste": "1.82",
+          "supplier": "Uleiuri SRL",
+          "currentStock": 71910,
+          "minStock": 5000,
+          "stockStatus": "OK"
+        }
+      ],
+      "packagingRestaurant": [],
+      "packagingDelivery": []
+    },
+    "costs": {
+      "totalIngredientsCost": "1.82",
+      "totalCostWithWaste": "1.82",
+      "sellingPrice": 19,
+      "profitMargin": 17.18,
+      "markup": 90.4,
+      "foodCostPercentage": "9.60"
+    },
+    "stats": {
+      "totalIngredients": 1,
+      "totalPackagingItems": 0,
+      "hasNutritionalInfo": false,
+      "lowStockIngredients": 0
+    }
+  },
+  {
+    "product": {
+      "id": 105,
+      "name": "Orez cu Legume",
+      "name_en": "Rice with Vegetables",
+      "category": "Garnituri",
+      "category_en": "Side Dishes",
+      "price": 18,
+      "description": "Orez, ciuperci, ardei kapia, ceapă roșie, unt",
+      "description_en": "Rice, mushrooms, kapia pepper, red onion, butter",
+      "weight": "200G",
+      "prep_time": null,
+      "spice_level": 0,
+      "is_vegetarian": 1,
+      "is_spicy": 0,
+      "is_takeout_only": 0,
+      "allergens": "lapte",
+      "allergens_en": "milk"
+    },
+    "nutrition": {
+      "calories": null,
+      "protein": null,
+      "carbs": null,
+      "fat": null,
+      "fiber": null,
+      "sodium": null,
+      "sugar": null,
+      "salt": null
+    },
+    "recipe": {
+      "ingredients": [
+        {
+          "id": 814,
+          "name": "Orez pentru sarmale",
+          "category": "Cereale și Paste",
+          "quantity": 80,
+          "unit": "g",
+          "unitStock": "g",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.1660575228298032,
+          "totalCost": "13.28",
+          "totalCostWithWaste": "13.28",
+          "supplier": "Cereale SRL",
+          "currentStock": 16194.489795918369,
+          "minStock": 2000,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 821,
+          "name": "Ulei vegetal",
+          "category": "Uleiuri și Grăsimi",
+          "quantity": 5,
+          "unit": "g",
+          "unitStock": "ml",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.36491973522575893,
+          "totalCost": "1.82",
+          "totalCostWithWaste": "1.82",
+          "supplier": "Uleiuri SRL",
+          "currentStock": 71910,
+          "minStock": 5000,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 23,
+          "name": "morcovi",
+          "category": "General",
+          "quantity": 50,
+          "unit": "g",
+          "unitStock": "kg",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 9.564774813926666,
+          "totalCost": "478.24",
+          "totalCostWithWaste": "478.24",
+          "supplier": null,
+          "currentStock": 50667.5,
+          "minStock": 0.8,
+          "stockStatus": "OK"
+        }
+      ],
+      "packagingRestaurant": [],
+      "packagingDelivery": []
+    },
+    "costs": {
+      "totalIngredientsCost": "493.35",
+      "totalCostWithWaste": "493.35",
+      "sellingPrice": 18,
+      "profitMargin": -475.35,
+      "markup": -2640.82,
+      "foodCostPercentage": "2740.82"
+    },
+    "stats": {
+      "totalIngredients": 3,
+      "totalPackagingItems": 0,
+      "hasNutritionalInfo": false,
+      "lowStockIngredients": 0
+    }
+  },
+  {
+    "product": {
+      "id": 103,
+      "name": "Piure de Cartofi",
+      "name_en": "Mashed Potatoes",
+      "category": "Garnituri",
+      "category_en": "Side Dishes",
+      "price": 18,
+      "description": "Piure de cartofi cremos",
+      "description_en": "Creamy mashed potatoes",
+      "weight": "200G",
+      "prep_time": null,
+      "spice_level": 0,
+      "is_vegetarian": 1,
+      "is_spicy": 0,
+      "is_takeout_only": 0,
+      "allergens": "lapte",
+      "allergens_en": "milk"
+    },
+    "nutrition": {
+      "calories": null,
+      "protein": null,
+      "carbs": null,
+      "fat": null,
+      "fiber": null,
+      "sodium": null,
+      "sugar": null,
+      "salt": null
+    },
+    "recipe": {
+      "ingredients": [
+        {
+          "id": 169,
+          "name": "Sare de mare",
+          "category": "General",
+          "quantity": 3,
+          "unit": "g",
+          "unitStock": "g",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.0001243382635146494,
+          "totalCost": "0.00",
+          "totalCostWithWaste": "0.00",
+          "supplier": null,
+          "currentStock": 157634.5,
+          "minStock": 10,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 32,
+          "name": "cartofi",
+          "category": "General",
+          "quantity": 300,
+          "unit": "g",
+          "unitStock": "kg",
+          "wastePercentage": 20,
+          "variableConsumption": null,
+          "costPerUnit": 7.749966000239362,
+          "totalCost": "2324.99",
+          "totalCostWithWaste": "2789.99",
+          "supplier": null,
+          "currentStock": 76675,
+          "minStock": 2,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 53,
+          "name": "lapte",
+          "category": "General",
+          "quantity": 80,
+          "unit": "ml",
+          "unitStock": "l",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 4.3131870672107615,
+          "totalCost": "345.05",
+          "totalCostWithWaste": "345.05",
+          "supplier": null,
+          "currentStock": 23357,
+          "minStock": 0.4,
+          "stockStatus": "OK"
+        }
+      ],
+      "packagingRestaurant": [],
+      "packagingDelivery": []
+    },
+    "costs": {
+      "totalIngredientsCost": "2670.05",
+      "totalCostWithWaste": "3135.04",
+      "sellingPrice": 18,
+      "profitMargin": -3117.04,
+      "markup": -17316.91,
+      "foodCostPercentage": "17416.91"
+    },
+    "stats": {
+      "totalIngredients": 3,
+      "totalPackagingItems": 0,
+      "hasNutritionalInfo": false,
+      "lowStockIngredients": 0
+    }
+  }
+]

@@ -1,0 +1,101 @@
+{
+  "product": {
+    "id": 67,
+    "name": "Șnițel Crocant de Vită",
+    "name_en": "Crispy Beef Schnitzel",
+    "category": "Fel Principal",
+    "category_en": "Main Course",
+    "price": 91,
+    "description": "Mușchi de vită, cartofi prăjiți, sos brânzeturi",
+    "description_en": "Beef tenderloin, french fries, cheese sauce",
+    "weight": "200/200/100G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": "gluten, ouă, lapte",
+    "allergens_en": "gluten, eggs, milk"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 366,
+        "name": "Carne de vițel (spate)",
+        "category": "General",
+        "quantity": 180,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 538,
+        "name": "Pesmet Panko/Crocant",
+        "category": "General",
+        "quantity": 40,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 64,
+        "name": "suc de lămâie",
+        "category": "General",
+        "quantity": 5,
+        "unit": "g",
+        "unitStock": "l",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.770198325996813,
+        "totalCost": "3.85",
+        "totalCostWithWaste": "3.85",
+        "supplier": null,
+        "currentStock": 42848,
+        "minStock": 0.2,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "3.85",
+    "totalCostWithWaste": "3.85",
+    "sellingPrice": 91,
+    "profitMargin": 87.15,
+    "markup": 95.77,
+    "foodCostPercentage": "4.23"
+  },
+  "stats": {
+    "totalIngredients": 3,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

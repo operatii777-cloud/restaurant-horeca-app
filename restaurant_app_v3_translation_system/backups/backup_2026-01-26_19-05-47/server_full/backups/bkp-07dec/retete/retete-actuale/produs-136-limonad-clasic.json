@@ -1,0 +1,41 @@
+{
+  "productId": 136,
+  "productName": "Limonadă Clasică",
+  "productCategory": "Răcoritoare",
+  "price": 23,
+  "description": "Limonadă proaspătă naturală",
+  "ingredients": [
+    {
+      "ingredientId": 154,
+      "ingredientName": "Lămâie",
+      "ingredientCategory": "Legume și Fructe",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 33,
+      "ingredientName": "Zahăr",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 50,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 27,
+      "ingredientName": "Apă minerală",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 250,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "Gheață",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

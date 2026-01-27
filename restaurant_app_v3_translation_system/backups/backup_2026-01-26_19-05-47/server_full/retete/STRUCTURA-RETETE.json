@@ -1,0 +1,35 @@
+﻿Ã¯Â»Â¿{
+  "timestamp": "2025-10-20T16:13:14.666Z",
+  "reteteVechi": {
+    "directory": "retete-vechi/retete-raw/",
+    "source": "Baza de date veche (pre-rebuild)",
+    "totalFiles": 335,
+    "description": "ReÃƒÂˆÃ¢Â€Âºete din baza de date ÃƒÂ®nainte de rebuild (20 Oct 2025)"
+  },
+  "reteteActuale": {
+    "directory": "retete-actuale/",
+    "source": "Baza de date actualÃ„ÂƒÃ†Â’ (post-rebuild)",
+    "totalFiles": 247,
+    "totalProducts": 247,
+    "description": "ReÃƒÂˆÃ¢Â€Âºete din baza de date dupÃ„ÂƒÃ†Â’ rebuild (20 Oct 2025)"
+  },
+  "diferente": {
+    "totalDiferenta": -88,
+    "motivePosibile": [
+      "Produse duplicate eliminate ÃƒÂ®n rebuild",
+      "BÃ„ÂƒÃ†Â’uturi fÃ„ÂƒÃ†Â’rÃ„ÂƒÃ†Â’ reÃƒÂˆÃ¢Â€Âºete (nu necesitÃ„ÂƒÃ†Â’)",
+      "Produse ÃƒÂˆÃ¢Â„Â¢terse ÃƒÂ®n timpul curÃ„ÂƒÃ†Â’ÃƒÂˆÃ¢Â€Âºeniei",
+      "Produse noi adÃ„ÂƒÃ†Â’ugate"
+    ]
+  },
+  "structura": {
+    "retete-vechi/retete-raw/": "ReÃƒÂˆÃ¢Â€Âºete vechi (335 fiÃƒÂˆÃ¢Â„Â¢iere)",
+    "retete-actuale/": "ReÃƒÂˆÃ¢Â€Âºete actuale (247 fiÃƒÂˆÃ¢Â„Â¢iere)",
+    "ingrediente/": "Ingrediente grupate pe categorii",
+    "produse/": "Produse grupate pe categorii",
+    "ambalaje/": "ReÃƒÂˆÃ¢Â€Âºete ambalaje",
+    "analiza/": "Analize ÃƒÂˆÃ¢Â„Â¢i rapoarte"
+  }
+}
+
+

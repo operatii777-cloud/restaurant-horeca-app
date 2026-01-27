@@ -1,0 +1,70 @@
+{
+  "productId": 1046,
+  "productName": "Varză Călită cu Afumătură",
+  "productCategory": "Fel Principal",
+  "ingredients": [
+    {
+      "ingredientId": 825,
+      "ingredientName": "Varză albă",
+      "ingredientCategory": "Legume și Fructe",
+      "quantityNeeded": 300,
+      "unit": "g",
+      "wastePercentage": 25,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 826,
+      "ingredientName": "Ciolan afumat",
+      "ingredientCategory": "Carne și Pește",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 15,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 815,
+      "ingredientName": "Ceapă tocată",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 60,
+      "unit": "g",
+      "wastePercentage": 15,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 798,
+      "ingredientName": "Roșii Shaorma",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 80,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 823,
+      "ingredientName": "Boia de ardei dulce",
+      "ingredientCategory": "Sosuri și Condimente",
+      "quantityNeeded": 8,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 821,
+      "ingredientName": "Ulei vegetal",
+      "ingredientCategory": "Uleiuri și Grăsimi",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": [
+    {
+      "ingredientId": 623,
+      "ingredientName": "Ton în conservă",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "itemType": "packaging_delivery"
+    }
+  ]
+}

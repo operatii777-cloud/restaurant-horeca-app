@@ -1,0 +1,94 @@
+.food-cost-dashboard-page {
+  padding: 24px;
+}
+
+.food-cost-dashboard-page .card {
+  border: none;
+  border-radius: 12px;
+}
+
+.food-cost-dashboard-page .card-header {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.period-kpi-card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  height: 100%;
+}
+
+.period-kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.period-kpi-card h3 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 8px 0;
+}
+
+.period-kpi-card h6 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Butoane perioadă - fundal albastru pentru toate */
+.food-cost-dashboard-page .btn-group .btn {
+  background-color: #0d6efd !important;
+  border-color: #0d6efd !important;
+  color: white !important;
+}
+
+.food-cost-dashboard-page .btn-group .btn:hover {
+  background-color: #0b5ed7 !important;
+  border-color: #0a58ca !important;
+  color: white !important;
+}
+
+.food-cost-dashboard-page .btn-group .btn:active,
+.food-cost-dashboard-page .btn-group .btn.active {
+  background-color: #0a58ca !important;
+  border-color: #0a53be !important;
+  color: white !important;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.5) !important;
+}
+
+/* Buton Actualizează - fundal albastru */
+.food-cost-dashboard-page .card-header .btn-outline-secondary {
+  background-color: #0d6efd !important;
+  border-color: #0d6efd !important;
+  color: white !important;
+}
+
+.food-cost-dashboard-page .card-header .btn-outline-secondary:hover {
+  background-color: #0b5ed7 !important;
+  border-color: #0a58ca !important;
+  color: white !important;
+}
+
+.food-cost-dashboard-page .card-header .btn-outline-secondary:disabled {
+  background-color: #6c757d !important;
+  border-color: #6c757d !important;
+  color: white !important;
+  opacity: 0.65;
+}
+
+/* Titluri carduri - text negru */
+.food-cost-dashboard-page .card-header h5,
+.food-cost-dashboard-page .card-header h5.mb-0,
+.food-cost-dashboard-page .card .card-header h5,
+.food-cost-dashboard-page .card .card-header h5.mb-0 {
+  color: #000000 !important;
+  font-weight: 600 !important;
+}
+
+/* Asigură că toate h5 din carduri au text negru */
+.food-cost-dashboard-page .card-header h5 * {
+  color: #000000 !important;
+}
+

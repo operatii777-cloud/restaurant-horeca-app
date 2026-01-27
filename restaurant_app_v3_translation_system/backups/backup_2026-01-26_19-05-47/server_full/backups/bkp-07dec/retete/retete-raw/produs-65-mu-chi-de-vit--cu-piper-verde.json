@@ -1,0 +1,26 @@
+{
+  "productId": 65,
+  "productName": "Mușchi de Vită cu Piper Verde",
+  "productCategory": "Fel Principal",
+  "ingredients": [
+    {
+      "ingredientId": 126,
+      "ingredientName": "Burtă de vită fiartă și tăiată",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 117,
+      "ingredientName": "Piper negru",
+      "ingredientCategory": "Condimente și Sosuri",
+      "quantityNeeded": 100,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

@@ -1,0 +1,84 @@
+{
+  "product": {
+    "id": 69,
+    "name": "Pulpă de Rață Confiată",
+    "name_en": "Duck Leg Confit",
+    "category": "Fel Principal",
+    "category_en": "Main Course",
+    "price": 99,
+    "description": "Pulpă de rață, sos de rodie, piure cu trufe",
+    "description_en": "Duck leg, pomegranate sauce, truffle mashed potatoes",
+    "weight": "250/200G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": "lapte",
+    "allergens_en": "milk"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 368,
+        "name": "Pulpă de rață",
+        "category": "General",
+        "quantity": 250,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 169,
+        "name": "Sare de mare",
+        "category": "General",
+        "quantity": 5,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.0001243382635146494,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 157634.5,
+        "minStock": 10,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "0.00",
+    "totalCostWithWaste": "0.00",
+    "sellingPrice": 99,
+    "profitMargin": 99,
+    "markup": 100,
+    "foodCostPercentage": "0.00"
+  },
+  "stats": {
+    "totalIngredients": 2,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

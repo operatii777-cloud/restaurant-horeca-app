@@ -1,0 +1,26 @@
+{
+  "productId": 234,
+  "productName": "Pălincă Bran",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 270,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 731,
+      "ingredientName": "Pălincă Bran",
+      "ingredientCategory": "General",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

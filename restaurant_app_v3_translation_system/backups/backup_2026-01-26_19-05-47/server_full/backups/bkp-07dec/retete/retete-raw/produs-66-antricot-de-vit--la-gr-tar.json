@@ -1,0 +1,35 @@
+{
+  "productId": 66,
+  "productName": "Antricot de Vită la Grătar",
+  "productCategory": "Fel Principal",
+  "ingredients": [
+    {
+      "ingredientId": 126,
+      "ingredientName": "Burtă de vită fiartă și tăiată",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 250,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 169,
+      "ingredientName": "Sare de mare",
+      "ingredientCategory": "General",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 821,
+      "ingredientName": "Ulei vegetal",
+      "ingredientCategory": "Uleiuri și Grăsimi",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

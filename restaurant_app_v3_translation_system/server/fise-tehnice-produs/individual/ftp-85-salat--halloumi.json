@@ -1,0 +1,118 @@
+{
+  "product": {
+    "id": 85,
+    "name": "Salată Halloumi",
+    "name_en": "Halloumi Salad",
+    "category": "Salate",
+    "category_en": "Salads",
+    "price": 44,
+    "description": "Legume la grătar, halloumi la grătar, dressing",
+    "description_en": "Grilled vegetables, grilled halloumi, dressing",
+    "weight": "300G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 1,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": "lapte",
+    "allergens_en": "milk"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 798,
+        "name": "Roșii Shaorma",
+        "category": "Legume",
+        "quantity": 40,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.034257682745826516,
+        "totalCost": "1.37",
+        "totalCostWithWaste": "1.37",
+        "supplier": "Furnizor Test",
+        "currentStock": 127522.22222222222,
+        "minStock": 100,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 797,
+        "name": "Salată Verde Shaorma",
+        "category": "Legume",
+        "quantity": 100,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.5455748291685286,
+        "totalCost": "54.56",
+        "totalCostWithWaste": "54.56",
+        "supplier": "Furnizor Test",
+        "currentStock": 55268.47058823529,
+        "minStock": 100,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 821,
+        "name": "Ulei vegetal",
+        "category": "Uleiuri și Grăsimi",
+        "quantity": 20,
+        "unit": "ml",
+        "unitStock": "ml",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.36491973522575893,
+        "totalCost": "7.30",
+        "totalCostWithWaste": "7.30",
+        "supplier": "Uleiuri SRL",
+        "currentStock": 71910,
+        "minStock": 5000,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 50,
+        "name": "brânză feta",
+        "category": "General",
+        "quantity": 100,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.5405837481795882,
+        "totalCost": "54.06",
+        "totalCostWithWaste": "54.06",
+        "supplier": null,
+        "currentStock": 30030,
+        "minStock": 0.4,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "117.28",
+    "totalCostWithWaste": "117.28",
+    "sellingPrice": 44,
+    "profitMargin": -73.28,
+    "markup": -166.56,
+    "foodCostPercentage": "266.56"
+  },
+  "stats": {
+    "totalIngredients": 4,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

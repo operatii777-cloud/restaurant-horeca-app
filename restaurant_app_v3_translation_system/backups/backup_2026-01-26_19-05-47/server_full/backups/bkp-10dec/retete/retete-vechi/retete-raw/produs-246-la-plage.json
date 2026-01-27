@@ -1,0 +1,44 @@
+{
+  "productId": 246,
+  "productName": "La Plage",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 270,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 458,
+      "ingredientName": "Sirop Fructul Pasiunii",
+      "ingredientCategory": "General",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 459,
+      "ingredientName": "Gin/Vodcă",
+      "ingredientCategory": "General",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 460,
+      "ingredientName": "Suc de Portocale/Ananas",
+      "ingredientCategory": "General",
+      "quantityNeeded": 100,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

@@ -1,0 +1,19 @@
+﻿Ã¯Â»Â¿{
+  "productId": 251,
+  "productName": "VarzÃ„ÂƒÃ†Â’ CÃ„ÂƒÃ†Â’litÃ„ÂƒÃ†Â’ cu AfumÃ„ÂƒÃ†Â’turÃ„ÂƒÃ†Â’",
+  "productCategory": "Fel Principal",
+  "price": 26,
+  "description": "VarzÃ„ÂƒÃ†Â’ cÃ„ÂƒÃ†Â’litÃ„ÂƒÃ†Â’ cu carne afumatÃ„ÂƒÃ†Â’, ceapÃ„ÂƒÃ†Â’, boia de ardei ÃƒÂˆÃ¢Â„Â¢i condimente",
+  "ingredients": [
+    {
+      "ingredientId": 94,
+      "ingredientName": "CeapÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Fructe ÃƒÂˆÃ¢Â„Â¢i Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

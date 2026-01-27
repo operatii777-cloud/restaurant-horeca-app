@@ -1,0 +1,33 @@
+{
+  "productId": 10,
+  "productName": "Blue Tequila Shot",
+  "productCategory": "Băuturi și Coctailuri",
+  "price": 19,
+  "description": "Shot - Tequila, sirop curacao, lămâie",
+  "ingredients": [
+    {
+      "ingredientId": 77,
+      "ingredientName": "Tequila",
+      "ingredientCategory": "Băuturi Alcoolice",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 191,
+      "ingredientName": "Sirop blue curacao",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 79,
+      "ingredientName": "Suc de lămâie",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 10,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}

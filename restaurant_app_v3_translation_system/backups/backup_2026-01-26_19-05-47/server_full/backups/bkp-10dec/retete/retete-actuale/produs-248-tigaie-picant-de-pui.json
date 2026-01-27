@@ -1,0 +1,17 @@
+{
+  "productId": 248,
+  "productName": "Tigaie Picantă de Pui",
+  "productCategory": "Fel Principal",
+  "price": 28,
+  "description": "Tigaie picantă de pui",
+  "ingredients": [
+    {
+      "ingredientId": 107,
+      "ingredientName": "Pui",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

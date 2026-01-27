@@ -1,0 +1,136 @@
+.stock-adjust-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+}
+
+.stock-adjust-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.48);
+}
+
+.stock-adjust-modal__content {
+  position: relative;
+  margin: 64px auto;
+  max-width: 520px;
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 25px 45px rgba(15, 23, 42, 0.18);
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  color: #1e293b;
+  z-index: 1201;
+}
+
+.stock-adjust-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.stock-adjust-modal__header h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #1e293b;
+  font-weight: 600;
+}
+
+.stock-adjust-modal__header p {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: #64748b;
+}
+
+.stock-adjust-modal__close {
+  border: none;
+  background: transparent;
+  color: #64748b;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+.stock-adjust-modal__close:hover {
+  color: #1e293b;
+}
+
+.stock-adjust-modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.stock-adjust-modal__label {
+  font-size: 13px;
+  color: #475569;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.stock-adjust-modal__form input[type='number'],
+.stock-adjust-modal__form input[type='text'] {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+  background: #ffffff;
+  color: #1e293b;
+  box-sizing: border-box;
+}
+
+.stock-adjust-modal__form input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.12);
+}
+
+.stock-adjust-modal__field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stock-adjust-modal__radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+}
+
+.stock-adjust-modal__radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #1e293b;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.stock-adjust-modal__radio-group label:hover {
+  color: #3b82f6;
+}
+
+.stock-adjust-modal__radio-group input[type='radio'] {
+  cursor: pointer;
+  accent-color: #3b82f6;
+}
+
+.stock-adjust-modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 6px;
+}

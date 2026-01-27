@@ -1,0 +1,15 @@
+[
+  {
+    "id": 826,
+    "name": "Ciolan afumat",
+    "category": "Carne și Pește",
+    "unit": "g",
+    "current_stock": 36961.76470588236,
+    "min_stock": 3000,
+    "cost_per_unit": 0.028,
+    "supplier": "Carnex SRL",
+    "is_available": 1,
+    "created_at": "2025-10-10 18:06:58",
+    "last_updated": "2025-10-10 18:26:24"
+  }
+]

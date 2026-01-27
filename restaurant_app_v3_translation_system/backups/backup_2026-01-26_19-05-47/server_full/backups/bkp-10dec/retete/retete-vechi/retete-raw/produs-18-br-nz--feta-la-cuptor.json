@@ -1,0 +1,62 @@
+{
+  "productId": 18,
+  "productName": "Brânză Feta la Cuptor",
+  "productCategory": "Aperitive Calde",
+  "ingredients": [
+    {
+      "ingredientId": 798,
+      "ingredientName": "Roșii Shaorma",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 88,
+      "ingredientName": "Ardei gras",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 15,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 821,
+      "ingredientName": "Ulei vegetal",
+      "ingredientCategory": "Uleiuri și Grăsimi",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 169,
+      "ingredientName": "Sare de mare",
+      "ingredientCategory": "General",
+      "quantityNeeded": 1,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 117,
+      "ingredientName": "Piper negru",
+      "ingredientCategory": "Condimente și Sosuri",
+      "quantityNeeded": 0.5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 50,
+      "ingredientName": "brânză feta",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

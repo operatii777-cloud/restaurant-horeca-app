@@ -1,0 +1,46 @@
+﻿Ã¯Â»Â¿{
+  "productId": 4,
+  "productName": "OmletÃ„ÂƒÃ†Â’ cu ÃƒÂˆÃ‹ÂœuncÃ„ÂƒÃ†Â’ ÃƒÂˆÃ¢Â„Â¢i Mozzarella",
+  "productCategory": "Mic Dejun",
+  "ingredients": [
+    {
+      "ingredientId": 1,
+      "ingredientName": "ouÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "General",
+      "quantityNeeded": 3,
+      "unit": "buc",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 821,
+      "ingredientName": "Ulei vegetal",
+      "ingredientCategory": "Uleiuri ÃƒÂˆÃ¢Â„Â¢i GrÃ„ÂƒÃ†Â’simi",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 624,
+      "ingredientName": "Ingrediente speciale (ex: Prosciutto Crudo, Rucola)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 560,
+      "ingredientName": "Mozzarella (rasÃ„ÂƒÃ†Â’)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

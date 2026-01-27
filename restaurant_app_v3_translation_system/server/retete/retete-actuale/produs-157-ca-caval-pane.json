@@ -1,0 +1,19 @@
+﻿Ã¯Â»Â¿{
+  "productId": 157,
+  "productName": "CaÃƒÂˆÃ¢Â„Â¢caval Pane",
+  "productCategory": "Aperitive Calde",
+  "price": 32,
+  "description": "CaÃƒÂˆÃ¢Â„Â¢caval panat ÃƒÂˆÃ¢Â„Â¢i prÃ„ÂƒÃ†Â’jit",
+  "ingredients": [
+    {
+      "ingredientId": 91,
+      "ingredientName": "CaÃƒÂˆÃ¢Â„Â¢caval",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

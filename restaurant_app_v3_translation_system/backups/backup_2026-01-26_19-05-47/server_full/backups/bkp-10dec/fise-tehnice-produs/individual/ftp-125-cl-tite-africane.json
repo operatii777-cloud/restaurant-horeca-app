@@ -1,0 +1,118 @@
+{
+  "product": {
+    "id": 125,
+    "name": "Clătite Africane",
+    "name_en": "African Pancakes",
+    "category": "Deserturi",
+    "category_en": "Desserts",
+    "price": 35,
+    "description": "Mascarpone, dulceață vișine, nutella, banană, biscuiți",
+    "description_en": "Mascarpone, sour cherry jam, Nutella, banana, biscuits",
+    "weight": "",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 1,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": "gluten, ouă, lapte, nuci",
+    "allergens_en": "gluten, eggs, milk, nuts"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 480,
+        "name": "Banane (caramelizate/sotate)",
+        "category": "General",
+        "quantity": 50,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 5670,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 401,
+        "name": "Clătite (aluat)",
+        "category": "General",
+        "quantity": 2,
+        "unit": "buc",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 53,
+        "name": "lapte",
+        "category": "General",
+        "quantity": 30,
+        "unit": "ml",
+        "unitStock": "l",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 4.3131870672107615,
+        "totalCost": "129.40",
+        "totalCostWithWaste": "129.40",
+        "supplier": null,
+        "currentStock": 23357,
+        "minStock": 0.4,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 479,
+        "name": "Înghețată (opțional)",
+        "category": "General",
+        "quantity": 50,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "129.40",
+    "totalCostWithWaste": "129.40",
+    "sellingPrice": 35,
+    "profitMargin": -94.4,
+    "markup": -269.7,
+    "foodCostPercentage": "369.70"
+  },
+  "stats": {
+    "totalIngredients": 4,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

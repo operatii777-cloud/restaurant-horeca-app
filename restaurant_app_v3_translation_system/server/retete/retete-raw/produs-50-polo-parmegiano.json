@@ -1,0 +1,37 @@
+﻿Ã¯Â»Â¿{
+  "productId": 50,
+  "productName": "Polo Parmegiano",
+  "productCategory": "Fel Principal",
+  "ingredients": [
+    {
+      "ingredientId": 363,
+      "ingredientName": "Piept de pui",
+      "ingredientCategory": "General",
+      "quantityNeeded": 180,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 48,
+      "ingredientName": "parmezan",
+      "ingredientCategory": "General",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 530,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 80,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

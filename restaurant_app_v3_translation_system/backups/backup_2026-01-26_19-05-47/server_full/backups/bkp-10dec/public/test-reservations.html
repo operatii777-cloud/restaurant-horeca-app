@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Rezervări</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        .btn { padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        .btn:hover { background: #0056b3; }
+        .result { margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 3px; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        
+        /* Responsive Design pentru Test Rezervări */
+        @media (max-width: 1200px) {
+            body {
+                margin: 15px;
+            }
+            .test-section {
+                margin: 15px 0;
+                padding: 12px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                margin: 10px;
+            }
+            .test-section {
+                margin: 15px 0;
+                padding: 10px;
+            }
+            .btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+                width: 100%;
+                margin: 5px 0;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            h3 {
+                font-size: 1.2rem;
+            }
+            .result {
+                padding: 8px;
+                font-size: 0.9rem;
+            }
+            table {
+                font-size: 0.85rem;
+            }
+            th, td {
+                padding: 6px 4px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            body {
+                margin: 5px;
+            }
+            .test-section {
+                margin: 10px 0;
+                padding: 8px;
+            }
+            .btn {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+            h1 {
+                font-size: 1.3rem;
+            }
+            h3 {
+                font-size: 1.1rem;
+            }
+            .result {
+                padding: 6px;
+                font-size: 0.85rem;
+            }
+            table {
+                font-size: 0.8rem;
+            }
+            th, td {
+                padding: 4px 2px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .test-section {
+                padding: 6px;
+            }
+            .btn {
+                padding: 5px 10px;
+                font-size: 0.8rem;
+            }
+            h1 {
+                font-size: 1.2rem;
+            }
+            h3 {
+                font-size: 1rem;
+            }
+            .result {
+                padding: 5px;
+                font-size: 0.8rem;
+            }
+            table {
+                font-size: 0.75rem;
+            }
+            th, td {
+                padding: 3px 1px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test Funcționalitate Rezervări</h1>
+    
+    <div class="test-section">
+        <h3>1. Test API Rezervări</h3>
+        <button class="btn" onclick="testReservationsAPI()">Testează API</button>
+        <div id="apiResult" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>2. Test Încărcare Rezervări</h3>
+        <button class="btn" onclick="loadReservationsTest()">Încarcă Rezervări</button>
+        <div id="loadResult" class="result"></div>
+        <table id="reservationsTable" style="display: none;">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Client</th>
+                    <th>Telefon</th>
+                    <th>Email</th>
+                    <th>Data</th>
+                    <th>Ora</th>
+                    <th>Persoane</th>
+                    <th>Masă</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="reservationsTableBody">
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="test-section">
+        <h3>3. Test Creare Rezervare</h3>
+        <button class="btn" onclick="testCreateReservation()">Creează Rezervare Test</button>
+        <div id="createResult" class="result"></div>
+    </div>
+
+    <script>
+        // Test API rezervări
+        async function testReservationsAPI() {
+            const resultDiv = document.getElementById('apiResult');
+            resultDiv.innerHTML = '🔄 Testare API...';
+            
+            try {
+                const response = await fetch('/api/reservations');
+                const reservations = await response.json();
+                
+                resultDiv.innerHTML = `
+                    ✅ API funcționează!<br>
+                    📊 Status: ${response.status}<br>
+                    📋 Rezervări găsite: ${reservations.length}<br>
+                    📅 Prima rezervare: ${reservations[0]?.customer_name || 'N/A'}
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `❌ Eroare API: ${error.message}`;
+            }
+        }
+        
+        // Test încărcare rezervări
+        async function loadReservationsTest() {
+            const resultDiv = document.getElementById('loadResult');
+            const table = document.getElementById('reservationsTable');
+            const tableBody = document.getElementById('reservationsTableBody');
+            
+            resultDiv.innerHTML = '🔄 Încărcare rezervări...';
+            
+            try {
+                const response = await fetch('/api/reservations');
+                const reservations = await response.json();
+                
+                if (reservations.length === 0) {
+                    resultDiv.innerHTML = '⚠️ Nu există rezervări';
+                    return;
+                }
+                
+                let html = '';
+                reservations.forEach(reservation => {
+                    const statusText = getStatusText(reservation.status);
+                    html += `
+                        <tr>
+                            <td>${reservation.id}</td>
+                            <td>${reservation.customer_name}</td>
+                            <td>${reservation.customer_phone}</td>
+                            <td>${reservation.customer_email || 'N/A'}</td>
+                            <td>${reservation.reservation_date}</td>
+                            <td>${reservation.reservation_time}</td>
+                            <td>${reservation.party_size}</td>
+                            <td>Masa ${reservation.table_number}</td>
+                            <td>${statusText}</td>
+                        </tr>
+                    `;
+                });
+                
+                tableBody.innerHTML = html;
+                table.style.display = 'table';
+                resultDiv.innerHTML = `✅ ${reservations.length} rezervări încărcate cu succes!`;
+                
+            } catch (error) {
+                resultDiv.innerHTML = `❌ Eroare la încărcare: ${error.message}`;
+            }
+        }
+        
+        // Test creare rezervare
+        async function testCreateReservation() {
+            const resultDiv = document.getElementById('createResult');
+            resultDiv.innerHTML = '🔄 Creare rezervare test...';
+            
+            try {
+                const testData = {
+                    tableId: 1,
+                    customerName: 'Test Client ' + Date.now(),
+                    customerPhone: '0712345678',
+                    customerEmail: 'test@example.com',
+                    reservationDate: '2025-01-20',
+                    reservationTime: '19:00',
+                    partySize: 4,
+                    specialRequests: 'Test rezervare'
+                };
+                
+                const response = await fetch('/api/reservations', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(testData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    resultDiv.innerHTML = `
+                        ✅ Rezervare creată cu succes!<br>
+                        🆔 ID: ${result.reservationId}<br>
+                        🔑 Cod confirmare: ${result.confirmationCode}
+                    `;
+                } else {
+                    resultDiv.innerHTML = `❌ Eroare la creare: ${result.error}`;
+                }
+                
+            } catch (error) {
+                resultDiv.innerHTML = `❌ Eroare la creare: ${error.message}`;
+            }
+        }
+        
+        // Funcție helper pentru status
+        function getStatusText(status) {
+            const statusMap = {
+                'pending': 'În așteptare',
+                'confirmed': 'Confirmată',
+                'cancelled': 'Anulată',
+                'completed': 'Finalizată'
+            };
+            return statusMap[status] || 'În așteptare';
+        }
+        
+        // Test automat la încărcarea paginii
+        window.onload = function() {
+            console.log('🧪 Pagina de test încărcată');
+            testReservationsAPI();
+        };
+    </script>
+</body>
+</html>

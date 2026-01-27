@@ -1,0 +1,37 @@
+﻿Ã¯Â»Â¿{
+  "productId": 306,
+  "productName": "ÃƒÂˆÃ‹ÂœniÃƒÂˆÃ¢Â€Âºel Vienez",
+  "productCategory": "Fel Principal",
+  "ingredients": [
+    {
+      "ingredientId": 364,
+      "ingredientName": "Pesmet/FÃ„ÂƒÃ†Â’inÃ„ÂƒÃ†Â’/Ou (panÃƒÂƒÃ‚Â©)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 366,
+      "ingredientName": "Carne de viÃƒÂˆÃ¢Â€Âºel (spate)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 180,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 64,
+      "ingredientName": "suc de lÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+      "ingredientCategory": "General",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfer Stocuri între Gestiuni - Restaurant App</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/admin-common.css">
+    <link rel="stylesheet" href="css/transfers-ui.css">
+    
+    <!-- Font Awesome pentru iconițe -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="page-header">
+            <div class="header-left">
+                <button class="btn btn-back" onclick="window.location.href='multi-location.html'">
+                    <i class="fas fa-arrow-left"></i> Înapoi
+                </button>
+                <h1>
+                    <i class="fas fa-exchange-alt"></i>
+                    Transfer Stocuri între Gestiuni
+                </h1>
+            </div>
+            <div class="header-right">
+                <button class="btn btn-primary" id="btnNewTransfer">
+                    <i class="fas fa-plus"></i> Transfer Nou
+                </button>
+            </div>
+        </header>
+
+        <!-- Filtre -->
+        <section class="filters-section">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label for="filterStatus">
+                        <i class="fas fa-filter"></i> Status
+                    </label>
+                    <select id="filterStatus" class="filter-select">
+                        <option value="">Toate</option>
+                        <option value="pending">Pending</option>
+                        <option value="approved">Aprobat</option>
+                        <option value="completed">Finalizat</option>
+                        <option value="rejected">Respins</option>
+                        <option value="cancelled">Anulat</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filterFromLocation">
+                        <i class="fas fa-warehouse"></i> De la gestiunea
+                    </label>
+                    <select id="filterFromLocation" class="filter-select">
+                        <option value="">Toate</option>
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filterToLocation">
+                        <i class="fas fa-box-open"></i> Către gestiunea
+                    </label>
+                    <select id="filterToLocation" class="filter-select">
+                        <option value="">Toate</option>
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filterDateFrom">
+                        <i class="fas fa-calendar"></i> De la data
+                    </label>
+                    <input type="date" id="filterDateFrom" class="filter-input">
+                </div>
+
+                <div class="filter-group">
+                    <label for="filterDateTo">
+                        <i class="fas fa-calendar"></i> Până la data
+                    </label>
+                    <input type="date" id="filterDateTo" class="filter-input">
+                </div>
+
+                <div class="filter-group filter-actions">
+                    <button class="btn btn-secondary" id="btnApplyFilters">
+                        <i class="fas fa-search"></i> Aplică Filtre
+                    </button>
+                    <button class="btn btn-secondary" id="btnClearFilters">
+                        <i class="fas fa-times"></i> Resetează
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Listă Transferuri -->
+        <section class="transfers-list-section">
+            <div class="section-header">
+                <h2>Listă Transferuri</h2>
+                <div class="stats-summary" id="statsSummary">
+                    <span class="stat-item">
+                        <i class="fas fa-list"></i> Total: <strong id="statTotal">0</strong>
+                    </span>
+                    <span class="stat-item stat-pending">
+                        <i class="fas fa-clock"></i> Pending: <strong id="statPending">0</strong>
+                    </span>
+                    <span class="stat-item stat-approved">
+                        <i class="fas fa-check"></i> Aprobate: <strong id="statApproved">0</strong>
+                    </span>
+                    <span class="stat-item stat-completed">
+                        <i class="fas fa-check-double"></i> Finalizate: <strong id="statCompleted">0</strong>
+                    </span>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="transfers-table" id="transfersTable">
+                    <thead>
+                        <tr>
+                            <th>Nr. Transfer</th>
+                            <th>Data</th>
+                            <th>De la</th>
+                            <th>Către</th>
+                            <th>Items</th>
+                            <th>Valoare</th>
+                            <th>Status</th>
+                            <th>Acțiuni</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transfersTableBody">
+                        <!-- Populated dynamically -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <i class="fas fa-inbox fa-3x"></i>
+                <p>Nu există transferuri</p>
+            </div>
+
+            <div class="loading-state" id="loadingState" style="display: none;">
+                <i class="fas fa-spinner fa-spin fa-2x"></i>
+                <p>Se încarcă transferurile...</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal: Transfer Nou -->
+    <div class="modal" id="modalNewTransfer">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2>
+                    <i class="fas fa-plus-circle"></i>
+                    Transfer Nou
+                </h2>
+                <button class="modal-close" onclick="closeModal('modalNewTransfer')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Step indicator -->
+                <div class="steps-indicator">
+                    <div class="step active" data-step="1">
+                        <span class="step-number">1</span>
+                        <span class="step-label">Info Transfer</span>
+                    </div>
+                    <div class="step" data-step="2">
+                        <span class="step-number">2</span>
+                        <span class="step-label">Selectare Items</span>
+                    </div>
+                    <div class="step" data-step="3">
+                        <span class="step-number">3</span>
+                        <span class="step-label">Confirmare</span>
+                    </div>
+                </div>
+
+                <!-- Step 1: Info Transfer -->
+                <div class="step-content" id="step1" style="display: block;">
+                    <form id="formTransferInfo">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="transferFromLocation">
+                                    <i class="fas fa-warehouse"></i> De la gestiunea *
+                                </label>
+                                <select id="transferFromLocation" class="form-control" required>
+                                    <option value="">Selectează gestiunea sursă</option>
+                                    <!-- Populated dynamically -->
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="transferToLocation">
+                                    <i class="fas fa-box-open"></i> Către gestiunea *
+                                </label>
+                                <select id="transferToLocation" class="form-control" required>
+                                    <option value="">Selectează gestiunea destinație</option>
+                                    <!-- Populated dynamically -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="transferDate">
+                                    <i class="fas fa-calendar"></i> Data transfer *
+                                </label>
+                                <input type="date" id="transferDate" class="form-control" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="transferRequestedBy">
+                                    <i class="fas fa-user"></i> Solicitat de *
+                                </label>
+                                <input type="text" id="transferRequestedBy" class="form-control" 
+                                       placeholder="Nume solicitant" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="transferNotes">
+                                <i class="fas fa-sticky-note"></i> Observații
+                            </label>
+                            <textarea id="transferNotes" class="form-control" rows="3" 
+                                      placeholder="Detalii suplimentare despre transfer"></textarea>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 2: Selectare Items -->
+                <div class="step-content" id="step2" style="display: none;">
+                    <div class="items-section">
+                        <div class="items-header">
+                            <h3>Adaugă Ingrediente</h3>
+                            <button class="btn btn-sm btn-primary" id="btnAddItem">
+                                <i class="fas fa-plus"></i> Adaugă Ingredient
+                            </button>
+                        </div>
+
+                        <div class="items-list" id="transferItemsList">
+                            <!-- Items added dynamically -->
+                        </div>
+
+                        <div class="items-summary">
+                            <div class="summary-row">
+                                <span>Total items:</span>
+                                <strong id="summaryTotalItems">0</strong>
+                            </div>
+                            <div class="summary-row summary-total">
+                                <span>Valoare totală:</span>
+                                <strong id="summaryTotalValue">0.00 RON</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Confirmare -->
+                <div class="step-content" id="step3" style="display: none;">
+                    <div class="confirmation-section">
+                        <h3>Verifică detaliile transferului</h3>
+                        
+                        <div class="confirmation-details">
+                            <div class="detail-group">
+                                <label>De la gestiunea:</label>
+                                <span id="confirmFromLocation">-</span>
+                            </div>
+                            <div class="detail-group">
+                                <label>Către gestiunea:</label>
+                                <span id="confirmToLocation">-</span>
+                            </div>
+                            <div class="detail-group">
+                                <label>Data transfer:</label>
+                                <span id="confirmDate">-</span>
+                            </div>
+                            <div class="detail-group">
+                                <label>Solicitat de:</label>
+                                <span id="confirmRequestedBy">-</span>
+                            </div>
+                        </div>
+
+                        <div class="confirmation-items">
+                            <h4>Ingrediente (Total: <span id="confirmItemsCount">0</span>)</h4>
+                            <table class="confirmation-table">
+                                <thead>
+                                    <tr>
+                                        <th>Ingredient</th>
+                                        <th>Cantitate</th>
+                                        <th>Preț/unitate</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="confirmItemsTable">
+                                    <!-- Populated dynamically -->
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3" style="text-align: right;"><strong>TOTAL:</strong></td>
+                                        <td><strong id="confirmTotalValue">0.00 RON</strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="btnPrevStep">
+                    <i class="fas fa-arrow-left"></i> Înapoi
+                </button>
+                <button class="btn btn-primary" id="btnNextStep">
+                    Următorul <i class="fas fa-arrow-right"></i>
+                </button>
+                <button class="btn btn-success" id="btnCreateTransfer" style="display: none;">
+                    <i class="fas fa-check"></i> Creează Transfer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Detalii Transfer -->
+    <div class="modal" id="modalTransferDetails">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2>
+                    <i class="fas fa-info-circle"></i>
+                    Detalii Transfer
+                </h2>
+                <button class="modal-close" onclick="closeModal('modalTransferDetails')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="transferDetailsBody">
+                <!-- Populated dynamically -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('modalTransferDetails')">
+                    Închide
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Aprobare/Respingere -->
+    <div class="modal" id="modalApproveReject">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="approveRejectTitle">
+                    <i class="fas fa-check-circle"></i>
+                    Aprobă Transfer
+                </h2>
+                <button class="modal-close" onclick="closeModal('modalApproveReject')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="approveRejectTransferId">
+                <input type="hidden" id="approveRejectAction">
+                
+                <div class="form-group">
+                    <label for="approveRejectBy">
+                        <i class="fas fa-user-check"></i> Aprobat/Respins de *
+                    </label>
+                    <input type="text" id="approveRejectBy" class="form-control" 
+                           placeholder="Nume manager" required>
+                </div>
+
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i>
+                    <span id="approveRejectMessage">-</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('modalApproveReject')">
+                    Anulează
+                </button>
+                <button class="btn btn-primary" id="btnConfirmApproveReject">
+                    Confirmă
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast pentru notificări -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Scripts -->
+    <script src="js/transfers-ui.js"></script>
+</body>
+    <script src="/branding/qroms-badge.js"></script>
+</html>
+

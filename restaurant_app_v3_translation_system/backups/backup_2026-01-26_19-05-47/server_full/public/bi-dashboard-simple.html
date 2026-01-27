@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BI Dashboard - Restaurant Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 20px 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .period-selector {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .period-btn {
+            padding: 8px 16px;
+            border: 1.5px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        
+        .period-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-1px);
+        }
+        
+        .period-btn.active {
+            background: #667eea;
+            color: white;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+        
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .kpi-card {
+            background: white;
+            padding: 18px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .kpi-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .kpi-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        
+        .kpi-icon {
+            font-size: 1.4rem;
+        }
+        
+        .kpi-title {
+            font-size: 0.7rem;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .kpi-value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+        
+        .kpi-trend {
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .kpi-trend.up {
+            color: #27ae60;
+        }
+        
+        .kpi-trend.down {
+            color: #e74c3c;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 100px 0;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .error {
+            background: #e74c3c;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .info-panel {
+            background: white;
+            padding: 18px 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin-bottom: 15px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .info-panel h2 {
+            color: #2c3e50;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+        }
+        
+        .info-item {
+            padding: 12px 15px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+        
+        .info-item strong {
+            display: block;
+            color: #667eea;
+            margin-bottom: 4px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <span>📊</span>
+                <span id="restaurant-name">BI Dashboard</span>
+            </h1>
+            <div class="period-selector">
+                <button class="period-btn active" onclick="loadPeriod('today')">Azi</button>
+                <button class="period-btn" onclick="loadPeriod('week')">Săptămână</button>
+                <button class="period-btn" onclick="loadPeriod('month')">Lună</button>
+            </div>
+        </div>
+        
+        <div id="content">
+            <div class="loading">🔄 Loading BI Dashboard...</div>
+        </div>
+    </div>
+    
+    <script>
+        let currentPeriod = 'today';
+        
+        async function loadDashboard() {
+            try {
+                // Load white-label config
+                const configRes = await fetch('/api/config');
+                const config = await configRes.json();
+                
+                if (config.success) {
+                    document.getElementById('restaurant-name').textContent = 
+                        `📊 ${config.data.branding.restaurant_name}`;
+                    document.title = `BI Dashboard - ${config.data.branding.restaurant_name}`;
+                }
+                
+                // Load dashboard metrics
+                const dashRes = await fetch(`/api/bi/dashboard?period=${currentPeriod}`);
+                const dashboard = await dashRes.json();
+                
+                if (!dashboard.success) {
+                    throw new Error(dashboard.error || 'Failed to load dashboard');
+                }
+                
+                // Render KPIs
+                renderDashboard(dashboard.data);
+                
+            } catch (error) {
+                document.getElementById('content').innerHTML = `
+                    <div class="error">
+                        <h2>⚠️ Error Loading Dashboard</h2>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        function renderDashboard(data) {
+            const { metrics, period, categorized } = data;
+            
+            let html = `
+                <div class="info-panel">
+                    <h2>📅 Period: ${period.current.start} → ${period.current.end}</h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <strong>Total Metrics</strong>
+                            ${metrics.length}
+                        </div>
+                        <div class="info-item">
+                            <strong>Categories</strong>
+                            ${Object.keys(categorized).join(', ')}
+                        </div>
+                        <div class="info-item">
+                            <strong>Period Type</strong>
+                            ${period.type}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="kpi-grid">
+            `;
+            
+            // Render each KPI
+            for (const metric of metrics) {
+                const trendClass = metric.comparison ? 
+                    (metric.comparison.trend === 'up' ? 'up' : metric.comparison.trend === 'down' ? 'down' : '') : '';
+                
+                const trendIcon = metric.comparison ? 
+                    (metric.comparison.trend === 'up' ? '↗' : metric.comparison.trend === 'down' ? '↘' : '→') : '';
+                
+                html += `
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <span class="kpi-icon">${metric.icon || '📊'}</span>
+                            <span class="kpi-title">${metric.label.ro}</span>
+                        </div>
+                        <div class="kpi-value">${metric.formatted}</div>
+                        ${metric.comparison ? `
+                            <div class="kpi-trend ${trendClass}">
+                                <span>${trendIcon}</span>
+                                <span>${metric.comparison.change_percent.toFixed(1)}% vs ${period.type === 'today' ? 'ieri' : 'perioada anterioară'}</span>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }
+            
+            html += '</div>';
+            
+            document.getElementById('content').innerHTML = html;
+        }
+        
+        function loadPeriod(period) {
+            currentPeriod = period;
+            
+            // Update active button
+            document.querySelectorAll('.period-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Reload dashboard
+            document.getElementById('content').innerHTML = '<div class="loading">🔄 Loading...</div>';
+            loadDashboard();
+        }
+        
+        // Load on page load
+        window.addEventListener('DOMContentLoaded', loadDashboard);
+        
+        // Auto-refresh every 30 seconds
+        setInterval(loadDashboard, 30000);
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,101 @@
+{
+  "product": {
+    "id": 82,
+    "name": "Salată cu Pui Crocant",
+    "name_en": "Crispy Chicken Salad",
+    "category": "Salate",
+    "category_en": "Salads",
+    "price": 41,
+    "description": "Mix salată, piept de pui, roșii cherry, ou, brânză telemea, dressing de muștar cu miere",
+    "description_en": "Salad mix, chicken breast, cherry tomatoes, egg, telemea cheese, honey mustard dressing",
+    "weight": "300G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": "ouă, lapte, gluten, muștar",
+    "allergens_en": "eggs, milk, gluten, mustard"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 648,
+        "name": "Dressing Ranch/Iaurt",
+        "category": "General",
+        "quantity": 50,
+        "unit": "ml",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 4800,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 363,
+        "name": "Piept de pui",
+        "category": "General",
+        "quantity": 100,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 11.147430571690123,
+        "totalCost": "1114.74",
+        "totalCostWithWaste": "1114.74",
+        "supplier": "Metro Cash & Carry",
+        "currentStock": 114355.14519450802,
+        "minStock": 0.01,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 797,
+        "name": "Salată Verde Shaorma",
+        "category": "Legume",
+        "quantity": 100,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.5455748291685286,
+        "totalCost": "54.56",
+        "totalCostWithWaste": "54.56",
+        "supplier": "Furnizor Test",
+        "currentStock": 55268.47058823529,
+        "minStock": 100,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "1169.30",
+    "totalCostWithWaste": "1169.30",
+    "sellingPrice": 41,
+    "profitMargin": -1128.3,
+    "markup": -2751.95,
+    "foodCostPercentage": "2851.95"
+  },
+  "stats": {
+    "totalIngredients": 3,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

@@ -1,0 +1,60 @@
+.costs-page {
+  padding: 20px;
+}
+
+.stat-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+}
+
+.stat-card.stat-excellent::before {
+  background: var(--bs-success);
+}
+
+.stat-card.stat-good::before {
+  background: var(--bs-info);
+}
+
+.stat-card.stat-warning::before {
+  background: var(--bs-warning);
+}
+
+.stat-card.stat-danger::before {
+  background: var(--bs-danger);
+}
+
+.stat-card.stat-success::before {
+  background: var(--bs-success);
+}
+
+.stat-card.stat-info::before {
+  background: var(--bs-info);
+}
+
+.stat-icon {
+  font-size: 2.5rem;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--bs-dark);
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--bs-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+

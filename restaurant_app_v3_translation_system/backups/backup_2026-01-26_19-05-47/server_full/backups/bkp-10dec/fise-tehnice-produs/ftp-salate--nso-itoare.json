@@ -1,0 +1,708 @@
+[
+  {
+    "product": {
+      "id": 111,
+      "name": "Salată Verde",
+      "name_en": "Green Salad",
+      "category": "Salate Însoțitoare",
+      "category_en": "Side Salads",
+      "price": 18,
+      "description": "Salată verde, ceapă roșie, lămâie",
+      "description_en": "Green lettuce, red onion, lemon",
+      "weight": "200G",
+      "prep_time": null,
+      "spice_level": 0,
+      "is_vegetarian": 1,
+      "is_spicy": 0,
+      "is_takeout_only": 0,
+      "allergens": null,
+      "allergens_en": ""
+    },
+    "nutrition": {
+      "calories": null,
+      "protein": null,
+      "carbs": null,
+      "fat": null,
+      "fiber": null,
+      "sodium": null,
+      "sugar": null,
+      "salt": null
+    },
+    "recipe": {
+      "ingredients": [
+        {
+          "id": 797,
+          "name": "Salată Verde Shaorma",
+          "category": "Legume",
+          "quantity": 150,
+          "unit": "g",
+          "unitStock": "g",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.5455748291685286,
+          "totalCost": "81.84",
+          "totalCostWithWaste": "81.84",
+          "supplier": "Furnizor Test",
+          "currentStock": 55268.47058823529,
+          "minStock": 100,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 821,
+          "name": "Ulei vegetal",
+          "category": "Uleiuri și Grăsimi",
+          "quantity": 10,
+          "unit": "ml",
+          "unitStock": "ml",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.36491973522575893,
+          "totalCost": "3.65",
+          "totalCostWithWaste": "3.65",
+          "supplier": "Uleiuri SRL",
+          "currentStock": 71910,
+          "minStock": 5000,
+          "stockStatus": "OK"
+        }
+      ],
+      "packagingRestaurant": [],
+      "packagingDelivery": []
+    },
+    "costs": {
+      "totalIngredientsCost": "85.49",
+      "totalCostWithWaste": "85.49",
+      "sellingPrice": 18,
+      "profitMargin": -67.49,
+      "markup": -374.92,
+      "foodCostPercentage": "474.92"
+    },
+    "stats": {
+      "totalIngredients": 2,
+      "totalPackagingItems": 0,
+      "hasNutritionalInfo": false,
+      "lowStockIngredients": 0
+    }
+  },
+  {
+    "product": {
+      "id": 115,
+      "name": "Salată de Ardei Copt",
+      "name_en": "Roasted Pepper Salad",
+      "category": "Salate Însoțitoare",
+      "category_en": "Side Salads",
+      "price": 18,
+      "description": "Salată de ardei copt, usturoi, mărar",
+      "description_en": "Roasted pepper salad, garlic, dill",
+      "weight": "200G",
+      "prep_time": null,
+      "spice_level": 0,
+      "is_vegetarian": 1,
+      "is_spicy": 0,
+      "is_takeout_only": 0,
+      "allergens": null,
+      "allergens_en": ""
+    },
+    "nutrition": {
+      "calories": null,
+      "protein": null,
+      "carbs": null,
+      "fat": null,
+      "fiber": null,
+      "sodium": null,
+      "sugar": null,
+      "salt": null
+    },
+    "recipe": {
+      "ingredients": [
+        {
+          "id": 800,
+          "name": "Sos Usturoi Shaorma",
+          "category": "Sosuri",
+          "quantity": 15,
+          "unit": "ml",
+          "unitStock": "ml",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 1.1303157632422682,
+          "totalCost": "16.95",
+          "totalCostWithWaste": "16.95",
+          "supplier": "Furnizor Test",
+          "currentStock": 64752.76470588235,
+          "minStock": 100,
+          "stockStatus": "OK"
+        }
+      ],
+      "packagingRestaurant": [],
+      "packagingDelivery": []
+    },
+    "costs": {
+      "totalIngredientsCost": "16.95",
+      "totalCostWithWaste": "16.95",
+      "sellingPrice": 18,
+      "profitMargin": 1.05,
+      "markup": 5.81,
+      "foodCostPercentage": "94.19"
+    },
+    "stats": {
+      "totalIngredients": 1,
+      "totalPackagingItems": 0,
+      "hasNutritionalInfo": false,
+      "lowStockIngredients": 0
+    }
+  },
+  {
+    "product": {
+      "id": 113,
+      "name": "Salată Asortată de Vară",
+      "name_en": "Mixed Summer Salad",
+      "category": "Salate Însoțitoare",
+      "category_en": "Side Salads",
+      "price": 18,
+      "description": "Roșii, castraveți, ardei kapia, ceapă roșie",
+      "description_en": "Tomatoes, cucumbers, kapia pepper, red onion",
+      "weight": "200G",
+      "prep_time": null,
+      "spice_level": 0,
+      "is_vegetarian": 1,
+      "is_spicy": 0,
+      "is_takeout_only": 0,
+      "allergens": null,
+      "allergens_en": ""
+    },
+    "nutrition": {
+      "calories": null,
+      "protein": null,
+      "carbs": null,
+      "fat": null,
+      "fiber": null,
+      "sodium": null,
+      "sugar": null,
+      "salt": null
+    },
+    "recipe": {
+      "ingredients": [
+        {
+          "id": 815,
+          "name": "Ceapă tocată",
+          "category": "Diverse",
+          "quantity": 20,
+          "unit": "g",
+          "unitStock": "g",
+          "wastePercentage": 15,
+          "variableConsumption": null,
+          "costPerUnit": 0.7168016692209687,
+          "totalCost": "14.34",
+          "totalCostWithWaste": "16.49",
+          "supplier": "Furnizor General",
+          "currentStock": 127428.23529411764,
+          "minStock": 100,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 821,
+          "name": "Ulei vegetal",
+          "category": "Uleiuri și Grăsimi",
+          "quantity": 10,
+          "unit": "ml",
+          "unitStock": "ml",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.36491973522575893,
+          "totalCost": "3.65",
+          "totalCostWithWaste": "3.65",
+          "supplier": "Uleiuri SRL",
+          "currentStock": 71910,
+          "minStock": 5000,
+          "stockStatus": "OK"
+        }
+      ],
+      "packagingRestaurant": [],
+      "packagingDelivery": []
+    },
+    "costs": {
+      "totalIngredientsCost": "17.99",
+      "totalCostWithWaste": "20.14",
+      "sellingPrice": 18,
+      "profitMargin": -2.14,
+      "markup": -11.86,
+      "foodCostPercentage": "111.86"
+    },
+    "stats": {
+      "totalIngredients": 2,
+      "totalPackagingItems": 0,
+      "hasNutritionalInfo": false,
+      "lowStockIngredients": 0
+    }
+  },
+  {
+    "product": {
+      "id": 114,
+      "name": "Salată de Murături",
+      "name_en": "Pickle Salad",
+      "category": "Salate Însoțitoare",
+      "category_en": "Side Salads",
+      "price": 18,
+      "description": "Murături asortate",
+      "description_en": "Assorted pickles",
+      "weight": "200G",
+      "prep_time": null,
+      "spice_level": 0,
+      "is_vegetarian": 1,
+      "is_spicy": 0,
+      "is_takeout_only": 0,
+      "allergens": null,
+      "allergens_en": ""
+    },
+    "nutrition": {
+      "calories": null,
+      "protein": null,
+      "carbs": null,
+      "fat": null,
+      "fiber": null,
+      "sodium": null,
+      "sugar": null,
+      "salt": null
+    },
+    "recipe": {
+      "ingredients": [
+        {
+          "id": 803,
+          "name": "Castraveți Murați Shaorma",
+          "category": "Legume și Fructe",
+          "quantity": 150,
+          "unit": "g",
+          "unitStock": "g",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.1550095194474108,
+          "totalCost": "23.25",
+          "totalCostWithWaste": "23.25",
+          "supplier": "Conserve Gustoase SRL",
+          "currentStock": 8467.368421052632,
+          "minStock": 1000,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 821,
+          "name": "Ulei vegetal",
+          "category": "Uleiuri și Grăsimi",
+          "quantity": 5,
+          "unit": "ml",
+          "unitStock": "ml",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.36491973522575893,
+          "totalCost": "1.82",
+          "totalCostWithWaste": "1.82",
+          "supplier": "Uleiuri SRL",
+          "currentStock": 71910,
+          "minStock": 5000,
+          "stockStatus": "OK"
+        }
+      ],
+      "packagingRestaurant": [],
+      "packagingDelivery": []
+    },
+    "costs": {
+      "totalIngredientsCost": "25.08",
+      "totalCostWithWaste": "25.08",
+      "sellingPrice": 18,
+      "profitMargin": -7.08,
+      "markup": -39.31,
+      "foodCostPercentage": "139.31"
+    },
+    "stats": {
+      "totalIngredients": 2,
+      "totalPackagingItems": 0,
+      "hasNutritionalInfo": false,
+      "lowStockIngredients": 0
+    }
+  },
+  {
+    "product": {
+      "id": 112,
+      "name": "Salată Iceberg",
+      "name_en": "Iceberg Salad",
+      "category": "Salate Însoțitoare",
+      "category_en": "Side Salads",
+      "price": 18,
+      "description": "Salată iceberg, lămâie",
+      "description_en": "Iceberg lettuce, lemon",
+      "weight": "200G",
+      "prep_time": null,
+      "spice_level": 0,
+      "is_vegetarian": 1,
+      "is_spicy": 0,
+      "is_takeout_only": 0,
+      "allergens": null,
+      "allergens_en": ""
+    },
+    "nutrition": {
+      "calories": null,
+      "protein": null,
+      "carbs": null,
+      "fat": null,
+      "fiber": null,
+      "sodium": null,
+      "sugar": null,
+      "salt": null
+    },
+    "recipe": {
+      "ingredients": [
+        {
+          "id": 797,
+          "name": "Salată Verde Shaorma",
+          "category": "Legume",
+          "quantity": 150,
+          "unit": "g",
+          "unitStock": "g",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.5455748291685286,
+          "totalCost": "81.84",
+          "totalCostWithWaste": "81.84",
+          "supplier": "Furnizor Test",
+          "currentStock": 55268.47058823529,
+          "minStock": 100,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 821,
+          "name": "Ulei vegetal",
+          "category": "Uleiuri și Grăsimi",
+          "quantity": 10,
+          "unit": "ml",
+          "unitStock": "ml",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.36491973522575893,
+          "totalCost": "3.65",
+          "totalCostWithWaste": "3.65",
+          "supplier": "Uleiuri SRL",
+          "currentStock": 71910,
+          "minStock": 5000,
+          "stockStatus": "OK"
+        }
+      ],
+      "packagingRestaurant": [],
+      "packagingDelivery": []
+    },
+    "costs": {
+      "totalIngredientsCost": "85.49",
+      "totalCostWithWaste": "85.49",
+      "sellingPrice": 18,
+      "profitMargin": -67.49,
+      "markup": -374.92,
+      "foodCostPercentage": "474.92"
+    },
+    "stats": {
+      "totalIngredients": 2,
+      "totalPackagingItems": 0,
+      "hasNutritionalInfo": false,
+      "lowStockIngredients": 0
+    }
+  },
+  {
+    "product": {
+      "id": 116,
+      "name": "Salată de Roșii",
+      "name_en": "Tomato Salad",
+      "category": "Salate Însoțitoare",
+      "category_en": "Side Salads",
+      "price": 18,
+      "description": "Salată de roșii proaspete",
+      "description_en": "Fresh tomato salad",
+      "weight": "200G",
+      "prep_time": null,
+      "spice_level": 0,
+      "is_vegetarian": 1,
+      "is_spicy": 0,
+      "is_takeout_only": 0,
+      "allergens": null,
+      "allergens_en": ""
+    },
+    "nutrition": {
+      "calories": null,
+      "protein": null,
+      "carbs": null,
+      "fat": null,
+      "fiber": null,
+      "sodium": null,
+      "sugar": null,
+      "salt": null
+    },
+    "recipe": {
+      "ingredients": [
+        {
+          "id": 815,
+          "name": "Ceapă tocată",
+          "category": "Diverse",
+          "quantity": 20,
+          "unit": "g",
+          "unitStock": "g",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.7168016692209687,
+          "totalCost": "14.34",
+          "totalCostWithWaste": "14.34",
+          "supplier": "Furnizor General",
+          "currentStock": 127428.23529411764,
+          "minStock": 100,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 798,
+          "name": "Roșii Shaorma",
+          "category": "Legume",
+          "quantity": 150,
+          "unit": "g",
+          "unitStock": "g",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.034257682745826516,
+          "totalCost": "5.14",
+          "totalCostWithWaste": "5.14",
+          "supplier": "Furnizor Test",
+          "currentStock": 127522.22222222222,
+          "minStock": 100,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 821,
+          "name": "Ulei vegetal",
+          "category": "Uleiuri și Grăsimi",
+          "quantity": 10,
+          "unit": "ml",
+          "unitStock": "ml",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.36491973522575893,
+          "totalCost": "3.65",
+          "totalCostWithWaste": "3.65",
+          "supplier": "Uleiuri SRL",
+          "currentStock": 71910,
+          "minStock": 5000,
+          "stockStatus": "OK"
+        }
+      ],
+      "packagingRestaurant": [],
+      "packagingDelivery": []
+    },
+    "costs": {
+      "totalIngredientsCost": "23.12",
+      "totalCostWithWaste": "23.12",
+      "sellingPrice": 18,
+      "profitMargin": -5.12,
+      "markup": -28.47,
+      "foodCostPercentage": "128.47"
+    },
+    "stats": {
+      "totalIngredients": 3,
+      "totalPackagingItems": 0,
+      "hasNutritionalInfo": false,
+      "lowStockIngredients": 0
+    }
+  },
+  {
+    "product": {
+      "id": 110,
+      "name": "Salată de Rucola și Roșii Cherry",
+      "name_en": "Arugula and Cherry Tomato Salad",
+      "category": "Salate Însoțitoare",
+      "category_en": "Side Salads",
+      "price": 28,
+      "description": "Rucola, roșii cherry, ceapă roșie, brânză dură, dressing balsamic",
+      "description_en": "Arugula, cherry tomatoes, red onion, Parmesan, balsamic dressing",
+      "weight": "200G",
+      "prep_time": null,
+      "spice_level": 0,
+      "is_vegetarian": 1,
+      "is_spicy": 0,
+      "is_takeout_only": 0,
+      "allergens": "lapte",
+      "allergens_en": "milk"
+    },
+    "nutrition": {
+      "calories": null,
+      "protein": null,
+      "carbs": null,
+      "fat": null,
+      "fiber": null,
+      "sodium": null,
+      "sugar": null,
+      "salt": null
+    },
+    "recipe": {
+      "ingredients": [
+        {
+          "id": 798,
+          "name": "Roșii Shaorma",
+          "category": "Legume",
+          "quantity": 40,
+          "unit": "g",
+          "unitStock": "g",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.034257682745826516,
+          "totalCost": "1.37",
+          "totalCostWithWaste": "1.37",
+          "supplier": "Furnizor Test",
+          "currentStock": 127522.22222222222,
+          "minStock": 100,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 330,
+          "name": "Rucola proaspătă",
+          "category": "General",
+          "quantity": 80,
+          "unit": "g",
+          "unitStock": "buc",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0,
+          "totalCost": "0.00",
+          "totalCostWithWaste": "0.00",
+          "supplier": null,
+          "currentStock": 2000,
+          "minStock": 10,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 821,
+          "name": "Ulei vegetal",
+          "category": "Uleiuri și Grăsimi",
+          "quantity": 15,
+          "unit": "ml",
+          "unitStock": "ml",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.36491973522575893,
+          "totalCost": "5.47",
+          "totalCostWithWaste": "5.47",
+          "supplier": "Uleiuri SRL",
+          "currentStock": 71910,
+          "minStock": 5000,
+          "stockStatus": "OK"
+        }
+      ],
+      "packagingRestaurant": [],
+      "packagingDelivery": []
+    },
+    "costs": {
+      "totalIngredientsCost": "6.84",
+      "totalCostWithWaste": "6.84",
+      "sellingPrice": 28,
+      "profitMargin": 21.16,
+      "markup": 75.56,
+      "foodCostPercentage": "24.44"
+    },
+    "stats": {
+      "totalIngredients": 3,
+      "totalPackagingItems": 0,
+      "hasNutritionalInfo": false,
+      "lowStockIngredients": 0
+    }
+  },
+  {
+    "product": {
+      "id": 109,
+      "name": "Salată de Varză cu Morcov și Mărar",
+      "name_en": "Cabbage Salad with Carrot and Dill",
+      "category": "Salate Însoțitoare",
+      "category_en": "Side Salads",
+      "price": 16,
+      "description": "Varză, morcov, mărar",
+      "description_en": "Cabbage, carrot, dill",
+      "weight": "200G",
+      "prep_time": null,
+      "spice_level": 0,
+      "is_vegetarian": 1,
+      "is_spicy": 0,
+      "is_takeout_only": 0,
+      "allergens": null,
+      "allergens_en": ""
+    },
+    "nutrition": {
+      "calories": null,
+      "protein": null,
+      "carbs": null,
+      "fat": null,
+      "fiber": null,
+      "sodium": null,
+      "sugar": null,
+      "salt": null
+    },
+    "recipe": {
+      "ingredients": [
+        {
+          "id": 830,
+          "name": "Rozmarin",
+          "category": "Sosuri și Condimente",
+          "quantity": 15,
+          "unit": "ml",
+          "unitStock": "g",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.03998665331998665,
+          "totalCost": "0.60",
+          "totalCostWithWaste": "0.60",
+          "supplier": "Spice World SRL",
+          "currentStock": 8991,
+          "minStock": 200,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 825,
+          "name": "Varză albă",
+          "category": "Legume și Fructe",
+          "quantity": 120,
+          "unit": "g",
+          "unitStock": "g",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 0.009660102173841598,
+          "totalCost": "1.16",
+          "totalCostWithWaste": "1.16",
+          "supplier": "Legume Proaspete SRL",
+          "currentStock": 121709.77777777778,
+          "minStock": 10000,
+          "stockStatus": "OK"
+        },
+        {
+          "id": 23,
+          "name": "morcovi",
+          "category": "General",
+          "quantity": 30,
+          "unit": "g",
+          "unitStock": "kg",
+          "wastePercentage": 0,
+          "variableConsumption": null,
+          "costPerUnit": 9.564774813926666,
+          "totalCost": "286.94",
+          "totalCostWithWaste": "286.94",
+          "supplier": null,
+          "currentStock": 50667.5,
+          "minStock": 0.8,
+          "stockStatus": "OK"
+        }
+      ],
+      "packagingRestaurant": [],
+      "packagingDelivery": []
+    },
+    "costs": {
+      "totalIngredientsCost": "288.70",
+      "totalCostWithWaste": "288.70",
+      "sellingPrice": 16,
+      "profitMargin": -272.7,
+      "markup": -1704.39,
+      "foodCostPercentage": "1804.39"
+    },
+    "stats": {
+      "totalIngredients": 3,
+      "totalPackagingItems": 0,
+      "hasNutritionalInfo": false,
+      "lowStockIngredients": 0
+    }
+  }
+]

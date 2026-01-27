@@ -1,0 +1,43 @@
+﻿Ã¯Â»Â¿{
+  "productId": 32,
+  "productName": "Cuba Libre",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "price": 31,
+  "description": "Coctail clasic - Rom, Pepsi, lime",
+  "ingredients": [
+    {
+      "ingredientId": 76,
+      "ingredientName": "Rom alb",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi Alcoolice",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 195,
+      "ingredientName": "Pepsi",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 83,
+      "ingredientName": "Lime",
+      "ingredientCategory": "Fructe ÃƒÂˆÃ¢Â„Â¢i Legume",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "GheaÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

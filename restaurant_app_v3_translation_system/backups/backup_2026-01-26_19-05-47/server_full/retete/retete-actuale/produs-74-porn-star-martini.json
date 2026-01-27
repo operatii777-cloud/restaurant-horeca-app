@@ -1,0 +1,59 @@
+﻿Ã¯Â»Â¿{
+  "productId": 74,
+  "productName": "Porn Star Martini",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "price": 31,
+  "description": "Coctail - Vodka, Prosecco, piure de fructul pasiunii, fresh lÃ„ÂƒÃ†Â’mÃƒÂ¢ie, sirop de vanilie",
+  "ingredients": [
+    {
+      "ingredientId": 72,
+      "ingredientName": "Vodka",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi Alcoolice",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 198,
+      "ingredientName": "Prosecco",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 205,
+      "ingredientName": "Piure de fructul pasiunii",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 40,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 79,
+      "ingredientName": "Suc de lÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 206,
+      "ingredientName": "Sirop de vanilie",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 207,
+      "ingredientName": "Fructul pasiunii",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 0.5,
+      "unit": "buc",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

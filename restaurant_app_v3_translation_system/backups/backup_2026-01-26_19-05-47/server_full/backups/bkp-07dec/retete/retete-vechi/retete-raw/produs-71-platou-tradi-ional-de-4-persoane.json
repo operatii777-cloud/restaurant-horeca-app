@@ -1,0 +1,44 @@
+{
+  "productId": 71,
+  "productName": "Platou Tradițional de 4 Persoane",
+  "productCategory": "Platouri",
+  "ingredients": [
+    {
+      "ingredientId": 497,
+      "ingredientName": "Cârnați afumați",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 632,
+      "ingredientName": "Mămăligă/Murături",
+      "ingredientCategory": "General",
+      "quantityNeeded": 400,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 633,
+      "ingredientName": "Ceafă/Cotlet la grătar",
+      "ingredientCategory": "General",
+      "quantityNeeded": 300,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 50,
+      "ingredientName": "brânză feta",
+      "ingredientCategory": "General",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

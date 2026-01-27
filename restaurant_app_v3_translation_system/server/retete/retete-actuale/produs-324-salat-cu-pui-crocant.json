@@ -1,0 +1,59 @@
+﻿Ã¯Â»Â¿{
+  "productId": 324,
+  "productName": "SalatÃ„ÂƒÃ†Â’ cu Pui Crocant",
+  "productCategory": "Salate",
+  "price": 41,
+  "description": "Mix salatÃ„ÂƒÃ†Â’, piept de pui, roÃƒÂˆÃ¢Â„Â¢ii cherry, ou, brÃƒÂ¢nzÃ„ÂƒÃ†Â’ telemea, dressing de muÃƒÂˆÃ¢Â„Â¢tar cu miere",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 103,
+      "ingredientName": "SalatÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 107,
+      "ingredientName": "Pui",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 110,
+      "ingredientName": "Piept de pui",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 163,
+      "ingredientName": "BrÃƒÂ¢nzÃ„ÂƒÃ†Â’ telemea",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 96,
+      "ingredientName": "Ou",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

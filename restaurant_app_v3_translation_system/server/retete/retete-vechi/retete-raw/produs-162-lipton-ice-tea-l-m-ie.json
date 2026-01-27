@@ -1,0 +1,28 @@
+﻿Ã¯Â»Â¿{
+  "productId": 162,
+  "productName": "Lipton Ice Tea LÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+  "productCategory": "RÃ„ÂƒÃ†Â’coritoare",
+  "ingredients": [
+    {
+      "ingredientId": 270,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 64,
+      "ingredientName": "suc de lÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+      "ingredientCategory": "General",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

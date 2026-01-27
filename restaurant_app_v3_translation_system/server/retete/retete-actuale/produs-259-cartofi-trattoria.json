@@ -1,0 +1,51 @@
+﻿Ã¯Â»Â¿{
+  "productId": 259,
+  "productName": "Cartofi Trattoria",
+  "productCategory": "Garnituri",
+  "price": 26,
+  "description": "Cartofi, bacon, ou, sos ceddar, roÃƒÂˆÃ¢Â„Â¢ii, ceapÃ„ÂƒÃ†Â’ verde",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 94,
+      "ingredientName": "CeapÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Fructe ÃƒÂˆÃ¢Â„Â¢i Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 67,
+      "ingredientName": "Cartofi",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 200,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 69,
+      "ingredientName": "Bacon",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 40,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 96,
+      "ingredientName": "Ou",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

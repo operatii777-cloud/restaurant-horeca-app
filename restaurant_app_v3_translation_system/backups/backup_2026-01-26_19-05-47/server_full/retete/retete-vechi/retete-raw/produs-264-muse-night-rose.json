@@ -1,0 +1,19 @@
+﻿Ã¯Â»Â¿{
+  "productId": 264,
+  "productName": "Muse Night Rose",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 751,
+      "ingredientName": "Muse Night Rose",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

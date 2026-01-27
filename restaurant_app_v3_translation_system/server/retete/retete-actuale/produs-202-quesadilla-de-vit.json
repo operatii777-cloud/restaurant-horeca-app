@@ -1,0 +1,27 @@
+﻿Ã¯Â»Â¿{
+  "productId": 202,
+  "productName": "Quesadilla de VitÃ„ÂƒÃ†Â’",
+  "productCategory": "Fast Food",
+  "price": 59,
+  "description": "Ragu, fasole roÃƒÂˆÃ¢Â„Â¢ie, porumb, ceddar, mozzarella, cartofi prÃ„ÂƒÃ†Â’jiÃƒÂˆÃ¢Â€Âºi",
+  "ingredients": [
+    {
+      "ingredientId": 67,
+      "ingredientName": "Cartofi",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 200,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 38,
+      "ingredientName": "Mozzarella",
+      "ingredientCategory": "Lactate ÃƒÂˆÃ¢Â„Â¢i BrÃƒÂ¢nzeturi",
+      "quantityNeeded": 150,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

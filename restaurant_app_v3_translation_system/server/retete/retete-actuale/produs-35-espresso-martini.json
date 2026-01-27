@@ -1,0 +1,43 @@
+﻿Ã¯Â»Â¿{
+  "productId": 35,
+  "productName": "Espresso Martini",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "price": 31,
+  "description": "Coctail - Vodka, lichior de cafea, espresso, sirop de zahÃ„ÂƒÃ†Â’r",
+  "ingredients": [
+    {
+      "ingredientId": 72,
+      "ingredientName": "Vodka",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi Alcoolice",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 188,
+      "ingredientName": "Kahlua",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 25,
+      "ingredientName": "Cafea boabe",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 30,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 80,
+      "ingredientName": "Sirop simplu",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 10,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

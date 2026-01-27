@@ -1,0 +1,43 @@
+﻿Ã¯Â»Â¿{
+  "productId": 332,
+  "productName": "SalatÃ„ÂƒÃ†Â’ de MurÃ„ÂƒÃ†Â’turi",
+  "productCategory": "Salate ÃƒÂƒÃ…Â½nsoÃƒÂˆÃ¢Â€Âºitoare",
+  "price": 18,
+  "description": "MurÃ„ÂƒÃ†Â’turi asortate",
+  "ingredients": [
+    {
+      "ingredientId": 173,
+      "ingredientName": "CastraveÃƒÂˆÃ¢Â€Âºi muraÃƒÂˆÃ¢Â€Âºi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 174,
+      "ingredientName": "Morcovi muraÃƒÂˆÃ¢Â€Âºi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 94,
+      "ingredientName": "CeapÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Fructe ÃƒÂˆÃ¢Â„Â¢i Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 31,
+      "ingredientName": "Ulei de floarea-soarelui",
+      "ingredientCategory": "Condimente ÃƒÂˆÃ¢Â„Â¢i Sosuri",
+      "quantityNeeded": 20,
+      "unit": "l",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

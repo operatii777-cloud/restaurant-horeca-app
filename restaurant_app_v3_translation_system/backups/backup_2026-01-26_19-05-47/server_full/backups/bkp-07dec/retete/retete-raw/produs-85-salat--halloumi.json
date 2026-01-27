@@ -1,0 +1,44 @@
+{
+  "productId": 85,
+  "productName": "Salată Halloumi",
+  "productCategory": "Salate",
+  "ingredients": [
+    {
+      "ingredientId": 797,
+      "ingredientName": "Salată Verde Shaorma",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 798,
+      "ingredientName": "Roșii Shaorma",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 821,
+      "ingredientName": "Ulei vegetal",
+      "ingredientCategory": "Uleiuri și Grăsimi",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 50,
+      "ingredientName": "brânză feta",
+      "ingredientCategory": "General",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

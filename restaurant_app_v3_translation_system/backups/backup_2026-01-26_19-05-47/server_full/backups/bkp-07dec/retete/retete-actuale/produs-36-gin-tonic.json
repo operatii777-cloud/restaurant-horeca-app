@@ -1,0 +1,41 @@
+{
+  "productId": 36,
+  "productName": "Gin Tonic",
+  "productCategory": "Băuturi și Coctailuri",
+  "price": 18,
+  "description": "Gin Tonic clasic",
+  "ingredients": [
+    {
+      "ingredientId": 78,
+      "ingredientName": "Gin",
+      "ingredientCategory": "Băuturi Alcoolice",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 197,
+      "ingredientName": "Apă tonică",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 154,
+      "ingredientName": "Lămâie",
+      "ingredientCategory": "Legume și Fructe",
+      "quantityNeeded": 1,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "Gheață",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

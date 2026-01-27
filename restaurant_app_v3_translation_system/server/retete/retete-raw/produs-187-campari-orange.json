@@ -1,0 +1,46 @@
+﻿Ã¯Â»Â¿{
+  "productId": 187,
+  "productName": "Campari Orange",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 432,
+      "ingredientName": "Campari",
+      "ingredientCategory": "General",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 447,
+      "ingredientName": "Felie/coajÃ„ÂƒÃ†Â’ de PortocalÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "General",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 270,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 63,
+      "ingredientName": "suc de portocale",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

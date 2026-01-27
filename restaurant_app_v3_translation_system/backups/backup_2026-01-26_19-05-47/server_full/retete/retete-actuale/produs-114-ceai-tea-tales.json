@@ -1,0 +1,27 @@
+﻿Ã¯Â»Â¿{
+  "productId": 114,
+  "productName": "Ceai Tea Tales",
+  "productCategory": "Cafea/CiocolatÃ„ÂƒÃ†Â’/Ceai",
+  "price": 16,
+  "description": "Jasmine/Herbal/Spicy Ginger/English Breakfast/Cranberry/Wild Berry",
+  "ingredients": [
+    {
+      "ingredientId": 87,
+      "ingredientName": "Ceai Tea Tales",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 1,
+      "unit": "plic",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 88,
+      "ingredientName": "ApÃ„ÂƒÃ†Â’ fierbinte",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 250,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

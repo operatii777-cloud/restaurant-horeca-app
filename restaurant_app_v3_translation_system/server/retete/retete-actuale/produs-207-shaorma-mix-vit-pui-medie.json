@@ -1,0 +1,27 @@
+﻿Ã¯Â»Â¿{
+  "productId": 207,
+  "productName": "Shaorma Mix VitÃ„ÂƒÃ†Â’-Pui - Medie",
+  "productCategory": "Fast Food",
+  "price": 29,
+  "description": "Shaorma mix vitÃ„ÂƒÃ†Â’ ÃƒÂˆÃ¢Â„Â¢i pui cu legume proaspete, sos usturoi - porÃƒÂˆÃ¢Â€Âºie medie",
+  "ingredients": [
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 107,
+      "ingredientName": "Pui",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

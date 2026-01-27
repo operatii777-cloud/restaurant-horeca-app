@@ -1,0 +1,17 @@
+{
+  "productId": 261,
+  "productName": "Purcari Nocturne Rose",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 761,
+      "ingredientName": "Purcari Nocturne Rose",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

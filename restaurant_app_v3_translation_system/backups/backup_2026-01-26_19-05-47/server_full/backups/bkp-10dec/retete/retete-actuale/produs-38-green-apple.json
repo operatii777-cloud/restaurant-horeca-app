@@ -1,0 +1,41 @@
+{
+  "productId": 38,
+  "productName": "Green Apple",
+  "productCategory": "Băuturi și Coctailuri",
+  "price": 25,
+  "description": "Coctail fără alcool - Suc de mere verzi, lime, zahăr brun",
+  "ingredients": [
+    {
+      "ingredientId": 68,
+      "ingredientName": "Suc de mere",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 150,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 83,
+      "ingredientName": "Lime",
+      "ingredientCategory": "Fructe și Legume",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 81,
+      "ingredientName": "Zahăr brun",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "Gheață",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

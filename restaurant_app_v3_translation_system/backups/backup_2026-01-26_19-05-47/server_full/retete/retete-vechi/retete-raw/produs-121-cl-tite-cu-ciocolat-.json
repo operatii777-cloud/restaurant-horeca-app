@@ -1,0 +1,37 @@
+﻿Ã¯Â»Â¿{
+  "productId": 121,
+  "productName": "ClÃ„ÂƒÃ†Â’tite cu CiocolatÃ„ÂƒÃ†Â’",
+  "productCategory": "Deserturi",
+  "ingredients": [
+    {
+      "ingredientId": 401,
+      "ingredientName": "ClÃ„ÂƒÃ†Â’tite (aluat)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 2,
+      "unit": "buc",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 480,
+      "ingredientName": "Banane (caramelizate/sotate)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 53,
+      "ingredientName": "lapte",
+      "ingredientCategory": "General",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

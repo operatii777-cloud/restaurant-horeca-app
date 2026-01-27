@@ -1,0 +1,25 @@
+{
+  "productId": 264,
+  "productName": "Orez Sălbatic",
+  "productCategory": "Garnituri",
+  "price": 18,
+  "description": "Orez sălbatic aromat",
+  "ingredients": [
+    {
+      "ingredientId": 162,
+      "ingredientName": "Orez sălbatic",
+      "ingredientCategory": "Cereale și Paste",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 156,
+      "ingredientName": "Apă",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 200,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}

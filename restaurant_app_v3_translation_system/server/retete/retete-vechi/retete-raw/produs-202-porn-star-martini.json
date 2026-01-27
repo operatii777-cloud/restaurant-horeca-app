@@ -1,0 +1,55 @@
+﻿Ã¯Â»Â¿{
+  "productId": 202,
+  "productName": "Porn Star Martini",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 445,
+      "ingredientName": "VodcÃ„ÂƒÃ†Â’ (Ketel One)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 469,
+      "ingredientName": "Piure de Fructul Pasiunii",
+      "ingredientCategory": "General",
+      "quantityNeeded": 40,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 477,
+      "ingredientName": "Topping (simplu, sos vanilie)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 10,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 472,
+      "ingredientName": "Passoa (lichior fructul pasiunii)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 471,
+      "ingredientName": "Prosecco/ÃƒÂˆÃ‹Âœampanie (shot)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 40,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

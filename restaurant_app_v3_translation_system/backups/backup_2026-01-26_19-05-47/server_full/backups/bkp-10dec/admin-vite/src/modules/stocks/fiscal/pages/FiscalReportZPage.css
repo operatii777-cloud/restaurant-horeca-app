@@ -1,0 +1,51 @@
+.fiscal-report-z-page {
+  padding: 0;
+}
+
+.fiscal-report-z-page .card {
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.fiscal-report-z-page .card-header {
+  border-bottom: none;
+  padding: 1rem 1.5rem;
+  font-weight: 600;
+}
+
+.fiscal-report-z-page .card-body {
+  padding: 1.5rem;
+}
+
+.fiscal-report-z-page .btn-danger {
+  background: linear-gradient(45deg, #dc3545, #c82333);
+  border: none;
+  box-shadow: 0 4px 6px rgba(220, 53, 69, 0.2);
+}
+
+.fiscal-report-z-page .btn-danger:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 12px rgba(220, 53, 69, 0.3);
+}
+
+.fiscal-report-z-page .btn-danger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.fiscal-report-z-page .table {
+  margin-top: 1rem;
+}
+
+.fiscal-report-z-page .table thead th {
+  background-color: #f8fafc;
+  font-weight: 600;
+  color: #0f172a;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.fiscal-report-z-page .spinner-border {
+  width: 1rem;
+  height: 1rem;
+}
+

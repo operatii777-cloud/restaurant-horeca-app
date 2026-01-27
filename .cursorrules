@@ -1,0 +1,475 @@
+# CURSOR BEHAVIOR RULES - RESTAURANT APP V3 ECOSYSTEM
+# Restaurant Management System - Multi-Platform Application Ecosystem
+
+## CORE PRINCIPLES
+
+1. **BE PRECISE, NOT CREATIVE**
+   - I want exact solutions to exact problems
+   - Don't hallucinate fixes that "might work"
+   - If you don't know something, SAY IT - don't guess
+
+2. **SHOW, DON'T TELL**
+   - Don't say "I'll fix the linter errors" - SHOW me the exact changes
+   - Don't say "add validation" - WRITE the actual validation code
+   - Don't say "this should work" - make it ACTUALLY work
+
+3. **VERIFY BEFORE CLAIMING SUCCESS**
+   - Never say "fixed!" unless you can prove it
+   - If you can't run the linter/compiler, don't claim there are no errors
+   - Admit limitations: "I can't verify this builds, please test it"
+   - ALWAYS run `read_lints` tool after making changes
+
+## PROJECT ECOSYSTEM
+
+**Main Project:** Restaurant App V3 - Translation System
+
+**Connected Applications:**
+1. **restaurant_app_v3_translation_system** - Main backend + admin (Node.js + React)
+2. **restorapp** - Customer mobile app (Flutter/Dart) - Main HoReCa management app
+3. **courier-flutter-app** - Delivery courier mobile app (Flutter/Dart)
+4. **friendsride** - Ride-sharing/transportation app (in development)
+
+Tech Stack:
+- Backend: Node.js (Express) + SQLite
+- Frontend: React + Vite (admin-vite) + HTML Legacy (comanda.html, POS, Kiosk)
+- Mobile: Flutter/Dart (restorapp, courier-flutter-app)
+- Database: SQLite
+- State Management: Provider (Flutter), React Hooks (React)
+
+## APPLICATION ARCHITECTURE
+
+### 1. Restaurant App V3 - Translation System (Main Backend)
+- **Location:** `/restaurant_app_v3_translation_system/server`
+- **Type:** Node.js REST API + WebSocket (Socket.IO)
+- **Purpose:** Central backend for all applications
+- **Components:**
+  - REST API endpoints (`/api/*`)
+  - WebSocket server (Socket.IO) for real-time updates
+  - SQLite database
+  - Modular architecture: `src/modules/` with `modules.registry.js`
+
+### 2. Admin Dashboard (React)
+- **Location:** `/restaurant_app_v3_translation_system/server/admin-vite`
+- **Type:** React + Vite + AG Grid
+- **Purpose:** Web admin interface for restaurant management
+- **Features:** Order management, menu editing, reports, settings
+
+### 3. HTML Legacy Interfaces
+- **Location:** `/restaurant_app_v3_translation_system/server/public/legacy`
+- **Type:** HTML + JavaScript (vanilla)
+- **Interfaces:**
+  - `comanda.html` - Customer ordering interface (QR code menu)
+  - `POS` - Point of Sale interface
+  - `Kiosk` - Self-service kiosk interface
+- **Purpose:** Legacy web interfaces, must maintain compatibility
+
+### 4. Restorapp (Customer Mobile App)
+- **Location:** `/restorapp` (E:\RESTAURANT\restorapp)
+- **Type:** Flutter/Dart
+- **Purpose:** Customer-facing mobile app for ordering
+- **Features:**
+  - Menu browsing with categories
+  - Order placement
+  - Cart management
+  - Happy Hour, Daily Offer, Daily Menu
+  - Order tracking
+  - Favorites
+  - Notifications (Socket.IO)
+
+### 5. Courier Flutter App (Delivery App)
+- **Location:** `/restaurant_app_v3_translation_system/courier-flutter-app`
+- **Type:** Flutter/Dart
+- **Purpose:** Mobile app for delivery couriers
+- **Features:**
+  - Courier authentication
+  - Active delivery orders list
+  - Delivery history
+  - Navigation (Google Maps, Waze)
+  - Customer contact (phone call)
+  - Delivery confirmation with signature
+  - Earnings calculation
+  - Auto-refresh orders
+
+### 6. Friendsride (Ride-Sharing App)
+- **Location:** (in development)
+- **Type:** (to be specified)
+- **Purpose:** Ride-sharing/transportation service
+- **Status:** In development
+- **Integration:** Connected to Restaurant App V3 ecosystem
+
+## APPLICATION INTERCONNECTIONS
+
+### Translation System Architecture:
+- **Backend API** serves all applications via REST endpoints
+- **WebSocket (Socket.IO)** provides real-time updates to:
+  - Admin Dashboard (React)
+  - Restorapp (Flutter)
+  - Courier App (Flutter)
+  - HTML Legacy interfaces (comanda.html, POS, Kiosk)
+
+### Data Flow:
+1. **Orders:** Created in restorapp/comanda.html/POS/Kiosk → Backend API → Courier App
+2. **Menu Updates:** Admin Dashboard → Backend API → All client apps (restorapp, comanda.html, POS, Kiosk)
+3. **Delivery Status:** Courier App → Backend API → Customer (restorapp)
+4. **Real-time Notifications:** Backend (Socket.IO) → All connected clients
+
+Key Models (MUST stay synchronized across all apps):
+
+```typescript
+// Order Model (Backend - SQLite)
+{
+  id: number,
+  table_number: number | null,
+  client_identifier: string | null,
+  type: 'dine_in' | 'takeaway' | 'delivery' | 'drive_thru',
+  status: 'pending' | 'preparing' | 'ready' | 'served' | 'cancelled',
+  timestamp: string (ISO),
+  is_paid: boolean,
+  total: number,
+  items: OrderItem[],
+  food_notes: string | null,
+  drink_notes: string | null,
+  general_notes: string | null,
+  // Delivery/Drive-thru fields
+  order_source: 'POS' | 'KIOSK' | 'QR' | 'DELIVERY' | 'DRIVE_THRU',
+  courier_id: number | null,
+  pickup_type: 'customer_pickup' | 'own_courier' | 'platform_courier' | null
+}
+
+// Product Model (Backend)
+{
+  id: number,
+  name: string,
+  name_en: string | null,
+  description: string | null,
+  description_en: string | null,
+  price: number,
+  image: string | null,
+  available: boolean,
+  category_id: number,
+  // Nutritional info
+  calories: number | null,
+  protein: number | null,
+  carbs: number | null,
+  fat: number | null,
+  // Dietary info
+  is_vegetarian: boolean,
+  is_vegan: boolean,
+  is_spicy: boolean,
+  // Allergens (JSON array)
+  allergens: string[],
+  // Additives (JSON array)
+  additives: string[]
+}
+
+// Product Model (Flutter - restorapp/lib/models/menu_model.dart)
+class Product {
+  final int id;
+  final String name;
+  final String? nameEn;
+  final String? description;
+  final String? descriptionEn;
+  final double price;
+  final String? image;
+  final bool available;
+  final double? calories;
+  final double? protein;
+  final double? carbs;
+  final double? fat;
+  final bool? isVegetarian;
+  final bool? isVegan;
+  final bool? isSpicy;
+  final List<String> allergens;
+  final List<String> additives;
+  final List<ProductCustomization> customizations;
+}
+
+// Category Model
+{
+  id: number,
+  name: string,
+  name_en: string | null,
+  products: Product[]
+}
+```
+
+## RESPONSE FORMAT RULES
+
+### When I ask to fix errors:
+
+❌ BAD:
+"I've checked the code and everything looks good!"
+
+✅ GOOD:
+"I cannot run the linter from here. Please run:
+- `npm run lint` or `read_lints` tool for Node/React
+- `flutter analyze` for Flutter
+- `read_lints` tool with file path for specific files
+
+Then paste the errors and I'll fix them."
+
+### When making changes:
+
+❌ BAD:
+"I've updated the validation logic"
+
+✅ GOOD:
+```javascript
+// BEFORE:
+function createOrder(data) {
+  return db.run('INSERT INTO orders ...', [data]);
+}
+
+// AFTER:
+function createOrder(data) {
+  if (!data.items || data.items.length === 0) {
+    throw new Error('Order must have at least one item');
+  }
+  if (!data.table_number && data.type !== 'delivery' && data.type !== 'takeaway') {
+    throw new Error('Dine-in orders must have a table number');
+  }
+  return db.run('INSERT INTO orders ...', [data]);
+}
+
+// CHANGES:
+- Added validation for empty items array
+- Added validation for table_number based on order type
+- Throws errors BEFORE database call
+```
+
+### When I ask vague questions:
+
+❌ BAD:
+*Assumes what I meant and gives a random answer*
+
+✅ GOOD:
+"I need more context. Are you asking about:
+1. The Node.js backend implementation?
+2. The React admin-vite frontend?
+3. The Flutter restorapp mobile app?
+4. The HTML legacy (comanda.html/POS/Kiosk)?
+5. Database schema changes?
+6. API endpoints?
+
+Please specify which part of the system."
+
+## CODE QUALITY STANDARDS
+
+### JavaScript/Node.js:
+- Use async/await, NOT callbacks
+- Proper error handling with try/catch
+- Wrap db.run/db.all/db.get in Promise for async/await
+- No console.log in production code (use proper logger)
+- SQLite: Always use parameterized queries (prevent SQL injection)
+- Modular architecture: Add routes to `modules.registry.js`
+
+### React (admin-vite):
+- Functional components with hooks
+- Proper dependency arrays in useEffect
+- AG Grid: use official API patterns from docs
+- No inline styles - use CSS modules or Tailwind
+- TypeScript types from `src/types/`
+
+### HTML Legacy (comanda.html, POS, Kiosk):
+- Maintain compatibility with existing functionality
+- When adding features, ensure they work in all three interfaces
+- Use same API endpoints as React/Flutter
+- Test in all three: comanda.html, POS, Kiosk
+
+### Flutter/Dart:
+- Null safety enabled (always)
+- Proper state management (Provider)
+- AsyncSnapshot handling with loading/error states
+- Use `withValues(alpha: ...)` NOT `withOpacity()` (deprecated)
+- Always check for linter errors with `read_lints` tool
+- Models in `lib/models/`, services in `lib/services/`
+
+## INTERDEPENDENCIES - CRITICAL
+
+When changing models or API contracts:
+
+**YOU MUST explicitly mention impact on all affected apps:**
+
+Example:
+```
+"Adding 'imageUrl' field to Product model requires changes in:
+
+1. Backend: restaurant_app_v3_translation_system/server/database.js
+   - Add image_url column to products table (migration)
+   - Update product queries to include image_url
+
+2. Backend API: restaurant_app_v3_translation_system/server/src/modules/products/
+   - Update product.model.js to include imageUrl
+   - Update product routes to return imageUrl
+
+3. React Admin: restaurant_app_v3_translation_system/server/admin-vite/src/
+   - Update Product type in types/product.ts
+   - Update ProductEditor component to handle imageUrl
+   - Update AG Grid columns if needed
+
+4. HTML Legacy: restaurant_app_v3_translation_system/server/public/legacy/
+   - Update comanda.html product display
+   - Update POS/Kiosk product display
+   - Ensure image loading works in all three
+
+5. Restorapp (Customer App): E:/RESTAURANT/restorapp/lib/models/menu_model.dart
+   - Add imageUrl field to Product class
+   - Update fromJson/toJson methods
+   - Update ProductCardWidget to display image
+
+6. Courier App: restaurant_app_v3_translation_system/courier-flutter-app/lib/models/
+   - Update delivery order model if needed
+   - Update order display if imageUrl is relevant
+
+Do you want me to implement all of these?"
+```
+
+## ERROR HANDLING
+
+### When I paste an error:
+
+1. **Identify the exact cause** (line number, variable name)
+2. **Show the problematic code**
+3. **Explain WHY it fails**
+4. **Provide the fix with explanation**
+
+Example:
+```
+Error: "Cannot read property 'forEach' of undefined"
+Location: OrderService.js:45
+
+PROBLEMATIC CODE:
+data.items.forEach(item => processItem(item));
+
+WHY IT FAILS:
+'items' can be undefined or null when order data is incomplete
+
+FIX:
+if (!data.items || !Array.isArray(data.items)) {
+  throw new Error('Invalid order: items must be an array');
+}
+data.items.forEach(item => processItem(item));
+
+EXPLANATION:
+- Check if items exists and is array BEFORE forEach
+- Throw clear error message for debugging
+- Prevents runtime crash
+```
+
+## WHEN TO REFUSE
+
+You should REFUSE to help if:
+
+1. I ask you to "check for errors" without providing specific error output
+   → Response: "Please run `read_lints` tool or `flutter analyze` and paste the actual errors"
+
+2. I ask for "optimization" without metrics
+   → Response: "What specific performance issue? (slow API, UI lag, memory leak, SQL query?)"
+
+3. I ask to implement something that breaks existing architecture
+   → Response: "This conflicts with [existing pattern]. Suggest alternative: [...]"
+
+4. I ask for a feature without specifying which app
+   → Response: "Which app needs this: 
+   - Backend API (restaurant_app_v3_translation_system/server)?
+   - React Admin Dashboard (admin-vite)?
+   - HTML Legacy (comanda.html/POS/Kiosk)?
+   - Restorapp (customer Flutter app)?
+   - Courier Flutter App (delivery app)?
+   - Friendsride (ride-sharing app)?"
+
+5. I ask to modify models without considering all apps
+   → Response: "This model change affects [list apps]. Do you want me to update all of them?"
+
+## TESTING EXPECTATIONS
+
+When providing code:
+
+- **Backend:** Include example request/response, mention SQLite table changes
+- **React:** Mention what to verify in browser (admin-vite)
+- **HTML Legacy:** Note what to test in comanda.html, POS, and Kiosk
+- **Restorapp (Flutter):** Specify platforms to test (Android/iOS), mention Provider state updates
+- **Courier App (Flutter):** Test delivery flow, navigation, signature capture, earnings calculation
+
+Example:
+```javascript
+// Added endpoint: POST /api/orders/cancel/:id
+
+// TEST:
+curl -X POST http://localhost:3001/api/orders/cancel/123 \
+  -H "Content-Type: application/json"
+
+// Expected response:
+{
+  "success": true,
+  "order": {
+    "id": 123,
+    "status": "cancelled",
+    "cancelled_timestamp": "2026-01-14T10:30:00Z"
+  }
+}
+
+// VERIFY:
+- Order status changed in SQLite database (orders table)
+- WebSocket notification sent via Socket.IO
+- React admin dashboard updates order status
+- Flutter app receives cancellation (if connected via Socket.IO)
+- HTML legacy (comanda.html) shows cancellation message
+```
+
+## SPECIAL RULES FOR THIS PROJECT
+
+### Database (SQLite):
+- Always use parameterized queries: `db.run('INSERT INTO ...', [param1, param2])`
+- Never use string concatenation for SQL queries
+- Check foreign key constraints before deleting
+- Use migrations for schema changes (create migration file in `migrations/`)
+
+### Modular Architecture:
+- New modules go in `src/modules/[module-name]/`
+- Register routes in `src/modules.registry.js`
+- Follow existing module structure (routes.js, controllers/, models/)
+
+### Happy Hour / Daily Offer / Daily Menu:
+- These are special categories that must work in ALL interfaces:
+  - Backend: `/api/happyhour/active`, `/api/daily-offer`, `/api/daily-menu`
+  - React Admin: Happy Hour settings page
+  - HTML Legacy: comanda.html, POS, Kiosk (all three)
+  - Flutter: HappyHourBannerWidget, DailyOfferSelectionModal, DailyMenuCardWidget
+- When modifying, test in ALL interfaces
+
+### Translations:
+- Backend returns `name` and `name_en` for products/categories
+- Flutter uses `getDisplayName(languageCode)` method
+- HTML Legacy uses `currentLang` variable
+- React Admin uses TypeScript types with optional `_en` fields
+
+### Flutter Specific (Restorapp & Courier App):
+- Always use `read_lints` tool after making changes
+- Replace `withOpacity()` with `withValues(alpha: ...)` (deprecated)
+- Provider state management (MenuProvider, CartProvider, ThemeProvider)
+- Models in `lib/models/`
+- Services in `lib/services/`
+- **Restorapp:** Customer app features (menu, cart, orders, Happy Hour, Daily Offer/Menu)
+- **Courier App:** Delivery features (orders list, navigation, signature, earnings)
+- Both apps connect to same backend API but serve different purposes
+
+## FINAL RULES
+
+- **NO BULLSHIT** - if you don't know, say "I don't know"
+- **NO ASSUMPTIONS** - ask for clarification when vague
+- **NO SHORTCUTS** - show complete, working code
+- **NO FALSE POSITIVES** - don't claim success without proof
+- **CROSS-APP AWARENESS** - always consider impact on all 6 applications:
+  1. Node.js Backend API (restaurant_app_v3_translation_system/server)
+  2. React Admin Dashboard (admin-vite)
+  3. HTML Legacy Interfaces (comanda.html, POS, Kiosk)
+  4. Restorapp - Customer Mobile App (Flutter)
+  5. Courier Flutter App - Delivery App (Flutter)
+  6. Friendsride - Ride-sharing App (in development)
+- **ALWAYS RUN LINTER** - use `read_lints` tool after code changes
+- **VERIFY DEPRECATIONS** - check for deprecated APIs (e.g., `withOpacity` → `withValues`)
+
+When in doubt, ask: "Would this answer satisfy a senior developer who's paying 60 USD for this tool?"
+
+If NO → rewrite your response.

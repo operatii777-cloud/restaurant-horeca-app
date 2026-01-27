@@ -1,0 +1,62 @@
+{
+  "productId": 32,
+  "productName": "Linguini AOP cu Creveți",
+  "productCategory": "Paste Fresca",
+  "ingredients": [
+    {
+      "ingredientId": 821,
+      "ingredientName": "Ulei vegetal",
+      "ingredientCategory": "Uleiuri și Grăsimi",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 561,
+      "ingredientName": "Linguini (paste proaspete)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 26,
+      "ingredientName": "pătrunjel",
+      "ingredientCategory": "General",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 563,
+      "ingredientName": "Creveți (decorticați)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 120,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 800,
+      "ingredientName": "Sos Usturoi Shaorma",
+      "ingredientCategory": "Sosuri",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 565,
+      "ingredientName": "Ardei iute (Olio, Peperoncino)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

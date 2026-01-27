@@ -1,0 +1,100 @@
+﻿Ã¯Â»Â¿{
+  "productId": 23,
+  "productName": "SupÃ„ÂƒÃ†Â’ CremÃ„ÂƒÃ†Â’ de Legume",
+  "productCategory": "Ciorbe",
+  "ingredients": [
+    {
+      "ingredientId": 23,
+      "ingredientName": "morcovi",
+      "ingredientCategory": "General",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 15,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 169,
+      "ingredientName": "Sare de mare",
+      "ingredientCategory": "General",
+      "quantityNeeded": 4,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 117,
+      "ingredientName": "Piper negru",
+      "ingredientCategory": "Condimente ÃƒÂˆÃ¢Â„Â¢i Sosuri",
+      "quantityNeeded": 0.5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 815,
+      "ingredientName": "CeapÃ„ÂƒÃ†Â’ tocatÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 15,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 32,
+      "ingredientName": "cartofi",
+      "ingredientCategory": "General",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 129,
+      "ingredientName": "ÃƒÂˆÃ…Â¡elinÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 15,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 176,
+      "ingredientName": "Fond de legume/ApÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "General",
+      "quantityNeeded": 250,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 175,
+      "ingredientName": "Crutoane (se adaugÃ„ÂƒÃ†Â’ separat)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 178,
+      "ingredientName": "Dovlecel",
+      "ingredientCategory": "General",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 130,
+      "ingredientName": "SmÃƒÂ¢ntÃƒÂ¢nÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

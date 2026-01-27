@@ -1,0 +1,27 @@
+﻿Ã¯Â»Â¿{
+  "productId": 320,
+  "productName": "SalatÃ„ÂƒÃ†Â’ Caprese",
+  "productCategory": "Salate",
+  "price": 20,
+  "description": "SalatÃ„ÂƒÃ†Â’ Caprese cu mozzarella",
+  "ingredients": [
+    {
+      "ingredientId": 103,
+      "ingredientName": "SalatÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 38,
+      "ingredientName": "Mozzarella",
+      "ingredientCategory": "Lactate ÃƒÂˆÃ¢Â„Â¢i BrÃƒÂ¢nzeturi",
+      "quantityNeeded": 150,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

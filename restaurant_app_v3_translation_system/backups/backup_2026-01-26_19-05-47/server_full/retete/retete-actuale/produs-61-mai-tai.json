@@ -1,0 +1,59 @@
+﻿Ã¯Â»Â¿{
+  "productId": 61,
+  "productName": "Mai Tai",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "price": 31,
+  "description": "Coctail clasic - Rom, suc de portocale, sirop de migdale, lime",
+  "ingredients": [
+    {
+      "ingredientId": 76,
+      "ingredientName": "Rom alb",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi Alcoolice",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 201,
+      "ingredientName": "Rom negru",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 46,
+      "ingredientName": "Suc de portocale",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 50,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 202,
+      "ingredientName": "Sirop de migdale",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 83,
+      "ingredientName": "Lime",
+      "ingredientCategory": "Fructe ÃƒÂˆÃ¢Â„Â¢i Legume",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "GheaÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

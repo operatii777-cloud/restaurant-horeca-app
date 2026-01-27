@@ -1,0 +1,44 @@
+{
+  "productId": 101,
+  "productName": "Cartofi Trattoria",
+  "productCategory": "Garnituri",
+  "ingredients": [
+    {
+      "ingredientId": 800,
+      "ingredientName": "Sos Usturoi Shaorma",
+      "ingredientCategory": "Sosuri",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 15,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 830,
+      "ingredientName": "Rozmarin",
+      "ingredientCategory": "Sosuri și Condimente",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 821,
+      "ingredientName": "Ulei vegetal",
+      "ingredientCategory": "Uleiuri și Grăsimi",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 32,
+      "ingredientName": "cartofi",
+      "ingredientCategory": "General",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

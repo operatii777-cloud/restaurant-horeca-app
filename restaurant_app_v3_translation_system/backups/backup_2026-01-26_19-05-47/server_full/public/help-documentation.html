@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentație</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: white;
+            color: #333;
+        }
+        
+        h1 {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        h2 {
+            color: #764ba2;
+            margin-top: 30px;
+        }
+        
+        .section {
+            background: #f9fafb;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            border-radius: 5px;
+        }
+        
+        ul {
+            line-height: 1.8;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 5px;
+        }
+        
+        .btn:hover {
+            background: #5568d3;
+        }
+    </style>
+</head>
+<body>
+    <h1>📚 Documentație Restaurant Management System</h1>
+    
+    <div class="section">
+        <h2>🚀 Pornire Rapidă</h2>
+        <p>Sistemul este configurat cu 336 produse și 797 ingrediente gata de utilizare.</p>
+        <ul>
+            <li><strong>Explorează meniul:</strong> comanda.html</li>
+            <li><strong>Personalizează:</strong> Catalog Produse</li>
+            <li><strong>Populează stocuri:</strong> Financiar → NIR</li>
+        </ul>
+        <a href="/setup-guide.html" target="_blank" class="btn">📖 Ghid Complet</a>
+        <a href="/admin.html" target="_blank" class="btn">⚙️ Administrare</a>
+    </div>
+
+    <div class="section">
+        <h2>📦 Module Principale</h2>
+        <ul>
+            <li><strong>Stocuri:</strong> Ingrediente, rețete, fișe tehnice</li>
+            <li><strong>Financiar:</strong> NIR, rapoarte, comenzi</li>
+            <li><strong>Marketing:</strong> Loialitate, feedback</li>
+            <li><strong>Raportare:</strong> Dashboard, analytics</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>⚙️ Configurare</h2>
+        <p><strong>Opțiunea A - Template (Recomandat):</strong></p>
+        <ol>
+            <li>Delete unused products (1-2 hours)</li>
+            <li>Ajustează prețurile (1 oră)</li>
+            <li>Populează stocurile prin NIR (30 min)</li>
+        </ol>
+        <p><strong>Timp total: 3-4 ore</strong></p>
+    </div>
+
+    <div class="section">
+        <h2>🔄 Flux Zilnic</h2>
+        <p><strong>Dimineața:</strong> Verifică stocuri, adaugă ingrediente prin NIR</p>
+        <p><strong>În timpul zilei:</strong> Comenzi → KDS → Stocuri scad automat</p>
+        <p><strong>Seara:</strong> Raport Z, verifică anulări, backup</p>
+    </div>
+
+    <div class="section">
+        <h2>🆘 Troubleshooting</h2>
+        <p><strong>Server nu pornește:</strong></p>
+        <code>Get-Process -Name node | Stop-Process -Force</code>
+        
+        <p style="margin-top: 10px;"><strong>Stocurile nu scad:</strong></p>
+        <p>Verifică dacă produsele au rețete definite în Stocuri → Rețete</p>
+        
+        <p style="margin-top: 10px;"><strong>Auto-Restart Server:</strong></p>
+        <p>Vezi fișierele AUTO-RESTART-GUIDE.md și watchdog.ps1</p>
+    </div>
+
+    <div class="section">
+        <h2>📚 Resurse</h2>
+        <ul>
+            <li><a href="/setup-guide.html" target="_blank">Ghid Setup Complet</a></li>
+            <li><a href="/translation/GHID-SETUP.md" target="_blank">Ghid Setup Traduceri</a></li>
+            <li><a href="/translation/README-COMPLET.md" target="_blank">README Traduceri</a></li>
+            <li>AUTO-RESTART-GUIDE.md - Ghid PM2 și Watchdog</li>
+        </ul>
+    </div>
+
+    <script>
+        console.log('✅ Help documentation loaded successfully');
+        console.log('📍 Running in:', window.self === window.top ? 'standalone' : 'iframe');
+    </script>
+</body>
+    <script src="/branding/qroms-badge.js"></script>
+</html>
+

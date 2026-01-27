@@ -1,0 +1,84 @@
+{
+  "product": {
+    "id": 305,
+    "name": "Cordon Bleu",
+    "name_en": "Cordon Bleu",
+    "category": "Fel Principal",
+    "category_en": "Main Course",
+    "price": 35,
+    "description": "Cordon Bleu de pui",
+    "description_en": "Cordon Bleu de chicken",
+    "weight": null,
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 364,
+        "name": "Pesmet/Făină/Ou (pané)",
+        "category": "General",
+        "quantity": 30,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 1970,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 363,
+        "name": "Piept de pui",
+        "category": "General",
+        "quantity": 150,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 11.147430571690123,
+        "totalCost": "1672.11",
+        "totalCostWithWaste": "1672.11",
+        "supplier": "Metro Cash & Carry",
+        "currentStock": 114355.14519450802,
+        "minStock": 0.01,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "1672.11",
+    "totalCostWithWaste": "1672.11",
+    "sellingPrice": 35,
+    "profitMargin": -1637.11,
+    "markup": -4677.47,
+    "foodCostPercentage": "4777.47"
+  },
+  "stats": {
+    "totalIngredients": 2,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

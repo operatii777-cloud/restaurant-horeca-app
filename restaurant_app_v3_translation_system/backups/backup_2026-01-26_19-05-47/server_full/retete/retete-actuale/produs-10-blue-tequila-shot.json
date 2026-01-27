@@ -1,0 +1,35 @@
+﻿Ã¯Â»Â¿{
+  "productId": 10,
+  "productName": "Blue Tequila Shot",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "price": 19,
+  "description": "Shot - Tequila, sirop curacao, lÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+  "ingredients": [
+    {
+      "ingredientId": 77,
+      "ingredientName": "Tequila",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi Alcoolice",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 191,
+      "ingredientName": "Sirop blue curacao",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 79,
+      "ingredientName": "Suc de lÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 10,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

@@ -1,0 +1,17 @@
+{
+  "productId": 3,
+  "productName": "Aperol Spritz",
+  "productCategory": "Băuturi și Coctailuri",
+  "price": 31,
+  "description": "Coctail clasic - Aperol, Prosecco, apă minerală, portocală",
+  "ingredients": [
+    {
+      "ingredientId": 71,
+      "ingredientName": "Gheață",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

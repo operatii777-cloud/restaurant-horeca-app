@@ -1,0 +1,101 @@
+{
+  "product": {
+    "id": 104,
+    "name": "Cartofi Zdrobiți",
+    "name_en": "Smashed Potatoes",
+    "category": "Garnituri",
+    "category_en": "Side Dishes",
+    "price": 18,
+    "description": "Cartofi zdrobiți cu ierburi",
+    "description_en": "Smashed potatoes with herbs",
+    "weight": "200G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 1,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": "lapte",
+    "allergens_en": "milk"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 830,
+        "name": "Rozmarin",
+        "category": "Sosuri și Condimente",
+        "quantity": 5,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.03998665331998665,
+        "totalCost": "0.20",
+        "totalCostWithWaste": "0.20",
+        "supplier": "Spice World SRL",
+        "currentStock": 8991,
+        "minStock": 200,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 821,
+        "name": "Ulei vegetal",
+        "category": "Uleiuri și Grăsimi",
+        "quantity": 10,
+        "unit": "ml",
+        "unitStock": "ml",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.36491973522575893,
+        "totalCost": "3.65",
+        "totalCostWithWaste": "3.65",
+        "supplier": "Uleiuri SRL",
+        "currentStock": 71910,
+        "minStock": 5000,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 32,
+        "name": "cartofi",
+        "category": "General",
+        "quantity": 200,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 7.749966000239362,
+        "totalCost": "1549.99",
+        "totalCostWithWaste": "1549.99",
+        "supplier": null,
+        "currentStock": 76675,
+        "minStock": 2,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "1553.84",
+    "totalCostWithWaste": "1553.84",
+    "sellingPrice": 18,
+    "profitMargin": -1535.84,
+    "markup": -8532.46,
+    "foodCostPercentage": "8632.46"
+  },
+  "stats": {
+    "totalIngredients": 3,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

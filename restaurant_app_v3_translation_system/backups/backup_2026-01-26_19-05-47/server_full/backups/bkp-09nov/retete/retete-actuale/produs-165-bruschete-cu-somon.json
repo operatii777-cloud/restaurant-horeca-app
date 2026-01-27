@@ -1,0 +1,41 @@
+{
+  "productId": 165,
+  "productName": "Bruschete cu Somon",
+  "productCategory": "Aperitive Reci",
+  "price": 34,
+  "description": "Baghetă, cremă de brânză, roșii uscate, ceapă roșie, somon fume, icre roșii, capere",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "Roșii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 94,
+      "ingredientName": "Ceapă",
+      "ingredientCategory": "Fructe și Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 42,
+      "ingredientName": "Capere",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 10,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 101,
+      "ingredientName": "Somon",
+      "ingredientCategory": "Peste Fructe de Mare",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

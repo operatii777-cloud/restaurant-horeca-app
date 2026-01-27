@@ -1,0 +1,35 @@
+﻿Ã¯Â»Â¿{
+  "productId": 7,
+  "productName": "Black Amaretto",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "price": 31,
+  "description": "Coctail - Amaretto, Rom, lichior de cafea",
+  "ingredients": [
+    {
+      "ingredientId": 189,
+      "ingredientName": "Amaretto",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 76,
+      "ingredientName": "Rom alb",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi Alcoolice",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 188,
+      "ingredientName": "Kahlua",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

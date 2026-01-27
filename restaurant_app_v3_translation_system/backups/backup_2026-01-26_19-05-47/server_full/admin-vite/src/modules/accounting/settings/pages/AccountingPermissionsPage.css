@@ -1,0 +1,77 @@
+.accounting-permissions-page {
+  padding: 1.5rem;
+}
+
+.accounting-permissions-page .page-header {
+  margin-bottom: 2rem;
+}
+
+.accounting-permissions-page .page-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.accounting-permissions-page .page-header p {
+  color: #6c757d;
+  margin-bottom: 0;
+}
+
+.accounting-permissions-page .help-content h5 {
+  color: #0d6efd;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.accounting-permissions-page .help-content ol,
+.accounting-permissions-page .help-content ul {
+  padding-left: 1.5rem;
+}
+
+.accounting-permissions-page .help-content li {
+  margin-bottom: 0.5rem;
+}
+
+.accounting-permissions-page .help-content code {
+  background-color: #f8f9fa;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+  color: #d63384;
+}
+
+.accounting-permissions-page .help-content .alert {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Help Modal - Edge to Edge 120% Width */
+.accounting-permissions-page .modal.show .modal-dialog {
+  width: 120vw !important;
+  max-width: 120vw !important;
+  margin: 0 !important;
+  margin-left: -10vw !important;
+  border-radius: 0 !important;
+  max-height: 100vh !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+}
+
+.accounting-permissions-page .modal.show .modal-content {
+  border-radius: 0 !important;
+  height: 100vh !important;
+  width: 120vw !important;
+  display: flex !important;
+  flex-direction: column !important;
+  margin: 0 !important;
+}
+
+.accounting-permissions-page .modal.show .modal-body {
+  flex-grow: 1 !important;
+  overflow-y: auto !important;
+}
+

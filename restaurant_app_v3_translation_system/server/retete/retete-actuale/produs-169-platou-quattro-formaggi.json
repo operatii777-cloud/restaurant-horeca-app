@@ -1,0 +1,35 @@
+﻿Ã¯Â»Â¿{
+  "productId": 169,
+  "productName": "Platou Quattro Formaggi",
+  "productCategory": "Aperitive Reci",
+  "price": 64,
+  "description": "BrÃƒÂ¢nzÃ„ÂƒÃ†Â’ brie, brÃƒÂ¢nzÃ„ÂƒÃ†Â’ gorgonzola, parmesan, mozzarella, mÃ„ÂƒÃ†Â’r, strugure, miez de nucÃ„ÂƒÃ†Â’, grisine",
+  "ingredients": [
+    {
+      "ingredientId": 38,
+      "ingredientName": "Mozzarella",
+      "ingredientCategory": "Lactate ÃƒÂˆÃ¢Â„Â¢i BrÃƒÂ¢nzeturi",
+      "quantityNeeded": 150,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 93,
+      "ingredientName": "Gorgonzola",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 106,
+      "ingredientName": "BrÃƒÂ¢nzÃ„ÂƒÃ†Â’ brie",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

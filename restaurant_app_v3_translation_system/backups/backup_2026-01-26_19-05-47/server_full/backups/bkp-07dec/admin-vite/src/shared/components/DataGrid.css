@@ -1,0 +1,55 @@
+.data-grid {
+  width: 100%;
+  border-radius: 18px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  overflow: hidden;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.data-grid .ag-root-wrapper {
+  border-radius: 18px;
+}
+
+.data-grid .ag-header {
+  background: linear-gradient(135deg, #eef4ff 0%, #f9fbff 100%);
+  border-bottom: 1px solid #d8e0f0;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.data-grid .ag-header-cell {
+  font-size: 0.85rem;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.data-grid .ag-row {
+  font-size: 0.9rem;
+  color: #1e293b;
+}
+
+.data-grid .ag-row:nth-child(odd) .ag-cell:not(.ag-cell-focus) {
+  background-color: rgba(248, 250, 252, 0.7);
+}
+
+.data-grid .ag-row:hover .ag-cell {
+  background-color: rgba(37, 99, 235, 0.06) !important;
+}
+
+.data-grid .ag-cell {
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-right: 1px solid rgba(226, 232, 240, 0.4);
+}
+
+.ingredients-grid__action-cell {
+  justify-content: flex-end;
+  font-size: 0.85rem;
+}
+
+.ingredients-grid__action-cell:hover {
+  text-decoration: underline;
+}

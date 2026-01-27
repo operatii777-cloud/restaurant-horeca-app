@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RaportZ xmlns="urn:anaf:rapoarte:opanaf146:2018">
+  <Header>
+    <DenumireFurnizor>{DENUMIRE_FIRMA}</DenumireFurnizor>
+    <CUI>{CUI}</CUI>
+    <Adresa>{ADRESA_PUNCT}</Adresa>
+    <NrRegistru>{NR_APARAT_FISCAL}</NrRegistru>
+    <NumarRaport>{NUMAR_RAPORT_Z}</NumarRaport>
+    <Data>{DATA_RAPORT}</Data>
+    <Ora>{ORA_INCHIDERE}</Ora>
+    <Operator>{OPERATOR_CURENT}</Operator>
+  </Header>
+
+  <DetaliiTVA>
+    <CotaTVA procent="11">
+      <Baza>{BAZA_11}</Baza>
+      <TVA>{TVA_11}</TVA>
+      <Total>{TOTAL_11}</Total>
+    </CotaTVA>
+    <CotaTVA procent="21">
+      <Baza>{BAZA_21}</Baza>
+      <TVA>{TVA_21}</TVA>
+      <Total>{TOTAL_21}</Total>
+    </CotaTVA>
+    <CotaTVA procent="0">
+      <Baza>{BAZA_0}</Baza>
+      <TVA>0.00</TVA>
+      <Total>{TOTAL_0}</Total>
+    </CotaTVA>
+  </DetaliiTVA>
+
+  <Incasari>
+    <Cash>{INCASARI_CASH}</Cash>
+    <Card>{INCASARI_CARD}</Card>
+    <Voucher>{INCASARI_VOUCHER}</Voucher>
+    <TotalZi>{TOTAL_GENERAL_BRUT}</TotalZi>
+  </Incasari>
+
+  <Indicatori>
+    <NumarBonuri>{NR_BONURI_EMISE}</NumarBonuri>
+    <NumarAnulari>{NR_ANULARI}</NumarAnulari>
+    <SumaAnulari>{SUMA_ANULATA}</SumaAnulari>
+    <BonMax>{BON_MAX}</BonMax>
+    <BonMin>{BON_MIN}</BonMin>
+    <MedieBon>{MEDIE_BON}</MedieBon>
+  </Indicatori>
+  
+  <Meta>
+    <GeneratDe>FriendsPOS v1.0</GeneratDe>
+    <Checksum algorithm="SHA256">{CHECKSUM_SHA256}</Checksum>
+    <DataGenerare>{DATA_GENERARE}</DataGenerare>
+    <OraGenerare>{ORA_GENERARE}</OraGenerare>
+    <VersiuneFormat>OPANAF146-2018</VersiuneFormat>
+  </Meta>
+</RaportZ>

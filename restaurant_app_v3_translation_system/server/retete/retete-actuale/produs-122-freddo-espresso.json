@@ -1,0 +1,19 @@
+﻿Ã¯Â»Â¿{
+  "productId": 122,
+  "productName": "Freddo Espresso",
+  "productCategory": "Cafea/CiocolatÃ„ÂƒÃ†Â’/Ceai",
+  "price": 13,
+  "description": "Espresso, gheaÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’",
+  "ingredients": [
+    {
+      "ingredientId": 25,
+      "ingredientName": "Cafea boabe",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 18,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

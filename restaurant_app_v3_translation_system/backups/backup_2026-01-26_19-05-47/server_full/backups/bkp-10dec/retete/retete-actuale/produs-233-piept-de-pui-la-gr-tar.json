@@ -1,0 +1,41 @@
+{
+  "productId": 233,
+  "productName": "Piept de Pui la Grătar",
+  "productCategory": "Fel Principal",
+  "price": 42,
+  "description": "Piept de pui, piure",
+  "ingredients": [
+    {
+      "ingredientId": 110,
+      "ingredientName": "Piept de pui",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 18,
+      "ingredientName": "Ulei de măsline",
+      "ingredientCategory": "Uleiuri",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 65,
+      "ingredientName": "Sare",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 5,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 32,
+      "ingredientName": "Piper negru",
+      "ingredientCategory": "Condimente și Sosuri",
+      "quantityNeeded": 2,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+.marketing-page {
+  padding: 1.5rem;
+}
+
+.marketing-page [data-page-ready="true"] {
+  opacity: 1;
+}
+

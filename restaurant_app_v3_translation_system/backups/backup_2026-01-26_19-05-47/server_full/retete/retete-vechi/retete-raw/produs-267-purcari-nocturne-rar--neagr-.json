@@ -1,0 +1,19 @@
+﻿Ã¯Â»Â¿{
+  "productId": 267,
+  "productName": "Purcari Nocturne RarÃ„ÂƒÃ†Â’ NeagrÃ„ÂƒÃ†Â’",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 760,
+      "ingredientName": "Purcari Nocturne RarÃ„ÂƒÃ†Â’ NeagrÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

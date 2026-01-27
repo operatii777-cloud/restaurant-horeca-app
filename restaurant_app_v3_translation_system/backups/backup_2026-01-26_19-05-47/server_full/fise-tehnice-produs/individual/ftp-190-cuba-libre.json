@@ -1,0 +1,118 @@
+{
+  "product": {
+    "id": 190,
+    "name": "Cuba Libre",
+    "name_en": "Cuba Libre",
+    "category": "Băuturi și Coctailuri",
+    "category_en": "Drinks & Cocktails",
+    "price": 31,
+    "description": "Coctail clasic - Rom, Pepsi, lime",
+    "description_en": "Classic cocktail - Rum, Pepsi, lime",
+    "weight": "250ML",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 282,
+        "name": "Felie de Lime",
+        "category": "General",
+        "quantity": 5,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 1990,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 279,
+        "name": "Rom (Auriu/Negru)",
+        "category": "General",
+        "quantity": 50,
+        "unit": "ml",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 1950,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 797,
+        "name": "Salată Verde Shaorma",
+        "category": "Legume",
+        "quantity": 1,
+        "unit": "buc",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.5455748291685286,
+        "totalCost": "0.55",
+        "totalCostWithWaste": "0.55",
+        "supplier": "Furnizor Test",
+        "currentStock": 55268.47058823529,
+        "minStock": 100,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 280,
+        "name": "Suc de Lime",
+        "category": "General",
+        "quantity": 10,
+        "unit": "ml",
+        "unitStock": "buc",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 1880,
+        "minStock": 10,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "0.55",
+    "totalCostWithWaste": "0.55",
+    "sellingPrice": 31,
+    "profitMargin": 30.45,
+    "markup": 98.24,
+    "foodCostPercentage": "1.76"
+  },
+  "stats": {
+    "totalIngredients": 4,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

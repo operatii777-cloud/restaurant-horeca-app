@@ -1,0 +1,37 @@
+﻿Ã¯Â»Â¿{
+  "productId": 308,
+  "productName": "Somon la GrÃ„ÂƒÃ†Â’tar cu LÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+  "productCategory": "Fel Principal",
+  "ingredients": [
+    {
+      "ingredientId": 370,
+      "ingredientName": "File de Somon",
+      "ingredientCategory": "General",
+      "quantityNeeded": 180,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 64,
+      "ingredientName": "suc de lÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+      "ingredientCategory": "General",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 821,
+      "ingredientName": "Ulei vegetal",
+      "ingredientCategory": "Uleiuri ÃƒÂˆÃ¢Â„Â¢i GrÃ„ÂƒÃ†Â’simi",
+      "quantityNeeded": 5,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

@@ -1,0 +1,84 @@
+{
+  "product": {
+    "id": 59,
+    "name": "Mici cu Cartofi Prăjiți",
+    "name_en": "\"Mici\" with French Fries",
+    "category": "Fel Principal",
+    "category_en": "Main Course",
+    "price": 39,
+    "description": "Mici 3 buc, cartofi prăjiți, muștar",
+    "description_en": "3 \"mici\" (grilled minced meat rolls), french fries, mustard",
+    "weight": "200/200G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": "muștar",
+    "allergens_en": "mustard"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 518,
+        "name": "Mici",
+        "category": "General",
+        "quantity": 3,
+        "unit": "buc",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 32,
+        "name": "cartofi",
+        "category": "General",
+        "quantity": 200,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 7.749966000239362,
+        "totalCost": "1549.99",
+        "totalCostWithWaste": "1549.99",
+        "supplier": null,
+        "currentStock": 76675,
+        "minStock": 2,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "1549.99",
+    "totalCostWithWaste": "1549.99",
+    "sellingPrice": 39,
+    "profitMargin": -1510.99,
+    "markup": -3874.34,
+    "foodCostPercentage": "3974.34"
+  },
+  "stats": {
+    "totalIngredients": 2,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

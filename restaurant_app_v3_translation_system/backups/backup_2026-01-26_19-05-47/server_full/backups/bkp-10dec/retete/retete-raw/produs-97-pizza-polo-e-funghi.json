@@ -1,0 +1,44 @@
+{
+  "productId": 97,
+  "productName": "Pizza Polo e Funghi",
+  "productCategory": "Pizza",
+  "ingredients": [
+    {
+      "ingredientId": 3,
+      "ingredientName": "mozzarella",
+      "ingredientCategory": "General",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 604,
+      "ingredientName": "Blat de pizza (standard)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 250,
+      "unit": "buc",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 363,
+      "ingredientName": "Piept de pui",
+      "ingredientCategory": "General",
+      "quantityNeeded": 60,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 17,
+      "ingredientName": "ciuperci",
+      "ingredientCategory": "General",
+      "quantityNeeded": 60,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

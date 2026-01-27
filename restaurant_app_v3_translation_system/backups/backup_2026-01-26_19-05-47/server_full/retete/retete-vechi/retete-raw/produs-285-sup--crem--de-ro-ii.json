@@ -1,0 +1,64 @@
+﻿Ã¯Â»Â¿{
+  "productId": 285,
+  "productName": "SupÃ„ÂƒÃ†Â’ CremÃ„ÂƒÃ†Â’ de RoÃƒÂˆÃ¢Â„Â¢ii",
+  "productCategory": "Ciorbe",
+  "ingredients": [
+    {
+      "ingredientId": 285,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 821,
+      "ingredientName": "Ulei vegetal",
+      "ingredientCategory": "Uleiuri ÃƒÂˆÃ¢Â„Â¢i GrÃ„ÂƒÃ†Â’simi",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 798,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii Shaorma",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 250,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 293,
+      "ingredientName": "Crutoane (servire)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 800,
+      "ingredientName": "Sos Usturoi Shaorma",
+      "ingredientCategory": "Sosuri",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 130,
+      "ingredientName": "SmÃƒÂ¢ntÃƒÂ¢nÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

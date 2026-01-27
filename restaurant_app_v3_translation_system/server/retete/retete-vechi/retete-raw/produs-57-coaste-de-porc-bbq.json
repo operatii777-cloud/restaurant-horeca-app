@@ -1,0 +1,37 @@
+﻿Ã¯Â»Â¿{
+  "productId": 57,
+  "productName": "Coaste de Porc BBQ",
+  "productCategory": "Fel Principal",
+  "ingredients": [
+    {
+      "ingredientId": 812,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 300,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 506,
+      "ingredientName": "Condimente uscate (rub)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 507,
+      "ingredientName": "Sos BBQ (homemade/comercial)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 80,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

@@ -1,0 +1,101 @@
+{
+  "product": {
+    "id": 322,
+    "name": "Tort Krantz",
+    "name_en": "Tort Krantz",
+    "category": "Deserturi",
+    "category_en": "Desserts",
+    "price": 20,
+    "description": "Tort Krantz (felie)",
+    "description_en": "Tort Krantz (felie)",
+    "weight": null,
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 480,
+        "name": "Banane (caramelizate/sotate)",
+        "category": "General",
+        "quantity": 10,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 5670,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 410,
+        "name": "Blat de bezea/Nucă",
+        "category": "General",
+        "quantity": 80,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 400,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 477,
+        "name": "Topping (simplu, sos vanilie)",
+        "category": "General",
+        "quantity": 60,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.3519402638689779,
+        "totalCost": "21.12",
+        "totalCostWithWaste": "21.12",
+        "supplier": null,
+        "currentStock": 8985,
+        "minStock": 10,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "21.12",
+    "totalCostWithWaste": "21.12",
+    "sellingPrice": 20,
+    "profitMargin": -1.12,
+    "markup": -5.58,
+    "foodCostPercentage": "105.58"
+  },
+  "stats": {
+    "totalIngredients": 3,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

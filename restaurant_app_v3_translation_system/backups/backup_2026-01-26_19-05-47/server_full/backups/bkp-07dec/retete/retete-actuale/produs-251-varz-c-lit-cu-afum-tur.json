@@ -1,0 +1,17 @@
+{
+  "productId": 251,
+  "productName": "Varză Călită cu Afumătură",
+  "productCategory": "Fel Principal",
+  "price": 26,
+  "description": "Varză călită cu carne afumată, ceapă, boia de ardei și condimente",
+  "ingredients": [
+    {
+      "ingredientId": 94,
+      "ingredientName": "Ceapă",
+      "ingredientCategory": "Fructe și Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

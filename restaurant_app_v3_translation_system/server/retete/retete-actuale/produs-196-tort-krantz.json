@@ -1,0 +1,51 @@
+﻿Ã¯Â»Â¿{
+  "productId": 196,
+  "productName": "Tort Krantz",
+  "productCategory": "Deserturi",
+  "price": 20,
+  "description": "Tort Krantz (felie)",
+  "ingredients": [
+    {
+      "ingredientId": 95,
+      "ingredientName": "FÃ„ÂƒÃ†Â’inÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 33,
+      "ingredientName": "ZahÃ„ÂƒÃ†Â’r",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 150,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 8,
+      "ingredientName": "OuÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "OuÃ„ÂƒÃ†Â’ ÃƒÂˆÃ¢Â„Â¢i lactate",
+      "quantityNeeded": 4,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 136,
+      "ingredientName": "Nuci mÃ„ÂƒÃ†Â’cinate",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 132,
+      "ingredientName": "Cacao pudrÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

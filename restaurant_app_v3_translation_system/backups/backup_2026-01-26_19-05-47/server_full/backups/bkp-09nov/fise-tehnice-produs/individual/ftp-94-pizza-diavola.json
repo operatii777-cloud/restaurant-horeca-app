@@ -1,0 +1,118 @@
+{
+  "product": {
+    "id": 94,
+    "name": "Pizza Diavola",
+    "name_en": "Pizza Diavola",
+    "category": "Pizza",
+    "category_en": "Pizza",
+    "price": 41,
+    "description": "Blat pizza, sos de roșii, mozzarella, salam picant, peperoncino",
+    "description_en": "Pizza dough, tomato sauce, mozzarella, spicy salami, peperoncino",
+    "weight": "",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 1,
+    "is_takeout_only": 0,
+    "allergens": "gluten, lapte",
+    "allergens_en": "gluten, milk"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 615,
+        "name": "Ardei iute (proaspăt/fulgi)",
+        "category": "General",
+        "quantity": 5,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 604,
+        "name": "Blat de pizza (standard)",
+        "category": "General",
+        "quantity": 250,
+        "unit": "buc",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": -5000,
+        "minStock": 10,
+        "stockStatus": "LOW"
+      },
+      {
+        "id": 614,
+        "name": "Salam Picant (Pepperoni/Ventricina)",
+        "category": "General",
+        "quantity": 60,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.3592814371257485,
+        "totalCost": "21.56",
+        "totalCostWithWaste": "21.56",
+        "supplier": null,
+        "currentStock": 6680,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 3,
+        "name": "mozzarella",
+        "category": "General",
+        "quantity": 100,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 30,
+        "totalCost": "3000.00",
+        "totalCostWithWaste": "3000.00",
+        "supplier": null,
+        "currentStock": 95,
+        "minStock": 0.5,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "3021.56",
+    "totalCostWithWaste": "3021.56",
+    "sellingPrice": 41,
+    "profitMargin": -2980.56,
+    "markup": -7269.65,
+    "foodCostPercentage": "7369.65"
+  },
+  "stats": {
+    "totalIngredients": 4,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 1
+  }
+}

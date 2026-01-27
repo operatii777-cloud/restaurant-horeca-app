@@ -1,0 +1,62 @@
+{
+  "productId": 285,
+  "productName": "Supă Cremă de Roșii",
+  "productCategory": "Ciorbe",
+  "ingredients": [
+    {
+      "ingredientId": 285,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 821,
+      "ingredientName": "Ulei vegetal",
+      "ingredientCategory": "Uleiuri și Grăsimi",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 798,
+      "ingredientName": "Roșii Shaorma",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 250,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 293,
+      "ingredientName": "Crutoane (servire)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 800,
+      "ingredientName": "Sos Usturoi Shaorma",
+      "ingredientCategory": "Sosuri",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 130,
+      "ingredientName": "Smântână",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

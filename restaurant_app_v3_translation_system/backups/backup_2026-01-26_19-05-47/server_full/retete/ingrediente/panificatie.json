@@ -1,0 +1,121 @@
+﻿Ã¯Â»Â¿[
+  {
+    "id": 853,
+    "name": "BaghetÃ„ÂƒÃ†Â’",
+    "category": "Panificatie",
+    "unit": "buc",
+    "current_stock": 15,
+    "min_stock": 15,
+    "cost_per_unit": 1.5,
+    "supplier": "Furnizor Panificatie",
+    "is_available": 1,
+    "created_at": "2025-10-16 19:38:42",
+    "last_updated": "2025-10-16 19:38:42"
+  },
+  {
+    "id": 876,
+    "name": "Drojdie",
+    "category": "Panificatie",
+    "unit": "kg",
+    "current_stock": 1,
+    "min_stock": 1,
+    "cost_per_unit": 15,
+    "supplier": "Furnizor Panificatie",
+    "is_available": 1,
+    "created_at": "2025-10-16 19:38:42",
+    "last_updated": "2025-10-16 19:38:42"
+  },
+  {
+    "id": 104,
+    "name": "FÃ„ÂƒÃ†Â’inÃ„ÂƒÃ†Â’ albÃ„ÂƒÃ†Â’",
+    "category": "Panificatie",
+    "unit": "kg",
+    "current_stock": 1710,
+    "min_stock": 20,
+    "cost_per_unit": 3,
+    "supplier": "Furnizor Panificatie",
+    "is_available": 1,
+    "created_at": "2025-09-18 19:10:14",
+    "last_updated": "2025-09-18 19:10:14"
+  },
+  {
+    "id": 114,
+    "name": "FÃ„ÂƒÃ†Â’inÃ„ÂƒÃ†Â’ integralÃ„ÂƒÃ†Â’",
+    "category": "Panificatie",
+    "unit": "kg",
+    "current_stock": 200,
+    "min_stock": 10,
+    "cost_per_unit": 4,
+    "supplier": "Furnizor Panificatie",
+    "is_available": 1,
+    "created_at": "2025-09-18 19:10:14",
+    "last_updated": "2025-09-18 19:10:14"
+  },
+  {
+    "id": 785,
+    "name": "Lipie",
+    "category": "Panificatie",
+    "unit": "buc",
+    "current_stock": 400,
+    "min_stock": 20,
+    "cost_per_unit": 1,
+    "supplier": "Furnizor Panificatie",
+    "is_available": 1,
+    "created_at": "2025-09-27 18:05:08",
+    "last_updated": "2025-09-27 18:05:08"
+  },
+  {
+    "id": 850,
+    "name": "PÃƒÂ¢ine albÃ„ÂƒÃ†Â’",
+    "category": "Panificatie",
+    "unit": "buc",
+    "current_stock": 20,
+    "min_stock": 20,
+    "cost_per_unit": 2,
+    "supplier": "Furnizor Panificatie",
+    "is_available": 1,
+    "created_at": "2025-10-16 19:38:42",
+    "last_updated": "2025-10-16 19:38:42"
+  },
+  {
+    "id": 851,
+    "name": "PÃƒÂ¢ine neagrÃ„ÂƒÃ†Â’",
+    "category": "Panificatie",
+    "unit": "buc",
+    "current_stock": 10,
+    "min_stock": 10,
+    "cost_per_unit": 2.5,
+    "supplier": "Furnizor Panificatie",
+    "is_available": 1,
+    "created_at": "2025-10-16 19:38:42",
+    "last_updated": "2025-10-16 19:38:42"
+  },
+  {
+    "id": 877,
+    "name": "Sare",
+    "category": "Panificatie",
+    "unit": "kg",
+    "current_stock": 5,
+    "min_stock": 5,
+    "cost_per_unit": 2,
+    "supplier": "Furnizor Panificatie",
+    "is_available": 1,
+    "created_at": "2025-10-16 19:38:42",
+    "last_updated": "2025-10-16 19:38:42"
+  },
+  {
+    "id": 879,
+    "name": "ZahÃ„ÂƒÃ†Â’r",
+    "category": "Panificatie",
+    "unit": "kg",
+    "current_stock": 5,
+    "min_stock": 5,
+    "cost_per_unit": 4,
+    "supplier": "Furnizor Panificatie",
+    "is_available": 1,
+    "created_at": "2025-10-16 19:38:42",
+    "last_updated": "2025-10-16 19:38:42"
+  }
+]
+
+

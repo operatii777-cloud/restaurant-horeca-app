@@ -1,0 +1,375 @@
+/**
+ * MICROSOFT WINDOWS FLUENT DESIGN SYSTEM
+ * Stil autentic Windows - clean, minimal, profesional
+ * Inspirat din Windows 11 Fluent Design
+ */
+
+/* ============================================
+   WINDOWS FLUENT DESIGN - COLOR SYSTEM
+   ============================================ */
+
+:root {
+  /* Windows Fluent Colors - Light Mode */
+  --windows-bg-primary: #ffffff;
+  --windows-bg-secondary: #f3f3f3;
+  --windows-bg-tertiary: #e5e5e5;
+  --windows-bg-hover: #f3f3f3;
+  --windows-bg-active: #e5e5e5;
+  --windows-bg-selected: #e8f4f8;
+  
+  /* Windows Text Colors - Perfect Contrast */
+  --windows-text-primary: #202020;      /* Contrast 16.8:1 (AAA) */
+  --windows-text-secondary: #606060;    /* Contrast 7.2:1 (AA) */
+  --windows-text-tertiary: #808080;     /* Contrast 5.1:1 (AA) */
+  --windows-text-disabled: #c0c0c0;     /* Contrast 2.1:1 - doar disabled */
+  
+  /* Windows Accent Color - System Blue */
+  --windows-accent: #0078d4;            /* Windows 11 System Blue */
+  --windows-accent-hover: #106ebe;
+  --windows-accent-active: #005a9e;
+  
+  /* Windows Border Colors */
+  --windows-border: #d1d1d1;
+  --windows-border-hover: #b3b3b3;
+  --windows-border-focus: #0078d4;      /* Accent color pentru focus */
+  
+  /* Windows Semantic Colors */
+  --windows-success: #107c10;
+  --windows-warning: #ff8c00;
+  --windows-error: #d13438;
+  --windows-info: #0078d4;
+}
+
+/* Dark Mode - Windows Fluent Dark */
+[data-theme="dark"],
+.dark {
+  --windows-bg-primary: #202020;
+  --windows-bg-secondary: #2d2d2d;
+  --windows-bg-tertiary: #3a3a3a;
+  --windows-bg-hover: #2d2d2d;
+  --windows-bg-active: #3a3a3a;
+  --windows-bg-selected: #1a3a4a;
+  
+  --windows-text-primary: #ffffff;       /* Contrast 16.8:1 (AAA) */
+  --windows-text-secondary: #d1d1d1;    /* Contrast 7.2:1 (AA) */
+  --windows-text-tertiary: #b3b3b3;     /* Contrast 5.1:1 (AA) */
+  --windows-text-disabled: #808080;      /* Contrast 2.1:1 - doar disabled */
+  
+  --windows-border: #3a3a3a;
+  --windows-border-hover: #4a4a4a;
+  --windows-border-focus: #60a5fa;
+}
+
+/* ============================================
+   WINDOWS FLUENT DESIGN - TYPOGRAPHY
+   ============================================ */
+
+:root {
+  /* Windows Font - Segoe UI (system font) */
+  --windows-font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+  
+  /* Windows Font Sizes - System Defaults */
+  --windows-font-size-xs: 11px;      /* Windows small */
+  --windows-font-size-sm: 12px;      /* Windows normal */
+  --windows-font-size-base: 14px;    /* Windows medium */
+  --windows-font-size-lg: 16px;      /* Windows large */
+  --windows-font-size-xl: 18px;      /* Windows x-large */
+  --windows-font-size-2xl: 20px;     /* Windows xx-large */
+  
+  /* Windows Font Weights */
+  --windows-font-weight-normal: 400;
+  --windows-font-weight-medium: 500;
+  --windows-font-weight-semibold: 600;
+  --windows-font-weight-bold: 700;
+  
+  /* Windows Line Heights */
+  --windows-line-height-tight: 1.2;
+  --windows-line-height-normal: 1.4;
+  --windows-line-height-relaxed: 1.6;
+}
+
+/* ============================================
+   WINDOWS FLUENT DESIGN - SPACING
+   ============================================ */
+
+:root {
+  /* Windows Spacing - 4px base (Windows standard) */
+  --windows-spacing-1: 4px;
+  --windows-spacing-2: 8px;
+  --windows-spacing-3: 12px;
+  --windows-spacing-4: 16px;
+  --windows-spacing-5: 20px;
+  --windows-spacing-6: 24px;
+  --windows-spacing-8: 32px;
+  --windows-spacing-10: 40px;
+  --windows-spacing-12: 48px;
+}
+
+/* ============================================
+   WINDOWS FLUENT DESIGN - BORDER RADIUS
+   ============================================ */
+
+:root {
+  /* Windows Border Radius - Subtle (Windows 11 style) */
+  --windows-radius-none: 0;
+  --windows-radius-sm: 2px;
+  --windows-radius-md: 4px;
+  --windows-radius-lg: 6px;
+  --windows-radius-xl: 8px;
+}
+
+/* ============================================
+   WINDOWS FLUENT DESIGN - SHADOWS
+   ============================================ */
+
+:root {
+  /* Windows Shadows - Subtle elevation */
+  --windows-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --windows-shadow-md: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --windows-shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* ============================================
+   WINDOWS FLUENT DESIGN - BUTTONS
+   ============================================ */
+
+.btn-windows {
+  font-family: var(--windows-font-family);
+  font-size: var(--windows-font-size-sm);
+  font-weight: var(--windows-font-weight-medium);
+  padding: var(--windows-spacing-2) var(--windows-spacing-4);
+  border: 1px solid var(--windows-border);
+  border-radius: var(--windows-radius-md);
+  background-color: var(--windows-bg-primary);
+  color: var(--windows-text-primary);
+  cursor: pointer;
+  transition: all 100ms ease;
+  min-height: 32px; /* Windows button height */
+}
+
+.btn-windows:hover:not(:disabled) {
+  background-color: var(--windows-bg-hover);
+  border-color: var(--windows-border-hover);
+}
+
+.btn-windows:active:not(:disabled) {
+  background-color: var(--windows-bg-active);
+}
+
+.btn-windows:focus-visible {
+  outline: 2px solid var(--windows-border-focus);
+  outline-offset: 2px;
+}
+
+.btn-windows-primary {
+  background-color: var(--windows-accent);
+  color: #ffffff;
+  border-color: var(--windows-accent);
+}
+
+.btn-windows-primary:hover:not(:disabled) {
+  background-color: var(--windows-accent-hover);
+  border-color: var(--windows-accent-hover);
+}
+
+.btn-windows-primary:active:not(:disabled) {
+  background-color: var(--windows-accent-active);
+  border-color: var(--windows-accent-active);
+}
+
+/* ============================================
+   WINDOWS FLUENT DESIGN - INPUTS
+   ============================================ */
+
+.input-windows,
+input.windows-style,
+textarea.windows-style,
+select.windows-style {
+  font-family: var(--windows-font-family);
+  font-size: var(--windows-font-size-sm);
+  padding: var(--windows-spacing-2) var(--windows-spacing-3);
+  border: 1px solid var(--windows-border);
+  border-radius: var(--windows-radius-md);
+  background-color: var(--windows-bg-primary);
+  color: var(--windows-text-primary);
+  min-height: 32px; /* Windows input height */
+  transition: all 100ms ease;
+}
+
+.input-windows:focus,
+input.windows-style:focus,
+textarea.windows-style:focus,
+select.windows-style:focus {
+  outline: none;
+  border-color: var(--windows-border-focus);
+  box-shadow: 0 0 0 1px var(--windows-border-focus);
+}
+
+.input-windows:disabled,
+input.windows-style:disabled,
+textarea.windows-style:disabled,
+select.windows-style:disabled {
+  background-color: var(--windows-bg-secondary);
+  color: var(--windows-text-disabled);
+  cursor: not-allowed;
+}
+
+/* ============================================
+   WINDOWS FLUENT DESIGN - TABLES (EXCEL-LIKE)
+   ============================================ */
+
+.table-windows,
+.ag-theme-alpine.windows-style {
+  font-family: var(--windows-font-family);
+  font-size: var(--windows-font-size-sm);
+  color: var(--windows-text-primary);
+  background-color: var(--windows-bg-primary);
+  border: 1px solid var(--windows-border);
+}
+
+/* AG Grid Windows Style Override */
+.ag-theme-alpine.windows-style {
+  --ag-font-family: var(--windows-font-family);
+  --ag-font-size: var(--windows-font-size-sm);
+  --ag-header-font-size: var(--windows-font-size-sm);
+  --ag-header-font-weight: var(--windows-font-weight-semibold);
+  
+  /* Windows Colors */
+  --ag-background-color: var(--windows-bg-primary);
+  --ag-header-background-color: var(--windows-bg-secondary);
+  --ag-odd-row-background-color: var(--windows-bg-primary);
+  --ag-row-hover-color: var(--windows-bg-hover);
+  --ag-selected-row-background-color: var(--windows-bg-selected);
+  
+  /* Windows Text Colors */
+  --ag-foreground-color: var(--windows-text-primary);
+  --ag-header-foreground-color: var(--windows-text-primary);
+  --ag-secondary-foreground-color: var(--windows-text-secondary);
+  
+  /* Windows Borders */
+  --ag-border-color: var(--windows-border);
+  --ag-row-border-color: var(--windows-border);
+  --ag-header-column-separator-color: var(--windows-border);
+  
+  /* Windows Focus */
+  --ag-input-focus-border-color: var(--windows-border-focus);
+  --ag-range-selection-border-color: var(--windows-accent);
+  
+  /* Windows Heights - Excel-like - MAI ÎNALTE pentru lizibilitate */
+  --ag-row-height: 36px;
+  --ag-header-height: 48px;
+  
+  /* Windows Borders - Minimal */
+  --ag-borders: solid;
+  --ag-border-radius: 0; /* Windows - fără border radius pe tabele */
+  --ag-wrapper-border-radius: 0;
+}
+
+/* Windows Table Rows - Excel-like */
+.ag-theme-alpine.windows-style .ag-row {
+  border-bottom: 1px solid var(--windows-border);
+}
+
+.ag-theme-alpine.windows-style .ag-row:hover {
+  background-color: var(--windows-bg-hover) !important;
+}
+
+.ag-theme-alpine.windows-style .ag-row.ag-row-selected {
+  background-color: var(--windows-bg-selected) !important;
+}
+
+/* Windows Table Header - Excel-like - FIXED CONTRAST */
+.ag-theme-alpine.windows-style .ag-header {
+  background-color: var(--windows-bg-secondary) !important;
+  border-bottom: 2px solid var(--windows-border) !important;
+  color: var(--windows-text-primary) !important;
+  font-weight: 600 !important;
+  font-size: 12px !important;
+}
+
+.ag-theme-alpine.windows-style .ag-header-cell {
+  border-right: 1px solid var(--windows-border) !important;
+  padding: var(--windows-spacing-2) var(--windows-spacing-3) !important;
+  color: var(--windows-text-primary) !important;
+  font-weight: 600 !important;
+  font-size: 12px !important;
+  background: transparent !important;
+}
+
+.ag-theme-alpine.windows-style .ag-header-cell-text {
+  color: var(--windows-text-primary) !important;
+  font-weight: 600 !important;
+  font-size: 12px !important;
+}
+
+/* Windows Table Cells - Excel-like */
+.ag-theme-alpine.windows-style .ag-cell {
+  padding: var(--windows-spacing-2) var(--windows-spacing-3);
+  border-right: 1px solid var(--windows-border);
+  line-height: var(--windows-line-height-normal);
+}
+
+/* ============================================
+   WINDOWS FLUENT DESIGN - CARDS
+   ============================================ */
+
+.card-windows {
+  background-color: var(--windows-bg-primary);
+  border: 1px solid var(--windows-border);
+  border-radius: var(--windows-radius-lg);
+  padding: var(--windows-spacing-4);
+  box-shadow: var(--windows-shadow-sm);
+  font-family: var(--windows-font-family);
+}
+
+.card-windows-header {
+  font-size: var(--windows-font-size-lg);
+  font-weight: var(--windows-font-weight-semibold);
+  color: var(--windows-text-primary);
+  margin-bottom: var(--windows-spacing-3);
+  padding-bottom: var(--windows-spacing-3);
+  border-bottom: 1px solid var(--windows-border);
+}
+
+/* ============================================
+   WINDOWS FLUENT DESIGN - GLOBAL OVERRIDES
+   ============================================ */
+
+body.windows-style {
+  font-family: var(--windows-font-family);
+  font-size: var(--windows-font-size-base);
+  color: var(--windows-text-primary);
+  background-color: var(--windows-bg-secondary);
+}
+
+.windows-style h1,
+.windows-style h2,
+.windows-style h3,
+.windows-style h4,
+.windows-style h5,
+.windows-style h6 {
+  font-family: var(--windows-font-family);
+  font-weight: var(--windows-font-weight-semibold);
+  color: var(--windows-text-primary);
+}
+
+.windows-style p {
+  color: var(--windows-text-primary);
+  line-height: var(--windows-line-height-relaxed);
+}
+
+/* ============================================
+   WINDOWS FLUENT DESIGN - UTILITIES
+   ============================================ */
+
+.windows-container {
+  max-width: 100%;
+  margin: 0;
+  padding: var(--windows-spacing-4);
+}
+
+.windows-container-fluid {
+  width: 100%;
+  padding: var(--windows-spacing-4);
+}
+

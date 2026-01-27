@@ -1,0 +1,448 @@
+/**
+ * ExcelPageLayout STANDARD FINAL (boogiT-like)
+ * - Compact: padding 16, gap 12
+ * - Contrast: folosește token-uri (nu white/black hardcodat)
+ * - Sticky header + sticky toolbar
+ * - STANDARDUL UNIC pentru toate paginile Admin-Vite
+ */
+
+/* ==========================================================================
+   PAGE CONTAINER
+   ========================================================================== */
+.excel-page {
+  /* IMPORTANT: AppLayout nu trebuie să adauge padding. Aici controlăm TOT. */
+  width: 100%;
+  min-height: 100%;
+  background: var(--bg-app, #f6f7f9);
+  color: var(--text-primary, #111827);
+  display: flex;
+  flex-direction: column;
+}
+
+/* FORȚAT: elimină orice overlay/filter care ar putea ascunde textul */
+.excel-page * {
+  mix-blend-mode: normal !important;
+}
+
+/* FORȚAT: asigură că body-ul este vizibil */
+.excel-page__body {
+  display: flex !important;
+  flex-direction: column !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  overflow: visible !important;
+}
+
+/* FORȚAT: asigură că container-ul KPI cards este vizibil */
+.kpi-cards-container {
+  display: grid !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.kpi-cards-container > div {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+}
+
+/* ==========================================================================
+   HEADER (sticky)
+   ========================================================================== */
+.excel-page__header {
+  position: sticky;
+  top: var(--app-top-offset, 0px); /* Dacă ai TopBar+Nav sticky, ajustezi global */
+  z-index: 20; /* Simplificat: nu mai folosim 10000 */
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  padding: 14px 16px;
+  background: var(--bg-header, var(--bg-card, #ffffff));
+  border-bottom: 1px solid var(--border-subtle, #e5e7eb);
+}
+
+.excel-page__header-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.excel-page__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--text-primary, #111827);
+}
+
+.excel-page__subtitle {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--text-secondary, #6b7280);
+}
+
+.excel-page__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   TOOLBAR (sticky sub-header)
+   ========================================================================== */
+.excel-page__toolbar {
+  position: sticky;
+  top: calc(var(--app-top-offset, 0px) + 72px); /* DEFAULT. Dacă ai TopBar+Nav mai înalte, ajustezi global */
+  z-index: 15; /* Simplificat: peste body dar nu insane */
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  padding: 10px 16px;
+  background: #ffffff !important; /* FORȚAT: alb pentru contrast */
+  border-bottom: 1px solid var(--border-subtle, #e5e7eb);
+}
+
+/* ==========================================================================
+   BODY (REGULA DE AUR: padding 16, gap 12)
+   ========================================================================== */
+.excel-page__body {
+  padding: 16px !important;            /* REGULA DE AUR */
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;                /* REGULA DE AUR */
+  position: relative !important;
+  z-index: 1 !important; /* Sub toolbar dar peste background */
+  overflow: visible !important; /* Permite date picker să fie vizibil */
+  visibility: visible !important;
+  opacity: 1 !important;
+  min-height: 200px !important; /* Asigură că body-ul are înălțime minimă */
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.excel-page__footer {
+  padding: 10px 16px;
+  border-top: 1px solid var(--border-subtle, #e5e7eb);
+  background: var(--bg-header, var(--bg-card, #ffffff));
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--text-secondary, #6b7280);
+}
+
+/* ==========================================================================
+   COMPONENTS (reutilizabile) – KPI grid, cards, inputs, buttons
+   ========================================================================== */
+
+/* KPI GRID (compact) */
+.excel-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 0; /* Elimină margin-top */
+  margin-bottom: 0; /* Eliminat: gap-ul din body gestionează spacing-ul */
+  position: relative;
+  z-index: 1; /* Sub toolbar */
+}
+
+/* KPI CARD */
+.excel-kpi-card {
+  background: #ffffff !important; /* FORȚAT: alb pentru contrast maxim */
+  border: 1px solid #e5e7eb !important; /* FORȚAT: border gri */
+  border-radius: 12px;
+  padding: 14px !important;
+
+  display: flex !important; /* FORȚAT: display flex */
+  flex-direction: column !important;
+  gap: 6px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important; /* Subtle shadow pentru contrast */
+  position: relative !important; /* Pentru z-index */
+  z-index: 1 !important; /* Sub toolbar dar peste body */
+  opacity: 1 !important; /* FORȚAT: vizibil */
+  visibility: visible !important; /* FORȚAT: vizibil */
+  overflow: visible !important; /* FORȚAT: permite textul să fie vizibil */
+  filter: none !important; /* FORȚAT: elimină filtre */
+  transform: none !important; /* FORȚAT: elimină transformări */
+  isolation: isolate !important; /* FORȚAT: creează stacking context nou */
+}
+
+/* FORȚAT: toate elementele din card să fie vizibile */
+.excel-kpi-card * {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+  position: relative;
+  z-index: 2; /* Text peste orice overlay */
+}
+
+/* FORȚAT: elimină moștenirea de culoare care ar putea ascunde textul */
+.excel-kpi-card *:not(.excel-kpi-card__change) {
+  color: inherit !important;
+}
+
+.excel-kpi-card__label {
+  font-size: 12px;
+  color: #6b7280 !important; /* FORȚAT: gri pentru label */
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.excel-kpi-card__value {
+  font-size: 24px !important;
+  font-weight: 900 !important;
+  color: #111827 !important; /* FORȚAT: negru pentru vizibilitate maximă */
+  line-height: 1.2 !important;
+  letter-spacing: -0.5px !important; /* Compact pentru cifre mari */
+  opacity: 1 !important; /* FORȚAT: vizibilitate maximă */
+  visibility: visible !important; /* FORȚAT: vizibil */
+  display: block !important; /* FORȚAT: display block */
+  -webkit-text-fill-color: #111827 !important; /* FORȚAT: pentru WebKit browsers */
+  text-fill-color: #111827 !important; /* FORȚAT: pentru toate browserele */
+  text-shadow: none !important; /* FORȚAT: elimină text-shadow */
+  mix-blend-mode: normal !important; /* FORȚAT: normal blend mode */
+  position: relative !important;
+  z-index: 2 !important; /* Peste orice overlay */
+  background: transparent !important; /* FORȚAT: background transparent */
+  -webkit-background-clip: unset !important; /* FORȚAT: elimină background-clip */
+  background-clip: unset !important; /* FORȚAT: elimină background-clip */
+  -webkit-text-stroke: none !important; /* FORȚAT: elimină text-stroke */
+  text-stroke: none !important; /* FORȚAT: elimină text-stroke */
+  isolation: isolate !important; /* FORȚAT: creează stacking context nou */
+  will-change: auto !important; /* FORȚAT: elimină will-change */
+}
+
+.excel-kpi-card__change {
+  font-size: 12px;
+  color: var(--text-secondary, #6b7280);
+}
+
+/* GENERIC CARD */
+.excel-card {
+  background: var(--bg-card, #ffffff);
+  border: 1px solid var(--border-subtle, #e5e7eb);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.excel-card__header {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-subtle, #e5e7eb);
+  background: var(--bg-card, #ffffff);
+}
+
+.excel-card__title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text-primary, #111827);
+}
+
+.excel-card__body {
+  padding: 12px 14px;
+}
+
+/* INPUTS / BUTTONS (Excel-like) */
+.excel-input {
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle, #e5e7eb);
+  background: #ffffff !important; /* FORȚAT: alb */
+  color: #000000 !important; /* FORȚAT: negru */
+  outline: none;
+  font-size: 13px;
+  transition: all 0.15s ease;
+  position: relative;
+  z-index: 2; /* Simplificat: normal, peste body */
+}
+
+.excel-input:focus {
+  border-color: var(--primary, #2563eb);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary, #2563eb) 25%, transparent);
+}
+
+.excel-input::placeholder {
+  color: var(--text-secondary, #6b7280);
+}
+
+/* NOTĂ: Native date picker calendar NU poate fi controlat cu z-index */
+/* Calendarul apare într-un stacking context separat al browserului */
+/* Soluție: asigură-te că toolbar-ul are spațiu suficient și nu se suprapune cu cardurile */
+
+.excel-button {
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle, #e5e7eb);
+  background: var(--bg-card, #ffffff);
+  color: var(--text-primary, #111827);
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 13px;
+  transition: all 0.15s ease;
+}
+
+.excel-button:hover:not(:disabled) {
+  background: var(--bg-hover, #f3f4f6);
+  border-color: var(--border-strong, #d1d5db);
+}
+
+.excel-button--primary {
+  background: var(--primary, #2563eb);
+  color: var(--on-primary, #ffffff);
+  border-color: var(--primary, #2563eb);
+}
+
+.excel-button--primary:hover:not(:disabled) {
+  background: var(--primary-hover, #1d4ed8);
+  border-color: var(--primary-hover, #1d4ed8);
+}
+
+.excel-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* DROPDOWN (Excel-like) */
+.excel-dropdown {
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle, #e5e7eb);
+  background: var(--bg-card, #ffffff);
+  color: var(--text-primary, #111827);
+  outline: none;
+  font-size: 13px;
+  cursor: pointer;
+  min-width: 140px;
+  transition: all 0.15s ease;
+}
+
+.excel-dropdown:hover {
+  border-color: var(--border-strong, #d1d5db);
+  background: var(--bg-hover, #f3f4f6);
+}
+
+.excel-dropdown:focus {
+  border-color: var(--primary, #2563eb);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary, #2563eb) 25%, transparent);
+}
+
+/* ==========================================================================
+   IMPORTANT: Override bootstrap table contrast în cards (fără alb pe alb)
+   ========================================================================== */
+.excel-card .table,
+.excel-card table {
+  color: var(--text-primary, #111827) !important;
+  margin: 0;
+}
+
+.excel-card .table thead th {
+  color: var(--text-secondary, #6b7280) !important;
+  font-weight: 800;
+  background: var(--bg-header, var(--bg-card, #ffffff)) !important;
+}
+
+.excel-card .table tbody td {
+  color: var(--text-primary, #111827) !important;
+  background: var(--bg-card, #ffffff) !important;
+}
+
+.excel-card .table tbody td strong {
+  color: var(--text-primary, #111827) !important;
+  font-weight: 700;
+}
+
+.excel-card .table tbody tr:hover {
+  background: var(--bg-hover, #f3f4f6) !important;
+}
+
+/* Fix global pentru toate tabelele Bootstrap în ExcelPageLayout */
+.excel-page .table,
+.excel-page table {
+  color: var(--text-primary, #111827) !important;
+}
+
+.excel-page .table thead th {
+  color: var(--text-secondary, #6b7280) !important;
+}
+
+.excel-page .table tbody td {
+  color: var(--text-primary, #111827) !important;
+}
+
+.excel-page .table tbody td strong {
+  color: var(--text-primary, #111827) !important;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   GRID CONTAINER (pentru AG Grid)
+   ========================================================================== */
+.excel-grid-container {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+  position: relative;
+}
+
+/* AG Grid Excel-like styling */
+.excel-grid-container .ag-theme-quartz,
+.excel-grid-container .ag-theme-alpine {
+  --ag-row-height: 44px;
+  --ag-header-height: 48px;
+  --ag-cell-horizontal-padding: 8px;
+  --ag-font-size: 13px;
+  --ag-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --ag-border-color: var(--border-subtle, #e5e7eb);
+  --ag-header-background-color: var(--bg-header, var(--bg-card, #ffffff));
+  --ag-odd-row-background-color: var(--bg-card, #ffffff);
+  --ag-row-hover-color: var(--bg-hover, #f3f4f6);
+  --ag-background-color: var(--bg-card, #ffffff);
+  --ag-foreground-color: var(--text-primary, #111827);
+  height: 100%;
+  width: 100%;
+}
+
+/* ==========================================================================
+   RESPONSIVE: păstrează densitatea
+   ========================================================================== */
+@media (max-width: 768px) {
+  .excel-page__body {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .excel-page__header,
+  .excel-page__toolbar,
+  .excel-page__footer {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .excel-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+}

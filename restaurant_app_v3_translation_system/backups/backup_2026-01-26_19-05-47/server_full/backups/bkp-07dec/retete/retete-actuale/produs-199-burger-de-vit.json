@@ -1,0 +1,57 @@
+{
+  "productId": 199,
+  "productName": "Burger de Vită",
+  "productCategory": "Fast Food",
+  "price": 60,
+  "description": "Chiflă, carne de vită, roșii, salată verde, castraveți murați, ceddar, ceapă roșie, sos calypso, cartofi prăjiți",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "Roșii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 94,
+      "ingredientName": "Ceapă",
+      "ingredientCategory": "Fructe și Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 5,
+      "ingredientName": "Castraveți",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 103,
+      "ingredientName": "Salată",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 67,
+      "ingredientName": "Cartofi",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 200,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 108,
+      "ingredientName": "Carne de vită",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

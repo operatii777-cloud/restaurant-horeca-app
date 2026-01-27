@@ -1,0 +1,311 @@
+.lots-page {
+  display: grid;
+  gap: 24px;
+}
+
+.lots-hero {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(238, 246, 255, 0.94) 100%);
+  border-radius: 30px;
+  border: 1px solid rgba(226, 232, 240, 0.7);
+  padding: 32px 34px;
+  display: grid;
+  gap: 26px;
+  box-shadow: 0 48px 90px rgba(15, 23, 42, 0.06);
+}
+
+.lots-hero__info {
+  display: grid;
+  gap: 14px;
+  max-width: 760px;
+}
+
+.lots-hero__info h2 {
+  margin: 0;
+  font-size: 2.05rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.lots-hero__info p {
+  margin: 0;
+  color: #475569;
+  font-size: 0.96rem;
+  line-height: 1.65;
+}
+
+.lots-hero__labels {
+  display: inline-flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.lots-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  background: rgba(15, 23, 42, 0.06);
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.lots-chip--primary {
+  background: rgba(37, 99, 235, 0.16);
+  color: #1d4ed8;
+}
+
+.lots-hero__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.lots-hero__analytics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.lots-analytics-card {
+  background: #ffffff;
+  border-radius: 22px;
+  border: 1px solid rgba(226, 232, 240, 0.7);
+  padding: 22px;
+  display: grid;
+  gap: 12px;
+}
+
+.lots-analytics-card header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lots-analytics-title {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.lots-analytics-helper {
+  color: #64748b;
+  font-size: 0.82rem;
+}
+
+.lots-legend {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.lots-legend li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #475569;
+  font-size: 0.85rem;
+}
+
+.lots-legend li span:first-child {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+}
+
+.lots-legend strong {
+  margin-left: auto;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  color: #0f172a;
+  font-weight: 600;
+  gap: 2px;
+}
+
+.lots-legend strong small {
+  font-size: 0.7rem;
+  color: #94a3b8;
+}
+
+.lots-toolbar {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid rgba(226, 232, 240, 0.7);
+  padding: 18px 26px;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lots-toolbar__left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex: 1;
+  min-width: 0;
+}
+
+.lots-toolbar__left .table-filter {
+  flex: 1;
+}
+
+.lots-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: #475569;
+}
+
+.lots-toolbar__actions {
+  display: inline-flex;
+  gap: 12px;
+}
+
+.lots-btn {
+  border-radius: 12px;
+  border: 1px solid transparent;
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 10px 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.lots-btn--ghost {
+  background: #f8fafc;
+  border-color: rgba(148, 163, 184, 0.4);
+  color: #0f172a;
+}
+
+.lots-btn--ghost:hover {
+  background: #f1f5f9;
+}
+
+.lots-btn--primary {
+  background: linear-gradient(135deg, #2563eb 0%, #38bdf8 100%);
+  color: white;
+  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.18);
+}
+
+.lots-btn--outline {
+  background: transparent;
+  border-color: rgba(37, 99, 235, 0.36);
+  color: #1d4ed8;
+}
+
+.lots-btn--outline:hover {
+  background: rgba(37, 99, 235, 0.08);
+}
+
+.lots-link-button {
+  background: transparent;
+  border: none;
+  color: #2563eb;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.lots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 22px;
+}
+
+.lots-grid__panel {
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid rgba(226, 232, 240, 0.7);
+  padding: 22px 24px 26px;
+  display: grid;
+  gap: 18px;
+  box-shadow: 0 36px 70px rgba(15, 23, 42, 0.05);
+}
+
+.lots-grid__panel header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.lots-grid__panel h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #0f172a;
+}
+
+.lots-grid__panel p {
+  margin: 4px 0 0;
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+.lots-grid__panel-actions {
+  display: inline-flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.lots-secondary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.lots-secondary__card {
+  background: #ffffff;
+  border-radius: 22px;
+  border: 1px solid rgba(226, 232, 240, 0.7);
+  padding: 20px 22px;
+  display: grid;
+  gap: 16px;
+}
+
+.lots-secondary__card header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.lots-secondary__card ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+  color: #475569;
+  font-size: 0.9rem;
+}
+
+.lots-secondary__card li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.lots-secondary__card li strong {
+  color: #0f172a;
+}
+
+@media (max-width: 1280px) {
+  .lots-hero__analytics {
+    grid-template-columns: 1fr;
+  }
+
+  .lots-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .lots-toolbar__actions {
+    justify-content: flex-start;
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "productId": 287,
+  "productName": "Lasagna",
+  "productCategory": "Paste",
+  "price": 51,
+  "description": "Foi de lasagna, carne de vită, sos bechamel, ceapă, morcov, țelină, sos de roșii, mozzarella, brânză gorgonzola, ceddar",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "Roșii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 94,
+      "ingredientName": "Ceapă",
+      "ingredientCategory": "Fructe și Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 111,
+      "ingredientName": "Morcov",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 108,
+      "ingredientName": "Carne de vită",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 38,
+      "ingredientName": "Mozzarella",
+      "ingredientCategory": "Lactate și Brânzeturi",
+      "quantityNeeded": 150,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 93,
+      "ingredientName": "Gorgonzola",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 14,
+      "ingredientName": "Sos de roșii",
+      "ingredientCategory": "Sosuri",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

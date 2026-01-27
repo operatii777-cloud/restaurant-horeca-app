@@ -1,0 +1,17 @@
+{
+  "productId": 262,
+  "productName": "Solo Quinta Rose",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 773,
+      "ingredientName": "Solo Quinta Rose",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

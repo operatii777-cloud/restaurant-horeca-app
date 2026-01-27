@@ -1,0 +1,1198 @@
+﻿<!--
+  ============================================
+  LEGACY UI - Deprecated after PHASE S2
+  ============================================
+  
+  This file has been moved to /public/legacy/ as part of PHASE S3 cleanup.
+  
+  DO NOT MODIFY.
+  Reference only.
+  To be removed after PHASE S5.
+  
+  Original path: /public/admin-catalog-retete.html
+  Moved: 2025-12-07
+  ============================================
+-->
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 Catalog Rețete Template - White Label Setup</title>
+    <script src="/translation/translation.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+            --light-bg: #f8f9fa;
+            --dark-bg: #2c3e50;
+            --white: #ffffff;
+            --text-dark: #333333;
+            --border-color: #dee2e6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* ==================== HEADER ==================== */
+        .top-header {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 15px 30px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ==================== TABS ==================== */
+        .tabs-container {
+            background: var(--white);
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--light-bg);
+            color: var(--text-dark);
+        }
+
+        .tab-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ==================== BADGES ==================== */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .badge-success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .badge-danger {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .badge-warning {
+            background: var(--warning-color);
+            color: var(--text-dark);
+        }
+
+        .badge-info {
+            background: var(--info-color);
+            color: white;
+        }
+
+        /* ==================== TOOLBAR ==================== */
+        .toolbar {
+            background: var(--white);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .search-box::before {
+            content: '🔍';
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .filter-select {
+            padding: 10px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        /* ==================== TABLE EXCEL STYLE ==================== */
+        .table-container {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            max-height: calc(100vh - 350px);
+            overflow-y: auto;
+        }
+
+        .excel-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .excel-table thead {
+            background: var(--dark-bg);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .excel-table th {
+            padding: 12px 10px;
+            text-align: left;
+            font-weight: 600;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            white-space: nowrap;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .excel-table th:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .excel-table th::after {
+            content: ' ⇅';
+            opacity: 0.5;
+            font-size: 0.8rem;
+        }
+
+        .excel-table tbody tr {
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.2s ease;
+        }
+
+        .excel-table tbody tr:hover {
+            background: #f0f7ff;
+        }
+
+        .excel-table tbody tr.selected {
+            background: #e3f2fd;
+        }
+
+        .excel-table td {
+            padding: 10px;
+            border-right: 1px solid var(--border-color);
+        }
+
+        .excel-table td:last-child {
+            border-right: none;
+        }
+
+        /* Column widths */
+        .col-checkbox { width: 40px; text-align: center; }
+        .col-id { width: 60px; }
+        .col-image { width: 80px; text-align: center; }
+        .col-name { min-width: 200px; }
+        .col-category { width: 130px; }
+        .col-industry { width: 130px; }
+        .col-ingredients { width: 80px; text-align: center; }
+        .col-cost { width: 110px; text-align: right; }
+        .col-price { width: 110px; text-align: right; }
+        .col-margin { width: 80px; text-align: center; }
+        .col-allergens { min-width: 180px; }
+        .col-actions { width: 200px; text-align: center; }
+
+        /* ==================== BADGES ==================== */
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin: 2px;
+        }
+
+        .badge-category {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .badge-industry {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .badge-allergen {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        /* ==================== PRODUCT IMAGE ==================== */
+        .product-img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ==================== COST/PRICE ==================== */
+        .cost-value {
+            font-weight: 700;
+            color: var(--danger-color);
+        }
+
+        .price-value {
+            font-weight: 700;
+            color: var(--success-color);
+        }
+
+        .margin-indicator {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .margin-low { background: #f8d7da; color: #721c24; } /* <50% */
+        .margin-good { background: #fff3cd; color: #856404; } /* 50-65% */
+        .margin-excellent { background: #d4edda; color: #155724; } /* 65%+ */
+
+        /* ==================== ACTION BUTTONS ==================== */
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 2px;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn-view {
+            background: var(--info-color);
+            color: white;
+        }
+
+        .action-btn-import {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .action-btn-recipe {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ==================== STATS BAR ==================== */
+        .stats-bar {
+            background: var(--white);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            margin-top: 5px;
+        }
+
+        /* ==================== LOADING ==================== */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2rem;
+            color: var(--text-dark);
+        }
+
+        /* ==================== SCROLLBAR ==================== */
+        .table-container::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        .table-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .table-container::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 5px;
+        }
+
+        .table-container::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <div class="top-header">
+        <div class="header-title">📚 Catalog Rețete Template - White Label Setup</div>
+        <div class="header-actions">
+            <button class="btn btn-success" onclick="importSelected()">
+                ✅ Import Selectate în Meniu
+            </button>
+            <button class="btn btn-primary" onclick="addNewRecipe()">
+                ➕ Adaugă Rețetă Nouă
+            </button>
+            <button class="btn btn-danger" onclick="window.location.href='/admin.html'">
+                ← Înapoi la Admin
+            </button>
+        </div>
+    </div>
+
+    <!-- TABS NAVIGATION -->
+    <div class="tabs-container">
+        <button class="tab-btn active" onclick="showTab('retete')" id="tab-retete">
+            📚 Rețete Template
+        </button>
+        <button class="tab-btn" onclick="showTab('alergeni')" id="tab-alergeni">
+            ⚠️ Alergeni (14 Majori)
+        </button>
+        <button class="tab-btn" onclick="showTab('aditivi')" id="tab-aditivi">
+            🧪 Aditivi (E-uri)
+        </button>
+    </div>
+
+    <!-- TAB CONTENT: RETETE -->
+    <div id="retete-section" class="tab-content active">
+
+    <!-- TOOLBAR -->
+    <div class="toolbar">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Căutare produs / rețetă..." onkeyup="searchTable()">
+        </div>
+        
+        <div class="filter-group">
+            <select class="filter-select" id="industryFilter" onchange="filterTable()">
+                <option value="">🌐 Toate Categoriile</option>
+                <!-- Populate dinamic din categoriile rețetelor -->
+            </select>
+
+            <select class="filter-select" id="allergenFilter" onchange="filterTable()">
+                <option value="">Toți Alergenii</option>
+                <option value="Gluten">🌾 Gluten</option>
+                <option value="Lapte">🥛 Lapte</option>
+                <option value="Ouă">🥚 Ouă</option>
+                <option value="Nuci">🌰 Nuci</option>
+            </select>
+
+            <select class="filter-select" id="marginFilter" onchange="filterTable()">
+                <option value="">Toate Marjele</option>
+                <option value="low">< 50% (Scăzut)</option>
+                <option value="good">50-65% (Bun)</option>
+                <option value="excellent">65%+ (Excelent)</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- EXCEL TABLE -->
+    <div class="table-container">
+        <table class="excel-table" id="recipesTable">
+            <thead>
+                <tr>
+                    <th class="col-checkbox"><input type="checkbox" id="selectAll" onchange="toggleSelectAll()"></th>
+                    <th class="col-id" onclick="sortTable(1)">ID</th>
+                    <th class="col-image">Imagine</th>
+                    <th class="col-name" onclick="sortTable(3)">Denumire Produs</th>
+                    <th class="col-category" onclick="sortTable(4)">Categorie</th>
+                    <th class="col-industry" onclick="sortTable(5)">Industrie</th>
+                    <th class="col-ingredients" onclick="sortTable(6)">Ingrediente</th>
+                    <th class="col-cost" onclick="sortTable(7)">Cost Total</th>
+                    <th class="col-price" onclick="sortTable(8)">Preț Sugestiv</th>
+                    <th class="col-margin" onclick="sortTable(9)">Marjă %</th>
+                    <th class="col-allergens">Alergeni</th>
+                    <th class="col-actions">Acțiuni</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <tr>
+                    <td colspan="12" class="loading">⏳ Se încarcă rețete template...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- STATS BAR -->
+    <div class="stats-bar">
+        <div class="stat-item">
+            <div class="stat-value" id="totalRecipes">0</div>
+            <div class="stat-label">Total Rețete</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" id="selectedCount">0</div>
+            <div class="stat-label">Selectate</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" id="industriesCount">0</div>
+            <div class="stat-label">Industrii</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" id="avgMargin">0%</div>
+            <div class="stat-label">Marjă Medie</div>
+        </div>
+    </div>
+
+    </div> <!-- END RETETE SECTION -->
+
+    <!-- TAB CONTENT: ALERGENI -->
+    <div id="alergeni-section" class="tab-content" style="display: none;">
+        <div class="toolbar">
+            <div class="search-box">
+                <input type="text" id="searchAllergen" placeholder="Căutare alergen..." onkeyup="searchAllergens()">
+            </div>
+            <button class="btn btn-primary" onclick="addNewAllergen()">➕ Adaugă Alergen</button>
+        </div>
+
+        <div class="table-container">
+            <table class="excel-table" id="allergensTable">
+                <thead>
+                    <tr>
+                        <th class="col-id" onclick="sortAllergens(0)">ID</th>
+                        <th class="col-name" onclick="sortAllergens(1)">Denumire Alergen</th>
+                        <th class="col-name" onclick="sortAllergens(2)">Denumire EN</th>
+                        <th class="col-name" onclick="sortAllergens(3)">Cod</th>
+                        <th class="col-category" onclick="sortAllergens(4)">Categorie</th>
+                        <th class="col-actions">Acțiuni</th>
+                    </tr>
+                </thead>
+                <tbody id="allergensTableBody">
+                    <tr>
+                        <td colspan="6" class="loading">⏳ Se încarcă alergeni...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-value" id="totalAllergens">14</div>
+                <div class="stat-label">Total Alergeni Majori</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="activeAllergens">14</div>
+                <div class="stat-label">Activi</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB CONTENT: ADITIVI -->
+    <div id="aditivi-section" class="tab-content" style="display: none;">
+        <div class="toolbar">
+            <div class="search-box">
+                <input type="text" id="searchAdditive" placeholder="Căutare aditiv (ex: E621, Glutamat)..." onkeyup="searchAdditives()">
+            </div>
+            <button class="btn btn-primary" onclick="addNewAdditive()">➕ Adaugă Aditiv</button>
+        </div>
+
+        <div class="table-container">
+            <table class="excel-table" id="additivesTable">
+                <thead>
+                    <tr>
+                        <th class="col-id" onclick="sortAdditives(0)">ID</th>
+                        <th class="col-name" onclick="sortAdditives(1)">Cod E</th>
+                        <th class="col-name" onclick="sortAdditives(2)">Denumire</th>
+                        <th class="col-name" onclick="sortAdditives(3)">Denumire EN</th>
+                        <th class="col-category" onclick="sortAdditives(4)">Funcție</th>
+                        <th class="col-allergens" onclick="sortAdditives(5)">Risc Alergen</th>
+                        <th class="col-actions">Acțiuni</th>
+                    </tr>
+                </thead>
+                <tbody id="additivesTableBody">
+                    <tr>
+                        <td colspan="7" class="loading">⏳ Se încarcă aditivi...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-value" id="totalAdditives">0</div>
+                <div class="stat-label">Total Aditivi</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="coloringAdditives">0</div>
+                <div class="stat-label">Coloranți</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="preservativeAdditives">0</div>
+                <div class="stat-label">Conservanți</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let recipesData = [];
+        let sortDirection = {};
+
+        // ==================== LOAD DATA ====================
+        async function loadRecipes() {
+            try {
+                console.log('🔄 Încărcare rețete template...');
+                const response = await fetch('/api/recipe-templates');
+                const data = await response.json();
+                
+                if (!data.success) {
+                    throw new Error(data.error || 'Eroare la încărcare rețete');
+                }
+                
+                // Map datele din API la format UI
+                recipesData = data.recipes.map(r => ({
+                    id: r.id,
+                    name: r.name,
+                    name_en: r.name_en,
+                    category: r.category,
+                    category_en: r.category_en,
+                    description: r.description,
+                    image: r.image_url,
+                    industry: r.category, // Folosim category (Pizza, Paste, Salate) în loc de cuisine_type
+                    ingredients_count: 0, // Se va actualiza din API detalii
+                    total_cost: parseFloat(r.estimated_cost) || 0,
+                    price: parseFloat(r.suggested_price) || 0,
+                    allergens: (r.allergens || '').split(',').map(a => a.trim()).filter(a => a),
+                    is_vegetarian: r.is_vegetarian,
+                    is_spicy: r.is_spicy,
+                    prep_time: r.prep_time
+                }));
+                
+                console.log(`✅ Încărcate ${recipesData.length} rețete template`);
+                populateIndustryFilter(recipesData); // Populează filtrul Industrie cu categorii reale
+                renderTable(recipesData);
+                updateStats(recipesData);
+            } catch (error) {
+                console.error('❌ Eroare la încărcare:', error);
+                document.getElementById('tableBody').innerHTML = `
+                    <tr><td colspan="12" style="text-align:center; color:red; padding:30px;">
+                        ❌ Eroare la încărcarea datelor: ${error.message}
+                    </td></tr>
+                `;
+            }
+        }
+
+        // ==================== RENDER TABLE ====================
+        function renderTable(data) {
+            const tbody = document.getElementById('tableBody');
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="12" style="text-align:center; padding:30px;">Nu există rețete template</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = data.map((item, index) => {
+                const margin = item.price > 0 ? ((item.price - item.total_cost) / item.price * 100).toFixed(0) : 0;
+                return `
+                <tr>
+                    <td class="col-checkbox">
+                        <input type="checkbox" class="row-checkbox" data-id="${item.id}">
+                    </td>
+                    <td class="col-id">${item.id}</td>
+                    <td class="col-image">
+                        <img src="${item.image || '/images/placeholder.jpg'}" alt="${item.name}" class="product-img">
+                    </td>
+                    <td class="col-name"><strong>${item.name}</strong></td>
+                    <td class="col-category">
+                        <span class="badge badge-category">${item.category}</span>
+                    </td>
+                    <td class="col-industry">
+                        <span class="badge badge-industry">${item.industry}</span>
+                    </td>
+                    <td class="col-ingredients">${item.ingredients_count || 0}</td>
+                    <td class="col-cost">
+                        <span class="cost-value">${item.total_cost ? item.total_cost.toFixed(2) : '-'} RON</span>
+                        <br><small>(+waste +ambalaje)</small>
+                    </td>
+                    <td class="col-price">
+                        <span class="price-value">${item.price ? item.price.toFixed(2) : '-'} RON</span>
+                    </td>
+                    <td class="col-margin">
+                        <span class="margin-indicator ${getMarginClass(margin)}">
+                            ${margin}%
+                        </span>
+                    </td>
+                    <td class="col-allergens">
+                        ${(item.allergens || []).map(a => `<span class="badge badge-allergen">${a}</span>`).join(' ')}
+                    </td>
+                    <td class="col-actions">
+                        <button class="action-btn action-btn-view" onclick="viewDetails(${item.id})">👁️ Detalii</button><br>
+                        <button class="action-btn action-btn-recipe" onclick="viewRecipe(${item.id})">📋 Rețetă</button>
+                        <button class="action-btn action-btn-import" onclick="importSingle(${item.id})">📥 Import</button>
+                    </td>
+                </tr>
+            `}).join('');
+        }
+
+        // ==================== MARGIN CLASS ====================
+        function getMarginClass(margin) {
+            if (margin < 50) return 'margin-low';
+            if (margin <= 65) return 'margin-good';
+            return 'margin-excellent';
+        }
+
+        // ==================== SEARCH ====================
+        function searchTable() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = recipesData.filter(item => 
+                item.name.toLowerCase().includes(searchTerm) ||
+                item.category.toLowerCase().includes(searchTerm) ||
+                (item.allergens || []).some(a => a.toLowerCase().includes(searchTerm))
+            );
+            renderTable(filtered);
+        }
+
+        // ==================== FILTER ====================
+        function filterTable() {
+            const industry = document.getElementById('industryFilter').value;
+            const allergen = document.getElementById('allergenFilter').value;
+            const margin = document.getElementById('marginFilter').value;
+
+            let filtered = [...recipesData];
+
+            if (industry) {
+                filtered = filtered.filter(item => item.industry === industry);
+            }
+
+            if (allergen) {
+                filtered = filtered.filter(item => 
+                    (item.allergens || []).includes(allergen)
+                );
+            }
+
+            if (margin) {
+                filtered = filtered.filter(item => {
+                    const m = ((item.price - item.total_cost) / item.price * 100);
+                    if (margin === 'low') return m < 50;
+                    if (margin === 'good') return m >= 50 && m <= 65;
+                    if (margin === 'excellent') return m > 65;
+                    return true;
+                });
+            }
+
+            renderTable(filtered);
+        }
+
+        // ==================== SORT ====================
+        function sortTable(colIndex) {
+            const key = ['', 'id', '', 'name', 'category', 'industry', 'ingredients_count', 'total_cost', 'price', 'margin'][colIndex];
+            if (!key) return;
+            
+            if (!sortDirection[key]) sortDirection[key] = 'asc';
+            else sortDirection[key] = sortDirection[key] === 'asc' ? 'desc' : 'asc';
+
+            recipesData.sort((a, b) => {
+                let valA = a[key];
+                let valB = b[key];
+
+                if (key === 'margin') {
+                    valA = ((a.price - a.total_cost) / a.price * 100);
+                    valB = ((b.price - b.total_cost) / b.price * 100);
+                }
+
+                if (typeof valA === 'string') {
+                    valA = valA.toLowerCase();
+                    valB = valB.toLowerCase();
+                }
+
+                if (sortDirection[key] === 'asc') {
+                    return valA > valB ? 1 : -1;
+                } else {
+                    return valA < valB ? 1 : -1;
+                }
+            });
+
+            renderTable(recipesData);
+        }
+
+        // ==================== SELECT ALL ====================
+        function toggleSelectAll() {
+            const checked = document.getElementById('selectAll').checked;
+            document.querySelectorAll('.row-checkbox').forEach(cb => {
+                cb.checked = checked;
+            });
+            updateSelectedCount();
+        }
+
+        // ==================== POPULATE INDUSTRY FILTER ====================
+        function populateIndustryFilter(data) {
+            const categories = [...new Set(data.map(r => r.industry || r.category))].sort();
+            const industryFilter = document.getElementById('industryFilter');
+            
+            // Păstrează opțiunea "Toate"
+            industryFilter.innerHTML = '<option value="">🌐 Toate Categoriile</option>';
+            
+            // Emoji per categorie
+            const categoryEmojis = {
+                'Pizza': '🍕',
+                'Paste': '🍝',
+                'Salate': '🥗',
+                'Aperitive Calde': '🔥',
+                'Aperitive Reci': '🧊',
+                'Băuturi și Coctailuri': '🍹',
+                'Fast Food': '🍔',
+                'Fel Principal': '🍽️',
+                'Deserturi': '🍰',
+                'Ciorbe': '🍲'
+            };
+            
+            // Adaugă categoriile reale
+            categories.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat;
+                const emoji = categoryEmojis[cat] || '📦';
+                option.textContent = `${emoji} ${cat}`;
+                industryFilter.appendChild(option);
+            });
+            
+            console.log(`✅ Filtru Industrie populat cu ${categories.length} categorii`);
+        }
+
+        // ==================== UPDATE STATS ====================
+        function updateStats(data) {
+            document.getElementById('totalRecipes').textContent = data.length;
+            const industries = new Set(data.map(item => item.industry));
+            document.getElementById('industriesCount').textContent = industries.size;
+            
+            const avgMargin = data.reduce((sum, item) => {
+                const margin = item.price > 0 ? ((item.price - item.total_cost) / item.price * 100) : 0;
+                return sum + margin;
+            }, 0) / data.length;
+            document.getElementById('avgMargin').textContent = avgMargin.toFixed(0) + '%';
+        }
+
+        function updateSelectedCount() {
+            const count = document.querySelectorAll('.row-checkbox:checked').length;
+            document.getElementById('selectedCount').textContent = count;
+        }
+
+        // ==================== ACTIONS ====================
+        function viewDetails(id) {
+            const recipe = recipesData.find(item => item.id === id);
+            alert(`Detalii pentru: ${recipe.name}\n\nAceastă funcționalitate va deschide un modal cu toate detaliile produsului.`);
+        }
+
+        async function viewRecipe(id) {
+            try {
+                const response = await fetch(`/api/recipe-templates/${id}`);
+                const data = await response.json();
+                
+                if (!data.success) {
+                    alert(`❌ Eroare: ${data.error}`);
+                    return;
+                }
+                
+                const template = data.template;
+                const ingredients = data.ingredients || [];
+                
+                let ingredientsList = ingredients.map(ing => 
+                    `- ${ing.ingredient_name}: ${ing.quantity_needed}${ing.unit} (waste: ${ing.waste_percentage || 0}%)`
+                ).join('\n');
+                
+                alert(`📋 REȚETĂ: ${template.name}\n\n` +
+                      `Categorie: ${template.category}\n` +
+                      `Cost estimat: ${template.estimated_cost || 'N/A'} RON\n` +
+                      `Preț sugerat: ${template.suggested_price || 'N/A'} RON\n\n` +
+                      `Ingrediente (${ingredients.length}):\n${ingredientsList}`);
+            } catch (error) {
+                console.error('Eroare:', error);
+                alert(`❌ Eroare la încărcare rețetă: ${error.message}`);
+            }
+        }
+
+        async function importSingle(id) {
+            const recipe = recipesData.find(item => item.id === id);
+            
+            const price = prompt(`💰 Setează prețul pentru "${recipe.name}":\n\n` +
+                                `Cost estimat: ${recipe.total_cost.toFixed(2)} RON\n` +
+                                `Preț sugerat: ${recipe.price.toFixed(2)} RON\n\n` +
+                                `Introdu prețul final (RON):`, recipe.price.toFixed(2));
+            
+            if (!price || parseFloat(price) <= 0) {
+                alert('❌ Preț invalid! Import anulat.');
+                return;
+            }
+            
+            if (!confirm(`✅ ADAUGĂ ÎN MENIU: "${recipe.name}"\n\n` +
+                        `Preț: ${price} RON\n` +
+                        `Cost: ${recipe.total_cost.toFixed(2)} RON\n` +
+                        `Marjă: ${((parseFloat(price) - recipe.total_cost) / parseFloat(price) * 100).toFixed(0)}%\n\n` +
+                        `Se vor crea automat:\n` +
+                        `✅ Produsul în meniu\n` +
+                        `✅ Rețeta completă cu ingrediente\n` +
+                        `✅ Ingredientele în stoc (dacă nu există)\n\n` +
+                        `Continuă?`)) {
+                return;
+            }
+            
+            try {
+                console.log(`🔄 Import rețetă #${id}...`);
+                const response = await fetch(`/api/recipe-templates/import/${id}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ price: parseFloat(price) })
+                });
+                
+                const data = await response.json();
+                
+                if (!data.success) {
+                    alert(`❌ Eroare: ${data.error}`);
+                    return;
+                }
+                
+                alert(`🎉 SUCCES!\n\n` +
+                      `${data.message}\n\n` +
+                      `Produs ID: ${data.product_id}\n` +
+                      `Ingrediente copiate: ${data.ingredients_copied}\n` +
+                      `Ingrediente create automat: ${data.ingredients_created}\n\n` +
+                      `✅ Produsul apare ACUM în:\n` +
+                      `   • Catalog Produse (admin.html)\n` +
+                      `   • Meniu Client (comanda.html)\n\n` +
+                      `📸 Pentru poză personalizată:\n` +
+                      `   → Mergi la Catalog Produse\n` +
+                      `   → Editează produsul #${data.product_id}`);
+                
+            } catch (error) {
+                console.error('❌ Eroare la import:', error);
+                alert(`❌ Eroare la import: ${error.message}`);
+            }
+        }
+
+        function importSelected() {
+            const selected = Array.from(document.querySelectorAll('.row-checkbox:checked')).map(cb => cb.dataset.id);
+            if (selected.length === 0) {
+                alert('Selectați cel puțin o rețetă!');
+                return;
+            }
+            if (confirm(`Importați ${selected.length} rețete în meniul restaurantului?`)) {
+                alert(`Funcționalitate în dezvoltare.\nVor fi importate ${selected.length} rețete complete (cu ingrediente, waste, ambalaje).`);
+            }
+        }
+
+        function addNewRecipe() {
+            alert('Funcționalitate în dezvoltare.\nVa deschide un modal pentru adăugare rețetă nouă în catalog.');
+        }
+
+        // ==================== TABS NAVIGATION ====================
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+                tab.style.display = 'none';
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            const selectedTab = document.getElementById(`${tabName}-section`);
+            if (selectedTab) {
+                selectedTab.classList.add('active');
+                selectedTab.style.display = 'block';
+            }
+            
+            // Set active button
+            const selectedBtn = document.getElementById(`tab-${tabName}`);
+            if (selectedBtn) {
+                selectedBtn.classList.add('active');
+            }
+            
+            // Load data for the selected tab
+            if (tabName === 'alergeni') {
+                loadAllergens();
+            } else if (tabName === 'aditivi') {
+                loadAdditives();
+            }
+        }
+
+        // ==================== ALERGENI FUNCTIONS ====================
+        let allergensData = [];
+
+        async function loadAllergens() {
+            try {
+                const response = await fetch('/api/allergens-catalog');
+                const data = await response.json();
+                allergensData = data;
+                renderAllergensTable(data);
+            } catch (error) {
+                console.error('Eroare la încărcare alergeni:', error);
+                document.getElementById('allergensTableBody').innerHTML = `
+                    <tr><td colspan="6" style="text-align:center; color:red; padding:30px;">
+                        ❌ Eroare la încărcarea datelor. API endpoint nu este încă implementat.
+                    </td></tr>
+                `;
+            }
+        }
+
+        function renderAllergensTable(data) {
+            const tbody = document.getElementById('allergensTableBody');
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:30px;">Nu există alergeni</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = data.map((item, index) => `
+                <tr>
+                    <td>${item.id}</td>
+                    <td>${item.name_ro}</td>
+                    <td>${item.name_en || '-'}</td>
+                    <td>${item.code || '-'}</td>
+                    <td><span class="badge badge-warning">${item.category || 'Major'}</span></td>
+                    <td>
+                        <button class="action-btn action-btn-view" onclick="viewAllergenDetails(${item.id})">👁️ Detalii</button>
+                        <button class="action-btn action-btn-edit" onclick="editAllergen(${item.id})">✏️ Edit</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function searchAllergens() {
+            const searchTerm = document.getElementById('searchAllergen').value.toLowerCase();
+            const filtered = allergensData.filter(item => 
+                item.name_ro.toLowerCase().includes(searchTerm) ||
+                (item.name_en || '').toLowerCase().includes(searchTerm) ||
+                (item.code || '').toLowerCase().includes(searchTerm)
+            );
+            renderAllergensTable(filtered);
+        }
+
+        function sortAllergens(colIndex) {
+            // TO DO: implement sorting
+            alert('Sortare în dezvoltare');
+        }
+
+        function viewAllergenDetails(id) {
+            alert('Detalii alergen #' + id + '\n\nModal în dezvoltare.');
+        }
+
+        function editAllergen(id) {
+            alert('Editare alergen #' + id + '\n\nModal în dezvoltare.');
+        }
+
+        function addNewAllergen() {
+            alert('Adăugare alergen nou\n\nModal în dezvoltare.');
+        }
+
+        // ==================== ADITIVI FUNCTIONS ====================
+        let additivesData = [];
+
+        async function loadAdditives() {
+            try {
+                const response = await fetch('/api/additives-catalog');
+                const data = await response.json();
+                additivesData = data;
+                renderAdditivesTable(data);
+                updateAdditivesStats(data);
+            } catch (error) {
+                console.error('Eroare la încărcare aditivi:', error);
+                document.getElementById('additivesTableBody').innerHTML = `
+                    <tr><td colspan="7" style="text-align:center; color:red; padding:30px;">
+                        ❌ Eroare la încărcarea datelor. API endpoint nu este încă implementat.
+                    </td></tr>
+                `;
+            }
+        }
+
+        function renderAdditivesTable(data) {
+            const tbody = document.getElementById('additivesTableBody');
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:30px;">Nu există aditivi</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = data.map((item, index) => `
+                <tr>
+                    <td>${item.id}</td>
+                    <td><strong>${item.e_code}</strong></td>
+                    <td>${item.name_ro}</td>
+                    <td>${item.name_en || '-'}</td>
+                    <td><span class="badge badge-info">${item.function_type || '-'}</span></td>
+                    <td>${item.allergen_risk ? '<span class="badge badge-danger">Da</span>' : '<span class="badge badge-success">Nu</span>'}</td>
+                    <td>
+                        <button class="action-btn action-btn-view" onclick="viewAdditiveDetails(${item.id})">👁️ Detalii</button>
+                        <button class="action-btn action-btn-edit" onclick="editAdditive(${item.id})">✏️ Edit</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function updateAdditivesStats(data) {
+            document.getElementById('totalAdditives').textContent = data.length;
+            document.getElementById('coloringAdditives').textContent = 
+                data.filter(a => a.function_type && a.function_type.includes('Colorant')).length;
+            document.getElementById('preservativeAdditives').textContent = 
+                data.filter(a => a.function_type && a.function_type.includes('Conservant')).length;
+        }
+
+        function searchAdditives() {
+            const searchTerm = document.getElementById('searchAdditive').value.toLowerCase();
+            const filtered = additivesData.filter(item => 
+                item.e_code.toLowerCase().includes(searchTerm) ||
+                item.name_ro.toLowerCase().includes(searchTerm) ||
+                (item.name_en || '').toLowerCase().includes(searchTerm) ||
+                (item.function_type || '').toLowerCase().includes(searchTerm)
+            );
+            renderAdditivesTable(filtered);
+        }
+
+        function sortAdditives(colIndex) {
+            // TO DO: implement sorting
+            alert('Sortare în dezvoltare');
+        }
+
+        function viewAdditiveDetails(id) {
+            alert('Detalii aditiv #' + id + '\n\nModal în dezvoltare.');
+        }
+
+        function editAdditive(id) {
+            alert('Editare aditiv #' + id + '\n\nModal în dezvoltare.');
+        }
+
+        function addNewAdditive() {
+            alert('Adăugare aditiv nou\n\nModal în dezvoltare.');
+        }
+
+        // ==================== EVENT LISTENERS ====================
+        document.addEventListener('change', (e) => {
+            if (e.target.classList.contains('row-checkbox')) {
+                updateSelectedCount();
+            }
+        });
+
+        // ==================== INIT ====================
+        window.addEventListener('DOMContentLoaded', () => {
+            loadRecipes();
+        });
+    </script>
+
+</body>
+</html>
+
+

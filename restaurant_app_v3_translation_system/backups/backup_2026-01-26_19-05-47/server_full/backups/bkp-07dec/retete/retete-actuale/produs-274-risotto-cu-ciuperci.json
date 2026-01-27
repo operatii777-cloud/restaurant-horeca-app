@@ -1,0 +1,49 @@
+{
+  "productId": 274,
+  "productName": "Risotto cu Ciuperci",
+  "productCategory": "Paste",
+  "price": 30,
+  "description": "Risotto cu ciuperci",
+  "ingredients": [
+    {
+      "ingredientId": 167,
+      "ingredientName": "Orez arborio",
+      "ingredientCategory": "Cereale și Paste",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 168,
+      "ingredientName": "Ciuperci champignon",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 149,
+      "ingredientName": "Vin alb",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 66,
+      "ingredientName": "Parmezan",
+      "ingredientCategory": "Lactate și Brânzeturi",
+      "quantityNeeded": 30,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 60,
+      "ingredientName": "Unt",
+      "ingredientCategory": "Lactate și Brânzeturi",
+      "quantityNeeded": 20,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}

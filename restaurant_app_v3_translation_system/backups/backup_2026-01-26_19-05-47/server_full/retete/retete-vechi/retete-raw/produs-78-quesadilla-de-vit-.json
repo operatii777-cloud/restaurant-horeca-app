@@ -1,0 +1,91 @@
+﻿Ã¯Â»Â¿{
+  "productId": 78,
+  "productName": "Quesadilla de VitÃ„ÂƒÃ†Â’",
+  "productCategory": "Burgeri",
+  "ingredients": [
+    {
+      "ingredientId": 815,
+      "ingredientName": "CeapÃ„ÂƒÃ†Â’ tocatÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 15,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 169,
+      "ingredientName": "Sare de mare",
+      "ingredientCategory": "General",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 117,
+      "ingredientName": "Piper negru",
+      "ingredientCategory": "Condimente ÃƒÂˆÃ¢Â„Â¢i Sosuri",
+      "quantityNeeded": 1,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 88,
+      "ingredientName": "Ardei gras",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 15,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 235,
+      "ingredientName": "Tortilla (2 buc.)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 634,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 238,
+      "ingredientName": "Sos salsa",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 130,
+      "ingredientName": "SmÃƒÂ¢ntÃƒÂ¢nÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 126,
+      "ingredientName": "BurtÃ„ÂƒÃ†Â’ de vitÃ„ÂƒÃ†Â’ fiartÃ„ÂƒÃ†Â’ ÃƒÂˆÃ¢Â„Â¢i tÃ„ÂƒÃ†Â’iatÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

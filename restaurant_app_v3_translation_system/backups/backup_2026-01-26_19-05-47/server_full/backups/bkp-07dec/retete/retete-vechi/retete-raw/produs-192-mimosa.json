@@ -1,0 +1,26 @@
+{
+  "productId": 192,
+  "productName": "Mimosa",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 466,
+      "ingredientName": "Prosecco/Vin Spumant",
+      "ingredientCategory": "General",
+      "quantityNeeded": 100,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 467,
+      "ingredientName": "Suc de Portocale (proaspăt)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 100,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

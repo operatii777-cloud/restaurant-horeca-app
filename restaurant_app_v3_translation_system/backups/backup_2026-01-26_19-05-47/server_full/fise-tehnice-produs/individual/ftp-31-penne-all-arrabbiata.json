@@ -1,0 +1,118 @@
+{
+  "product": {
+    "id": 31,
+    "name": "Penne All'Arrabbiata",
+    "name_en": "Penne All'Arrabbiata",
+    "category": "Paste Fresca",
+    "category_en": "Fresh Pasta",
+    "price": 33,
+    "description": "Paste fresh, sos de roșii, ardei iute, usturoi, pătrunjel",
+    "description_en": "Fresh pasta, tomato sauce, hot pepper, garlic, parsley",
+    "weight": "350G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 1,
+    "is_spicy": 1,
+    "is_takeout_only": 0,
+    "allergens": "gluten",
+    "allergens_en": "gluten"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 349,
+        "name": "Ardei iute (chilli)",
+        "category": "General",
+        "quantity": 2,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 570,
+        "name": "Penne (paste proaspete)",
+        "category": "General",
+        "quantity": 150,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 800,
+        "name": "Sos Usturoi Shaorma",
+        "category": "Sosuri",
+        "quantity": 5,
+        "unit": "g",
+        "unitStock": "ml",
+        "wastePercentage": 15,
+        "variableConsumption": null,
+        "costPerUnit": 1.1303157632422682,
+        "totalCost": "5.65",
+        "totalCostWithWaste": "6.50",
+        "supplier": "Furnizor Test",
+        "currentStock": 64752.76470588235,
+        "minStock": 100,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 26,
+        "name": "pătrunjel",
+        "category": "General",
+        "quantity": 5,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.9209787415317573,
+        "totalCost": "4.60",
+        "totalCostWithWaste": "4.60",
+        "supplier": null,
+        "currentStock": 12006,
+        "minStock": 0.05,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "10.26",
+    "totalCostWithWaste": "11.10",
+    "sellingPrice": 33,
+    "profitMargin": 21.9,
+    "markup": 66.35,
+    "foodCostPercentage": "33.65"
+  },
+  "stats": {
+    "totalIngredients": 4,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

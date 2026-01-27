@@ -1,0 +1,57 @@
+{
+  "productId": 340,
+  "productName": "Turtă de Casă",
+  "productCategory": "Sosuri și Pâine",
+  "price": 6,
+  "description": "Turtă tradițională de casă, proaspătă",
+  "ingredients": [
+    {
+      "ingredientId": 30,
+      "ingredientName": "Făină albă",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 400,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 219,
+      "ingredientName": "Miere",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 81,
+      "ingredientName": "Zahăr brun",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 220,
+      "ingredientName": "Scorțișoară",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 221,
+      "ingredientName": "Cuisoare",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 156,
+      "ingredientName": "Apă",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}

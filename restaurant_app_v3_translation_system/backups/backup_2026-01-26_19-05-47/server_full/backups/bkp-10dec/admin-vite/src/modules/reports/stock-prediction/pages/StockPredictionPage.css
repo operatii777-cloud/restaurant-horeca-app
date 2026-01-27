@@ -1,0 +1,8 @@
+.stock-prediction-page {
+  padding: 1.5rem;
+}
+
+.stock-prediction-page [data-page-ready="true"] {
+  opacity: 1;
+}
+

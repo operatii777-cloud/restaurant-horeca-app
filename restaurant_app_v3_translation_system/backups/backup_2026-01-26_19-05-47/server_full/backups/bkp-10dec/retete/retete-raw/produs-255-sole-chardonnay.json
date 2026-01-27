@@ -1,0 +1,17 @@
+{
+  "productId": 255,
+  "productName": "Sole Chardonnay",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 770,
+      "ingredientName": "Sole Chardonnay",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

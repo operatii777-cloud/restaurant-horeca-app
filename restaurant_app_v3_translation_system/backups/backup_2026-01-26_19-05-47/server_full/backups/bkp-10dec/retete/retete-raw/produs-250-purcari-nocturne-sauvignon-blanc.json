@@ -1,0 +1,17 @@
+{
+  "productId": 250,
+  "productName": "Purcari Nocturne Sauvignon Blanc",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 762,
+      "ingredientName": "Purcari Nocturne Sauvignon Blanc",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

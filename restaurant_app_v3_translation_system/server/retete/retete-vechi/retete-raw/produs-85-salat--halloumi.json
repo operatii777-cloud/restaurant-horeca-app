@@ -1,0 +1,46 @@
+﻿Ã¯Â»Â¿{
+  "productId": 85,
+  "productName": "SalatÃ„ÂƒÃ†Â’ Halloumi",
+  "productCategory": "Salate",
+  "ingredients": [
+    {
+      "ingredientId": 797,
+      "ingredientName": "SalatÃ„ÂƒÃ†Â’ Verde Shaorma",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 798,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii Shaorma",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 821,
+      "ingredientName": "Ulei vegetal",
+      "ingredientCategory": "Uleiuri ÃƒÂˆÃ¢Â„Â¢i GrÃ„ÂƒÃ†Â’simi",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 50,
+      "ingredientName": "brÃƒÂ¢nzÃ„ÂƒÃ†Â’ feta",
+      "ingredientCategory": "General",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

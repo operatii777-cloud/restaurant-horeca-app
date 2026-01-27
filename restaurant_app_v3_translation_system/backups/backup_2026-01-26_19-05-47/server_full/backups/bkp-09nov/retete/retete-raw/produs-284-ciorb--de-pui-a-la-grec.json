@@ -1,0 +1,62 @@
+{
+  "productId": 284,
+  "productName": "Ciorbă de Pui a la Grec",
+  "productCategory": "Ciorbe",
+  "ingredients": [
+    {
+      "ingredientId": 130,
+      "ingredientName": "Smântână",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 23,
+      "ingredientName": "morcovi",
+      "ingredientCategory": "General",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 163,
+      "ingredientName": "Ou",
+      "ingredientCategory": "General",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 126,
+      "ingredientName": "Burtă de vită fiartă și tăiată",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 290,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 350,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 64,
+      "ingredientName": "suc de lămâie",
+      "ingredientCategory": "General",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

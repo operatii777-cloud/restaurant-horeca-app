@@ -1,0 +1,41 @@
+{
+  "productId": 345,
+  "productName": "Sos Aioli",
+  "productCategory": "Sosuri și Pâine",
+  "price": 3.5,
+  "description": "Sos aioli cu usturoi",
+  "ingredients": [
+    {
+      "ingredientId": 43,
+      "ingredientName": "Maioneză",
+      "ingredientCategory": "Condimente și Sosuri",
+      "quantityNeeded": 100,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 154,
+      "ingredientName": "Lămâie",
+      "ingredientCategory": "Legume și Fructe",
+      "quantityNeeded": 0.5,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 18,
+      "ingredientName": "Ulei de măsline",
+      "ingredientCategory": "Uleiuri",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}

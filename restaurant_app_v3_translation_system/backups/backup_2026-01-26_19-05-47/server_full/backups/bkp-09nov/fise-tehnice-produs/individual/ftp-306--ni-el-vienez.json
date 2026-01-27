@@ -1,0 +1,101 @@
+{
+  "product": {
+    "id": 306,
+    "name": "Șnițel Vienez",
+    "name_en": "Șnițel Vienez",
+    "category": "Fel Principal",
+    "category_en": "Main Course",
+    "price": 38,
+    "description": "Șnițel Vienez de vițel",
+    "description_en": "Șnițel Vienez de vițel",
+    "weight": null,
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 366,
+        "name": "Carne de vițel (spate)",
+        "category": "General",
+        "quantity": 180,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 364,
+        "name": "Pesmet/Făină/Ou (pané)",
+        "category": "General",
+        "quantity": 30,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 1970,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 64,
+        "name": "suc de lămâie",
+        "category": "General",
+        "quantity": 5,
+        "unit": "g",
+        "unitStock": "l",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.770198325996813,
+        "totalCost": "3.85",
+        "totalCostWithWaste": "3.85",
+        "supplier": null,
+        "currentStock": 42848,
+        "minStock": 0.2,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "3.85",
+    "totalCostWithWaste": "3.85",
+    "sellingPrice": 38,
+    "profitMargin": 34.15,
+    "markup": 89.87,
+    "foodCostPercentage": "10.13"
+  },
+  "stats": {
+    "totalIngredients": 3,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

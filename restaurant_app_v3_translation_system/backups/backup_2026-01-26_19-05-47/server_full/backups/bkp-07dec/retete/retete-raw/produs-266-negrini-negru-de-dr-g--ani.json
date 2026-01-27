@@ -1,0 +1,17 @@
+{
+  "productId": 266,
+  "productName": "Negrini Negru de Drăgășani",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 752,
+      "ingredientName": "Negrini Negru de Drăgășani",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

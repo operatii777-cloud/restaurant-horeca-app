@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="ro" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Politica de confidențialitate - Trattoria</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .language-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 5px;
+            border-radius: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .lang-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: #333;
+            cursor: pointer;
+            border-radius: 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        .lang-btn:hover { background: #f0f0f0; }
+        .lang-btn.active {
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            color: white;
+        }
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .content-section {
+            background: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .content-section h2 {
+            color: #ff6b35;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .content-section h3 {
+            color: #333;
+            margin: 1.5rem 0 1rem 0;
+            font-size: 1.3rem;
+        }
+        
+        .content-section p {
+            margin-bottom: 1rem;
+        }
+        
+        .content-section ul {
+            margin: 1rem 0 1rem 2rem;
+        }
+        
+        .content-section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin: 2rem 0;
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #ff6b35;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+        
+        .cta-button:hover {
+            background: #e05a2a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+        }
+        
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        /* ==================== MEDIA QUERIES PENTRU DESIGN RESPONSIVE ==================== */
+        
+        /* Ecrane foarte mari (4K, ultra-wide) */
+        @media (min-width: 1920px) {
+            .container {
+                max-width: 1400px;
+                padding: 20px 40px;
+            }
+            
+            .header h1 {
+                font-size: 3rem;
+            }
+            
+            .header p {
+                font-size: 1.4rem;
+            }
+            
+            .content-section {
+                padding: 40px;
+            }
+            
+            .content-section h2 {
+                font-size: 2.2rem;
+            }
+            
+            .content-section p {
+                font-size: 1.2rem;
+                line-height: 1.8;
+            }
+            
+            .highlight {
+                padding: 40px;
+            }
+            
+            .highlight h3 {
+                font-size: 1.8rem;
+            }
+            
+            .highlight p {
+                font-size: 1.2rem;
+            }
+            
+            .cta-button {
+                padding: 15px 30px;
+                font-size: 1.2rem;
+            }
+        }
+        
+        /* Laptopuri mari */
+        @media (min-width: 1440px) and (max-width: 1919px) {
+            .container {
+                max-width: 1200px;
+                padding: 15px 30px;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header p {
+                font-size: 1.2rem;
+            }
+            
+            .content-section {
+                padding: 35px;
+            }
+            
+            .content-section h2 {
+                font-size: 2rem;
+            }
+            
+            .content-section p {
+                font-size: 1.1rem;
+            }
+            
+            .highlight {
+                padding: 35px;
+            }
+            
+            .highlight h3 {
+                font-size: 1.6rem;
+            }
+            
+            .highlight p {
+                font-size: 1.1rem;
+            }
+            
+            .cta-button {
+                padding: 14px 28px;
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* Laptopuri standard */
+        @media (max-width: 1400px) {
+            .container {
+                padding: 12px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .header p {
+                font-size: 1.1rem;
+            }
+            
+            .content-section {
+                padding: 30px;
+            }
+            
+            .content-section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .content-section p {
+                font-size: 1rem;
+            }
+            
+            .highlight {
+                padding: 30px;
+            }
+            
+            .highlight h3 {
+                font-size: 1.5rem;
+            }
+            
+            .highlight p {
+                font-size: 1rem;
+            }
+            
+            .cta-button {
+                padding: 13px 26px;
+                font-size: 1rem;
+            }
+        }
+        
+        /* Tablete mari */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 10px 15px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .content-section {
+                padding: 25px;
+            }
+            
+            .content-section h2 {
+                font-size: 1.6rem;
+            }
+            
+            .content-section p {
+                font-size: 0.95rem;
+            }
+            
+            .highlight {
+                padding: 25px;
+            }
+            
+            .highlight h3 {
+                font-size: 1.4rem;
+            }
+            
+            .highlight p {
+                font-size: 0.95rem;
+            }
+            
+            .cta-button {
+                padding: 12px 24px;
+                font-size: 0.95rem;
+            }
+        }
+        
+        /* Tablete mici */
+        @media (max-width: 992px) {
+            .container {
+                padding: 8px 12px;
+            }
+            
+            .header {
+                padding: 1.5rem 0;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header p {
+                font-size: 0.95rem;
+            }
+            
+            .content-section {
+                padding: 22px;
+            }
+            
+            .content-section h2 {
+                font-size: 1.5rem;
+            }
+            
+            .content-section p {
+                font-size: 0.9rem;
+            }
+            
+            .highlight {
+                padding: 22px;
+            }
+            
+            .highlight h3 {
+                font-size: 1.3rem;
+            }
+            
+            .highlight p {
+                font-size: 0.9rem;
+            }
+            
+            .cta-button {
+                padding: 11px 22px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Telefoane mari */
+        @media (max-width: 768px) {
+            .container {
+                padding: 6px 10px;
+            }
+            
+            .header {
+                padding: 1.2rem 0;
+            }
+            
+            .header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .header p {
+                font-size: 0.9rem;
+            }
+            
+            .back-btn {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .content-section {
+                padding: 18px;
+            }
+            
+            .content-section h2 {
+                font-size: 1.4rem;
+            }
+            
+            .content-section p {
+                font-size: 0.85rem;
+            }
+            
+            .highlight {
+                padding: 18px;
+            }
+            
+            .highlight h3 {
+                font-size: 1.2rem;
+            }
+            
+            .highlight p {
+                font-size: 0.85rem;
+            }
+            
+            .cta-button {
+                padding: 10px 20px;
+                font-size: 0.85rem;
+            }
+            
+            .footer {
+                padding: 1.5rem;
+            }
+            
+            .footer p {
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Telefoane mici */
+        @media (max-width: 576px) {
+            .container {
+                padding: 5px 8px;
+            }
+            
+            .header {
+                padding: 1rem 0;
+            }
+            
+            .header h1 {
+                font-size: 1.4rem;
+            }
+            
+            .header p {
+                font-size: 0.85rem;
+            }
+            
+            .back-btn {
+                padding: 6px 10px;
+                font-size: 0.8rem;
+            }
+            
+            .content-section {
+                padding: 15px;
+            }
+            
+            .content-section h2 {
+                font-size: 1.3rem;
+            }
+            
+            .content-section p {
+                font-size: 0.8rem;
+            }
+            
+            .highlight {
+                padding: 15px;
+            }
+            
+            .highlight h3 {
+                font-size: 1.1rem;
+            }
+            
+            .highlight p {
+                font-size: 0.8rem;
+            }
+            
+            .cta-button {
+                padding: 8px 16px;
+                font-size: 0.8rem;
+            }
+            
+            .footer {
+                padding: 1.2rem;
+            }
+            
+            .footer p {
+                font-size: 0.8rem;
+            }
+        }
+        
+        /* Orientare landscape pe telefoane */
+        @media (max-height: 600px) and (orientation: landscape) {
+            .header {
+                padding: 0.8rem 0;
+            }
+            
+            .header h1 {
+                font-size: 1.2rem;
+            }
+            
+            .header p {
+                font-size: 0.8rem;
+            }
+            
+            .content-section {
+                padding: 12px;
+            }
+            
+            .highlight {
+                padding: 12px;
+            }
+            
+            .footer {
+                padding: 1rem;
+            }
+        }
+        
+        /* Ecrane ultra-wide */
+        @media (min-aspect-ratio: 21/9) {
+            .container {
+                max-width: 1600px;
+                padding: 25px 50px;
+            }
+            
+            .header h1 {
+                font-size: 3.2rem;
+            }
+            
+            .header p {
+                font-size: 1.5rem;
+            }
+            
+            .content-section {
+                padding: 50px;
+            }
+            
+            .content-section h2 {
+                font-size: 2.4rem;
+            }
+            
+            .content-section p {
+                font-size: 1.3rem;
+                line-height: 1.9;
+            }
+            
+            .highlight {
+                padding: 50px;
+            }
+            
+            .highlight h3 {
+                font-size: 2rem;
+            }
+            
+            .highlight p {
+                font-size: 1.3rem;
+            }
+            
+            .cta-button {
+                padding: 18px 36px;
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="language-switcher">
+        <button class="lang-btn active" onclick="changeLanguage('ro')" data-lang="ro">RO</button>
+        <button class="lang-btn" onclick="changeLanguage('en')" data-lang="en">EN</button>
+    </div>
+    
+    <div class="header">
+        <button class="back-btn" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i> <span id="backBtn">Înapoi</span>
+        </button>
+        <h1 id="headerTitle">🔒 Politica de confidențialitate</h1>
+        <p>Trattoria</p>
+    </div>
+
+    <div class="container">
+        <div class="content-section">
+            <h2>1. Operatorul de date</h2>
+            <p><strong>SC Trattoria SRL</strong>, cu sediul în Jud. Ilfov, Bragadiru, Prelungirea Ghencea nr. X, înregistrată la registrul comerțului sub nr. Jxx/xxxx/xxxx, cod fiscal RO xxxxxxx în calitate de Operator, prelucrează datele cu caracter personal în conformitate cu dispozițiile legale în domeniul protecției datelor cu caracter personal, precum și cu prevederile prezentei Politici de confidențialitate.</p>
+            
+            <p>Compania este operatorul de date în ceea ce privește prelucrarea datelor cu caracter personal, în sensul Regulamentului (UE) nr. 679/2016 privind protecția persoanelor fizice în ceea ce privește prelucrarea datelor cu caracter personal și privind libera circulație a acestor date (denumit în continuare "Regulamentul" sau "GDPR").</p>
+        </div>
+
+        <div class="content-section">
+            <h2>2. Aplicarea Politicii de confidențialitate</h2>
+            <p>Politica de confidențialitate ("Politica") descrie tipurile de date cu caracter personal pe care le colectăm, scopurile și temeiul legal al prelucrării, destinatarii care au acces la aceste date, drepturile și opțiunile pe care le au persoanele fizice vizate cu privire la prelucrarea datelor cu caracter personal precum și modalitatea de exercitare a acestor drepturi.</p>
+            
+            <p>În cadrul acestei Politici și în conformitate cu prevederile Regulamentului „date cu caracter personal" înseamnă orice informații privind o persoană fizică identificată sau identificabilă ("persoana vizată").</p>
+        </div>
+
+        <div class="content-section">
+            <h2>3. Scopul și baza legală a prelucrărilor</h2>
+            <p>Compania prelucrează datele cu caracter personal pe care le colectăm în următoarele scopuri:</p>
+            <ul>
+                <li>pentru desfășurarea relației contractuale;</li>
+                <li>pentru a înțelege modul cum sunt utilizate serviciile oferite de Companie;</li>
+                <li>pentru a putea oferi servicii de asistență și pentru soluționarea cererilor;</li>
+                <li>pentru gestionarea relațiilor Companiei cu clienții;</li>
+                <li>pentru marketing și publicitate (cu consimțământ);</li>
+                <li>pentru îndeplinirea obligațiilor legale.</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>4. Detalii privind prelucrările de date întemeiate pe consimțământ</h2>
+            <p>Transmiterea datelor cu caracter personal în vederea prelucrării de către Companie în scop de informare, reclamă, marketing și publicitate este voluntară iar prelucrarea acestora se efectuează în temeiul consimțământului specific, informat și liber exprimat al persoanelor vizate.</p>
+            
+            <p>Persoana vizată are dreptul de a-și retrage consimțământul în orice moment, fără a afecta legalitatea prelucrării efectuate pe baza consimțământului înainte de retragerea acestuia.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>5. Colectarea și utilizarea datelor personale</h2>
+            <h3>Categorii de date colectate:</h3>
+            <ul>
+                <li>Date personale de identificare (nume, prenume, adresa de facturare, adresa de livrare)</li>
+                <li>Date de contact (adresa email, număr de telefon)</li>
+                <li>Informații despre utilizarea site-ului (cookie-uri și web beacon-uri)</li>
+                <li>Alte date personale comunicate de persoana vizată</li>
+            </ul>
+            
+            <h3>Moduri de colectare:</h3>
+            <ul>
+                <li>Informații furnizate direct de utilizator</li>
+                <li>Informații obținute prin utilizarea serviciilor</li>
+                <li>Informații despre dispozitiv și rețea</li>
+                <li>Informații de jurnal și cookie-uri</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>6. Cookies și tehnologii similare</h2>
+            <p>Un "Internet Cookie" este un fișier de mici dimensiuni, format din litere și numere, care va fi stocat pe computerul sau terminalul mobil al utilizatorului.</p>
+            
+            <h3>Scopul utilizării cookie-urilor:</h3>
+            <ul>
+                <li>Personalizarea anumitor setări (limba, moneda)</li>
+                <li>Îmbunătățirea utilizării website-urilor</li>
+                <li>Anticiparea anumitor bunuri/servicii</li>
+            </ul>
+            
+            <p>Puteți seta browserul să blocheze toate cookie-urile sau să indice când plasăm un cookie. Este posibil ca multe dintre serviciile noastre să nu funcționeze corespunzător dacă ați dezactivat cookie-urile.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>7. Categorii de destinatari</h2>
+            <p>Compania va utiliza datele cu caracter personal numai într-o manieră corectă și legală. Nu vom vinde, comercializa sau închiria terților datele cu caracter personal.</p>
+            
+            <h3>Destinatarii pot include:</h3>
+            <ul>
+                <li>Angajații Companiei</li>
+                <li>Furnizorii de servicii</li>
+                <li>Operatorii de transport</li>
+                <li>Autoritățile competente (conform legii)</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>8. Mijloace de procesare a datelor și securitatea datelor</h2>
+            <p>Datele cu caracter personal pot fi prelucrate atât prin intermediul unor metode manuale, precum și cu ajutorul unor mijloace informatice.</p>
+            
+            <p>Au fost implementate măsuri tehnice și organizatorice corespunzătoare pentru a preveni prelucrarea neautorizată sau ilegală:</p>
+            <ul>
+                <li>Utilizarea de firewall-uri și servere securizate</li>
+                <li>Criptare și sisteme de managementul drepturilor de acces</li>
+                <li>Selectarea atentă a angajaților responsabili</li>
+                <li>Clauze de confidențialitate</li>
+                <li>Copii de backup și alte măsuri de prevenire</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>9. Durata stocării</h2>
+            <p>Compania păstrează datele cu caracter personal conform principiilor legalității, proporționalității și necesității, și în orice caz numai pe o perioada care nu depășește perioada necesară îndeplinirii scopurilor pentru care sunt prelucrate.</p>
+            
+            <p>După încetarea relației de colaborare sau la expirarea obligației legale de arhivare, datele vor fi șterse.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>10. Drepturile persoanelor vizate</h2>
+            <p>În legătură cu prelucrarea datelor cu caracter personal, în baza condițiilor specificate în Regulamentul GDPR, Compania garantează persoanelor vizate exercitarea următoarelor drepturi:</p>
+            
+            <ul>
+                <li><strong>Dreptul de informare și acces</strong> la datele cu caracter personal</li>
+                <li><strong>Dreptul la rectificare</strong> a datelor inexacte sau incomplete</li>
+                <li><strong>Dreptul la ștergerea datelor</strong> sau "dreptul de a fi uitat"</li>
+                <li><strong>Dreptul de retragere a consimțământului</strong></li>
+                <li><strong>Dreptul la restricționarea prelucrării</strong></li>
+                <li><strong>Dreptul la portabilitatea datelor</strong></li>
+                <li><strong>Dreptul la opoziție</strong></li>
+                <li><strong>Dreptul de a nu face obiectul unei decizii automate</strong></li>
+            </ul>
+            
+            <p>Pentru exercitarea acestor drepturi, persoana vizată se poate adresa prin email la adresa <strong>trattoriamia@gmail.com</strong>.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>11. Consecințele refuzului furnizării datelor personale</h2>
+            <p>În măsura în care ați optat pentru cumpărarea unui anumit produs și/sau serviciu, furnizarea datelor cu caracter personal constituie o necesitate din perspectiva cerințelor legale și/sau a relației juridice contractuale.</p>
+            
+            <p>Refuzul de a transmite datele conduce la imposibilitatea prestării de servicii/furnizării de bunuri care au legătură cu activitatea principală a Companiei.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>12. Confidențialitatea referitoare la minori</h2>
+            <p>Website-ul este destinat să fie utilizat de persoane cu vârsta de peste 18 ani. Nu căutăm să colectăm informații despre minori.</p>
+            
+            <p>În cazul în care un minor transmite informații personale prin intermediul site-ului nostru web, vom șterge aceste informații de îndată ce vom fi informați cu privire la vârsta sa.</p>
+        </div>
+
+        <div class="highlight">
+            <h3 id="ctaTitle">🔒 Ai întrebări despre confidențialitatea datelor tale?</h3>
+            <p id="ctaText">Echipa noastră este aici să îți răspundă la orice întrebare legată de protecția datelor personale.</p>
+            <a href="contact.html" class="cta-button" id="ctaButton">Contactează-ne</a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p id="footerText1">&copy; 2024 Trattoria. Toate drepturile rezervate.</p>
+        <p id="footerText2">Ultima actualizare: Decembrie 2024</p>
+    </div>
+
+    <script>
+        let currentLang = localStorage.getItem('selectedLanguage') || 'ro';
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('selectedLanguage', lang);
+            document.getElementById('htmlRoot').lang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+            applyTranslations();
+        }
+
+        function applyTranslations() {
+            const isEn = currentLang === 'en';
+            
+            document.getElementById('pageTitle').textContent = isEn ? 'Privacy Policy - Trattoria' : 'Politica de confidențialitate - Trattoria';
+            document.getElementById('backBtn').textContent = isEn ? 'Back' : 'Înapoi';
+            document.getElementById('headerTitle').textContent = isEn ? '🔒 Privacy Policy' : '🔒 Politica de confidențialitate';
+            
+            document.getElementById('ctaTitle').textContent = isEn ? '🔒 Questions about your data privacy?' : '🔒 Ai întrebări despre confidențialitatea datelor tale?';
+            document.getElementById('ctaText').textContent = isEn ? 'Our team is here to answer any questions related to personal data protection.' : 'Echipa noastră este aici să îți răspundă la orice întrebare legată de protecția datelor personale.';
+            document.getElementById('ctaButton').textContent = isEn ? 'Contact Us' : 'Contactează-ne';
+            
+            document.getElementById('footerText1').textContent = isEn ? '© 2024 Trattoria. All rights reserved.' : '© 2024 Trattoria. Toate drepturile rezervate.';
+            document.getElementById('footerText2').textContent = isEn ? 'Last updated: December 2024' : 'Ultima actualizare: Decembrie 2024';
+            
+            // TRADUCERE COMPLETĂ - Toate secțiunile
+            const sections = document.querySelectorAll('.content-section');
+            
+            if (isEn) {
+                // ENGLISH TRANSLATIONS
+                sections[0].innerHTML = `
+                    <h2>1. Data Controller</h2>
+                    <p><strong>SC Trattoria SRL</strong>, with its registered office in Ilfov County, Bragadiru, Prelungirea Ghencea no. X, registered with the Trade Register under no. Jxx/xxxx/xxxx, tax code RO xxxxxxx, as Data Controller, processes personal data in accordance with legal provisions in the field of personal data protection, as well as with the provisions of this Privacy Policy.</p>
+                    <p>The Company is the data controller regarding the processing of personal data, within the meaning of Regulation (EU) No. 679/2016 on the protection of natural persons with regard to the processing of personal data and on the free movement of such data (hereinafter referred to as the "Regulation" or "GDPR").</p>
+                `;
+                
+                sections[1].innerHTML = `
+                    <h2>2. Application of the Privacy Policy</h2>
+                    <p>The Privacy Policy ("Policy") describes the types of personal data we collect, the purposes and legal basis for processing, the recipients who have access to this data, the rights and options that natural persons have regarding the processing of personal data, as well as how to exercise these rights.</p>
+                    <p>Within this Policy and in accordance with the provisions of the Regulation, "personal data" means any information relating to an identified or identifiable natural person ("data subject").</p>
+                `;
+                
+                sections[2].innerHTML = `
+                    <h2>3. Purpose and legal basis of processing</h2>
+                    <p>The Company processes the personal data we collect for the following purposes:</p>
+                    <ul>
+                        <li>for conducting the contractual relationship;</li>
+                        <li>to understand how the services offered by the Company are used;</li>
+                        <li>to be able to provide support services and resolve requests;</li>
+                        <li>for managing the Company's relationships with customers;</li>
+                        <li>for marketing and advertising (with consent);</li>
+                        <li>to fulfill legal obligations.</li>
+                    </ul>
+                `;
+                
+                sections[3].innerHTML = `
+                    <h2>4. Details regarding data processing based on consent</h2>
+                    <p>The transmission of personal data for processing by the Company for information, advertising, marketing and publicity purposes is voluntary and their processing is carried out on the basis of the specific, informed and freely expressed consent of the data subjects.</p>
+                    <p>The data subject has the right to withdraw their consent at any time, without affecting the lawfulness of processing based on consent before its withdrawal.</p>
+                `;
+                
+                sections[4].innerHTML = `
+                    <h2>5. Collection and use of personal data</h2>
+                    <h3>Categories of data collected:</h3>
+                    <ul>
+                        <li>Personal identification data (first name, last name, billing address, delivery address)</li>
+                        <li>Contact data (email address, phone number)</li>
+                        <li>Information about website use (cookies and web beacons)</li>
+                        <li>Other personal data communicated by the data subject</li>
+                    </ul>
+                    <h3>Methods of collection:</h3>
+                    <ul>
+                        <li>Information provided directly by the user</li>
+                        <li>Information obtained through the use of services</li>
+                        <li>Information about device and network</li>
+                        <li>Log information and cookies</li>
+                    </ul>
+                `;
+                
+                sections[5].innerHTML = `
+                    <h2>6. Cookies and similar technologies</h2>
+                    <p>An "Internet Cookie" is a small file, consisting of letters and numbers, which will be stored on the user's computer or mobile terminal.</p>
+                    <h3>Purpose of using cookies:</h3>
+                    <ul>
+                        <li>Personalization of certain settings (language, currency)</li>
+                        <li>Improving the use of websites</li>
+                        <li>Anticipation of certain goods/services</li>
+                    </ul>
+                    <p>You can set your browser to block all cookies or to indicate when we place a cookie. Many of our services may not work properly if you have disabled cookies.</p>
+                `;
+                
+                sections[6].innerHTML = `
+                    <h2>7. Categories of recipients</h2>
+                    <p>The Company will use personal data only in a fair and lawful manner. We will not sell, trade or rent personal data to third parties.</p>
+                    <h3>Recipients may include:</h3>
+                    <ul>
+                        <li>Company employees</li>
+                        <li>Service providers</li>
+                        <li>Transport operators</li>
+                        <li>Competent authorities (according to law)</li>
+                    </ul>
+                `;
+                
+                sections[7].innerHTML = `
+                    <h2>8. Data processing methods and data security</h2>
+                    <p>Personal data may be processed both through manual methods and with the help of IT means.</p>
+                    <p>Appropriate technical and organizational measures have been implemented to prevent unauthorized or illegal processing:</p>
+                    <ul>
+                        <li>Use of firewalls and secure servers</li>
+                        <li>Encryption and access rights management systems</li>
+                        <li>Careful selection of responsible employees</li>
+                        <li>Confidentiality clauses</li>
+                        <li>Backup copies and other preventive measures</li>
+                    </ul>
+                `;
+                
+                sections[8].innerHTML = `
+                    <h2>9. Storage duration</h2>
+                    <p>The Company retains personal data in accordance with the principles of legality, proportionality and necessity, and in any case only for a period that does not exceed the period necessary to fulfill the purposes for which they are processed.</p>
+                    <p>After the termination of the collaboration relationship or upon expiration of the legal archiving obligation, the data will be deleted.</p>
+                `;
+                
+                sections[9].innerHTML = `
+                    <h2>10. Rights of data subjects</h2>
+                    <p>In connection with the processing of personal data, based on the conditions specified in the GDPR Regulation, the Company guarantees data subjects the exercise of the following rights:</p>
+                    <ul>
+                        <li><strong>Right to information and access</strong> to personal data</li>
+                        <li><strong>Right to rectification</strong> of inaccurate or incomplete data</li>
+                        <li><strong>Right to erasure of data</strong> or "right to be forgotten"</li>
+                        <li><strong>Right to withdraw consent</strong></li>
+                        <li><strong>Right to restriction of processing</strong></li>
+                        <li><strong>Right to data portability</strong></li>
+                        <li><strong>Right to object</strong></li>
+                        <li><strong>Right not to be subject to automated decision-making</strong></li>
+                    </ul>
+                    <p>To exercise these rights, the data subject can contact us by email at <strong>trattoriamia@gmail.com</strong>.</p>
+                `;
+                
+                sections[10].innerHTML = `
+                    <h2>11. Consequences of refusing to provide personal data</h2>
+                    <p>To the extent that you have opted to purchase a certain product and/or service, the provision of personal data constitutes a necessity from the perspective of legal requirements and/or the contractual legal relationship.</p>
+                    <p>Refusal to transmit data leads to the impossibility of providing services/supplying goods related to the Company's main activity.</p>
+                `;
+                
+                sections[11].innerHTML = `
+                    <h2>12. Privacy regarding minors</h2>
+                    <p>The website is intended to be used by persons over 18 years of age. We do not seek to collect information about minors.</p>
+                    <p>In the event that a minor transmits personal information through our website, we will delete this information as soon as we are informed about their age.</p>
+                `;
+            } else {
+                // ROMANIAN TRANSLATIONS (original content)
+                sections[0].innerHTML = `
+                    <h2>1. Operatorul de date</h2>
+                    <p><strong>SC Trattoria SRL</strong>, cu sediul în Jud. Ilfov, Bragadiru, Prelungirea Ghencea nr. X, înregistrată la registrul comerțului sub nr. Jxx/xxxx/xxxx, cod fiscal RO xxxxxxx în calitate de Operator, prelucrează datele cu caracter personal în conformitate cu dispozițiile legale în domeniul protecției datelor cu caracter personal, precum și cu prevederile prezentei Politici de confidențialitate.</p>
+                    <p>Compania este operatorul de date în ceea ce privește prelucrarea datelor cu caracter personal, în sensul Regulamentului (UE) nr. 679/2016 privind protecția persoanelor fizice în ceea ce privește prelucrarea datelor cu caracter personal și privind libera circulație a acestor date (denumit în continuare "Regulamentul" sau "GDPR").</p>
+                `;
+                
+                sections[1].innerHTML = `
+                    <h2>2. Aplicarea Politicii de confidențialitate</h2>
+                    <p>Politica de confidențialitate ("Politica") descrie tipurile de date cu caracter personal pe care le colectăm, scopurile și temeiul legal al prelucrării, destinatarii care au acces la aceste date, drepturile și opțiunile pe care le au persoanele fizice vizate cu privire la prelucrarea datelor cu caracter personal precum și modalitatea de exercitare a acestor drepturi.</p>
+                    <p>În cadrul acestei Politici și în conformitate cu prevederile Regulamentului „date cu caracter personal" înseamnă orice informații privind o persoană fizică identificată sau identificabilă ("persoana vizată").</p>
+                `;
+                
+                sections[2].innerHTML = `
+                    <h2>3. Scopul și baza legală a prelucrărilor</h2>
+                    <p>Compania prelucrează datele cu caracter personal pe care le colectăm în următoarele scopuri:</p>
+                    <ul>
+                        <li>pentru desfășurarea relației contractuale;</li>
+                        <li>pentru a înțelege modul cum sunt utilizate serviciile oferite de Companie;</li>
+                        <li>pentru a putea oferi servicii de asistență și pentru soluționarea cererilor;</li>
+                        <li>pentru gestionarea relațiilor Companiei cu clienții;</li>
+                        <li>pentru marketing și publicitate (cu consimțământ);</li>
+                        <li>pentru îndeplinirea obligațiilor legale.</li>
+                    </ul>
+                `;
+                
+                sections[3].innerHTML = `
+                    <h2>4. Detalii privind prelucrările de date întemeiate pe consimțământ</h2>
+                    <p>Transmiterea datelor cu caracter personal în vederea prelucrării de către Companie în scop de informare, reclamă, marketing și publicitate este voluntară iar prelucrarea acestora se efectuează în temeiul consimțământului specific, informat și liber exprimat al persoanelor vizate.</p>
+                    <p>Persoana vizată are dreptul de a-și retrage consimțământul în orice moment, fără a afecta legalitatea prelucrării efectuate pe baza consimțământului înainte de retragerea acestuia.</p>
+                `;
+                
+                sections[4].innerHTML = `
+                    <h2>5. Colectarea și utilizarea datelor personale</h2>
+                    <h3>Categorii de date colectate:</h3>
+                    <ul>
+                        <li>Date personale de identificare (nume, prenume, adresa de facturare, adresa de livrare)</li>
+                        <li>Date de contact (adresa email, număr de telefon)</li>
+                        <li>Informații despre utilizarea site-ului (cookie-uri și web beacon-uri)</li>
+                        <li>Alte date personale comunicate de persoana vizată</li>
+                    </ul>
+                    <h3>Moduri de colectare:</h3>
+                    <ul>
+                        <li>Informații furnizate direct de utilizator</li>
+                        <li>Informații obținute prin utilizarea serviciilor</li>
+                        <li>Informații despre dispozitiv și rețea</li>
+                        <li>Informații de jurnal și cookie-uri</li>
+                    </ul>
+                `;
+                
+                sections[5].innerHTML = `
+                    <h2>6. Cookies și tehnologii similare</h2>
+                    <p>Un "Internet Cookie" este un fișier de mici dimensiuni, format din litere și numere, care va fi stocat pe computerul sau terminalul mobil al utilizatorului.</p>
+                    <h3>Scopul utilizării cookie-urilor:</h3>
+                    <ul>
+                        <li>Personalizarea anumitor setări (limba, moneda)</li>
+                        <li>Îmbunătățirea utilizării website-urilor</li>
+                        <li>Anticiparea anumitor bunuri/servicii</li>
+                    </ul>
+                    <p>Puteți seta browserul să blocheze toate cookie-urile sau să indice când plasăm un cookie. Este posibil ca multe dintre serviciile noastre să nu funcționeze corespunzător dacă ați dezactivat cookie-urile.</p>
+                `;
+                
+                sections[6].innerHTML = `
+                    <h2>7. Categorii de destinatari</h2>
+                    <p>Compania va utiliza datele cu caracter personal numai într-o manieră corectă și legală. Nu vom vinde, comercializa sau închiria terților datele cu caracter personal.</p>
+                    <h3>Destinatarii pot include:</h3>
+                    <ul>
+                        <li>Angajații Companiei</li>
+                        <li>Furnizorii de servicii</li>
+                        <li>Operatorii de transport</li>
+                        <li>Autoritățile competente (conform legii)</li>
+                    </ul>
+                `;
+                
+                sections[7].innerHTML = `
+                    <h2>8. Mijloace de procesare a datelor și securitatea datelor</h2>
+                    <p>Datele cu caracter personal pot fi prelucrate atât prin intermediul unor metode manuale, precum și cu ajutorul unor mijloace informatice.</p>
+                    <p>Au fost implementate măsuri tehnice și organizatorice corespunzătoare pentru a preveni prelucrarea neautorizată sau ilegală:</p>
+                    <ul>
+                        <li>Utilizarea de firewall-uri și servere securizate</li>
+                        <li>Criptare și sisteme de managementul drepturilor de acces</li>
+                        <li>Selectarea atentă a angajaților responsabili</li>
+                        <li>Clauze de confidențialitate</li>
+                        <li>Copii de backup și alte măsuri de prevenire</li>
+                    </ul>
+                `;
+                
+                sections[8].innerHTML = `
+                    <h2>9. Durata stocării</h2>
+                    <p>Compania păstrează datele cu caracter personal conform principiilor legalității, proporționalității și necesității, și în orice caz numai pe o perioada care nu depășește perioada necesară îndeplinirii scopurilor pentru care sunt prelucrate.</p>
+                    <p>După încetarea relației de colaborare sau la expirarea obligației legale de arhivare, datele vor fi șterse.</p>
+                `;
+                
+                sections[9].innerHTML = `
+                    <h2>10. Drepturile persoanelor vizate</h2>
+                    <p>În legătură cu prelucrarea datelor cu caracter personal, în baza condițiilor specificate în Regulamentul GDPR, Compania garantează persoanelor vizate exercitarea următoarelor drepturi:</p>
+                    <ul>
+                        <li><strong>Dreptul de informare și acces</strong> la datele cu caracter personal</li>
+                        <li><strong>Dreptul la rectificare</strong> a datelor inexacte sau incomplete</li>
+                        <li><strong>Dreptul la ștergerea datelor</strong> sau "dreptul de a fi uitat"</li>
+                        <li><strong>Dreptul de retragere a consimțământului</strong></li>
+                        <li><strong>Dreptul la restricționarea prelucrării</strong></li>
+                        <li><strong>Dreptul la portabilitatea datelor</strong></li>
+                        <li><strong>Dreptul la opoziție</strong></li>
+                        <li><strong>Dreptul de a nu face obiectul unei decizii automate</strong></li>
+                    </ul>
+                    <p>Pentru exercitarea acestor drepturi, persoana vizată se poate adresa prin email la adresa <strong>trattoriamia@gmail.com</strong>.</p>
+                `;
+                
+                sections[10].innerHTML = `
+                    <h2>11. Consecințele refuzului furnizării datelor personale</h2>
+                    <p>În măsura în care ați optat pentru cumpărarea unui anumit produs și/sau serviciu, furnizarea datelor cu caracter personal constituie o necesitate din perspectiva cerințelor legale și/sau a relației juridice contractuale.</p>
+                    <p>Refuzul de a transmite datele conduce la imposibilitatea prestării de servicii/furnizării de bunuri care au legătură cu activitatea principală a Companiei.</p>
+                `;
+                
+                sections[11].innerHTML = `
+                    <h2>12. Confidențialitatea referitoare la minori</h2>
+                    <p>Website-ul este destinat să fie utilizat de persoane cu vârsta de peste 18 ani. Nu căutăm să colectăm informații despre minori.</p>
+                    <p>În cazul în care un minor transmite informații personale prin intermediul site-ului nostru web, vom șterge aceste informații de îndată ce vom fi informați cu privire la vârsta sa.</p>
+                `;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            changeLanguage(currentLang);
+        });
+    </script>
+</body>
+</html>

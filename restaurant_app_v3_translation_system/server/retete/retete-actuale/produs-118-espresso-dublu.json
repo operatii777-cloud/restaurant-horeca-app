@@ -1,0 +1,19 @@
+﻿Ã¯Â»Â¿{
+  "productId": 118,
+  "productName": "Espresso Dublu",
+  "productCategory": "Cafea/CiocolatÃ„ÂƒÃ†Â’/Ceai",
+  "price": 19,
+  "description": "Espresso dublu",
+  "ingredients": [
+    {
+      "ingredientId": 25,
+      "ingredientName": "Cafea boabe",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 36,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

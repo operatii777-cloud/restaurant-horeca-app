@@ -1,0 +1,41 @@
+[
+  {
+    "id": 146,
+    "name": "Brânză Mozzarella",
+    "category": "Lactate",
+    "unit": "kg",
+    "current_stock": 400,
+    "min_stock": 5,
+    "cost_per_unit": 25,
+    "supplier": "Furnizor Lactate",
+    "is_available": 1,
+    "created_at": "2025-09-27 13:44:01",
+    "last_updated": "2025-09-27 13:44:01"
+  },
+  {
+    "id": 130,
+    "name": "Smântână",
+    "category": "Lactate",
+    "unit": "g",
+    "current_stock": 69364.21052631579,
+    "min_stock": 500,
+    "cost_per_unit": 0.045203957751608605,
+    "supplier": "Furnizor Lactate",
+    "is_available": 1,
+    "created_at": "2025-09-24 18:35:56",
+    "last_updated": "2025-10-10 18:55:53"
+  },
+  {
+    "id": 147,
+    "name": "Smântână",
+    "category": "Lactate",
+    "unit": "L",
+    "current_stock": 300,
+    "min_stock": 3,
+    "cost_per_unit": 8,
+    "supplier": "Furnizor Lactate",
+    "is_available": 1,
+    "created_at": "2025-09-27 13:44:01",
+    "last_updated": "2025-09-27 13:44:01"
+  }
+]

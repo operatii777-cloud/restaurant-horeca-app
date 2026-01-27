@@ -1,0 +1,538 @@
+[
+  {
+    "key": "Admin Panel",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "PIN Administrator:",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Autentificare",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "ui._mesaje",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "ui._analiz_anulri",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Update Lista",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Reset Filtru",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Gestionare Ospătari",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Gestionare Stock",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "🥬 Ingredients",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "🍽️ Produse Finite",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "📋 Recipes",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "👻 Ingrediente Ascunse",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Actualizează Stocurile",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Populează Automat",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Verifică & Actualizează",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Stoc Scăzut",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Adaugă Ingredient",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Ingredient",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Categorie",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Unit",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Stoc Curent",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Stoc Minim",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Cost/Unit",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Furnizor",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Status",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Acțiuni",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Actualizează Lista",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Info",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Category",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Current Stock",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Minimum Stock",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Supplier",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Actions",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "_traduceri_in_asteptare",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "_reincarca_lista",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "_traduceri_info_1",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "_traduceri_info_2",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "_traduceri_info_3",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Adaugă Produs Nou",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Selectează Image",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Nicio imagine selectată",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "sau trage imaginea aici",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Anulează",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Activ",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Șterge",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "Băuturi",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-05T05:21:50.550Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "_add_category_nou",
+    "language": "en",
+    "page": "/admin.html",
+    "timestamp": "2025-11-06T06:36:25.114Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "reset_filtru",
+    "language": "en",
+    "page": "/admin.html",
+    "timestamp": "2025-11-06T06:36:25.114Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "update_lista",
+    "language": "en",
+    "page": "/admin.html",
+    "timestamp": "2025-11-06T07:22:18.707Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "ui._buturi_alcoolice",
+    "language": "en",
+    "page": "/admin.html",
+    "timestamp": "2025-11-06T09:04:05.123Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "categories.cafeaciocolatceai",
+    "language": "en",
+    "page": "/admin.html",
+    "timestamp": "2025-11-06T09:04:05.123Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "categories.coctailuri_nonalcoolice",
+    "language": "en",
+    "page": "/admin.html",
+    "timestamp": "2025-11-06T09:04:05.123Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "categories.deserturi",
+    "language": "en",
+    "page": "/admin.html",
+    "timestamp": "2025-11-06T09:04:05.123Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "categories.fast_food",
+    "language": "en",
+    "page": "/admin.html",
+    "timestamp": "2025-11-06T09:04:05.123Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "categories.salate",
+    "language": "en",
+    "page": "/admin.html",
+    "timestamp": "2025-11-06T09:04:05.123Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "categories.vinuri",
+    "language": "en",
+    "page": "/admin.html",
+    "timestamp": "2025-11-06T09:04:05.123Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "ui._coctailuri_non_alcoolice",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-07T09:11:14.846Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "ui._fast_food",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-07T09:11:14.846Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "ui._vinuri",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-07T09:11:14.846Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "ui.categorie_personalizata",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-09T16:16:37.085Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "ui.selecteaza_furnizorul",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-09T19:12:51.104Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "ui.ex_denumire_oficiala",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-09T19:12:51.104Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "ui.ex_denumire_engleza",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-09T19:12:51.104Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "categories.playwright",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-13T11:03:11.187Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "categories.playwright_reete",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-13T11:03:11.187Z",
+    "status": "reported",
+    "notes": ""
+  },
+  {
+    "key": "categories.peste_fructe_de_mare",
+    "language": "ro",
+    "page": "/admin.html",
+    "timestamp": "2025-11-24T17:56:25.938Z",
+    "status": "reported",
+    "notes": ""
+  }
+]

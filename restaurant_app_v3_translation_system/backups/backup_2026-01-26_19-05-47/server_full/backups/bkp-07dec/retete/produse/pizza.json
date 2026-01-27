@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1053,
+    "name": "Pizza Margherita",
+    "name_en": "Pizza Margherita",
+    "description": "Produs generat automat cu ingredientele: făină, drojdie, sare, ulei de măsline, roșii, mozzarella, oregano",
+    "description_en": "Produs generat automat with ingredientele: făină, drojdie, sare, olive oil, tomatoes, mozzarella, oregano",
+    "category": "pizza",
+    "category_en": "pizza",
+    "price": 56.07,
+    "image_url": null,
+    "allergens": "Conține gluten, lactoză",
+    "allergens_en": "Conține gluten, lactoză",
+    "weight": "300g",
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "info": null,
+    "ingredients": null,
+    "prep_time": 15,
+    "spice_level": 0,
+    "calories": 561,
+    "protein": 84,
+    "carbs": 337,
+    "fat": 140,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null,
+    "is_sellable": 1
+  }
+]

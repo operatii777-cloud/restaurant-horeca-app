@@ -1,0 +1,43 @@
+﻿Ã¯Â»Â¿{
+  "productId": 9,
+  "productName": "Blue Hawaii",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "price": 25,
+  "description": "Coctail fÃ„ÂƒÃ†Â’rÃ„ÂƒÃ†Â’ alcool - Suc de ananas, blue curacao, piure de cocos",
+  "ingredients": [
+    {
+      "ingredientId": 190,
+      "ingredientName": "Suc de ananas",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 100,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 191,
+      "ingredientName": "Sirop blue curacao",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 192,
+      "ingredientName": "Piure de cocos",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 40,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "GheaÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

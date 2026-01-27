@@ -1,0 +1,101 @@
+{
+  "product": {
+    "id": 93,
+    "name": "Pizza Restaurant App",
+    "name_en": "Pizza Restaurant App",
+    "category": "Pizza",
+    "category_en": "Pizza",
+    "price": 47,
+    "description": "Blat pizza, sos de roșii, mozzarella buffala, prosciutto crudo, roșii cherry, rucola, brânză dură",
+    "description_en": "Pizza dough, tomato sauce, buffalo mozzarella, prosciutto crudo, cherry tomatoes, arugula, hard cheese",
+    "weight": "",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": "gluten, lapte",
+    "allergens_en": "gluten, milk"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 604,
+        "name": "Blat de pizza (standard)",
+        "category": "General",
+        "quantity": 250,
+        "unit": "buc",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": -5000,
+        "minStock": 10,
+        "stockStatus": "LOW"
+      },
+      {
+        "id": 624,
+        "name": "Ingrediente speciale (ex: Prosciutto Crudo, Rucola)",
+        "category": "General",
+        "quantity": 80,
+        "unit": "g",
+        "unitStock": "buc",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.09185370066856817,
+        "totalCost": "7.35",
+        "totalCostWithWaste": "7.35",
+        "supplier": null,
+        "currentStock": 12670,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 3,
+        "name": "mozzarella",
+        "category": "General",
+        "quantity": 100,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 30,
+        "totalCost": "3000.00",
+        "totalCostWithWaste": "3000.00",
+        "supplier": null,
+        "currentStock": 95,
+        "minStock": 0.5,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "3007.35",
+    "totalCostWithWaste": "3007.35",
+    "sellingPrice": 47,
+    "profitMargin": -2960.35,
+    "markup": -6298.61,
+    "foodCostPercentage": "6398.61"
+  },
+  "stats": {
+    "totalIngredients": 3,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 1
+  }
+}

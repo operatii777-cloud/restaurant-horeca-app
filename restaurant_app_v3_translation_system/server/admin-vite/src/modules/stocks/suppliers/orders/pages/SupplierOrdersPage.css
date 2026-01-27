@@ -1,0 +1,13 @@
+/* 📦 Supplier Orders Page - Styles */
+
+.supplier-orders-page {
+  padding: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .supplier-orders-page {
+    padding: 1rem;
+  }
+}
+

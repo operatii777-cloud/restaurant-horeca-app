@@ -1,0 +1,35 @@
+﻿Ã¯Â»Â¿{
+  "productId": 221,
+  "productName": "Cotlet de Porc cu Os",
+  "productCategory": "Fel Principal",
+  "price": 32,
+  "description": "Cotlet de porc cu os",
+  "ingredients": [
+    {
+      "ingredientId": 142,
+      "ingredientName": "Cotlet de porc",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 250,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 18,
+      "ingredientName": "Ulei de mÃ„ÂƒÃ†Â’sline",
+      "ingredientCategory": "Uleiuri",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 65,
+      "ingredientName": "Sare",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 5,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

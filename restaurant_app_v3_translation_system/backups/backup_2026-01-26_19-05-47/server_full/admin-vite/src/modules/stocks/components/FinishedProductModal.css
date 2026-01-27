@@ -1,0 +1,115 @@
+.finished-product-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.finished-product-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+}
+
+.finished-product-modal__content {
+  position: relative;
+  width: min(620px, calc(100vw - 48px));
+  max-height: calc(100vh - 96px);
+  overflow-y: auto;
+  background: var(--color-surface);
+  border-radius: 20px;
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: 0 22px 48px rgba(15, 23, 42, 0.18);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.finished-product-modal__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.finished-product-modal__header h2 {
+  margin: 0 0 6px;
+}
+
+.finished-product-modal__header p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+.finished-product-modal__close {
+  border: none;
+  background: transparent;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.finished-product-modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.finished-product-modal__label {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.finished-product-modal__form select,
+.finished-product-modal__form input[type='number'] {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--color-border-subtle);
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+.finished-product-modal__form select:focus,
+.finished-product-modal__form input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.12);
+}
+
+.finished-product-modal__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.finished-product-modal__grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.finished-product-modal__checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.finished-product-modal__loading {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.finished-product-modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}

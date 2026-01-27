@@ -1,0 +1,35 @@
+{
+  "productId": 242,
+  "productName": "B52 Shot",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 433,
+      "ingredientName": "Kahlua (lichior de cafea)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 434,
+      "ingredientName": "Cointreau/Triple Sec",
+      "ingredientCategory": "General",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

@@ -1,0 +1,49 @@
+{
+  "productId": 179,
+  "productName": "Ciorbă de Văcuță",
+  "productCategory": "Ciorbe",
+  "price": 28,
+  "description": "Pulpă de vită, ceapă albă, morcov, mazăre, țelină, ardei kapia, fasole verde, cartofi, borș, pătrunjel",
+  "ingredients": [
+    {
+      "ingredientId": 94,
+      "ingredientName": "Ceapă",
+      "ingredientCategory": "Fructe și Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 109,
+      "ingredientName": "Ardei kapia",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 111,
+      "ingredientName": "Morcov",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 67,
+      "ingredientName": "Cartofi",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 200,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 112,
+      "ingredientName": "Pătrunjel",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

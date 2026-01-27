@@ -1,0 +1,49 @@
+{
+  "productId": 325,
+  "productName": "Salată cu Somon și Avocado",
+  "productCategory": "Salate",
+  "price": 46,
+  "description": "Mix salată, somon, avocado, ceapă roșie, roșii cherry, lămâie, dressing",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "Roșii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 94,
+      "ingredientName": "Ceapă",
+      "ingredientCategory": "Fructe și Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 103,
+      "ingredientName": "Salată",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 101,
+      "ingredientName": "Somon",
+      "ingredientCategory": "Peste Fructe de Mare",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 154,
+      "ingredientName": "Lămâie",
+      "ingredientCategory": "Legume și Fructe",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

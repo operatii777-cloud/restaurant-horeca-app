@@ -1,0 +1,85 @@
+/**
+ * PHASE S12 - POS Customer Panel Styles
+ */
+
+.pos-customer-panel {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pos-customer-panel-title {
+  margin: 0 0 15px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.pos-customer-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.pos-customer-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.pos-customer-input-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #666;
+}
+
+.pos-customer-input-group input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
+}
+
+.pos-customer-input-group input:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+.pos-customer-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.pos-customer-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pos-customer-btn--save {
+  background: #1976d2;
+  color: white;
+}
+
+.pos-customer-btn--save:hover {
+  background: #1565c0;
+}
+
+.pos-customer-btn--clear {
+  background: #f5f5f5;
+  color: #666;
+  border: 1px solid #ddd;
+}
+
+.pos-customer-btn--clear:hover {
+  background: #e0e0e0;
+}
+

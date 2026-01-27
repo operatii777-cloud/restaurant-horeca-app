@@ -1,0 +1,84 @@
+{
+  "product": {
+    "id": 313,
+    "name": "Tigaie Picantă de Pui",
+    "name_en": "Tigaie Picantă de Chicken",
+    "category": "Fel Principal",
+    "category_en": "Main Course",
+    "price": 28,
+    "description": "Tigaie picantă de pui",
+    "description_en": "Tigaie picantă de chicken",
+    "weight": null,
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 363,
+        "name": "Piept de pui",
+        "category": "General",
+        "quantity": 150,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 11.147430571690123,
+        "totalCost": "1672.11",
+        "totalCostWithWaste": "1672.11",
+        "supplier": "Metro Cash & Carry",
+        "currentStock": 114355.14519450802,
+        "minStock": 0.01,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 384,
+        "name": "Sos de soia/Sos iute",
+        "category": "General",
+        "quantity": 20,
+        "unit": "ml",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "1672.11",
+    "totalCostWithWaste": "1672.11",
+    "sellingPrice": 28,
+    "profitMargin": -1644.11,
+    "markup": -5871.84,
+    "foodCostPercentage": "5971.84"
+  },
+  "stats": {
+    "totalIngredients": 2,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

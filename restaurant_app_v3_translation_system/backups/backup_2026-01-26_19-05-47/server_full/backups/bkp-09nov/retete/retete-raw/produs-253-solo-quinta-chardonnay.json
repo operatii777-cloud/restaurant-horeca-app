@@ -1,0 +1,17 @@
+{
+  "productId": 253,
+  "productName": "Solo Quinta Chardonnay",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 772,
+      "ingredientName": "Solo Quinta Chardonnay",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

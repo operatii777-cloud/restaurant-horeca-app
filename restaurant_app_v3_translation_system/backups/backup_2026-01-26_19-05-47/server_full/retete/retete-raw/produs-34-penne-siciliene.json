@@ -1,0 +1,55 @@
+﻿Ã¯Â»Â¿{
+  "productId": 34,
+  "productName": "Penne Siciliene",
+  "productCategory": "Penne Al Forno",
+  "ingredients": [
+    {
+      "ingredientId": 348,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 120,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 3,
+      "ingredientName": "mozzarella",
+      "ingredientCategory": "General",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 583,
+      "ingredientName": "Penne (gÃ„ÂƒÃ†Â’tite)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 584,
+      "ingredientName": "Ricotta sÃ„ÂƒÃ†Â’ratÃ„ÂƒÃ†Â’ (opÃƒÂˆÃ¢Â€Âºional)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 585,
+      "ingredientName": "Vinete (prÃ„ÂƒÃ†Â’jite/coapte)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

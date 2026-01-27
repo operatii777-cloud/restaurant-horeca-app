@@ -1,0 +1,65 @@
+{
+  "productId": 342,
+  "productName": "Focaccia cu Usturoi și Parmezan",
+  "productCategory": "Sosuri și Pâine",
+  "price": 10,
+  "description": "Focaccia cu usturoi, parmezan și rozmarin",
+  "ingredients": [
+    {
+      "ingredientId": 30,
+      "ingredientName": "Făină albă",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 150,
+      "unit": "kg",
+      "wastePercentage": 5
+    },
+    {
+      "ingredientId": 18,
+      "ingredientName": "Ulei de măsline",
+      "ingredientCategory": "Uleiuri",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 20
+    },
+    {
+      "ingredientId": 66,
+      "ingredientName": "Parmezan",
+      "ingredientCategory": "Lactate și Brânzeturi",
+      "quantityNeeded": 30,
+      "unit": "kg",
+      "wastePercentage": 5
+    },
+    {
+      "ingredientId": 183,
+      "ingredientName": "Rozmarin",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 3,
+      "unit": "g",
+      "wastePercentage": 10
+    },
+    {
+      "ingredientId": 184,
+      "ingredientName": "Sare de mare",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 70,
+      "ingredientName": "Drojdie",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 5,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}

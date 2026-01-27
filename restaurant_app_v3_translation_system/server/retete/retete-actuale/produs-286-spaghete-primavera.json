@@ -1,0 +1,59 @@
+﻿Ã¯Â»Â¿{
+  "productId": 286,
+  "productName": "Spaghete Primavera",
+  "productCategory": "Paste",
+  "price": 33,
+  "description": "Paste fresh, ciuperci, zucchini, vinete, roÃƒÂˆÃ¢Â„Â¢ii cherry, pÃ„ÂƒÃ†Â’trunjel",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 92,
+      "ingredientName": "Ciuperci",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 60,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 161,
+      "ingredientName": "Zucchini",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 104,
+      "ingredientName": "Vinete",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 60,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 112,
+      "ingredientName": "PÃ„ÂƒÃ†Â’trunjel",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 64,
+      "ingredientName": "Paste",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 200,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

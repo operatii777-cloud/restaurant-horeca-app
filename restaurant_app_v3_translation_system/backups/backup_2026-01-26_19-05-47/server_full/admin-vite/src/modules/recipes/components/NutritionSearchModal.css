@@ -1,0 +1,36 @@
+.nutrition-search-modal {
+  padding: 1rem;
+}
+
+.nutrition-search-input {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nutrition-search-input input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.nutrition-results {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.nutrition-result-row {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.nutrition-result-row:hover {
+  background-color: #f8f9fa;
+}
+
+.nutrition-result-row td {
+  vertical-align: middle;
+}
+

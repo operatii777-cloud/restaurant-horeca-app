@@ -1,0 +1,43 @@
+﻿Ã¯Â»Â¿{
+  "productId": 97,
+  "productName": "Tanqueray Rangpur",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "price": 29,
+  "description": "Gin Coctail - Gin, apÃ„ÂƒÃ†Â’ tonicÃ„ÂƒÃ†Â’, lÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+  "ingredients": [
+    {
+      "ingredientId": 78,
+      "ingredientName": "Gin",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi Alcoolice",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 197,
+      "ingredientName": "ApÃ„ÂƒÃ†Â’ tonicÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 154,
+      "ingredientName": "LÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+      "ingredientCategory": "Legume ÃƒÂˆÃ¢Â„Â¢i Fructe",
+      "quantityNeeded": 1,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "GheaÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

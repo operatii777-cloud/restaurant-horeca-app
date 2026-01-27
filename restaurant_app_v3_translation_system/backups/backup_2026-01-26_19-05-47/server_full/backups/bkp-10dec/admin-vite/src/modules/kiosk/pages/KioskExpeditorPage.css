@@ -1,0 +1,324 @@
+/* ============================================
+   KIOSK EXPEDITOR PAGE - Pass / Expedition
+   Design: Dark theme with urgency-based colors
+   ============================================ */
+
+.expeditor-page {
+  padding: 1.5rem;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #f1f5f9;
+}
+
+/* Header */
+.expeditor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+.expeditor-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fbbf24;
+  margin: 0;
+}
+
+.expeditor-title-icon {
+  color: #fbbf24;
+}
+
+.expeditor-subtitle {
+  color: #94a3b8;
+  margin: 0.5rem 0 0 0;
+}
+
+.expeditor-stats {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.expeditor-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  background: rgba(30, 41, 59, 0.8);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.expeditor-stat span {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.expeditor-stat small {
+  font-size: 0.75rem;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.expeditor-stat--ready {
+  border-color: rgba(251, 191, 36, 0.5);
+}
+
+.expeditor-stat--ready span {
+  color: #fbbf24;
+}
+
+.expeditor-stat--picked {
+  border-color: rgba(34, 197, 94, 0.5);
+}
+
+.expeditor-stat--picked span {
+  color: #22c55e;
+}
+
+/* Section */
+.expeditor-section {
+  margin-bottom: 2rem;
+}
+
+.expeditor-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  margin-bottom: 1rem;
+}
+
+/* Empty State */
+.expeditor-empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 16px;
+  border: 2px dashed rgba(255, 255, 255, 0.1);
+}
+
+.expeditor-empty svg {
+  color: #64748b;
+  margin-bottom: 1rem;
+}
+
+.expeditor-empty h3 {
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.expeditor-empty p {
+  color: #64748b;
+}
+
+/* Cards Grid */
+.expeditor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.expeditor-card {
+  background: rgba(30, 41, 59, 0.9) !important;
+  border-radius: 16px !important;
+  border: 2px solid transparent !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.expeditor-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Urgency States */
+.expeditor-card--fresh {
+  border-color: rgba(34, 197, 94, 0.5) !important;
+}
+
+.expeditor-card--warm {
+  border-color: rgba(251, 191, 36, 0.5) !important;
+  animation: pulse-warm 2s infinite;
+}
+
+.expeditor-card--critical {
+  border-color: rgba(239, 68, 68, 0.8) !important;
+  animation: pulse-critical 1s infinite;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+}
+
+@keyframes pulse-warm {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(251, 191, 36, 0); }
+}
+
+@keyframes pulse-critical {
+  0%, 100% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.6); }
+}
+
+/* Card Content */
+.expeditor-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.expeditor-card__number {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #fbbf24;
+}
+
+.expeditor-card__table {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: #94a3b8;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.expeditor-card__items {
+  margin-bottom: 1rem;
+  max-height: 120px;
+  overflow: hidden;
+}
+
+.expeditor-card__item {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+  font-size: 0.9rem;
+}
+
+.expeditor-card__item .qty {
+  font-weight: 700;
+  color: #fbbf24;
+  min-width: 30px;
+}
+
+.expeditor-card__item .name {
+  color: #f1f5f9;
+}
+
+.expeditor-card__item--more {
+  color: #64748b;
+  font-style: italic;
+}
+
+.expeditor-card__pickup {
+  width: 100%;
+  padding: 0.75rem;
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 8px;
+}
+
+/* Recent Section */
+.expeditor-section--recent {
+  background: rgba(34, 197, 94, 0.05);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.expeditor-recent {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.expeditor-recent__item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(34, 197, 94, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.expeditor-recent__number {
+  font-weight: 700;
+  color: #22c55e;
+}
+
+.expeditor-recent__table {
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+/* Modal */
+.expeditor-modal-order {
+  padding: 1.5rem;
+  background: rgba(251, 191, 36, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.expeditor-modal-number {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #fbbf24;
+}
+
+.expeditor-modal-table {
+  font-size: 1.25rem;
+  color: #94a3b8;
+}
+
+.expeditor-modal-items {
+  text-align: left;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+/* Modal Overrides */
+.modal-content {
+  background: #1e293b !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.modal-header.bg-success {
+  border-bottom: none !important;
+}
+
+.modal-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background: rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .expeditor-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .expeditor-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .expeditor-card__number {
+    font-size: 1.5rem;
+  }
+}
+

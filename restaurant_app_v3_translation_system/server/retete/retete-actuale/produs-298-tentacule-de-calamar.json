@@ -1,0 +1,27 @@
+﻿Ã¯Â»Â¿{
+  "productId": 298,
+  "productName": "Tentacule de Calamar",
+  "productCategory": "Peste ÃƒÂˆÃ¢Â„Â¢i Fructe de Mare",
+  "price": 69,
+  "description": "Tentacule de calamar, roÃƒÂˆÃ¢Â„Â¢ii cherry, vin, unt",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 60,
+      "ingredientName": "Unt",
+      "ingredientCategory": "Lactate ÃƒÂˆÃ¢Â„Â¢i BrÃƒÂ¢nzeturi",
+      "quantityNeeded": 20,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

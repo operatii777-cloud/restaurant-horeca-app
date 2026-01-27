@@ -1,0 +1,19 @@
+﻿Ã¯Â»Â¿{
+  "productId": 185,
+  "productName": "ClÃ„ÂƒÃ†Â’tite Africane",
+  "productCategory": "Deserturi",
+  "price": 35,
+  "description": "Mascarpone, dulceaÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’ viÃƒÂˆÃ¢Â„Â¢ine, nutella, bananÃ„ÂƒÃ†Â’, biscuiÃƒÂˆÃ¢Â€Âºi",
+  "ingredients": [
+    {
+      "ingredientId": 125,
+      "ingredientName": "Mascarpone",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

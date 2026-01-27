@@ -1,0 +1,17 @@
+{
+  "productId": 260,
+  "productName": "Sarica Aniversarium Rose",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 766,
+      "ingredientName": "Sarica Aniversarium Rose",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

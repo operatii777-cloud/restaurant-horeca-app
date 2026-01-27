@@ -1,0 +1,81 @@
+{
+  "productId": 57,
+  "productName": "Long Island Iced Tea",
+  "productCategory": "Băuturi și Coctailuri",
+  "price": 25,
+  "description": "Long Island Iced Tea",
+  "ingredients": [
+    {
+      "ingredientId": 72,
+      "ingredientName": "Vodka",
+      "ingredientCategory": "Băuturi Alcoolice",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 76,
+      "ingredientName": "Rom alb",
+      "ingredientCategory": "Băuturi Alcoolice",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 77,
+      "ingredientName": "Tequila",
+      "ingredientCategory": "Băuturi Alcoolice",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 78,
+      "ingredientName": "Gin",
+      "ingredientCategory": "Băuturi Alcoolice",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 73,
+      "ingredientName": "Triple Sec",
+      "ingredientCategory": "Băuturi Alcoolice",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 79,
+      "ingredientName": "Suc de lămâie",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 25,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 80,
+      "ingredientName": "Sirop simplu",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 10,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 35,
+      "ingredientName": "Coca Cola",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 50,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "Gheață",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 60,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

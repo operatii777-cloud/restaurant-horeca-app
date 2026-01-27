@@ -1,0 +1,41 @@
+.additive-selector {
+  width: 100%;
+}
+
+.selected-additives {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.additives-list {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0.5rem;
+}
+
+.additive-item {
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.additive-item:hover {
+  background-color: #f8f9fa;
+}
+
+.additive-item.selected {
+  background-color: #fff3cd;
+}
+
+.additive-item .form-check {
+  margin: 0;
+}
+
+.additive-item .form-check-input {
+  margin-top: 0.25rem;
+}
+

@@ -1,0 +1,71 @@
+{
+  "productId": 200,
+  "productName": "Espresso Martini",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 433,
+      "ingredientName": "Kahlua (lichior de cafea)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 445,
+      "ingredientName": "Vodcă (Ketel One)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 40,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 278,
+      "ingredientName": "Sirop de Zahăr",
+      "ingredientCategory": "General",
+      "quantityNeeded": 10,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 450,
+      "ingredientName": "Espresso proaspăt (rece)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 240,
+      "ingredientName": "Espresso",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 423,
+      "ingredientName": "Vodcă",
+      "ingredientCategory": "General",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 676,
+      "ingredientName": "Kahlua",
+      "ingredientCategory": "General",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

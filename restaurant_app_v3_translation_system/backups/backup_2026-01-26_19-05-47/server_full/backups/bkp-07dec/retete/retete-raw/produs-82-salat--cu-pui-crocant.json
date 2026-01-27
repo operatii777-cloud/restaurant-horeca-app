@@ -1,0 +1,44 @@
+{
+  "productId": 82,
+  "productName": "Salată cu Pui Crocant",
+  "productCategory": "Salate",
+  "ingredients": [
+    {
+      "ingredientId": 797,
+      "ingredientName": "Salată Verde Shaorma",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 647,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 648,
+      "ingredientName": "Dressing Ranch/Iaurt",
+      "ingredientCategory": "General",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 363,
+      "ingredientName": "Piept de pui",
+      "ingredientCategory": "General",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

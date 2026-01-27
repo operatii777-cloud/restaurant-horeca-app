@@ -1,0 +1,240 @@
+﻿<!--
+  ============================================
+  LEGACY UI - Deprecated after PHASE S2
+  ============================================
+  
+  This file has been moved to /public/legacy/ as part of PHASE S3 cleanup.
+  
+  DO NOT MODIFY.
+  Reference only.
+  To be removed after PHASE S5.
+  
+  Original path: /public/react-modules/anaf/index.html
+  Moved: 2025-12-07
+  ============================================
+-->
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANAF Integration</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8f9fa; padding: 20px; }
+        .status-badge-sandbox { background: #fff3cd; color: #856404; padding: 10px 20px; border-radius: 20px; font-weight: 600; }
+        .status-badge-production { background: #d4edda; color: #155724; padding: 10px 20px; border-radius: 20px; font-weight: 600; }
+        .feature-card { background: white; border-radius: 12px; padding: 20px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .transmission-log-item { padding: 15px; border-left: 4px solid; margin-bottom: 10px; border-radius: 8px; }
+        .status-SIMULATED { border-color: #ffc107; background: #fff9e6; }
+        .status-ACCEPTED { border-color: #28a745; background: #e8f5e9; }
+        .status-REJECTED { border-color: #dc3545; background: #ffebee; }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1><i class="fas fa-university me-2 text-primary"></i>ANAF Integration</h1>
+            <div id="anafStatus"></div>
+        </div>
+        
+        <!-- Status Card -->
+        <div class="alert alert-warning">
+            <h5 class="alert-heading"><i class="fas fa-info-circle me-2"></i>Mod Sandbox Activ</h5>
+            <p class="mb-2">ANAF Integration este în <strong>MOD SANDBOX</strong> (test mode).</p>
+            <ul class="mb-0">
+                <li><strong>✅ Validare CUI:</strong> Funcțională (API public ANAF fără certificat)</li>
+                <li><strong>⚠️ Transmitere Rapoarte:</strong> SIMULATĂ (nu se transmit real la ANAF)</li>
+                <li><strong>📄 eFatura:</strong> Generare XML (nu se transmite fără certificat digital)</li>
+            </ul>
+            <hr>
+            <p class="mb-0"><strong>Pentru PRODUCȚIE:</strong> Este necesar certificat digital calificat de la ANAF + configurare OAuth2.</p>
+        </div>
+        
+        <!-- Validare CUI -->
+        <div class="feature-card">
+            <h4 class="mb-3"><i class="fas fa-building me-2"></i>Validare CUI (LIVE - API ANAF Public)</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" id="cuiInput" class="form-control" placeholder="Ex: RO12345678 sau 12345678">
+                        <button class="btn btn-primary" onclick="validateCUI()">
+                            <i class="fas fa-search me-2"></i>Validează CUI
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="cuiResult" class="mt-3"></div>
+        </div>
+        
+        <!-- Transmisii Simulate -->
+        <div class="feature-card">
+            <h4 class="mb-3"><i class="fas fa-paper-plane me-2"></i>Transmisii ANAF (SIMULATE)</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label">Dată Raport Z:</label>
+                    <div class="input-group">
+                        <input type="date" id="raportZDate" class="form-control" value="${new Date().toISOString().split('T')[0]}">
+                        <button class="btn btn-warning" onclick="transmitRaportZ()">
+                            <i class="fas fa-file-invoice me-2"></i>Transmite Raport Z (Simulate)
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="transmissionResult" class="mt-3"></div>
+        </div>
+        
+        <!-- Istoric Transmisii -->
+        <div class="feature-card">
+            <h4 class="mb-3"><i class="fas fa-history me-2"></i>Istoric Transmisii ANAF</h4>
+            <div id="transmissionLog">
+                <div class="text-center"><div class="spinner-border text-primary"></div><p class="mt-2">Se încarcă...</p></div>
+            </div>
+        </div>
+        
+        <!-- Configurare ANAF -->
+        <div class="feature-card">
+            <h4 class="mb-3"><i class="fas fa-cog me-2"></i>Configurare ANAF</h4>
+            <div id="anafConfigContainer">Se încarcă...</div>
+        </div>
+    </div>
+    
+    <script>
+        async function validateCUI() {
+            const cui = document.getElementById('cuiInput').value.trim();
+            if (!cui) {
+                alert('Introduceți un CUI');
+                return;
+            }
+            
+            const resultDiv = document.getElementById('cuiResult');
+            resultDiv.innerHTML = '<div class="spinner-border spinner-border-sm"></div> Validare în curs...';
+            
+            try {
+                const res = await fetch(\`/api/anaf/validate-cui/\${cui}\`);
+                const data = await res.json();
+                
+                if (data.success && data.valid) {
+                    resultDiv.innerHTML = \`
+                        <div class="alert alert-success">
+                            <h5 class="alert-heading"><i class="fas fa-check-circle me-2"></i>CUI Valid</h5>
+                            <p class="mb-1"><strong>Denumire:</strong> \${data.data.denumire}</p>
+                            <p class="mb-1"><strong>CUI:</strong> \${data.data.cui}</p>
+                            <p class="mb-1"><strong>Adresă:</strong> \${data.data.adresa || '-'}</p>
+                            <p class="mb-0"><strong>Plătitor TVA:</strong> \${data.data.scpTVA ? '✅ DA' : '❌ NU'}</p>
+                        </div>
+                    \`;
+                } else if (data.success && !data.valid) {
+                    resultDiv.innerHTML = \`
+                        <div class="alert alert-danger">
+                            <i class="fas fa-times-circle me-2"></i><strong>CUI Invalid sau Nu Există în Baza ANAF</strong>
+                        </div>
+                    \`;
+                } else {
+                    resultDiv.innerHTML = \`<div class="alert alert-warning">Eroare: \${data.error || 'Unknown'}</div>\`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = \`<div class="alert alert-danger">Eroare la validare: \${error.message}</div>\`;
+            }
+        }
+        
+        async function transmitRaportZ() {
+            const date = document.getElementById('raportZDate').value;
+            if (!date) {
+                alert('Selectați data raportului');
+                return;
+            }
+            
+            const resultDiv = document.getElementById('transmissionResult');
+            resultDiv.innerHTML = '<div class="spinner-border spinner-border-sm"></div> Transmitere în curs...';
+            
+            try {
+                const res = await fetch('/api/anaf/transmit-raport-z', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ date: date })
+                });
+                const data = await res.json();
+                
+                if (data.success && data.simulated) {
+                    resultDiv.innerHTML = \`
+                        <div class="alert alert-warning">
+                            <h5 class="alert-heading"><i class="fas fa-flask me-2"></i>Transmisie SIMULATĂ</h5>
+                            <p class="mb-1"><strong>Upload ID:</strong> \${data.upload_id}</p>
+                            <p class="mb-1"><strong>Status:</strong> \${data.status}</p>
+                            <p class="mb-0">\${data.message}</p>
+                        </div>
+                    \`;
+                    loadTransmissionLog();
+                } else {
+                    resultDiv.innerHTML = \`<div class="alert alert-danger">Eroare: \${data.error || 'Unknown'}</div>\`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = \`<div class="alert alert-danger">Eroare: \${error.message}</div>\`;
+            }
+        }
+        
+        async function loadTransmissionLog() {
+            try {
+                const res = await fetch('/api/anaf/transmission-log?limit=10');
+                const data = await res.json();
+                
+                const logDiv = document.getElementById('transmissionLog');
+                
+                if (data.success && data.data.length > 0) {
+                    logDiv.innerHTML = data.data.map(log => \`
+                        <div class="transmission-log-item status-\${log.status_message?.includes('SIMULATĂ') ? 'SIMULATED' : log.status_message}">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <strong>\${log.transmission_type}</strong>
+                                    <span class="text-muted small ms-2">\${new Date(log.transmission_date).toLocaleString('ro-RO')}</span>
+                                </div>
+                                <span class="badge bg-secondary">\${log.status_message || 'Unknown'}</span>
+                            </div>
+                            \${log.request_xml ? \`<div class="small text-muted mt-2">XML: \${log.request_xml.substring(0, 100)}...</div>\` : ''}
+                        </div>
+                    \`).join('');
+                } else {
+                    logDiv.innerHTML = '<p class="text-muted">Nicio transmisie înregistrată</p>';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+        
+        async function loadANAFConfig() {
+            try {
+                const res = await fetch('/api/anaf/config');
+                const data = await res.json();
+                
+                if (data.success) {
+                    const config = data.data;
+                    document.getElementById('anafStatus').innerHTML = config.anaf_enabled 
+                        ? '<span class="status-badge-production"><i class="fas fa-check-circle me-2"></i>PRODUCȚIE</span>'
+                        : '<span class="status-badge-sandbox"><i class="fas fa-flask me-2"></i>SANDBOX</span>';
+                    
+                    document.getElementById('anafConfigContainer').innerHTML = \`
+                        <div class="row">
+                            <div class="col-md-6"><p class="mb-2"><strong>Companie:</strong> \${config.company_name}</p></div>
+                            <div class="col-md-6"><p class="mb-2"><strong>CUI:</strong> \${config.cui}</p></div>
+                            <div class="col-md-6"><p class="mb-2"><strong>Serie Facturi:</strong> \${config.invoice_series}</p></div>
+                            <div class="col-md-6"><p class="mb-2"><strong>Nr. Curent:</strong> \${config.invoice_current_number}</p></div>
+                            <div class="col-md-6"><p class="mb-2"><strong>ANAF Enabled:</strong> \${config.anaf_enabled ? '✅ DA' : '❌ NU (Sandbox)'}</p></div>
+                            <div class="col-md-6"><p class="mb-2"><strong>Test Mode:</strong> \${config.anaf_test_mode ? '✅ DA' : '❌ NU'}</p></div>
+                        </div>
+                    \`;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            loadANAFConfig();
+            loadTransmissionLog();
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,118 @@
+{
+  "product": {
+    "id": 277,
+    "name": "Roses Roses",
+    "name_en": "Roses Roses",
+    "category": "Băuturi și Coctailuri",
+    "category_en": "Drinks & Cocktails",
+    "price": 130,
+    "description": "Vin roze sec import - 12% alc, crama Otella-Italia",
+    "description_en": "Imported dry rosé wine - 12% alc, Otella winery-Italy",
+    "weight": "750ML",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 459,
+        "name": "Gin/Vodcă",
+        "category": "General",
+        "quantity": 50,
+        "unit": "ml",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 1900,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 763,
+        "name": "Roses Roses",
+        "category": "General",
+        "quantity": 150,
+        "unit": "ml",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 1850,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 473,
+        "name": "Sirop de Trandafir",
+        "category": "General",
+        "quantity": 20,
+        "unit": "ml",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 1980,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 623,
+        "name": "Ton în conservă",
+        "category": "General",
+        "quantity": 100,
+        "unit": "ml",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.3074223941303995,
+        "totalCost": "30.74",
+        "totalCostWithWaste": "30.74",
+        "supplier": null,
+        "currentStock": 15388,
+        "minStock": 10,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "30.74",
+    "totalCostWithWaste": "30.74",
+    "sellingPrice": 130,
+    "profitMargin": 99.26,
+    "markup": 76.35,
+    "foodCostPercentage": "23.65"
+  },
+  "stats": {
+    "totalIngredients": 4,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

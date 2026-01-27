@@ -1,0 +1,46 @@
+﻿Ã¯Â»Â¿{
+  "productId": 48,
+  "productName": "Pui cu Ciuperci",
+  "productCategory": "Fel Principal",
+  "ingredients": [
+    {
+      "ingredientId": 363,
+      "ingredientName": "Piept de pui",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 512,
+      "ingredientName": "Ciuperci (Champignon)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 130,
+      "ingredientName": "SmÃƒÂ¢ntÃƒÂ¢nÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 536,
+      "ingredientName": "Vin Alb (opÃƒÂˆÃ¢Â€Âºional)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

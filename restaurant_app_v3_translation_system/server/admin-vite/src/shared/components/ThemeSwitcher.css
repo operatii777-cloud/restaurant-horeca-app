@@ -1,0 +1,107 @@
+.theme-switcher {
+  position: relative;
+  display: inline-block;
+}
+
+.theme-switcher__button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.theme-switcher__button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.theme-switcher--sm .theme-switcher__button {
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+.theme-switcher--lg .theme-switcher__button {
+  padding: 10px 16px;
+  font-size: 16px;
+}
+
+.theme-switcher__icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.theme-switcher__label {
+  font-weight: 500;
+}
+
+.theme-switcher__arrow {
+  font-size: 10px;
+  opacity: 0.7;
+  margin-left: 4px;
+}
+
+.theme-switcher__dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  min-width: 180px;
+  border-radius: 8px;
+  z-index: 10000; /* Foarte sus pentru a fi deasupra tuturor */
+  overflow: hidden;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.theme-switcher__option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  font-size: 14px;
+}
+
+.theme-switcher__option:hover {
+  opacity: 0.9;
+}
+
+.theme-switcher__option--active {
+  font-weight: 600;
+}
+
+.theme-switcher__option-icon {
+  font-size: 18px;
+  line-height: 1;
+  width: 24px;
+  text-align: center;
+}
+
+.theme-switcher__option-label {
+  flex: 1;
+}
+
+.theme-switcher__option-check {
+  font-size: 16px;
+  font-weight: bold;
+}
+

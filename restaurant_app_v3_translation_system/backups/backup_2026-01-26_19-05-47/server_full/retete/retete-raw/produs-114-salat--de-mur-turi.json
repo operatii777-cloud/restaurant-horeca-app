@@ -1,0 +1,28 @@
+﻿Ã¯Â»Â¿{
+  "productId": 114,
+  "productName": "SalatÃ„ÂƒÃ†Â’ de MurÃ„ÂƒÃ†Â’turi",
+  "productCategory": "Salate ÃƒÂƒÃ…Â½nsoÃƒÂˆÃ¢Â€Âºitoare",
+  "ingredients": [
+    {
+      "ingredientId": 803,
+      "ingredientName": "CastraveÃƒÂˆÃ¢Â€Âºi MuraÃƒÂˆÃ¢Â€Âºi Shaorma",
+      "ingredientCategory": "Legume ÃƒÂˆÃ¢Â„Â¢i Fructe",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 821,
+      "ingredientName": "Ulei vegetal",
+      "ingredientCategory": "Uleiuri ÃƒÂˆÃ¢Â„Â¢i GrÃ„ÂƒÃ†Â’simi",
+      "quantityNeeded": 5,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

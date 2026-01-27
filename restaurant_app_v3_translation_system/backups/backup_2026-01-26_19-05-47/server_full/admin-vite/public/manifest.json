@@ -1,0 +1,54 @@
+{
+  "name": "Restaurant Admin - Mod Curier",
+  "short_name": "Curier",
+  "description": "Aplicație mobilă pentru curieri - gestionare livrări",
+  "start_url": "/admin-vite/courier",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#667eea",
+  "orientation": "portrait",
+  "scope": "/admin-vite/",
+  "icons": [
+    {
+      "src": "/admin-vite/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/admin-vite/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["food", "business", "productivity"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Comenzi Active",
+      "short_name": "Active",
+      "description": "Vezi comenzile active",
+      "url": "/admin-vite/courier?tab=active",
+      "icons": [
+        {
+          "src": "/admin-vite/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Istoric",
+      "short_name": "Istoric",
+      "description": "Vezi istoricul livrărilor",
+      "url": "/admin-vite/courier?tab=history",
+      "icons": [
+        {
+          "src": "/admin-vite/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}
+

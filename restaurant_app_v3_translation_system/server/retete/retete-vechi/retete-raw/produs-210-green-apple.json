@@ -1,0 +1,46 @@
+﻿Ã¯Â»Â¿{
+  "productId": 210,
+  "productName": "Green Apple",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 64,
+      "ingredientName": "suc de lÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+      "ingredientCategory": "General",
+      "quantityNeeded": 10,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 451,
+      "ingredientName": "VodcÃ„ÂƒÃ†Â’/Gin",
+      "ingredientCategory": "General",
+      "quantityNeeded": 40,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 452,
+      "ingredientName": "Lichior de MÃ„ÂƒÃ†Â’r Verde",
+      "ingredientCategory": "General",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 278,
+      "ingredientName": "Sirop de ZahÃ„ÂƒÃ†Â’r",
+      "ingredientCategory": "General",
+      "quantityNeeded": 10,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

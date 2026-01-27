@@ -1,0 +1,65 @@
+{
+  "productId": 187,
+  "productName": "Clătite cu Ciocolată",
+  "productCategory": "Deserturi",
+  "price": 30,
+  "description": "Clătite clasice umplute cu cremă de ciocolată",
+  "ingredients": [
+    {
+      "ingredientId": 95,
+      "ingredientName": "Făină",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 8,
+      "ingredientName": "Ouă",
+      "ingredientCategory": "Ouă și lactate",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 20,
+      "ingredientName": "Lapte",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 200,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 33,
+      "ingredientName": "Zahăr",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 20,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 65,
+      "ingredientName": "Sare",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 2,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 128,
+      "ingredientName": "Ciocolată topită",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 22,
+      "ingredientName": "Frișcă",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "product": {
+    "id": 1054,
+    "name": "Paste Carbonara",
+    "name_en": "Pasta Carbonara",
+    "category": "paste",
+    "category_en": "paste",
+    "price": 37.9,
+    "description": "Produs generat automat cu ingredientele: paste, ulei de măsline, sare, piper",
+    "description_en": "Produs generat automat with ingredientele: paste, olive oil, sare, piper",
+    "weight": "300g",
+    "prep_time": 15,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": "Conține gluten, lactoză",
+    "allergens_en": "Conține gluten, lactoză"
+  },
+  "nutrition": {
+    "calories": 379,
+    "protein": 57,
+    "carbs": 227,
+    "fat": 95,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 117,
+        "name": "Piper negru",
+        "category": "Condimente și Sosuri",
+        "quantity": 0.1,
+        "unit": "kg",
+        "unitStock": "kg",
+        "wastePercentage": 3,
+        "variableConsumption": null,
+        "costPerUnit": 31.88429022942768,
+        "totalCost": "3.19",
+        "totalCostWithWaste": "3.28",
+        "supplier": "Furnizor Condimente",
+        "currentStock": 43979,
+        "minStock": 2,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 169,
+        "name": "Sare de mare",
+        "category": "General",
+        "quantity": 0.1,
+        "unit": "kg",
+        "unitStock": "g",
+        "wastePercentage": 3,
+        "variableConsumption": null,
+        "costPerUnit": 0.0001243382635146494,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 157634.5,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 821,
+        "name": "Ulei vegetal",
+        "category": "Uleiuri și Grăsimi",
+        "quantity": 0.1,
+        "unit": "kg",
+        "unitStock": "ml",
+        "wastePercentage": 3,
+        "variableConsumption": null,
+        "costPerUnit": 0.36491973522575893,
+        "totalCost": "0.04",
+        "totalCostWithWaste": "0.04",
+        "supplier": "Uleiuri SRL",
+        "currentStock": 71910,
+        "minStock": 5000,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 46,
+        "name": "paste",
+        "category": "General",
+        "quantity": 0.1,
+        "unit": "kg",
+        "unitStock": "kg",
+        "wastePercentage": 3,
+        "variableConsumption": null,
+        "costPerUnit": 8.342550671576564,
+        "totalCost": "0.83",
+        "totalCostWithWaste": "0.86",
+        "supplier": null,
+        "currentStock": 370,
+        "minStock": 1.6,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "4.06",
+    "totalCostWithWaste": "4.18",
+    "sellingPrice": 37.9,
+    "profitMargin": 33.72,
+    "markup": 88.97,
+    "foodCostPercentage": "11.03"
+  },
+  "stats": {
+    "totalIngredients": 4,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": true,
+    "lowStockIngredients": 0
+  }
+}

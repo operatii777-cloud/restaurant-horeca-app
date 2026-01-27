@@ -1,0 +1,55 @@
+﻿Ã¯Â»Â¿{
+  "productId": 83,
+  "productName": "SalatÃ„ÂƒÃ†Â’ cu Somon ÃƒÂˆÃ¢Â„Â¢i Avocado",
+  "productCategory": "Salate",
+  "ingredients": [
+    {
+      "ingredientId": 317,
+      "ingredientName": "Avocado",
+      "ingredientCategory": "General",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 798,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii Shaorma",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 821,
+      "ingredientName": "Ulei vegetal",
+      "ingredientCategory": "Uleiuri ÃƒÂˆÃ¢Â„Â¢i GrÃ„ÂƒÃ†Â’simi",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 797,
+      "ingredientName": "SalatÃ„ÂƒÃ†Â’ Verde Shaorma",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 370,
+      "ingredientName": "File de Somon",
+      "ingredientCategory": "General",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

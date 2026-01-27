@@ -1,0 +1,35 @@
+{
+  "productId": 2,
+  "productName": "Omletă Țărănească",
+  "productCategory": "Mic Dejun",
+  "ingredients": [
+    {
+      "ingredientId": 1,
+      "ingredientName": "ouă",
+      "ingredientCategory": "General",
+      "quantityNeeded": 3,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 624,
+      "ingredientName": "Ingrediente speciale (ex: Prosciutto Crudo, Rucola)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 0.15,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 3,
+      "ingredientName": "mozzarella",
+      "ingredientCategory": "General",
+      "quantityNeeded": 0.1,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

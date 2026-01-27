@@ -1,0 +1,14 @@
+{
+  "name": "shared-components",
+  "version": "1.0.0",
+  "description": "Shared components and utilities for React modules",
+  "type": "module",
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "ag-grid-react": "^31.3.2",
+    "ag-grid-community": "^31.3.2",
+    "axios": "^1.7.2"
+  }
+}
+

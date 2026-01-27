@@ -1,0 +1,161 @@
+{
+  "product": {
+    "id": 1049,
+    "name": "Obrăjori de Vită Braisați",
+    "name_en": "Braised Beef Cheeks",
+    "category": "Fel Principal",
+    "category_en": "Main Course",
+    "price": 48,
+    "description": "Obrăjori de vită braisați în vin roșu cu legume și ierburi aromate - preparat premium",
+    "description_en": "Braised beef cheeks in red wine with vegetables and aromatic herbs - premium dish",
+    "weight": null,
+    "prep_time": 180,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": 680,
+    "protein": 52,
+    "carbs": 28,
+    "fat": 38,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 126,
+        "name": "Burtă de vită fiartă și tăiată",
+        "category": "Carne",
+        "quantity": 300,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 10,
+        "variableConsumption": null,
+        "costPerUnit": 0.21643509653792728,
+        "totalCost": "64.93",
+        "totalCostWithWaste": "71.42",
+        "supplier": "Furnizor Carne",
+        "currentStock": 299528.47826086957,
+        "minStock": 1000,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 815,
+        "name": "Ceapă tocată",
+        "category": "Diverse",
+        "quantity": 80,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 15,
+        "variableConsumption": null,
+        "costPerUnit": 0.7168016692209687,
+        "totalCost": "57.34",
+        "totalCostWithWaste": "65.95",
+        "supplier": "Furnizor General",
+        "currentStock": 127428.23529411764,
+        "minStock": 100,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 830,
+        "name": "Rozmarin",
+        "category": "Sosuri și Condimente",
+        "quantity": 2,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.03998665331998665,
+        "totalCost": "0.08",
+        "totalCostWithWaste": "0.08",
+        "supplier": "Spice World SRL",
+        "currentStock": 8991,
+        "minStock": 200,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 23,
+        "name": "morcovi",
+        "category": "General",
+        "quantity": 80,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 20,
+        "variableConsumption": null,
+        "costPerUnit": 9.564774813926666,
+        "totalCost": "765.18",
+        "totalCostWithWaste": "918.22",
+        "supplier": null,
+        "currentStock": 50667.5,
+        "minStock": 0.8,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 61,
+        "name": "vin roșu",
+        "category": "General",
+        "quantity": 150,
+        "unit": "ml",
+        "unitStock": "l",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 7.232342661544275,
+        "totalCost": "1084.85",
+        "totalCostWithWaste": "1084.85",
+        "supplier": null,
+        "currentStock": 24560,
+        "minStock": 0.6,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 129,
+        "name": "Țelină",
+        "category": "Legume",
+        "quantity": 50,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 25,
+        "variableConsumption": null,
+        "costPerUnit": 0.03,
+        "totalCost": "1.50",
+        "totalCostWithWaste": "1.88",
+        "supplier": "Furnizor Legume",
+        "currentStock": 15866.666666666668,
+        "minStock": 200,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": [
+      {
+        "id": 623,
+        "name": "Ton în conservă",
+        "quantity": 1,
+        "unit": "buc",
+        "costPerUnit": 0.3074223941303995,
+        "totalCost": "0.31"
+      }
+    ]
+  },
+  "costs": {
+    "totalIngredientsCost": "1973.89",
+    "totalCostWithWaste": "2142.39",
+    "sellingPrice": 48,
+    "profitMargin": -2094.39,
+    "markup": -4363.32,
+    "foodCostPercentage": "4463.32"
+  },
+  "stats": {
+    "totalIngredients": 6,
+    "totalPackagingItems": 1,
+    "hasNutritionalInfo": true,
+    "lowStockIngredients": 0
+  }
+}

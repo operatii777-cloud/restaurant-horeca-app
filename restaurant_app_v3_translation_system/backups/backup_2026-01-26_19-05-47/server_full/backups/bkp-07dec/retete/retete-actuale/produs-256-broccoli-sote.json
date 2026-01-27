@@ -1,0 +1,33 @@
+{
+  "productId": 256,
+  "productName": "Broccoli Sote",
+  "productCategory": "Garnituri",
+  "price": 21,
+  "description": "Broccoli sote în unt",
+  "ingredients": [
+    {
+      "ingredientId": 160,
+      "ingredientName": "Broccoli",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 18,
+      "ingredientName": "Ulei de măsline",
+      "ingredientCategory": "Uleiuri",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}

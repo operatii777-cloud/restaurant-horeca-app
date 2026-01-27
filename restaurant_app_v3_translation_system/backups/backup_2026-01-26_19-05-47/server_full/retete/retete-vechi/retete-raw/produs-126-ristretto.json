@@ -1,0 +1,28 @@
+﻿Ã¯Â»Â¿{
+  "productId": 126,
+  "productName": "Ristretto",
+  "productCategory": "Cafea/CiocolatÃ„ÂƒÃ†Â’/Ceai",
+  "ingredients": [
+    {
+      "ingredientId": 122,
+      "ingredientName": "Cafea boabe",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 7,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 245,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

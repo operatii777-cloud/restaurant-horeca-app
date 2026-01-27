@@ -1,0 +1,17 @@
+{
+  "productId": 260,
+  "productName": "Cartofi Zdrobiți",
+  "productCategory": "Garnituri",
+  "price": 18,
+  "description": "Cartofi zdrobiți cu ierburi",
+  "ingredients": [
+    {
+      "ingredientId": 67,
+      "ingredientName": "Cartofi",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 200,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}

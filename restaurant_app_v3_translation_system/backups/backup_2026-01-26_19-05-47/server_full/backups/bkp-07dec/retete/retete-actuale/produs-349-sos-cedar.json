@@ -1,0 +1,41 @@
+{
+  "productId": 349,
+  "productName": "Sos Cedar",
+  "productCategory": "Sosuri și Pâine",
+  "price": 4,
+  "description": "Sos Cedar aromat",
+  "ingredients": [
+    {
+      "ingredientId": 217,
+      "ingredientName": "Tahini",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 154,
+      "ingredientName": "Lămâie",
+      "ingredientCategory": "Legume și Fructe",
+      "quantityNeeded": 1,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 156,
+      "ingredientName": "Apă",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}

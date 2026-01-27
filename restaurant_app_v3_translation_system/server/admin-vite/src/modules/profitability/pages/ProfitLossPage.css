@@ -1,0 +1,75 @@
+.profit-loss-page {
+  padding: 0; /* ELIMINĂ padding - AppLayout deja are 12px */
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm); /* EXCEL-LIKE: 8px compact */
+}
+
+.profit-loss-page .card {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-sm);
+}
+
+.profit-loss-page .card-header {
+  background: var(--bg-card) !important; /* FORȚEAZĂ theme token */
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary) !important; /* FORȚEAZĂ contrast */
+  padding: var(--spacing-base);
+}
+
+.profit-loss-page .card-header h5 {
+  color: var(--text-primary) !important;
+  margin: 0;
+}
+
+.profit-loss-page .card-body {
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  padding: var(--spacing-base);
+}
+
+.profit-loss-page .table {
+  margin-bottom: 0;
+  color: var(--text-primary);
+}
+
+.profit-loss-page .table thead th {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+  border-bottom: 2px solid var(--border-subtle);
+  background: var(--bg-card);
+}
+
+.profit-loss-page .table tbody td {
+  vertical-align: middle;
+  color: var(--text-primary);
+  background: var(--bg-card);
+}
+
+.profit-loss-page .table tbody tr:hover {
+  background: var(--bg-hover);
+}
+
+.profit-loss-page .table tbody tr:nth-child(even) {
+  background: var(--bg-hover);
+}
+
+/* Form controls - folosesc theme tokens */
+.profit-loss-page .form-control {
+  background: var(--bg-card);
+  border: 1px solid var(--border-base);
+  color: var(--text-primary);
+}
+
+.profit-loss-page .form-control:focus {
+  background: var(--bg-card);
+  border-color: var(--primary);
+  color: var(--text-primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+

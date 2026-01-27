@@ -1,0 +1,19 @@
+﻿Ã¯Â»Â¿{
+  "productId": 262,
+  "productName": "Solo Quinta Rose",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 773,
+      "ingredientName": "Solo Quinta Rose",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

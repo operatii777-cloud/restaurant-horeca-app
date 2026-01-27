@@ -1,0 +1,35 @@
+﻿Ã¯Â»Â¿{
+  "productId": 330,
+  "productName": "SalatÃ„ÂƒÃ†Â’ Verde",
+  "productCategory": "Salate ÃƒÂƒÃ…Â½nsoÃƒÂˆÃ¢Â€Âºitoare",
+  "price": 18,
+  "description": "SalatÃ„ÂƒÃ†Â’ verde, ceapÃ„ÂƒÃ†Â’ roÃƒÂˆÃ¢Â„Â¢ie, lÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+  "ingredients": [
+    {
+      "ingredientId": 94,
+      "ingredientName": "CeapÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Fructe ÃƒÂˆÃ¢Â„Â¢i Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 103,
+      "ingredientName": "SalatÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 154,
+      "ingredientName": "LÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+      "ingredientCategory": "Legume ÃƒÂˆÃ¢Â„Â¢i Fructe",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

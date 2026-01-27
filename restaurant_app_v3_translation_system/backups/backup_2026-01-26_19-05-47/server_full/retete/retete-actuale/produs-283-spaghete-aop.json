@@ -1,0 +1,51 @@
+﻿Ã¯Â»Â¿{
+  "productId": 283,
+  "productName": "Spaghete AOP",
+  "productCategory": "Paste",
+  "price": 33,
+  "description": "Paste fresh, ardei iute, usturoi, roÃƒÂˆÃ¢Â„Â¢ii cherry, pÃ„ÂƒÃ†Â’trunjel",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 16,
+      "ingredientName": "Ardei iute",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 112,
+      "ingredientName": "PÃ„ÂƒÃ†Â’trunjel",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 64,
+      "ingredientName": "Paste",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 200,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

@@ -1,0 +1,33 @@
+{
+  "productId": 323,
+  "productName": "Salată Rucola cu Parmezan",
+  "productCategory": "Salate",
+  "price": 18,
+  "description": "Salată cu rucola și parmezan",
+  "ingredients": [
+    {
+      "ingredientId": 103,
+      "ingredientName": "Salată",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 172,
+      "ingredientName": "Rucola",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 13,
+      "ingredientName": "Brânză dură",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

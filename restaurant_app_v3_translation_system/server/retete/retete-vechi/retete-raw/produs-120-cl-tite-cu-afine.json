@@ -1,0 +1,37 @@
+﻿Ã¯Â»Â¿{
+  "productId": 120,
+  "productName": "ClÃ„ÂƒÃ†Â’tite cu Afine",
+  "productCategory": "Deserturi",
+  "ingredients": [
+    {
+      "ingredientId": 401,
+      "ingredientName": "ClÃ„ÂƒÃ†Â’tite (aluat)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 2,
+      "unit": "buc",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 130,
+      "ingredientName": "SmÃƒÂ¢ntÃƒÂ¢nÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 482,
+      "ingredientName": "Afine proaspete/dulceaÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "General",
+      "quantityNeeded": 60,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

@@ -1,0 +1,26 @@
+{
+  "productId": 115,
+  "productName": "Salată de Ardei Copt",
+  "productCategory": "Salate Însoțitoare",
+  "ingredients": [
+    {
+      "ingredientId": 661,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 800,
+      "ingredientName": "Sos Usturoi Shaorma",
+      "ingredientCategory": "Sosuri",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

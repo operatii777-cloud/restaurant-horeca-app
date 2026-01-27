@@ -1,0 +1,117 @@
+{
+  "allergens": [
+    {
+      "code": "gluten",
+      "name_ro": "Gluten",
+      "name_en": "Gluten",
+      "emoji": "🌾",
+      "color": "#f59e0b",
+      "icon_svg": "gluten.svg"
+    },
+    {
+      "code": "milk",
+      "name_ro": "Lapte",
+      "name_en": "Milk",
+      "emoji": "🥛",
+      "color": "#3b82f6",
+      "icon_svg": "milk.svg"
+    },
+    {
+      "code": "eggs",
+      "name_ro": "Ouă",
+      "name_en": "Eggs",
+      "emoji": "🥚",
+      "color": "#eab308",
+      "icon_svg": "eggs.svg"
+    },
+    {
+      "code": "fish",
+      "name_ro": "Pește",
+      "name_en": "Fish",
+      "emoji": "🐟",
+      "color": "#06b6d4",
+      "icon_svg": "fish.svg"
+    },
+    {
+      "code": "peanuts",
+      "name_ro": "Arahide",
+      "name_en": "Peanuts",
+      "emoji": "🥜",
+      "color": "#a16207",
+      "icon_svg": "peanuts.svg"
+    },
+    {
+      "code": "soy",
+      "name_ro": "Soia",
+      "name_en": "Soy",
+      "emoji": "🫘",
+      "color": "#84cc16",
+      "icon_svg": "soy.svg"
+    },
+    {
+      "code": "tree_nuts",
+      "name_ro": "Fructe cu coajă lemnoasă",
+      "name_en": "Tree Nuts",
+      "emoji": "🌰",
+      "color": "#92400e",
+      "icon_svg": "tree_nuts.svg"
+    },
+    {
+      "code": "celery",
+      "name_ro": "Țelină",
+      "name_en": "Celery",
+      "emoji": "🥬",
+      "color": "#22c55e",
+      "icon_svg": "celery.svg"
+    },
+    {
+      "code": "mustard",
+      "name_ro": "Muștar",
+      "name_en": "Mustard",
+      "emoji": "🟡",
+      "color": "#eab308",
+      "icon_svg": "mustard.svg"
+    },
+    {
+      "code": "sesame",
+      "name_ro": "Susan",
+      "name_en": "Sesame",
+      "emoji": "🌰",
+      "color": "#d97706",
+      "icon_svg": "sesame.svg"
+    },
+    {
+      "code": "sulfites",
+      "name_ro": "Dioxid de sulf și sulfiți",
+      "name_en": "Sulfites",
+      "emoji": "⚗️",
+      "color": "#8b5cf6",
+      "icon_svg": "sulfites.svg"
+    },
+    {
+      "code": "lupin",
+      "name_ro": "Lupin",
+      "name_en": "Lupin",
+      "emoji": "🌱",
+      "color": "#10b981",
+      "icon_svg": "lupin.svg"
+    },
+    {
+      "code": "molluscs",
+      "name_ro": "Moluște",
+      "name_en": "Molluscs",
+      "emoji": "🐚",
+      "color": "#ec4899",
+      "icon_svg": "molluscs.svg"
+    },
+    {
+      "code": "crustaceans",
+      "name_ro": "Crustacee",
+      "name_en": "Crustaceans",
+      "emoji": "🦐",
+      "color": "#ef4444",
+      "icon_svg": "crustaceans.svg"
+    }
+  ]
+}
+

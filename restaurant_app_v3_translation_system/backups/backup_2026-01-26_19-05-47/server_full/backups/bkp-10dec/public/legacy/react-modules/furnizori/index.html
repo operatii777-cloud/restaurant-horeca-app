@@ -1,0 +1,193 @@
+﻿<!--
+  ============================================
+  LEGACY UI - Deprecated after PHASE S2
+  ============================================
+  
+  This file has been moved to /public/legacy/ as part of PHASE S3 cleanup.
+  
+  DO NOT MODIFY.
+  Reference only.
+  To be removed after PHASE S5.
+  
+  Original path: /public/react-modules/furnizori/index.html
+  Moved: 2025-12-07
+  ============================================
+-->
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestiune Furnizori</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8f9fa; padding: 20px; }
+        .supplier-card { background: white; border-radius: 12px; padding: 20px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #1976d2; }
+        .supplier-card.preferred { border-left-color: #ffc107; background: #fffbf0; }
+        .supplier-card.inactive { opacity: 0.6; border-left-color: #ccc; }
+        .rating-stars { color: #ffc107; font-size: 1.2rem; }
+        .stat-badge { display: inline-block; padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; margin-right: 8px; }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1><i class="fas fa-truck me-2"></i>Gestiune Furnizori</h1>
+            <button class="btn btn-primary" onclick="showAddSupplierModal()">
+                <i class="fas fa-plus me-2"></i>Adaugă Furnizor
+            </button>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col-md-4"><input type="text" id="searchSuppliers" class="form-control" placeholder="🔍 Căutare furnizor..."></div>
+            <div class="col-md-3">
+                <select id="filterCategory" class="form-select">
+                    <option value="">Toate categoriile</option>
+                    <option value="alimente">Alimente</option>
+                    <option value="bauturi">Băuturi</option>
+                    <option value="consumabile">Consumabile</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select id="filterStatus" class="form-select">
+                    <option value="all">Toți furnizorii</option>
+                    <option value="active">Activi</option>
+                    <option value="preferred">Preferențiali</option>
+                    <option value="inactive">Inactivi</option>
+                </select>
+            </div>
+        </div>
+        
+        <div id="suppliersContainer">
+            <div class="text-center py-5"><div class="spinner-border text-primary"></div><p class="mt-3">Se încarcă furnizori...</p></div>
+        </div>
+    </div>
+    
+    <script>
+        let suppliersData = [];
+        
+        async function loadSuppliers() {
+            try {
+                const res = await fetch('/api/suppliers');
+                const data = await res.json();
+                if (data.success) {
+                    suppliersData = data.data;
+                    renderSuppliers();
+                    console.log(`✅ ${data.data.length} furnizori încărcați`);
+                }
+            } catch (error) {
+                console.error('❌ Error:', error);
+                document.getElementById('suppliersContainer').innerHTML = '<div class="alert alert-danger">Eroare la încărcare</div>';
+            }
+        }
+        
+        function renderSuppliers() {
+            let filtered = suppliersData;
+            const search = document.getElementById('searchSuppliers')?.value?.toLowerCase() || '';
+            const category = document.getElementById('filterCategory')?.value || '';
+            const status = document.getElementById('filterStatus')?.value || 'all';
+            
+            if (search) {
+                filtered = filtered.filter(s => s.company_name.toLowerCase().includes(search) || (s.cui || '').includes(search));
+            }
+            
+            if (category) {
+                filtered = filtered.filter(s => {
+                    try {
+                        const cats = JSON.parse(s.categories || '[]');
+                        return cats.includes(category);
+                    } catch (e) {
+                        return false;
+                    }
+                });
+            }
+            
+            if (status === 'active') filtered = filtered.filter(s => s.is_active === 1);
+            else if (status === 'preferred') filtered = filtered.filter(s => s.is_preferred === 1);
+            else if (status === 'inactive') filtered = filtered.filter(s => s.is_active === 0);
+            
+            const container = document.getElementById('suppliersContainer');
+            
+            if (filtered.length === 0) {
+                container.innerHTML = '<div class="alert alert-warning">Nu s-au găsit furnizori</div>';
+                return;
+            }
+            
+            container.innerHTML = filtered.map(s => `
+                <div class="supplier-card ${s.is_preferred ? 'preferred' : ''} ${!s.is_active ? 'inactive' : ''}">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4 class="mb-2">
+                                ${s.is_preferred ? '<i class="fas fa-star text-warning me-2"></i>' : ''}
+                                ${s.company_name}
+                                ${!s.is_active ? '<span class="badge bg-secondary ms-2">Inactiv</span>' : ''}
+                            </h4>
+                            <div class="text-muted small mb-2">
+                                ${s.cui ? `<span class="me-3"><i class="fas fa-building me-1"></i>CUI: ${s.cui}</span>` : ''}
+                                ${s.phone ? `<span class="me-3"><i class="fas fa-phone me-1"></i>${s.phone}</span>` : ''}
+                                ${s.email ? `<span><i class="fas fa-envelope me-1"></i>${s.email}</span>` : ''}
+                            </div>
+                            ${s.notes ? `<p class="mb-2 small">${s.notes}</p>` : ''}
+                            <div>
+                                ${JSON.parse(s.categories || '[]').map(cat => `<span class="badge bg-info me-1">${cat}</span>`).join('')}
+                                <span class="stat-badge bg-light">Termene: ${s.payment_terms} zile</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <div class="rating-stars mb-2">
+                                ${'★'.repeat(Math.round(s.rating_avg || 0))}${'☆'.repeat(5 - Math.round(s.rating_avg || 0))}
+                                <span class="text-muted small">(${s.total_reviews || 0})</span>
+                            </div>
+                            <div class="small text-muted mb-2">
+                                Comenzi: ${s.total_orders || 0}<br>
+                                Total: ${(s.total_spent || 0).toFixed(2)} RON
+                            </div>
+                            <button class="btn btn-sm btn-outline-primary" onclick="viewSupplier(${s.id})">
+                                <i class="fas fa-eye me-1"></i>Detalii
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        async function showAddSupplierModal() {
+            const cui = prompt('Introduceți CUI furnizor (pentru validare automată ANAF):');
+            if (!cui) return;
+            
+            // Validare CUI prin ANAF
+            try {
+                const res = await fetch(`/api/anaf/validate-cui/${cui}`);
+                const data = await res.json();
+                
+                if (data.success && data.valid) {
+                    // Auto-fill cu date de la ANAF
+                    const confirmMsg = `✅ CUI Valid!\n\nDenumire: ${data.data.denumire}\nAdresă: ${data.data.adresa || 'N/A'}\nPlătitor TVA: ${data.data.scpTVA ? 'DA' : 'NU'}\n\nDoriți să creați furnizor cu aceste date?`;
+                    
+                    if (confirm(confirmMsg)) {
+                        // TODO: Formular complet cu date pre-populate
+                        alert('Formular adăugare furnizor - În dezvoltare');
+                    }
+                } else {
+                    alert(`❌ CUI Invalid sau Nu Există\n\n${data.message || 'Verificați CUI-ul introdus'}`);
+                }
+            } catch (error) {
+                alert(`Eroare la validare CUI: ${error.message}`);
+            }
+        }
+        
+        function viewSupplier(id) {
+            alert(`Detalii furnizor ID: ${id} - Coming Soon`);
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSuppliers();
+            document.getElementById('searchSuppliers')?.addEventListener('input', renderSuppliers);
+            document.getElementById('filterCategory')?.addEventListener('change', renderSuppliers);
+            document.getElementById('filterStatus')?.addEventListener('change', renderSuppliers);
+        });
+    </script>
+</body>
+</html>
+

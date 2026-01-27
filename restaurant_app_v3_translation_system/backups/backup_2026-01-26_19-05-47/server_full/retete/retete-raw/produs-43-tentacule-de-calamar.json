@@ -1,0 +1,37 @@
+﻿Ã¯Â»Â¿{
+  "productId": 43,
+  "productName": "Tentacule de Calamar",
+  "productCategory": "Peste Fructe de Mare",
+  "ingredients": [
+    {
+      "ingredientId": 638,
+      "ingredientName": "Calamari prÃ„ÂƒÃ†Â’jiÃƒÂˆÃ¢Â€Âºi",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 64,
+      "ingredientName": "suc de lÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 602,
+      "ingredientName": "FÃ„ÂƒÃ†Â’inÃ„ÂƒÃ†Â’/PanÃƒÂƒÃ‚Â©",
+      "ingredientCategory": "General",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

@@ -1,0 +1,37 @@
+﻿Ã¯Â»Â¿{
+  "productId": 321,
+  "productName": "Cheesecake cu Fructe de PÃ„ÂƒÃ†Â’dure",
+  "productCategory": "Deserturi",
+  "ingredients": [
+    {
+      "ingredientId": 812,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 482,
+      "ingredientName": "Afine proaspete/dulceaÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 50,
+      "ingredientName": "brÃƒÂ¢nzÃ„ÂƒÃ†Â’ feta",
+      "ingredientCategory": "General",
+      "quantityNeeded": 120,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

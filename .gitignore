@@ -1,0 +1,33 @@
+
+# Exclude node_modules and lock files
+node_modules/
+package-lock.json
+
+# Exclude backup folders
+restaurant_app_backup_*/
+tipizate_fixed_backup_*/
+
+# Exclude logs and reports
+*.log
+*.csv
+*.txt
+
+# Exclude scripts and analysis
+*.sh
+*.ps1
+*.py
+*.md
+
+# Exclude dev and test files
+*.test.*
+*.spec.*
+
+# Exclude .vscode and other editor configs
+.vscode/
+
+# Exclude database and temp files
+*.db
+
+# Exclude other non-essential files
+hs_err_*.log
+replay_*.log

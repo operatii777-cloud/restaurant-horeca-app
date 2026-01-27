@@ -1,0 +1,41 @@
+{
+  "productId": 261,
+  "productName": "Legume Sote",
+  "productCategory": "Garnituri",
+  "price": 12,
+  "description": "Legume sote",
+  "ingredients": [
+    {
+      "ingredientId": 111,
+      "ingredientName": "Morcov",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 161,
+      "ingredientName": "Zucchini",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 45,
+      "ingredientName": "Ardei gras",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 18,
+      "ingredientName": "Ulei de măsline",
+      "ingredientCategory": "Uleiuri",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}

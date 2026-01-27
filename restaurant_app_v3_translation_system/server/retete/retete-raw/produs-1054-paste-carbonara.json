@@ -1,0 +1,54 @@
+﻿Ã¯Â»Â¿{
+  "productId": 1054,
+  "productName": "Paste Carbonara",
+  "productCategory": "paste",
+  "ingredients": [
+    {
+      "ingredientId": 46,
+      "ingredientName": "paste",
+      "ingredientCategory": "General",
+      "quantityNeeded": 0.1,
+      "unit": "kg",
+      "wastePercentage": 3,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 821,
+      "ingredientName": "Ulei vegetal",
+      "ingredientCategory": "Uleiuri ÃƒÂˆÃ¢Â„Â¢i GrÃ„ÂƒÃ†Â’simi",
+      "quantityNeeded": 0.1,
+      "unit": "kg",
+      "wastePercentage": 3,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 169,
+      "ingredientName": "Sare de mare",
+      "ingredientCategory": "General",
+      "quantityNeeded": 0.1,
+      "unit": "kg",
+      "wastePercentage": 3,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 117,
+      "ingredientName": "Piper negru",
+      "ingredientCategory": "Condimente ÃƒÂˆÃ¢Â„Â¢i Sosuri",
+      "quantityNeeded": 0.1,
+      "unit": "kg",
+      "wastePercentage": 3,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": [
+    {
+      "ingredientId": 0,
+      "ingredientName": null,
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "itemType": "packaging_restaurant"
+    }
+  ]
+}
+
+

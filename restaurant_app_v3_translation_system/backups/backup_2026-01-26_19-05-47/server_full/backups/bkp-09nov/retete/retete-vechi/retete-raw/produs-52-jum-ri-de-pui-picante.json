@@ -1,0 +1,35 @@
+{
+  "productId": 52,
+  "productName": "Jumări de Pui Picante",
+  "productCategory": "Fel Principal",
+  "ingredients": [
+    {
+      "ingredientId": 515,
+      "ingredientName": "Făină/Ou/Pesmet (pané)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 517,
+      "ingredientName": "Sos iute (chilli/tabasco)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 10,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 126,
+      "ingredientName": "Burtă de vită fiartă și tăiată",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 180,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

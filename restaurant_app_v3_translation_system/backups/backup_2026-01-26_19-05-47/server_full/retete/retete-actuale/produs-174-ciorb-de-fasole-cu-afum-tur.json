@@ -1,0 +1,67 @@
+﻿Ã¯Â»Â¿{
+  "productId": 174,
+  "productName": "CiorbÃ„ÂƒÃ†Â’ de Fasole cu AfumÃ„ÂƒÃ†Â’turÃ„ÂƒÃ†Â’",
+  "productCategory": "Ciorbe",
+  "price": 24,
+  "description": "CiorbÃ„ÂƒÃ†Â’ cu fasole ÃƒÂˆÃ¢Â„Â¢i afumÃ„ÂƒÃ†Â’turÃ„ÂƒÃ†Â’",
+  "ingredients": [
+    {
+      "ingredientId": 114,
+      "ingredientName": "Fasole boabe",
+      "ingredientCategory": "Cereale ÃƒÂˆÃ¢Â„Â¢i Paste",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 115,
+      "ingredientName": "Ciolan afumat",
+      "ingredientCategory": "Carne ÃƒÂˆÃ¢Â„Â¢i PeÃƒÂˆÃ¢Â„Â¢te",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 94,
+      "ingredientName": "CeapÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Fructe ÃƒÂˆÃ¢Â„Â¢i Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 111,
+      "ingredientName": "Morcov",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 109,
+      "ingredientName": "Ardei kapia",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 116,
+      "ingredientName": "BorÃƒÂˆÃ¢Â„Â¢",
+      "ingredientCategory": "Condimente ÃƒÂˆÃ¢Â„Â¢i Sosuri",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 112,
+      "ingredientName": "PÃ„ÂƒÃ†Â’trunjel",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

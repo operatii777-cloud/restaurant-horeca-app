@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionare Ingrediente</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f5f6fa;
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+
+        .btn-info {
+            background: #1abc9c;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background: #16a085;
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #e67e22;
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #229954;
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .loading .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .admin-table thead {
+            background: #34495e;
+            color: white;
+        }
+
+        .admin-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .admin-table tbody tr {
+            border-bottom: 1px solid #ecf0f1;
+            transition: background 0.2s;
+        }
+
+        .admin-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .admin-table td {
+            padding: 12px 15px;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-ok {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-low {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-critical {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-right: 5px;
+            transition: all 0.2s;
+        }
+
+        .action-btn-edit {
+            background: #3498db;
+            color: white;
+        }
+
+        .action-btn-edit:hover {
+            background: #2980b9;
+        }
+
+        .action-btn-hide {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .action-btn-hide:hover {
+            background: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="section-title">
+            <span>📦</span>
+            <span data-translate="Gestionare Ingrediente">Gestionare Ingrediente</span>
+        </h2>
+        
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="loadStockProducts()">
+                <span>🔄</span>
+                <span data-translate="Actualizează Stocurile">Actualizează Stocurile</span>
+            </button>
+            <button class="btn btn-info" onclick="autoPopulateStocks()">
+                <span>🤖</span>
+                <span data-translate="Populează Automat">Populează Automat</span>
+            </button>
+            <button class="btn btn-secondary" onclick="checkUpdateStocks()">
+                <span>🔍</span>
+                <span data-translate="Verifică & Actualizează">Verifică & Actualizează</span>
+            </button>
+            <button class="btn btn-warning" onclick="showLowStockAlert()">
+                <span>⚠️</span>
+                <span data-translate="Stoc Scăzut">Stoc Scăzut</span>
+            </button>
+            <button class="btn btn-success" onclick="showAddIngredientModal()">
+                <span>➕</span>
+                <span data-translate="Adaugă Ingredient">Adaugă Ingredient</span>
+            </button>
+        </div>
+
+        <div id="stockAlert" class="alert"></div>
+        
+        <div id="stockLoading" class="loading">
+            <div class="spinner"></div>
+            <p>Se încarcă stocurile...</p>
+        </div>
+
+        <div class="table-container">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th data-translate="Ingredient">Ingredient</th>
+                        <th data-translate="Categorie">Categorie</th>
+                        <th data-translate="Unit">Unit</th>
+                        <th data-translate="Stoc Curent">Stoc Curent</th>
+                        <th data-translate="Stoc Minim">Stoc Minim</th>
+                        <th data-translate="Cost/Unit">Cost/Unit</th>
+                        <th data-translate="Furnizor">Furnizor</th>
+                        <th data-translate="Status">Status</th>
+                        <th data-translate="Acțiuni">Acțiuni</th>
+                    </tr>
+                </thead>
+                <tbody id="stockTableBody">
+                    <!-- Rows will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // ==================== GLOBAL STATE ====================
+        let ingredients = [];
+        let currentLang = 'ro';
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            // Listen for language changes from parent frame
+            window.addEventListener('message', (event) => {
+                if (event.data.type === 'languageChange') {
+                    currentLang = event.data.lang;
+                    translatePage();
+                    loadStockProducts(); // Reload data with new language
+                }
+            });
+
+            // Auto-load ingredients on page load
+            loadStockProducts();
+        });
+
+        // ==================== TRANSLATION ====================
+        const translations = {
+            ro: {
+                'Gestionare Ingrediente': 'Gestionare Ingrediente',
+                'Actualizează Stocurile': 'Actualizează Stocurile',
+                'Populează Automat': 'Populează Automat',
+                'Verifică & Actualizează': 'Verifică & Actualizează',
+                'Stoc Scăzut': 'Stoc Scăzut',
+                'Adaugă Ingredient': 'Adaugă Ingredient',
+                'Ingredient': 'Ingredient',
+                'Categorie': 'Categorie',
+                'Unit': 'U.M.',
+                'Stoc Curent': 'Stoc Curent',
+                'Stoc Minim': 'Stoc Minim',
+                'Cost/Unit': 'Cost/Unitate',
+                'Furnizor': 'Furnizor',
+                'Status': 'Status',
+                'Acțiuni': 'Acțiuni',
+                'Edit': 'Editează',
+                'Hide': 'Ascunde',
+                'OK': 'OK',
+                'SCĂZUT': 'SCĂZUT',
+                'CRITIC': 'CRITIC'
+            },
+            en: {
+                'Gestionare Ingrediente': 'Ingredients Management',
+                'Actualizează Stocurile': 'Refresh Stock',
+                'Populează Automat': 'Auto Populate',
+                'Verifică & Actualizează': 'Check & Update',
+                'Stoc Scăzut': 'Low Stock',
+                'Adaugă Ingredient': 'Add Ingredient',
+                'Ingredient': 'Ingredient',
+                'Categorie': 'Category',
+                'Unit': 'Unit',
+                'Stoc Curent': 'Current Stock',
+                'Stoc Minim': 'Min Stock',
+                'Cost/Unit': 'Cost/Unit',
+                'Furnizor': 'Supplier',
+                'Status': 'Status',
+                'Acțiuni': 'Actions',
+                'Edit': 'Edit',
+                'Hide': 'Hide',
+                'OK': 'OK',
+                'SCĂZUT': 'LOW',
+                'CRITIC': 'CRITICAL'
+            }
+        };
+
+        function translatePage() {
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[currentLang] && translations[currentLang][key]) {
+                    el.textContent = translations[currentLang][key];
+                }
+            });
+        }
+
+        // ==================== API FUNCTIONS ====================
+        async function loadStockProducts() {
+            const loading = document.getElementById('stockLoading');
+            const alert = document.getElementById('stockAlert');
+            const tbody = document.getElementById('stockTableBody');
+
+            loading.style.display = 'block';
+            alert.style.display = 'none';
+            tbody.innerHTML = '';
+
+            try {
+                const response = await fetch('/api/ingredients');
+                const data = await response.json();
+
+                if (data.success) {
+                    ingredients = data.ingredients;
+                    renderIngredients(ingredients);
+                } else {
+                    showAlert('Error loading ingredients: ' + data.error, 'error');
+                }
+            } catch (error) {
+                console.error('Error loading ingredients:', error);
+                showAlert('Failed to load ingredients. Please try again.', 'error');
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function renderIngredients(ingredientsList) {
+            const tbody = document.getElementById('stockTableBody');
+            tbody.innerHTML = '';
+
+            if (ingredientsList.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 40px;">No ingredients found</td></tr>';
+                return;
+            }
+
+            ingredientsList.forEach(ingredient => {
+                const row = document.createElement('tr');
+                
+                // Determine status
+                let status = 'OK';
+                let statusClass = 'status-ok';
+                if (ingredient.current_stock < ingredient.min_stock) {
+                    status = ingredient.current_stock === 0 ? 'CRITIC' : 'SCĂZUT';
+                    statusClass = ingredient.current_stock === 0 ? 'status-critical' : 'status-low';
+                }
+
+                // Use translated names if available
+                const name = currentLang === 'en' && ingredient.name_en ? ingredient.name_en : ingredient.name;
+                const category = currentLang === 'en' && ingredient.category_en ? ingredient.category_en : ingredient.category;
+
+                row.innerHTML = `
+                    <td><strong>${name}</strong></td>
+                    <td>${category || '-'}</td>
+                    <td>${ingredient.unit || '-'}</td>
+                    <td>${ingredient.current_stock || 0}</td>
+                    <td>${ingredient.min_stock || 0}</td>
+                    <td>${ingredient.cost_per_unit ? ingredient.cost_per_unit.toFixed(2) + ' RON' : '-'}</td>
+                    <td>${ingredient.supplier || '-'}</td>
+                    <td><span class="status-badge ${statusClass}">${translations[currentLang][status] || status}</span></td>
+                    <td>
+                        <button class="action-btn action-btn-edit" onclick="editIngredient(${ingredient.id})">${translations[currentLang]['Edit']}</button>
+                        <button class="action-btn action-btn-hide" onclick="hideIngredient(${ingredient.id})">${translations[currentLang]['Hide']}</button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        function showAlert(message, type = 'success') {
+            const alert = document.getElementById('stockAlert');
+            alert.textContent = message;
+            alert.className = 'alert alert-' + type;
+            alert.style.display = 'block';
+
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 5000);
+        }
+
+        // ==================== PLACEHOLDER FUNCTIONS ====================
+        function autoPopulateStocks() {
+            showAlert('Auto-populate functionality will be implemented soon.', 'info');
+        }
+
+        function checkUpdateStocks() {
+            showAlert('Check & Update functionality will be implemented soon.', 'info');
+        }
+
+        function showLowStockAlert() {
+            const lowStockItems = ingredients.filter(i => i.current_stock < i.min_stock);
+            if (lowStockItems.length === 0) {
+                showAlert('All ingredients are adequately stocked!', 'success');
+            } else {
+                showAlert(`Warning: ${lowStockItems.length} ingredients have low stock!`, 'warning');
+            }
+        }
+
+        function showAddIngredientModal() {
+            showAlert('Add Ingredient modal will be implemented soon.', 'info');
+        }
+
+        function editIngredient(id) {
+            showAlert(`Edit ingredient #${id} - functionality will be implemented soon.`, 'info');
+        }
+
+        function hideIngredient(id) {
+            if (confirm(`Are you sure you want to hide ingredient #${id}?`)) {
+                showAlert(`Ingredient #${id} hidden successfully.`, 'success');
+                // TODO: Implement actual hide functionality
+            }
+        }
+    </script>
+</body>
+</html>
+

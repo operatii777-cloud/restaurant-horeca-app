@@ -1,0 +1,41 @@
+.accounting-periods-page {
+  padding: 1.5rem;
+}
+
+.accounting-periods-page h2 {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.accounting-periods-page .text-muted {
+  font-size: 0.9rem;
+}
+
+.accounting-periods-page .card {
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.accounting-periods-page .table {
+  margin-bottom: 0;
+}
+
+.accounting-periods-page .badge {
+  font-size: 0.85rem;
+  padding: 0.35em 0.65em;
+}
+
+.accounting-periods-page .btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+.accounting-periods-page .modal-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.accounting-periods-page .modal-title {
+  font-weight: 600;
+}
+

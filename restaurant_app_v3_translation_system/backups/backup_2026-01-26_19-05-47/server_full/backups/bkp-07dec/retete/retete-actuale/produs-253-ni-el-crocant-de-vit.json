@@ -1,0 +1,17 @@
+{
+  "productId": 253,
+  "productName": "Șnițel Crocant de Vită",
+  "productCategory": "Fel Principal",
+  "price": 91,
+  "description": "Mușchi de vită, cartofi prăjiți, sos brânzeturi",
+  "ingredients": [
+    {
+      "ingredientId": 67,
+      "ingredientName": "Cartofi",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 200,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}

@@ -1,0 +1,3429 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Complet de Instrucțiuni - Restaurant App v3</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 10px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+        
+        .toc {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .toc h2 {
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+        
+        .toc ul {
+            list-style: none;
+            columns: 2;
+            column-gap: 30px;
+        }
+        
+        .toc li {
+            margin-bottom: 10px;
+            break-inside: avoid;
+        }
+        
+        .toc a {
+            color: #333;
+            text-decoration: none;
+            padding: 5px 0;
+            display: block;
+            transition: color 0.2s;
+        }
+        
+        .toc a:hover {
+            color: #667eea;
+        }
+        
+        .page-documentation {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .page-header {
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .page-header h2 {
+            color: #667eea;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .page-path {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .page-path code {
+            background: #f0f0f0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .page-description {
+            background: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        
+        .page-instructions, .page-features {
+            margin-bottom: 25px;
+        }
+        
+        .page-instructions h3, .page-features h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .page-instructions ol, .page-features ul {
+            margin-left: 20px;
+        }
+        
+        .page-instructions li, .page-features li {
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+        
+        .page-screenshot {
+            margin-top: 25px;
+        }
+        
+        .page-screenshot h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .page-screenshot img {
+            max-width: 100%;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .screenshot-placeholder {
+            background: #f8f9fa;
+            padding: 40px;
+            text-align: center;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .toc ul {
+                columns: 1;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Manual Complet de Instrucțiuni</h1>
+            <p>Restaurant App v3 - Ghid detaliat pentru fiecare pagină și funcționalitate</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">
+                Versiune: 3.0.0 | Data: 08.01.2026 | 66 pagini documentate
+            </p>
+        </div>
+        
+        <div class="toc">
+            <h2>📋 Cuprins</h2>
+            <ul>
+<li><a href="#dashboard">🏠 Dashboard Principal</a></li>
+<li><a href="#kiosk-dashboard">🖥️ POS/KIOSK</a></li>
+<li><a href="#monitoring-performance">📈 Monitoring & Performance</a></li>
+    <li><a href="#orders">📋 Gestionare Comenzi</a></li>
+    <li><a href="#orders-history">📚 Istoric Comenzi</a></li>
+    <li><a href="#orders-delivery">🚚 Comenzi Delivery</a></li>
+    <li><a href="#orders-drive-thru">🚗 Comenzi Drive-Thru</a></li>
+    <li><a href="#orders-takeaway">📦 Comenzi Takeaway</a></li>
+    <li><a href="#kiosk">🖥️ KIOSK</a></li>
+    <li><a href="#queue-monitor">📊 Queue Monitor</a></li>
+    <li><a href="#couriers">🛵 Curieri Proprii</a></li>
+    <li><a href="#dispatch">📡 Dispatch</a></li>
+    <li><a href="#stocks">📊 Gestionare Stocuri</a></li>
+    <li><a href="#stocks-inventory-multi">🏢 Inventar Multi-Gestiune</a></li>
+    <li><a href="#stocks-inventory-dashboard">📈 Inventory Dashboard</a></li>
+    <li><a href="#stocks-inventory-import">📥 Import Facturi</a></li>
+    <li><a href="#stocks-suppliers">🏢 Furnizori</a></li>
+    <li><a href="#stocks-suppliers-orders">📦 Comenzi Furnizori</a></li>
+    <li><a href="#stocks-waste">🗑️ Pierderi & Waste</a></li>
+    <li><a href="#stocks-labels">🏷️ Etichete Produse</a></li>
+    <li><a href="#stocks-allergens">⚠️ Alergeni</a></li>
+    <li><a href="#stocks-risk-alerts">⚠️ Stock & Risk Alerts</a></li>
+    <li><a href="#expiry-alerts">⏰ Expiry Alerts</a></li>
+    <li><a href="#recalls">🚨 Recalls</a></li>
+    <li><a href="#stocks-costs">💵 Costuri & Prețuri</a></li>
+    <li><a href="#catalog">🗂️ Catalog Produse</a></li>
+    <li><a href="#menu">🍽️ Gestionare Meniu</a></li>
+    <li><a href="#menu-builder">🛠️ Menu Builder</a></li>
+    <li><a href="#catalog-online">🛒 Categorii Online</a></li>
+    <li><a href="#catalog-attributes">🏷️ Grupuri Atribute</a></li>
+    <li><a href="#catalog-prices">💰 Utilitare Prețuri</a></li>
+    <li><a href="#ingredients">📦 Materii Prime</a></li>
+    <li><a href="#recipes">📋 Rețete & Fișe Tehnice</a></li>
+    <li><a href="#recipes-scaling">📏 Recipe Scaling</a></li>
+    <li><a href="#technical-sheets">📄 Fișe Tehnice</a></li>
+    <li><a href="#lots">🧾 Loturi & Recepții</a></li>
+    <li><a href="#production-batches">🧪 Producție</a></li>
+    <li><a href="#traceability">🔍 Traceability</a></li>
+    <li><a href="#reports-sales">📈 Rapoarte Vânzări</a></li>
+    <li><a href="#reports-stock">📦 Rapoarte Stoc</a></li>
+    <li><a href="#reports-financial">💰 Rapoarte Financiare</a></li>
+    <li><a href="#reports-profit-loss">💰 Profit & Loss (P&L)</a></li>
+    <li><a href="#reports-abc-analysis">📈 Analiză ABC Produse</a></li>
+    <li><a href="#reports-stock-prediction">🔮 Predicție Stoc</a></li>
+    <li><a href="#reports-top-products">📊 Top Products & Analytics</a></li>
+    <li><a href="#reports-staff">👥 Rapoarte Personal</a></li>
+    <li><a href="#reports-advanced">📊 Rapoarte Avansate</a></li>
+    <li><a href="#settings">🏢 Configurare Restaurant</a></li>
+    <li><a href="#settings-locations">🏭 Gestiune Locații</a></li>
+    <li><a href="#settings-areas">🗺️ Gestiune Zone/Săli</a></li>
+    <li><a href="#settings-tables">🪑 Configurare Mese</a></li>
+    <li><a href="#waiters">🧑‍🍳 Ospătari & PIN-uri</a></li>
+    <li><a href="#settings-schedule">⏰ Program & Orar</a></li>
+    <li><a href="#settings-printers">🖨️ Imprimante & Periferice</a></li>
+    <li><a href="#settings-users">👤 Utilizatori & Permisiuni</a></li>
+    <li><a href="#settings-notifications">🔔 Notificări & Alerte</a></li>
+    <li><a href="#settings-localization">🌍 Localizare</a></li>
+    <li><a href="#settings-ui-customization">🎨 Personalizare UI</a></li>
+    <li><a href="#settings-branding">🖼️ Aspect & Branding</a></li>
+    <li><a href="#settings-product-display">🛍️ Modul Afișare Produse (Stock Display Mode)</a></li>
+    <li><a href="#settings-missing-translations">🌐 Traduceri în Așteptare</a></li>
+    <li><a href="#settings-payment-methods">💳 Metode de Plată</a></li>
+    <li><a href="#integrations">🔌 Integrări</a></li>
+    <li><a href="#settings-import-export">📥📤 Import/Export</a></li>
+    <li><a href="#backup">💾 Backup</a></li>
+    <li><a href="#settings-manual-instructiuni">📚 Manual Instrucțiuni</a></li>
+            </ul>
+        </div>
+        
+
+<section id="dashboard" class="page-documentation">
+  <div class="page-header">
+    <h2>🏠 Dashboard Principal</h2>
+    <p class="page-path">Cale: <code>/dashboard</code></p>
+  </div>
+  
+  <div class="page-description">
+    <p>Vedere de ansamblu asupra tuturor operațiunilor restaurantului cu KPI-uri în timp real</p>
+  </div>
+  
+  <div class="page-instructions">
+    <h3>📋 Instrucțiuni de Utilizare</h3>
+    <ol>
+      <li>Dashboard-ul principal afișează KPI-uri cheie în timp real (vânzări, comenzi, profit)</li>
+      <li>Graficele interactive arată tendințe de vânzări și performanță pe perioade</li>
+      <li>Utilizați filtrele pentru a selecta perioada de timp dorită (astăzi, săptămâna aceasta, luna aceasta)</li>
+      <li>Click pe orice card KPI pentru a accesa rapoarte detaliate</li>
+      <li>Actualizarea se face automat la fiecare 30 de secunde</li>
+      <li>Exportați datele în Excel sau PDF pentru analiză ulterioară</li>
+    </ol>
+  </div>
+  
+  <div class="page-features">
+    <h3>✨ Funcționalități Principale</h3>
+    <ul>
+      <li>KPI Cards: Vânzări, Comenzi, Clienți, Profit cu comparații cu perioada anterioară</li>
+      <li>Grafice Interactive: Vânzări pe perioade, Top produse, Comparații anuale</li>
+      <li>Alerte Automate: Notificări pentru valori critice sau anomalii</li>
+      <li>Quick Actions: Acces rapid la funcții frecvente (comenzi noi, rapoarte)</li>
+      <li>Widgets Personalizabile: Reorganizați dashboard-ul după preferințe</li>
+    </ul>
+  </div>
+  
+  <div class="page-screenshot">
+    <h3>📸 Captură Ecran</h3>
+    <img src="screenshots/admin-vite/dashboard.png" 
+         alt="Dashboard Principal" 
+         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+    <p class="screenshot-placeholder" style="display:none;">
+      📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+      <small>Fișier așteptat: screenshots/admin-vite/dashboard.png</small>
+    </p>
+  </div>
+</section>
+
+
+<section id="kiosk-dashboard" class="page-documentation">
+  <div class="page-header">
+    <h2>🖥️ POS/KIOSK</h2>
+    <p class="page-path">Cale: <code>/kiosk/dashboard</code></p>
+  </div>
+  
+  <div class="page-description">
+    <p>Pagina POS/KIOSK - Sisteme POS și Kiosk</p>
+  </div>
+  
+  <div class="page-instructions">
+    <h3>📋 Instrucțiuni de Utilizare</h3>
+    <ol>
+      <li>Pagina POS/KIOSK permite gestionarea și configurarea sisteme pos și kiosk</li>
+      <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+      <li>Click pe elemente pentru a accesa detalii complete</li>
+      <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+      <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      <li>Utilizați interfața touch-friendly pentru operațiuni rapide</li>
+      <li>Monitorizați comenzile active în timp real</li>
+    </ol>
+  </div>
+  
+  <div class="page-features">
+    <h3>✨ Funcționalități Principale</h3>
+    <ul>
+      <li>Interfață intuitivă și ușor de utilizat</li>
+      <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+      <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+      <li>Actualizare în timp real pentru date curente</li>
+      <li>Interfață optimizată pentru touch screens</li>
+      <li>Sincronizare real-time cu sistemul central</li>
+    </ul>
+  </div>
+  
+  <div class="page-screenshot">
+    <h3>📸 Captură Ecran</h3>
+    <img src="screenshots/admin-vite/kiosk-dashboard.png" 
+         alt="POS/KIOSK" 
+         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+    <p class="screenshot-placeholder" style="display:none;">
+      📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+      <small>Fișier așteptat: screenshots/admin-vite/kiosk-dashboard.png</small>
+    </p>
+  </div>
+</section>
+
+
+<section id="monitoring-performance" class="page-documentation">
+  <div class="page-header">
+    <h2>📈 Monitoring & Performance</h2>
+    <p class="page-path">Cale: <code>/monitoring/performance</code></p>
+  </div>
+  
+  <div class="page-description">
+    <p>Pagina Monitoring & Performance - Funcționalitate generală</p>
+  </div>
+  
+  <div class="page-instructions">
+    <h3>📋 Instrucțiuni de Utilizare</h3>
+    <ol>
+      <li>Pagina Monitoring & Performance permite gestionarea și configurarea funcționalitate generală</li>
+      <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+      <li>Click pe elemente pentru a accesa detalii complete</li>
+      <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+      <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+    </ol>
+  </div>
+  
+  <div class="page-features">
+    <h3>✨ Funcționalități Principale</h3>
+    <ul>
+      <li>Interfață intuitivă și ușor de utilizat</li>
+      <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+      <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+      <li>Actualizare în timp real pentru date curente</li>
+    </ul>
+  </div>
+  
+  <div class="page-screenshot">
+    <h3>📸 Captură Ecran</h3>
+    <img src="screenshots/admin-vite/monitoring-performance.png" 
+         alt="Monitoring & Performance" 
+         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+    <p class="screenshot-placeholder" style="display:none;">
+      📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+      <small>Fișier așteptat: screenshots/admin-vite/monitoring-performance.png</small>
+    </p>
+  </div>
+</section>
+
+
+  <section id="orders" class="page-documentation">
+    <div class="page-header">
+      <h2>📋 Gestionare Comenzi</h2>
+      <p class="page-path">Cale: <code>/orders</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Gestionare completă a tuturor comenzilor restaurantului cu filtrare avansată și modificare în timp real</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Lista afișează toate comenzile active și finalizate organizate cronologic</li>
+        <li>Utilizați filtrele pentru a căuta după status (activ, finalizat, anulat), dată, client sau tip comandă</li>
+        <li>Click pe o comandă pentru a vedea detalii complete: produse, plăți, curier, istoric status</li>
+        <li>Modificați statusul comenzii direct din listă (pregătit, în livrare, finalizat)</li>
+        <li>Add note sau instrucțiuni speciale pentru fiecare comandă</li>
+        <li>Exportați rapoarte în Excel sau PDF pentru contabilitate sau analiză</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Filtrare Avansată: Status, Dată, Client, Tip comandă (Delivery, Takeaway, Drive-Thru)</li>
+        <li>Modificare în Timp Real: Status, Note, Alocare curier, Cancel</li>
+        <li>Istoric Complet: Toate comenzile cu detalii despre modificări și evenimente</li>
+        <li>Export Multiple: Excel, PDF, CSV pentru integrare cu sisteme externe</li>
+        <li>Notificări: Alerte pentru comenzi noi, modificări status, probleme</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/orders.png" 
+           alt="Gestionare Comenzi" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/orders.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="orders-history" class="page-documentation">
+    <div class="page-header">
+      <h2>📚 Istoric Comenzi</h2>
+      <p class="page-path">Cale: <code>/orders/history</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Istoric Comenzi - Gestionare și urmărire comenzi</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Istoric Comenzi permite gestionarea și configurarea gestionare și urmărire comenzi</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Monitorizați statusul comenzilor în timp real cu actualizare automată</li>
+        <li>Modificați statusul comenzilor direct din listă pentru eficiență maximă</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+        <li>Status tracking în timp real cu notificări</li>
+        <li>Notificări pentru evenimente importante (comenzi noi, modificări)</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/orders-history.png" 
+           alt="Istoric Comenzi" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/orders-history.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="orders-delivery" class="page-documentation">
+    <div class="page-header">
+      <h2>🚚 Comenzi Delivery</h2>
+      <p class="page-path">Cale: <code>/orders/delivery</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Comenzi Delivery - Gestionare și urmărire comenzi</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Comenzi Delivery permite gestionarea și configurarea gestionare și urmărire comenzi</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Monitorizați statusul comenzilor în timp real cu actualizare automată</li>
+        <li>Modificați statusul comenzilor direct din listă pentru eficiență maximă</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+        <li>Status tracking în timp real cu notificări</li>
+        <li>Notificări pentru evenimente importante (comenzi noi, modificări)</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/orders-delivery.png" 
+           alt="Comenzi Delivery" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/orders-delivery.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="orders-drive-thru" class="page-documentation">
+    <div class="page-header">
+      <h2>🚗 Comenzi Drive-Thru</h2>
+      <p class="page-path">Cale: <code>/orders/drive-thru</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Comenzi Drive-Thru - Gestionare și urmărire comenzi</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Comenzi Drive-Thru permite gestionarea și configurarea gestionare și urmărire comenzi</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Monitorizați statusul comenzilor în timp real cu actualizare automată</li>
+        <li>Modificați statusul comenzilor direct din listă pentru eficiență maximă</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+        <li>Status tracking în timp real cu notificări</li>
+        <li>Notificări pentru evenimente importante (comenzi noi, modificări)</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/orders-drive-thru.png" 
+           alt="Comenzi Drive-Thru" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/orders-drive-thru.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="orders-takeaway" class="page-documentation">
+    <div class="page-header">
+      <h2>📦 Comenzi Takeaway</h2>
+      <p class="page-path">Cale: <code>/orders/takeaway</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Comenzi Takeaway - Gestionare și urmărire comenzi</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Comenzi Takeaway permite gestionarea și configurarea gestionare și urmărire comenzi</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Monitorizați statusul comenzilor în timp real cu actualizare automată</li>
+        <li>Modificați statusul comenzilor direct din listă pentru eficiență maximă</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+        <li>Status tracking în timp real cu notificări</li>
+        <li>Notificări pentru evenimente importante (comenzi noi, modificări)</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/orders-takeaway.png" 
+           alt="Comenzi Takeaway" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/orders-takeaway.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="kiosk" class="page-documentation">
+    <div class="page-header">
+      <h2>🖥️ KIOSK</h2>
+      <p class="page-path">Cale: <code>/kiosk</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina KIOSK - Sisteme POS și Kiosk</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina KIOSK permite gestionarea și configurarea sisteme pos și kiosk</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Utilizați interfața touch-friendly pentru operațiuni rapide</li>
+        <li>Monitorizați comenzile active în timp real</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+        <li>Interfață optimizată pentru touch screens</li>
+        <li>Sincronizare real-time cu sistemul central</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/kiosk.png" 
+           alt="KIOSK" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/kiosk.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="queue-monitor" class="page-documentation">
+    <div class="page-header">
+      <h2>📊 Queue Monitor</h2>
+      <p class="page-path">Cale: <code>/queue-monitor</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Queue Monitor - Funcționalitate generală</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Queue Monitor permite gestionarea și configurarea funcționalitate generală</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/queue-monitor.png" 
+           alt="Queue Monitor" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/queue-monitor.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="couriers" class="page-documentation">
+    <div class="page-header">
+      <h2>🛵 Curieri Proprii</h2>
+      <p class="page-path">Cale: <code>/couriers</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Curieri Proprii - Funcționalitate generală</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Curieri Proprii permite gestionarea și configurarea funcționalitate generală</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/couriers.png" 
+           alt="Curieri Proprii" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/couriers.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="dispatch" class="page-documentation">
+    <div class="page-header">
+      <h2>📡 Dispatch</h2>
+      <p class="page-path">Cale: <code>/dispatch</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Dispatch - Funcționalitate generală</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Dispatch permite gestionarea și configurarea funcționalitate generală</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/dispatch.png" 
+           alt="Dispatch" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/dispatch.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="stocks" class="page-documentation">
+    <div class="page-header">
+      <h2>📊 Gestionare Stocuri</h2>
+      <p class="page-path">Cale: <code>/stocks</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Gestionare completă a stocurilor și inventarului cu alerte automate și rapoarte detaliate</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Vizualizați stocul actual pentru toate produsele organizate pe categorii</li>
+        <li>Utilizați filtrele pentru a găsi produse specifice sau categorii</li>
+        <li>Actualizați stocul manual sau prin import din fișiere Excel/CSV</li>
+        <li>Configurați alerte pentru stocuri scăzute sau produse expirate</li>
+        <li>Vizualizați istoricul mișcărilor de stoc pentru fiecare produs</li>
+        <li>Exportați rapoarte de stoc pentru inventariere sau analiză</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Real-Time Stock View: Current stock for all products with automatic updates</li>
+        <li>Alerte Automate: Notificări pentru stocuri scăzute, produse expirate, discrepanțe</li>
+        <li>Import/Export: Excel, CSV pentru sincronizare cu furnizori sau sisteme externe</li>
+        <li>Istoric Complet: Toate mișcările de stoc (intrări, ieșiri, ajustări) cu detalii</li>
+        <li>Analiză: Rotație stoc, Valoare inventar, Predicții consum</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/stocks.png" 
+           alt="Gestionare Stocuri" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/stocks.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="stocks-inventory-multi" class="page-documentation">
+    <div class="page-header">
+      <h2>🏢 Inventar Multi-Gestiune</h2>
+      <p class="page-path">Cale: <code>/stocks/inventory/multi</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Inventar Multi-Gestiune - Gestionare stocuri și inventar</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Inventar Multi-Gestiune permite gestionarea și configurarea gestionare stocuri și inventar</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Configurați alerte pentru stocuri scăzute pentru a preveni rupturile de stoc</li>
+        <li>Importați stocuri din fișiere Excel sau CSV pentru actualizare rapidă</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+        <li>Alerte automate pentru stocuri scăzute sau produse expirate</li>
+        <li>Istoric complet mișcări stoc cu detalii despre fiecare operațiune</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/stocks-inventory-multi.png" 
+           alt="Inventar Multi-Gestiune" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/stocks-inventory-multi.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="stocks-inventory-dashboard" class="page-documentation">
+    <div class="page-header">
+      <h2>📈 Inventory Dashboard</h2>
+      <p class="page-path">Cale: <code>/stocks/inventory/dashboard</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Inventory Dashboard - Gestionare stocuri și inventar</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Inventory Dashboard permite gestionarea și configurarea gestionare stocuri și inventar</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Configurați alerte pentru stocuri scăzute pentru a preveni rupturile de stoc</li>
+        <li>Importați stocuri din fișiere Excel sau CSV pentru actualizare rapidă</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+        <li>Alerte automate pentru stocuri scăzute sau produse expirate</li>
+        <li>Istoric complet mișcări stoc cu detalii despre fiecare operațiune</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/stocks-inventory-dashboard.png" 
+           alt="Inventory Dashboard" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/stocks-inventory-dashboard.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="stocks-inventory-import" class="page-documentation">
+    <div class="page-header">
+      <h2>📥 Import Facturi</h2>
+      <p class="page-path">Cale: <code>/stocks/inventory/import</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Import Facturi - Gestionare stocuri și inventar</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Import Facturi permite gestionarea și configurarea gestionare stocuri și inventar</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Configurați alerte pentru stocuri scăzute pentru a preveni rupturile de stoc</li>
+        <li>Importați stocuri din fișiere Excel sau CSV pentru actualizare rapidă</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+        <li>Alerte automate pentru stocuri scăzute sau produse expirate</li>
+        <li>Istoric complet mișcări stoc cu detalii despre fiecare operațiune</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/stocks-inventory-import.png" 
+           alt="Import Facturi" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/stocks-inventory-import.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="stocks-suppliers" class="page-documentation">
+    <div class="page-header">
+      <h2>🏢 Furnizori</h2>
+      <p class="page-path">Cale: <code>/stocks/suppliers</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Furnizori - Gestionare stocuri și inventar</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Furnizori permite gestionarea și configurarea gestionare stocuri și inventar</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Configurați alerte pentru stocuri scăzute pentru a preveni rupturile de stoc</li>
+        <li>Importați stocuri din fișiere Excel sau CSV pentru actualizare rapidă</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+        <li>Alerte automate pentru stocuri scăzute sau produse expirate</li>
+        <li>Istoric complet mișcări stoc cu detalii despre fiecare operațiune</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/stocks-suppliers.png" 
+           alt="Furnizori" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/stocks-suppliers.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="stocks-suppliers-orders" class="page-documentation">
+    <div class="page-header">
+      <h2>📦 Comenzi Furnizori</h2>
+      <p class="page-path">Cale: <code>/stocks/suppliers/orders</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Comenzi Furnizori - Gestionare și urmărire comenzi</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Comenzi Furnizori permite gestionarea și configurarea gestionare și urmărire comenzi</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Monitorizați statusul comenzilor în timp real cu actualizare automată</li>
+        <li>Modificați statusul comenzilor direct din listă pentru eficiență maximă</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+        <li>Status tracking în timp real cu notificări</li>
+        <li>Notificări pentru evenimente importante (comenzi noi, modificări)</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/stocks-suppliers-orders.png" 
+           alt="Comenzi Furnizori" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/stocks-suppliers-orders.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="stocks-waste" class="page-documentation">
+    <div class="page-header">
+      <h2>🗑️ Pierderi & Waste</h2>
+      <p class="page-path">Cale: <code>/stocks/waste</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Pierderi & Waste - Gestionare stocuri și inventar</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Pierderi & Waste permite gestionarea și configurarea gestionare stocuri și inventar</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Configurați alerte pentru stocuri scăzute pentru a preveni rupturile de stoc</li>
+        <li>Importați stocuri din fișiere Excel sau CSV pentru actualizare rapidă</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+        <li>Alerte automate pentru stocuri scăzute sau produse expirate</li>
+        <li>Istoric complet mișcări stoc cu detalii despre fiecare operațiune</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/stocks-waste.png" 
+           alt="Pierderi & Waste" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/stocks-waste.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="stocks-labels" class="page-documentation">
+    <div class="page-header">
+      <h2>🏷️ Etichete Produse</h2>
+      <p class="page-path">Cale: <code>/stocks/labels</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Etichete Produse - Gestionare stocuri și inventar</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Etichete Produse permite gestionarea și configurarea gestionare stocuri și inventar</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Configurați alerte pentru stocuri scăzute pentru a preveni rupturile de stoc</li>
+        <li>Importați stocuri din fișiere Excel sau CSV pentru actualizare rapidă</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+        <li>Alerte automate pentru stocuri scăzute sau produse expirate</li>
+        <li>Istoric complet mișcări stoc cu detalii despre fiecare operațiune</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/stocks-labels.png" 
+           alt="Etichete Produse" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/stocks-labels.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="stocks-allergens" class="page-documentation">
+    <div class="page-header">
+      <h2>⚠️ Alergeni</h2>
+      <p class="page-path">Cale: <code>/stocks/allergens</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Alergeni - Gestionare stocuri și inventar</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Alergeni permite gestionarea și configurarea gestionare stocuri și inventar</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Configurați alerte pentru stocuri scăzute pentru a preveni rupturile de stoc</li>
+        <li>Importați stocuri din fișiere Excel sau CSV pentru actualizare rapidă</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+        <li>Alerte automate pentru stocuri scăzute sau produse expirate</li>
+        <li>Istoric complet mișcări stoc cu detalii despre fiecare operațiune</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/stocks-allergens.png" 
+           alt="Alergeni" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/stocks-allergens.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="stocks-risk-alerts" class="page-documentation">
+    <div class="page-header">
+      <h2>⚠️ Stock & Risk Alerts</h2>
+      <p class="page-path">Cale: <code>/stocks/risk-alerts</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Stock & Risk Alerts - Gestionare stocuri și inventar</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Stock & Risk Alerts permite gestionarea și configurarea gestionare stocuri și inventar</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Configurați alerte pentru stocuri scăzute pentru a preveni rupturile de stoc</li>
+        <li>Importați stocuri din fișiere Excel sau CSV pentru actualizare rapidă</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+        <li>Alerte automate pentru stocuri scăzute sau produse expirate</li>
+        <li>Istoric complet mișcări stoc cu detalii despre fiecare operațiune</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/stocks-risk-alerts.png" 
+           alt="Stock & Risk Alerts" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/stocks-risk-alerts.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="expiry-alerts" class="page-documentation">
+    <div class="page-header">
+      <h2>⏰ Expiry Alerts</h2>
+      <p class="page-path">Cale: <code>/expiry-alerts</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Expiry Alerts - Funcționalitate generală</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Expiry Alerts permite gestionarea și configurarea funcționalitate generală</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/expiry-alerts.png" 
+           alt="Expiry Alerts" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/expiry-alerts.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="recalls" class="page-documentation">
+    <div class="page-header">
+      <h2>🚨 Recalls</h2>
+      <p class="page-path">Cale: <code>/recalls</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Recalls - Funcționalitate generală</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Recalls permite gestionarea și configurarea funcționalitate generală</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/recalls.png" 
+           alt="Recalls" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/recalls.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="stocks-costs" class="page-documentation">
+    <div class="page-header">
+      <h2>💵 Costuri & Prețuri</h2>
+      <p class="page-path">Cale: <code>/stocks/costs</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Costuri & Prețuri - Gestionare stocuri și inventar</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Costuri & Prețuri permite gestionarea și configurarea gestionare stocuri și inventar</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Configurați alerte pentru stocuri scăzute pentru a preveni rupturile de stoc</li>
+        <li>Importați stocuri din fișiere Excel sau CSV pentru actualizare rapidă</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+        <li>Alerte automate pentru stocuri scăzute sau produse expirate</li>
+        <li>Istoric complet mișcări stoc cu detalii despre fiecare operațiune</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/stocks-costs.png" 
+           alt="Costuri & Prețuri" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/stocks-costs.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="catalog" class="page-documentation">
+    <div class="page-header">
+      <h2>🗂️ Catalog Produse</h2>
+      <p class="page-path">Cale: <code>/catalog</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Gestionare catalog complet de produse și categorii cu atribute detaliate și fotografii</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Add, edit or delete products from catalog with intuitive interface</li>
+        <li>Organizați produsele în categorii pentru navigare ușoară (Aperitive, Feluri principale, Deserturi, Băuturi)</li>
+        <li>Configurați prețuri, alergeni și informații nutriționale pentru fiecare produs</li>
+        <li>Add fotografii de înaltă calitate pentru fiecare produs</li>
+        <li>Setați disponibilitatea produselor (disponibil/indisponibil) pentru control meniu</li>
+        <li>Exportați catalogul pentru sincronizare cu alte sisteme sau platforme delivery</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Product CRUD Management: Create, Edit, Delete with complete validation</li>
+        <li>Categorii Ierarhice: Organizare flexibilă pe categorii și subcategorii</li>
+        <li>Atribute Complete: Alergeni, Valori nutriționale, Prețuri, Descrieri</li>
+        <li>Galerie Foto: Upload și gestionare fotografii pentru fiecare produs</li>
+        <li>Import/Export: Sincronizare cu sisteme externe, platforme delivery, site-uri web</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/catalog.png" 
+           alt="Catalog Produse" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/catalog.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="menu" class="page-documentation">
+    <div class="page-header">
+      <h2>🍽️ Gestionare Meniu</h2>
+      <p class="page-path">Cale: <code>/menu</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Gestionare meniu restaurant cu organizare pe categorii și control disponibilitate</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Creați și editați meniul restaurantului cu editor vizual intuitiv</li>
+        <li>Organizați produsele în categorii (Aperitive, Feluri principale, Deserturi, Băuturi)</li>
+        <li>Configurați disponibilitatea produselor (disponibil/indisponibil) pentru control meniu</li>
+        <li>Setați prețuri și promoții (reduceri, oferte speciale)</li>
+        <li>Preview meniul înainte de publicare pentru verificare</li>
+        <li>Publicați meniul pentru a fi vizibil în aplicația client sau site web</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Editor Vizual: Drag & drop pentru organizare rapidă a produselor</li>
+        <li>Categorii Flexibile: Organizare pe categorii cu sortare personalizată</li>
+        <li>Control Disponibilitate: Activare/dezactivare produse sau categorii întregi</li>
+        <li>Preview: View menu before publishing</li>
+        <li>Versiuni: Păstrare istoric versiuni meniu pentru rollback</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/menu.png" 
+           alt="Gestionare Meniu" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/menu.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="menu-builder" class="page-documentation">
+    <div class="page-header">
+      <h2>🛠️ Menu Builder</h2>
+      <p class="page-path">Cale: <code>/menu/builder</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Menu Builder - Gestionare catalog produse</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Menu Builder permite gestionarea și configurarea gestionare catalog produse</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/menu-builder.png" 
+           alt="Menu Builder" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/menu-builder.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="catalog-online" class="page-documentation">
+    <div class="page-header">
+      <h2>🛒 Categorii Online</h2>
+      <p class="page-path">Cale: <code>/catalog/online</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Categorii Online - Gestionare catalog produse</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Categorii Online permite gestionarea și configurarea gestionare catalog produse</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/catalog-online.png" 
+           alt="Categorii Online" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/catalog-online.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="catalog-attributes" class="page-documentation">
+    <div class="page-header">
+      <h2>🏷️ Grupuri Atribute</h2>
+      <p class="page-path">Cale: <code>/catalog/attributes</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Grupuri Atribute - Gestionare catalog produse</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Grupuri Atribute permite gestionarea și configurarea gestionare catalog produse</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/catalog-attributes.png" 
+           alt="Grupuri Atribute" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/catalog-attributes.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="catalog-prices" class="page-documentation">
+    <div class="page-header">
+      <h2>💰 Utilitare Prețuri</h2>
+      <p class="page-path">Cale: <code>/catalog/prices</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Utilitare Prețuri - Gestionare catalog produse</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Utilitare Prețuri permite gestionarea și configurarea gestionare catalog produse</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/catalog-prices.png" 
+           alt="Utilitare Prețuri" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/catalog-prices.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="ingredients" class="page-documentation">
+    <div class="page-header">
+      <h2>📦 Materii Prime</h2>
+      <p class="page-path">Cale: <code>/ingredients</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Materii Prime - Gestionare stocuri și inventar</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Materii Prime permite gestionarea și configurarea gestionare stocuri și inventar</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Configurați alerte pentru stocuri scăzute pentru a preveni rupturile de stoc</li>
+        <li>Importați stocuri din fișiere Excel sau CSV pentru actualizare rapidă</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+        <li>Alerte automate pentru stocuri scăzute sau produse expirate</li>
+        <li>Istoric complet mișcări stoc cu detalii despre fiecare operațiune</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/ingredients.png" 
+           alt="Materii Prime" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/ingredients.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="recipes" class="page-documentation">
+    <div class="page-header">
+      <h2>📋 Rețete & Fișe Tehnice</h2>
+      <p class="page-path">Cale: <code>/recipes</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Gestionare rețete complete cu ingrediente, instrucțiuni și calcul cost automat</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Creați rețete noi sau editați rețete existente cu interfață intuitivă</li>
+        <li>Add ingrediente cu cantități precise (grame, litri, bucăți)</li>
+        <li>Configurați instrucțiuni de preparare pas cu pas cu timpi și temperaturi</li>
+        <li>Calculați costul automat pe baza prețurilor actuale ale ingrediente</li>
+        <li>Scalați rețetele pentru orice număr de porții (1, 10, 100)</li>
+        <li>Generați fișe tehnice HACCP complete pentru conformitate</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Editor Rețete: Interfață intuitivă pentru adăugare ingrediente și instrucțiuni</li>
+        <li>Calcul Cost Automat: Cost pe porție bazat pe prețuri actuale ingrediente</li>
+        <li>Scalare: Ajustare automată cantități pentru orice număr de porții</li>
+        <li>Fișe Tehnice: Generare automată fișe tehnice HACCP cu toate informațiile necesare</li>
+        <li>Template-uri: Rețete standard pentru creare rapidă</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/recipes.png" 
+           alt="Rețete & Fișe Tehnice" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/recipes.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="recipes-scaling" class="page-documentation">
+    <div class="page-header">
+      <h2>📏 Recipe Scaling</h2>
+      <p class="page-path">Cale: <code>/recipes/scaling</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Recipe Scaling - Gestionare rețete și fișe tehnice</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Recipe Scaling permite gestionarea și configurarea gestionare rețete și fișe tehnice</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/recipes-scaling.png" 
+           alt="Recipe Scaling" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/recipes-scaling.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="technical-sheets" class="page-documentation">
+    <div class="page-header">
+      <h2>📄 Fișe Tehnice</h2>
+      <p class="page-path">Cale: <code>/technical-sheets</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Fișe Tehnice - Gestionare rețete și fișe tehnice</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Fișe Tehnice permite gestionarea și configurarea gestionare rețete și fișe tehnice</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/technical-sheets.png" 
+           alt="Fișe Tehnice" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/technical-sheets.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="lots" class="page-documentation">
+    <div class="page-header">
+      <h2>🧾 Loturi & Recepții</h2>
+      <p class="page-path">Cale: <code>/lots</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Loturi & Recepții - Funcționalitate generală</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Loturi & Recepții permite gestionarea și configurarea funcționalitate generală</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/lots.png" 
+           alt="Loturi & Recepții" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/lots.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="production-batches" class="page-documentation">
+    <div class="page-header">
+      <h2>🧪 Producție</h2>
+      <p class="page-path">Cale: <code>/production/batches</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Producție - Funcționalitate generală</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Producție permite gestionarea și configurarea funcționalitate generală</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/production-batches.png" 
+           alt="Producție" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/production-batches.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="traceability" class="page-documentation">
+    <div class="page-header">
+      <h2>🔍 Traceability</h2>
+      <p class="page-path">Cale: <code>/traceability</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Traceability - Funcționalitate generală</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Traceability permite gestionarea și configurarea funcționalitate generală</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/traceability.png" 
+           alt="Traceability" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/traceability.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="reports-sales" class="page-documentation">
+    <div class="page-header">
+      <h2>📈 Rapoarte Vânzări</h2>
+      <p class="page-path">Cale: <code>/reports/sales</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Rapoarte Vânzări - Rapoarte și analiză</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Rapoarte Vânzări permite gestionarea și configurarea rapoarte și analiză</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+        <li>Grafice interactive pentru analiză vizuală</li>
+        <li>Export Excel și PDF pentru integrare cu sisteme externe</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/reports-sales.png" 
+           alt="Rapoarte Vânzări" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/reports-sales.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="reports-stock" class="page-documentation">
+    <div class="page-header">
+      <h2>📦 Rapoarte Stoc</h2>
+      <p class="page-path">Cale: <code>/reports/stock</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Rapoarte Stoc - Rapoarte și analiză</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Rapoarte Stoc permite gestionarea și configurarea rapoarte și analiză</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+        <li>Grafice interactive pentru analiză vizuală</li>
+        <li>Export Excel și PDF pentru integrare cu sisteme externe</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/reports-stock.png" 
+           alt="Rapoarte Stoc" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/reports-stock.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="reports-financial" class="page-documentation">
+    <div class="page-header">
+      <h2>💰 Rapoarte Financiare</h2>
+      <p class="page-path">Cale: <code>/reports/financial</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Rapoarte Financiare - Rapoarte și analiză</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Rapoarte Financiare permite gestionarea și configurarea rapoarte și analiză</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+        <li>Grafice interactive pentru analiză vizuală</li>
+        <li>Export Excel și PDF pentru integrare cu sisteme externe</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/reports-financial.png" 
+           alt="Rapoarte Financiare" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/reports-financial.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="reports-profit-loss" class="page-documentation">
+    <div class="page-header">
+      <h2>💰 Profit & Loss (P&L)</h2>
+      <p class="page-path">Cale: <code>/reports/profit-loss</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Profit & Loss (P&L) - Rapoarte și analiză</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Profit & Loss (P&L) permite gestionarea și configurarea rapoarte și analiză</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+        <li>Grafice interactive pentru analiză vizuală</li>
+        <li>Export Excel și PDF pentru integrare cu sisteme externe</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/reports-profit-loss.png" 
+           alt="Profit & Loss (P&L)" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/reports-profit-loss.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="reports-abc-analysis" class="page-documentation">
+    <div class="page-header">
+      <h2>📈 Analiză ABC Produse</h2>
+      <p class="page-path">Cale: <code>/reports/abc-analysis</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Analiză ABC Produse - Rapoarte și analiză</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Analiză ABC Produse permite gestionarea și configurarea rapoarte și analiză</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+        <li>Grafice interactive pentru analiză vizuală</li>
+        <li>Export Excel și PDF pentru integrare cu sisteme externe</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/reports-abc-analysis.png" 
+           alt="Analiză ABC Produse" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/reports-abc-analysis.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="reports-stock-prediction" class="page-documentation">
+    <div class="page-header">
+      <h2>🔮 Predicție Stoc</h2>
+      <p class="page-path">Cale: <code>/reports/stock-prediction</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Predicție Stoc - Rapoarte și analiză</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Predicție Stoc permite gestionarea și configurarea rapoarte și analiză</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+        <li>Grafice interactive pentru analiză vizuală</li>
+        <li>Export Excel și PDF pentru integrare cu sisteme externe</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/reports-stock-prediction.png" 
+           alt="Predicție Stoc" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/reports-stock-prediction.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="reports-top-products" class="page-documentation">
+    <div class="page-header">
+      <h2>📊 Top Products & Analytics</h2>
+      <p class="page-path">Cale: <code>/reports/top-products</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Top Products & Analytics - Rapoarte și analiză</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Top Products & Analytics permite gestionarea și configurarea rapoarte și analiză</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+        <li>Grafice interactive pentru analiză vizuală</li>
+        <li>Export Excel și PDF pentru integrare cu sisteme externe</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/reports-top-products.png" 
+           alt="Top Products & Analytics" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/reports-top-products.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="reports-staff" class="page-documentation">
+    <div class="page-header">
+      <h2>👥 Rapoarte Personal</h2>
+      <p class="page-path">Cale: <code>/reports/staff</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Rapoarte Personal - Rapoarte și analiză</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Rapoarte Personal permite gestionarea și configurarea rapoarte și analiză</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+        <li>Grafice interactive pentru analiză vizuală</li>
+        <li>Export Excel și PDF pentru integrare cu sisteme externe</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/reports-staff.png" 
+           alt="Rapoarte Personal" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/reports-staff.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="reports-advanced" class="page-documentation">
+    <div class="page-header">
+      <h2>📊 Rapoarte Avansate</h2>
+      <p class="page-path">Cale: <code>/reports/advanced</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Rapoarte Avansate - Rapoarte și analiză</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Rapoarte Avansate permite gestionarea și configurarea rapoarte și analiză</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+        <li>Grafice interactive pentru analiză vizuală</li>
+        <li>Export Excel și PDF pentru integrare cu sisteme externe</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/reports-advanced.png" 
+           alt="Rapoarte Avansate" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/reports-advanced.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="settings" class="page-documentation">
+    <div class="page-header">
+      <h2>🏢 Configurare Restaurant</h2>
+      <p class="page-path">Cale: <code>/settings</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Configurare generală a restaurantului și sistemului cu toate opțiunile disponibile</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Configurați informațiile de bază ale restaurantului (nume, adresă, contact)</li>
+        <li>Setați programul de funcționare (zile și ore pentru fiecare zi)</li>
+        <li>Configurați taxe și TVA (cote TVA, taxe locale)</li>
+        <li>Gestionați metodele de plată acceptate (cash, card, online)</li>
+        <li>Configurați integrarea cu sisteme externe (delivery platforms, payment gateways)</li>
+        <li>Salvați modificările pentru a le aplica în sistem</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Informații Restaurant: Nume, Adresă, Contact, Logo, Branding</li>
+        <li>Program Funcționare: Zile și ore pentru fiecare zi cu excepții</li>
+        <li>Fiscal: TVA, Taxe, Case de marcat, Integrare ANAF</li>
+        <li>Plăți: Metode acceptate, Integrare payment gateways</li>
+        <li>Integrări: Delivery platforms (Glovo, Uber, Bolt), Sisteme externe</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/settings.png" 
+           alt="Configurare Restaurant" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/settings.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="settings-locations" class="page-documentation">
+    <div class="page-header">
+      <h2>🏭 Gestiune Locații</h2>
+      <p class="page-path">Cale: <code>/settings/locations</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Gestiune Locații - Configurare sistem</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Gestiune Locații permite gestionarea și configurarea configurare sistem</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Salvați modificările pentru a le aplica în sistem</li>
+        <li>Verificați validarea datelor înainte de Save pentru a evita erorile</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/settings-locations.png" 
+           alt="Gestiune Locații" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/settings-locations.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="settings-areas" class="page-documentation">
+    <div class="page-header">
+      <h2>🗺️ Gestiune Zone/Săli</h2>
+      <p class="page-path">Cale: <code>/settings/areas</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Gestiune Zone/Săli - Configurare sistem</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Gestiune Zone/Săli permite gestionarea și configurarea configurare sistem</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Salvați modificările pentru a le aplica în sistem</li>
+        <li>Verificați validarea datelor înainte de Save pentru a evita erorile</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/settings-areas.png" 
+           alt="Gestiune Zone/Săli" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/settings-areas.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="settings-tables" class="page-documentation">
+    <div class="page-header">
+      <h2>🪑 Configurare Mese</h2>
+      <p class="page-path">Cale: <code>/settings/tables</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Configurare Mese - Configurare sistem</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Configurare Mese permite gestionarea și configurarea configurare sistem</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Salvați modificările pentru a le aplica în sistem</li>
+        <li>Verificați validarea datelor înainte de Save pentru a evita erorile</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/settings-tables.png" 
+           alt="Configurare Mese" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/settings-tables.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="waiters" class="page-documentation">
+    <div class="page-header">
+      <h2>🧑‍🍳 Ospătari & PIN-uri</h2>
+      <p class="page-path">Cale: <code>/waiters</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Ospătari & PIN-uri - Funcționalitate generală</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Ospătari & PIN-uri permite gestionarea și configurarea funcționalitate generală</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/waiters.png" 
+           alt="Ospătari & PIN-uri" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/waiters.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="settings-schedule" class="page-documentation">
+    <div class="page-header">
+      <h2>⏰ Program & Orar</h2>
+      <p class="page-path">Cale: <code>/settings/schedule</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Program & Orar - Configurare sistem</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Program & Orar permite gestionarea și configurarea configurare sistem</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Salvați modificările pentru a le aplica în sistem</li>
+        <li>Verificați validarea datelor înainte de Save pentru a evita erorile</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/settings-schedule.png" 
+           alt="Program & Orar" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/settings-schedule.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="settings-printers" class="page-documentation">
+    <div class="page-header">
+      <h2>🖨️ Imprimante & Periferice</h2>
+      <p class="page-path">Cale: <code>/settings/printers</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Imprimante & Periferice - Configurare sistem</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Imprimante & Periferice permite gestionarea și configurarea configurare sistem</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Salvați modificările pentru a le aplica în sistem</li>
+        <li>Verificați validarea datelor înainte de Save pentru a evita erorile</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/settings-printers.png" 
+           alt="Imprimante & Periferice" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/settings-printers.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="settings-users" class="page-documentation">
+    <div class="page-header">
+      <h2>👤 Utilizatori & Permisiuni</h2>
+      <p class="page-path">Cale: <code>/settings/users</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Utilizatori & Permisiuni - Configurare sistem</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Utilizatori & Permisiuni permite gestionarea și configurarea configurare sistem</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Salvați modificările pentru a le aplica în sistem</li>
+        <li>Verificați validarea datelor înainte de Save pentru a evita erorile</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/settings-users.png" 
+           alt="Utilizatori & Permisiuni" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/settings-users.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="settings-notifications" class="page-documentation">
+    <div class="page-header">
+      <h2>🔔 Notificări & Alerte</h2>
+      <p class="page-path">Cale: <code>/settings/notifications</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Notificări & Alerte - Configurare sistem</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Notificări & Alerte permite gestionarea și configurarea configurare sistem</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Salvați modificările pentru a le aplica în sistem</li>
+        <li>Verificați validarea datelor înainte de Save pentru a evita erorile</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/settings-notifications.png" 
+           alt="Notificări & Alerte" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/settings-notifications.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="settings-localization" class="page-documentation">
+    <div class="page-header">
+      <h2>🌍 Localizare</h2>
+      <p class="page-path">Cale: <code>/settings/localization</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Localizare - Configurare sistem</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Localizare permite gestionarea și configurarea configurare sistem</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Salvați modificările pentru a le aplica în sistem</li>
+        <li>Verificați validarea datelor înainte de Save pentru a evita erorile</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/settings-localization.png" 
+           alt="Localizare" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/settings-localization.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="settings-ui-customization" class="page-documentation">
+    <div class="page-header">
+      <h2>🎨 Personalizare UI</h2>
+      <p class="page-path">Cale: <code>/settings/ui-customization</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Personalizare UI - Configurare sistem</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Personalizare UI permite gestionarea și configurarea configurare sistem</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Salvați modificările pentru a le aplica în sistem</li>
+        <li>Verificați validarea datelor înainte de Save pentru a evita erorile</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/settings-ui-customization.png" 
+           alt="Personalizare UI" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/settings-ui-customization.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="settings-branding" class="page-documentation">
+    <div class="page-header">
+      <h2>🖼️ Aspect & Branding</h2>
+      <p class="page-path">Cale: <code>/settings/branding</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Aspect & Branding - Configurare sistem</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Aspect & Branding permite gestionarea și configurarea configurare sistem</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Salvați modificările pentru a le aplica în sistem</li>
+        <li>Verificați validarea datelor înainte de Save pentru a evita erorile</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/settings-branding.png" 
+           alt="Aspect & Branding" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/settings-branding.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="settings-product-display" class="page-documentation">
+    <div class="page-header">
+      <h2>🛍️ Modul Afișare Produse în Funcție de Stoc (Stock Display Mode)</h2>
+      <p class="page-path">Cale: <code>/settings/product-display</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p><strong>Această secțiune descrie comportamentul oficial al aplicației privind afișarea produselor în meniul clientului, precum și separarea clară între mediile TEST și PROD, pentru a evita orice interpretare eronată din partea utilizatorilor, auditorilor sau partenerilor.</strong></p>
+      
+      <h3>1. Scop</h3>
+      <p>Funcționalitatea <strong>Stock Display Mode</strong> controlează ce produse sunt afișate în meniu, <strong>fără a afecta regulile de validare a stocului la comandă</strong>. Afișarea produselor este o decizie de UX/comercială; validarea de stoc se aplică <strong>întotdeauna</strong> la trimiterea comenzii.</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>2. Moduri Disponible de Afișare</h3>
+      <p>Aplicația suportă următoarele moduri:</p>
+      
+      <h4>🔹 SHOW_ALL_PRODUCTS (Toate Produsele)</h4>
+      <p>Afișează <strong>toate produsele</strong> din meniu, indiferent de stoc.</p>
+      <p><strong>Recomandat pentru:</strong></p>
+      <ul>
+        <li><strong>Mediu TEST</strong> - dezvoltare și testare</li>
+        <li><strong>Configurare inițială</strong> - onboarding și setup</li>
+        <li><strong>Demo și Training</strong> - prezentări și instruire</li>
+        <li><strong>Benchmark-uri</strong> - evaluări funcționalități</li>
+      </ul>
+      <p><strong>⚠️ Notă Importantă:</strong></p>
+      <ul>
+        <li>Produsele fără stoc <strong>pot fi vizibile</strong> în meniu</li>
+        <li>Acestea <strong>NU pot fi finalizate</strong> la comandă dacă validarea de stoc este activă</li>
+        <li>Utilizatorul va primi un mesaj clar despre indisponibilitatea produsului</li>
+      </ul>
+      <p><strong>🔧 Configurare:</strong></p>
+      <ul>
+        <li>Acces: <strong>Setări → Afișare Produse</strong> (<code>/settings/product-display</code>)</li>
+        <li>Selectează: <strong>"Toate produsele afișate (recomandat)"</strong></li>
+        <li>Status: <code>autoManageDisplay = false</code></li>
+      </ul>
+      
+      <h4>🔹 SHOW_ONLY_IN_STOCK (Doar Produse cu Stoc)</h4>
+      <p>Afișează <strong>doar produsele cu stoc disponibil</strong> (stoc > 0).</p>
+      <p><strong>Recomandat pentru:</strong></p>
+      <ul>
+        <li><strong>Mediu PROD</strong> - operațiuni zilnice</li>
+        <li><strong>Restaurante cu stoc strict</strong> - control precis disponibilitate</li>
+        <li><strong>Optimizare UX</strong> - evitarea confuziilor clienților</li>
+      </ul>
+      <p><strong>🔧 Configurare:</strong></p>
+      <ul>
+        <li>Acces: <strong>Setări → Afișare Produse</strong> (<code>/settings/product-display</code>)</li>
+        <li>Selectează: <strong>"Doar produsele cu stoc > 0"</strong></li>
+        <li>Status: <code>autoManageDisplay = true</code></li>
+      </ul>
+      
+      <h4>🔹 SHOW_IN_STOCK_OVER_THRESHOLD (Stoc peste Prag)</h4>
+      <p>Afișează <strong>doar produsele cu stoc mai mare decât un prag configurabil</strong> (ex: >10 unități).</p>
+      <p><strong>Recomandat pentru:</strong></p>
+      <ul>
+        <li><strong>Locații cu rulaj mare</strong> - restaurante foarte active</li>
+        <li><strong>Prevenirea comenzilor pentru stoc rezidual</strong> - evitarea epuizărilor</li>
+        <li><strong>Optimizare UX avansată</strong> - control granular disponibilitate</li>
+      </ul>
+      <p><strong>🔧 Configurare:</strong></p>
+      <ul>
+        <li>Acces: <strong>Setări → Afișare Produse</strong> (<code>/settings/product-display</code>)</li>
+        <li>Selectează: <strong>"Doar produsele cu stoc > [prag]"</strong></li>
+        <li>Status: <code>autoManageDisplay = true</code> + prag configurabil</li>
+      </ul>
+    </div>
+    
+    <div class="page-features">
+      <h3>3. Medii de Rulare (Environment)</h3>
+      <p>Aplicația diferențiază explicit comportamentul în funcție de mediu:</p>
+      
+      <h4>🧪 TEST (Mediu de Dezvoltare)</h4>
+      <p><strong>Comportament permis:</strong></p>
+      <ul>
+        <li>✅ Permite afișarea tuturor produselor</li>
+        <li>✅ Permite crearea comenzilor în scop de testare</li>
+        <li>✅ Validarea de stoc poate fi relaxată controlat</li>
+        <li>✅ Logging detaliat pentru debugging</li>
+      </ul>
+      <p><strong>Destinat exclusiv pentru:</strong></p>
+      <ul>
+        <li>QA (Quality Assurance)</li>
+        <li>Dezvoltare și testare</li>
+        <li>Benchmark-uri și evaluări</li>
+        <li>Training și onboarding</li>
+      </ul>
+      <p><strong>⚠️ NU este recomandat pentru:</strong></p>
+      <ul>
+        <li>Operațiuni reale cu clienți</li>
+        <li>Producție sau staging public</li>
+      </ul>
+      
+      <h4>🏭 PROD (Mediu de Producție)</h4>
+      <p><strong>Comportament strict:</strong></p>
+      <ul>
+        <li>✅ Validarea de stoc este <strong>strictă și obligatorie</strong></li>
+        <li>✅ Comenzile cu stoc insuficient sunt <strong>blocate automat</strong></li>
+        <li>✅ Consum automat din rețete și mișcări de stoc</li>
+        <li>✅ Conformitate completă HoReCa (ERP / POS)</li>
+      </ul>
+      <p><strong>Caracteristici:</strong></p>
+      <ul>
+        <li>Toate mișcările de stoc sunt înregistrate</li>
+        <li>Audit trail complet pentru toate operațiunile</li>
+        <li>Raportare automată pentru stocuri critice</li>
+        <li>Integrare completă cu sistemele externe</li>
+      </ul>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>4. Reguli Importante (Obligatorii)</h3>
+      <h4>⚠️ Separare Clară: Afișare vs. Validare</h4>
+      <ol>
+        <li><strong>Afișarea produselor NU garantează posibilitatea de a comanda</strong>
+          <ul>
+            <li>Un produs poate fi vizibil în meniu dar indisponibil pentru comandă</li>
+            <li>Validarea finală se face la submitul comenzii</li>
+          </ul>
+        </li>
+        <li><strong>Validarea de stoc se face la submit / send to kitchen</strong>
+          <ul>
+            <li>Toate comenzile sunt validate înainte de finalizare</li>
+            <li>Clienții primesc feedback clar despre indisponibilitate</li>
+          </ul>
+        </li>
+        <li><strong>Consumul de ingrediente se face automat pe baza rețetelor</strong>
+          <ul>
+            <li>Fiecare produs comandat consumă ingrediente conform rețetei</li>
+            <li>Stocurile sunt actualizate în timp real</li>
+          </ul>
+        </li>
+        <li><strong>Toate mișcările de stoc sunt înregistrate</strong>
+          <ul>
+            <li>Audit trail complet pentru tracabilitate</li>
+            <li>Raportare pentru conformitate și analiză</li>
+          </ul>
+        </li>
+      </ol>
+      
+      <h3>5. Interfață Utilizator</h3>
+      <p><strong>Acces Configurare:</strong></p>
+      <ul>
+        <li><strong>Meniu:</strong> Setări → Afișare Produse</li>
+        <li><strong>Cale:</strong> <code>/settings/product-display</code></li>
+        <li><strong>Permisiuni:</strong> Administrator sau Manager</li>
+      </ul>
+      
+      <h3>6. Conformitate &amp; Audit</h3>
+      <p>Această separare între afișare și validare este:</p>
+      <ul>
+        <li>✅ <strong>Standard în sistemele HoReCa enterprise</strong> - folosită de soluții precum Lightspeed, Toast, Freya</li>
+        <li>✅ <strong>Acceptată în audituri</strong> - separarea clară între UX și business logic</li>
+        <li>✅ <strong>Utilizată de soluții POS internaționale</strong> - best practice în industrie</li>
+      </ul>
+      <p><strong>Documentarea clară</strong> a modului Stock Display Mode elimină orice ambiguitate în:</p>
+      <ul>
+        <li>Evaluări tehnice</li>
+        <li>Benchmark-uri comparate</li>
+        <li>Audituri externe</li>
+        <li>Integrări cu parteneri</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/settings-product-display.png" 
+           alt="Modul Afișare Produse - Stock Display Mode" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/settings-product-display.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="settings-missing-translations" class="page-documentation">
+    <div class="page-header">
+      <h2>🌐 Traduceri în Așteptare</h2>
+      <p class="page-path">Cale: <code>/settings/missing-translations</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Traduceri în Așteptare - Configurare sistem</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Traduceri în Așteptare permite gestionarea și configurarea configurare sistem</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Salvați modificările pentru a le aplica în sistem</li>
+        <li>Verificați validarea datelor înainte de Save pentru a evita erorile</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/settings-missing-translations.png" 
+           alt="Traduceri în Așteptare" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/settings-missing-translations.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="settings-payment-methods" class="page-documentation">
+    <div class="page-header">
+      <h2>💳 Metode de Plată</h2>
+      <p class="page-path">Cale: <code>/settings/payment-methods</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Metode de Plată - Configurare sistem</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Metode de Plată permite gestionarea și configurarea configurare sistem</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Salvați modificările pentru a le aplica în sistem</li>
+        <li>Verificați validarea datelor înainte de Save pentru a evita erorile</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/settings-payment-methods.png" 
+           alt="Metode de Plată" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/settings-payment-methods.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="integrations" class="page-documentation">
+    <div class="page-header">
+      <h2>🔌 Integrări</h2>
+      <p class="page-path">Cale: <code>/integrations</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Integrări - Funcționalitate generală</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Integrări permite gestionarea și configurarea funcționalitate generală</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/integrations.png" 
+           alt="Integrări" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/integrations.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="settings-import-export" class="page-documentation">
+    <div class="page-header">
+      <h2>📥📤 Import/Export</h2>
+      <p class="page-path">Cale: <code>/settings/import-export</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Import/Export - Configurare sistem</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Import/Export permite gestionarea și configurarea configurare sistem</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+        <li>Salvați modificările pentru a le aplica în sistem</li>
+        <li>Verificați validarea datelor înainte de Save pentru a evita erorile</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/settings-import-export.png" 
+           alt="Import/Export" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/settings-import-export.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="backup" class="page-documentation">
+    <div class="page-header">
+      <h2>💾 Backup</h2>
+      <p class="page-path">Cale: <code>/backup</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Pagina Backup - Funcționalitate generală</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Pagina Backup permite gestionarea și configurarea funcționalitate generală</li>
+        <li>Utilizați filtrele și căutarea pentru a găsi informații specifice</li>
+        <li>Click pe elemente pentru a accesa detalii complete</li>
+        <li>Use action buttons for common operations (Add, Edit, Delete)</li>
+        <li>Exportați datele pentru analiză sau backup (Excel, PDF, CSV)</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Interfață intuitivă și ușor de utilizat</li>
+        <li>Căutare și filtrare avansată pentru găsire rapidă</li>
+        <li>Export date în multiple formate (Excel, PDF, CSV)</li>
+        <li>Actualizare în timp real pentru date curente</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/backup.png" 
+           alt="Backup" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/backup.png</small>
+      </p>
+    </div>
+  </section>
+
+
+  <section id="settings-manual-instructiuni" class="page-documentation">
+    <div class="page-header">
+      <h2>📚 Manual Instrucțiuni</h2>
+      <p class="page-path">Cale: <code>/settings/manual-instructiuni</code></p>
+    </div>
+    
+    <div class="page-description">
+      <p>Ghid complet pentru utilizarea aplicației Restaurant App v3 cu instrucțiuni detaliate pentru fiecare funcționalitate</p>
+    </div>
+    
+    <div class="page-instructions">
+      <h3>📋 Instrucțiuni de Utilizare</h3>
+      <ol>
+        <li>Accesați manualul complet cu toate instrucțiunile pentru fiecare pagină</li>
+        <li>Navigați prin secțiuni pentru a găsi informațiile necesare</li>
+        <li>Utilizați căutarea (Ctrl+F) pentru a găsi rapid informații specifice</li>
+        <li>Descărcați manualul pentru referință offline (PDF sau Markdown)</li>
+        <li>Consultați ghidurile rapide pentru diferite roluri (Admin, Ospătar, Bucătar, Barman)</li>
+        <li>Vizualizați capturile de ecran pentru fiecare interfață</li>
+      </ol>
+    </div>
+    
+    <div class="page-features">
+      <h3>✨ Funcționalități Principale</h3>
+      <ul>
+        <li>Manual Complet: 100+ pagini documentate cu instrucțiuni detaliate</li>
+        <li>Ghiduri Rapide: Pentru Admin, Ospătar, Bucătar, Barman cu link-uri directe</li>
+        <li>Screenshots: Capturi ecran pentru fiecare interfață și funcționalitate</li>
+        <li>Download: PDF sau Markdown pentru referință offline</li>
+        <li>Căutare: Index complet pentru găsire rapidă informații</li>
+      </ul>
+    </div>
+    
+    <div class="page-screenshot">
+      <h3>📸 Captură Ecran</h3>
+      <img src="screenshots/admin-vite/settings-manual-instructiuni.png" 
+           alt="Manual Instrucțiuni" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <p class="screenshot-placeholder" style="display:none;">
+        📷 Captură ecran va fi adăugată după rularea testelor de screenshot<br>
+        <small>Fișier așteptat: screenshots/admin-vite/settings-manual-instructiuni.png</small>
+      </p>
+    </div>
+  </section>
+
+    </div>
+</body>
+</html>

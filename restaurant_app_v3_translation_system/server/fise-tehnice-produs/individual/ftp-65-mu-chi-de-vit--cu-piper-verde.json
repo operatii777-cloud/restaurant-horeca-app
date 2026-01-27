@@ -1,0 +1,84 @@
+{
+  "product": {
+    "id": 65,
+    "name": "Mușchi de Vită cu Piper Verde",
+    "name_en": "Beef Tenderloin with Green Pepper",
+    "category": "Fel Principal",
+    "category_en": "Main Course",
+    "price": 100,
+    "description": "Mușchi de vită, piper verde, cognac, cartofi la cuptor",
+    "description_en": "Beef tenderloin, green pepper, cognac, baked potatoes",
+    "weight": "380G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": "lapte",
+    "allergens_en": "milk"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 126,
+        "name": "Burtă de vită fiartă și tăiată",
+        "category": "Carne",
+        "quantity": 200,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.21643509653792728,
+        "totalCost": "43.29",
+        "totalCostWithWaste": "43.29",
+        "supplier": "Furnizor Carne",
+        "currentStock": 299528.47826086957,
+        "minStock": 1000,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 117,
+        "name": "Piper negru",
+        "category": "Condimente și Sosuri",
+        "quantity": 100,
+        "unit": "ml",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 31.88429022942768,
+        "totalCost": "3188.43",
+        "totalCostWithWaste": "3188.43",
+        "supplier": "Furnizor Condimente",
+        "currentStock": 43979,
+        "minStock": 2,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "3231.72",
+    "totalCostWithWaste": "3231.72",
+    "sellingPrice": 100,
+    "profitMargin": -3131.72,
+    "markup": -3131.72,
+    "foodCostPercentage": "3231.72"
+  },
+  "stats": {
+    "totalIngredients": 2,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

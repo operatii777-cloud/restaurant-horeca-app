@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Cost & Profitabilitate - White Label Template</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ==================== WHITE LABEL VARIABLES ==================== */
+        :root {
+            --brand-primary: #667eea;
+            --brand-secondary: #764ba2;
+            --brand-success: #28a745;
+            --brand-danger: #dc3545;
+            --brand-warning: #ffc107;
+            --brand-info: #17a2b8;
+            --color-white: #ffffff;
+            --color-light: #f8f9fa;
+            --color-dark: #333333;
+            --color-gray: #6c757d;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.15);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 15px;
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--color-light);
+            padding: 20px;
+            color: var(--color-dark);
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+            color: var(--color-white);
+            padding: 30px;
+            border-radius: var(--radius-lg);
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .page-header h1 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .page-header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--color-white);
+            padding: 25px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            transition: transform var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        .stat-card.stat-excellent::before { background: var(--brand-success); }
+        .stat-card.stat-good::before { background: var(--brand-info); }
+        .stat-card.stat-warning::before { background: var(--brand-warning); }
+        .stat-card.stat-danger::before { background: var(--brand-danger); }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .stat-card.stat-excellent .stat-icon { color: var(--brand-success); }
+        .stat-card.stat-good .stat-icon { color: var(--brand-info); }
+        .stat-card.stat-warning .stat-icon { color: var(--brand-warning); }
+        .stat-card.stat-danger .stat-icon { color: var(--brand-danger); }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-dark);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--color-gray);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-trend {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .trend-up { color: var(--brand-success); }
+        .trend-down { color: var(--brand-danger); }
+
+        .card-custom {
+            background: var(--color-white);
+            border-radius: var(--radius-md);
+            padding: 25px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 25px;
+        }
+
+        .card-header-custom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--color-light);
+        }
+
+        .card-header-custom h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: var(--color-dark);
+            font-weight: 600;
+        }
+
+        .btn-custom {
+            padding: 12px 30px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+            color: var(--color-white);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .btn-success-custom { background: var(--brand-success); color: var(--color-white); }
+        .btn-danger-custom { background: var(--brand-danger); color: var(--color-white); }
+        .btn-warning-custom { background: var(--brand-warning); color: var(--color-dark); }
+        .btn-info-custom { background: var(--brand-info); color: var(--color-white); }
+
+        .table-custom {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+
+        .table-custom thead th {
+            background: var(--color-light);
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--color-gray);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .table-custom tbody tr {
+            background: var(--color-white);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-normal);
+        }
+
+        .table-custom tbody tr:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .table-custom tbody td {
+            padding: 15px;
+            border-top: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .table-custom tbody td:first-child {
+            border-left: 1px solid #f0f0f0;
+            border-top-left-radius: var(--radius-sm);
+            border-bottom-left-radius: var(--radius-sm);
+        }
+
+        .table-custom tbody td:last-child {
+            border-right: 1px solid #f0f0f0;
+            border-top-right-radius: var(--radius-sm);
+            border-bottom-right-radius: var(--radius-sm);
+        }
+
+        .badge-custom {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge-excellent { background: #d4edda; color: #155724; }
+        .badge-good { background: #d1ecf1; color: #0c5460; }
+        .badge-warning { background: #fff3cd; color: #856404; }
+        .badge-danger { background: #f8d7da; color: #721c24; }
+
+        .progress-bar-custom {
+            width: 100%;
+            height: 8px;
+            background: var(--color-light);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width var(--transition-normal);
+        }
+
+        .progress-excellent { background: var(--brand-success); }
+        .progress-good { background: var(--brand-info); }
+        .progress-warning { background: var(--brand-warning); }
+        .progress-danger { background: var(--brand-danger); }
+
+        .search-filter-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .search-filter-bar input,
+        .search-filter-bar select {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--brand-primary);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hidden { display: none !important; }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--color-gray);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .page-header h1 { font-size: 1.5rem; }
+            .card-header-custom {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>
+            <i class="fas fa-calculator"></i>
+            Food Cost & Profitabilitate
+        </h1>
+        <p>Analiză costuri, prețuri și profitabilitate produse</p>
+    </div>
+
+    <!-- Statistics -->
+    <div class="stats-grid">
+        <div class="stat-card stat-good" id="avgFoodCostCard">
+            <div class="stat-icon"><i class="fas fa-percentage"></i></div>
+            <div class="stat-value" id="avgFoodCost">0%</div>
+            <div class="stat-label">Food Cost Mediu</div>
+            <div class="stat-trend" id="foodCostTrend">
+                <i class="fas fa-arrow-up"></i>
+                <span>vs. luna trecută</span>
+            </div>
+        </div>
+        <div class="stat-card stat-success">
+            <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+            <div class="stat-value" id="avgMargin">0%</div>
+            <div class="stat-label">Marjă Medie</div>
+            <div class="stat-trend trend-up">
+                <i class="fas fa-arrow-up"></i>
+                <span>+2.5% vs. luna trecută</span>
+            </div>
+        </div>
+        <div class="stat-card stat-warning">
+            <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <div class="stat-value" id="alertsCount">0</div>
+            <div class="stat-label">Alerte Food Cost</div>
+        </div>
+        <div class="stat-card stat-info">
+            <div class="stat-icon"><i class="fas fa-utensils"></i></div>
+            <div class="stat-value" id="totalProducts">0</div>
+            <div class="stat-label">Produse Analizate</div>
+        </div>
+    </div>
+
+    <!-- Food Cost Guidelines -->
+    <div class="card-custom">
+        <div class="card-header-custom">
+            <h2><i class="fas fa-info-circle me-2"></i>Ghid Food Cost</h2>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <div class="badge-custom badge-excellent">✅ Excelent: &lt; 25%</div>
+                <p class="small text-muted mt-2">Profitabilitate foarte bună</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="badge-custom badge-good">👍 Bun: 25-30%</div>
+                <p class="small text-muted mt-2">Profitabilitate acceptabilă</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="badge-custom badge-warning">⚠️ Atenție: 30-35%</div>
+                <p class="small text-muted mt-2">Necesită optimizare</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="badge-custom badge-danger">❌ Pericol: &gt; 35%</div>
+                <p class="small text-muted mt-2">Pierdere sau profit minim</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Products Analysis -->
+    <div class="card-custom">
+        <div class="card-header-custom">
+            <h2><i class="fas fa-list me-2"></i>Analiză Produse</h2>
+            <div>
+                <button class="btn-custom btn-success-custom" onclick="exportToExcel()">
+                    <i class="fas fa-file-excel"></i> Export Excel
+                </button>
+                <button class="btn-custom btn-primary-custom" onclick="refreshData()">
+                    <i class="fas fa-sync-alt"></i> Actualizează
+                </button>
+            </div>
+        </div>
+
+        <!-- Search and Filter -->
+        <div class="search-filter-bar">
+            <input type="text" id="searchInput" placeholder="🔍 Caută produs..." onkeyup="filterProducts()">
+            <select id="categoryFilter" onchange="filterProducts()">
+                <option value="">Toate Categoriile</option>
+                <option value="aperitive">Aperitive</option>
+                <option value="ciorbe">Ciorbe</option>
+                <option value="salate">Salate</option>
+                <option value="pizza">Pizza</option>
+                <option value="paste">Paste</option>
+                <option value="feluri_principale">Feluri Principale</option>
+                <option value="deserturi">Deserturi</option>
+                <option value="bauturi">Băuturi</option>
+            </select>
+            <select id="foodCostFilter" onchange="filterProducts()">
+                <option value="">Toate Nivelurile</option>
+                <option value="excellent">✅ Excelent (&lt;25%)</option>
+                <option value="good">👍 Bun (25-30%)</option>
+                <option value="warning">⚠️ Atenție (30-35%)</option>
+                <option value="danger">❌ Pericol (&gt;35%)</option>
+            </select>
+        </div>
+
+        <!-- Products Table -->
+        <div id="productsTableContainer">
+            <table class="table-custom">
+                <thead>
+                    <tr>
+                        <th>Produs</th>
+                        <th>Cost Ingrediente</th>
+                        <th>Preț Vânzare</th>
+                        <th>Food Cost %</th>
+                        <th>Marjă</th>
+                        <th>Profit/Porție</th>
+                        <th>Recomandare</th>
+                        <th>Acțiuni</th>
+                    </tr>
+                </thead>
+                <tbody id="productsTableBody">
+                    <!-- Populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <div id="emptyState" class="empty-state hidden">
+            <i class="fas fa-calculator"></i>
+            <h3>Nu există date</h3>
+            <p>Produsele cu rețete definite vor apărea aici automat</p>
+        </div>
+    </div>
+
+    <!-- Top/Bottom Products -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card-custom">
+                <div class="card-header-custom">
+                    <h2><i class="fas fa-trophy me-2"></i>Top 5 Cele Mai Profitabile</h2>
+                </div>
+                <div id="topProductsList">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card-custom">
+                <div class="card-header-custom">
+                    <h2><i class="fas fa-exclamation-triangle me-2"></i>Top 5 Necesită Atenție</h2>
+                </div>
+                <div id="bottomProductsList">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // ==================== WHITE LABEL CONFIGURATION ====================
+        const CONFIG = {
+            apiBaseUrl: '/api/food-cost',
+            currency: 'RON',
+            dateFormat: 'DD.MM.YYYY',
+            refreshInterval: 60000, // 1 minute
+            foodCostThresholds: {
+                excellent: 25,
+                good: 30,
+                warning: 35
+            }
+        };
+
+        // ==================== GLOBAL STATE ====================
+        let products = [];
+        let filteredProducts = [];
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+            setInterval(refreshData, CONFIG.refreshInterval);
+        });
+
+        // ==================== LOAD DATA ====================
+        async function loadProducts() {
+            showLoading(true);
+            try {
+                const response = await fetch(`${CONFIG.apiBaseUrl}/products`);
+                if (response.ok) {
+                    products = await response.json();
+                    filteredProducts = [...products];
+                    renderProducts();
+                    updateStatistics();
+                    renderTopBottom();
+                } else {
+                    products = generateMockData(); // Fallback to mock data
+                    filteredProducts = [...products];
+                    renderProducts();
+                    updateStatistics();
+                    renderTopBottom();
+                }
+            } catch (error) {
+                console.error('Error loading products:', error);
+                products = generateMockData(); // Fallback to mock data
+                filteredProducts = [...products];
+                renderProducts();
+                updateStatistics();
+                renderTopBottom();
+            }
+            showLoading(false);
+        }
+
+        // ==================== RENDER PRODUCTS ====================
+        function renderProducts() {
+            const tbody = document.getElementById('productsTableBody');
+            const emptyState = document.getElementById('emptyState');
+            const tableContainer = document.getElementById('productsTableContainer');
+
+            if (filteredProducts.length === 0) {
+                tableContainer.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            tableContainer.classList.remove('hidden');
+            emptyState.classList.add('hidden');
+
+            tbody.innerHTML = filteredProducts.map(product => {
+                const foodCostPercent = (product.cost / product.price * 100).toFixed(1);
+                const margin = ((product.price - product.cost) / product.price * 100).toFixed(1);
+                const profit = (product.price - product.cost).toFixed(2);
+                const level = getFoodCostLevel(foodCostPercent);
+
+                return `
+                    <tr>
+                        <td>
+                            <strong>${product.name}</strong><br>
+                            <small class="text-muted">${product.category}</small>
+                        </td>
+                        <td>${formatCurrency(product.cost)}</td>
+                        <td><strong>${formatCurrency(product.price)}</strong></td>
+                        <td>
+                            <strong class="${level.class}">${foodCostPercent}%</strong>
+                            <div class="progress-bar-custom">
+                                <div class="progress-fill ${level.progressClass}" style="width: ${Math.min(foodCostPercent, 100)}%"></div>
+                            </div>
+                        </td>
+                        <td><strong>${margin}%</strong></td>
+                        <td><strong>${formatCurrency(profit)}</strong></td>
+                        <td>
+                            <span class="badge-custom ${level.badgeClass}">
+                                ${level.icon} ${level.label}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-info" onclick="viewDetails(${product.id})">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-sm btn-primary" onclick="suggestPrice(${product.id})">
+                                <i class="fas fa-lightbulb"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // ==================== UPDATE STATISTICS ====================
+        function updateStatistics() {
+            if (products.length === 0) return;
+
+            const avgFoodCost = products.reduce((sum, p) => sum + (p.cost / p.price * 100), 0) / products.length;
+            const avgMargin = products.reduce((sum, p) => sum + ((p.price - p.cost) / p.price * 100), 0) / products.length;
+            const alertsCount = products.filter(p => (p.cost / p.price * 100) > CONFIG.foodCostThresholds.warning).length;
+
+            document.getElementById('avgFoodCost').textContent = avgFoodCost.toFixed(1) + '%';
+            document.getElementById('avgMargin').textContent = avgMargin.toFixed(1) + '%';
+            document.getElementById('alertsCount').textContent = alertsCount;
+            document.getElementById('totalProducts').textContent = products.length;
+
+            // Update card status
+            const avgFoodCostCard = document.getElementById('avgFoodCostCard');
+            avgFoodCostCard.className = 'stat-card ' + getFoodCostLevel(avgFoodCost).statClass;
+        }
+
+        // ==================== RENDER TOP/BOTTOM ====================
+        function renderTopBottom() {
+            // Top 5 most profitable
+            const topProducts = [...products]
+                .sort((a, b) => (b.price - b.cost) - (a.price - a.cost))
+                .slice(0, 5);
+
+            document.getElementById('topProductsList').innerHTML = topProducts.map((p, i) => {
+                const profit = (p.price - p.cost).toFixed(2);
+                const foodCost = (p.cost / p.price * 100).toFixed(1);
+                return `
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>${i + 1}. ${p.name}</strong>
+                                <br>
+                                <small class="text-muted">Food Cost: ${foodCost}%</small>
+                            </div>
+                            <div class="text-end">
+                                <strong class="text-success">${formatCurrency(profit)}</strong>
+                                <br>
+                                <small class="text-muted">profit/porție</small>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Bottom 5 need attention
+            const bottomProducts = [...products]
+                .sort((a, b) => (b.cost / b.price) - (a.cost / a.price))
+                .slice(0, 5);
+
+            document.getElementById('bottomProductsList').innerHTML = bottomProducts.map((p, i) => {
+                const foodCost = (p.cost / p.price * 100).toFixed(1);
+                const level = getFoodCostLevel(foodCost);
+                return `
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>${i + 1}. ${p.name}</strong>
+                                <br>
+                                <small class="text-muted">${p.category}</small>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge-custom ${level.badgeClass}">
+                                    ${foodCost}%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ==================== FILTER PRODUCTS ====================
+        function filterProducts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const foodCostFilter = document.getElementById('foodCostFilter').value;
+
+            filteredProducts = products.filter(product => {
+                const matchesSearch = !searchTerm || product.name.toLowerCase().includes(searchTerm);
+                const matchesCategory = !categoryFilter || product.category === categoryFilter;
+                
+                let matchesFoodCost = true;
+                if (foodCostFilter) {
+                    const foodCostPercent = (product.cost / product.price * 100);
+                    const level = getFoodCostLevel(foodCostPercent);
+                    matchesFoodCost = level.key === foodCostFilter;
+                }
+
+                return matchesSearch && matchesCategory && matchesFoodCost;
+            });
+
+            renderProducts();
+        }
+
+        // ==================== ACTIONS ====================
+        function viewDetails(id) {
+            const product = products.find(p => p.id === id);
+            if (product) {
+                const foodCost = (product.cost / product.price * 100).toFixed(1);
+                const margin = ((product.price - product.cost) / product.price * 100).toFixed(1);
+                const profit = (product.price - product.cost).toFixed(2);
+                alert(`Detalii ${product.name}:\n\nCost: ${formatCurrency(product.cost)}\nPreț: ${formatCurrency(product.price)}\nFood Cost: ${foodCost}%\nMarjă: ${margin}%\nProfit/porție: ${formatCurrency(profit)}`);
+            }
+        }
+
+        function suggestPrice(id) {
+            const product = products.find(p => p.id === id);
+            if (product) {
+                const targetFoodCost = 25; // Target 25%
+                const suggestedPrice = (product.cost / (targetFoodCost / 100)).toFixed(2);
+                alert(`Sugestie Preț pentru ${product.name}:\n\nCost actual: ${formatCurrency(product.cost)}\nPreț actual: ${formatCurrency(product.price)}\n\nPentru Food Cost 25%:\nPreț sugerat: ${formatCurrency(suggestedPrice)}\n\nDiferență: ${formatCurrency(suggestedPrice - product.price)}`);
+            }
+        }
+
+        function exportToExcel() {
+            showToast('info', 'Export Excel în curs...');
+            // TODO: Implement Excel export
+        }
+
+        function refreshData() {
+            loadProducts();
+        }
+
+        // ==================== UTILITIES ====================
+        function getFoodCostLevel(percent) {
+            if (percent < CONFIG.foodCostThresholds.excellent) {
+                return {
+                    key: 'excellent',
+                    label: 'Excelent',
+                    icon: '✅',
+                    class: 'text-success',
+                    badgeClass: 'badge-excellent',
+                    progressClass: 'progress-excellent',
+                    statClass: 'stat-excellent'
+                };
+            } else if (percent < CONFIG.foodCostThresholds.good) {
+                return {
+                    key: 'good',
+                    label: 'Bun',
+                    icon: '👍',
+                    class: 'text-info',
+                    badgeClass: 'badge-good',
+                    progressClass: 'progress-good',
+                    statClass: 'stat-good'
+                };
+            } else if (percent < CONFIG.foodCostThresholds.warning) {
+                return {
+                    key: 'warning',
+                    label: 'Atenție',
+                    icon: '⚠️',
+                    class: 'text-warning',
+                    badgeClass: 'badge-warning',
+                    progressClass: 'progress-warning',
+                    statClass: 'stat-warning'
+                };
+            } else {
+                return {
+                    key: 'danger',
+                    label: 'Pericol',
+                    icon: '❌',
+                    class: 'text-danger',
+                    badgeClass: 'badge-danger',
+                    progressClass: 'progress-danger',
+                    statClass: 'stat-danger'
+                };
+            }
+        }
+
+        function formatCurrency(amount) {
+            return `${parseFloat(amount).toFixed(2)} ${CONFIG.currency}`;
+        }
+
+        function showLoading(show) {
+            document.getElementById('loadingOverlay').classList.toggle('hidden', !show);
+        }
+
+        function showToast(type, message) {
+            alert(message);
+        }
+
+        // ==================== MOCK DATA (for demo) ====================
+        function generateMockData() {
+            return [
+                { id: 1, name: 'Pizza Margherita', category: 'pizza', cost: 8.50, price: 35.00 },
+                { id: 2, name: 'Paste Carbonara', category: 'paste', cost: 7.20, price: 32.00 },
+                { id: 3, name: 'Salată Caesar', category: 'salate', cost: 6.80, price: 28.00 },
+                { id: 4, name: 'Ciorbă de burtă', category: 'ciorbe', cost: 5.50, price: 22.00 },
+                { id: 5, name: 'Mici cu muștar', category: 'feluri_principale', cost: 12.00, price: 30.00 },
+                { id: 6, name: 'Papanași', category: 'deserturi', cost: 4.50, price: 18.00 },
+                { id: 7, name: 'Sarmale', category: 'feluri_principale', cost: 8.00, price: 28.00 },
+                { id: 8, name: 'Pizza Quattro Formaggi', category: 'pizza', cost: 10.50, price: 42.00 },
+                { id: 9, name: 'Tiramisu', category: 'deserturi', cost: 6.00, price: 22.00 },
+                { id: 10, name: 'Burger Classic', category: 'feluri_principale', cost: 11.00, price: 38.00 }
+            ];
+        }
+    </script>
+</body>
+</html>
+

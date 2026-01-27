@@ -1,0 +1,44 @@
+{
+  "productId": 131,
+  "productName": "Caffe Latte",
+  "productCategory": "Cafea/Ciocolată/Ceai",
+  "ingredients": [
+    {
+      "ingredientId": 278,
+      "ingredientName": "Sirop de Zahăr",
+      "ingredientCategory": "General",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 53,
+      "ingredientName": "lapte",
+      "ingredientCategory": "General",
+      "quantityNeeded": 180,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 247,
+      "ingredientName": "Espresso (dublu)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 60,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 240,
+      "ingredientName": "Espresso",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

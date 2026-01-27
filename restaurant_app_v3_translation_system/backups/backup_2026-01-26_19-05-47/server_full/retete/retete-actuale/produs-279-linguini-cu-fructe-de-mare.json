@@ -1,0 +1,75 @@
+﻿Ã¯Â»Â¿{
+  "productId": 279,
+  "productName": "Linguini cu Fructe de Mare",
+  "productCategory": "Paste",
+  "price": 59,
+  "description": "Paste fresh, midii ÃƒÂ®n cochilie, carne midii, creveÃƒÂˆÃ¢Â€Âºi, calamar inele, sos de roÃƒÂˆÃ¢Â„Â¢ii, usturoi, vin, pÃ„ÂƒÃ†Â’trunjel, unt",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 112,
+      "ingredientName": "PÃ„ÂƒÃ†Â’trunjel",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 137,
+      "ingredientName": "CreveÃƒÂˆÃ¢Â€Âºi",
+      "ingredientCategory": "Peste Fructe de Mare",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 138,
+      "ingredientName": "Midii",
+      "ingredientCategory": "Peste Fructe de Mare",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 60,
+      "ingredientName": "Unt",
+      "ingredientCategory": "Lactate ÃƒÂˆÃ¢Â„Â¢i BrÃƒÂ¢nzeturi",
+      "quantityNeeded": 20,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 64,
+      "ingredientName": "Paste",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 200,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 14,
+      "ingredientName": "Sos de roÃƒÂˆÃ¢Â„Â¢ii",
+      "ingredientCategory": "Sosuri",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

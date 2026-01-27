@@ -1,0 +1,93 @@
+/**
+ * PHASE S12 - POS Table Selector Styles
+ */
+
+.pos-table-selector {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pos-table-selector-title {
+  margin: 0 0 15px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.pos-table-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.pos-table-btn {
+  padding: 15px;
+  border: 2px solid #ddd;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.pos-table-btn:hover {
+  border-color: #1976d2;
+  background: #f5f5f5;
+}
+
+.pos-table-btn.selected {
+  border-color: #1976d2;
+  background: #e3f2fd;
+}
+
+.pos-table-btn.occupied {
+  border-color: #c62828;
+  background: #ffebee;
+}
+
+.pos-table-btn.reserved {
+  border-color: #f57c00;
+  background: #fff3e0;
+}
+
+.pos-table-number {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.pos-table-status {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #666;
+}
+
+.pos-table-clear-btn {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background: white;
+  color: #666;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.pos-table-clear-btn:hover {
+  background: #f5f5f5;
+  border-color: #999;
+}
+
+.pos-table-selector-loading {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+}
+

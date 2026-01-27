@@ -1,0 +1,25 @@
+{
+  "name": "ingrediente-module",
+  "version": "1.0.0",
+  "description": "Modul React pentru gestionarea ingredientelor - Restaurant App",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "ag-grid-community": "^31.3.2",
+    "ag-grid-react": "^31.3.2",
+    "axios": "^1.7.2",
+    "node-cron": "^4.2.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.3.4"
+  }
+}

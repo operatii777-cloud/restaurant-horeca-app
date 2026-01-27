@@ -1,0 +1,67 @@
+﻿Ã¯Â»Â¿{
+  "productId": 310,
+  "productName": "Pizza Quattro Stagioni",
+  "productCategory": "Pizza",
+  "price": 43,
+  "description": "Blat pizza, sos de roÃƒÂˆÃ¢Â„Â¢ii, mozzarella, ÃƒÂˆÃ¢Â„Â¢uncÃ„ÂƒÃ†Â’, salam, ciuperci, mÃ„ÂƒÃ†Â’sline",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 92,
+      "ingredientName": "Ciuperci",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 60,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 37,
+      "ingredientName": "MÃ„ÂƒÃ†Â’sline",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 20,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 140,
+      "ingredientName": "ÃƒÂˆÃ‹ÂœuncÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 44,
+      "ingredientName": "Salam",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 40,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 38,
+      "ingredientName": "Mozzarella",
+      "ingredientCategory": "Lactate ÃƒÂˆÃ¢Â„Â¢i BrÃƒÂ¢nzeturi",
+      "quantityNeeded": 150,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 14,
+      "ingredientName": "Sos de roÃƒÂˆÃ¢Â„Â¢ii",
+      "ingredientCategory": "Sosuri",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

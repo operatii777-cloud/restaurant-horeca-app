@@ -1,0 +1,43 @@
+﻿Ã¯Â»Â¿{
+  "productId": 236,
+  "productName": "Porc Forestier",
+  "productCategory": "Fel Principal",
+  "price": 61,
+  "description": "MuÃƒÂˆÃ¢Â„Â¢chiuleÃƒÂˆÃ¢Â€Âº de porc, funghi porcini, bacon, cremÃ„ÂƒÃ†Â’ vegetalÃ„ÂƒÃ†Â’, pastÃ„ÂƒÃ†Â’ de trufe, cartofi zdrobiÃƒÂˆÃ¢Â€Âºi, roÃƒÂˆÃ¢Â„Â¢ii cherry",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 67,
+      "ingredientName": "Cartofi",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 200,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 69,
+      "ingredientName": "Bacon",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 40,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 121,
+      "ingredientName": "CremÃ„ÂƒÃ†Â’ vegetalÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

@@ -1,0 +1,9 @@
+.abc-analysis-page {
+  padding: var(--spacing-4);
+}
+
+.abc-analysis-page h2 {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-bold);
+}
+

@@ -1,0 +1,82 @@
+﻿Ã¯Â»Â¿{
+  "productId": 7,
+  "productName": "Bruschete cu Somon",
+  "productCategory": "Aperitive Reci",
+  "ingredients": [
+    {
+      "ingredientId": 191,
+      "ingredientName": "PÃƒÂ¢ine (4 felii baghetÃ„ÂƒÃ†Â’)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 117,
+      "ingredientName": "Piper negru",
+      "ingredientCategory": "Condimente ÃƒÂˆÃ¢Â„Â¢i Sosuri",
+      "quantityNeeded": 0.5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 99,
+      "ingredientName": "Capere",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 169,
+      "ingredientName": "Sare de mare",
+      "ingredientCategory": "General",
+      "quantityNeeded": 1,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 50,
+      "ingredientName": "brÃƒÂ¢nzÃ„ÂƒÃ†Â’ feta",
+      "ingredientCategory": "General",
+      "quantityNeeded": 60,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 64,
+      "ingredientName": "suc de lÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+      "ingredientCategory": "General",
+      "quantityNeeded": 5,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 370,
+      "ingredientName": "File de Somon",
+      "ingredientCategory": "General",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 830,
+      "ingredientName": "Rozmarin",
+      "ingredientCategory": "Sosuri ÃƒÂˆÃ¢Â„Â¢i Condimente",
+      "quantityNeeded": 3,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

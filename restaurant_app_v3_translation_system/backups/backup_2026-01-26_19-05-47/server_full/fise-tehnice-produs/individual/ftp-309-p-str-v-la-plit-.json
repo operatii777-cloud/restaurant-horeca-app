@@ -1,0 +1,101 @@
+{
+  "product": {
+    "id": 309,
+    "name": "Păstrăv la Plită",
+    "name_en": "Păstrăv la Plită",
+    "category": "Fel Principal",
+    "category_en": "Main Course",
+    "price": 38,
+    "description": "Păstrăv la plită",
+    "description_en": "Păstrăv la plită",
+    "weight": null,
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 375,
+        "name": "Mălai (pentru pané)",
+        "category": "General",
+        "quantity": 10,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 373,
+        "name": "Păstrăv întreg (eviscerat)",
+        "category": "General",
+        "quantity": 250,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 800,
+        "name": "Sos Usturoi Shaorma",
+        "category": "Sosuri",
+        "quantity": 5,
+        "unit": "g",
+        "unitStock": "ml",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 1.1303157632422682,
+        "totalCost": "5.65",
+        "totalCostWithWaste": "5.65",
+        "supplier": "Furnizor Test",
+        "currentStock": 64752.76470588235,
+        "minStock": 100,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "5.65",
+    "totalCostWithWaste": "5.65",
+    "sellingPrice": 38,
+    "profitMargin": 32.35,
+    "markup": 85.13,
+    "foodCostPercentage": "14.87"
+  },
+  "stats": {
+    "totalIngredients": 3,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

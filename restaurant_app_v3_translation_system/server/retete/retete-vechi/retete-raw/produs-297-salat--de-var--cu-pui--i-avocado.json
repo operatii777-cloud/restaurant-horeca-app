@@ -1,0 +1,55 @@
+﻿Ã¯Â»Â¿{
+  "productId": 297,
+  "productName": "SalatÃ„ÂƒÃ†Â’ de VarÃ„ÂƒÃ†Â’ cu Pui ÃƒÂˆÃ¢Â„Â¢i Avocado",
+  "productCategory": "Salate",
+  "ingredients": [
+    {
+      "ingredientId": 317,
+      "ingredientName": "Avocado",
+      "ingredientCategory": "General",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 797,
+      "ingredientName": "SalatÃ„ÂƒÃ†Â’ Verde Shaorma",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 363,
+      "ingredientName": "Piept de pui",
+      "ingredientCategory": "General",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 337,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 64,
+      "ingredientName": "suc de lÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+      "ingredientCategory": "General",
+      "quantityNeeded": 40,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

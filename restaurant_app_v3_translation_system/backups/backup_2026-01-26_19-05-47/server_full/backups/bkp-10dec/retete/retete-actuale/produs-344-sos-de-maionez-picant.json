@@ -1,0 +1,41 @@
+{
+  "productId": 344,
+  "productName": "Sos de Maioneză Picantă",
+  "productCategory": "Sosuri și Pâine",
+  "price": 3,
+  "description": "Sos de maioneză picantă",
+  "ingredients": [
+    {
+      "ingredientId": 43,
+      "ingredientName": "Maioneză",
+      "ingredientCategory": "Condimente și Sosuri",
+      "quantityNeeded": 150,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 16,
+      "ingredientName": "Ardei iute",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 216,
+      "ingredientName": "Paprika",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 3,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+﻿Ã¯Â»Â¿{
+  "productId": 196,
+  "productName": "Pina Colada",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 460,
+      "ingredientName": "Suc de Portocale/Ananas",
+      "ingredientCategory": "General",
+      "quantityNeeded": 100,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 274,
+      "ingredientName": "Rom Alb",
+      "ingredientCategory": "General",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 276,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 250,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

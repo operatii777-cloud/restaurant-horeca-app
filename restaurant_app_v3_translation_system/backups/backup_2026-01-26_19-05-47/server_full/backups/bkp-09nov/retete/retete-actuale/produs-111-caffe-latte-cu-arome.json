@@ -1,0 +1,33 @@
+{
+  "productId": 111,
+  "productName": "Caffe Latte cu Arome",
+  "productCategory": "Cafea/Ciocolată/Ceai",
+  "price": 19,
+  "description": "Vanilie/caramel/ciocolată",
+  "ingredients": [
+    {
+      "ingredientId": 25,
+      "ingredientName": "Cafea boabe",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 30,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 20,
+      "ingredientName": "Lapte",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 200,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 222,
+      "ingredientName": "Sirop aromat",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}

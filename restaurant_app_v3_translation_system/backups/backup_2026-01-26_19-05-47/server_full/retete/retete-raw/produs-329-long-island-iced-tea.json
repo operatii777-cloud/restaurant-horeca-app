@@ -1,0 +1,82 @@
+﻿Ã¯Â»Â¿{
+  "productId": 329,
+  "productName": "Long Island Iced Tea",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 274,
+      "ingredientName": "Rom Alb",
+      "ingredientCategory": "General",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 59,
+      "ingredientName": "gin",
+      "ingredientCategory": "General",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 270,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 423,
+      "ingredientName": "VodcÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "General",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 424,
+      "ingredientName": "Triple Sec/CuraÃƒÂƒÃ‚Â§ao",
+      "ingredientCategory": "General",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 64,
+      "ingredientName": "suc de lÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 426,
+      "ingredientName": "Cola (pentru completare)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 100,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 427,
+      "ingredientName": "Tequila",
+      "ingredientCategory": "General",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

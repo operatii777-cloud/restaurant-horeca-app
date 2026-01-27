@@ -1,0 +1,118 @@
+{
+  "product": {
+    "id": 286,
+    "name": "Supă de Găluște",
+    "name_en": "Supă de Găluște",
+    "category": "Ciorbe",
+    "category_en": "Soups",
+    "price": 19,
+    "description": "Supă cu găluște de griș",
+    "description_en": "Supă with găluște de griș",
+    "weight": null,
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 126,
+        "name": "Burtă de vită fiartă și tăiată",
+        "category": "Carne",
+        "quantity": 50,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.21643509653792728,
+        "totalCost": "10.82",
+        "totalCostWithWaste": "10.82",
+        "supplier": "Furnizor Carne",
+        "currentStock": 299528.47826086957,
+        "minStock": 1000,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 297,
+        "name": "Găluște de griș",
+        "category": "General",
+        "quantity": 50,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 23,
+        "name": "morcovi",
+        "category": "General",
+        "quantity": 30,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 9.564774813926666,
+        "totalCost": "286.94",
+        "totalCostWithWaste": "286.94",
+        "supplier": null,
+        "currentStock": 50667.5,
+        "minStock": 0.8,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 26,
+        "name": "pătrunjel",
+        "category": "General",
+        "quantity": 5,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.9209787415317573,
+        "totalCost": "4.60",
+        "totalCostWithWaste": "4.60",
+        "supplier": null,
+        "currentStock": 12006,
+        "minStock": 0.05,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "302.37",
+    "totalCostWithWaste": "302.37",
+    "sellingPrice": 19,
+    "profitMargin": -283.37,
+    "markup": -1491.42,
+    "foodCostPercentage": "1591.42"
+  },
+  "stats": {
+    "totalIngredients": 4,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

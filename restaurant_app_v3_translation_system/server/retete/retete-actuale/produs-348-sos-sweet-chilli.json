@@ -1,0 +1,43 @@
+﻿Ã¯Â»Â¿{
+  "productId": 348,
+  "productName": "Sos Sweet Chilli",
+  "productCategory": "Sosuri ÃƒÂˆÃ¢Â„Â¢i PÃƒÂ¢ine",
+  "price": 3,
+  "description": "Sos sweet chilli dulce-picant",
+  "ingredients": [
+    {
+      "ingredientId": 218,
+      "ingredientName": "Ardei roÃƒÂˆÃ¢Â„Â¢u",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 33,
+      "ingredientName": "ZahÃ„ÂƒÃ†Â’r",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 80,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 50,
+      "ingredientName": "OÃƒÂˆÃ¢Â€Âºet",
+      "ingredientCategory": "Condimente ÃƒÂˆÃ¢Â„Â¢i Sosuri",
+      "quantityNeeded": 50,
+      "unit": "l",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

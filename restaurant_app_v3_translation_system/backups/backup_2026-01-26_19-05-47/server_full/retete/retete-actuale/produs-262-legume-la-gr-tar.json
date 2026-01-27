@@ -1,0 +1,43 @@
+﻿Ã¯Â»Â¿{
+  "productId": 262,
+  "productName": "Legume la GrÃ„ÂƒÃ†Â’tar",
+  "productCategory": "Garnituri",
+  "price": 19,
+  "description": "Vinete, dovlecel, roÃƒÂˆÃ¢Â„Â¢ii, ciuperci, ceapÃ„ÂƒÃ†Â’ roÃƒÂˆÃ¢Â„Â¢ie",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 94,
+      "ingredientName": "CeapÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Fructe ÃƒÂˆÃ¢Â„Â¢i Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 92,
+      "ingredientName": "Ciuperci",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 60,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 104,
+      "ingredientName": "Vinete",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 60,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

@@ -1,0 +1,37 @@
+﻿Ã¯Â»Â¿{
+  "productId": 44,
+  "productName": "Fritto Misto Tempura",
+  "productCategory": "Peste Fructe de Mare",
+  "ingredients": [
+    {
+      "ingredientId": 563,
+      "ingredientName": "CreveÃƒÂˆÃ¢Â€Âºi (decorticaÃƒÂˆÃ¢Â€Âºi)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 593,
+      "ingredientName": "FÃ„ÂƒÃ†Â’inÃ„ÂƒÃ†Â’ Tempura/ApÃ„ÂƒÃ†Â’ mineralÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "General",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 64,
+      "ingredientName": "suc de lÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+      "ingredientCategory": "General",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

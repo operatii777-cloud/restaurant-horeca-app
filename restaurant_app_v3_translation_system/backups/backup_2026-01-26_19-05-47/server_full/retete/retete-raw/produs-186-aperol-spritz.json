@@ -1,0 +1,55 @@
+﻿Ã¯Â»Â¿{
+  "productId": 186,
+  "productName": "Aperol Spritz",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 269,
+      "ingredientName": "Prosecco",
+      "ingredientCategory": "General",
+      "quantityNeeded": 90,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 273,
+      "ingredientName": "ApÃ„ÂƒÃ†Â’ MineralÃ„ÂƒÃ†Â’/Sifon",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 270,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 271,
+      "ingredientName": "Aperol",
+      "ingredientCategory": "General",
+      "quantityNeeded": 60,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 447,
+      "ingredientName": "Felie/coajÃ„ÂƒÃ†Â’ de PortocalÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "General",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

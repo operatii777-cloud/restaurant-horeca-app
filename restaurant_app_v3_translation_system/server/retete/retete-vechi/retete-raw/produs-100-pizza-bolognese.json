@@ -1,0 +1,46 @@
+﻿Ã¯Â»Â¿{
+  "productId": 100,
+  "productName": "Pizza Bolognese",
+  "productCategory": "Pizza",
+  "ingredients": [
+    {
+      "ingredientId": 48,
+      "ingredientName": "parmezan",
+      "ingredientCategory": "General",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 3,
+      "ingredientName": "mozzarella",
+      "ingredientCategory": "General",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 604,
+      "ingredientName": "Blat de pizza (standard)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 250,
+      "unit": "buc",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 606,
+      "ingredientName": "Sos Ragu Bolognese",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

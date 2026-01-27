@@ -1,0 +1,19 @@
+﻿Ã¯Â»Â¿{
+  "productId": 271,
+  "productName": "Fettuccine Alfredo",
+  "productCategory": "Paste",
+  "price": 26,
+  "description": "Fettuccine Alfredo cu smÃƒÂ¢ntÃƒÂ¢nÃ„ÂƒÃ†Â’",
+  "ingredients": [
+    {
+      "ingredientId": 113,
+      "ingredientName": "SmÃƒÂ¢ntÃƒÂ¢nÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

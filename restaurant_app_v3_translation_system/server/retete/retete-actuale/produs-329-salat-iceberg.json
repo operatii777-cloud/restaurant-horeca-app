@@ -1,0 +1,35 @@
+﻿Ã¯Â»Â¿{
+  "productId": 329,
+  "productName": "SalatÃ„ÂƒÃ†Â’ Iceberg",
+  "productCategory": "Salate ÃƒÂƒÃ…Â½nsoÃƒÂˆÃ¢Â€Âºitoare",
+  "price": 18,
+  "description": "SalatÃ„ÂƒÃ†Â’ iceberg, lÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+  "ingredients": [
+    {
+      "ingredientId": 103,
+      "ingredientName": "SalatÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 6,
+      "ingredientName": "SalatÃ„ÂƒÃ†Â’ iceberg",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 154,
+      "ingredientName": "LÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+      "ingredientCategory": "Legume ÃƒÂˆÃ¢Â„Â¢i Fructe",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

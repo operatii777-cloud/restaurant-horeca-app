@@ -1,0 +1,118 @@
+{
+  "product": {
+    "id": 42,
+    "name": "Tigaie cu Fructe de Mare",
+    "name_en": "Seafood Pan",
+    "category": "Peste Fructe de Mare",
+    "category_en": "Fish & Seafood",
+    "price": 72,
+    "description": "Creveți, midii, midii în cochilie, inele de calamar, roșii cherry, usturoi, vin, unt, pâine de casă, pătrunjel",
+    "description_en": "Shrimp, mussels, mussels in shell, calamari rings, cherry tomatoes, garlic, wine, butter, homemade bread, parsley",
+    "weight": "250G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": "crustacee, moluște, lapte, gluten",
+    "allergens_en": "crustaceans, molluscs, milk, gluten"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 566,
+        "name": "Fructe de mare mixte",
+        "category": "General",
+        "quantity": 150,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 798,
+        "name": "Roșii Shaorma",
+        "category": "Legume",
+        "quantity": 50,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.034257682745826516,
+        "totalCost": "1.71",
+        "totalCostWithWaste": "1.71",
+        "supplier": "Furnizor Test",
+        "currentStock": 127522.22222222222,
+        "minStock": 100,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 800,
+        "name": "Sos Usturoi Shaorma",
+        "category": "Sosuri",
+        "quantity": 5,
+        "unit": "g",
+        "unitStock": "ml",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 1.1303157632422682,
+        "totalCost": "5.65",
+        "totalCostWithWaste": "5.65",
+        "supplier": "Furnizor Test",
+        "currentStock": 64752.76470588235,
+        "minStock": 100,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 821,
+        "name": "Ulei vegetal",
+        "category": "Uleiuri și Grăsimi",
+        "quantity": 30,
+        "unit": "ml",
+        "unitStock": "ml",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.36491973522575893,
+        "totalCost": "10.95",
+        "totalCostWithWaste": "10.95",
+        "supplier": "Uleiuri SRL",
+        "currentStock": 71910,
+        "minStock": 5000,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "18.31",
+    "totalCostWithWaste": "18.31",
+    "sellingPrice": 72,
+    "profitMargin": 53.69,
+    "markup": 74.57,
+    "foodCostPercentage": "25.43"
+  },
+  "stats": {
+    "totalIngredients": 4,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

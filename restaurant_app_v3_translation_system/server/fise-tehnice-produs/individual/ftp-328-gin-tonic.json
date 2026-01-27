@@ -1,0 +1,101 @@
+{
+  "product": {
+    "id": 328,
+    "name": "Gin Tonic",
+    "name_en": "Gin Tonic",
+    "category": "Băuturi și Coctailuri",
+    "category_en": "Drinks",
+    "price": 18,
+    "description": "Gin Tonic clasic",
+    "description_en": "Gin Tonic clasic",
+    "weight": null,
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 623,
+        "name": "Ton în conservă",
+        "category": "General",
+        "quantity": 150,
+        "unit": "ml",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.3074223941303995,
+        "totalCost": "46.11",
+        "totalCostWithWaste": "46.11",
+        "supplier": null,
+        "currentStock": 15388,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 59,
+        "name": "gin",
+        "category": "General",
+        "quantity": 50,
+        "unit": "ml",
+        "unitStock": "l",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 9.90028906681588,
+        "totalCost": "495.01",
+        "totalCostWithWaste": "495.01",
+        "supplier": null,
+        "currentStock": 1910,
+        "minStock": 0.2,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 64,
+        "name": "suc de lămâie",
+        "category": "General",
+        "quantity": 10,
+        "unit": "g",
+        "unitStock": "l",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.770198325996813,
+        "totalCost": "7.70",
+        "totalCostWithWaste": "7.70",
+        "supplier": null,
+        "currentStock": 42848,
+        "minStock": 0.2,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "548.83",
+    "totalCostWithWaste": "548.83",
+    "sellingPrice": 18,
+    "profitMargin": -530.83,
+    "markup": -2949.05,
+    "foodCostPercentage": "3049.05"
+  },
+  "stats": {
+    "totalIngredients": 3,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

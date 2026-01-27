@@ -1,0 +1,19 @@
+﻿Ã¯Â»Â¿{
+  "productId": 134,
+  "productName": "Fresh de Grapefruit",
+  "productCategory": "RÃ„ÂƒÃ†Â’coritoare",
+  "price": 27,
+  "description": "Suc proaspÃ„ÂƒÃ†Â’t de grapefruit",
+  "ingredients": [
+    {
+      "ingredientId": 209,
+      "ingredientName": "Grapefruit",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 3,
+      "unit": "felie",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

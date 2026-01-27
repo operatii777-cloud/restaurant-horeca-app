@@ -1,0 +1,84 @@
+{
+  "product": {
+    "id": 123,
+    "name": "Cheesecake",
+    "name_en": "Cheesecake",
+    "category": "Deserturi",
+    "category_en": "Desserts",
+    "price": 31,
+    "description": "Cheesecake clasic",
+    "description_en": "Classic cheesecake",
+    "weight": "200G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 1,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": "gluten, ouă, lapte",
+    "allergens_en": "gluten, eggs, milk"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 477,
+        "name": "Topping (simplu, sos vanilie)",
+        "category": "General",
+        "quantity": 30,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.3519402638689779,
+        "totalCost": "10.56",
+        "totalCostWithWaste": "10.56",
+        "supplier": null,
+        "currentStock": 8985,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 50,
+        "name": "brânză feta",
+        "category": "General",
+        "quantity": 120,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.5405837481795882,
+        "totalCost": "64.87",
+        "totalCostWithWaste": "64.87",
+        "supplier": null,
+        "currentStock": 30030,
+        "minStock": 0.4,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "75.43",
+    "totalCostWithWaste": "75.43",
+    "sellingPrice": 31,
+    "profitMargin": -44.43,
+    "markup": -143.32,
+    "foodCostPercentage": "243.32"
+  },
+  "stats": {
+    "totalIngredients": 2,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

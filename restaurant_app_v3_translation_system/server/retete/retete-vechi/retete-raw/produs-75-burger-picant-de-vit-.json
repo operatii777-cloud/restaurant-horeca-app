@@ -1,0 +1,91 @@
+﻿Ã¯Â»Â¿{
+  "productId": 75,
+  "productName": "Burger Picant de VitÃ„ÂƒÃ†Â’",
+  "productCategory": "Burgeri",
+  "ingredients": [
+    {
+      "ingredientId": 215,
+      "ingredientName": "ChiflÃ„ÂƒÃ†Â’ de burger",
+      "ingredientCategory": "General",
+      "quantityNeeded": 1,
+      "unit": "bucÃ„ÂƒÃ†Â’ÃƒÂˆÃ¢Â€Âºi",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 32,
+      "ingredientName": "cartofi",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 327,
+      "ingredientName": "Bacon (cubuleÃƒÂˆÃ¢Â€Âºe)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 169,
+      "ingredientName": "Sare de mare",
+      "ingredientCategory": "General",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 117,
+      "ingredientName": "Piper negru",
+      "ingredientCategory": "Condimente ÃƒÂˆÃ¢Â„Â¢i Sosuri",
+      "quantityNeeded": 1,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 126,
+      "ingredientName": "BurtÃ„ÂƒÃ†Â’ de vitÃ„ÂƒÃ†Â’ fiartÃ„ÂƒÃ†Â’ ÃƒÂˆÃ¢Â„Â¢i tÃ„ÂƒÃ†Â’iatÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 180,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 634,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 228,
+      "ingredientName": "Sos Sriracha/Chili Mayo",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 227,
+      "ingredientName": "JalapeÃƒÂƒÃ‚Â±o murat (feliat)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

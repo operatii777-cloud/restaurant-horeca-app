@@ -1,0 +1,92 @@
+<!-- 🎨 HEADER TEMPLATE UNIFICAT pentru Bar, KDS, Livrare -->
+<!-- Versiune: 3.0.8 | Design Profesional fără Suprapuneri -->
+
+<link rel="stylesheet" href="/styles/staff-header-unified.css">
+
+<div class="staff-header">
+    <!-- RÂND 1: Titlu + Controale -->
+    <div class="staff-header-top">
+        <div class="staff-header-title">
+            <h1 id="pageTitle">
+                <!-- ICON + TITLU specific fiecărei pagini -->
+                🍹 Bar - Comenzi în Preparare
+            </h1>
+            <!-- Subtitle opțional (ex: "Ospătar 1 - Mesele 1-20") -->
+            <span class="subtitle" id="pageSubtitle"></span>
+        </div>
+        
+        <div class="staff-header-controls">
+mai este             <!-- 1. Language Switcher -->
+            <div class="lang-group">
+                <button class="lang-btn active" data-lang="ro" onclick="changeLanguage('ro')">🇷🇴 RO</button>
+                <button class="lang-btn" data-lang="en" onclick="changeLanguage('en')">🇬🇧 EN</button>
+            </div>
+
+            <!-- 2. Connection Status -->
+            <div class="connection-status connected" id="connectionStatus">
+                <span>🟢</span>
+                <span id="connectionStatusText">Conectat Live</span>
+            </div>
+
+            <!-- 3. Theme Button (doar pentru Livrare) -->
+            <button class="action-btn theme" onclick="openThemeModal()" id="themeBtnLivrare" style="display:none;">
+                <span>🎨</span>
+                <span id="themeBtnLabelLivrare">Tema</span>
+            </button>
+
+            <!-- 4. Logout -->
+            <button class="action-btn logout" onclick="logout()" id="logoutBtn">
+                <span>🚪</span>
+                <span id="logoutText">Logout</span>
+            </button>
+
+            <!-- 5. Powered by QrOMS -->
+            <a class="brand-badge" href="https://qroms.app" target="_blank" rel="noopener">
+                <img src="/QrOMS.jpg" alt="QrOMS" onerror="this.onerror=null;this.src='/Trattoria.jpg';">
+                <span>Powered by QrOMS</span>
+            </a>
+        </div>
+    </div>
+    
+    <!-- RÂND 2: Statistici + Filtre -->
+    <div class="staff-header-bottom">
+        <!-- Statistici (personalizate per pagină) -->
+        <div class="stats-row" id="statsContainer">
+            <div class="stat-card">
+                <div class="stat-number" id="totalOrders">0</div>
+                <div class="stat-label" id="totalOrdersLabel">Total Comenzi</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="avgTime">0m</div>
+                <div class="stat-label" id="avgTimeLabel">Timp Mediu</div>
+            </div>
+        </div>
+        
+        <!-- Filtre (personalizate per pagină) -->
+        <div class="filters-row" id="filtersContainer">
+            <button class="filter-btn blue" onclick="toggleHistoryPanel()">
+                <span>📋</span>
+                <span id="historyBtnText">ISTORIC</span>
+            </button>
+            <button class="filter-btn blue active" onclick="toggleAggregatedPanel()">
+                <span>📊</span>
+                <span id="totalBtnText">TOTAL</span>
+            </button>
+            <button class="filter-btn green" onclick="showMessages()">
+                <span>💬</span>
+                <span id="messagesBtnText">MESAJE</span>
+            </button>
+            <button class="filter-btn red" onclick="showCancelled()">
+                <span>❌</span>
+                <span id="cancelledBtnText">ANULATE</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Messages Toggle Button (floating, dacă e necesar) -->
+<button class="messages-toggle-header" onclick="toggleMessagesModal()" title="Mesaje interne" id="messagesToggleBtn" style="display:none;">
+    💬
+    <span class="messages-badge" id="messagesBadge" style="display: none;">0</span>
+</button>
+

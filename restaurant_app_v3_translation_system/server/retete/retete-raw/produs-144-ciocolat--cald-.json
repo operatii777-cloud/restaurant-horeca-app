@@ -1,0 +1,28 @@
+﻿Ã¯Â»Â¿{
+  "productId": 144,
+  "productName": "CiocolatÃ„ÂƒÃ†Â’ CaldÃ„ÂƒÃ†Â’",
+  "productCategory": "Cafea/CiocolatÃ„ÂƒÃ†Â’/Ceai",
+  "ingredients": [
+    {
+      "ingredientId": 53,
+      "ingredientName": "lapte",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 257,
+      "ingredientName": "FriÃƒÂˆÃ¢Â„Â¢cÃ„ÂƒÃ†Â’ (opÃƒÂˆÃ¢Â€Âºional)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

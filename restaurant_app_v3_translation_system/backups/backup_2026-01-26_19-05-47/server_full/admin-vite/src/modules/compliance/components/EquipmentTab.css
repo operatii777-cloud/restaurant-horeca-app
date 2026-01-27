@@ -1,0 +1,39 @@
+.equipment-tab {
+  padding: var(--space-lg);
+}
+
+.equipment-tab .tab-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-lg);
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.equipment-tab .toolbar-info {
+  flex: 1;
+  min-width: 300px;
+}
+
+.equipment-tab .ag-grid-container {
+  margin-top: var(--space-md);
+}
+
+.equipment-tab .ag-theme-alpine,
+.equipment-tab .ag-theme-alpine-dark {
+  height: 600px;
+  width: 100%;
+}
+
+.equipment-tab .action-buttons {
+  display: flex;
+  gap: var(--space-xs);
+  justify-content: center;
+}
+
+.equipment-tab .action-buttons .btn {
+  padding: 0.25rem 0.5rem;
+}
+
+

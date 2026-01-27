@@ -1,0 +1,43 @@
+﻿Ã¯Â»Â¿{
+  "productId": 34,
+  "productName": "Disaronno Fitz",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "price": 28,
+  "description": "Coctail - Amaretto disaronno, apÃ„ÂƒÃ†Â’ carbogazoasÃ„ÂƒÃ†Â’",
+  "ingredients": [
+    {
+      "ingredientId": 189,
+      "ingredientName": "Amaretto",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 196,
+      "ingredientName": "ApÃ„ÂƒÃ†Â’ carbogazoasÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 154,
+      "ingredientName": "LÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+      "ingredientCategory": "Legume ÃƒÂˆÃ¢Â„Â¢i Fructe",
+      "quantityNeeded": 1,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "GheaÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

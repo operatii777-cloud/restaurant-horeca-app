@@ -1,0 +1,49 @@
+{
+  "productId": 302,
+  "productName": "Pizza Carbonara",
+  "productCategory": "Pizza",
+  "price": 47,
+  "description": "Blat pizza, cremă vegetală, mozzarella, bacon, brânză dură, ou",
+  "ingredients": [
+    {
+      "ingredientId": 69,
+      "ingredientName": "Bacon",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 40,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 121,
+      "ingredientName": "Cremă vegetală",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 38,
+      "ingredientName": "Mozzarella",
+      "ingredientCategory": "Lactate și Brânzeturi",
+      "quantityNeeded": 150,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 13,
+      "ingredientName": "Brânză dură",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 96,
+      "ingredientName": "Ou",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "wastePercentage": 0
+    }
+  ]
+}

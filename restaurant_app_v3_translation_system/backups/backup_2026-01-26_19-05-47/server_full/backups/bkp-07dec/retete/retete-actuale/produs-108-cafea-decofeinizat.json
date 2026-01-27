@@ -1,0 +1,17 @@
+{
+  "productId": 108,
+  "productName": "Cafea Decofeinizată",
+  "productCategory": "Cafea/Ciocolată/Ceai",
+  "price": 13,
+  "description": "Cafea fără cofeină",
+  "ingredients": [
+    {
+      "ingredientId": 86,
+      "ingredientName": "Cafea boabe decofeinizată",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 18,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

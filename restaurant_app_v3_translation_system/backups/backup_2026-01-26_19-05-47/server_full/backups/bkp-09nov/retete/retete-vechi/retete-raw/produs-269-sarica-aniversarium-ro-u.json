@@ -1,0 +1,17 @@
+{
+  "productId": 269,
+  "productName": "Sarica Aniversarium Roșu",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 768,
+      "ingredientName": "Sarica Aniversarium Roșu",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

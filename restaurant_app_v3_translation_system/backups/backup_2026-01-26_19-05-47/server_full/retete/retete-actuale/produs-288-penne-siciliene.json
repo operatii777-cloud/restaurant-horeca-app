@@ -1,0 +1,99 @@
+﻿Ã¯Â»Â¿{
+  "productId": 288,
+  "productName": "Penne Siciliene",
+  "productCategory": "Paste",
+  "price": 48,
+  "description": "Paste fresh, bacon, ciuperci, piept de pui, sos de roÃƒÂˆÃ¢Â„Â¢ii, cremÃ„ÂƒÃ†Â’ vegetalÃ„ÂƒÃ†Â’, brÃƒÂ¢nzÃ„ÂƒÃ†Â’ durÃ„ÂƒÃ†Â’, mozzarella, busuioc",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 92,
+      "ingredientName": "Ciuperci",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 60,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 17,
+      "ingredientName": "Busuioc",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 107,
+      "ingredientName": "Pui",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 110,
+      "ingredientName": "Piept de pui",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 69,
+      "ingredientName": "Bacon",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 40,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 121,
+      "ingredientName": "CremÃ„ÂƒÃ†Â’ vegetalÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 38,
+      "ingredientName": "Mozzarella",
+      "ingredientCategory": "Lactate ÃƒÂˆÃ¢Â„Â¢i BrÃƒÂ¢nzeturi",
+      "quantityNeeded": 150,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 13,
+      "ingredientName": "BrÃƒÂ¢nzÃ„ÂƒÃ†Â’ durÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 64,
+      "ingredientName": "Paste",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 200,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 14,
+      "ingredientName": "Sos de roÃƒÂˆÃ¢Â„Â¢ii",
+      "ingredientCategory": "Sosuri",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

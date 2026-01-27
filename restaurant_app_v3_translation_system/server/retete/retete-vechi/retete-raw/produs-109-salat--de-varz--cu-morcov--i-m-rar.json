@@ -1,0 +1,37 @@
+﻿Ã¯Â»Â¿{
+  "productId": 109,
+  "productName": "SalatÃ„ÂƒÃ†Â’ de VarzÃ„ÂƒÃ†Â’ cu Morcov ÃƒÂˆÃ¢Â„Â¢i MÃ„ÂƒÃ†Â’rar",
+  "productCategory": "Salate ÃƒÂƒÃ…Â½nsoÃƒÂˆÃ¢Â€Âºitoare",
+  "ingredients": [
+    {
+      "ingredientId": 825,
+      "ingredientName": "VarzÃ„ÂƒÃ†Â’ albÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Legume ÃƒÂˆÃ¢Â„Â¢i Fructe",
+      "quantityNeeded": 120,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 830,
+      "ingredientName": "Rozmarin",
+      "ingredientCategory": "Sosuri ÃƒÂˆÃ¢Â„Â¢i Condimente",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 23,
+      "ingredientName": "morcovi",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

@@ -1,0 +1,33 @@
+.stock-reports-page {
+  padding: 20px;
+}
+
+/* Efect hover pentru tabele - zoom în loc de bandă neagră */
+.stock-reports-page .table tbody tr {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.stock-reports-page .table tbody tr:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4);
+  background-color: rgba(56, 189, 248, 0.15) !important;
+  z-index: 1;
+  position: relative;
+}
+
+.stock-reports-page .table tbody tr:hover td {
+  background-color: transparent !important;
+  color: #00ff88 !important;
+  border-color: rgba(56, 189, 248, 0.4) !important;
+}
+
+.stock-reports-page .table tbody tr:hover td *,
+.stock-reports-page .table tbody tr:hover td span,
+.stock-reports-page .table tbody tr:hover td div,
+.stock-reports-page .table tbody tr:hover td strong,
+.stock-reports-page .table tbody tr:hover td .text-muted {
+  color: #00ff88 !important;
+}
+
+

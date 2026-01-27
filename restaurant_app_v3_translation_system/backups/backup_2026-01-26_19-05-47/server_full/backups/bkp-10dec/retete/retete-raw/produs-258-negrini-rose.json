@@ -1,0 +1,17 @@
+{
+  "productId": 258,
+  "productName": "Negrini Rose",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 754,
+      "ingredientName": "Negrini Rose",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

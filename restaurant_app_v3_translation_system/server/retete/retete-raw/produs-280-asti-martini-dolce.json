@@ -1,0 +1,19 @@
+﻿Ã¯Â»Â¿{
+  "productId": 280,
+  "productName": "Asti Martini Dolce",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 739,
+      "ingredientName": "Asti Martini Dolce",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

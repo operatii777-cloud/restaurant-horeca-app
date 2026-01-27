@@ -1,0 +1,184 @@
+// import { useTranslation } from '@/i18n/I18nContext';
+import React, { useState, useEffect, useRef } from 'react';
+import { AgGridReact } from 'ag-grid-react';
+import { Line } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+} from "chart.js";
+// AG Grid CSS imported globally with theme="legacy"
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+interface UserActivity {
+  user_id: number;
+  username: string;
+  total_actions: number;
+  last_activity: string;
+  actions_by_type: Record<string, number>;
+}
+
+export const UserActivityPage: React.FC = () => {
+//   const { t } = useTranslation();
+  const [activities, setActivities] = useState<UserActivity[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [topUsers, setTopUsers] = useState<UserActivity[]>([]);
+  const [chartData, setChartData] = useState<any>(null);
+
+  useEffect(() => {
+    loadUserActivity();
+    loadChartData();
+  }, []);
+
+  const loadChartData = async () => {
+    try {
+      const response = await fetch('/api/audit/user-activity/chart?days=30');
+      if (!response.ok) throw new Error('Failed to load chart data');
+      
+      const data = await response.json();
+      const chartDataPoints = Array.isArray(data) ? data : [];
+      
+      setChartData({
+        labels: chartDataPoints.map((d: any) => new Date(d.date).toLocaleDateString('ro-RO')),
+        datasets: [
+          {
+            label: 'AcÈ›iuni',
+            data: chartDataPoints.map((d: any) => d.actions),
+            borderColor: 'rgb(75, 192, 192)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            tension: 0.1
+          },
+          {
+            label: 'Utilizatori Activi',
+            data: chartDataPoints.map((d: any) => d.users),
+            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            tension: 0.1
+          }
+        ]
+      });
+    } catch (error) {
+      console.error('Error loading chart data:', error);
+    }
+  };
+
+  const loadUserActivity = async () => {
+    try {
+      setLoading(true);
+      // Folosim endpoint-ul dedicat pentru user activity
+      const response = await fetch('/api/audit/user-activity?limit=1000');
+      if (!response.ok) throw new Error('Failed to load user activity');
+      
+      const data = await response.json();
+      const activitiesList = Array.isArray(data) ? data : [];
+      
+      setActivities(activitiesList);
+      setTopUsers(activitiesList.slice(0, 10));
+    } catch (error) {
+      console.error('Error loading user activity:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const columnDefs = [
+    { field: 'username', headerName: 'Utilizator', width: 200 },
+    { field: 'total_actions', headerName: 'Total AcÈ›iuni', width: 150 },
+    { field: 'last_activity', headerName: 'Ultima Activitate', width: 180, valueFormatter: (params: any) => new Date(params.value).toLocaleString('ro-RO') },
+    {
+      headerName: 'AcÈ›iuni pe Tip',
+      width: 300,
+      cellRenderer: (params: any) => {
+        const actions = params.data.actions_by_type;
+        return Object.entries(actions).map(([action, count]: [string, any]) => 
+          `"Action": "Count"`
+        ).join(', ');
+      }
+    }
+  ];
+
+  return (
+    <div className="padding-20">
+      <div className="page-header margin-bottom-20">
+        <h1><i className="fas fa-user-clock me-2"></i>User Activity</h1>
+        <button className="btn btn-primary" onClick={loadUserActivity}>
+          <i className="fas fa-sync me-1"></i>"ReÃ®ncarcÄƒ"</button>
+      </div>
+
+      <div className="row mb-4">
+        <div className="col-md-6">
+          <div className="card">
+            <div className="card-header bg-info text-white">
+              <h5><i className="fas fa-trophy me-2"></i>Top 10 Utilizatori Activi</h5>
+            </div>
+            <div className="card-body">
+              <ol>
+                {topUsers.map((user, idx) => (
+                  <li key={user.user_id}>
+                    <strong>{user.username}</strong> - {user.total_actions} acÈ›iuni
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-6">
+          <div className="card">
+            <div className="card-header bg-primary text-white">
+              <h5><i className="fas fa-chart-line me-2"></i>EvoluÈ›ie Activitate (30 zile)</h5>
+            </div>
+            <div className="card-body">
+              {chartData ? (
+                <Line 
+                  data={chartData}
+                  options={{
+                    responsive: true,
+                    plugins: {
+                      legend: {
+                        position: 'top' as const,
+                      },
+                      title: {
+                        display: false,
+                      },
+                    },
+                  }}
+                />
+              ) : (
+                <p>Se încarcă datele...</p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="ag-theme-alpine-dark" style={{ height: '600px', width: '100%' }}>
+        <AgGridReact
+          theme="legacy"
+          rowData={activities}
+          columnDefs={columnDefs}
+          defaultColDef={{ sortable: true, filter: true }}
+          loading={loading}
+        />
+      </div>
+    </div>
+  );
+};
+
+
+
+
+

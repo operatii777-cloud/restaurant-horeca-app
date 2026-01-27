@@ -1,0 +1,35 @@
+﻿Ã¯Â»Â¿{
+  "productId": 243,
+  "productName": "PÃ„ÂƒÃ†Â’strÃ„ÂƒÃ†Â’v la PlitÃ„ÂƒÃ†Â’",
+  "productCategory": "Fel Principal",
+  "price": 38,
+  "description": "PÃ„ÂƒÃ†Â’strÃ„ÂƒÃ†Â’v la plitÃ„ÂƒÃ†Â’",
+  "ingredients": [
+    {
+      "ingredientId": 153,
+      "ingredientName": "PÃ„ÂƒÃ†Â’strÃ„ÂƒÃ†Â’v proaspÃ„ÂƒÃ†Â’t",
+      "ingredientCategory": "Peste Fructe de Mare",
+      "quantityNeeded": 250,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 154,
+      "ingredientName": "LÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+      "ingredientCategory": "Legume ÃƒÂˆÃ¢Â„Â¢i Fructe",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 18,
+      "ingredientName": "Ulei de mÃ„ÂƒÃ†Â’sline",
+      "ingredientCategory": "Uleiuri",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

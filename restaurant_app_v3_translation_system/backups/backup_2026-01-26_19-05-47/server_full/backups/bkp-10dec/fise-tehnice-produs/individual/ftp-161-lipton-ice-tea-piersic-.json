@@ -1,0 +1,67 @@
+{
+  "product": {
+    "id": 161,
+    "name": "Lipton Ice Tea Piersică",
+    "name_en": "Lipton Ice Tea Peach",
+    "category": "Răcoritoare",
+    "category_en": "Soft Drinks",
+    "price": 13,
+    "description": "Ceai rece cu aromă de piersică",
+    "description_en": "Peach flavored ice tea",
+    "weight": "250ML",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 623,
+        "name": "Ton în conservă",
+        "category": "General",
+        "quantity": 1,
+        "unit": "buc",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.3074223941303995,
+        "totalCost": "0.31",
+        "totalCostWithWaste": "0.31",
+        "supplier": null,
+        "currentStock": 15388,
+        "minStock": 10,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "0.31",
+    "totalCostWithWaste": "0.31",
+    "sellingPrice": 13,
+    "profitMargin": 12.69,
+    "markup": 97.64,
+    "foodCostPercentage": "2.36"
+  },
+  "stats": {
+    "totalIngredients": 1,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

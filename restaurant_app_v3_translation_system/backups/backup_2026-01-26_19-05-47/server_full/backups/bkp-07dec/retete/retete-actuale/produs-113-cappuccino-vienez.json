@@ -1,0 +1,25 @@
+{
+  "productId": 113,
+  "productName": "Cappuccino Vienez",
+  "productCategory": "Cafea/Ciocolată/Ceai",
+  "price": 17,
+  "description": "Espresso, lapte, frișcă",
+  "ingredients": [
+    {
+      "ingredientId": 25,
+      "ingredientName": "Cafea boabe",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 18,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 20,
+      "ingredientName": "Lapte",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}

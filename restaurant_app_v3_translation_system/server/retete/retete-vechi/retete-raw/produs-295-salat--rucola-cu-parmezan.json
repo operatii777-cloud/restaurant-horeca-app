@@ -1,0 +1,46 @@
+﻿Ã¯Â»Â¿{
+  "productId": 295,
+  "productName": "SalatÃ„ÂƒÃ†Â’ Rucola cu Parmezan",
+  "productCategory": "Salate",
+  "ingredients": [
+    {
+      "ingredientId": 798,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii Shaorma",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 330,
+      "ingredientName": "Rucola proaspÃ„ÂƒÃ†Â’tÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "General",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 821,
+      "ingredientName": "Ulei vegetal",
+      "ingredientCategory": "Uleiuri ÃƒÂˆÃ¢Â„Â¢i GrÃ„ÂƒÃ†Â’simi",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 48,
+      "ingredientName": "parmezan",
+      "ingredientCategory": "General",
+      "quantityNeeded": 15,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

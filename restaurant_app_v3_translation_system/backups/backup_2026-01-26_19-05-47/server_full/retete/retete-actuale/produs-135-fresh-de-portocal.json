@@ -1,0 +1,19 @@
+﻿Ã¯Â»Â¿{
+  "productId": 135,
+  "productName": "Fresh de PortocalÃ„ÂƒÃ†Â’",
+  "productCategory": "RÃ„ÂƒÃ†Â’coritoare",
+  "price": 27,
+  "description": "Suc proaspÃ„ÂƒÃ†Â’t de portocale",
+  "ingredients": [
+    {
+      "ingredientId": 194,
+      "ingredientName": "PortocalÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 4,
+      "unit": "felie",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

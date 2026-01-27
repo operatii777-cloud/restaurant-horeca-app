@@ -1,0 +1,49 @@
+{
+  "productId": 176,
+  "productName": "Ciorbă de Perișoare",
+  "productCategory": "Ciorbe",
+  "price": 25,
+  "description": "Pulpă de porc, ceapă albă, morcov, țelină, ardei kapia, ou, borș, pătrunjel",
+  "ingredients": [
+    {
+      "ingredientId": 94,
+      "ingredientName": "Ceapă",
+      "ingredientCategory": "Fructe și Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 109,
+      "ingredientName": "Ardei kapia",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 111,
+      "ingredientName": "Morcov",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 112,
+      "ingredientName": "Pătrunjel",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 96,
+      "ingredientName": "Ou",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "wastePercentage": 0
+    }
+  ]
+}

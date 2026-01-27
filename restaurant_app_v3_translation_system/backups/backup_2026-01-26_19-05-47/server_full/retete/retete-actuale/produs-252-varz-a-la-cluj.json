@@ -1,0 +1,27 @@
+﻿Ã¯Â»Â¿{
+  "productId": 252,
+  "productName": "VarzÃ„ÂƒÃ†Â’ a la Cluj",
+  "productCategory": "Fel Principal",
+  "price": 30,
+  "description": "VarzÃ„ÂƒÃ†Â’ la cuptor cu carne tocatÃ„ÂƒÃ†Â’, orez ÃƒÂˆÃ¢Â„Â¢i smÃƒÂ¢ntÃƒÂ¢nÃ„ÂƒÃ†Â’ - specialitate clujeanÃ„ÂƒÃ†Â’",
+  "ingredients": [
+    {
+      "ingredientId": 113,
+      "ingredientName": "SmÃƒÂ¢ntÃƒÂ¢nÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 61,
+      "ingredientName": "Orez",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 80,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

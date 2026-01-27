@@ -1,0 +1,30 @@
+{
+  "autoSave": true,
+  "saveInterval": 10,
+  "archivePath": ".cursor-archive",
+  "enableRecovery": true,
+  "playwrightTimeout": 30,
+  "compression": {
+    "enabled": true,
+    "olderThan": 7
+  },
+  "notifications": true,
+  "maxFileSizeMB": 100,
+  "tags": {
+    "autoDetect": true,
+    "keywords": {
+      "frontend": ["react", "tsx", "component", "ui", "vite"],
+      "backend": ["server", "api", "endpoint", "database", "sql"],
+      "bug-fix": ["fix", "error", "bug", "issue", "problem"],
+      "feature": ["add", "new", "implement", "create", "feature"],
+      "test": ["test", "playwright", "spec", "e2e", "unit"],
+      "refactor": ["refactor", "cleanup", "optimize", "improve"]
+    }
+  },
+  "recovery": {
+    "autoDetectBlock": true,
+    "saveLastMessages": 10,
+    "generateRecoveryPlan": true
+  }
+}
+

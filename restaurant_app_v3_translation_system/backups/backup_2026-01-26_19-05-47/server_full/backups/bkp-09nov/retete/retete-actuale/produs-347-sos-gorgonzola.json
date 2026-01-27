@@ -1,0 +1,49 @@
+{
+  "productId": 347,
+  "productName": "Sos Gorgonzola",
+  "productCategory": "Sosuri și Pâine",
+  "price": 5,
+  "description": "Sos cremos cu gorgonzola",
+  "ingredients": [
+    {
+      "ingredientId": 93,
+      "ingredientName": "Gorgonzola",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 113,
+      "ingredientName": "Smântână",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 20,
+      "ingredientName": "Lapte",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 65,
+      "ingredientName": "Sare",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 2,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 98,
+      "ingredientName": "Piper",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 1,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

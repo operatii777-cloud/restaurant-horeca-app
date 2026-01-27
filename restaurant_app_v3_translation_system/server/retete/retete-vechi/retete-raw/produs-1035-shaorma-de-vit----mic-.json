@@ -1,0 +1,104 @@
+﻿Ã¯Â»Â¿{
+  "productId": 1035,
+  "productName": "Shaorma de VitÃ„ÂƒÃ†Â’ - MicÃ„ÂƒÃ†Â’",
+  "productCategory": "Fast Food",
+  "ingredients": [
+    {
+      "ingredientId": 126,
+      "ingredientName": "BurtÃ„ÂƒÃ†Â’ de vitÃ„ÂƒÃ†Â’ fiartÃ„ÂƒÃ†Â’ ÃƒÂˆÃ¢Â„Â¢i tÃ„ÂƒÃ†Â’iatÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 120,
+      "unit": "g",
+      "wastePercentage": 8,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 796,
+      "ingredientName": "Lipie Shaorma",
+      "ingredientCategory": "PÃƒÂ¢ine",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "wastePercentage": 2,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 797,
+      "ingredientName": "SalatÃ„ÂƒÃ†Â’ Verde Shaorma",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 25,
+      "unit": "g",
+      "wastePercentage": 15,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 798,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii Shaorma",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 10,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 815,
+      "ingredientName": "CeapÃ„ÂƒÃ†Â’ tocatÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 15,
+      "unit": "g",
+      "wastePercentage": 15,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 825,
+      "ingredientName": "VarzÃ„ÂƒÃ†Â’ albÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Legume ÃƒÂˆÃ¢Â„Â¢i Fructe",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 20,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 800,
+      "ingredientName": "Sos Usturoi Shaorma",
+      "ingredientCategory": "Sosuri",
+      "quantityNeeded": 25,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 805,
+      "ingredientName": "Sos Iute Shaorma",
+      "ingredientCategory": "Sosuri ÃƒÂˆÃ¢Â„Â¢i Condimente",
+      "quantityNeeded": 8,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": [
+    {
+      "ingredientId": 623,
+      "ingredientName": "Ton ÃƒÂ®n conservÃ„ÂƒÃ†Â’",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "itemType": "packaging_delivery"
+    },
+    {
+      "ingredientId": 808,
+      "ingredientName": "HÃƒÂ¢rtie Shaorma",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "itemType": "packaging_restaurant"
+    },
+    {
+      "ingredientId": 809,
+      "ingredientName": "ÃƒÂˆÃ‹ÂœerveÃƒÂˆÃ¢Â€Âºele",
+      "quantityNeeded": 3,
+      "unit": "buc",
+      "itemType": "packaging_restaurant"
+    }
+  ]
+}
+
+

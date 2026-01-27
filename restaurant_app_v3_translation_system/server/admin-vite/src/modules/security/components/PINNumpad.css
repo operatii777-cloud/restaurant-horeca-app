@@ -1,0 +1,138 @@
+/**
+ * PIN Numpad Styles
+ * Touch-optimized for POS/Kiosk terminals
+ */
+
+.pin-numpad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  max-width: 320px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.pin-numpad-btn {
+  width: 90px;
+  height: 90px;
+  font-size: 32px;
+  font-weight: 600;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #f0f0f0, #e6e6e6);
+  color: #333;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 
+    4px 4px 8px rgba(0, 0, 0, 0.1),
+    -4px -4px 8px rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pin-numpad-btn:hover:not(:disabled) {
+  background: linear-gradient(145deg, #e6e6e6, #f0f0f0);
+  transform: translateY(-2px);
+}
+
+.pin-numpad-btn:active:not(:disabled) {
+  transform: scale(0.95);
+  box-shadow: 
+    2px 2px 4px rgba(0, 0, 0, 0.1),
+    -2px -2px 4px rgba(255, 255, 255, 0.9);
+  background: linear-gradient(145deg, #e0e0e0, #d6d6d6);
+}
+
+.pin-numpad-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pin-numpad-btn.clear {
+  background: linear-gradient(145deg, #ffebee, #ffcdd2);
+  color: #c62828;
+}
+
+.pin-numpad-btn.clear:hover:not(:disabled) {
+  background: linear-gradient(145deg, #ffcdd2, #ef9a9a);
+}
+
+.pin-numpad-btn.backspace {
+  background: linear-gradient(145deg, #fff3e0, #ffe0b2);
+  color: #e65100;
+}
+
+.pin-numpad-btn.backspace:hover:not(:disabled) {
+  background: linear-gradient(145deg, #ffe0b2, #ffcc80);
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .pin-numpad-btn {
+    background: linear-gradient(145deg, #2d2d2d, #1a1a1a);
+    color: #fff;
+    box-shadow: 
+      4px 4px 8px rgba(0, 0, 0, 0.4),
+      -4px -4px 8px rgba(60, 60, 60, 0.1);
+  }
+
+  .pin-numpad-btn:hover:not(:disabled) {
+    background: linear-gradient(145deg, #333, #2a2a2a);
+  }
+
+  .pin-numpad-btn:active:not(:disabled) {
+    background: linear-gradient(145deg, #1a1a1a, #111);
+  }
+
+  .pin-numpad-btn.clear {
+    background: linear-gradient(145deg, #5d1a1a, #4a1515);
+    color: #ff8a80;
+  }
+
+  .pin-numpad-btn.backspace {
+    background: linear-gradient(145deg, #5d3a1a, #4a2f15);
+    color: #ffab40;
+  }
+}
+
+/* Ripple effect */
+.pin-numpad-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.pin-numpad-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease;
+}
+
+.pin-numpad-btn:active::after {
+  width: 200px;
+  height: 200px;
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+  .pin-numpad-btn {
+    width: 70px;
+    height: 70px;
+    font-size: 24px;
+  }
+  
+  .pin-numpad {
+    gap: 8px;
+    padding: 8px;
+  }
+}
+

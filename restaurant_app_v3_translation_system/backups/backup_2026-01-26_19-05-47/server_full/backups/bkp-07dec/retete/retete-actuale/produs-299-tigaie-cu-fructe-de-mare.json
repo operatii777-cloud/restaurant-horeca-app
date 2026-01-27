@@ -1,0 +1,65 @@
+{
+  "productId": 299,
+  "productName": "Tigaie cu Fructe de Mare",
+  "productCategory": "Peste și Fructe de Mare",
+  "price": 72,
+  "description": "Creveți, midii, midii în cochilie, inele de calamar, roșii cherry, usturoi, vin, unt, pâine de casă, pătrunjel",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "Roșii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 112,
+      "ingredientName": "Pătrunjel",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 137,
+      "ingredientName": "Creveți",
+      "ingredientCategory": "Peste Fructe de Mare",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 138,
+      "ingredientName": "Midii",
+      "ingredientCategory": "Peste Fructe de Mare",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 60,
+      "ingredientName": "Unt",
+      "ingredientCategory": "Lactate și Brânzeturi",
+      "quantityNeeded": 20,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 117,
+      "ingredientName": "Pâine",
+      "ingredientCategory": "Panificație",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

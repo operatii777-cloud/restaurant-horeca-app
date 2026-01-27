@@ -1,0 +1,64 @@
+{
+  "job": {
+    "id": "order_118",
+    "data": {
+      "orderId": 118,
+      "finalItems": [
+        {
+          "itemId": "it_1762679704267_436089162",
+          "productId": 156,
+          "name": "Brânză Feta la Cuptor",
+          "quantity": 1,
+          "finalPrice": 46,
+          "isFree": false,
+          "customizations": [],
+          "status": "pending",
+          "station": "kitchen"
+        },
+        {
+          "itemId": "it_1762679704267_345721315",
+          "productId": 197,
+          "name": "Burger Crispy Pui",
+          "quantity": 1,
+          "finalPrice": 56,
+          "isFree": false,
+          "customizations": [],
+          "status": "pending",
+          "station": "kitchen"
+        },
+        {
+          "itemId": "it_1762679704267_386002461",
+          "productId": 202,
+          "name": "Quesadilla de Vită",
+          "quantity": 1,
+          "finalPrice": 59,
+          "isFree": false,
+          "customizations": [],
+          "status": "pending",
+          "station": "kitchen"
+        },
+        {
+          "itemId": "it_1762679704267_480536396",
+          "productId": 40,
+          "name": "Holsten Nefiltrată",
+          "quantity": 1,
+          "finalPrice": 15,
+          "isFree": false,
+          "customizations": [],
+          "status": "pending",
+          "station": "bar"
+        }
+      ],
+      "orderType": "here"
+    },
+    "priority": 1,
+    "retries": 3,
+    "addedAt": 1762679704285,
+    "status": "waiting"
+  },
+  "error": {
+    "message": "SQLITE_CONSTRAINT: NOT NULL constraint failed: ingredient_batches.remaining_quantity",
+    "stack": "Error: SQLITE_CONSTRAINT: NOT NULL constraint failed: ingredient_batches.remaining_quantity"
+  },
+  "failedAt": "2025-11-09T09:15:04.585Z"
+}

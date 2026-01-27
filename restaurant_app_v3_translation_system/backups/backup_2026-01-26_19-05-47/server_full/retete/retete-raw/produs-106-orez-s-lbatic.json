@@ -1,0 +1,28 @@
+﻿Ã¯Â»Â¿{
+  "productId": 106,
+  "productName": "Orez SÃ„ÂƒÃ†Â’lbatic",
+  "productCategory": "Garnituri",
+  "ingredients": [
+    {
+      "ingredientId": 812,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 814,
+      "ingredientName": "Orez pentru sarmale",
+      "ingredientCategory": "Cereale ÃƒÂˆÃ¢Â„Â¢i Paste",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

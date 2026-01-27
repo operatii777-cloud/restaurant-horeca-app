@@ -1,0 +1,33 @@
+{
+  "productId": 222,
+  "productName": "Cotlet de Porc cu Os și Sos de Ciuperci",
+  "productCategory": "Fel Principal",
+  "price": 69,
+  "description": "Cotlet de porc, cremă vegetală, ciuperci, cartofi la cuptor",
+  "ingredients": [
+    {
+      "ingredientId": 142,
+      "ingredientName": "Cotlet de porc",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 250,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 18,
+      "ingredientName": "Ulei de măsline",
+      "ingredientCategory": "Uleiuri",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 65,
+      "ingredientName": "Sare",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 5,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}

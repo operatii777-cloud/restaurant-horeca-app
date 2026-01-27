@@ -1,0 +1,19 @@
+﻿Ã¯Â»Â¿{
+  "productId": 160,
+  "productName": "Mozzarella Sticks",
+  "productCategory": "Aperitive Calde",
+  "price": 40,
+  "description": "BÃ„ÂƒÃ†Â’ÃƒÂˆÃ¢Â€Âºi de mozzarella panaÃƒÂˆÃ¢Â€Âºi",
+  "ingredients": [
+    {
+      "ingredientId": 38,
+      "ingredientName": "Mozzarella",
+      "ingredientCategory": "Lactate ÃƒÂˆÃ¢Â„Â¢i BrÃƒÂ¢nzeturi",
+      "quantityNeeded": 150,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

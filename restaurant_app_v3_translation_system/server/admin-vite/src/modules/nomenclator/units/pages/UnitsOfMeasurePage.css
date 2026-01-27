@@ -1,0 +1,122 @@
+.units-of-measure-page {
+  padding: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.units-of-measure-page .card {
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.units-of-measure-page .card-header {
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  padding: 1rem 1.5rem;
+}
+
+.units-of-measure-page .table {
+  margin-bottom: 0;
+  color: #000000 !important; /* Text negru */
+}
+
+.units-of-measure-page .table thead {
+  background-color: #f8f9fa !important;
+}
+
+.units-of-measure-page .table th {
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6;
+  white-space: nowrap;
+  color: #000000 !important; /* Text negru pentru header */
+  background-color: #f8f9fa !important;
+}
+
+.units-of-measure-page .table td {
+  vertical-align: middle;
+  color: #000000 !important; /* Text negru pentru celule */
+  background-color: #ffffff !important;
+}
+
+/* FORȚEZ toate textele din tabel să fie negre - inclusiv text-muted */
+.units-of-measure-page .table td *,
+.units-of-measure-page .table td span,
+.units-of-measure-page .table td div,
+.units-of-measure-page .table td .text-muted,
+.units-of-measure-page .table td .text-secondary {
+  color: #000000 !important;
+}
+
+.units-of-measure-page .table tbody tr {
+  background-color: #ffffff !important;
+}
+
+.units-of-measure-page .table tbody tr:nth-of-type(even) {
+  background-color: #f8f9fa !important;
+}
+
+.units-of-measure-page .table tbody tr:nth-of-type(even) td *,
+.units-of-measure-page .table tbody tr:nth-of-type(even) td .text-muted {
+  color: #000000 !important;
+}
+
+.units-of-measure-page .table tbody tr:hover {
+  background-color: #e9ecef !important;
+}
+
+.units-of-measure-page .table tbody tr:hover td *,
+.units-of-measure-page .table tbody tr:hover td .text-muted {
+  color: #000000 !important;
+}
+
+.units-of-measure-page code {
+  background-color: #f8f9fa;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #d63384;
+}
+
+.units-of-measure-page .badge {
+  font-size: 0.75rem;
+  padding: 0.35em 0.65em;
+}
+
+.units-of-measure-page .btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+.units-of-measure-page .modal-body {
+  padding: 1.5rem;
+}
+
+.units-of-measure-page .form-label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.units-of-measure-page .text-danger {
+  color: #dc3545 !important;
+}
+
+.units-of-measure-page .text-muted {
+  font-size: 0.875rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .units-of-measure-page {
+    padding: 1rem;
+  }
+
+  .units-of-measure-page .table {
+    font-size: 0.875rem;
+  }
+
+  .units-of-measure-page .table th,
+  .units-of-measure-page .table td {
+    padding: 0.5rem;
+  }
+}
+

@@ -1,0 +1,46 @@
+﻿Ã¯Â»Â¿{
+  "productId": 41,
+  "productName": "Midii Picante ÃƒÂ®n Sos RoÃƒÂˆÃ¢Â„Â¢u",
+  "productCategory": "Peste Fructe de Mare",
+  "ingredients": [
+    {
+      "ingredientId": 349,
+      "ingredientName": "Ardei iute (chilli)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 3,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 356,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 300,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 800,
+      "ingredientName": "Sos Usturoi Shaorma",
+      "ingredientCategory": "Sosuri",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 597,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

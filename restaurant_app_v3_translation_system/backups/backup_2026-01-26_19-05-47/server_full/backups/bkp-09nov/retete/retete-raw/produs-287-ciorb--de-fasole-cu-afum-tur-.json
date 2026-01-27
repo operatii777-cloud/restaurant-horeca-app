@@ -1,0 +1,62 @@
+{
+  "productId": 287,
+  "productName": "Ciorbă de Fasole cu Afumătură",
+  "productCategory": "Ciorbe",
+  "ingredients": [
+    {
+      "ingredientId": 299,
+      "ingredientName": "Fasole uscată",
+      "ingredientCategory": "General",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 300,
+      "ingredientName": "Tarhon (opțional)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 798,
+      "ingredientName": "Roșii Shaorma",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 302,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 303,
+      "ingredientName": "Costiță afumată/Ciolan",
+      "ingredientCategory": "General",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 304,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 300,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

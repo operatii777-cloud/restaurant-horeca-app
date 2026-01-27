@@ -1,0 +1,25 @@
+{
+  "productId": 333,
+  "productName": "Salată de Roșii",
+  "productCategory": "Salate Însoțitoare",
+  "price": 18,
+  "description": "Salată de roșii proaspete",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "Roșii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 103,
+      "ingredientName": "Salată",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

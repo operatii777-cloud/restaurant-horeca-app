@@ -1,0 +1,85 @@
+.kiosk-widget-page {
+  padding: 24px;
+  background: var(--navy-black, #020617);
+  min-height: 100vh;
+}
+
+.kiosk-widget-page .page-header {
+  margin-bottom: 24px;
+}
+
+.kiosk-widget-page .page-header h1 {
+  color: #fde047 !important;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.kiosk-widget-page .page-header p {
+  color: #f1f5f9 !important;
+  margin-top: 8px;
+}
+
+.kiosk-widget-page .card {
+  background: var(--navy-deep, #0f172a) !important;
+  border: 1px solid var(--slate-navy, #1e293b) !important;
+  color: #fde047 !important;
+}
+
+.kiosk-widget-page .card-header {
+  background: var(--slate-navy, #1e293b) !important;
+  border-bottom: 1px solid var(--slate, #334155) !important;
+  color: #fde047 !important;
+}
+
+.kiosk-widget-page .card-body {
+  color: #f1f5f9 !important;
+}
+
+.kiosk-widget-page .form-label {
+  color: #fde047 !important;
+  font-weight: 600;
+}
+
+.kiosk-widget-page .form-control,
+.kiosk-widget-page .form-select {
+  background: var(--slate-navy, #1e293b) !important;
+  border: 1px solid var(--slate, #334155) !important;
+  color: #f1f5f9 !important;
+}
+
+.kiosk-widget-page .form-control:focus,
+.kiosk-widget-page .form-select:focus {
+  background: var(--navy-deep, #0f172a) !important;
+  border-color: #3b82f6 !important;
+  color: #f1f5f9 !important;
+}
+
+.kiosk-widget-page .form-check-label {
+  color: #f1f5f9 !important;
+}
+
+.kiosk-widget-page code {
+  background: var(--slate-navy, #1e293b) !important;
+  color: #fde047 !important;
+  border: 1px solid var(--slate, #334155) !important;
+}
+
+.kiosk-widget-page .feature-item h6 {
+  color: #fde047 !important;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.kiosk-widget-page .feature-item ul {
+  color: #f1f5f9 !important;
+}
+
+.kiosk-widget-page .sticky-top {
+  position: sticky;
+  top: 20px;
+}
+

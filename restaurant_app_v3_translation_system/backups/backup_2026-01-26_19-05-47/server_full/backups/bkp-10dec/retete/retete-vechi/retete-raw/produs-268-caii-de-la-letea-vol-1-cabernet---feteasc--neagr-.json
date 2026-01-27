@@ -1,0 +1,17 @@
+{
+  "productId": 268,
+  "productName": "Caii de la Letea Vol 1 Cabernet & Fetească Neagră",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 743,
+      "ingredientName": "Caii de la Letea Vol 1 Cabernet & Fetească Neagră",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

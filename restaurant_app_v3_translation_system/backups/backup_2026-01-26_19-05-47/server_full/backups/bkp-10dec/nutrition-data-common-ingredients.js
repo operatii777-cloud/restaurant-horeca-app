@@ -1,0 +1,540 @@
+// 📊 BAZĂ DE DATE cu valori nutriționale pentru ingrediente comune de restaurant
+// Surse: USDA FoodData Central, Open Food Facts, INRAN
+// Valori per 100g ingredient
+
+module.exports = {
+    // ==================== LACTATE & BRÂNZETURI ====================
+    'mozzarella': {
+        description: 'Brânză mozzarella italiană',
+        energy_kcal: 280,
+        fat: 22.4,
+        saturated_fat: 13.2,
+        carbs: 2.2,
+        sugars: 1.0,
+        protein: 18.7,
+        salt: 0.5,
+        fiber: 0,
+        allergens: ['Lactate'],
+        source: 'USDA'
+    },
+    'parmesan': {
+        description: 'Brânză parmigiano reggiano',
+        energy_kcal: 431,
+        fat: 28.6,
+        saturated_fat: 18.1,
+        carbs: 4.1,
+        sugars: 0.9,
+        protein: 38.5,
+        salt: 1.6,
+        fiber: 0,
+        allergens: ['Lactate'],
+        source: 'USDA'
+    },
+    'smantana': {
+        description: 'Smântână pentru gătit 20% grăsime',
+        energy_kcal: 195,
+        fat: 20.0,
+        saturated_fat: 12.5,
+        carbs: 3.5,
+        sugars: 3.2,
+        protein: 2.2,
+        salt: 0.08,
+        fiber: 0,
+        allergens: ['Lactate'],
+        source: 'USDA'
+    },
+    'lapte': {
+        description: 'Lapte integral 3.5% grăsime',
+        energy_kcal: 61,
+        fat: 3.3,
+        saturated_fat: 1.9,
+        carbs: 4.8,
+        sugars: 5.1,
+        protein: 3.2,
+        salt: 0.04,
+        fiber: 0,
+        allergens: ['Lactate'],
+        source: 'USDA'
+    },
+    'unt': {
+        description: 'Unt proaspăt nesărat',
+        energy_kcal: 717,
+        fat: 81.1,
+        saturated_fat: 51.4,
+        carbs: 0.1,
+        sugars: 0.1,
+        protein: 0.9,
+        salt: 0.01,
+        fiber: 0,
+        allergens: ['Lactate'],
+        source: 'USDA'
+    },
+
+    // ==================== CARNE & PEŞTE ====================
+    'piept de pui': {
+        description: 'Piept de pui fără piele, crud',
+        energy_kcal: 165,
+        fat: 3.6,
+        saturated_fat: 1.0,
+        carbs: 0,
+        sugars: 0,
+        protein: 31.0,
+        salt: 0.07,
+        fiber: 0,
+        allergens: [],
+        source: 'USDA'
+    },
+    'carne de porc': {
+        description: 'Carne de porc, pulpă, crudă',
+        energy_kcal: 242,
+        fat: 17.8,
+        saturated_fat: 6.5,
+        carbs: 0,
+        sugars: 0,
+        protein: 20.5,
+        salt: 0.06,
+        fiber: 0,
+        allergens: [],
+        source: 'USDA'
+    },
+    'carne de vita': {
+        description: 'Carne de vită, mușchi, crudă',
+        energy_kcal: 250,
+        fat: 18.0,
+        saturated_fat: 7.3,
+        carbs: 0,
+        sugars: 0,
+        protein: 22.0,
+        salt: 0.05,
+        fiber: 0,
+        allergens: [],
+        source: 'USDA'
+    },
+    'somon': {
+        description: 'Somon Atlantic proaspăt crud',
+        energy_kcal: 208,
+        fat: 13.4,
+        saturated_fat: 3.1,
+        carbs: 0,
+        sugars: 0,
+        protein: 20.4,
+        salt: 0.06,
+        fiber: 0,
+        allergens: ['Pește'],
+        source: 'USDA'
+    },
+    'bacon': {
+        description: 'Bacon afumat crud',
+        energy_kcal: 541,
+        fat: 50.0,
+        saturated_fat: 17.5,
+        carbs: 1.4,
+        sugars: 0.7,
+        protein: 18.0,
+        salt: 2.3,
+        fiber: 0,
+        allergens: [],
+        additives: ['E250'],
+        source: 'USDA'
+    },
+
+    // ==================== LEGUME ====================
+    'rosii': {
+        description: 'Roșii proaspete coapte',
+        energy_kcal: 18,
+        fat: 0.2,
+        saturated_fat: 0.0,
+        carbs: 3.9,
+        sugars: 2.6,
+        protein: 0.9,
+        salt: 0.005,
+        fiber: 1.2,
+        allergens: [],
+        source: 'USDA'
+    },
+    'ceapa': {
+        description: 'Ceapă albă/gălbui crudă',
+        energy_kcal: 40,
+        fat: 0.1,
+        saturated_fat: 0.0,
+        carbs: 9.3,
+        sugars: 4.2,
+        protein: 1.1,
+        salt: 0.004,
+        fiber: 1.7,
+        allergens: [],
+        source: 'USDA'
+    },
+    'usturoi': {
+        description: 'Usturoi proaspăt crud',
+        energy_kcal: 149,
+        fat: 0.5,
+        saturated_fat: 0.1,
+        carbs: 33.1,
+        sugars: 1.0,
+        protein: 6.4,
+        salt: 0.017,
+        fiber: 2.1,
+        allergens: [],
+        source: 'USDA'
+    },
+    'ardei gras': {
+        description: 'Ardei gras roșu/verde crud',
+        energy_kcal: 31,
+        fat: 0.3,
+        saturated_fat: 0.1,
+        carbs: 6.0,
+        sugars: 4.2,
+        protein: 1.0,
+        salt: 0.004,
+        fiber: 2.1,
+        allergens: [],
+        source: 'USDA'
+    },
+    'cartofi': {
+        description: 'Cartofi albi cu coajă crudi',
+        energy_kcal: 77,
+        fat: 0.1,
+        saturated_fat: 0.0,
+        carbs: 17.5,
+        sugars: 0.8,
+        protein: 2.0,
+        salt: 0.006,
+        fiber: 2.1,
+        allergens: [],
+        source: 'USDA'
+    },
+    'ciuperci champignon': {
+        description: 'Ciuperci champignon albe proaspete',
+        energy_kcal: 22,
+        fat: 0.3,
+        saturated_fat: 0.0,
+        carbs: 3.3,
+        sugars: 2.0,
+        protein: 3.1,
+        salt: 0.005,
+        fiber: 1.0,
+        allergens: [],
+        source: 'USDA'
+    },
+    'salata verde': {
+        description: 'Salată verde iceberg proaspătă',
+        energy_kcal: 14,
+        fat: 0.1,
+        saturated_fat: 0.0,
+        carbs: 3.0,
+        sugars: 1.4,
+        protein: 0.9,
+        salt: 0.010,
+        fiber: 1.2,
+        allergens: [],
+        source: 'USDA'
+    },
+    'castraveti': {
+        description: 'Castraveți proaspeți cu coajă',
+        energy_kcal: 15,
+        fat: 0.1,
+        saturated_fat: 0.0,
+        carbs: 3.6,
+        sugars: 1.7,
+        protein: 0.7,
+        salt: 0.002,
+        fiber: 0.5,
+        allergens: [],
+        source: 'USDA'
+    },
+
+    // ==================== CONDIMENTE & SOSURI ====================
+    'sare': {
+        description: 'Sare de bucătărie iodată',
+        energy_kcal: 0,
+        fat: 0,
+        saturated_fat: 0,
+        carbs: 0,
+        sugars: 0,
+        protein: 0,
+        salt: 99.0,
+        fiber: 0,
+        allergens: [],
+        source: 'USDA'
+    },
+    'piper negru': {
+        description: 'Piper negru măcinat',
+        energy_kcal: 251,
+        fat: 3.3,
+        saturated_fat: 1.4,
+        carbs: 64.0,
+        sugars: 0.6,
+        protein: 10.4,
+        salt: 0.020,
+        fiber: 25.3,
+        allergens: [],
+        source: 'USDA'
+    },
+    'ulei de masline': {
+        description: 'Ulei extravirgin de măsline',
+        energy_kcal: 884,
+        fat: 100.0,
+        saturated_fat: 13.8,
+        carbs: 0,
+        sugars: 0,
+        protein: 0,
+        salt: 0.002,
+        fiber: 0,
+        allergens: [],
+        source: 'USDA'
+    },
+    'ulei de floarea soarelui': {
+        description: 'Ulei rafinat de floarea soarelui',
+        energy_kcal: 884,
+        fat: 100.0,
+        saturated_fat: 10.3,
+        carbs: 0,
+        sugars: 0,
+        protein: 0,
+        salt: 0,
+        fiber: 0,
+        allergens: [],
+        source: 'USDA'
+    },
+    'otet': {
+        description: 'Oțet alb/balsamic',
+        energy_kcal: 21,
+        fat: 0,
+        saturated_fat: 0,
+        carbs: 0.9,
+        sugars: 0.4,
+        protein: 0,
+        salt: 0.008,
+        fiber: 0,
+        allergens: [],
+        source: 'USDA'
+    },
+    'ketchup': {
+        description: 'Ketchup de roșii',
+        energy_kcal: 112,
+        fat: 0.1,
+        saturated_fat: 0.0,
+        carbs: 26.6,
+        sugars: 22.8,
+        protein: 1.0,
+        salt: 1.1,
+        fiber: 0.3,
+        allergens: [],
+        additives: ['E330'],
+        source: 'USDA'
+    },
+    'maioneza': {
+        description: 'Maioneză clasică',
+        energy_kcal: 680,
+        fat: 75.0,
+        saturated_fat: 11.5,
+        carbs: 2.7,
+        sugars: 1.4,
+        protein: 1.0,
+        salt: 1.0,
+        fiber: 0,
+        allergens: ['Ouă'],
+        additives: ['E330'],
+        source: 'USDA'
+    },
+
+    // ==================== CEREALE & FĂINOASE ====================
+    'faina alba': {
+        description: 'Făină albă de grâu tip 000',
+        energy_kcal: 364,
+        fat: 1.0,
+        saturated_fat: 0.2,
+        carbs: 76.3,
+        sugars: 0.3,
+        protein: 10.3,
+        salt: 0.002,
+        fiber: 2.7,
+        allergens: ['Gluten'],
+        source: 'USDA'
+    },
+    'paste fainoase': {
+        description: 'Paste fainoase uscate din grâu dur',
+        energy_kcal: 371,
+        fat: 1.5,
+        saturated_fat: 0.3,
+        carbs: 74.7,
+        sugars: 2.7,
+        protein: 13.0,
+        salt: 0.006,
+        fiber: 3.2,
+        allergens: ['Gluten'],
+        source: 'USDA'
+    },
+    'orez': {
+        description: 'Orez alb bob lung uscat',
+        energy_kcal: 365,
+        fat: 0.7,
+        saturated_fat: 0.2,
+        carbs: 80.0,
+        sugars: 0.1,
+        protein: 7.1,
+        salt: 0.005,
+        fiber: 1.3,
+        allergens: [],
+        source: 'USDA'
+    },
+    'paine alba': {
+        description: 'Pâine albă feliată',
+        energy_kcal: 265,
+        fat: 3.2,
+        saturated_fat: 0.7,
+        carbs: 49.0,
+        sugars: 5.0,
+        protein: 9.0,
+        salt: 1.3,
+        fiber: 2.7,
+        allergens: ['Gluten'],
+        source: 'USDA'
+    },
+
+    // ==================== OUĂ ====================
+    'oua de gaina': {
+        description: 'Ouă de găină proaspete întregi',
+        energy_kcal: 155,
+        fat: 11.0,
+        saturated_fat: 3.3,
+        carbs: 1.1,
+        sugars: 1.1,
+        protein: 13.0,
+        salt: 0.14,
+        fiber: 0,
+        allergens: ['Ouă'],
+        source: 'USDA'
+    },
+
+    // ==================== ZAHĂR & DULCIURI ====================
+    'zahar': {
+        description: 'Zahăr alb cristalizat',
+        energy_kcal: 387,
+        fat: 0,
+        saturated_fat: 0,
+        carbs: 99.8,
+        sugars: 99.8,
+        protein: 0,
+        salt: 0.001,
+        fiber: 0,
+        allergens: [],
+        source: 'USDA'
+    },
+    'miere': {
+        description: 'Miere naturală de albine',
+        energy_kcal: 304,
+        fat: 0,
+        saturated_fat: 0,
+        carbs: 82.4,
+        sugars: 82.1,
+        protein: 0.3,
+        salt: 0.004,
+        fiber: 0.2,
+        allergens: [],
+        source: 'USDA'
+    },
+
+    // ==================== FRUCTE ====================
+    'lamai': {
+        description: 'Lămâi proaspete cu coajă',
+        energy_kcal: 29,
+        fat: 0.3,
+        saturated_fat: 0.0,
+        carbs: 9.3,
+        sugars: 2.5,
+        protein: 1.1,
+        salt: 0.002,
+        fiber: 2.8,
+        allergens: [],
+        source: 'USDA'
+    },
+    'portocale': {
+        description: 'Portocale proaspete cu coajă',
+        energy_kcal: 47,
+        fat: 0.1,
+        saturated_fat: 0.0,
+        carbs: 11.8,
+        sugars: 9.4,
+        protein: 0.9,
+        salt: 0,
+        fiber: 2.4,
+        allergens: [],
+        source: 'USDA'
+    },
+
+    // ==================== BĂUTURI ====================
+    'apa': {
+        description: 'Apă potabilă',
+        energy_kcal: 0,
+        fat: 0,
+        saturated_fat: 0,
+        carbs: 0,
+        sugars: 0,
+        protein: 0,
+        salt: 0.001,
+        fiber: 0,
+        allergens: [],
+        source: 'USDA'
+    },
+
+    // ==================== PRODUSE PROCESATE ====================
+    'sos de rosii': {
+        description: 'Sos de roșii pentru pizza/paste',
+        energy_kcal: 29,
+        fat: 0.3,
+        saturated_fat: 0.0,
+        carbs: 6.2,
+        sugars: 3.8,
+        protein: 1.3,
+        salt: 0.8,
+        fiber: 1.5,
+        allergens: [],
+        additives: ['E330'],
+        source: 'USDA'
+    },
+    'branza topita': {
+        description: 'Brânză topită pentru sandvișuri',
+        energy_kcal: 315,
+        fat: 24.0,
+        saturated_fat: 15.0,
+        carbs: 8.5,
+        sugars: 6.0,
+        protein: 16.0,
+        salt: 2.3,
+        fiber: 0,
+        allergens: ['Lactate'],
+        additives: ['E330', 'E331'],
+        source: 'Open Food Facts'
+    },
+
+    // ==================== ALERGENI COMUNI ====================
+    'nuci': {
+        description: 'Nuci comune (nucă de Grenoble)',
+        energy_kcal: 654,
+        fat: 65.2,
+        saturated_fat: 6.1,
+        carbs: 13.7,
+        sugars: 2.6,
+        protein: 15.2,
+        salt: 0.002,
+        fiber: 6.7,
+        allergens: ['Fructe cu coajă'],
+        source: 'USDA'
+    },
+    'migdale': {
+        description: 'Migdale crude',
+        energy_kcal: 579,
+        fat: 49.9,
+        saturated_fat: 3.8,
+        carbs: 21.6,
+        sugars: 4.4,
+        protein: 21.2,
+        salt: 0.001,
+        fiber: 12.5,
+        allergens: ['Fructe cu coajă'],
+        source: 'USDA'
+    }
+};
+

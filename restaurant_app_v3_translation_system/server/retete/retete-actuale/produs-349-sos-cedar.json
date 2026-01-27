@@ -1,0 +1,43 @@
+﻿Ã¯Â»Â¿{
+  "productId": 349,
+  "productName": "Sos Cedar",
+  "productCategory": "Sosuri ÃƒÂˆÃ¢Â„Â¢i PÃƒÂ¢ine",
+  "price": 4,
+  "description": "Sos Cedar aromat",
+  "ingredients": [
+    {
+      "ingredientId": 217,
+      "ingredientName": "Tahini",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 154,
+      "ingredientName": "LÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+      "ingredientCategory": "Legume ÃƒÂˆÃ¢Â„Â¢i Fructe",
+      "quantityNeeded": 1,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 156,
+      "ingredientName": "ApÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

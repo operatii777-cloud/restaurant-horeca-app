@@ -1,0 +1,79 @@
+{
+  "productId": 1053,
+  "productName": "Pizza Margherita",
+  "productCategory": "pizza",
+  "ingredients": [
+    {
+      "ingredientId": 104,
+      "ingredientName": "Făină albă",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 0.1,
+      "unit": "kg",
+      "wastePercentage": 5,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 794,
+      "ingredientName": "Drojdie proaspătă",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 0.1,
+      "unit": "kg",
+      "wastePercentage": 5,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 169,
+      "ingredientName": "Sare de mare",
+      "ingredientCategory": "General",
+      "quantityNeeded": 0.1,
+      "unit": "kg",
+      "wastePercentage": 5,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 821,
+      "ingredientName": "Ulei vegetal",
+      "ingredientCategory": "Uleiuri și Grăsimi",
+      "quantityNeeded": 0.1,
+      "unit": "kg",
+      "wastePercentage": 5,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 798,
+      "ingredientName": "Roșii Shaorma",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 0.1,
+      "unit": "kg",
+      "wastePercentage": 5,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 3,
+      "ingredientName": "mozzarella",
+      "ingredientCategory": "General",
+      "quantityNeeded": 0.1,
+      "unit": "kg",
+      "wastePercentage": 5,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 40,
+      "ingredientName": "oregano",
+      "ingredientCategory": "General",
+      "quantityNeeded": 0.1,
+      "unit": "kg",
+      "wastePercentage": 5,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": [
+    {
+      "ingredientId": 0,
+      "ingredientName": null,
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "itemType": "packaging_restaurant"
+    }
+  ]
+}

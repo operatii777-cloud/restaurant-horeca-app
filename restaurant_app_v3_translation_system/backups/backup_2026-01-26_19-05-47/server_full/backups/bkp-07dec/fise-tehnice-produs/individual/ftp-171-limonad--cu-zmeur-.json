@@ -1,0 +1,67 @@
+{
+  "product": {
+    "id": 171,
+    "name": "Limonadă cu Zmeură",
+    "name_en": "Raspberry Lemonade",
+    "category": "Răcoritoare",
+    "category_en": "Soft Drinks",
+    "price": 27,
+    "description": "Limonadă cu aromă acidulată de zmeură",
+    "description_en": "Lemonade with tangy raspberry flavor",
+    "weight": "400ML",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 482,
+        "name": "Afine proaspete/dulceață",
+        "category": "General",
+        "quantity": 1,
+        "unit": "buc",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.02687679723355954,
+        "totalCost": "0.03",
+        "totalCostWithWaste": "0.03",
+        "supplier": null,
+        "currentStock": 16778,
+        "minStock": 10,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "0.03",
+    "totalCostWithWaste": "0.03",
+    "sellingPrice": 27,
+    "profitMargin": 26.97,
+    "markup": 99.9,
+    "foodCostPercentage": "0.10"
+  },
+  "stats": {
+    "totalIngredients": 1,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

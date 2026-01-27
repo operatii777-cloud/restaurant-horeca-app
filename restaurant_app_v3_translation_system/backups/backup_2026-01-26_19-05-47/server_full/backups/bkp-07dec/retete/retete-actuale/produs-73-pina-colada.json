@@ -1,0 +1,49 @@
+{
+  "productId": 73,
+  "productName": "Pina Colada",
+  "productCategory": "Băuturi și Coctailuri",
+  "price": 31,
+  "description": "Coctail - Rom, suc de ananas, piure de cocos, frișcă lichidă",
+  "ingredients": [
+    {
+      "ingredientId": 76,
+      "ingredientName": "Rom alb",
+      "ingredientCategory": "Băuturi Alcoolice",
+      "quantityNeeded": 60,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 190,
+      "ingredientName": "Suc de ananas",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 120,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 192,
+      "ingredientName": "Piure de cocos",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 60,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 22,
+      "ingredientName": "Frișcă",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "Gheață",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

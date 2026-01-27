@@ -1,0 +1,28 @@
+/**
+ * AgGridTable Styles
+ * Standardizare stiluri pentru wrapper-ul AG Grid
+ */
+
+.ag-grid-table-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+/* Ensure AG Grid theme is applied */
+.ag-grid-table-wrapper .ag-theme-alpine-dark {
+  width: 100%;
+  height: 100%;
+}
+
+/* Loading overlay styling */
+.ag-grid-table-wrapper .ag-overlay-loading-center {
+  color: #f1f5f9;
+  font-size: 1rem;
+}
+
+/* No rows overlay styling */
+.ag-grid-table-wrapper .ag-overlay-no-rows-center {
+  color: #94a3b8;
+  font-size: 1rem;
+}
+

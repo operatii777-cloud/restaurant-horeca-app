@@ -1,0 +1,49 @@
+{
+  "productId": 319,
+  "productName": "Salată Caesar",
+  "productCategory": "Salate",
+  "price": 41,
+  "description": "Salată iceberg, piept de pui, bacon, dressing caesar, anchios, crutoane",
+  "ingredients": [
+    {
+      "ingredientId": 103,
+      "ingredientName": "Salată",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 6,
+      "ingredientName": "Salată iceberg",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 107,
+      "ingredientName": "Pui",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 110,
+      "ingredientName": "Piept de pui",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 69,
+      "ingredientName": "Bacon",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 40,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}

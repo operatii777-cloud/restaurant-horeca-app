@@ -1,0 +1,81 @@
+{
+  "productId": 192,
+  "productName": "Papanași",
+  "productCategory": "Deserturi",
+  "price": 38,
+  "description": "Dulceață fructe de pădure/vișine/afine/ciocolată",
+  "ingredients": [
+    {
+      "ingredientId": 133,
+      "ingredientName": "Brânză de vaci",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 250,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 95,
+      "ingredientName": "Făină",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 96,
+      "ingredientName": "Ou",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 2,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 33,
+      "ingredientName": "Zahăr",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 30,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 134,
+      "ingredientName": "Bicarbonat",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 65,
+      "ingredientName": "Sare",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 2,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 113,
+      "ingredientName": "Smântână",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 130,
+      "ingredientName": "Dulceață de vișine",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 31,
+      "ingredientName": "Ulei de floarea-soarelui",
+      "ingredientCategory": "Condimente și Sosuri",
+      "quantityNeeded": 50,
+      "unit": "l",
+      "wastePercentage": 0
+    }
+  ]
+}

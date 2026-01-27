@@ -1,0 +1,33 @@
+{
+  "productId": 133,
+  "productName": "Fresh Mix",
+  "productCategory": "Răcoritoare",
+  "price": 27,
+  "description": "Amestec de sucuri proaspete de citrice",
+  "ingredients": [
+    {
+      "ingredientId": 194,
+      "ingredientName": "Portocală",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 2,
+      "unit": "felie",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 209,
+      "ingredientName": "Grapefruit",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 1,
+      "unit": "felie",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 154,
+      "ingredientName": "Lămâie",
+      "ingredientCategory": "Legume și Fructe",
+      "quantityNeeded": 1,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

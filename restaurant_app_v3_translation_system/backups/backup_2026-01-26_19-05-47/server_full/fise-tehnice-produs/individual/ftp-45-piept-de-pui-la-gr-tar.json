@@ -1,0 +1,84 @@
+{
+  "product": {
+    "id": 45,
+    "name": "Piept de Pui la Grătar",
+    "name_en": "Grilled Chicken Breast",
+    "category": "Fel Principal",
+    "category_en": "Main Course",
+    "price": 42,
+    "description": "Piept de pui, piure",
+    "description_en": "Chicken breast, mashed potatoes",
+    "weight": "200/200G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": "lapte",
+    "allergens_en": "milk"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 363,
+        "name": "Piept de pui",
+        "category": "General",
+        "quantity": 180,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 11.147430571690123,
+        "totalCost": "2006.54",
+        "totalCostWithWaste": "2006.54",
+        "supplier": "Metro Cash & Carry",
+        "currentStock": 114355.14519450802,
+        "minStock": 0.01,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 169,
+        "name": "Sare de mare",
+        "category": "General",
+        "quantity": 2,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.0001243382635146494,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 157634.5,
+        "minStock": 10,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "2006.54",
+    "totalCostWithWaste": "2006.54",
+    "sellingPrice": 42,
+    "profitMargin": -1964.54,
+    "markup": -4677.47,
+    "foodCostPercentage": "4777.47"
+  },
+  "stats": {
+    "totalIngredients": 2,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

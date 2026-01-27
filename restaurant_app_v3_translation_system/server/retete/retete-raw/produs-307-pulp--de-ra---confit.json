@@ -1,0 +1,28 @@
+﻿Ã¯Â»Â¿{
+  "productId": 307,
+  "productName": "PulpÃ„ÂƒÃ†Â’ de RaÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’ Confit",
+  "productCategory": "Fel Principal",
+  "ingredients": [
+    {
+      "ingredientId": 368,
+      "ingredientName": "PulpÃ„ÂƒÃ†Â’ de raÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "General",
+      "quantityNeeded": 250,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 169,
+      "ingredientName": "Sare de mare",
+      "ingredientCategory": "General",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

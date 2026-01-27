@@ -1,0 +1,49 @@
+{
+  "productId": 346,
+  "productName": "Sos BBQ",
+  "productCategory": "Sosuri și Pâine",
+  "price": 3,
+  "description": "Sos BBQ picant-dulce",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "Roșii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 81,
+      "ingredientName": "Zahăr brun",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 50,
+      "ingredientName": "Oțet",
+      "ingredientCategory": "Condimente și Sosuri",
+      "quantityNeeded": 30,
+      "unit": "l",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 216,
+      "ingredientName": "Paprika",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

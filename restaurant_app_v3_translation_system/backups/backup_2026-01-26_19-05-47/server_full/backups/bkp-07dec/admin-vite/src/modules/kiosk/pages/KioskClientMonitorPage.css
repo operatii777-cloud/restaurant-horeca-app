@@ -1,0 +1,399 @@
+/* ============================================
+   MONITOR CLIENȚI - Display Public
+   Design dark inspirat din HorecaAI
+   ============================================ */
+
+.client-monitor {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e1b4b 100%);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  position: relative;
+}
+
+/* Controls Overlay */
+.client-monitor__controls {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 0.75rem;
+  z-index: 100;
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+  align-items: center;
+}
+
+.client-monitor__controls:hover {
+  opacity: 1;
+}
+
+.client-monitor__time {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #94a3b8;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 9999px;
+  font-variant-numeric: tabular-nums;
+}
+
+.client-monitor__control-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.client-monitor__control-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  transform: scale(1.05);
+}
+
+/* Main Content */
+.client-monitor__content {
+  flex: 1;
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  padding-top: 4rem;
+}
+
+/* Columns */
+.client-monitor__column {
+  border-radius: 1.5rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.client-monitor__column--progress {
+  flex: 0.4;
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  border: 1px solid #334155;
+}
+
+.client-monitor__column--ready {
+  flex: 0.6;
+  background: linear-gradient(180deg, rgba(16, 185, 129, 0.15) 0%, rgba(6, 78, 59, 0.2) 100%);
+  border: 2px solid rgba(16, 185, 129, 0.4);
+  position: relative;
+}
+
+.client-monitor__column--ready::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at top, rgba(16, 185, 129, 0.1), transparent 70%);
+  pointer-events: none;
+}
+
+/* Headers */
+.client-monitor__header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.client-monitor__header--progress {
+  border-bottom: 4px solid #475569;
+}
+
+.client-monitor__header--ready {
+  border-bottom: 4px solid #10b981;
+}
+
+.client-monitor__icon {
+  flex-shrink: 0;
+}
+
+.client-monitor__icon--spin {
+  color: #f59e0b;
+  animation: spin-slow 8s linear infinite;
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.client-monitor__header--ready .client-monitor__icon {
+  color: #34d399;
+}
+
+.client-monitor__title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin: 0;
+  color: #e2e8f0;
+}
+
+.client-monitor__header--progress .client-monitor__title {
+  font-size: 2rem;
+  color: #94a3b8;
+}
+
+.client-monitor__title--glow {
+  color: #fff;
+  text-shadow: 0 0 30px rgba(16, 185, 129, 0.6);
+}
+
+/* Orders Grid */
+.client-monitor__orders {
+  flex: 1;
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+  overflow-y: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.client-monitor__column--progress .client-monitor__orders {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.client-monitor__orders--ready {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+/* Cards */
+.client-monitor__card {
+  border-radius: 1rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.client-monitor__card--progress {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid #334155;
+}
+
+.client-monitor__card--ready {
+  background: linear-gradient(145deg, rgba(6, 78, 59, 0.6), rgba(4, 47, 46, 0.8));
+  border: 3px solid rgba(16, 185, 129, 0.5);
+  padding: 1.5rem;
+}
+
+.client-monitor__card--flash {
+  animation: flash-pulse 0.5s ease-in-out infinite;
+  background: linear-gradient(145deg, #10b981, #059669) !important;
+  border-color: #fff !important;
+  transform: scale(1.03);
+  box-shadow: 0 0 40px rgba(16, 185, 129, 0.7);
+}
+
+@keyframes flash-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+/* Card Number */
+.client-monitor__card-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: #64748b;
+  line-height: 1;
+}
+
+.client-monitor__card--ready .client-monitor__card-number {
+  color: #34d399;
+}
+
+.client-monitor__card-number--large {
+  font-size: 4.5rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+}
+
+.client-monitor__card--flash .client-monitor__card-number {
+  color: #fff;
+}
+
+/* Card Details */
+.client-monitor__card-details {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.client-monitor__card--ready .client-monitor__card-details {
+  font-size: 1rem;
+  color: #a7f3d0;
+  margin-top: 0.75rem;
+}
+
+.client-monitor__card--flash .client-monitor__card-details {
+  color: #fff;
+}
+
+.client-monitor__card-time {
+  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+  border-radius: 9999px;
+}
+
+/* Station indicators */
+.client-monitor__card-stations {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.client-monitor__station {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+}
+
+.client-monitor__station--pending {
+  background: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+}
+
+.client-monitor__station--done {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+}
+
+/* Empty States */
+.client-monitor__empty {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  color: #475569;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.client-monitor__empty--ready {
+  color: rgba(16, 185, 129, 0.3);
+  font-size: 3rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  line-height: 1.3;
+  text-align: center;
+  height: 100%;
+  padding: 0;
+}
+
+/* More indicator */
+.client-monitor__more {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 1rem;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Footer */
+.client-monitor__footer {
+  text-align: center;
+  padding: 1rem;
+  color: #475569;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4em;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .client-monitor__title {
+    font-size: 2rem;
+  }
+  
+  .client-monitor__header--progress .client-monitor__title {
+    font-size: 1.5rem;
+  }
+  
+  .client-monitor__card-number--large {
+    font-size: 3.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .client-monitor__content {
+    flex-direction: column;
+    padding: 1rem;
+    padding-top: 5rem;
+  }
+  
+  .client-monitor__column {
+    flex: none;
+    min-height: 40vh;
+  }
+  
+  .client-monitor__column--progress .client-monitor__orders {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .client-monitor__orders--ready {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .client-monitor__card-number--large {
+    font-size: 3rem;
+  }
+}
+
+/* Scrollbar styling */
+.client-monitor__orders::-webkit-scrollbar {
+  width: 6px;
+}
+
+.client-monitor__orders::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.client-monitor__orders::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.client-monitor__orders::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+

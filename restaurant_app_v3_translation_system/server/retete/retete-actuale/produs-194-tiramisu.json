@@ -1,0 +1,59 @@
+﻿Ã¯Â»Â¿{
+  "productId": 194,
+  "productName": "Tiramisu",
+  "productCategory": "Deserturi",
+  "price": 22,
+  "description": "Tiramisu (porÃƒÂˆÃ¢Â€Âºie)",
+  "ingredients": [
+    {
+      "ingredientId": 125,
+      "ingredientName": "Mascarpone",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 135,
+      "ingredientName": "PiÃƒÂˆÃ¢Â„Â¢coturi savoiardi",
+      "ingredientCategory": "PanificaÃƒÂˆÃ¢Â€Âºie",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 25,
+      "ingredientName": "Cafea boabe",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 20,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 8,
+      "ingredientName": "OuÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "OuÃ„ÂƒÃ†Â’ ÃƒÂˆÃ¢Â„Â¢i lactate",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 33,
+      "ingredientName": "ZahÃ„ÂƒÃ†Â’r",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 50,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 132,
+      "ingredientName": "Cacao pudrÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

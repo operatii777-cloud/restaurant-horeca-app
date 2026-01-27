@@ -1,0 +1,951 @@
+/* ========================================
+   ADMINV4 DARK-NAVY THEME - ULTRA PREMIUM
+   ======================================== */
+
+/* 🎨 PALETĂ DARK-NAVY */
+:root {
+  --navy-black: #020617;
+  --navy-deep: #0f172a;
+  --slate-navy: #1e293b;
+  --slate: #334155;
+  --gray-navy: #64748b;
+  --gray-light: #94a3b8;
+  --text-white: #f1f5f9;
+  
+  /* Accente */
+  --blue-primary: #3b82f6;
+  --blue-dark: #2563eb;
+  --violet: #9333ea;
+  --green: #22c55e;
+  --yellow: #eab308;
+  --red: #ef4444;
+}
+
+/* ========== GLOBAL ========== */
+body {
+  background: var(--navy-black) !important;
+  color: var(--text-white) !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+}
+
+/* ========== PAGES ========== */
+.page, [class*="page"] {
+  padding: 24px !important;
+  background: var(--navy-black) !important;
+  min-height: 100vh;
+}
+
+.page-title, h1 {
+  font-size: 1.6rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 24px !important;
+  color: var(--text-white) !important;
+}
+
+.page-header {
+  margin-bottom: 24px !important;
+}
+
+.page-header h1, .page-header h2 {
+  color: var(--text-white) !important;
+}
+
+.page-header p {
+  color: var(--gray-light) !important;
+}
+
+/* ========== CARDS ========== */
+/* STANDARDIZARE: Carduri dark - text alb/galben pentru vizibilitate maximă */
+.card {
+  background: var(--navy-deep) !important;
+  border-radius: 14px !important;
+  padding: 20px !important;
+  border: 1px solid var(--slate-navy) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.35) !important;
+  margin-bottom: 16px !important;
+  color: #ffffff !important; /* Alb pentru text principal */
+}
+
+/* FORȚEZ toate textele din cardurile dark să fie albe/galbene */
+.card *,
+.card span,
+.card div,
+.card p,
+.card strong,
+.card code,
+.card .text-muted,
+.card .text-secondary,
+.card .text-gray,
+.card-body *,
+.card-body span,
+.card-body div,
+.card-body p,
+.card-body .text-muted,
+.card-body .text-secondary {
+  color: #ffffff !important; /* Alb pentru toate textele */
+}
+
+/* ========== CARDS CU FUNDAL ÎNCHIS - TEXT ALB/DESCHIS ========== */
+/* Toate cardurile cu fundal colorat (bg-primary, bg-success, etc.) au text alb pentru vizibilitate */
+.card.bg-primary,
+.card.bg-success,
+.card.bg-danger,
+.card.bg-warning,
+.card.bg-info,
+.card.bg-secondary,
+.card.bg-dark,
+[class*="card"].bg-primary,
+[class*="card"].bg-success,
+[class*="card"].bg-danger,
+[class*="card"].bg-warning,
+[class*="card"].bg-info,
+[class*="card"].bg-secondary,
+[class*="card"].bg-dark {
+  color: #ffffff !important;
+}
+
+/* Toate textele din cardurile cu fundal închis să fie albe/deschise */
+.card.bg-primary *,
+.card.bg-success *,
+.card.bg-danger *,
+.card.bg-warning *,
+.card.bg-info *,
+.card.bg-secondary *,
+.card.bg-dark *,
+[class*="card"].bg-primary *,
+[class*="card"].bg-success *,
+[class*="card"].bg-danger *,
+[class*="card"].bg-warning *,
+[class*="card"].bg-info *,
+[class*="card"].bg-secondary *,
+[class*="card"].bg-dark * {
+  color: #ffffff !important;
+}
+
+/* Card header cu fundal colorat - text alb */
+.card-header.bg-primary,
+.card-header.bg-success,
+.card-header.bg-danger,
+.card-header.bg-warning,
+.card-header.bg-info,
+.card-header.bg-secondary,
+.card-header.bg-dark,
+.card.bg-primary .card-header,
+.card.bg-success .card-header,
+.card.bg-danger .card-header,
+.card.bg-warning .card-header,
+.card.bg-info .card-header,
+.card.bg-secondary .card-header,
+.card.bg-dark .card-header {
+  color: #ffffff !important;
+  background-color: inherit !important;
+}
+
+/* Toate textele din card-header cu fundal colorat */
+.card-header.bg-primary *,
+.card-header.bg-success *,
+.card-header.bg-danger *,
+.card-header.bg-warning *,
+.card-header.bg-info *,
+.card-header.bg-secondary *,
+.card-header.bg-dark *,
+.card.bg-primary .card-header *,
+.card.bg-success .card-header *,
+.card.bg-danger .card-header *,
+.card.bg-warning .card-header *,
+.card.bg-info .card-header *,
+.card.bg-secondary .card-header *,
+.card.bg-dark .card-header * {
+  color: #ffffff !important;
+}
+
+/* Card body cu fundal colorat - text alb */
+.card-body.bg-primary,
+.card-body.bg-success,
+.card-body.bg-danger,
+.card-body.bg-warning,
+.card-body.bg-info,
+.card-body.bg-secondary,
+.card-body.bg-dark,
+.card.bg-primary .card-body,
+.card.bg-success .card-body,
+.card.bg-danger .card-body,
+.card.bg-warning .card-body,
+.card.bg-info .card-body,
+.card.bg-secondary .card-body,
+.card.bg-dark .card-body {
+  color: #ffffff !important;
+  background-color: inherit !important;
+}
+
+/* Toate textele din card-body cu fundal colorat */
+.card-body.bg-primary *,
+.card-body.bg-success *,
+.card-body.bg-danger *,
+.card-body.bg-warning *,
+.card-body.bg-info *,
+.card-body.bg-secondary *,
+.card-body.bg-dark *,
+.card.bg-primary .card-body *,
+.card.bg-success .card-body *,
+.card.bg-danger .card-body *,
+.card.bg-warning .card-body *,
+.card.bg-info .card-body *,
+.card.bg-secondary .card-body *,
+.card.bg-dark .card-body * {
+  color: #ffffff !important;
+}
+
+/* Titluri și text în cardurile cu fundal colorat */
+.card.bg-primary h1,
+.card.bg-primary h2,
+.card.bg-primary h3,
+.card.bg-primary h4,
+.card.bg-primary h5,
+.card.bg-primary h6,
+.card.bg-primary p,
+.card.bg-primary span,
+.card.bg-primary div,
+.card.bg-primary small,
+.card.bg-success h1,
+.card.bg-success h2,
+.card.bg-success h3,
+.card.bg-success h4,
+.card.bg-success h5,
+.card.bg-success h6,
+.card.bg-success p,
+.card.bg-success span,
+.card.bg-success div,
+.card.bg-success small,
+.card.bg-danger h1,
+.card.bg-danger h2,
+.card.bg-danger h3,
+.card.bg-danger h4,
+.card.bg-danger h5,
+.card.bg-danger h6,
+.card.bg-danger p,
+.card.bg-danger span,
+.card.bg-danger div,
+.card.bg-danger small,
+.card.bg-warning h1,
+.card.bg-warning h2,
+.card.bg-warning h3,
+.card.bg-warning h4,
+.card.bg-warning h5,
+.card.bg-warning h6,
+.card.bg-warning p,
+.card.bg-warning span,
+.card.bg-warning div,
+.card.bg-warning small,
+.card.bg-info h1,
+.card.bg-info h2,
+.card.bg-info h3,
+.card.bg-info h4,
+.card.bg-info h5,
+.card.bg-info h6,
+.card.bg-info p,
+.card.bg-info span,
+.card.bg-info div,
+.card.bg-info small,
+.card.bg-secondary h1,
+.card.bg-secondary h2,
+.card.bg-secondary h3,
+.card.bg-secondary h4,
+.card.bg-secondary h5,
+.card.bg-secondary h6,
+.card.bg-secondary p,
+.card.bg-secondary span,
+.card.bg-secondary div,
+.card.bg-secondary small,
+.card.bg-dark h1,
+.card.bg-dark h2,
+.card.bg-dark h3,
+.card.bg-dark h4,
+.card.bg-dark h5,
+.card.bg-dark h6,
+.card.bg-dark p,
+.card.bg-dark span,
+.card.bg-dark div,
+.card.bg-dark small {
+  color: #ffffff !important;
+}
+
+/* Override pentru text-muted și text-secondary în cardurile cu fundal colorat */
+.card.bg-primary .text-muted,
+.card.bg-primary .text-secondary,
+.card.bg-success .text-muted,
+.card.bg-success .text-secondary,
+.card.bg-danger .text-muted,
+.card.bg-danger .text-secondary,
+.card.bg-warning .text-muted,
+.card.bg-warning .text-secondary,
+.card.bg-info .text-muted,
+.card.bg-info .text-secondary,
+.card.bg-secondary .text-muted,
+.card.bg-secondary .text-secondary,
+.card.bg-dark .text-muted,
+.card.bg-dark .text-secondary {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.card-header {
+  background: var(--navy-deep) !important;
+  border-bottom: 1px solid var(--slate-navy) !important;
+  color: #ffffff !important; /* Alb pentru text */
+  padding: 16px 20px !important;
+}
+
+.card-header *,
+.card-header span,
+.card-header div,
+.card-header h1,
+.card-header h2,
+.card-header h3,
+.card-header h4,
+.card-header h5,
+.card-header h6 {
+  color: #ffffff !important;
+}
+
+.card-body {
+  background: var(--navy-deep) !important;
+  color: #ffffff !important; /* Alb pentru text */
+  padding: 20px !important;
+}
+
+.card-title, .card h3, .card h4, .card h5 {
+  color: #ffffff !important; /* Alb pentru titluri */
+}
+
+.card p, .card span, .card div, .card li {
+  color: #f1f5f9 !important; /* Alb pentru text secundar */
+}
+
+/* ========== TABLES ========== */
+/* STANDARDIZARE: Text negru pentru toate tabelele Bootstrap - vizibilitate maximă */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+.table thead {
+  background: #f8f9fa !important;
+}
+
+.table th {
+  padding: 12px !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  color: #000000 !important;
+  border-bottom: 2px solid #dee2e6 !important;
+  background: #f8f9fa !important;
+}
+
+.table td {
+  padding: 12px !important;
+  color: #000000 !important;
+  border-bottom: 1px solid #dee2e6 !important;
+  background: #ffffff !important;
+}
+
+/* FORȚEZ toate textele din tabele să fie negre - inclusiv text-muted, text-secondary, etc. */
+.table td *,
+.table td span,
+.table td div,
+.table td p,
+.table td strong,
+.table td code,
+.table td .text-muted,
+.table td .text-secondary,
+.table td .text-gray,
+.table tbody .text-muted,
+.table tbody .text-secondary,
+.table tbody .text-gray {
+  color: #000000 !important;
+}
+
+.table tbody tr {
+  background: #ffffff !important;
+}
+
+.table tbody tr:nth-of-type(even) {
+  background: #f8f9fa !important;
+}
+
+.table tbody tr:nth-of-type(even) td *,
+.table tbody tr:nth-of-type(even) td span,
+.table tbody tr:nth-of-type(even) td div,
+.table tbody tr:nth-of-type(even) td .text-muted {
+  color: #000000 !important;
+}
+
+.table tr:hover td {
+  background: #e9ecef !important;
+  color: #000000 !important;
+}
+
+.table tr:hover td *,
+.table tr:hover td span,
+.table tr:hover td div,
+.table tr:hover td .text-muted {
+  color: #000000 !important;
+}
+
+.table-dark {
+  background: #212529 !important;
+  color: #ffffff !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background: #ffffff !important;
+}
+
+.table-striped tbody tr:nth-of-type(even) {
+  background: #f8f9fa !important;
+}
+
+/* ========== BUTTONS ========== */
+.btn-primary, .btn.btn-primary {
+  background: linear-gradient(135deg, var(--blue-primary), var(--blue-dark)) !important;
+  color: white !important;
+  padding: 10px 18px !important;
+  border-radius: 8px !important;
+  border: none !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.2s !important;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px) !important;
+  background: linear-gradient(135deg, var(--blue-dark), #1d4ed8) !important;
+}
+
+.btn-secondary, .btn.btn-secondary {
+  background: var(--slate) !important;
+  color: var(--text-white) !important;
+  padding: 10px 18px !important;
+  border-radius: 8px !important;
+  border: none !important;
+  font-weight: 600 !important;
+}
+
+.btn-secondary:hover {
+  background: #475569 !important;
+}
+
+.btn-success {
+  background: var(--green) !important;
+  color: white !important;
+  border: none !important;
+}
+
+.btn-warning {
+  background: var(--yellow) !important;
+  color: #000 !important;
+  border: none !important;
+}
+
+.btn-danger {
+  background: var(--red) !important;
+  color: white !important;
+  border: none !important;
+}
+
+.btn-info {
+  background: var(--blue-primary) !important;
+  color: white !important;
+  border: none !important;
+}
+
+/* ========== MODALS ========== */
+.modal-content {
+  background: var(--navy-deep) !important;
+  border: 1px solid var(--slate) !important;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6) !important;
+  color: var(--text-white) !important;
+}
+
+.modal-header {
+  background: var(--navy-deep) !important;
+  border-bottom: 1px solid var(--slate-navy) !important;
+  color: var(--text-white) !important;
+}
+
+.modal-title, .modal h3, .modal h4 {
+  color: var(--text-white) !important;
+}
+
+.modal-body {
+  background: var(--navy-deep) !important;
+  color: var(--text-white) !important;
+}
+
+.modal-footer {
+  background: var(--navy-deep) !important;
+  border-top: 1px solid var(--slate-navy) !important;
+}
+
+/* ========== FORMS ========== */
+.form-label, label {
+  color: var(--gray-light) !important;
+  font-weight: 500 !important;
+  margin-bottom: 6px !important;
+}
+
+.form-control, .form-select, input, select, textarea {
+  background: var(--slate-navy) !important;
+  border: 1px solid var(--slate) !important;
+  color: var(--text-white) !important;
+  padding: 10px 12px !important;
+  border-radius: 6px !important;
+}
+
+.form-control:focus, .form-select:focus, input:focus, select:focus, textarea:focus {
+  border-color: var(--blue-primary) !important;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.2) !important;
+  outline: none !important;
+  background: var(--navy-deep) !important;
+}
+
+.form-control::placeholder, input::placeholder, textarea::placeholder {
+  color: var(--gray-navy) !important;
+}
+
+/* ========== BADGES ========== */
+.badge {
+  padding: 4px 10px !important;
+  border-radius: 6px !important;
+  font-weight: 600 !important;
+  font-size: 0.75rem !important;
+}
+
+.badge.bg-success {
+  background: var(--green) !important;
+  color: white !important;
+}
+
+.badge.bg-danger {
+  background: var(--red) !important;
+  color: white !important;
+}
+
+.badge.bg-warning {
+  background: var(--yellow) !important;
+  color: #000 !important;
+}
+
+.badge.bg-info {
+  background: var(--blue-primary) !important;
+  color: white !important;
+}
+
+.badge.bg-secondary {
+  background: var(--slate) !important;
+  color: var(--text-white) !important;
+}
+
+/* ========== ALERTS ========== */
+.alert {
+  border-radius: 8px !important;
+  border: 1px solid !important;
+  padding: 16px !important;
+}
+
+.alert-success {
+  background: rgba(34,197,94,0.1) !important;
+  border-color: var(--green) !important;
+  color: var(--green) !important;
+}
+
+.alert-danger {
+  background: rgba(239,68,68,0.1) !important;
+  border-color: var(--red) !important;
+  color: var(--red) !important;
+}
+
+.alert-warning {
+  background: rgba(234,179,8,0.1) !important;
+  border-color: var(--yellow) !important;
+  color: var(--yellow) !important;
+}
+
+.alert-info {
+  background: rgba(59,130,246,0.1) !important;
+  border-color: var(--blue-primary) !important;
+  color: var(--blue-primary) !important;
+}
+
+/* ========== STATISTICS CARDS ========== */
+/* ========== STAT-CARD CU FUNDAL COLORAT ========== */
+/* Stat-card cu clase Bootstrap bg-* au text alb */
+.stat-card.bg-primary,
+.stat-card.bg-success,
+.stat-card.bg-danger,
+.stat-card.bg-warning,
+.stat-card.bg-info,
+.stat-card.bg-secondary,
+.stat-card.bg-dark,
+.stat-card.bg-primary *,
+.stat-card.bg-success *,
+.stat-card.bg-danger *,
+.stat-card.bg-warning *,
+.stat-card.bg-info *,
+.stat-card.bg-secondary *,
+.stat-card.bg-dark * {
+  color: #ffffff !important;
+}
+
+.stat-card {
+  background: var(--navy-deep) !important;
+  border: 1px solid var(--slate-navy) !important;
+  border-radius: 12px !important;
+  padding: 20px !important;
+  text-align: center !important;
+  color: #ffffff !important; /* Alb pentru text - vizibilitate maximă pe fundal închis */
+}
+
+/* Toate textele și iconițele din stat-card să fie albe */
+.stat-card *,
+.stat-card .fas,
+.stat-card .far,
+.stat-card .fab,
+.stat-card i,
+.stat-card .fa,
+.stat-card [class*="fa-"] {
+  color: #ffffff !important;
+}
+
+.stat-value {
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  color: #ffffff !important; /* Alb pentru text - vizibilitate maximă */
+}
+
+.stat-label {
+  font-size: 0.875rem !important;
+  color: #ffffff !important; /* Alb pentru text */
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* ========== DROPDOWN ========== */
+.dropdown-menu {
+  background: var(--navy-deep) !important;
+  border: 1px solid var(--slate) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4) !important;
+}
+
+.dropdown-item {
+  color: var(--text-white) !important;
+}
+
+.dropdown-item:hover {
+  background: var(--slate-navy) !important;
+}
+
+/* ========== SPINNER ========== */
+.spinner-border {
+  color: var(--blue-primary) !important;
+}
+
+/* ========== TEXT UTILITIES ========== */
+.text-muted {
+  color: var(--gray-light) !important;
+}
+
+.text-secondary {
+  color: var(--gray-navy) !important;
+}
+
+/* ========== BORDERS ========== */
+.border {
+  border-color: var(--slate-navy) !important;
+}
+
+/* ========== BACKGROUNDS ========== */
+.bg-white {
+  background: var(--navy-deep) !important;
+}
+
+.bg-light {
+  background: var(--slate-navy) !important;
+}
+
+.bg-dark {
+  background: var(--navy-black) !important;
+  color: #ffffff !important;
+}
+
+/* ========== BOOTSTRAP BG-* CLASSES - TEXT ALB/DESCHIS ========== */
+/* Toate clasele Bootstrap bg-* au text alb pentru vizibilitate */
+.bg-primary,
+.bg-success,
+.bg-danger,
+.bg-warning,
+.bg-info,
+.bg-secondary,
+.bg-dark {
+  color: #ffffff !important;
+}
+
+/* Toate textele din elementele cu bg-* să fie albe */
+.bg-primary *,
+.bg-success *,
+.bg-danger *,
+.bg-warning *,
+.bg-info *,
+.bg-secondary *,
+.bg-dark * {
+  color: #ffffff !important;
+}
+
+/* Override pentru text-muted în elementele cu bg-* */
+.bg-primary .text-muted,
+.bg-success .text-muted,
+.bg-danger .text-muted,
+.bg-warning .text-muted,
+.bg-info .text-muted,
+.bg-secondary .text-muted,
+.bg-dark .text-muted {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* ========== REGULĂ GENERALĂ - TOATE ELEMENTELE CU FUNDAL ÎNCHIS ========== */
+/* Orice element cu text-white și fundal colorat are text alb */
+[class*="text-white"][class*="bg-"],
+[class*="bg-"][class*="text-white"] {
+  color: #ffffff !important;
+}
+
+[class*="text-white"][class*="bg-"] *,
+[class*="bg-"][class*="text-white"] * {
+  color: #ffffff !important;
+}
+
+/* ========== REGULĂ FINALĂ - FORȚARE TEXT ALB PENTRU FUNDALURI ÎNCHISE ========== */
+/* Această regulă acoperă orice caz rămas */
+.card[class*="bg-"]:not(.bg-light):not(.bg-white),
+[class*="card"][class*="bg-"]:not(.bg-light):not(.bg-white) {
+  color: #ffffff !important;
+}
+
+.card[class*="bg-"]:not(.bg-light):not(.bg-white) *,
+[class*="card"][class*="bg-"]:not(.bg-light):not(.bg-white) * {
+  color: #ffffff !important;
+}
+
+/* ========== AG-GRID DARK THEME ========== */
+.ag-theme-alpine {
+  --ag-background-color: var(--navy-deep);
+  --ag-foreground-color: var(--text-white);
+  --ag-header-background-color: var(--navy-deep);
+  --ag-odd-row-background-color: var(--navy-deep);
+  --ag-row-hover-color: var(--slate-navy);
+  --ag-border-color: var(--slate-navy);
+}
+
+/* ========== SCROLLBAR ========== */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--navy-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--slate);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-navy);
+}
+
+/* ========== DARK CARDS - TEXT ALB STANDARDIZAT ========== */
+/* STANDARDIZARE: Toate cardurile dark au text alb pentru vizibilitate maximă */
+[class*="card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary):not(.bg-secondary),
+[class*="Card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary):not(.bg-secondary),
+.card:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary):not(.bg-secondary),
+.stat-card,
+.analytics-card,
+.kpi-card,
+.chart-card,
+.table-card {
+  background: var(--navy-deep) !important;
+  color: #ffffff !important; /* Alb pentru text principal */
+}
+
+/* ========== METRIC-CARD CU FUNDAL COLORAT ========== */
+/* Metric-card cu clase Bootstrap bg-* sau text-white au text alb */
+.metric-card.bg-primary,
+.metric-card.bg-success,
+.metric-card.bg-danger,
+.metric-card.bg-warning,
+.metric-card.bg-info,
+.metric-card.bg-secondary,
+.metric-card.bg-dark,
+.metric-card.text-white,
+.metric-card.bg-primary *,
+.metric-card.bg-success *,
+.metric-card.bg-danger *,
+.metric-card.bg-warning *,
+.metric-card.bg-info *,
+.metric-card.bg-secondary *,
+.metric-card.bg-dark *,
+.metric-card.text-white * {
+  color: #ffffff !important;
+}
+
+/* Card cu metric-card și bg-* */
+.card.metric-card.bg-primary,
+.card.metric-card.bg-success,
+.card.metric-card.bg-danger,
+.card.metric-card.bg-warning,
+.card.metric-card.bg-info,
+.card.metric-card.bg-secondary,
+.card.metric-card.bg-dark,
+.card.metric-card.text-white,
+.card.metric-card.bg-primary *,
+.card.metric-card.bg-success *,
+.card.metric-card.bg-danger *,
+.card.metric-card.bg-warning *,
+.card.metric-card.bg-info *,
+.card.metric-card.bg-secondary *,
+.card.metric-card.bg-dark *,
+.card.metric-card.text-white * {
+  color: #ffffff !important;
+}
+
+/* FORȚEZ toate textele din cardurile dark să fie albe */
+[class*="card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary):not(.bg-secondary) *,
+[class*="card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary):not(.bg-secondary) span,
+[class*="card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary):not(.bg-secondary) div,
+[class*="card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary):not(.bg-secondary) p,
+[class*="card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary):not(.bg-secondary) .text-muted,
+[class*="card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary):not(.bg-secondary) .text-secondary,
+.card:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary):not(.bg-secondary) *,
+.card:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary):not(.bg-secondary) span,
+.card:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary):not(.bg-secondary) div,
+.card:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary):not(.bg-secondary) p,
+.card:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary):not(.bg-secondary) .text-muted,
+.card:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary):not(.bg-secondary) .text-secondary,
+.stat-card *,
+.stat-card span,
+.stat-card div,
+.stat-card p,
+.stat-card .text-muted,
+.analytics-card *,
+.analytics-card span,
+.analytics-card div,
+.analytics-card p,
+.analytics-card .text-muted,
+.kpi-card *,
+.kpi-card span,
+.kpi-card div,
+.kpi-card p,
+.kpi-card .text-muted,
+.chart-card *,
+.chart-card span,
+.chart-card div,
+.chart-card p,
+.chart-card .text-muted,
+.table-card *,
+.table-card span,
+.table-card div,
+.table-card p,
+.table-card .text-muted {
+  color: #ffffff !important; /* Alb pentru toate textele din carduri dark */
+}
+
+[class*="card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) h1,
+[class*="card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) h2,
+[class*="card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) h3,
+[class*="card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) h4,
+[class*="card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) h5,
+[class*="card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) h6,
+[class*="Card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) h1,
+[class*="Card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) h2,
+[class*="Card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) h3,
+[class*="Card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) h4,
+[class*="Card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) h5,
+[class*="Card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) h6,
+.card:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) h1,
+.card:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) h2,
+.card:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) h3,
+.card:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) h4,
+.card:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) h5,
+.card:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) h6,
+.stat-card h1,
+.stat-card h2,
+.stat-card h3,
+.stat-card h4,
+.stat-card h5,
+.stat-card h6,
+.analytics-card h1,
+.analytics-card h2,
+.analytics-card h3,
+.analytics-card h4,
+.analytics-card h5,
+.analytics-card h6,
+.kpi-card h1,
+.kpi-card h2,
+.kpi-card h3,
+.kpi-card h4,
+.kpi-card h5,
+.kpi-card h6,
+.chart-card h1,
+.chart-card h2,
+.chart-card h3,
+.chart-card h4,
+.chart-card h5,
+.chart-card h6,
+.table-card h1,
+.table-card h2,
+.table-card h3,
+.table-card h4,
+.table-card h5,
+.table-card h6 {
+  color: #ffffff !important; /* Alb pentru titluri */
+}
+
+[class*="card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) p,
+[class*="card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) span:not(.badge):not(.btn),
+[class*="card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) div:not(.badge):not(.btn),
+[class*="card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) li,
+[class*="Card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) p,
+[class*="Card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) span:not(.badge):not(.btn),
+[class*="Card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) div:not(.badge):not(.btn),
+[class*="Card"]:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) li,
+.card:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) p,
+.card:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) span:not(.badge):not(.btn),
+.card:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) div:not(.badge):not(.btn),
+.card:not(.bg-warning):not(.bg-success):not(.bg-danger):not(.bg-info):not(.bg-primary) li,
+.stat-card p,
+.stat-card span:not(.badge):not(.btn),
+.stat-card div:not(.badge):not(.btn),
+.stat-card li,
+.analytics-card p,
+.analytics-card span:not(.badge):not(.btn),
+.analytics-card div:not(.badge):not(.btn),
+.analytics-card li,
+.kpi-card p,
+.kpi-card span:not(.badge):not(.btn),
+.kpi-card div:not(.badge):not(.btn),
+.kpi-card li,
+.chart-card p,
+.chart-card span:not(.badge):not(.btn),
+.chart-card div:not(.badge):not(.btn),
+.chart-card li,
+.table-card p,
+.table-card span:not(.badge):not(.btn),
+.table-card div:not(.badge):not(.btn),
+.table-card li {
+  color: #f1f5f9 !important; /* Alb pentru text secundar */
+}
+

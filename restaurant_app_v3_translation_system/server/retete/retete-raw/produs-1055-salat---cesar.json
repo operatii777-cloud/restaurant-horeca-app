@@ -1,0 +1,90 @@
+﻿Ã¯Â»Â¿{
+  "productId": 1055,
+  "productName": "SalatÃƒÂƒÃ¢Â€ÂžÃƒÂ†Ã¢Â€Â™ Cesar",
+  "productCategory": "default",
+  "ingredients": [
+    {
+      "ingredientId": 797,
+      "ingredientName": "SalatÃ„ÂƒÃ†Â’ Verde Shaorma",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 0.1,
+      "unit": "kg",
+      "wastePercentage": 5,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 363,
+      "ingredientName": "Piept de pui",
+      "ingredientCategory": "General",
+      "quantityNeeded": 0.1,
+      "unit": "kg",
+      "wastePercentage": 5,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 48,
+      "ingredientName": "parmezan",
+      "ingredientCategory": "General",
+      "quantityNeeded": 0.1,
+      "unit": "kg",
+      "wastePercentage": 5,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 641,
+      "ingredientName": "Crutoane",
+      "ingredientCategory": "General",
+      "quantityNeeded": 0.1,
+      "unit": "kg",
+      "wastePercentage": 5,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 821,
+      "ingredientName": "Ulei vegetal",
+      "ingredientCategory": "Uleiuri ÃƒÂˆÃ¢Â„Â¢i GrÃ„ÂƒÃ†Â’simi",
+      "quantityNeeded": 0.1,
+      "unit": "kg",
+      "wastePercentage": 5,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 1,
+      "ingredientName": "ouÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "General",
+      "quantityNeeded": 0.1,
+      "unit": "kg",
+      "wastePercentage": 5,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 169,
+      "ingredientName": "Sare de mare",
+      "ingredientCategory": "General",
+      "quantityNeeded": 0.1,
+      "unit": "kg",
+      "wastePercentage": 5,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 117,
+      "ingredientName": "Piper negru",
+      "ingredientCategory": "Condimente ÃƒÂˆÃ¢Â„Â¢i Sosuri",
+      "quantityNeeded": 0.1,
+      "unit": "kg",
+      "wastePercentage": 5,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": [
+    {
+      "ingredientId": 0,
+      "ingredientName": null,
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "itemType": "packaging_restaurant"
+    }
+  ]
+}
+
+

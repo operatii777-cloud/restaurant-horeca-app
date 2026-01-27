@@ -1,0 +1,21 @@
+{
+  "summary": {
+    "totalConsoleErrors": 0,
+    "totalAPIErrors": 0,
+    "totalButtonErrors": 0,
+    "totalPDFErrors": 0,
+    "totalReportErrors": 0,
+    "totalFormErrors": 0,
+    "totalNavigationErrors": 0,
+    "timestamp": "2026-01-26T17:16:32.627Z"
+  },
+  "issues": {
+    "consoleErrors": [],
+    "apiErrors": [],
+    "buttonErrors": [],
+    "pdfErrors": [],
+    "reportErrors": [],
+    "formErrors": [],
+    "navigationErrors": []
+  }
+}

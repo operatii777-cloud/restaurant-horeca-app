@@ -1,0 +1,65 @@
+{
+  "productId": 99,
+  "productName": "Tropical Margarita",
+  "productCategory": "Băuturi și Coctailuri",
+  "price": 31,
+  "description": "Coctail clasic - Tequila, triplu sec, piure căpșuni/zmeură/fructul pasiunii",
+  "ingredients": [
+    {
+      "ingredientId": 77,
+      "ingredientName": "Tequila",
+      "ingredientCategory": "Băuturi Alcoolice",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 73,
+      "ingredientName": "Triple Sec",
+      "ingredientCategory": "Băuturi Alcoolice",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 75,
+      "ingredientName": "Suc de lime",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 25,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 46,
+      "ingredientName": "Suc de portocale",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 30,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 80,
+      "ingredientName": "Sirop simplu",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 10,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 65,
+      "ingredientName": "Sare",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 2,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "Gheață",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

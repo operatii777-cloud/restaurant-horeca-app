@@ -1,0 +1,35 @@
+{
+  "productId": 120,
+  "productName": "Clătite cu Afine",
+  "productCategory": "Deserturi",
+  "ingredients": [
+    {
+      "ingredientId": 401,
+      "ingredientName": "Clătite (aluat)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 2,
+      "unit": "buc",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 130,
+      "ingredientName": "Smântână",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 482,
+      "ingredientName": "Afine proaspete/dulceață",
+      "ingredientCategory": "General",
+      "quantityNeeded": 60,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

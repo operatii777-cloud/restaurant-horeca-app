@@ -1,0 +1,28 @@
+﻿Ã¯Â»Â¿{
+  "productId": 156,
+  "productName": "Red Bull",
+  "productCategory": "RÃ„ÂƒÃ†Â’coritoare",
+  "ingredients": [
+    {
+      "ingredientId": 270,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 705,
+      "ingredientName": "Red Bull",
+      "ingredientCategory": "General",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

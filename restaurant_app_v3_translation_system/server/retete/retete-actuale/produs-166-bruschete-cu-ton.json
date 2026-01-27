@@ -1,0 +1,35 @@
+﻿Ã¯Â»Â¿{
+  "productId": 166,
+  "productName": "Bruschete cu Ton",
+  "productCategory": "Aperitive Reci",
+  "price": 33,
+  "description": "BaghetÃ„ÂƒÃ†Â’, ton, maionezÃ„ÂƒÃ†Â’, mÃ„ÂƒÃ†Â’sline kalamata, capere",
+  "ingredients": [
+    {
+      "ingredientId": 37,
+      "ingredientName": "MÃ„ÂƒÃ†Â’sline",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 20,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 42,
+      "ingredientName": "Capere",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 10,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 102,
+      "ingredientName": "Ton",
+      "ingredientCategory": "Peste Fructe de Mare",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

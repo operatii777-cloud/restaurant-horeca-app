@@ -1,0 +1,118 @@
+{
+  "product": {
+    "id": 73,
+    "name": "Platou Crispy de 2 Persoane",
+    "name_en": "Crispy Platter for 2 People",
+    "category": "Platouri",
+    "category_en": "Platters",
+    "price": 155,
+    "description": "Pui crispy, cartofi prăjiți, salată coleslaw, sos calypso, sos aioli",
+    "description_en": "Crispy chicken, french fries, coleslaw salad, calypso sauce, aioli sauce",
+    "weight": "400/200/300G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 1,
+    "allergens": "gluten, ouă, lapte",
+    "allergens_en": "gluten, eggs, milk"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 638,
+        "name": "Calamari prăjiți",
+        "category": "General",
+        "quantity": 100,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 8000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 363,
+        "name": "Piept de pui",
+        "category": "General",
+        "quantity": 300,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 11.147430571690123,
+        "totalCost": "3344.23",
+        "totalCostWithWaste": "3344.23",
+        "supplier": "Metro Cash & Carry",
+        "currentStock": 114355.14519450802,
+        "minStock": 0.01,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 629,
+        "name": "Sosuri (Aioli, Iute)",
+        "category": "General",
+        "quantity": 100,
+        "unit": "ml",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 32,
+        "name": "cartofi",
+        "category": "General",
+        "quantity": 300,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 7.749966000239362,
+        "totalCost": "2324.99",
+        "totalCostWithWaste": "2324.99",
+        "supplier": null,
+        "currentStock": 76675,
+        "minStock": 2,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "5669.22",
+    "totalCostWithWaste": "5669.22",
+    "sellingPrice": 155,
+    "profitMargin": -5514.22,
+    "markup": -3557.56,
+    "foodCostPercentage": "3657.56"
+  },
+  "stats": {
+    "totalIngredients": 4,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

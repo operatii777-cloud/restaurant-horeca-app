@@ -1,0 +1,82 @@
+<!-- ============================================================================
+     PDF MENU BUILDER MODAL
+     Include acest fișier în admin.html folosind JavaScript sau direct în HTML
+     ============================================================================ -->
+
+<!-- Modal Overlay -->
+<div id="pdfBuilderModal" class="pdf-builder-modal">
+    <div class="pdf-builder-container">
+        
+        <!-- Header -->
+        <div class="pdf-builder-header">
+            <h2>
+                <i class="fas fa-file-pdf"></i>
+                Editor Meniuri PDF
+            </h2>
+            <button id="closePdfBuilder" class="close-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <!-- Tabs -->
+        <div class="pdf-builder-tabs">
+            <button class="pdf-builder-tab active" data-type="food">
+                <i class="fas fa-utensils"></i> Meniu Mâncare
+            </button>
+            <button class="pdf-builder-tab" data-type="drinks">
+                <i class="fas fa-wine-glass"></i> Meniu Băuturi
+            </button>
+        </div>
+        
+        <!-- Body -->
+        <div class="pdf-builder-body">
+            <div id="categoriesList">
+                <!-- Categories will be rendered here by JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Footer (Actions) -->
+        <div class="pdf-builder-footer">
+            <div class="pdf-builder-footer-left">
+                <button id="savePdfConfig" class="btn-primary btn-success">
+                    <i class="fas fa-save"></i> Salvează Configurația
+                </button>
+            </div>
+            
+            <div class="pdf-builder-footer-right">
+                <select id="regenerateType">
+                    <option value="all">Toate PDF-urile</option>
+                    <option value="food">Doar Mâncare</option>
+                    <option value="drinks">Doar Băuturi</option>
+                </select>
+                
+                <button id="regeneratePdf" class="btn-primary btn-warning">
+                    <i class="fas fa-sync-alt"></i> Regenerează PDF
+                </button>
+                
+                <select id="previewLang">
+                    <option value="ro">Română</option>
+                    <option value="en">English</option>
+                </select>
+                
+                <button id="previewPdf" class="btn-secondary">
+                    <i class="fas fa-eye"></i> Preview PDF
+                </button>
+            </div>
+        </div>
+        
+        <!-- Loading Overlay -->
+        <div id="pdfBuilderLoadingOverlay">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Se încarcă...</div>
+        </div>
+        
+    </div>
+</div>
+
+<!-- Required: Sortable.js library for drag & drop -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+<!-- PDF Builder UI JavaScript -->
+<script src="/js/pdf-builder-ui.js"></script>
+

@@ -1,0 +1,44 @@
+{
+  "productId": 54,
+  "productName": "Tigaie Grecească",
+  "productCategory": "Fel Principal",
+  "ingredients": [
+    {
+      "ingredientId": 50,
+      "ingredientName": "brânză feta",
+      "ingredientCategory": "General",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 363,
+      "ingredientName": "Piept de pui",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 543,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 542,
+      "ingredientName": "Condimente Grecești (Oregano)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

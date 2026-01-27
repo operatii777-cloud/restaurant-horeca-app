@@ -1,0 +1,35 @@
+﻿Ã¯Â»Â¿{
+  "productId": 49,
+  "productName": "Kamikaze Shot",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "price": 19,
+  "description": "Shot - Vodka, triplu sec, fresh lÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+  "ingredients": [
+    {
+      "ingredientId": 72,
+      "ingredientName": "Vodka",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi Alcoolice",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 73,
+      "ingredientName": "Triple Sec",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi Alcoolice",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 79,
+      "ingredientName": "Suc de lÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

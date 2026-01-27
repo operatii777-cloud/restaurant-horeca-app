@@ -1,0 +1,46 @@
+﻿Ã¯Â»Â¿{
+  "productId": 62,
+  "productName": "CocoÃƒÂˆÃ¢Â„Â¢el la Ceaun",
+  "productCategory": "Fel Principal",
+  "ingredients": [
+    {
+      "ingredientId": 800,
+      "ingredientName": "Sos Usturoi Shaorma",
+      "ingredientCategory": "Sosuri",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 15,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 812,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 350,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 62,
+      "ingredientName": "vin alb",
+      "ingredientCategory": "General",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 830,
+      "ingredientName": "Rozmarin",
+      "ingredientCategory": "Sosuri ÃƒÂˆÃ¢Â„Â¢i Condimente",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

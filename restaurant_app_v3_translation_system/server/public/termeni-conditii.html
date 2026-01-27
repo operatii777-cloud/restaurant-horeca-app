@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="ro" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Termeni și condiții - Trattoria</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .language-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 5px;
+            border-radius: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .lang-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: #333;
+            cursor: pointer;
+            border-radius: 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        .lang-btn:hover { background: #f0f0f0; }
+        .lang-btn.active {
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            color: white;
+        }
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .content-section {
+            background: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .content-section h2 {
+            color: #ff6b35;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .content-section h3 {
+            color: #333;
+            margin: 1.5rem 0 1rem 0;
+            font-size: 1.3rem;
+        }
+        
+        .content-section p {
+            margin-bottom: 1rem;
+        }
+        
+        .content-section ul {
+            margin: 1rem 0 1rem 2rem;
+        }
+        
+        .content-section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin: 2rem 0;
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #ff6b35;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+        
+        .cta-button:hover {
+            background: #e05a2a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+        }
+        
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        /* ==================== MEDIA QUERIES PENTRU DESIGN RESPONSIVE ==================== */
+        
+        /* Ecrane foarte mari (4K, ultra-wide) */
+        @media (min-width: 1920px) {
+            .container {
+                max-width: 1400px;
+                padding: 20px 40px;
+            }
+            
+            .header h1 {
+                font-size: 3rem;
+            }
+            
+            .header p {
+                font-size: 1.4rem;
+            }
+            
+            .content-section {
+                padding: 40px;
+            }
+            
+            .content-section h2 {
+                font-size: 2.2rem;
+            }
+            
+            .content-section p {
+                font-size: 1.2rem;
+                line-height: 1.8;
+            }
+            
+            .highlight {
+                padding: 40px;
+            }
+            
+            .highlight h3 {
+                font-size: 1.8rem;
+            }
+            
+            .highlight p {
+                font-size: 1.2rem;
+            }
+            
+            .cta-button {
+                padding: 15px 30px;
+                font-size: 1.2rem;
+            }
+        }
+        
+        /* Laptopuri mari */
+        @media (min-width: 1440px) and (max-width: 1919px) {
+            .container {
+                max-width: 1200px;
+                padding: 15px 30px;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header p {
+                font-size: 1.2rem;
+            }
+            
+            .content-section {
+                padding: 35px;
+            }
+            
+            .content-section h2 {
+                font-size: 2rem;
+            }
+            
+            .content-section p {
+                font-size: 1.1rem;
+            }
+            
+            .highlight {
+                padding: 35px;
+            }
+            
+            .highlight h3 {
+                font-size: 1.6rem;
+            }
+            
+            .highlight p {
+                font-size: 1.1rem;
+            }
+            
+            .cta-button {
+                padding: 14px 28px;
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* Laptopuri standard */
+        @media (max-width: 1400px) {
+            .container {
+                padding: 12px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .header p {
+                font-size: 1.1rem;
+            }
+            
+            .content-section {
+                padding: 30px;
+            }
+            
+            .content-section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .content-section p {
+                font-size: 1rem;
+            }
+            
+            .highlight {
+                padding: 30px;
+            }
+            
+            .highlight h3 {
+                font-size: 1.5rem;
+            }
+            
+            .highlight p {
+                font-size: 1rem;
+            }
+            
+            .cta-button {
+                padding: 13px 26px;
+                font-size: 1rem;
+            }
+        }
+        
+        /* Tablete mari */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 10px 15px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .content-section {
+                padding: 25px;
+            }
+            
+            .content-section h2 {
+                font-size: 1.6rem;
+            }
+            
+            .content-section p {
+                font-size: 0.95rem;
+            }
+            
+            .highlight {
+                padding: 25px;
+            }
+            
+            .highlight h3 {
+                font-size: 1.4rem;
+            }
+            
+            .highlight p {
+                font-size: 0.95rem;
+            }
+            
+            .cta-button {
+                padding: 12px 24px;
+                font-size: 0.95rem;
+            }
+        }
+        
+        /* Tablete mici */
+        @media (max-width: 992px) {
+            .container {
+                padding: 8px 12px;
+            }
+            
+            .header {
+                padding: 1.5rem 0;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header p {
+                font-size: 0.95rem;
+            }
+            
+            .content-section {
+                padding: 22px;
+            }
+            
+            .content-section h2 {
+                font-size: 1.5rem;
+            }
+            
+            .content-section p {
+                font-size: 0.9rem;
+            }
+            
+            .highlight {
+                padding: 22px;
+            }
+            
+            .highlight h3 {
+                font-size: 1.3rem;
+            }
+            
+            .highlight p {
+                font-size: 0.9rem;
+            }
+            
+            .cta-button {
+                padding: 11px 22px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Telefoane mari */
+        @media (max-width: 768px) {
+            .container {
+                padding: 6px 10px;
+            }
+            
+            .header {
+                padding: 1.2rem 0;
+            }
+            
+            .header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .header p {
+                font-size: 0.9rem;
+            }
+            
+            .back-btn {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .content-section {
+                padding: 18px;
+            }
+            
+            .content-section h2 {
+                font-size: 1.4rem;
+            }
+            
+            .content-section p {
+                font-size: 0.85rem;
+            }
+            
+            .highlight {
+                padding: 18px;
+            }
+            
+            .highlight h3 {
+                font-size: 1.2rem;
+            }
+            
+            .highlight p {
+                font-size: 0.85rem;
+            }
+            
+            .cta-button {
+                padding: 10px 20px;
+                font-size: 0.85rem;
+            }
+            
+            .footer {
+                padding: 1.5rem;
+            }
+            
+            .footer p {
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Telefoane mici */
+        @media (max-width: 576px) {
+            .container {
+                padding: 5px 8px;
+            }
+            
+            .header {
+                padding: 1rem 0;
+            }
+            
+            .header h1 {
+                font-size: 1.4rem;
+            }
+            
+            .header p {
+                font-size: 0.85rem;
+            }
+            
+            .back-btn {
+                padding: 6px 10px;
+                font-size: 0.8rem;
+            }
+            
+            .content-section {
+                padding: 15px;
+            }
+            
+            .content-section h2 {
+                font-size: 1.3rem;
+            }
+            
+            .content-section p {
+                font-size: 0.8rem;
+            }
+            
+            .highlight {
+                padding: 15px;
+            }
+            
+            .highlight h3 {
+                font-size: 1.1rem;
+            }
+            
+            .highlight p {
+                font-size: 0.8rem;
+            }
+            
+            .cta-button {
+                padding: 8px 16px;
+                font-size: 0.8rem;
+            }
+            
+            .footer {
+                padding: 1.2rem;
+            }
+            
+            .footer p {
+                font-size: 0.8rem;
+            }
+        }
+        
+        /* Orientare landscape pe telefoane */
+        @media (max-height: 600px) and (orientation: landscape) {
+            .header {
+                padding: 0.8rem 0;
+            }
+            
+            .header h1 {
+                font-size: 1.2rem;
+            }
+            
+            .header p {
+                font-size: 0.8rem;
+            }
+            
+            .content-section {
+                padding: 12px;
+            }
+            
+            .highlight {
+                padding: 12px;
+            }
+            
+            .footer {
+                padding: 1rem;
+            }
+        }
+        
+        /* Ecrane ultra-wide */
+        @media (min-aspect-ratio: 21/9) {
+            .container {
+                max-width: 1600px;
+                padding: 25px 50px;
+            }
+            
+            .header h1 {
+                font-size: 3.2rem;
+            }
+            
+            .header p {
+                font-size: 1.5rem;
+            }
+            
+            .content-section {
+                padding: 50px;
+            }
+            
+            .content-section h2 {
+                font-size: 2.4rem;
+            }
+            
+            .content-section p {
+                font-size: 1.3rem;
+                line-height: 1.9;
+            }
+            
+            .highlight {
+                padding: 50px;
+            }
+            
+            .highlight h3 {
+                font-size: 2rem;
+            }
+            
+            .highlight p {
+                font-size: 1.3rem;
+            }
+            
+            .cta-button {
+                padding: 18px 36px;
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="language-switcher">
+        <button class="lang-btn active" onclick="changeLanguage('ro')" data-lang="ro">RO</button>
+        <button class="lang-btn" onclick="changeLanguage('en')" data-lang="en">EN</button>
+    </div>
+    
+    <div class="header">
+        <button class="back-btn" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i> <span id="backBtn">Înapoi</span>
+        </button>
+        <h1 id="headerTitle">📋 Termeni și condiții</h1>
+        <p>Trattoria</p>
+    </div>
+
+    <div class="container">
+        <div class="content-section">
+            <h2>1. Definiții și Termeni Folosiți</h2>
+            <p><strong>Serviciu:</strong> Se referă la platforma online oferită de către Trattoria pentru comenzi de mâncare și servicii de livrare.</p>
+            <p><strong>Utilizator:</strong> Orice persoană care accesează și utilizează website-ul și serviciile noastre.</p>
+            <p><strong>Cont Utilizator:</strong> Spațiul personal al utilizatorului creat la înregistrare, unde acesta își poate gestiona informațiile și comenzile.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>2. Scopul Pagii Web</h2>
+            <p>Scopul nostru este de a oferi o platformă convenabilă pentru comandarea și livrarea mâncărilor pregătite de către echipa noastră.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>3. Drepturile și Responsabilitățile Utilizatorilor</h2>
+            <p>Utilizatorii se angajează să utilizeze serviciul în conformitate cu legislația în vigoare și să respecte regulile stabilite de către Trattoria.</p>
+            <p>Este interzisă utilizarea serviciului în scopuri ilegale sau neautorizate.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>4. Confidențialitate și Date Personale</h2>
+            <p>Colectarea și prelucrarea datelor personale ale utilizatorilor este reglementată de Politica noastră de Confidențialitate, disponibilă <a href="politica-confidentialitate.html" style="color: #ff6b35;">aici</a>.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>5. Cookies și Tehnologii Similare</h2>
+            <p>Folosim cookie-uri pentru a îmbunătăți experiența utilizatorilor, pentru analiza traficului și pentru a personaliza conținutul. Alte tehnologii similare pot fi folosite în acest scop.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>6. Proprietate Intelectuală</h2>
+            <p>Toate drepturile de autor, mărci comerciale și alte drepturi de proprietate intelectuală asupra conținutului de pe website aparțin Trattoria.</p>
+            <p>Utilizatorii nu au permisiunea de a reproduce, distribui sau utiliza materialele noastre fără acordul nostru scris.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>7. Limitări ale Responsabilității</h2>
+            <p>Ne străduim să oferim informații precise, însă nu garantăm corectitudinea sau disponibilitatea permanentă a conținutului nostru.</p>
+            <p>Ne rezervăm dreptul de a schimba conținutul sau serviciile fără notificare prealabilă.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>8. Legislație Aplicabilă și Jurisdicție</h2>
+            <p>Acești termeni și condiții sunt guvernați de legile în vigoare ale României în anul 2024.</p>
+            <p>Orice litigiu va fi soluționat în instanțele competente din România.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>9. Modificări ale Termenilor și Condițiilor</h2>
+            <p>Eventualele modificări ale termenilor și condițiilor vor fi publicate pe website-ul nostru și vor fi comunicate utilizatorilor abonați prin email.</p>
+            <p>Utilizarea continuă a serviciului după astfel de modificări reprezintă acceptul implicit al acestora.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>10. Alte Informații Importante</h2>
+            <p>Pentru orice întrebări suplimentare sau clarificări, vă rugăm să ne contactați la adresa de email: <strong>trattoriamia@gmail.com</strong></p>
+        </div>
+
+        <div class="highlight">
+            <h3 id="ctaTitle">🍽️ Ai întrebări despre termenii noștri?</h3>
+            <p id="ctaText">Echipa noastră este aici să te ajute cu orice nelămurire.</p>
+            <a href="contact.html" class="cta-button" id="ctaButton">Contactează-ne</a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p id="footerText1">&copy; 2024 Trattoria. Toate drepturile rezervate.</p>
+        <p id="footerText2">Ultima actualizare: Decembrie 2024</p>
+    </div>
+
+    <script>
+        let currentLang = localStorage.getItem('selectedLanguage') || 'ro';
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('selectedLanguage', lang);
+            document.getElementById('htmlRoot').lang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+            applyTranslations();
+        }
+
+        function applyTranslations() {
+            const isEn = currentLang === 'en';
+            
+            document.getElementById('pageTitle').textContent = isEn ? 'Terms and Conditions - Trattoria' : 'Termeni și condiții - Trattoria';
+            document.getElementById('backBtn').textContent = isEn ? 'Back' : 'Înapoi';
+            document.getElementById('headerTitle').textContent = isEn ? '📋 Terms and Conditions' : '📋 Termeni și condiții';
+            
+            document.getElementById('ctaTitle').textContent = isEn ? '🍽️ Questions about our terms?' : '🍽️ Ai întrebări despre termenii noștri?';
+            document.getElementById('ctaText').textContent = isEn ? 'Our team is here to help you with any questions.' : 'Echipa noastră este aici să te ajute cu orice nelămurire.';
+            document.getElementById('ctaButton').textContent = isEn ? 'Contact Us' : 'Contactează-ne';
+            
+            document.getElementById('footerText1').textContent = isEn ? '© 2024 Trattoria. All rights reserved.' : '© 2024 Trattoria. Toate drepturile rezervate.';
+            document.getElementById('footerText2').textContent = isEn ? 'Last updated: December 2024' : 'Ultima actualizare: Decembrie 2024';
+            
+            // TRADUCERE COMPLETĂ - Toate secțiunile
+            const sections = document.querySelectorAll('.content-section');
+            
+            if (isEn) {
+                // ENGLISH TRANSLATIONS
+                sections[0].innerHTML = `
+                    <h2>1. Definitions and Terms Used</h2>
+                    <p><strong>Service:</strong> Refers to the online platform provided by Trattoria for food orders and delivery services.</p>
+                    <p><strong>User:</strong> Any person who accesses and uses the services offered by Trattoria.</p>
+                    <p><strong>Company:</strong> Refers to SC Trattoria SRL, the entity that owns and operates the website and services.</p>
+                `;
+                
+                sections[1].innerHTML = `
+                    <h2>2. Acceptance of Terms</h2>
+                    <p>By accessing and using our website or services, you agree to comply with these terms and conditions.</p>
+                    <p>If you do not agree with these terms, please do not use our services.</p>
+                `;
+                
+                sections[2].innerHTML = `
+                    <h2>3. User Rights and Responsibilities</h2>
+                    <p>Users agree to use the service in accordance with applicable law and to respect the rules established by Trattoria.</p>
+                    <p>Using the service for illegal or unauthorized purposes is prohibited.</p>
+                `;
+                
+                sections[3].innerHTML = `
+                    <h2>4. Privacy and Personal Data</h2>
+                    <p>The collection and processing of users' personal data is governed by our Privacy Policy, available <a href="politica-confidentialitate.html" style="color: #ff6b35;">here</a>.</p>
+                `;
+                
+                sections[4].innerHTML = `
+                    <h2>5. Cookies and Similar Technologies</h2>
+                    <p>We use cookies to improve user experience, analyze traffic, and personalize content. Other similar technologies may be used for this purpose.</p>
+                `;
+                
+                sections[5].innerHTML = `
+                    <h2>6. Intellectual Property</h2>
+                    <p>All copyrights, trademarks, and other intellectual property rights to the content on the website belong to Trattoria.</p>
+                    <p>Users are not permitted to reproduce, distribute, or use our materials without our written consent.</p>
+                `;
+                
+                sections[6].innerHTML = `
+                    <h2>7. Limitations of Liability</h2>
+                    <p>We strive to provide accurate information, but we do not guarantee the accuracy or permanent availability of our content.</p>
+                    <p>We reserve the right to change content or services without prior notice.</p>
+                `;
+                
+                sections[7].innerHTML = `
+                    <h2>8. Applicable Law and Jurisdiction</h2>
+                    <p>These terms and conditions are governed by the laws in force in Romania in 2024.</p>
+                    <p>Any dispute will be resolved in the competent courts of Romania.</p>
+                `;
+                
+                sections[8].innerHTML = `
+                    <h2>9. Changes to Terms and Conditions</h2>
+                    <p>Any changes to the terms and conditions will be published on our website and communicated to subscribed users via email.</p>
+                    <p>Continued use of the service after such changes constitutes implicit acceptance thereof.</p>
+                `;
+                
+                sections[9].innerHTML = `
+                    <h2>10. Other Important Information</h2>
+                    <p>For any additional questions or clarifications, please contact us at the email address: <strong>trattoriamia@gmail.com</strong></p>
+                `;
+            } else {
+                // ROMANIAN TRANSLATIONS (original content)
+                sections[0].innerHTML = `
+                    <h2>1. Definiții și Termeni Folosiți</h2>
+                    <p><strong>Serviciu:</strong> Se referă la platforma online oferită de către Trattoria pentru comenzi de mâncare și servicii de livrare.</p>
+                    <p><strong>Utilizator:</strong> Orice persoană care accesează și utilizează serviciile oferite de Trattoria.</p>
+                    <p><strong>Companie:</strong> Se referă la SC Trattoria SRL, entitatea care deține și operează website-ul și serviciile.</p>
+                `;
+                
+                sections[1].innerHTML = `
+                    <h2>2. Acceptarea Termenilor</h2>
+                    <p>Prin accesarea și utilizarea website-ului sau serviciilor noastre, sunteți de acord să respectați acești termeni și condiții.</p>
+                    <p>Dacă nu sunteți de acord cu acești termeni, vă rugăm să nu utilizați serviciile noastre.</p>
+                `;
+                
+                sections[2].innerHTML = `
+                    <h2>3. Drepturile și Responsabilitățile Utilizatorilor</h2>
+                    <p>Utilizatorii se angajează să utilizeze serviciul în conformitate cu legislația în vigoare și să respecte regulile stabilite de către Trattoria.</p>
+                    <p>Este interzisă utilizarea serviciului în scopuri ilegale sau neautorizate.</p>
+                `;
+                
+                sections[3].innerHTML = `
+                    <h2>4. Confidențialitate și Date Personale</h2>
+                    <p>Colectarea și prelucrarea datelor personale ale utilizatorilor este reglementată de Politica noastră de Confidențialitate, disponibilă <a href="politica-confidentialitate.html" style="color: #ff6b35;">aici</a>.</p>
+                `;
+                
+                sections[4].innerHTML = `
+                    <h2>5. Cookies și Tehnologii Similare</h2>
+                    <p>Folosim cookie-uri pentru a îmbunătăți experiența utilizatorilor, pentru analiza traficului și pentru a personaliza conținutul. Alte tehnologii similare pot fi folosite în acest scop.</p>
+                `;
+                
+                sections[5].innerHTML = `
+                    <h2>6. Proprietate Intelectuală</h2>
+                    <p>Toate drepturile de autor, mărci comerciale și alte drepturi de proprietate intelectuală asupra conținutului de pe website aparțin Trattoria.</p>
+                    <p>Utilizatorii nu au permisiunea de a reproduce, distribui sau utiliza materialele noastre fără acordul nostru scris.</p>
+                `;
+                
+                sections[6].innerHTML = `
+                    <h2>7. Limitări ale Responsabilității</h2>
+                    <p>Ne străduim să oferim informații precise, însă nu garantăm corectitudinea sau disponibilitatea permanentă a conținutului nostru.</p>
+                    <p>Ne rezervăm dreptul de a schimba conținutul sau serviciile fără notificare prealabilă.</p>
+                `;
+                
+                sections[7].innerHTML = `
+                    <h2>8. Legislație Aplicabilă și Jurisdicție</h2>
+                    <p>Acești termeni și condiții sunt guvernați de legile în vigoare ale României în anul 2024.</p>
+                    <p>Orice litigiu va fi soluționat în instanțele competente din România.</p>
+                `;
+                
+                sections[8].innerHTML = `
+                    <h2>9. Modificări ale Termenilor și Condițiilor</h2>
+                    <p>Eventualele modificări ale termenilor și condițiilor vor fi publicate pe website-ul nostru și vor fi comunicate utilizatorilor abonați prin email.</p>
+                    <p>Utilizarea continuă a serviciului după astfel de modificări reprezintă acceptul implicit al acestora.</p>
+                `;
+                
+                sections[9].innerHTML = `
+                    <h2>10. Alte Informații Importante</h2>
+                    <p>Pentru orice întrebări suplimentare sau clarificări, vă rugăm să ne contactați la adresa de email: <strong>trattoriamia@gmail.com</strong></p>
+                `;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            changeLanguage(currentLang);
+        });
+    </script>
+</body>
+</html>

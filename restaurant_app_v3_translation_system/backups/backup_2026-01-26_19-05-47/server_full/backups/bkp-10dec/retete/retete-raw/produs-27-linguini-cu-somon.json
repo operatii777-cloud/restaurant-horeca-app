@@ -1,0 +1,44 @@
+{
+  "productId": 27,
+  "productName": "Linguini cu Somon",
+  "productCategory": "Paste Fresca",
+  "ingredients": [
+    {
+      "ingredientId": 561,
+      "ingredientName": "Linguini (paste proaspete)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 50,
+      "ingredientName": "brânză feta",
+      "ingredientCategory": "General",
+      "quantityNeeded": 80,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 830,
+      "ingredientName": "Rozmarin",
+      "ingredientCategory": "Sosuri și Condimente",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 370,
+      "ingredientName": "File de Somon",
+      "ingredientCategory": "General",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

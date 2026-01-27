@@ -1,0 +1,37 @@
+﻿Ã¯Â»Â¿{
+  "productId": 88,
+  "productName": "Pizza Quattro Stagioni",
+  "productCategory": "Pizza",
+  "ingredients": [
+    {
+      "ingredientId": 3,
+      "ingredientName": "mozzarella",
+      "ingredientCategory": "General",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 604,
+      "ingredientName": "Blat de pizza (standard)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 250,
+      "unit": "buc",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 821,
+      "ingredientName": "Ulei vegetal",
+      "ingredientCategory": "Uleiuri ÃƒÂˆÃ¢Â„Â¢i GrÃ„ÂƒÃ†Â’simi",
+      "quantityNeeded": 120,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

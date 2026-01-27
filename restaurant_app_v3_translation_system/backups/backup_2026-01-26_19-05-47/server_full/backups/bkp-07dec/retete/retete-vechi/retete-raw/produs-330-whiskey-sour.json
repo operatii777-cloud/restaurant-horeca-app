@@ -1,0 +1,53 @@
+{
+  "productId": 330,
+  "productName": "Whiskey Sour",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 278,
+      "ingredientName": "Sirop de Zahăr",
+      "ingredientCategory": "General",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 428,
+      "ingredientName": "Whiskey (Bourbon)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 60,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 270,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 429,
+      "ingredientName": "Albuș de Ou (opțional, pentru spumă)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 15,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 64,
+      "ingredientName": "suc de lămâie",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

@@ -1,0 +1,101 @@
+{
+  "product": {
+    "id": 187,
+    "name": "Campari Orange",
+    "name_en": "Campari Orange",
+    "category": "Băuturi și Coctailuri",
+    "category_en": "Drinks & Cocktails",
+    "price": 31,
+    "description": "Coctail clasic - Campari, suc de portocale, portocală",
+    "description_en": "Classic cocktail - Campari, orange juice, orange",
+    "weight": "300ML",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 432,
+        "name": "Campari",
+        "category": "General",
+        "quantity": 50,
+        "unit": "ml",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 1870,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 447,
+        "name": "Felie/coajă de Portocală",
+        "category": "General",
+        "quantity": 5,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 7385,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 63,
+        "name": "suc de portocale",
+        "category": "General",
+        "quantity": 150,
+        "unit": "ml",
+        "unitStock": "l",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 7.715538359654901,
+        "totalCost": "1157.33",
+        "totalCostWithWaste": "1157.33",
+        "supplier": null,
+        "currentStock": 2410,
+        "minStock": 0.4,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "1157.33",
+    "totalCostWithWaste": "1157.33",
+    "sellingPrice": 31,
+    "profitMargin": -1126.33,
+    "markup": -3633.33,
+    "foodCostPercentage": "3733.33"
+  },
+  "stats": {
+    "totalIngredients": 3,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

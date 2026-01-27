@@ -1,0 +1,75 @@
+﻿Ã¯Â»Â¿{
+  "productId": 270,
+  "productName": "OmletÃ„ÂƒÃ†Â’ ÃƒÂˆÃ…Â¡Ã„ÂƒÃ†Â’rÃ„ÂƒÃ†Â’neascÃ„ÂƒÃ†Â’",
+  "productCategory": "Mic Dejun",
+  "price": 33,
+  "description": "OuÃ„ÂƒÃ†Â’, brÃƒÂ¢nzÃ„ÂƒÃ†Â’ telemea, bacon, ciuperci, ardei kapia, ceapÃ„ÂƒÃ†Â’, mÃ„ÂƒÃ†Â’rar",
+  "ingredients": [
+    {
+      "ingredientId": 94,
+      "ingredientName": "CeapÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Fructe ÃƒÂˆÃ¢Â„Â¢i Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 109,
+      "ingredientName": "Ardei kapia",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 92,
+      "ingredientName": "Ciuperci",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 60,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 63,
+      "ingredientName": "MÃ„ÂƒÃ†Â’rar",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 69,
+      "ingredientName": "Bacon",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 40,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 163,
+      "ingredientName": "BrÃƒÂ¢nzÃ„ÂƒÃ†Â’ telemea",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 8,
+      "ingredientName": "OuÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "OuÃ„ÂƒÃ†Â’ ÃƒÂˆÃ¢Â„Â¢i lactate",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 96,
+      "ingredientName": "Ou",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

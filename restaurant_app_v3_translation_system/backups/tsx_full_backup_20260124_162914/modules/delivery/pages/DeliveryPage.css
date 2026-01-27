@@ -1,0 +1,245 @@
+/**
+ * PHASE S10 - Delivery Page Styles
+ * 
+ * Styles for Delivery interface.
+ * Matches legacy livrare1-10.html visual style.
+ */
+
+.delivery-page {
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+.delivery-header {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.delivery-title {
+  margin: 0 0 15px 0;
+  font-size: 28px;
+  font-weight: bold;
+  color: #764ba2;
+}
+
+.delivery-stats {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.delivery-stat-item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.delivery-stat-label {
+  font-weight: 600;
+  color: #666;
+}
+
+.delivery-stat-value {
+  font-size: 20px;
+  font-weight: bold;
+  color: #764ba2;
+}
+
+.delivery-filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.delivery-filter-btn {
+  padding: 10px 20px;
+  border: 2px solid #667eea;
+  background: white;
+  color: #667eea;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.delivery-filter-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.delivery-filter-btn.active {
+  background: #667eea;
+  color: white;
+}
+
+.delivery-orders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.delivery-order-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #28a745;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.delivery-order-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.delivery-order-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.delivery-order-id {
+  font-size: 20px;
+  font-weight: bold;
+  color: #764ba2;
+}
+
+.delivery-customer-name {
+  background: #E3F2FD;
+  color: #1976D2;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.delivery-customer-phone {
+  background: #E8F5E9;
+  color: #2E7D32;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.delivery-customer-phone:hover {
+  background: #C8E6C9;
+}
+
+.delivery-address {
+  margin-bottom: 15px;
+  padding: 10px;
+  background: #F5F5F5;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.delivery-order-items {
+  margin-bottom: 15px;
+}
+
+.delivery-item-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.delivery-item-qty {
+  font-weight: bold;
+  color: #764ba2;
+}
+
+.delivery-item-name {
+  color: #333;
+}
+
+.delivery-order-total {
+  margin-bottom: 15px;
+  padding: 10px;
+  background: #FFF9C4;
+  border-radius: 4px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.delivery-order-notes {
+  margin-bottom: 15px;
+  padding: 10px;
+  background: #F5F5F5;
+  border-radius: 4px;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.delivery-order-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 2px solid #eee;
+}
+
+.delivery-timer {
+  font-size: 20px;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+  color: #764ba2;
+}
+
+.delivery-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.delivery-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.delivery-btn-deliver {
+  background: #28a745;
+  color: white;
+}
+
+.delivery-btn-deliver:hover {
+  background: #218838;
+}
+
+.delivery-btn-paid {
+  background: #667eea;
+  color: white;
+}
+
+.delivery-btn-paid:hover {
+  background: #5568d3;
+}
+
+.delivery-status-paid {
+  color: #28a745;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.delivery-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: white;
+  font-size: 18px;
+}
+

@@ -1,0 +1,49 @@
+{
+  "productId": 71,
+  "productName": "Negroni",
+  "productCategory": "Băuturi și Coctailuri",
+  "price": 20,
+  "description": "Negroni clasic",
+  "ingredients": [
+    {
+      "ingredientId": 78,
+      "ingredientName": "Gin",
+      "ingredientCategory": "Băuturi Alcoolice",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 193,
+      "ingredientName": "Campari",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 204,
+      "ingredientName": "Vermut roșu",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 194,
+      "ingredientName": "Portocală",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 1,
+      "unit": "felie",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "Gheață",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+﻿Ã¯Â»Â¿{
+  "productId": 115,
+  "productName": "CiocolatÃ„ÂƒÃ†Â’ CaldÃ„ÂƒÃ†Â’",
+  "productCategory": "Cafea/CiocolatÃ„ÂƒÃ†Â’/Ceai",
+  "price": 18,
+  "description": "AlbÃ„ÂƒÃ†Â’/neagrÃ„ÂƒÃ†Â’",
+  "ingredients": [
+    {
+      "ingredientId": 89,
+      "ingredientName": "CiocolatÃ„ÂƒÃ†Â’ neagrÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 20,
+      "ingredientName": "Lapte",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 200,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 33,
+      "ingredientName": "ZahÃ„ÂƒÃ†Â’r",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 10,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

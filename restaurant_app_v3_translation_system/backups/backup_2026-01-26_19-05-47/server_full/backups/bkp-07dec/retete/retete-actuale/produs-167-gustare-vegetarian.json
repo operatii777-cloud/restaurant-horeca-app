@@ -1,0 +1,25 @@
+{
+  "productId": 167,
+  "productName": "Gustare Vegetariană",
+  "productCategory": "Aperitive Reci",
+  "price": 59,
+  "description": "Baghetă, cremă de brânză picantă, zacuscă, salată de vinete, humus",
+  "ingredients": [
+    {
+      "ingredientId": 103,
+      "ingredientName": "Salată",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 104,
+      "ingredientName": "Vinete",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 60,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

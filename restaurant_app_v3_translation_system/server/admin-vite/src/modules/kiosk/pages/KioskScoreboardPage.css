@@ -1,0 +1,323 @@
+/* ============================================
+   KIOSK SCOREBOARD PAGE - Kitchen Gamification
+   Design: Dark theme with vibrant accents
+   ============================================ */
+
+.scoreboard-page {
+  padding: 1.5rem;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #f1f5f9;
+}
+
+/* Header */
+.scoreboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.scoreboard-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fbbf24;
+  margin: 0;
+}
+
+.scoreboard-title-icon {
+  color: #fbbf24;
+}
+
+.scoreboard-subtitle {
+  color: #94a3b8;
+  margin: 0.5rem 0 0 0;
+}
+
+.scoreboard-time {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #fbbf24;
+  font-family: 'Courier New', monospace;
+}
+
+/* KPIs */
+.scoreboard-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.scoreboard-kpi {
+  background: rgba(30, 41, 59, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+
+.scoreboard-kpi .card-body {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.scoreboard-kpi__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scoreboard-kpi--orders .scoreboard-kpi__icon {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+}
+
+.scoreboard-kpi--time .scoreboard-kpi__icon {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+}
+
+.scoreboard-kpi--hour .scoreboard-kpi__icon {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+}
+
+.scoreboard-kpi--target .scoreboard-kpi__icon {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+.scoreboard-kpi__value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.scoreboard-kpi__label {
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
+/* Leaderboard */
+.scoreboard-leaderboard {
+  background: rgba(30, 41, 59, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 16px !important;
+  overflow: hidden;
+}
+
+.scoreboard-leaderboard__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(245, 158, 11, 0.1)) !important;
+  border-bottom: 1px solid rgba(251, 191, 36, 0.3) !important;
+  padding: 1rem 1.5rem !important;
+}
+
+.scoreboard-leaderboard__header h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fbbf24;
+}
+
+/* Pulse animation for LIVE badge */
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Podium */
+.scoreboard-podium {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 2rem;
+  padding: 2rem;
+  background: linear-gradient(180deg, rgba(251, 191, 36, 0.1), transparent);
+}
+
+.scoreboard-podium__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 16px;
+  border: 2px solid transparent;
+  transition: transform 0.3s ease;
+}
+
+.scoreboard-podium__item--1 {
+  border-color: #fbbf24;
+  transform: scale(1.1);
+  box-shadow: 0 0 30px rgba(251, 191, 36, 0.3);
+}
+
+.scoreboard-podium__item--2 {
+  border-color: #94a3b8;
+}
+
+.scoreboard-podium__item--3 {
+  border-color: #cd7f32;
+}
+
+.scoreboard-podium__medal {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.scoreboard-podium__avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #0f172a;
+  margin-bottom: 0.5rem;
+}
+
+.scoreboard-podium__name {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #f1f5f9;
+}
+
+.scoreboard-podium__position {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-bottom: 0.5rem;
+}
+
+.scoreboard-podium__stats {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.scoreboard-podium__stats span {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.scoreboard-podium__streak {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  background: rgba(239, 68, 68, 0.2);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: #f87171;
+  font-weight: 600;
+}
+
+/* Table */
+.scoreboard-table {
+  color: #f1f5f9;
+  margin: 0;
+}
+
+.scoreboard-table thead th {
+  background: rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  padding: 1rem;
+}
+
+.scoreboard-table tbody td {
+  border-color: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  vertical-align: middle;
+}
+
+.scoreboard-table tbody tr:hover {
+  background: rgba(251, 191, 36, 0.05);
+}
+
+.scoreboard-table__top {
+  background: rgba(251, 191, 36, 0.05);
+}
+
+.scoreboard-table__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: #0f172a;
+}
+
+/* Footer */
+.scoreboard-footer {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.scoreboard-footer__message {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(239, 68, 68, 0.1));
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fbbf24;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .scoreboard-kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .scoreboard-podium {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .scoreboard-podium__item--1 {
+    order: -1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 576px) {
+  .scoreboard-kpis {
+    grid-template-columns: 1fr;
+  }
+}
+

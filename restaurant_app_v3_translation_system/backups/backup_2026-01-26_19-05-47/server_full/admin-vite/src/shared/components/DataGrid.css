@@ -1,0 +1,342 @@
+/* ============================================
+   DATA GRID - TEMA ALB/NEGRU (Excel-like)
+   Edge-to-edge Windows style cu contrast maxim
+   ============================================ */
+
+/* CSS Variables pentru selecție și hover transparent */
+.data-grid.ag-theme-alpine {
+  --ag-row-hover-color: rgba(0, 0, 0, 0.05) !important;
+  --ag-selected-row-background-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.data-grid {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+  overflow: hidden;
+  background: #ffffff !important;
+  box-shadow: none;
+  display: flex !important;
+  flex-direction: column !important;
+  position: relative !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.data-grid .ag-root-wrapper {
+  border-radius: 0;
+  border: none;
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  position: relative !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  min-height: 400px !important;
+  background: #ffffff !important;
+}
+
+/* ============================================
+   HEADER - ALB CU TEXT NEGRU BOLD
+   ============================================ */
+
+.data-grid .ag-header {
+  background: #f8f9fa !important;
+  border-bottom: 2px solid #dee2e6 !important;
+  font-weight: 700 !important;
+  color: #212529 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: 13px !important;
+}
+
+.data-grid .ag-header-cell {
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 12px 16px !important;
+  border-right: 1px solid #dee2e6 !important;
+  color: #212529 !important;
+  background: transparent !important;
+  min-height: 48px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.data-grid .ag-header-cell:last-child {
+  border-right: none;
+}
+
+.data-grid .ag-header-cell-text {
+  color: #212529 !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+}
+
+/* Sortare icon */
+.data-grid .ag-header-icon {
+  color: #212529 !important;
+  opacity: 0.7;
+}
+
+.data-grid .ag-header-icon:hover {
+  opacity: 1;
+}
+
+/* ============================================
+   RÂNDURI - ALB CU BORDURI GRI
+   ============================================ */
+
+.data-grid .ag-row {
+  font-size: 14px !important;
+  color: #212529 !important;
+  border-bottom: 1px solid #e9ecef !important;
+  background-color: #ffffff !important;
+}
+
+.data-grid .ag-row:nth-child(even) {
+  background-color: #f8f9fa !important;
+}
+
+.data-grid .ag-row:nth-child(odd) {
+  background-color: #ffffff !important;
+}
+
+/* Hover effect - TRANSPARENT SUBTIL (nu ascunde conținutul) */
+.data-grid .ag-row:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+  transition: background-color 0.15s ease;
+}
+
+/* Selecție rând - TRANSPARENT SUBTIL (nu ascunde conținutul) */
+.data-grid .ag-row.ag-row-selected {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ============================================
+   CELULE - TEXT NEGRU VIZIBIL
+   ============================================ */
+
+.data-grid .ag-cell {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px !important;
+  border-right: 1px solid #e9ecef !important;
+  font-size: 14px !important;
+  color: #212529 !important;
+  line-height: 1.5;
+  font-weight: 400 !important;
+}
+
+.data-grid .ag-cell:last-child {
+  border-right: none;
+}
+
+/* ============================================
+   CELULE - TEXT VIZIBIL FORȚAT
+   ============================================ */
+
+.data-grid .ag-cell-value,
+.data-grid .ag-cell-value * {
+  color: #212529 !important;
+  font-weight: 400 !important;
+  font-size: 14px !important;
+}
+
+.data-grid .ag-cell-wrapper {
+  color: #212529 !important;
+}
+
+/* ============================================
+   PAGINARE - STIL ALB/NEGRU
+   ============================================ */
+
+.data-grid .ag-paging-panel {
+  padding: 16px 32px;
+  background: #f8f9fa !important;
+  border-top: 1px solid #dee2e6 !important;
+  font-size: 14px;
+  color: #212529 !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.data-grid .ag-paging-page-summary-panel {
+  color: #212529 !important;
+}
+
+.data-grid .ag-paging-page-size {
+  margin-right: 16px;
+  color: #212529 !important;
+}
+
+.data-grid .ag-paging-page-size select {
+  padding: 8px 12px;
+  border: 1px solid #ced4da !important;
+  border-radius: 4px;
+  background: #ffffff !important;
+  color: #212529 !important;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.data-grid .ag-paging-page-size select:hover {
+  background: #e9ecef !important;
+}
+
+.data-grid .ag-paging-button {
+  background-color: #ffffff !important;
+  color: #212529 !important;
+  border: 1px solid #ced4da !important;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin: 0 4px;
+  transition: background-color 0.2s ease;
+}
+
+.data-grid .ag-paging-button:hover:not([disabled]) {
+  background-color: #e9ecef !important;
+}
+
+.data-grid .ag-paging-button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ============================================
+   INPUT & CONTROALE
+   ============================================ */
+
+.data-grid .ag-text-field-input,
+.data-grid .ag-input-field-input {
+  background-color: #ffffff !important;
+  color: #212529 !important;
+  border: 1px solid #ced4da !important;
+  border-radius: 4px;
+  padding: 8px 12px;
+}
+
+.data-grid .ag-text-field-input:focus,
+.data-grid .ag-input-field-input:focus {
+  border-color: #0d6efd !important;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25);
+}
+
+/* ============================================
+   LOADING & OVERLAY
+   ============================================ */
+
+.data-grid .ag-overlay-loading-center {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  color: #212529 !important;
+  font-size: 16px;
+  padding: 24px;
+  border-radius: 8px;
+  border: 1px solid #dee2e6 !important;
+}
+
+.data-grid .ag-overlay-no-rows-center {
+  color: #6c757d !important;
+  opacity: 1 !important;
+  font-size: 16px;
+  background-color: transparent;
+}
+
+/* ============================================
+   MENIURI & DROPDOWN-URI
+   ============================================ */
+
+.data-grid .ag-menu {
+  background-color: #ffffff !important;
+  border: 1px solid #dee2e6 !important;
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.data-grid .ag-menu-option {
+  color: #212529 !important;
+  padding: 10px 16px;
+}
+
+.data-grid .ag-menu-option:hover {
+  background-color: #f8f9fa !important;
+}
+
+.data-grid .ag-menu-separator {
+  background-color: #dee2e6 !important;
+}
+
+/* ============================================
+   ACTION CELLS
+   ============================================ */
+
+.ingredients-grid__action-cell {
+  justify-content: flex-end;
+  font-size: 14px;
+  color: #212529 !important;
+}
+
+.ingredients-grid__action-cell:hover {
+  text-decoration: underline;
+}
+
+/* ============================================
+   SCROLLBAR CUSTOM
+   ============================================ */
+
+.data-grid .ag-body-horizontal-scroll-viewport::-webkit-scrollbar,
+.data-grid .ag-body-vertical-scroll-viewport::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+  background-color: #f8f9fa;
+}
+
+.data-grid .ag-body-horizontal-scroll-viewport::-webkit-scrollbar-thumb,
+.data-grid .ag-body-vertical-scroll-viewport::-webkit-scrollbar-thumb {
+  background-color: #ced4da;
+  border-radius: 6px;
+  border: 2px solid #f8f9fa;
+}
+
+.data-grid .ag-body-horizontal-scroll-viewport::-webkit-scrollbar-thumb:hover,
+.data-grid .ag-body-vertical-scroll-viewport::-webkit-scrollbar-thumb:hover {
+  background-color: #adb5bd;
+}
+
+/* ============================================
+   TEXT VIZIBIL FORȚAT - TOATE ELEMENTELE
+   ============================================ */
+
+.data-grid,
+.data-grid * {
+  color: #212529 !important;
+}
+
+.data-grid .ag-cell,
+.data-grid .ag-header-cell-label,
+.data-grid .ag-header-cell-text,
+.data-grid .ag-menu-option-text,
+.data-grid .ag-filter-toolpanel-group-title-bar-title,
+.data-grid .ag-column-drop-title,
+.data-grid .ag-cell-value,
+.data-grid .ag-cell-value * {
+  color: #212529 !important;
+}
+
+/* Forțează textul să fie vizibil chiar dacă există override-uri */
+.data-grid .ag-cell-wrapper,
+.data-grid .ag-cell-wrapper * {
+  color: #212529 !important;
+  font-weight: 400 !important;
+}

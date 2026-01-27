@@ -1,0 +1,551 @@
+{
+  "functional": [
+    {
+      "module": "variance",
+      "method": "GET",
+      "path": "/api/variance/daily",
+      "status": 200,
+      "success": true,
+      "duration": 6,
+      "timestamp": "2025-12-27T19:38:22.320Z"
+    },
+    {
+      "module": "technical-sheets",
+      "method": "GET",
+      "path": "/api/technical-sheets",
+      "status": 200,
+      "success": true,
+      "duration": 6,
+      "timestamp": "2025-12-27T19:38:22.428Z"
+    },
+    {
+      "module": "recalls",
+      "method": "GET",
+      "path": "/api/recalls",
+      "status": 200,
+      "success": true,
+      "duration": 4,
+      "timestamp": "2025-12-27T19:38:22.535Z"
+    },
+    {
+      "module": "expiry-alerts",
+      "method": "GET",
+      "path": "/api/expiry-alerts",
+      "status": 200,
+      "success": true,
+      "duration": 6,
+      "timestamp": "2025-12-27T19:38:22.641Z"
+    },
+    {
+      "module": "portions",
+      "method": "GET",
+      "path": "/api/portions",
+      "status": 200,
+      "success": true,
+      "duration": 6,
+      "timestamp": "2025-12-27T19:38:22.761Z"
+    },
+    {
+      "module": "smart-restock",
+      "method": "GET",
+      "path": "/api/smart-restock-v2/analysis",
+      "status": 200,
+      "success": true,
+      "duration": 5,
+      "timestamp": "2025-12-27T19:38:22.876Z"
+    },
+    {
+      "module": "hostess",
+      "method": "GET",
+      "path": "/api/hostess/tables",
+      "status": 200,
+      "success": true,
+      "duration": 4,
+      "timestamp": "2025-12-27T19:38:22.987Z"
+    },
+    {
+      "module": "lostfound",
+      "method": "GET",
+      "path": "/api/lostfound/items",
+      "status": 200,
+      "success": true,
+      "duration": 6,
+      "timestamp": "2025-12-27T19:38:23.095Z"
+    },
+    {
+      "module": "coatroom",
+      "method": "GET",
+      "path": "/api/coatroom/tickets",
+      "status": 200,
+      "success": true,
+      "duration": 4,
+      "timestamp": "2025-12-27T19:38:23.211Z"
+    },
+    {
+      "module": "laundry",
+      "method": "GET",
+      "path": "/api/laundry/items",
+      "status": 200,
+      "success": true,
+      "duration": 3,
+      "timestamp": "2025-12-27T19:38:23.326Z"
+    },
+    {
+      "module": "reports",
+      "method": "GET",
+      "path": "/api/reports/delivery-performance",
+      "status": 200,
+      "success": true,
+      "duration": 8,
+      "timestamp": "2025-12-27T19:38:23.442Z"
+    },
+    {
+      "module": "stats",
+      "method": "GET",
+      "path": "/api/stats/delivery",
+      "status": 200,
+      "success": true,
+      "duration": 4,
+      "timestamp": "2025-12-27T19:38:23.546Z"
+    },
+    {
+      "module": "stocks",
+      "method": "GET",
+      "path": "/api/stocks/ingredients",
+      "status": 200,
+      "success": true,
+      "duration": 10,
+      "timestamp": "2025-12-27T19:38:23.659Z"
+    },
+    {
+      "module": "catalog",
+      "method": "GET",
+      "path": "/api/catalog/categories",
+      "status": 200,
+      "success": true,
+      "duration": 7,
+      "timestamp": "2025-12-27T19:38:23.769Z"
+    },
+    {
+      "module": "admin",
+      "method": "GET",
+      "path": "/api/admin/health",
+      "status": 200,
+      "success": true,
+      "duration": 4,
+      "timestamp": "2025-12-27T19:38:23.876Z"
+    },
+    {
+      "module": "orders",
+      "method": "GET",
+      "path": "/api/orders",
+      "status": 200,
+      "success": true,
+      "duration": 9,
+      "timestamp": "2025-12-27T19:38:23.992Z"
+    },
+    {
+      "module": "delivery",
+      "method": "GET",
+      "path": "/api/orders/delivery",
+      "status": 200,
+      "success": true,
+      "duration": 4,
+      "timestamp": "2025-12-27T19:38:24.098Z"
+    },
+    {
+      "module": "delivery-kpi",
+      "method": "GET",
+      "path": "/api/delivery/kpi",
+      "status": 200,
+      "success": true,
+      "duration": 7,
+      "timestamp": "2025-12-27T19:38:24.205Z"
+    },
+    {
+      "module": "bi",
+      "method": "GET",
+      "path": "/api/bi/sales-summary",
+      "status": 200,
+      "success": true,
+      "duration": 3,
+      "timestamp": "2025-12-27T19:38:24.309Z"
+    },
+    {
+      "module": "suppliers",
+      "method": "GET",
+      "path": "/api/suppliers",
+      "status": 200,
+      "success": true,
+      "duration": 4,
+      "timestamp": "2025-12-27T19:38:24.419Z"
+    },
+    {
+      "module": "customers",
+      "method": "GET",
+      "path": "/api/customers",
+      "status": 200,
+      "success": true,
+      "duration": 4,
+      "timestamp": "2025-12-27T19:38:24.529Z"
+    },
+    {
+      "module": "allergens",
+      "method": "GET",
+      "path": "/api/allergens",
+      "status": 200,
+      "success": true,
+      "duration": 3,
+      "timestamp": "2025-12-27T19:38:24.635Z"
+    },
+    {
+      "module": "food-cost",
+      "method": "GET",
+      "path": "/api/food-cost/analysis",
+      "status": 200,
+      "success": true,
+      "duration": 3,
+      "timestamp": "2025-12-27T19:38:24.745Z"
+    },
+    {
+      "module": "webhooks",
+      "method": "GET",
+      "path": "/api/webhooks",
+      "status": 200,
+      "success": true,
+      "duration": 4,
+      "timestamp": "2025-12-27T19:38:24.856Z"
+    },
+    {
+      "module": "compliance",
+      "method": "GET",
+      "path": "/api/compliance/equipment",
+      "status": 200,
+      "success": true,
+      "duration": 4,
+      "timestamp": "2025-12-27T19:38:24.975Z"
+    },
+    {
+      "module": "gift-cards",
+      "method": "GET",
+      "path": "/api/gift-cards",
+      "status": 200,
+      "success": true,
+      "duration": 5,
+      "timestamp": "2025-12-27T19:38:25.085Z"
+    },
+    {
+      "module": "loyalty",
+      "method": "GET",
+      "path": "/api/loyalty/programs",
+      "status": 200,
+      "success": true,
+      "duration": 5,
+      "timestamp": "2025-12-27T19:38:25.191Z"
+    },
+    {
+      "module": "reservations",
+      "method": "GET",
+      "path": "/api/reservations",
+      "status": 200,
+      "success": true,
+      "duration": 5,
+      "timestamp": "2025-12-27T19:38:25.299Z"
+    },
+    {
+      "module": "waitlist",
+      "method": "GET",
+      "path": "/api/waitlist",
+      "status": 200,
+      "success": true,
+      "duration": 3,
+      "timestamp": "2025-12-27T19:38:25.410Z"
+    },
+    {
+      "module": "cogs",
+      "method": "GET",
+      "path": "/api/cogs/product-profitability",
+      "status": 200,
+      "success": true,
+      "duration": 5,
+      "timestamp": "2025-12-27T19:38:25.518Z"
+    },
+    {
+      "module": "financial",
+      "method": "GET",
+      "path": "/api/financial/daily-summary",
+      "status": 200,
+      "success": true,
+      "duration": 59,
+      "timestamp": "2025-12-27T19:38:25.684Z"
+    },
+    {
+      "module": "tipizate",
+      "method": "GET",
+      "path": "/api/tipizate/nir",
+      "status": 200,
+      "success": true,
+      "duration": 5,
+      "timestamp": "2025-12-27T19:38:25.794Z"
+    }
+  ],
+  "performance": [
+    {
+      "module": "admin",
+      "path": "/api/admin/health",
+      "avgDuration": 3,
+      "maxDuration": 4,
+      "minDuration": 3,
+      "samples": 10,
+      "timestamp": "2025-12-27T19:38:34.997Z"
+    },
+    {
+      "module": "bi",
+      "path": "/api/bi/sales-summary",
+      "avgDuration": 3,
+      "maxDuration": 4,
+      "minDuration": 3,
+      "samples": 10,
+      "timestamp": "2025-12-27T19:38:37.468Z"
+    },
+    {
+      "module": "variance",
+      "path": "/api/variance/daily",
+      "avgDuration": 4,
+      "maxDuration": 5,
+      "minDuration": 3,
+      "samples": 10,
+      "timestamp": "2025-12-27T19:38:26.498Z"
+    },
+    {
+      "module": "technical-sheets",
+      "path": "/api/technical-sheets",
+      "avgDuration": 4,
+      "maxDuration": 4,
+      "minDuration": 3,
+      "samples": 10,
+      "timestamp": "2025-12-27T19:38:27.095Z"
+    },
+    {
+      "module": "recalls",
+      "path": "/api/recalls",
+      "avgDuration": 4,
+      "maxDuration": 5,
+      "minDuration": 3,
+      "samples": 10,
+      "timestamp": "2025-12-27T19:38:27.694Z"
+    },
+    {
+      "module": "expiry-alerts",
+      "path": "/api/expiry-alerts",
+      "avgDuration": 4,
+      "maxDuration": 5,
+      "minDuration": 3,
+      "samples": 10,
+      "timestamp": "2025-12-27T19:38:28.290Z"
+    },
+    {
+      "module": "portions",
+      "path": "/api/portions",
+      "avgDuration": 4,
+      "maxDuration": 4,
+      "minDuration": 3,
+      "samples": 10,
+      "timestamp": "2025-12-27T19:38:28.910Z"
+    },
+    {
+      "module": "smart-restock",
+      "path": "/api/smart-restock-v2/analysis",
+      "avgDuration": 4,
+      "maxDuration": 6,
+      "minDuration": 3,
+      "samples": 10,
+      "timestamp": "2025-12-27T19:38:29.513Z"
+    },
+    {
+      "module": "hostess",
+      "path": "/api/hostess/tables",
+      "avgDuration": 4,
+      "maxDuration": 5,
+      "minDuration": 2,
+      "samples": 10,
+      "timestamp": "2025-12-27T19:38:30.113Z"
+    },
+    {
+      "module": "lostfound",
+      "path": "/api/lostfound/items",
+      "avgDuration": 4,
+      "maxDuration": 6,
+      "minDuration": 3,
+      "samples": 10,
+      "timestamp": "2025-12-27T19:38:30.710Z"
+    },
+    {
+      "module": "coatroom",
+      "path": "/api/coatroom/tickets",
+      "avgDuration": 4,
+      "maxDuration": 7,
+      "minDuration": 3,
+      "samples": 10,
+      "timestamp": "2025-12-27T19:38:31.314Z"
+    },
+    {
+      "module": "laundry",
+      "path": "/api/laundry/items",
+      "avgDuration": 4,
+      "maxDuration": 5,
+      "minDuration": 3,
+      "samples": 10,
+      "timestamp": "2025-12-27T19:38:31.921Z"
+    },
+    {
+      "module": "stats",
+      "path": "/api/stats/delivery",
+      "avgDuration": 4,
+      "maxDuration": 4,
+      "minDuration": 3,
+      "samples": 10,
+      "timestamp": "2025-12-27T19:38:33.161Z"
+    },
+    {
+      "module": "delivery",
+      "path": "/api/orders/delivery",
+      "avgDuration": 4,
+      "maxDuration": 4,
+      "minDuration": 3,
+      "samples": 10,
+      "timestamp": "2025-12-27T19:38:36.254Z"
+    },
+    {
+      "module": "reports",
+      "path": "/api/reports/delivery-performance",
+      "avgDuration": 5,
+      "maxDuration": 6,
+      "minDuration": 4,
+      "samples": 10,
+      "timestamp": "2025-12-27T19:38:32.528Z"
+    },
+    {
+      "module": "catalog",
+      "path": "/api/catalog/categories",
+      "avgDuration": 5,
+      "maxDuration": 6,
+      "minDuration": 4,
+      "samples": 10,
+      "timestamp": "2025-12-27T19:38:34.413Z"
+    },
+    {
+      "module": "suppliers",
+      "path": "/api/suppliers",
+      "avgDuration": 5,
+      "maxDuration": 8,
+      "minDuration": 4,
+      "samples": 10,
+      "timestamp": "2025-12-27T19:38:38.089Z"
+    },
+    {
+      "module": "stocks",
+      "path": "/api/stocks/ingredients",
+      "avgDuration": 7,
+      "maxDuration": 9,
+      "minDuration": 5,
+      "samples": 10,
+      "timestamp": "2025-12-27T19:38:33.813Z"
+    },
+    {
+      "module": "delivery-kpi",
+      "path": "/api/delivery/kpi",
+      "avgDuration": 8,
+      "maxDuration": 28,
+      "minDuration": 5,
+      "samples": 10,
+      "timestamp": "2025-12-27T19:38:36.883Z"
+    },
+    {
+      "module": "orders",
+      "path": "/api/orders",
+      "avgDuration": 9,
+      "maxDuration": 11,
+      "minDuration": 8,
+      "samples": 10,
+      "timestamp": "2025-12-27T19:38:35.670Z"
+    }
+  ],
+  "security": [
+    {
+      "test": "SQL Injection",
+      "payload": "' OR '1'='1",
+      "blocked": false,
+      "status": 200,
+      "timestamp": "2025-12-27T19:38:38.093Z"
+    },
+    {
+      "test": "SQL Injection",
+      "payload": "1'; DROP TABLE users--",
+      "blocked": false,
+      "status": 200,
+      "timestamp": "2025-12-27T19:38:38.095Z"
+    },
+    {
+      "test": "SQL Injection",
+      "payload": "admin'--",
+      "blocked": false,
+      "status": 200,
+      "timestamp": "2025-12-27T19:38:38.097Z"
+    },
+    {
+      "test": "SQL Injection",
+      "payload": "' UNION SELECT NULL--",
+      "blocked": false,
+      "status": 200,
+      "timestamp": "2025-12-27T19:38:38.098Z"
+    },
+    {
+      "test": "XSS",
+      "payload": "<script>alert('XSS')</script>",
+      "blocked": true,
+      "status": 200,
+      "timestamp": "2025-12-27T19:38:38.100Z"
+    },
+    {
+      "test": "XSS",
+      "payload": "<img src=x onerror=alert('XSS')>",
+      "blocked": true,
+      "status": 200,
+      "timestamp": "2025-12-27T19:38:38.102Z"
+    },
+    {
+      "test": "XSS",
+      "payload": "javascript:alert('XSS')",
+      "blocked": true,
+      "status": 200,
+      "timestamp": "2025-12-27T19:38:38.104Z"
+    }
+  ],
+  "load": [
+    {
+      "test": "Concurrent Users",
+      "users": 50,
+      "successful": 50,
+      "failed": 0,
+      "totalDuration": 58,
+      "avgDuration": 1,
+      "timestamp": "2025-12-27T19:38:38.162Z"
+    },
+    {
+      "test": "Stress Test",
+      "requests": 100,
+      "successful": 100,
+      "failed": 0,
+      "totalDuration": 137,
+      "requestsPerSecond": 732,
+      "timestamp": "2025-12-27T19:38:38.299Z"
+    }
+  ],
+  "summary": {
+    "total": 32,
+    "passed": 32,
+    "failed": 0,
+    "warnings": 0
+  }
+}

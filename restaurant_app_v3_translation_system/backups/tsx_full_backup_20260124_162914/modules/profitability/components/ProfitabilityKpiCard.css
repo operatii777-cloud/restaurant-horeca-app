@@ -1,0 +1,123 @@
+.profitability-kpi-card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  height: 100%;
+}
+
+.profitability-kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.profitability-kpi-card--blue {
+  border-left: 4px solid #2563eb;
+}
+
+.profitability-kpi-card--green {
+  border-left: 4px solid #22c55e;
+}
+
+.profitability-kpi-card--orange {
+  border-left: 4px solid #f59e0b;
+}
+
+.profitability-kpi-card--red {
+  border-left: 4px solid #ef4444;
+}
+
+.profitability-kpi-card--purple {
+  border-left: 4px solid #a855f7;
+}
+
+.profitability-kpi-card .kpi-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.profitability-kpi-card .kpi-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #6b7280;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.profitability-kpi-card .kpi-trend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.profitability-kpi-card .kpi-trend.trend-positive {
+  color: #22c55e;
+}
+
+.profitability-kpi-card .kpi-trend.trend-negative {
+  color: #ef4444;
+}
+
+.profitability-kpi-card .kpi-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.profitability-kpi-card .kpi-subtitle {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-top: 4px;
+}
+
+/* Loading skeleton */
+.profitability-kpi-card--loading {
+  pointer-events: none;
+}
+
+.kpi-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.kpi-skeleton-title,
+.kpi-skeleton-value,
+.kpi-skeleton-subtitle {
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 4px;
+}
+
+.kpi-skeleton-title {
+  height: 16px;
+  width: 60%;
+}
+
+.kpi-skeleton-value {
+  height: 32px;
+  width: 80%;
+}
+
+.kpi-skeleton-subtitle {
+  height: 12px;
+  width: 40%;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+

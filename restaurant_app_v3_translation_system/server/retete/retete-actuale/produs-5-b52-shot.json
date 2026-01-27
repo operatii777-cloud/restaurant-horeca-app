@@ -1,0 +1,35 @@
+﻿Ã¯Â»Â¿{
+  "productId": 5,
+  "productName": "B52 Shot",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "price": 19,
+  "description": "Shot - Baileys, lichior cafea, triplu sec",
+  "ingredients": [
+    {
+      "ingredientId": 187,
+      "ingredientName": "Bailey's",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 188,
+      "ingredientName": "Kahlua",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 73,
+      "ingredientName": "Triple Sec",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi Alcoolice",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

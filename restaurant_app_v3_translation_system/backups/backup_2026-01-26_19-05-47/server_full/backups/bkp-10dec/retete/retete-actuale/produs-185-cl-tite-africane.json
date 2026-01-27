@@ -1,0 +1,17 @@
+{
+  "productId": 185,
+  "productName": "Clătite Africane",
+  "productCategory": "Deserturi",
+  "price": 35,
+  "description": "Mascarpone, dulceață vișine, nutella, banană, biscuiți",
+  "ingredients": [
+    {
+      "ingredientId": 125,
+      "ingredientName": "Mascarpone",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "product": {
+    "id": 111,
+    "name": "Salată Verde",
+    "name_en": "Green Salad",
+    "category": "Salate Însoțitoare",
+    "category_en": "Side Salads",
+    "price": 18,
+    "description": "Salată verde, ceapă roșie, lămâie",
+    "description_en": "Green lettuce, red onion, lemon",
+    "weight": "200G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 1,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 797,
+        "name": "Salată Verde Shaorma",
+        "category": "Legume",
+        "quantity": 150,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.5455748291685286,
+        "totalCost": "81.84",
+        "totalCostWithWaste": "81.84",
+        "supplier": "Furnizor Test",
+        "currentStock": 55268.47058823529,
+        "minStock": 100,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 821,
+        "name": "Ulei vegetal",
+        "category": "Uleiuri și Grăsimi",
+        "quantity": 10,
+        "unit": "ml",
+        "unitStock": "ml",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.36491973522575893,
+        "totalCost": "3.65",
+        "totalCostWithWaste": "3.65",
+        "supplier": "Uleiuri SRL",
+        "currentStock": 71910,
+        "minStock": 5000,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "85.49",
+    "totalCostWithWaste": "85.49",
+    "sellingPrice": 18,
+    "profitMargin": -67.49,
+    "markup": -374.92,
+    "foodCostPercentage": "474.92"
+  },
+  "stats": {
+    "totalIngredients": 2,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

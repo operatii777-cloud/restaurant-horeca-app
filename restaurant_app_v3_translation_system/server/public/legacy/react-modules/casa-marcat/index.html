@@ -1,0 +1,315 @@
+﻿<!--
+  ============================================
+  LEGACY UI - Deprecated after PHASE S2
+  ============================================
+  
+  This file has been moved to /public/legacy/ as part of PHASE S3 cleanup.
+  
+  DO NOT MODIFY.
+  Reference only.
+  To be removed after PHASE S5.
+  
+  Original path: /public/react-modules/casa-marcat/index.html
+  Moved: 2025-12-07
+  ============================================
+-->
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casa de Marcat Fiscală ANAF</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8f9fa; padding: 20px; }
+        .fiscal-card { background: white; border-radius: 16px; padding: 30px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .status-badge { display: inline-block; padding: 10px 20px; border-radius: 20px; font-weight: 600; margin-bottom: 20px; }
+        .status-connected { background: #d4edda; color: #155724; }
+        .status-disconnected { background: #f8d7da; color: #721c24; }
+        .config-section { background: #f8f9fa; padding: 20px; border-radius: 12px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <h1 class="mb-4"><i class="fas fa-cash-register me-2 text-success"></i>Casa de Marcat Fiscală ANAF</h1>
+        
+        <div id="connectionStatus" class="text-center mb-4">
+            <span class="status-badge status-disconnected">⚪ NECONECTAT</span>
+        </div>
+        
+        <!-- Configurare Casă Fiscală -->
+        <div class="fiscal-card">
+            <h4 class="mb-3"><i class="fas fa-cog me-2"></i>Configurare Casă Fiscală</h4>
+            
+            <div class="config-section">
+                <h6>Model Casă Fiscală:</h6>
+                <select id="fiscalModel" class="form-select mb-3">
+                    <option value="datecs">Datecs (DP-25, DP-150, FP-700, FMP-10)</option>
+                    <option value="tremol">Tremol (M20, S21, FP-01)</option>
+                    <option value="custom">Custom (KUBE II)</option>
+                    <option value="elcom">Elcom (Euro-50TEi Mini)</option>
+                </select>
+                
+                <h6>Tip Conexiune:</h6>
+                <select id="connectionType" class="form-select mb-3" onchange="toggleConnectionType()">
+                    <option value="serial">Serial (RS-232, USB-to-Serial)</option>
+                    <option value="tcp">TCP/IP (Ethernet)</option>
+                </select>
+                
+                <div id="serialConfig">
+                    <h6>Port Serial:</h6>
+                    <select id="serialPort" class="form-select mb-3">
+                        <option value="COM1">COM1</option>
+                        <option value="COM2">COM2</option>
+                        <option value="COM3">COM3</option>
+                        <option value="COM4">COM4</option>
+                    </select>
+                    
+                    <h6>Baud Rate:</h6>
+                    <select id="baudRate" class="form-select">
+                        <option value="115200">115200 (recomandat Datecs)</option>
+                        <option value="9600">9600 (recomandat Tremol)</option>
+                        <option value="19200">19200</option>
+                        <option value="38400">38400</option>
+                    </select>
+                </div>
+                
+                <div id="tcpConfig" style="display:none;">
+                    <h6>IP Casă Fiscală:</h6>
+                    <input type="text" id="tcpHost" class="form-control mb-3" value="192.168.1.100" placeholder="192.168.1.100">
+                    
+                    <h6>Port TCP:</h6>
+                    <input type="number" id="tcpPort" class="form-control" value="8000" placeholder="8000">
+                </div>
+            </div>
+            
+            <div class="d-grid gap-2">
+                <button class="btn btn-primary btn-lg" onclick="saveConfig()">
+                    <i class="fas fa-save me-2"></i>Salvează Configurare
+                </button>
+                <button class="btn btn-success btn-lg" onclick="connectFiscalPrinter()">
+                    <i class="fas fa-plug me-2"></i>Conectare la Casa Fiscală
+                </button>
+                <button class="btn btn-danger btn-lg" onclick="disconnectFiscalPrinter()">
+                    <i class="fas fa-times me-2"></i>Deconectare
+                </button>
+            </div>
+        </div>
+        
+        <!-- Emitere Bon Fiscal -->
+        <div class="fiscal-card">
+            <h4 class="mb-3"><i class="fas fa-receipt me-2"></i>Emitere Bon Fiscal</h4>
+            
+            <div class="alert alert-info">
+                <h6 class="alert-heading">📋 Comenzi Disponibile:</h6>
+                <p class="mb-0">Introduceți ID-ul comenzii pentru a emite bon fiscal. Bonul va fi transmis automat către ANAF conform Ordin 3457/2018.</p>
+            </div>
+            
+            <div class="input-group mb-3">
+                <span class="input-group-text">ID Comandă:</span>
+                <input type="number" id="orderId" class="form-control" placeholder="Ex: 123">
+                <button class="btn btn-success" onclick="printFiscalReceipt()">
+                    <i class="fas fa-print me-2"></i>Emite Bon Fiscal
+                </button>
+            </div>
+            
+            <div id="printResult"></div>
+        </div>
+        
+        <!-- Rapoarte Fiscale -->
+        <div class="fiscal-card">
+            <h4 class="mb-3"><i class="fas fa-file-invoice me-2"></i>Rapoarte Fiscale</h4>
+            
+            <div class="row">
+                <div class="col-md-6 d-grid">
+                    <button class="btn btn-warning btn-lg mb-2" onclick="printRaportX()">
+                        <i class="fas fa-file-alt me-2"></i>Raport X (Informativ)
+                    </button>
+                </div>
+                <div class="col-md-6 d-grid">
+                    <button class="btn btn-danger btn-lg mb-2" onclick="printRaportZ()">
+                        <i class="fas fa-file-invoice-dollar me-2"></i>Raport Z (Închidere Zi Fiscală)
+                    </button>
+                </div>
+            </div>
+            
+            <div class="alert alert-warning mt-3">
+                <strong>⚠️ ATENȚIE:</strong> Raportul Z închide ziua fiscală și NU poate fi anulat. Emiteți doar la sfârșitul zilei!
+            </div>
+        </div>
+        
+        <!-- Istoric Bonuri Fiscale -->
+        <div class="fiscal-card">
+            <h4 class="mb-3"><i class="fas fa-history me-2"></i>Istoric Bonuri Fiscale (Astăzi)</h4>
+            <div id="receiptsHistory">Se încarcă...</div>
+        </div>
+    </div>
+    
+    <script>
+        function toggleConnectionType() {
+            const type = document.getElementById('connectionType').value;
+            document.getElementById('serialConfig').style.display = type === 'serial' ? 'block' : 'none';
+            document.getElementById('tcpConfig').style.display = type === 'tcp' ? 'block' : 'none';
+        }
+        
+        async function saveConfig() {
+            const config = {
+                enabled: true,
+                type: document.getElementById('connectionType').value,
+                model: document.getElementById('fiscalModel').value,
+                port: document.getElementById('serialPort').value,
+                host: document.getElementById('tcpHost').value,
+                tcpPort: document.getElementById('tcpPort').value
+            };
+            
+            try {
+                const res = await fetch('/api/fiscal/config', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(config)
+                });
+                
+                const data = await res.json();
+                
+                if (data.success) {
+                    alert('✅ Configurare salvată cu succes!');
+                } else {
+                    alert('❌ Eroare: ' + (data.error || 'Unknown'));
+                }
+            } catch (error) {
+                alert('❌ Eroare: ' + error.message);
+            }
+        }
+        
+        async function connectFiscalPrinter() {
+            try {
+                const res = await fetch('/api/fiscal/connect', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                const data = await res.json();
+                
+                if (data.success) {
+                    document.getElementById('connectionStatus').innerHTML = '<span class="status-badge status-connected">🟢 CONECTAT - ' + data.model.toUpperCase() + '</span>';
+                    alert('✅ Conectat la casa fiscală!');
+                } else {
+                    alert('❌ Eroare: ' + (data.error || 'Unknown'));
+                }
+            } catch (error) {
+                alert('❌ Eroare: ' + error.message);
+            }
+        }
+        
+        async function disconnectFiscalPrinter() {
+            document.getElementById('connectionStatus').innerHTML = '<span class="status-badge status-disconnected">⚪ NECONECTAT</span>';
+            alert('⚠️ Deconectat de la casa fiscală');
+        }
+        
+        async function printFiscalReceipt() {
+            const orderId = document.getElementById('orderId').value;
+            if (!orderId) {
+                alert('Introduceți ID comandă');
+                return;
+            }
+            
+            const resultDiv = document.getElementById('printResult');
+            resultDiv.innerHTML = '<div class="alert alert-info">⏳ Se emite bonul fiscal...</div>';
+            
+            try {
+                const res = await fetch('/api/fiscal/print-receipt', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ order_id: orderId })
+                });
+                
+                const data = await res.json();
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <div class="alert alert-success">
+                            <h5 class="alert-heading">✅ Bon Fiscal Emis ${data.simulated ? '(SIMULAT)' : ''}</h5>
+                            <p class="mb-1"><strong>Număr Bon:</strong> ${data.receipt_number}</p>
+                            ${data.fiscal_memory_number ? `<p class="mb-1"><strong>Nr. Memorie Fiscală:</strong> ${data.fiscal_memory_number}</p>` : ''}
+                            <p class="mb-0"><strong>Transmis ANAF:</strong> ${data.transmitted_to_anaf ? '✅ DA' : '❌ NU'}</p>
+                            ${data.simulated ? '<hr><p class="mb-0 small"><em>Simulare - Casa fiscală nu este conectată. Bonul a fost salvat în baza de date pentru evidență.</em></p>' : ''}
+                        </div>
+                    `;
+                    loadReceiptsHistory();
+                } else {
+                    resultDiv.innerHTML = `<div class="alert alert-danger">❌ Eroare: ${data.error || 'Unknown'}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="alert alert-danger">❌ Eroare: ${error.message}</div>`;
+            }
+        }
+        
+        async function printRaportX() {
+            alert('📊 Raport X - În dezvoltare\n\nRaportul X este un raport informativ care nu închide ziua fiscală.');
+        }
+        
+        async function printRaportZ() {
+            if (!confirm('⚠️ ATENȚIE!\n\nRaportul Z închide ziua fiscală și NU poate fi anulat.\n\nEmiteți Raport Z doar la sfârșitul zilei!\n\nContinuați?')) {
+                return;
+            }
+            
+            try {
+                const res = await fetch('/api/fiscal/daily-report-z', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                const data = await res.json();
+                
+                if (data.success) {
+                    alert('✅ Raport Z emis cu succes!\n\nZiua fiscală a fost închisă.');
+                } else {
+                    alert('❌ Eroare: ' + (data.error || 'Unknown'));
+                }
+            } catch (error) {
+                alert('❌ Eroare: ' + error.message);
+            }
+        }
+        
+        async function loadReceiptsHistory() {
+            try {
+                const today = new Date().toISOString().split('T')[0];
+                const res = await fetch(`/api/orders?date=${today}&limit=100`);
+                const data = await res.json();
+                
+                const historyDiv = document.getElementById('receiptsHistory');
+                
+                if (data.success && data.data.length > 0) {
+                    historyDiv.innerHTML = `
+                        <div class="table-responsive">
+                            <table class="table table-sm table-hover">
+                                <thead><tr><th>Comandă</th><th>Masă</th><th>Total</th><th>Status Fiscal</th></tr></thead>
+                                <tbody>
+                                    ${data.data.slice(0, 10).map(order => `
+                                        <tr>
+                                            <td>#${order.id}</td>
+                                            <td>${order.table_number || 'Takeout'}</td>
+                                            <td>${order.total_price} RON</td>
+                                            <td><span class="badge bg-secondary">Verifică</span></td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                } else {
+                    historyDiv.innerHTML = '<p class="text-muted">Nicio comandă astăzi</p>';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            loadReceiptsHistory();
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,59 @@
+﻿Ã¯Â»Â¿{
+  "productId": 272,
+  "productName": "Gnocchi cu Sos Pesto",
+  "productCategory": "Paste",
+  "price": 28,
+  "description": "Gnocchi cu sos pesto",
+  "ingredients": [
+    {
+      "ingredientId": 164,
+      "ingredientName": "Gnocchi",
+      "ingredientCategory": "Cereale ÃƒÂˆÃ¢Â„Â¢i Paste",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 165,
+      "ingredientName": "Busuioc proaspÃ„ÂƒÃ†Â’t",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 66,
+      "ingredientName": "Parmezan",
+      "ingredientCategory": "Lactate ÃƒÂˆÃ¢Â„Â¢i BrÃƒÂ¢nzeturi",
+      "quantityNeeded": 30,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 18,
+      "ingredientName": "Ulei de mÃ„ÂƒÃ†Â’sline",
+      "ingredientCategory": "Uleiuri",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 166,
+      "ingredientName": "Nuci de pin",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

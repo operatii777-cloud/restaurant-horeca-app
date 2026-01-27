@@ -1,0 +1,17 @@
+{
+  "productId": 267,
+  "productName": "Purcari Nocturne Rară Neagră",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 760,
+      "ingredientName": "Purcari Nocturne Rară Neagră",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

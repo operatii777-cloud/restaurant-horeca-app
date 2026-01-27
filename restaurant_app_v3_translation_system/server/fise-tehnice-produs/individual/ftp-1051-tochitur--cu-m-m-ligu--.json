@@ -1,0 +1,144 @@
+{
+  "product": {
+    "id": 1051,
+    "name": "Tochitură cu Mămăliguță",
+    "name_en": "Traditional Pork Stew with Polenta",
+    "category": "Fel Principal",
+    "category_en": "Main Course",
+    "price": 34,
+    "description": "Tochitură tradițională moldovenească cu carne de porc, mămăligă, smântână și ou",
+    "description_en": "Traditional Moldavian pork stew with polenta, sour cream and egg",
+    "weight": null,
+    "prep_time": 50,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": 720,
+    "protein": 35,
+    "carbs": 52,
+    "fat": 38,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 815,
+        "name": "Ceapă tocată",
+        "category": "Diverse",
+        "quantity": 40,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 15,
+        "variableConsumption": null,
+        "costPerUnit": 0.7168016692209687,
+        "totalCost": "28.67",
+        "totalCostWithWaste": "32.97",
+        "supplier": "Furnizor General",
+        "currentStock": 127428.23529411764,
+        "minStock": 100,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 497,
+        "name": "Cârnați afumați",
+        "category": "General",
+        "quantity": 60,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 5,
+        "variableConsumption": null,
+        "costPerUnit": 0.004127958007804014,
+        "totalCost": "0.25",
+        "totalCostWithWaste": "0.26",
+        "supplier": null,
+        "currentStock": 12112.526315789473,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 395,
+        "name": "Mălai",
+        "category": "General",
+        "quantity": 100,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 19400,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 800,
+        "name": "Sos Usturoi Shaorma",
+        "category": "Sosuri",
+        "quantity": 8,
+        "unit": "g",
+        "unitStock": "ml",
+        "wastePercentage": 15,
+        "variableConsumption": null,
+        "costPerUnit": 1.1303157632422682,
+        "totalCost": "9.04",
+        "totalCostWithWaste": "10.40",
+        "supplier": "Furnizor Test",
+        "currentStock": 64752.76470588235,
+        "minStock": 100,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 61,
+        "name": "vin roșu",
+        "category": "General",
+        "quantity": 50,
+        "unit": "ml",
+        "unitStock": "l",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 7.232342661544275,
+        "totalCost": "361.62",
+        "totalCostWithWaste": "361.62",
+        "supplier": null,
+        "currentStock": 24560,
+        "minStock": 0.6,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": [
+      {
+        "id": 623,
+        "name": "Ton în conservă",
+        "quantity": 1,
+        "unit": "buc",
+        "costPerUnit": 0.3074223941303995,
+        "totalCost": "0.31"
+      }
+    ]
+  },
+  "costs": {
+    "totalIngredientsCost": "399.58",
+    "totalCostWithWaste": "405.25",
+    "sellingPrice": 34,
+    "profitMargin": -371.25,
+    "markup": -1091.91,
+    "foodCostPercentage": "1191.91"
+  },
+  "stats": {
+    "totalIngredients": 5,
+    "totalPackagingItems": 1,
+    "hasNutritionalInfo": true,
+    "lowStockIngredients": 0
+  }
+}

@@ -1,0 +1,51 @@
+﻿Ã¯Â»Â¿{
+  "productId": 139,
+  "productName": "LimonadÃ„ÂƒÃ†Â’ cu Mango",
+  "productCategory": "RÃ„ÂƒÃ†Â’coritoare",
+  "price": 27,
+  "description": "LimonadÃ„ÂƒÃ†Â’ cu aromÃ„ÂƒÃ†Â’ tropicalÃ„ÂƒÃ†Â’ de mango",
+  "ingredients": [
+    {
+      "ingredientId": 213,
+      "ingredientName": "Mango",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 154,
+      "ingredientName": "LÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+      "ingredientCategory": "Legume ÃƒÂˆÃ¢Â„Â¢i Fructe",
+      "quantityNeeded": 1,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 33,
+      "ingredientName": "ZahÃ„ÂƒÃ†Â’r",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 50,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 27,
+      "ingredientName": "ApÃ„ÂƒÃ†Â’ mineralÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 250,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "GheaÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

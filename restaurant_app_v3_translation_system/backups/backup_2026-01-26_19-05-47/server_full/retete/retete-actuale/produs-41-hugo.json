@@ -1,0 +1,59 @@
+﻿Ã¯Â»Â¿{
+  "productId": 41,
+  "productName": "Hugo",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "price": 31,
+  "description": "Coctail clasic - Prosecco, sirop de soc, apÃ„ÂƒÃ†Â’ mineralÃ„ÂƒÃ†Â’, lime, mentÃ„ÂƒÃ†Â’ fresh",
+  "ingredients": [
+    {
+      "ingredientId": 198,
+      "ingredientName": "Prosecco",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 100,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 199,
+      "ingredientName": "Sirop de soc",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 27,
+      "ingredientName": "ApÃ„ÂƒÃ†Â’ mineralÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 50,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 83,
+      "ingredientName": "Lime",
+      "ingredientCategory": "Fructe ÃƒÂˆÃ¢Â„Â¢i Legume",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 200,
+      "ingredientName": "MentÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "GheaÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

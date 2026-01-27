@@ -1,0 +1,26 @@
+{
+  "productId": 106,
+  "productName": "Orez Sălbatic",
+  "productCategory": "Garnituri",
+  "ingredients": [
+    {
+      "ingredientId": 812,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 814,
+      "ingredientName": "Orez pentru sarmale",
+      "ingredientCategory": "Cereale și Paste",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

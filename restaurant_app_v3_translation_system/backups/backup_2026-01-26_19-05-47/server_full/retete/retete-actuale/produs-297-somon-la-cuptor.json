@@ -1,0 +1,43 @@
+﻿Ã¯Â»Â¿{
+  "productId": 297,
+  "productName": "Somon la Cuptor",
+  "productCategory": "Peste ÃƒÂˆÃ¢Â„Â¢i Fructe de Mare",
+  "price": 75,
+  "description": "Somon, orez sÃ„ÂƒÃ†Â’lbatic, broccoli, lÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+  "ingredients": [
+    {
+      "ingredientId": 160,
+      "ingredientName": "Broccoli",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 101,
+      "ingredientName": "Somon",
+      "ingredientCategory": "Peste Fructe de Mare",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 61,
+      "ingredientName": "Orez",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 80,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 154,
+      "ingredientName": "LÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+      "ingredientCategory": "Legume ÃƒÂˆÃ¢Â„Â¢i Fructe",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

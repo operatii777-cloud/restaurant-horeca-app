@@ -1,0 +1,118 @@
+{
+  "product": {
+    "id": 143,
+    "name": "Ceai Tea Tales",
+    "name_en": "Tea Tales Tea",
+    "category": "Cafea/Ciocolată/Ceai",
+    "category_en": "Coffee/Chocolate/Tea",
+    "price": 16,
+    "description": "Jasmine/Herbal/Spicy Ginger/English Breakfast/Cranberry/Wild Berry",
+    "description_en": "Jasmine/Herbal/Spicy Ginger/English Breakfast/Cranberry/Wild Berry",
+    "weight": "230ML",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 674,
+        "name": "Plic de ceai",
+        "category": "General",
+        "quantity": 2,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 1998,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 253,
+        "name": "Plic de ceai (diverse arome)",
+        "category": "General",
+        "quantity": 2,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 1998,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 278,
+        "name": "Sirop de Zahăr",
+        "category": "General",
+        "quantity": 10,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.16027284697733232,
+        "totalCost": "1.60",
+        "totalCostWithWaste": "1.60",
+        "supplier": null,
+        "currentStock": 19730,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 64,
+        "name": "suc de lămâie",
+        "category": "General",
+        "quantity": 10,
+        "unit": "g",
+        "unitStock": "l",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.770198325996813,
+        "totalCost": "7.70",
+        "totalCostWithWaste": "7.70",
+        "supplier": null,
+        "currentStock": 42848,
+        "minStock": 0.2,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "9.30",
+    "totalCostWithWaste": "9.30",
+    "sellingPrice": 16,
+    "profitMargin": 6.7,
+    "markup": 41.85,
+    "foodCostPercentage": "58.15"
+  },
+  "stats": {
+    "totalIngredients": 4,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

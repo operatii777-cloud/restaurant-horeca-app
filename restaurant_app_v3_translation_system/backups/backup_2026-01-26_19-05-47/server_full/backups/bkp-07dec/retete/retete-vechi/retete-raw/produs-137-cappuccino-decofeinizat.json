@@ -1,0 +1,44 @@
+{
+  "productId": 137,
+  "productName": "Cappuccino Decofeinizat",
+  "productCategory": "Cafea/Ciocolată/Ceai",
+  "ingredients": [
+    {
+      "ingredientId": 278,
+      "ingredientName": "Sirop de Zahăr",
+      "ingredientCategory": "General",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 53,
+      "ingredientName": "lapte",
+      "ingredientCategory": "General",
+      "quantityNeeded": 120,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 250,
+      "ingredientName": "Espresso decofeinizat",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 672,
+      "ingredientName": "Cafea decofeinizată",
+      "ingredientCategory": "General",
+      "quantityNeeded": 7,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

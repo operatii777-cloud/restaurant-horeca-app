@@ -1,0 +1,17 @@
+{
+  "productId": 160,
+  "productName": "Mozzarella Sticks",
+  "productCategory": "Aperitive Calde",
+  "price": 40,
+  "description": "Băți de mozzarella panați",
+  "ingredients": [
+    {
+      "ingredientId": 38,
+      "ingredientName": "Mozzarella",
+      "ingredientCategory": "Lactate și Brânzeturi",
+      "quantityNeeded": 150,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "product": {
+    "id": 113,
+    "name": "Salată Asortată de Vară",
+    "name_en": "Mixed Summer Salad",
+    "category": "Salate Însoțitoare",
+    "category_en": "Side Salads",
+    "price": 18,
+    "description": "Roșii, castraveți, ardei kapia, ceapă roșie",
+    "description_en": "Tomatoes, cucumbers, kapia pepper, red onion",
+    "weight": "200G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 1,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 815,
+        "name": "Ceapă tocată",
+        "category": "Diverse",
+        "quantity": 20,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 15,
+        "variableConsumption": null,
+        "costPerUnit": 0.7168016692209687,
+        "totalCost": "14.34",
+        "totalCostWithWaste": "16.49",
+        "supplier": "Furnizor General",
+        "currentStock": 127428.23529411764,
+        "minStock": 100,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 821,
+        "name": "Ulei vegetal",
+        "category": "Uleiuri și Grăsimi",
+        "quantity": 10,
+        "unit": "ml",
+        "unitStock": "ml",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.36491973522575893,
+        "totalCost": "3.65",
+        "totalCostWithWaste": "3.65",
+        "supplier": "Uleiuri SRL",
+        "currentStock": 71910,
+        "minStock": 5000,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "17.99",
+    "totalCostWithWaste": "20.14",
+    "sellingPrice": 18,
+    "profitMargin": -2.14,
+    "markup": -11.86,
+    "foodCostPercentage": "111.86"
+  },
+  "stats": {
+    "totalIngredients": 2,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

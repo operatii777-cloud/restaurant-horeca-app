@@ -1,0 +1,60 @@
+.variance-reporting-page {
+  padding: var(--spacing-4);
+}
+
+.variance-reporting-page h2 {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Fix text color for tables - ensure black text */
+.variance-reporting-page .table {
+  color: #000000 !important;
+}
+
+.variance-reporting-page .table thead {
+  background-color: #f8f9fa !important;
+}
+
+.variance-reporting-page .table th {
+  color: #000000 !important;
+  background-color: #f8f9fa !important;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.variance-reporting-page .table td {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+}
+
+/* FORȚEZ toate textele din tabel să fie negre */
+.variance-reporting-page .table td *,
+.variance-reporting-page .table td span,
+.variance-reporting-page .table td div,
+.variance-reporting-page .table td .text-muted,
+.variance-reporting-page .table td .text-secondary {
+  color: #000000 !important;
+}
+
+.variance-reporting-page .table tbody tr {
+  background-color: #ffffff !important;
+}
+
+.variance-reporting-page .table tbody tr:nth-of-type(even) {
+  background-color: #f8f9fa !important;
+}
+
+.variance-reporting-page .table tbody tr:nth-of-type(even) td *,
+.variance-reporting-page .table tbody tr:nth-of-type(even) td .text-muted {
+  color: #000000 !important;
+}
+
+.variance-reporting-page .table tbody tr:hover {
+  background-color: #e9ecef !important;
+}
+
+.variance-reporting-page .table tbody tr:hover td *,
+.variance-reporting-page .table tbody tr:hover td .text-muted {
+  color: #000000 !important;
+}
+

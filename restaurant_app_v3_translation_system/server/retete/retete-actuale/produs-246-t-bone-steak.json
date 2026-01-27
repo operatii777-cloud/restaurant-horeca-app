@@ -1,0 +1,35 @@
+﻿Ã¯Â»Â¿{
+  "productId": 246,
+  "productName": "T-Bone Steak",
+  "productCategory": "Fel Principal",
+  "price": 55,
+  "description": "T-Bone Steak",
+  "ingredients": [
+    {
+      "ingredientId": 157,
+      "ingredientName": "T-Bone steak",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 400,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 18,
+      "ingredientName": "Ulei de mÃ„ÂƒÃ†Â’sline",
+      "ingredientCategory": "Uleiuri",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 65,
+      "ingredientName": "Sare",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 5,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

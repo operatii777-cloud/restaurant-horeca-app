@@ -1,0 +1,25 @@
+{
+  "productId": 252,
+  "productName": "Varză a la Cluj",
+  "productCategory": "Fel Principal",
+  "price": 30,
+  "description": "Varză la cuptor cu carne tocată, orez și smântână - specialitate clujeană",
+  "ingredients": [
+    {
+      "ingredientId": 113,
+      "ingredientName": "Smântână",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 61,
+      "ingredientName": "Orez",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 80,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}

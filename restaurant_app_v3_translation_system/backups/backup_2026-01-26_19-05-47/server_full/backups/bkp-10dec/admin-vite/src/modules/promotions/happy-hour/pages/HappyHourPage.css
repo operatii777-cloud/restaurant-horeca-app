@@ -1,0 +1,25 @@
+.happy-hour-page {
+  padding: 1.5rem;
+}
+
+.happy-hour-page [data-page-ready="true"] {
+  opacity: 1;
+}
+
+.stats-list .stat-item {
+  background: #f8f9fa;
+  transition: background 0.2s;
+}
+
+.stats-list .stat-item:hover {
+  background: #e9ecef;
+}
+
+.active-list .active-item {
+  transition: transform 0.2s;
+}
+
+.active-list .active-item:hover {
+  transform: translateX(5px);
+}
+

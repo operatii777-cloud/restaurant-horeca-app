@@ -1,0 +1,41 @@
+{
+  "productId": 34,
+  "productName": "Disaronno Fitz",
+  "productCategory": "Băuturi și Coctailuri",
+  "price": 28,
+  "description": "Coctail - Amaretto disaronno, apă carbogazoasă",
+  "ingredients": [
+    {
+      "ingredientId": 189,
+      "ingredientName": "Amaretto",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 196,
+      "ingredientName": "Apă carbogazoasă",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 154,
+      "ingredientName": "Lămâie",
+      "ingredientCategory": "Legume și Fructe",
+      "quantityNeeded": 1,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "Gheață",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+﻿Ã¯Â»Â¿{
+  "productId": 317,
+  "productName": "MÃ„ÂƒÃ†Â’mÃ„ÂƒÃ†Â’ligÃ„ÂƒÃ†Â’",
+  "productCategory": "Garnituri",
+  "ingredients": [
+    {
+      "ingredientId": 395,
+      "ingredientName": "MÃ„ÂƒÃ†Â’lai",
+      "ingredientCategory": "General",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 396,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 400,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

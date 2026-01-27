@@ -1,0 +1,101 @@
+{
+  "product": {
+    "id": 66,
+    "name": "Antricot de Vită la Grătar",
+    "name_en": "Grilled Beef Ribeye",
+    "category": "Fel Principal",
+    "category_en": "Main Course",
+    "price": 92,
+    "description": "Antricot de vită, cartofi la cuptor, ciuperci sote",
+    "description_en": "Beef ribeye, baked potatoes, sautéed mushrooms",
+    "weight": "500G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 126,
+        "name": "Burtă de vită fiartă și tăiată",
+        "category": "Carne",
+        "quantity": 250,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.21643509653792728,
+        "totalCost": "54.11",
+        "totalCostWithWaste": "54.11",
+        "supplier": "Furnizor Carne",
+        "currentStock": 299528.47826086957,
+        "minStock": 1000,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 169,
+        "name": "Sare de mare",
+        "category": "General",
+        "quantity": 5,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.0001243382635146494,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 157634.5,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 821,
+        "name": "Ulei vegetal",
+        "category": "Uleiuri și Grăsimi",
+        "quantity": 10,
+        "unit": "g",
+        "unitStock": "ml",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.36491973522575893,
+        "totalCost": "3.65",
+        "totalCostWithWaste": "3.65",
+        "supplier": "Uleiuri SRL",
+        "currentStock": 71910,
+        "minStock": 5000,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "57.76",
+    "totalCostWithWaste": "57.76",
+    "sellingPrice": 92,
+    "profitMargin": 34.24,
+    "markup": 37.22,
+    "foodCostPercentage": "62.78"
+  },
+  "stats": {
+    "totalIngredients": 3,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

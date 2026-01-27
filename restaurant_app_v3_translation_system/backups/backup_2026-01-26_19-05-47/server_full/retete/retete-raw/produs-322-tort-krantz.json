@@ -1,0 +1,37 @@
+﻿Ã¯Â»Â¿{
+  "productId": 322,
+  "productName": "Tort Krantz",
+  "productCategory": "Deserturi",
+  "ingredients": [
+    {
+      "ingredientId": 410,
+      "ingredientName": "Blat de bezea/NucÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "General",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 477,
+      "ingredientName": "Topping (simplu, sos vanilie)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 60,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 480,
+      "ingredientName": "Banane (caramelizate/sotate)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

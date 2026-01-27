@@ -1,0 +1,57 @@
+{
+  "productId": 339,
+  "productName": "Pâine de Casă",
+  "productCategory": "Sosuri și Pâine",
+  "price": 5,
+  "description": "Pâine tradițională de casă, proaspătă",
+  "ingredients": [
+    {
+      "ingredientId": 30,
+      "ingredientName": "Făină albă",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 500,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 70,
+      "ingredientName": "Drojdie",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 10,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 156,
+      "ingredientName": "Apă",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 300,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 65,
+      "ingredientName": "Sare",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 10,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 33,
+      "ingredientName": "Zahăr",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 10,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 18,
+      "ingredientName": "Ulei de măsline",
+      "ingredientCategory": "Uleiuri",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}

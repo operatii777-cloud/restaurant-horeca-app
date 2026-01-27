@@ -1,0 +1,19 @@
+﻿Ã¯Â»Â¿{
+  "productId": 125,
+  "productName": "Ristretto",
+  "productCategory": "Cafea/CiocolatÃ„ÂƒÃ†Â’/Ceai",
+  "price": 13,
+  "description": "Cafea ristretto",
+  "ingredients": [
+    {
+      "ingredientId": 25,
+      "ingredientName": "Cafea boabe",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 18,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

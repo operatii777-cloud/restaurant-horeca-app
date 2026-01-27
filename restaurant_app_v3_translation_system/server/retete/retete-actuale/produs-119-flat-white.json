@@ -1,0 +1,27 @@
+﻿Ã¯Â»Â¿{
+  "productId": 119,
+  "productName": "Flat White",
+  "productCategory": "Cafea/CiocolatÃ„ÂƒÃ†Â’/Ceai",
+  "price": 18,
+  "description": "Flat white",
+  "ingredients": [
+    {
+      "ingredientId": 25,
+      "ingredientName": "Cafea boabe",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 36,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 20,
+      "ingredientName": "Lapte",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 120,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

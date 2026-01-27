@@ -1,0 +1,49 @@
+{
+  "productId": 30,
+  "productName": "Cosmopolitan",
+  "productCategory": "Băuturi și Coctailuri",
+  "price": 31,
+  "description": "Coctail clasic - Vodka, triplu sec, suc de merișoare, portocală",
+  "ingredients": [
+    {
+      "ingredientId": 72,
+      "ingredientName": "Vodka",
+      "ingredientCategory": "Băuturi Alcoolice",
+      "quantityNeeded": 40,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 73,
+      "ingredientName": "Triple Sec",
+      "ingredientCategory": "Băuturi Alcoolice",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 74,
+      "ingredientName": "Suc de cranberry",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 75,
+      "ingredientName": "Suc de lime",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "Gheață",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

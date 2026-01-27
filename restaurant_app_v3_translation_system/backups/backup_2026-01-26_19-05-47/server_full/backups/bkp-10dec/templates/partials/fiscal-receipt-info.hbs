@@ -1,0 +1,130 @@
+<div class="fiscal-info-page">
+  {{#if (eq @root.metadata.lang "ro")}}
+    <!-- Versiune Română -->
+    <div class="fiscal-header">
+      <h2 class="fiscal-title">📋 Informații Importante despre Bonul Fiscal</h2>
+      <p class="fiscal-subtitle">Drepturile și obligațiile dumneavoastră</p>
+    </div>
+    
+    <div class="fiscal-content">
+      <div class="fiscal-point">
+        <div class="point-number">1</div>
+        <div class="point-text">
+          <strong>Dacă nu primiți bonul fiscal, aveți obligația să-l solicitați</strong>
+        </div>
+      </div>
+      
+      <div class="fiscal-point">
+        <div class="point-number">2</div>
+        <div class="point-text">
+          <strong>În cazul unui refuz</strong>, aveți dreptul de a beneficia de bunul achiziționat sau de serviciul prestat <strong>fără plata contravalorii acestuia</strong>
+        </div>
+      </div>
+      
+      <div class="fiscal-point">
+        <div class="point-number">3</div>
+        <div class="point-text">
+          <strong>Solicitați și păstrați bonurile fiscale</strong> pentru a putea participa la extragerile lunare și ocazionale ale loteriei bonurilor fiscale
+        </div>
+      </div>
+      
+      <div class="fiscal-point">
+        <div class="point-number">4</div>
+        <div class="point-text">
+          <strong>Este interzisă înmânarea către client</strong> a altui document, care atestă plata contravalorii bunurilor sau serviciilor prestate, <strong>decât bonul fiscal</strong>
+        </div>
+      </div>
+      
+      <div class="fiscal-point">
+        <div class="point-number">5</div>
+        <div class="point-text">
+          Pentru a semnala nerespectarea obligațiilor legale ale operatorilor economici, puteți apela <strong>gratuit, non-stop</strong>, serviciul TelVerde al Ministerului Finanțelor Publice: <strong class="highlight-phone">0800.800.085</strong>
+        </div>
+      </div>
+    </div>
+    
+    <div class="fiscal-footer">
+      <p class="fiscal-legal">
+        Aceste drepturi și obligații sunt stabilite prin prevederile Ordonanței de urgență a Guvernului <strong>nr. 28/1999</strong> privind obligația operatorilor economici de a utiliza aparate de marcat electronice fiscale.
+      </p>
+      
+      <div class="divider-small"></div>
+      
+      <div class="legal-allergens">
+        📋 Informațiile despre alergeni și gramaje sunt conforme cu <strong>Regulamentul UE 1169/2011</strong>.<br>
+        Pentru detalii suplimentare despre ingrediente, vă rugăm să contactați personalul.
+      </div>
+      
+      <div class="divider-small"></div>
+      
+      <div class="contact-info-page2">
+        📍 {{@root.restaurant.address}} | 📞 {{@root.restaurant.phone}}<br>
+        🌐 <a href="http://{{@root.restaurant.website}}">{{@root.restaurant.website}}</a> | ✉️ {{@root.restaurant.email}}
+      </div>
+    </div>
+  {{else}}
+    <!-- English Version -->
+    <div class="fiscal-header">
+      <h2 class="fiscal-title">📋 Important Information about Fiscal Receipts</h2>
+      <p class="fiscal-subtitle">Your rights and obligations</p>
+    </div>
+    
+    <div class="fiscal-content">
+      <div class="fiscal-point">
+        <div class="point-number">1</div>
+        <div class="point-text">
+          <strong>If you do not receive the fiscal receipt, you are obliged to request it</strong>
+        </div>
+      </div>
+      
+      <div class="fiscal-point">
+        <div class="point-number">2</div>
+        <div class="point-text">
+          <strong>In case of refusal</strong>, you have the right to benefit from the purchased goods or services rendered <strong>without paying its value</strong>
+        </div>
+      </div>
+      
+      <div class="fiscal-point">
+        <div class="point-number">3</div>
+        <div class="point-text">
+          <strong>Request and keep fiscal receipts</strong> to be able to participate in the monthly and occasional draws of the fiscal receipt lottery
+        </div>
+      </div>
+      
+      <div class="fiscal-point">
+        <div class="point-number">4</div>
+        <div class="point-text">
+          <strong>It is forbidden to hand over to the client</strong> any other document certifying the payment for goods or services, <strong>other than the fiscal receipt</strong>
+        </div>
+      </div>
+      
+      <div class="fiscal-point">
+        <div class="point-number">5</div>
+        <div class="point-text">
+          To report non-compliance with legal obligations by economic operators, you can call <strong>free, non-stop</strong>, the TelVerde service of the Ministry of Public Finance: <strong class="highlight-phone">0800.800.085</strong>
+        </div>
+      </div>
+    </div>
+    
+    <div class="fiscal-footer">
+      <p class="fiscal-legal">
+        These rights and obligations are established by the provisions of Government Emergency Ordinance <strong>no. 28/1999</strong> regarding the obligation of economic operators to use electronic fiscal marking devices.
+      </p>
+      
+      <div class="divider-small"></div>
+      
+      <div class="legal-allergens">
+        📋 Allergen and portion information complies with <strong>EU Regulation 1169/2011</strong>.<br>
+        For additional details about ingredients, please contact our staff.
+      </div>
+      
+      <div class="divider-small"></div>
+      
+      <div class="contact-info-page2">
+        📍 {{@root.restaurant.address}} | 📞 {{@root.restaurant.phone}}<br>
+        🌐 <a href="http://{{@root.restaurant.website}}">{{@root.restaurant.website}}</a> | ✉️ {{@root.restaurant.email}}
+      </div>
+    </div>
+  {{/if}}
+</div>
+

@@ -1,0 +1,17 @@
+{
+  "productId": 259,
+  "productName": "Caii de la Letea Vol 1 Rose",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 744,
+      "ingredientName": "Caii de la Letea Vol 1 Rose",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

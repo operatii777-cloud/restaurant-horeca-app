@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casa de Marcat - White Label Template</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ==================== WHITE LABEL VARIABLES ==================== */
+        :root {
+            /* Brand Colors - Customizable */
+            --brand-primary: #667eea;
+            --brand-secondary: #764ba2;
+            --brand-success: #28a745;
+            --brand-danger: #dc3545;
+            --brand-warning: #ffc107;
+            --brand-info: #17a2b8;
+            
+            /* Neutral Colors */
+            --color-white: #ffffff;
+            --color-light: #f8f9fa;
+            --color-dark: #333333;
+            --color-gray: #6c757d;
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.15);
+            
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 15px;
+            
+            /* Transitions */
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+        }
+
+        /* ==================== GLOBAL STYLES ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--color-light);
+            padding: 20px;
+            color: var(--color-dark);
+        }
+
+        /* ==================== HEADER ==================== */
+        .page-header {
+            background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+            color: var(--color-white);
+            padding: 30px;
+            border-radius: var(--radius-lg);
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .page-header h1 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .page-header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        /* ==================== CARDS ==================== */
+        .card-custom {
+            background: var(--color-white);
+            border-radius: var(--radius-md);
+            padding: 25px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 25px;
+            transition: transform var(--transition-normal);
+        }
+
+        .card-custom:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header-custom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--color-light);
+        }
+
+        .card-header-custom h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: var(--color-dark);
+            font-weight: 600;
+        }
+
+        /* ==================== STATISTICS ==================== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--color-white);
+            padding: 25px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            transition: transform var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--brand-primary), var(--brand-secondary));
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--brand-primary);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-dark);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--color-gray);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ==================== BUTTONS ==================== */
+        .btn-custom {
+            padding: 12px 30px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+            color: var(--color-white);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .btn-success-custom {
+            background: var(--brand-success);
+            color: var(--color-white);
+        }
+
+        .btn-danger-custom {
+            background: var(--brand-danger);
+            color: var(--color-white);
+        }
+
+        .btn-warning-custom {
+            background: var(--brand-warning);
+            color: var(--color-dark);
+        }
+
+        .btn-info-custom {
+            background: var(--brand-info);
+            color: var(--color-white);
+        }
+
+        .btn-custom:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* ==================== SESSION STATUS ==================== */
+        .session-status {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: var(--color-white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 25px;
+        }
+
+        .status-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .status-open {
+            background: var(--brand-success);
+        }
+
+        .status-closed {
+            background: var(--brand-danger);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .status-info h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--color-dark);
+        }
+
+        .status-info p {
+            margin: 5px 0 0 0;
+            color: var(--color-gray);
+            font-size: 0.95rem;
+        }
+
+        /* ==================== TABLES ==================== */
+        .table-custom {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+
+        .table-custom thead th {
+            background: var(--color-light);
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--color-gray);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .table-custom tbody tr {
+            background: var(--color-white);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-normal);
+        }
+
+        .table-custom tbody tr:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .table-custom tbody td {
+            padding: 15px;
+            border-top: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .table-custom tbody td:first-child {
+            border-left: 1px solid #f0f0f0;
+            border-top-left-radius: var(--radius-sm);
+            border-bottom-left-radius: var(--radius-sm);
+        }
+
+        .table-custom tbody td:last-child {
+            border-right: 1px solid #f0f0f0;
+            border-top-right-radius: var(--radius-sm);
+            border-bottom-right-radius: var(--radius-sm);
+        }
+
+        /* ==================== BADGES ==================== */
+        .badge-custom {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-danger {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .badge-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .badge-info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        /* ==================== FORMS ==================== */
+        .form-group-custom {
+            margin-bottom: 20px;
+        }
+
+        .form-label-custom {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--color-dark);
+        }
+
+        .form-control-custom {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            transition: border-color var(--transition-fast);
+        }
+
+        .form-control-custom:focus {
+            outline: none;
+            border-color: var(--brand-primary);
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+
+        /* ==================== MODALS ==================== */
+        .modal-custom .modal-content {
+            border-radius: var(--radius-lg);
+            border: none;
+        }
+
+        .modal-custom .modal-header {
+            background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+            color: var(--color-white);
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            padding: 20px 30px;
+        }
+
+        .modal-custom .modal-header h5 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .modal-custom .modal-body {
+            padding: 30px;
+        }
+
+        /* ==================== LOADING ==================== */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--brand-primary);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .card-header-custom {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+
+        /* ==================== EMPTY STATE ==================== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--color-gray);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            color: var(--color-gray);
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>
+            <i class="fas fa-cash-register"></i>
+            Casa de Marcat
+        </h1>
+        <p>Gestionare sesiuni casă, încasări și rapoarte Z</p>
+    </div>
+
+    <!-- Session Status -->
+    <div class="session-status">
+        <div class="status-indicator" id="statusIndicator"></div>
+        <div class="status-info">
+            <h3 id="sessionStatusText">Casa Închisă</h3>
+            <p id="sessionStatusDetails">Deschide casa pentru a începe ziua de lucru</p>
+        </div>
+        <div class="ms-auto">
+            <button class="btn-custom btn-success-custom" id="openCashBtn" onclick="openCashSession()">
+                <i class="fas fa-lock-open"></i> Deschide Casa
+            </button>
+            <button class="btn-custom btn-danger-custom hidden" id="closeCashBtn" onclick="closeCashSession()">
+                <i class="fas fa-lock"></i> Închide Casa
+            </button>
+        </div>
+    </div>
+
+    <!-- Statistics -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div>
+            <div class="stat-value" id="totalCash">0.00 RON</div>
+            <div class="stat-label">Total Cash Astăzi</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-credit-card"></i></div>
+            <div class="stat-value" id="totalCard">0.00 RON</div>
+            <div class="stat-label">Total Card Astăzi</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+            <div class="stat-value" id="totalRevenue">0.00 RON</div>
+            <div class="stat-label">Total Vânzări</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-receipt"></i></div>
+            <div class="stat-value" id="totalOrders">0</div>
+            <div class="stat-label">Comenzi Astăzi</div>
+        </div>
+    </div>
+
+    <!-- Current Session Details -->
+    <div class="card-custom" id="currentSessionCard">
+        <div class="card-header-custom">
+            <h2><i class="fas fa-info-circle me-2"></i>Sesiune Curentă</h2>
+            <button class="btn-custom btn-info-custom" onclick="refreshSession()">
+                <i class="fas fa-sync-alt"></i> Actualizează
+            </button>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <strong>Fond Inițial:</strong>
+                <span id="initialFund">0.00 RON</span>
+            </div>
+            <div class="col-md-6 mb-3">
+                <strong>Ora Deschidere:</strong>
+                <span id="openTime">-</span>
+            </div>
+            <div class="col-md-6 mb-3">
+                <strong>Operator:</strong>
+                <span id="operatorName">-</span>
+            </div>
+            <div class="col-md-6 mb-3">
+                <strong>Durată Sesiune:</strong>
+                <span id="sessionDuration">-</span>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <h4>Detalii Încasări</h4>
+            <table class="table-custom">
+                <thead>
+                    <tr>
+                        <th>Metodă Plată</th>
+                        <th>Număr Tranzacții</th>
+                        <th>Valoare</th>
+                    </tr>
+                </thead>
+                <tbody id="paymentMethodsTable">
+                    <tr>
+                        <td colspan="3" class="text-center">Nu există date</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Cash Sessions History -->
+    <div class="card-custom">
+        <div class="card-header-custom">
+            <h2><i class="fas fa-history me-2"></i>Istoric Sesiuni</h2>
+            <button class="btn-custom btn-primary-custom" onclick="generateReportZ()">
+                <i class="fas fa-file-pdf"></i> Raport Z
+            </button>
+        </div>
+
+        <div id="sessionsTableContainer">
+            <table class="table-custom">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Operator</th>
+                        <th>Fond Inițial</th>
+                        <th>Total Încasat</th>
+                        <th>Diferență</th>
+                        <th>Status</th>
+                        <th>Acțiuni</th>
+                    </tr>
+                </thead>
+                <tbody id="sessionsTableBody">
+                    <!-- Populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <div id="emptyState" class="empty-state hidden">
+            <i class="fas fa-cash-register"></i>
+            <h3>Nu există sesiuni</h3>
+            <p>Deschide prima sesiune pentru a începe</p>
+        </div>
+    </div>
+
+    <!-- Open Cash Modal -->
+    <div class="modal fade modal-custom" id="openCashModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-lock-open me-2"></i>Deschide Casa
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="openCashForm">
+                        <div class="form-group-custom">
+                            <label class="form-label-custom">Fond Inițial (RON) *</label>
+                            <input type="number" class="form-control-custom" id="initialFundInput" 
+                                   step="0.01" min="0" value="0" required>
+                            <small class="text-muted">Suma cash cu care începi ziua</small>
+                        </div>
+                        <div class="form-group-custom">
+                            <label class="form-label-custom">Operator *</label>
+                            <input type="text" class="form-control-custom" id="operatorInput" 
+                                   placeholder="Nume operator" required>
+                        </div>
+                        <div class="form-group-custom">
+                            <label class="form-label-custom">Note</label>
+                            <textarea class="form-control-custom" id="notesInput" rows="3" 
+                                      placeholder="Note opționale..."></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anulează</button>
+                    <button type="button" class="btn-custom btn-success-custom" onclick="confirmOpenCash()">
+                        <i class="fas fa-check"></i> Deschide Casa
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Close Cash Modal -->
+    <div class="modal fade modal-custom" id="closeCashModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-lock me-2"></i>Închide Casa
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>Atenție!</strong> Verifică suma cash înainte de închidere.
+                    </div>
+                    <form id="closeCashForm">
+                        <div class="form-group-custom">
+                            <label class="form-label-custom">Cash Final Numărat (RON) *</label>
+                            <input type="number" class="form-control-custom" id="finalCashInput" 
+                                   step="0.01" min="0" required>
+                        </div>
+                        <div class="form-group-custom">
+                            <label class="form-label-custom">Cash Așteptat</label>
+                            <input type="text" class="form-control-custom" id="expectedCashDisplay" readonly>
+                        </div>
+                        <div class="form-group-custom">
+                            <label class="form-label-custom">Diferență</label>
+                            <input type="text" class="form-control-custom" id="differenceDisplay" readonly>
+                        </div>
+                        <div class="form-group-custom">
+                            <label class="form-label-custom">Explicație Diferență (dacă există)</label>
+                            <textarea class="form-control-custom" id="differenceNotes" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anulează</button>
+                    <button type="button" class="btn-custom btn-danger-custom" onclick="confirmCloseCash()">
+                        <i class="fas fa-lock"></i> Închide Casa
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // ==================== WHITE LABEL CONFIGURATION ====================
+        const CONFIG = {
+            apiBaseUrl: '/api/cash-register',
+            currency: 'RON',
+            dateFormat: 'DD.MM.YYYY HH:mm',
+            refreshInterval: 30000, // 30 seconds
+        };
+
+        // ==================== GLOBAL STATE ====================
+        let currentSession = null;
+        let sessions = [];
+        let openCashModal, closeCashModal;
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            openCashModal = new bootstrap.Modal(document.getElementById('openCashModal'));
+            closeCashModal = new bootstrap.Modal(document.getElementById('closeCashModal'));
+            
+            loadCurrentSession();
+            loadSessions();
+            
+            // Auto-refresh every 30 seconds
+            setInterval(refreshSession, CONFIG.refreshInterval);
+        });
+
+        // ==================== LOAD DATA ====================
+        async function loadCurrentSession() {
+            showLoading(true);
+            try {
+                const response = await fetch(`${CONFIG.apiBaseUrl}/current`);
+                if (response.ok) {
+                    currentSession = await response.json();
+                    updateUI();
+                } else {
+                    currentSession = null;
+                    updateUI();
+                }
+            } catch (error) {
+                console.error('Error loading session:', error);
+                currentSession = null;
+                updateUI();
+            }
+            showLoading(false);
+        }
+
+        async function loadSessions() {
+            try {
+                const response = await fetch(`${CONFIG.apiBaseUrl}/sessions`);
+                if (response.ok) {
+                    sessions = await response.json();
+                    renderSessions();
+                }
+            } catch (error) {
+                console.error('Error loading sessions:', error);
+            }
+        }
+
+        // ==================== UPDATE UI ====================
+        function updateUI() {
+            const isOpen = currentSession && currentSession.status === 'open';
+            
+            // Update status indicator
+            const indicator = document.getElementById('statusIndicator');
+            indicator.className = 'status-indicator ' + (isOpen ? 'status-open' : 'status-closed');
+            
+            // Update status text
+            document.getElementById('sessionStatusText').textContent = isOpen ? 'Casa Deschisă' : 'Casa Închisă';
+            document.getElementById('sessionStatusDetails').textContent = isOpen 
+                ? `Sesiune activă de la ${formatTime(currentSession.opened_at)}`
+                : 'Deschide casa pentru a începe ziua de lucru';
+            
+            // Toggle buttons
+            document.getElementById('openCashBtn').classList.toggle('hidden', isOpen);
+            document.getElementById('closeCashBtn').classList.toggle('hidden', !isOpen);
+            
+            // Update statistics
+            if (isOpen && currentSession) {
+                document.getElementById('totalCash').textContent = formatCurrency(currentSession.total_cash || 0);
+                document.getElementById('totalCard').textContent = formatCurrency(currentSession.total_card || 0);
+                document.getElementById('totalRevenue').textContent = formatCurrency(currentSession.total_revenue || 0);
+                document.getElementById('totalOrders').textContent = currentSession.total_orders || 0;
+                
+                // Update session details
+                document.getElementById('initialFund').textContent = formatCurrency(currentSession.initial_fund);
+                document.getElementById('openTime').textContent = formatTime(currentSession.opened_at);
+                document.getElementById('operatorName').textContent = currentSession.operator_name;
+                document.getElementById('sessionDuration').textContent = calculateDuration(currentSession.opened_at);
+                
+                // Update payment methods table
+                updatePaymentMethodsTable(currentSession.payment_methods || []);
+            } else {
+                // Reset to zero
+                document.getElementById('totalCash').textContent = '0.00 ' + CONFIG.currency;
+                document.getElementById('totalCard').textContent = '0.00 ' + CONFIG.currency;
+                document.getElementById('totalRevenue').textContent = '0.00 ' + CONFIG.currency;
+                document.getElementById('totalOrders').textContent = '0';
+                
+                document.getElementById('initialFund').textContent = '-';
+                document.getElementById('openTime').textContent = '-';
+                document.getElementById('operatorName').textContent = '-';
+                document.getElementById('sessionDuration').textContent = '-';
+            }
+        }
+
+        function updatePaymentMethodsTable(methods) {
+            const tbody = document.getElementById('paymentMethodsTable');
+            if (methods.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" class="text-center">Nu există date</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = methods.map(method => `
+                <tr>
+                    <td>${method.name}</td>
+                    <td>${method.count}</td>
+                    <td><strong>${formatCurrency(method.amount)}</strong></td>
+                </tr>
+            `).join('');
+        }
+
+        function renderSessions() {
+            const tbody = document.getElementById('sessionsTableBody');
+            const emptyState = document.getElementById('emptyState');
+            const tableContainer = document.getElementById('sessionsTableContainer');
+            
+            if (sessions.length === 0) {
+                tableContainer.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            
+            tableContainer.classList.remove('hidden');
+            emptyState.classList.add('hidden');
+            
+            tbody.innerHTML = sessions.map(session => `
+                <tr>
+                    <td>${formatDate(session.opened_at)}</td>
+                    <td>${session.operator_name}</td>
+                    <td>${formatCurrency(session.initial_fund)}</td>
+                    <td>${formatCurrency(session.total_revenue)}</td>
+                    <td>
+                        <span class="badge-custom ${session.difference >= 0 ? 'badge-success' : 'badge-danger'}">
+                            ${formatCurrency(session.difference)}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="badge-custom ${session.status === 'open' ? 'badge-success' : 'badge-info'}">
+                            ${session.status === 'open' ? 'Deschisă' : 'Închisă'}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-info" onclick="viewSession(${session.id})">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // ==================== ACTIONS ====================
+        function openCashSession() {
+            document.getElementById('openCashForm').reset();
+            openCashModal.show();
+        }
+
+        async function confirmOpenCash() {
+            const form = document.getElementById('openCashForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            
+            const data = {
+                initial_fund: parseFloat(document.getElementById('initialFundInput').value),
+                operator_name: document.getElementById('operatorInput').value,
+                notes: document.getElementById('notesInput').value
+            };
+            
+            showLoading(true);
+            try {
+                const response = await fetch(`${CONFIG.apiBaseUrl}/open`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    openCashModal.hide();
+                    await loadCurrentSession();
+                    await loadSessions();
+                    showToast('success', 'Casa deschisă cu succes!');
+                } else {
+                    showToast('error', 'Eroare la deschiderea casei');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('error', 'Eroare la deschiderea casei');
+            }
+            showLoading(false);
+        }
+
+        function closeCashSession() {
+            if (!currentSession) return;
+            
+            document.getElementById('expectedCashDisplay').value = formatCurrency(currentSession.total_cash + currentSession.initial_fund);
+            document.getElementById('finalCashInput').value = '';
+            document.getElementById('differenceDisplay').value = '';
+            document.getElementById('differenceNotes').value = '';
+            
+            closeCashModal.show();
+            
+            // Calculate difference on input
+            document.getElementById('finalCashInput').addEventListener('input', function() {
+                const finalCash = parseFloat(this.value) || 0;
+                const expectedCash = currentSession.total_cash + currentSession.initial_fund;
+                const difference = finalCash - expectedCash;
+                document.getElementById('differenceDisplay').value = formatCurrency(difference);
+            });
+        }
+
+        async function confirmCloseCash() {
+            const form = document.getElementById('closeCashForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            
+            const finalCash = parseFloat(document.getElementById('finalCashInput').value);
+            const expectedCash = currentSession.total_cash + currentSession.initial_fund;
+            const difference = finalCash - expectedCash;
+            
+            const data = {
+                final_cash: finalCash,
+                difference: difference,
+                difference_notes: document.getElementById('differenceNotes').value
+            };
+            
+            showLoading(true);
+            try {
+                const response = await fetch(`${CONFIG.apiBaseUrl}/close`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    closeCashModal.hide();
+                    await loadCurrentSession();
+                    await loadSessions();
+                    showToast('success', 'Casa închisă cu succes!');
+                } else {
+                    showToast('error', 'Eroare la închiderea casei');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('error', 'Eroare la închiderea casei');
+            }
+            showLoading(false);
+        }
+
+        function refreshSession() {
+            loadCurrentSession();
+            loadSessions();
+        }
+
+        function viewSession(id) {
+            const session = sessions.find(s => s.id === id);
+            if (session) {
+                alert(`Detalii Sesiune:\n\nData: ${formatDate(session.opened_at)}\nOperator: ${session.operator_name}\nFond Inițial: ${formatCurrency(session.initial_fund)}\nTotal: ${formatCurrency(session.total_revenue)}\nDiferență: ${formatCurrency(session.difference)}`);
+            }
+        }
+
+        function generateReportZ() {
+            showToast('info', 'Generare Raport Z în curs...');
+            // TODO: Implement PDF generation
+        }
+
+        // ==================== UTILITIES ====================
+        function formatCurrency(amount) {
+            return `${parseFloat(amount).toFixed(2)} ${CONFIG.currency}`;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString('ro-RO');
+        }
+
+        function formatTime(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleTimeString('ro-RO', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function calculateDuration(startTime) {
+            const start = new Date(startTime);
+            const now = new Date();
+            const diff = now - start;
+            const hours = Math.floor(diff / 3600000);
+            const minutes = Math.floor((diff % 3600000) / 60000);
+            return `${hours}h ${minutes}m`;
+        }
+
+        function showLoading(show) {
+            document.getElementById('loadingOverlay').classList.toggle('hidden', !show);
+        }
+
+        function showToast(type, message) {
+            alert(message); // Simple alert - can be replaced with toast library
+        }
+    </script>
+</body>
+</html>
+

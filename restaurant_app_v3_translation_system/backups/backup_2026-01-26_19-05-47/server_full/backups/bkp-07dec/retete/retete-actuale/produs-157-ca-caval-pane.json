@@ -1,0 +1,17 @@
+{
+  "productId": 157,
+  "productName": "Cașcaval Pane",
+  "productCategory": "Aperitive Calde",
+  "price": 32,
+  "description": "Cașcaval panat și prăjit",
+  "ingredients": [
+    {
+      "ingredientId": 91,
+      "ingredientName": "Cașcaval",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

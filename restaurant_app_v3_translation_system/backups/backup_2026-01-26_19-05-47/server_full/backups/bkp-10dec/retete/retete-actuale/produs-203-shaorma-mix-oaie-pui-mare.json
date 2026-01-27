@@ -1,0 +1,25 @@
+{
+  "productId": 203,
+  "productName": "Shaorma Mix Oaie-Pui - Mare",
+  "productCategory": "Fast Food",
+  "price": 37,
+  "description": "Shaorma mix oaie și pui cu legume proaspete, sos usturoi - porție mare",
+  "ingredients": [
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 107,
+      "ingredientName": "Pui",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

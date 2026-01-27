@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionare Furnizori</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .page-header h1 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-left: 4px solid var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .stat-card .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .stat-card .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .stat-card .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+
+        .content-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .content-card-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5);
+        }
+
+        .search-filter-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .search-filter-bar input,
+        .search-filter-bar select {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        .suppliers-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+
+        .suppliers-table thead th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            border: none;
+        }
+
+        .suppliers-table tbody tr {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .suppliers-table tbody tr:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .suppliers-table tbody td {
+            padding: 15px;
+            border-top: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .suppliers-table tbody td:first-child {
+            border-left: 1px solid #f0f0f0;
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+        }
+
+        .suppliers-table tbody td:last-child {
+            border-right: 1px solid #f0f0f0;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .badge-custom {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .rating-stars {
+            color: #ffc107;
+            font-size: 1.1rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-edit {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background: #138496;
+        }
+
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #c82333;
+        }
+
+        .btn-view {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-view:hover {
+            background: #218838;
+        }
+
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 15px 15px 0 0;
+            padding: 20px 30px;
+        }
+
+        .modal-header h5 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-control, .form-select {
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            padding: 10px 15px;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1><i class="fas fa-truck me-3"></i>Gestionare Furnizori</h1>
+        <p>Administrează furnizorii, categoriile și relațiile comerciale</p>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="stats-container">
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-truck"></i></div>
+            <div class="stat-value" id="totalSuppliers">0</div>
+            <div class="stat-label">Total Furnizori</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+            <div class="stat-value" id="activeSuppliers">0</div>
+            <div class="stat-label">Activi</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-tags"></i></div>
+            <div class="stat-value" id="totalCategories">0</div>
+            <div class="stat-label">Categorii</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-star"></i></div>
+            <div class="stat-value" id="avgRating">0.0</div>
+            <div class="stat-label">Rating Mediu</div>
+        </div>
+    </div>
+
+    <!-- Main Content Card -->
+    <div class="content-card">
+        <div class="content-card-header">
+            <h2><i class="fas fa-list me-2"></i>Lista Furnizori</h2>
+            <button class="btn-primary-custom" onclick="openAddSupplierModal()">
+                <i class="fas fa-plus me-2"></i>Adaugă Furnizor
+            </button>
+        </div>
+
+        <!-- Search and Filter Bar -->
+        <div class="search-filter-bar">
+            <input type="text" id="searchInput" placeholder="🔍 Caută furnizor (nume, CUI, contact)..." onkeyup="filterSuppliers()">
+            <select id="categoryFilter" onchange="filterSuppliers()">
+                <option value="">Toate Categoriile</option>
+                <option value="legume">🥬 Legume & Fructe</option>
+                <option value="carne">🥩 Carne & Mezeluri</option>
+                <option value="lactate">🥛 Lactate</option>
+                <option value="bauturi">🍷 Băuturi</option>
+                <option value="condimente">🧂 Condimente</option>
+                <option value="panificatie">🍞 Panificație</option>
+                <option value="altele">📦 Altele</option>
+            </select>
+            <select id="statusFilter" onchange="filterSuppliers()">
+                <option value="">Toate Statusurile</option>
+                <option value="active">✅ Activ</option>
+                <option value="inactive">❌ Inactiv</option>
+            </select>
+        </div>
+
+        <!-- Suppliers Table -->
+        <div id="suppliersTableContainer">
+            <table class="suppliers-table">
+                <thead>
+                    <tr>
+                        <th>Furnizor</th>
+                        <th>Contact</th>
+                        <th>Categorii</th>
+                        <th>Rating</th>
+                        <th>Status</th>
+                        <th>Acțiuni</th>
+                    </tr>
+                </thead>
+                <tbody id="suppliersTableBody">
+                    <!-- Populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state hidden">
+            <i class="fas fa-truck"></i>
+            <h3>Nu există furnizori</h3>
+            <p>Adaugă primul furnizor pentru a începe gestionarea aprovizionării</p>
+            <button class="btn-primary-custom mt-3" onclick="openAddSupplierModal()">
+                <i class="fas fa-plus me-2"></i>Adaugă Primul Furnizor
+            </button>
+        </div>
+    </div>
+
+    <!-- Add/Edit Supplier Modal -->
+    <div class="modal fade" id="supplierModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">
+                        <i class="fas fa-plus-circle me-2"></i>Adaugă Furnizor Nou
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="supplierForm">
+                        <input type="hidden" id="supplierId">
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="supplierName" class="form-label">Nume Furnizor *</label>
+                                <input type="text" class="form-control" id="supplierName" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="supplierCUI" class="form-label">CUI *</label>
+                                <input type="text" class="form-control" id="supplierCUI" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="supplierPhone" class="form-label">Telefon *</label>
+                                <input type="tel" class="form-control" id="supplierPhone" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="supplierEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="supplierEmail">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="supplierAddress" class="form-label">Adresă</label>
+                            <input type="text" class="form-control" id="supplierAddress">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="supplierCategory" class="form-label">Categorie Principală *</label>
+                                <select class="form-select" id="supplierCategory" required>
+                                    <option value="">Selectează...</option>
+                                    <option value="legume">🥬 Legume & Fructe</option>
+                                    <option value="carne">🥩 Carne & Mezeluri</option>
+                                    <option value="lactate">🥛 Lactate</option>
+                                    <option value="bauturi">🍷 Băuturi</option>
+                                    <option value="condimente">🧂 Condimente</option>
+                                    <option value="panificatie">🍞 Panificație</option>
+                                    <option value="altele">📦 Altele</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="supplierPaymentTerms" class="form-label">Termeni Plată</label>
+                                <select class="form-select" id="supplierPaymentTerms">
+                                    <option value="cash">💵 Cash la Livrare</option>
+                                    <option value="net15">📅 Net 15 zile</option>
+                                    <option value="net30" selected>📅 Net 30 zile</option>
+                                    <option value="net60">📅 Net 60 zile</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="supplierRating" class="form-label">Rating (1-5)</label>
+                                <input type="number" class="form-control" id="supplierRating" min="1" max="5" step="0.5" value="5">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="supplierStatus" class="form-label">Status</label>
+                                <select class="form-select" id="supplierStatus">
+                                    <option value="active">✅ Activ</option>
+                                    <option value="inactive">❌ Inactiv</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="supplierNotes" class="form-label">Note / Observații</label>
+                            <textarea class="form-control" id="supplierNotes" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anulează</button>
+                    <button type="button" class="btn btn-primary-custom" onclick="saveSupplier()">
+                        <i class="fas fa-save me-2"></i>Salvează
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Global variables
+        let suppliers = [];
+        let supplierModal;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            supplierModal = new bootstrap.Modal(document.getElementById('supplierModal'));
+            loadSuppliers();
+        });
+
+        // Load suppliers from API
+        async function loadSuppliers() {
+            showLoading(true);
+            try {
+                const response = await fetch('/api/suppliers');
+                if (response.ok) {
+                    suppliers = await response.json();
+                    renderSuppliers();
+                    updateStatistics();
+                } else {
+                    console.error('Failed to load suppliers');
+                    suppliers = [];
+                    renderSuppliers();
+                }
+            } catch (error) {
+                console.error('Error loading suppliers:', error);
+                suppliers = [];
+                renderSuppliers();
+            }
+            showLoading(false);
+        }
+
+        // Render suppliers table
+        function renderSuppliers() {
+            const tbody = document.getElementById('suppliersTableBody');
+            const emptyState = document.getElementById('emptyState');
+            const tableContainer = document.getElementById('suppliersTableContainer');
+
+            if (suppliers.length === 0) {
+                tableContainer.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            tableContainer.classList.remove('hidden');
+            emptyState.classList.add('hidden');
+
+            tbody.innerHTML = suppliers.map(supplier => `
+                <tr data-supplier-id="${supplier.id}">
+                    <td>
+                        <strong>${supplier.name}</strong><br>
+                        <small class="text-muted">CUI: ${supplier.cui}</small>
+                    </td>
+                    <td>
+                        <i class="fas fa-phone text-primary me-1"></i>${supplier.phone}<br>
+                        ${supplier.email ? `<i class="fas fa-envelope text-primary me-1"></i>${supplier.email}` : ''}
+                    </td>
+                    <td>
+                        ${getCategoryBadge(supplier.category)}
+                    </td>
+                    <td>
+                        <div class="rating-stars">
+                            ${getRatingStars(supplier.rating)}
+                        </div>
+                        <small class="text-muted">${supplier.rating}/5</small>
+                    </td>
+                    <td>
+                        <span class="badge-custom ${supplier.status === 'active' ? 'badge-active' : 'badge-inactive'}">
+                            ${supplier.status === 'active' ? '✅ Activ' : '❌ Inactiv'}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-btn btn-view" onclick="viewSupplier(${supplier.id})" title="Vezi Detalii">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="action-btn btn-edit" onclick="editSupplier(${supplier.id})" title="Editează">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn btn-delete" onclick="deleteSupplier(${supplier.id})" title="Șterge">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Get category badge HTML
+        function getCategoryBadge(category) {
+            const categories = {
+                'legume': { icon: '🥬', label: 'Legume & Fructe', color: '#28a745' },
+                'carne': { icon: '🥩', label: 'Carne', color: '#dc3545' },
+                'lactate': { icon: '🥛', label: 'Lactate', color: '#17a2b8' },
+                'bauturi': { icon: '🍷', label: 'Băuturi', color: '#6f42c1' },
+                'condimente': { icon: '🧂', label: 'Condimente', color: '#fd7e14' },
+                'panificatie': { icon: '🍞', label: 'Panificație', color: '#ffc107' },
+                'altele': { icon: '📦', label: 'Altele', color: '#6c757d' }
+            };
+            const cat = categories[category] || categories['altele'];
+            return `<span class="category-badge" style="background: ${cat.color}20; color: ${cat.color};">
+                ${cat.icon} ${cat.label}
+            </span>`;
+        }
+
+        // Get rating stars HTML
+        function getRatingStars(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+            
+            let html = '';
+            for (let i = 0; i < fullStars; i++) html += '<i class="fas fa-star"></i>';
+            if (hasHalfStar) html += '<i class="fas fa-star-half-alt"></i>';
+            for (let i = 0; i < emptyStars; i++) html += '<i class="far fa-star"></i>';
+            
+            return html;
+        }
+
+        // Update statistics
+        function updateStatistics() {
+            document.getElementById('totalSuppliers').textContent = suppliers.length;
+            document.getElementById('activeSuppliers').textContent = suppliers.filter(s => s.status === 'active').length;
+            
+            const categories = new Set(suppliers.map(s => s.category));
+            document.getElementById('totalCategories').textContent = categories.size;
+            
+            const avgRating = suppliers.length > 0 
+                ? (suppliers.reduce((sum, s) => sum + s.rating, 0) / suppliers.length).toFixed(1)
+                : '0.0';
+            document.getElementById('avgRating').textContent = avgRating;
+        }
+
+        // Filter suppliers
+        function filterSuppliers() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+
+            const rows = document.querySelectorAll('#suppliersTableBody tr');
+            rows.forEach(row => {
+                const supplierId = parseInt(row.dataset.supplierId);
+                const supplier = suppliers.find(s => s.id === supplierId);
+                
+                if (!supplier) {
+                    row.style.display = 'none';
+                    return;
+                }
+
+                const matchesSearch = !searchTerm || 
+                    supplier.name.toLowerCase().includes(searchTerm) ||
+                    supplier.cui.toLowerCase().includes(searchTerm) ||
+                    supplier.phone.includes(searchTerm) ||
+                    (supplier.email && supplier.email.toLowerCase().includes(searchTerm));
+
+                const matchesCategory = !categoryFilter || supplier.category === categoryFilter;
+                const matchesStatus = !statusFilter || supplier.status === statusFilter;
+
+                row.style.display = (matchesSearch && matchesCategory && matchesStatus) ? '' : 'none';
+            });
+        }
+
+        // Open add supplier modal
+        function openAddSupplierModal() {
+            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus-circle me-2"></i>Adaugă Furnizor Nou';
+            document.getElementById('supplierForm').reset();
+            document.getElementById('supplierId').value = '';
+            supplierModal.show();
+        }
+
+        // Edit supplier
+        function editSupplier(id) {
+            const supplier = suppliers.find(s => s.id === id);
+            if (!supplier) return;
+
+            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit me-2"></i>Editează Furnizor';
+            document.getElementById('supplierId').value = supplier.id;
+            document.getElementById('supplierName').value = supplier.name;
+            document.getElementById('supplierCUI').value = supplier.cui;
+            document.getElementById('supplierPhone').value = supplier.phone;
+            document.getElementById('supplierEmail').value = supplier.email || '';
+            document.getElementById('supplierAddress').value = supplier.address || '';
+            document.getElementById('supplierCategory').value = supplier.category;
+            document.getElementById('supplierPaymentTerms').value = supplier.payment_terms || 'net30';
+            document.getElementById('supplierRating').value = supplier.rating;
+            document.getElementById('supplierStatus').value = supplier.status;
+            document.getElementById('supplierNotes').value = supplier.notes || '';
+
+            supplierModal.show();
+        }
+
+        // Save supplier
+        async function saveSupplier() {
+            const form = document.getElementById('supplierForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            const supplierId = document.getElementById('supplierId').value;
+            const supplierData = {
+                name: document.getElementById('supplierName').value,
+                cui: document.getElementById('supplierCUI').value,
+                phone: document.getElementById('supplierPhone').value,
+                email: document.getElementById('supplierEmail').value,
+                address: document.getElementById('supplierAddress').value,
+                category: document.getElementById('supplierCategory').value,
+                payment_terms: document.getElementById('supplierPaymentTerms').value,
+                rating: parseFloat(document.getElementById('supplierRating').value),
+                status: document.getElementById('supplierStatus').value,
+                notes: document.getElementById('supplierNotes').value
+            };
+
+            showLoading(true);
+            try {
+                const url = supplierId ? `/api/suppliers/${supplierId}` : '/api/suppliers';
+                const method = supplierId ? 'PUT' : 'POST';
+
+                const response = await fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(supplierData)
+                });
+
+                if (response.ok) {
+                    supplierModal.hide();
+                    await loadSuppliers();
+                    showToast('success', supplierId ? 'Furnizor actualizat cu succes!' : 'Furnizor adăugat cu succes!');
+                } else {
+                    showToast('error', 'Eroare la salvarea furnizorului');
+                }
+            } catch (error) {
+                console.error('Error saving supplier:', error);
+                showToast('error', 'Eroare la salvarea furnizorului');
+            }
+            showLoading(false);
+        }
+
+        // Delete supplier
+        async function deleteSupplier(id) {
+            if (!confirm('Sigur doriți să ștergeți acest furnizor?')) return;
+
+            showLoading(true);
+            try {
+                const response = await fetch(`/api/suppliers/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    await loadSuppliers();
+                    showToast('success', 'Furnizor șters cu succes!');
+                } else {
+                    showToast('error', 'Eroare la ștergerea furnizorului');
+                }
+            } catch (error) {
+                console.error('Error deleting supplier:', error);
+                showToast('error', 'Eroare la ștergerea furnizorului');
+            }
+            showLoading(false);
+        }
+
+        // View supplier details
+        function viewSupplier(id) {
+            const supplier = suppliers.find(s => s.id === id);
+            if (!supplier) return;
+
+            alert(`Detalii Furnizor:\n\nNume: ${supplier.name}\nCUI: ${supplier.cui}\nTelefon: ${supplier.phone}\nEmail: ${supplier.email || 'N/A'}\nAdresă: ${supplier.address || 'N/A'}\nCategorie: ${supplier.category}\nRating: ${supplier.rating}/5\nStatus: ${supplier.status}\nNote: ${supplier.notes || 'N/A'}`);
+        }
+
+        // Show loading overlay
+        function showLoading(show) {
+            const overlay = document.getElementById('loadingOverlay');
+            if (show) {
+                overlay.classList.remove('hidden');
+            } else {
+                overlay.classList.add('hidden');
+            }
+        }
+
+        // Show toast notification
+        function showToast(type, message) {
+            // Simple alert for now - can be replaced with a proper toast library
+            alert(message);
+        }
+    </script>
+</body>
+</html>
+

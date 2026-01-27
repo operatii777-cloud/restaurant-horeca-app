@@ -1,0 +1,41 @@
+{
+  "productId": 22,
+  "productName": "Campari Orange",
+  "productCategory": "Băuturi și Coctailuri",
+  "price": 31,
+  "description": "Coctail clasic - Campari, suc de portocale, portocală",
+  "ingredients": [
+    {
+      "ingredientId": 193,
+      "ingredientName": "Campari",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 46,
+      "ingredientName": "Suc de portocale",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 100,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 194,
+      "ingredientName": "Portocală",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 1,
+      "unit": "felie",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "Gheață",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

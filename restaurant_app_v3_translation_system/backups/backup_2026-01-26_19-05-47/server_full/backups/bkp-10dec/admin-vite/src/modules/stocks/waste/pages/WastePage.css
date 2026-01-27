@@ -1,0 +1,13 @@
+/* 🗑️ Waste Page - Styles */
+
+.waste-page {
+  padding: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .waste-page {
+    padding: 1rem;
+  }
+}
+

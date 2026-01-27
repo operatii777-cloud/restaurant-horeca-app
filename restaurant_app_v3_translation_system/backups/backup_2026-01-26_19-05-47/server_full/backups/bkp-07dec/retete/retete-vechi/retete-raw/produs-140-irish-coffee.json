@@ -1,0 +1,62 @@
+{
+  "productId": 140,
+  "productName": "Irish Coffee",
+  "productCategory": "Cafea/Ciocolată/Ceai",
+  "ingredients": [
+    {
+      "ingredientId": 265,
+      "ingredientName": "Cafea/Espresso (dublu)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 266,
+      "ingredientName": "Frișcă (bătută lejer)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 278,
+      "ingredientName": "Sirop de Zahăr",
+      "ingredientCategory": "General",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 268,
+      "ingredientName": "Irish Whiskey",
+      "ingredientCategory": "General",
+      "quantityNeeded": 40,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 673,
+      "ingredientName": "Frișcă",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 122,
+      "ingredientName": "Cafea boabe",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

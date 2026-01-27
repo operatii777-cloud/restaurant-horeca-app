@@ -1,0 +1,25 @@
+{
+  "productId": 327,
+  "productName": "Salată de Vară cu Pui și Avocado",
+  "productCategory": "Salate",
+  "price": 24,
+  "description": "Salată de vară cu pui și avocado",
+  "ingredients": [
+    {
+      "ingredientId": 103,
+      "ingredientName": "Salată",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 107,
+      "ingredientName": "Pui",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

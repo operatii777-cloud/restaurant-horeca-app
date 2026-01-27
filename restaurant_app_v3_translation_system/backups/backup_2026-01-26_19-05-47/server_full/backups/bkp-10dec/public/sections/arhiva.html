@@ -1,0 +1,343 @@
+<style>
+/* Responsive Design pentru Arhiva Rapoarte Fiscale */
+@media (max-width: 1200px) {
+    .row.mb-4 {
+        flex-direction: column;
+    }
+    .col-md-4 {
+        margin-bottom: 1rem;
+    }
+    .d-flex.align-items-end {
+        justify-content: center;
+        margin-top: 1rem;
+    }
+    .btn {
+        margin: 0.25rem;
+        width: auto;
+        min-width: 120px;
+    }
+}
+
+@media (max-width: 768px) {
+    .card-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    .card-header .d-flex {
+        justify-content: center;
+        margin-top: 0.5rem;
+    }
+    .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    .form-control {
+        font-size: 0.9rem;
+    }
+    .form-label {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .btn {
+        width: 100%;
+        margin: 0.25rem 0;
+    }
+    .btn-group .btn {
+        width: auto;
+        margin: 0.125rem;
+    }
+    .card-body {
+        padding: 1rem 0.75rem;
+    }
+    .list-group-item {
+        padding: 0.75rem;
+        font-size: 0.85rem;
+    }
+}
+</style>
+
+<div id="arhiva-content">
+    <h3><i class="fas fa-archive me-2"></i>8️⃣ Arhiva Rapoarte Fiscale</h3>
+    <p class="text-muted">Arhiva conține pachetele ZIP securizate ale rapoartelor Z și Lunare, stocate pe folder structurat (An/Lună/Zi).</p>
+
+    <div class="alert alert-info">
+        <i class="fas fa-info-circle me-2"></i>
+        <strong>Informații:</strong> Toate fișierele din arhivă includ checksums SHA-256 pentru verificarea integrității.
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <label for="selectDataArhiva" class="form-label">
+                <i class="fas fa-calendar-day me-2"></i>Căutare după Dată (Z):
+            </label>
+            <input type="date" id="selectDataArhiva" class="form-control" onchange="cautaRapoarte()">
+        </div>
+        <div class="col-md-4">
+            <label for="selectLunaArhiva" class="form-label">
+                <i class="fas fa-calendar-alt me-2"></i>Căutare după Lună (Lunar):
+            </label>
+            <input type="month" id="selectLunaArhiva" class="form-control" onchange="cautaRapoarte()">
+        </div>
+        <div class="col-md-4 d-flex align-items-end">
+            <button class="btn btn-primary" onclick="cautaRapoarte()">
+                <i class="fas fa-search me-2"></i>Căutare
+            </button>
+            <button class="btn btn-secondary ms-2" onclick="clearFilters()">
+                <i class="fas fa-times me-2"></i>Șterge Filtre
+            </button>
+        </div>
+    </div>
+    
+    <div id="rezultate-arhiva" class="card shadow-sm">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+            <div>
+                <i class="fas fa-folder-open me-2"></i>Rezultate Căutare
+            </div>
+            <div>
+                <span class="badge bg-light text-dark" id="arhiva-count">0 fișiere</span>
+            </div>
+        </div>
+        <div class="card-body">
+            <div id="arhiva-loading" class="text-center" style="display: none;">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Se încarcă...</span>
+                </div>
+                <p class="mt-2">Se caută în arhivă...</p>
+            </div>
+            
+            <ul id="lista-fisiere-arhiva" class="list-group list-group-flush">
+                <li class="list-group-item text-center text-muted">
+                    <i class="fas fa-info-circle me-2"></i>Alege o dată sau o lună pentru a vedea arhiva.
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="row mt-4" id="arhiva-actions" style="display: none;">
+        <div class="col-md-12">
+            <div class="card bg-light">
+                <div class="card-header">
+                    <h5><i class="fas fa-tools me-2"></i>Acțiuni Arhivă</h5>
+                </div>
+                <div class="card-body">
+                    <button class="btn btn-success me-2" onclick="verificaIntegritate()">
+                        <i class="fas fa-shield-alt me-2"></i>Verifică Integritatea
+                    </button>
+                    <button class="btn btn-info me-2" onclick="descarcaArhivaCompleta()">
+                        <i class="fas fa-download me-2"></i>Descarcă Arhivă Completă
+                    </button>
+                    <button class="btn btn-warning" onclick="genereazaRaportArhiva()">
+                        <i class="fas fa-file-alt me-2"></i>Generează Raport Arhivă
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function cautaRapoarte() {
+    const dataZi = document.getElementById('selectDataArhiva').value;
+    const luna = document.getElementById('selectLunaArhiva').value;
+    
+    // Clear the other input when one is selected
+    if (dataZi) {
+        document.getElementById('selectLunaArhiva').value = '';
+    } else if (luna) {
+        document.getElementById('selectDataArhiva').value = '';
+    }
+    
+    let query = '';
+    if (dataZi) {
+        query = `data=${dataZi}`;
+    } else if (luna) {
+        query = `luna=${luna}`;
+    } else {
+        document.getElementById('lista-fisiere-arhiva').innerHTML = 
+            `<li class="list-group-item text-center text-muted">
+                <i class="fas fa-info-circle me-2"></i>Alege o dată sau o lună.
+            </li>`;
+        document.getElementById('arhiva-count').textContent = '0 fișiere';
+        document.getElementById('arhiva-actions').style.display = 'none';
+        return;
+    }
+
+    const loadingDiv = document.getElementById('arhiva-loading');
+    const contentDiv = document.getElementById('lista-fisiere-arhiva');
+    
+    loadingDiv.style.display = 'block';
+    contentDiv.style.display = 'none';
+
+    fetch(`/api/rapoarte/arhiva?${query}`)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Eroare la preluarea arhivei');
+        }
+        return response.json();
+    })
+    .then(fisiere => {
+        let listaHtml = '';
+        if (fisiere.length === 0) {
+            listaHtml = `
+                <li class="list-group-item text-center text-warning">
+                    <i class="fas fa-exclamation-triangle me-2"></i>Nu s-au găsit rapoarte pentru criteriile selectate.
+                </li>
+            `;
+            document.getElementById('arhiva-actions').style.display = 'none';
+        } else {
+            fisiere.forEach(fisier => {
+                const tipBadge = fisier.tip === 'Lunar' ? 'bg-info' : 'bg-success';
+                const icon = fisier.tip === 'Lunar' ? 'fas fa-calendar-alt' : 'fas fa-file-invoice';
+                
+                listaHtml += `
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <i class="${icon} me-3 text-primary"></i>
+                            <div>
+                                <h6 class="mb-1">${fisier.nume}</h6>
+                                <small class="text-muted">
+                                    <span class="badge ${tipBadge} me-2">${fisier.tip}</span>
+                                    ${fisier.dataCreare || 'Data necunoscută'}
+                                </small>
+                            </div>
+                        </div>
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-sm btn-outline-primary" onclick="descarcaFisier('${fisier.linkDescarcare.replace('.zip', '.xml')}')">
+                                <i class="fas fa-file-code"></i> XML
+                            </button>
+                            <button class="btn btn-sm btn-outline-info" onclick="descarcaFisier('${fisier.linkDescarcare.replace('.zip', '.html')}')">
+                                <i class="fas fa-file-alt"></i> HTML
+                            </button>
+                            <button class="btn btn-sm btn-outline-success" onclick="descarcaFisier('${fisier.linkDescarcare}')">
+                                <i class="fas fa-download"></i> ZIP
+                            </button>
+                            <button class="btn btn-sm btn-outline-warning" onclick="verificaFisierIntegritate('${fisier.checksum}', '${fisier.nume}')">
+                                <i class="fas fa-shield-alt"></i> Verifică
+                            </button>
+                        </div>
+                    </li>
+                `;
+            });
+            document.getElementById('arhiva-actions').style.display = 'block';
+        }
+        
+        document.getElementById('lista-fisiere-arhiva').innerHTML = listaHtml;
+        document.getElementById('arhiva-count').textContent = `${fisiere.length} fișiere`;
+        
+        loadingDiv.style.display = 'none';
+        contentDiv.style.display = 'block';
+    })
+    .catch(error => {
+        console.error('Eroare la preluarea arhivei:', error);
+        document.getElementById('lista-fisiere-arhiva').innerHTML = `
+            <li class="list-group-item text-center text-danger">
+                <i class="fas fa-exclamation-triangle me-2"></i>Eroare la preluarea arhivei: ${error.message}
+            </li>
+        `;
+        document.getElementById('arhiva-count').textContent = 'Eroare';
+        loadingDiv.style.display = 'none';
+        contentDiv.style.display = 'block';
+        document.getElementById('arhiva-actions').style.display = 'none';
+    });
+}
+
+function descarcaFisier(link) {
+    // Creează un link temporar pentru descărcare
+    const tempLink = document.createElement('a');
+    tempLink.href = link;
+    tempLink.download = '';
+    document.body.appendChild(tempLink);
+    tempLink.click();
+    document.body.removeChild(tempLink);
+    
+    showNotification('Descărcarea a început...', 'info');
+}
+
+function verificaFisierIntegritate(checksum, numeFisier) {
+    fetch(`/api/arhiva/verifica-integrritate?fisier=${encodeURIComponent(numeFisier)}&checksum=${checksum}`)
+    .then(response => response.json())
+    .then(result => {
+        if (result.integrityValid) {
+            showNotification(`✅ Fișierul ${numeFisier} este integru!`, 'success');
+        } else {
+            showNotification(`❌ Fișierul ${numeFisier} este corupt sau modificat!`, 'error');
+        }
+    })
+    .catch(error => {
+        showNotification(`Eroare la verificarea integrității: ${error.message}`, 'error');
+    });
+}
+
+function clearFilters() {
+    document.getElementById('selectDataArhiva').value = '';
+    document.getElementById('selectLunaArhiva').value = '';
+    document.getElementById('lista-fisiere-arhiva').innerHTML = `
+        <li class="list-group-item text-center text-muted">
+            <i class="fas fa-info-circle me-2"></i>Alege o dată sau o lună pentru a vedea arhiva.
+        </li>
+    `;
+    document.getElementById('arhiva-count').textContent = '0 fișiere';
+    document.getElementById('arhiva-actions').style.display = 'none';
+}
+
+function verificaIntegritate() {
+    showNotification('Verificarea integrității a început...', 'info');
+    
+    fetch('/api/arhiva/verifica-integrritate-totala')
+    .then(response => response.json())
+    .then(result => {
+        if (result.totalFiles === result.validFiles) {
+            showNotification(`✅ Toate fișierele (${result.totalFiles}) sunt integre!`, 'success');
+        } else {
+            showNotification(`⚠️ ${result.invalidFiles} din ${result.totalFiles} fișiere sunt corupte!`, 'warning');
+        }
+    })
+    .catch(error => {
+        showNotification(`Eroare la verificarea integrității: ${error.message}`, 'error');
+    });
+}
+
+function descarcaArhivaCompleta() {
+    const dataZi = document.getElementById('selectDataArhiva').value;
+    const luna = document.getElementById('selectLunaArhiva').value;
+    
+    let query = '';
+    if (dataZi) {
+        query = `data=${dataZi}`;
+    } else if (luna) {
+        query = `luna=${luna}`;
+    } else {
+        showNotification('Selectează o dată sau lună pentru descărcare', 'warning');
+        return;
+    }
+    
+    window.open(`/api/arhiva/descarca-completa?${query}`, '_blank');
+    showNotification('Descărcarea arhivei complete a început...', 'info');
+}
+
+function genereazaRaportArhiva() {
+    const dataZi = document.getElementById('selectDataArhiva').value;
+    const luna = document.getElementById('selectLunaArhiva').value;
+    
+    let query = '';
+    if (dataZi) {
+        query = `data=${dataZi}`;
+    } else if (luna) {
+        query = `luna=${luna}`;
+    } else {
+        showNotification('Selectează o dată sau lună pentru raport', 'warning');
+        return;
+    }
+    
+    window.open(`/api/arhiva/raport?${query}`, '_blank');
+    showNotification('Raportul de arhivă se generează...', 'info');
+}
+
+// Inițializează cu data curentă
+document.addEventListener('DOMContentLoaded', function() {
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('selectDataArhiva').value = today;
+});
+</script>

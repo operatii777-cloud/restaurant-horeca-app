@@ -1,0 +1,53 @@
+{
+  "productId": 143,
+  "productName": "Ceai Tea Tales",
+  "productCategory": "Cafea/Ciocolată/Ceai",
+  "ingredients": [
+    {
+      "ingredientId": 245,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 250,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 253,
+      "ingredientName": "Plic de ceai (diverse arome)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 64,
+      "ingredientName": "suc de lămâie",
+      "ingredientCategory": "General",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 278,
+      "ingredientName": "Sirop de Zahăr",
+      "ingredientCategory": "General",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 674,
+      "ingredientName": "Plic de ceai",
+      "ingredientCategory": "General",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

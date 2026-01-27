@@ -1,0 +1,57 @@
+{
+  "productId": 182,
+  "productName": "Supă de Găluște",
+  "productCategory": "Ciorbe",
+  "price": 19,
+  "description": "Supă cu găluște de griș",
+  "ingredients": [
+    {
+      "ingredientId": 122,
+      "ingredientName": "Carne de pui",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 95,
+      "ingredientName": "Făină",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 8,
+      "ingredientName": "Ouă",
+      "ingredientCategory": "Ouă și lactate",
+      "quantityNeeded": 1,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 94,
+      "ingredientName": "Ceapă",
+      "ingredientCategory": "Fructe și Legume",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 111,
+      "ingredientName": "Morcov",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 112,
+      "ingredientName": "Pătrunjel",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

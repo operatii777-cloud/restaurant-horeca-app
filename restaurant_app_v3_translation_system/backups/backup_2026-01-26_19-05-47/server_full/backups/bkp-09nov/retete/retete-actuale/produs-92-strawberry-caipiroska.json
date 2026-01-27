@@ -1,0 +1,49 @@
+{
+  "productId": 92,
+  "productName": "Strawberry Caipiroska",
+  "productCategory": "Băuturi și Coctailuri",
+  "price": 31,
+  "description": "Coctail - Vodka, piure de căpșuni",
+  "ingredients": [
+    {
+      "ingredientId": 72,
+      "ingredientName": "Vodka",
+      "ingredientCategory": "Băuturi Alcoolice",
+      "quantityNeeded": 60,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 208,
+      "ingredientName": "Piure de căpșuni",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 60,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 81,
+      "ingredientName": "Zahăr brun",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 83,
+      "ingredientName": "Lime",
+      "ingredientCategory": "Fructe și Legume",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "Gheață",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

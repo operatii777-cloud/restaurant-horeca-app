@@ -1,0 +1,65 @@
+{
+  "productId": 159,
+  "productName": "Inele de Ceapă Pane",
+  "productCategory": "Aperitive Calde",
+  "price": 25,
+  "description": "Inele de ceapă panate",
+  "ingredients": [
+    {
+      "ingredientId": 94,
+      "ingredientName": "Ceapă",
+      "ingredientCategory": "Fructe și Legume",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 15
+    },
+    {
+      "ingredientId": 95,
+      "ingredientName": "Făină",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 96,
+      "ingredientName": "Ou",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 2,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 97,
+      "ingredientName": "Pesmet",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 31,
+      "ingredientName": "Ulei de floarea-soarelui",
+      "ingredientCategory": "Condimente și Sosuri",
+      "quantityNeeded": 100,
+      "unit": "l",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 65,
+      "ingredientName": "Sare",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 3,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 98,
+      "ingredientName": "Piper",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

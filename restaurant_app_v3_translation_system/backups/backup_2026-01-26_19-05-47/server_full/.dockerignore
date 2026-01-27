@@ -1,0 +1,49 @@
+# Dependencies
+node_modules
+npm-debug.log
+package-lock.json
+
+# Build artifacts
+admin-vite/dist
+admin-vite/node_modules
+*.log
+
+# Development files
+Dev-Files
+backups
+*.md
+!README.md
+!MANUAL-INSTRUCTIUNI.md
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test files
+tests
+*.test.js
+*.spec.js
+coverage
+playwright-report
+test-results
+
+# Temporary files
+*.tmp
+*.temp
+data/queue-backup.json
+data/failed-jobs
+
+# Environment
+.env
+.env.local
+.env.*.local

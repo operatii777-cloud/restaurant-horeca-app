@@ -1,0 +1,49 @@
+{
+  "productId": 265,
+  "productName": "Orez cu Legume",
+  "productCategory": "Garnituri",
+  "price": 18,
+  "description": "Orez, ciuperci, ardei kapia, ceapă roșie, unt",
+  "ingredients": [
+    {
+      "ingredientId": 94,
+      "ingredientName": "Ceapă",
+      "ingredientCategory": "Fructe și Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 109,
+      "ingredientName": "Ardei kapia",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 92,
+      "ingredientName": "Ciuperci",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 60,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 60,
+      "ingredientName": "Unt",
+      "ingredientCategory": "Lactate și Brânzeturi",
+      "quantityNeeded": 20,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 61,
+      "ingredientName": "Orez",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 80,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}

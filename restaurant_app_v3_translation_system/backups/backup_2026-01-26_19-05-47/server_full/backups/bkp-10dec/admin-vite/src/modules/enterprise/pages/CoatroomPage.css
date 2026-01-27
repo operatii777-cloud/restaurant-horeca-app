@@ -1,0 +1,17 @@
+/* Coatroom - Dark Navy Theme */
+.coatroom-page {
+  padding: 24px;
+  background: #020617;
+  min-height: 100vh;
+}
+
+.ticket-code {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  color: white;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
+}
+

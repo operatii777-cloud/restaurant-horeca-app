@@ -1,0 +1,28 @@
+﻿Ã¯Â»Â¿{
+  "productId": 59,
+  "productName": "Mici cu Cartofi PrÃ„ÂƒÃ†Â’jiÃƒÂˆÃ¢Â€Âºi",
+  "productCategory": "Fel Principal",
+  "ingredients": [
+    {
+      "ingredientId": 518,
+      "ingredientName": "Mici",
+      "ingredientCategory": "General",
+      "quantityNeeded": 3,
+      "unit": "buc",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 32,
+      "ingredientName": "cartofi",
+      "ingredientCategory": "General",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

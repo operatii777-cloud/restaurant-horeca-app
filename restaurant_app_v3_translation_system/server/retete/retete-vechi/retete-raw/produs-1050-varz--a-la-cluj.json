@@ -1,0 +1,81 @@
+﻿Ã¯Â»Â¿{
+  "productId": 1050,
+  "productName": "VarzÃ„ÂƒÃ†Â’ a la Cluj",
+  "productCategory": "Fel Principal",
+  "ingredients": [
+    {
+      "ingredientId": 825,
+      "ingredientName": "VarzÃ„ÂƒÃ†Â’ albÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Legume ÃƒÂˆÃ¢Â„Â¢i Fructe",
+      "quantityNeeded": 250,
+      "unit": "g",
+      "wastePercentage": 25,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 126,
+      "ingredientName": "BurtÃ„ÂƒÃ†Â’ de vitÃ„ÂƒÃ†Â’ fiartÃ„ÂƒÃ†Â’ ÃƒÂˆÃ¢Â„Â¢i tÃ„ÂƒÃ†Â’iatÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 5,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 814,
+      "ingredientName": "Orez pentru sarmale",
+      "ingredientCategory": "Cereale ÃƒÂˆÃ¢Â„Â¢i Paste",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 2,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 815,
+      "ingredientName": "CeapÃ„ÂƒÃ†Â’ tocatÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 60,
+      "unit": "g",
+      "wastePercentage": 15,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 130,
+      "ingredientName": "SmÃƒÂ¢ntÃƒÂ¢nÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 80,
+      "unit": "ml",
+      "wastePercentage": 5,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 798,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii Shaorma",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 100,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 823,
+      "ingredientName": "Boia de ardei dulce",
+      "ingredientCategory": "Sosuri ÃƒÂˆÃ¢Â„Â¢i Condimente",
+      "quantityNeeded": 8,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": [
+    {
+      "ingredientId": 623,
+      "ingredientName": "Ton ÃƒÂ®n conservÃ„ÂƒÃ†Â’",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "itemType": "packaging_delivery"
+    }
+  ]
+}
+
+

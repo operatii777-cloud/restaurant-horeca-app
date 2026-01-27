@@ -1,0 +1,97 @@
+.reservation-modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.reservation-modal__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.reservation-modal__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.reservation-modal__field label {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.reservation-modal__field input,
+.reservation-modal__field select,
+.reservation-modal__field textarea {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface);
+  transition: border-color 0.2s ease;
+  font-size: 14px;
+}
+
+.reservation-modal__field textarea {
+  resize: vertical;
+}
+
+.reservation-modal__field input:focus,
+.reservation-modal__field select:focus,
+.reservation-modal__field textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(0, 132, 255, 0.1);
+}
+
+.reservation-modal__field--full {
+  grid-column: 1 / -1;
+}
+
+.reservation-modal__hint {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.reservation-modal__error {
+  font-size: 12px;
+  color: var(--color-error, #c0392b);
+}
+
+.reservation-modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 12px;
+}
+
+.reservation-modal__footer button {
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.reservation-modal__footer .ghost {
+  background: var(--bg-surface);
+  border-color: var(--border-color);
+}
+
+.reservation-modal__footer .ghost:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.reservation-modal__footer .primary {
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: 600;
+}
+
+.reservation-modal__footer .primary:hover {
+  opacity: 0.9;
+}
+
+

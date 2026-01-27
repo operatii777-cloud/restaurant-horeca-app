@@ -1,0 +1,59 @@
+﻿Ã¯Â»Â¿{
+  "productId": 254,
+  "productName": "ÃƒÂˆÃ‹ÂœniÃƒÂˆÃ¢Â€Âºel Vienez",
+  "productCategory": "Fel Principal",
+  "price": 38,
+  "description": "ÃƒÂˆÃ‹ÂœniÃƒÂˆÃ¢Â€Âºel Vienez de viÃƒÂˆÃ¢Â€Âºel",
+  "ingredients": [
+    {
+      "ingredientId": 159,
+      "ingredientName": "Carne de vitÃ„ÂƒÃ†Â’ (ÃƒÂˆÃ¢Â„Â¢niÃƒÂˆÃ¢Â€Âºel)",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 8,
+      "ingredientName": "OuÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "OuÃ„ÂƒÃ†Â’ ÃƒÂˆÃ¢Â„Â¢i lactate",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 95,
+      "ingredientName": "FÃ„ÂƒÃ†Â’inÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 97,
+      "ingredientName": "Pesmet",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 100,
+      "ingredientName": "Ulei",
+      "ingredientCategory": "Condimente ÃƒÂˆÃ¢Â„Â¢i Sosuri",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 65,
+      "ingredientName": "Sare",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 5,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

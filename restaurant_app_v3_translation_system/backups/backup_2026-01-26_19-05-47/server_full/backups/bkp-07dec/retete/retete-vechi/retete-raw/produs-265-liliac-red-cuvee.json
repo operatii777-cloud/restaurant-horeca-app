@@ -1,0 +1,17 @@
+{
+  "productId": 265,
+  "productName": "Liliac Red Cuvee",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 746,
+      "ingredientName": "Liliac Red Cuvee",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

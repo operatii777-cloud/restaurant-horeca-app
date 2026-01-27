@@ -1,0 +1,65 @@
+{
+  "productId": 336,
+  "productName": "Burger vegan",
+  "productCategory": "Fast Food",
+  "price": 60,
+  "description": "Burger vegan cu chifla integrală, burgher de legume, salată iceberg, roșii, castraveți, ceapă, sos vegan special",
+  "ingredients": [
+    {
+      "ingredientId": 1,
+      "ingredientName": "Chifla integrală cu susan",
+      "ingredientCategory": "Panificație",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 5
+    },
+    {
+      "ingredientId": 2,
+      "ingredientName": "Burgher vegan (legume)",
+      "ingredientCategory": "Produse vegane",
+      "quantityNeeded": 120,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 6,
+      "ingredientName": "Salată iceberg",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 15
+    },
+    {
+      "ingredientId": 7,
+      "ingredientName": "Roșii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 10
+    },
+    {
+      "ingredientId": 5,
+      "ingredientName": "Castraveți",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 10
+    },
+    {
+      "ingredientId": 3,
+      "ingredientName": "Ceapă roșie",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 15
+    },
+    {
+      "ingredientId": 4,
+      "ingredientName": "Sos vegan special",
+      "ingredientCategory": "Sosuri",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

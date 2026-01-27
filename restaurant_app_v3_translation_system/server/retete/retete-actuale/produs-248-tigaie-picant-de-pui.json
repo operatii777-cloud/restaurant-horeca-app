@@ -1,0 +1,19 @@
+﻿Ã¯Â»Â¿{
+  "productId": 248,
+  "productName": "Tigaie PicantÃ„ÂƒÃ†Â’ de Pui",
+  "productCategory": "Fel Principal",
+  "price": 28,
+  "description": "Tigaie picantÃ„ÂƒÃ†Â’ de pui",
+  "ingredients": [
+    {
+      "ingredientId": 107,
+      "ingredientName": "Pui",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

@@ -1,0 +1,17 @@
+{
+  "productId": 134,
+  "productName": "Fresh de Grapefruit",
+  "productCategory": "Răcoritoare",
+  "price": 27,
+  "description": "Suc proaspăt de grapefruit",
+  "ingredients": [
+    {
+      "ingredientId": 209,
+      "ingredientName": "Grapefruit",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 3,
+      "unit": "felie",
+      "wastePercentage": 0
+    }
+  ]
+}

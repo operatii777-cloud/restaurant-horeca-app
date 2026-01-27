@@ -1,0 +1,118 @@
+{
+  "product": {
+    "id": 27,
+    "name": "Linguini cu Somon",
+    "name_en": "Linguini with Salmon",
+    "category": "Paste Fresca",
+    "category_en": "Fresh Pasta",
+    "price": 48,
+    "description": "Paste fresh, somon proaspăt, zucchini, sos de roșii, cremă vegetală, pătrunjel, unt",
+    "description_en": "Fresh pasta, fresh salmon, zucchini, tomato sauce, vegetable cream, parsley, butter",
+    "weight": "350G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": "gluten, pește, lapte",
+    "allergens_en": "gluten, fish, milk"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 370,
+        "name": "File de Somon",
+        "category": "General",
+        "quantity": 80,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.026706424048638988,
+        "totalCost": "2.14",
+        "totalCostWithWaste": "2.14",
+        "supplier": null,
+        "currentStock": 8040,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 561,
+        "name": "Linguini (paste proaspete)",
+        "category": "General",
+        "quantity": 150,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 830,
+        "name": "Rozmarin",
+        "category": "Sosuri și Condimente",
+        "quantity": 5,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.03998665331998665,
+        "totalCost": "0.20",
+        "totalCostWithWaste": "0.20",
+        "supplier": "Spice World SRL",
+        "currentStock": 8991,
+        "minStock": 200,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 50,
+        "name": "brânză feta",
+        "category": "General",
+        "quantity": 80,
+        "unit": "ml",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.5405837481795882,
+        "totalCost": "43.25",
+        "totalCostWithWaste": "43.25",
+        "supplier": null,
+        "currentStock": 30030,
+        "minStock": 0.4,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "45.58",
+    "totalCostWithWaste": "45.58",
+    "sellingPrice": 48,
+    "profitMargin": 2.42,
+    "markup": 5.04,
+    "foodCostPercentage": "94.96"
+  },
+  "stats": {
+    "totalIngredients": 4,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

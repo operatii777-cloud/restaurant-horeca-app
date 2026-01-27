@@ -1,0 +1,34 @@
+﻿Ã¯Â»Â¿[
+  {
+    "id": 1054,
+    "name": "Paste Carbonara",
+    "name_en": "Pasta Carbonara",
+    "description": "Produs generat automat cu ingredientele: paste, ulei de mÃ„ÂƒÃ†Â’sline, sare, piper",
+    "description_en": "Produs generat automat with ingredientele: paste, olive oil, sare, piper",
+    "category": "paste",
+    "category_en": "paste",
+    "price": 37.9,
+    "image_url": null,
+    "allergens": "ConÃƒÂˆÃ¢Â€Âºine gluten, lactozÃ„ÂƒÃ†Â’",
+    "allergens_en": "ConÃƒÂˆÃ¢Â€Âºine gluten, lactozÃ„ÂƒÃ†Â’",
+    "weight": "300g",
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "info": null,
+    "ingredients": null,
+    "prep_time": 15,
+    "spice_level": 0,
+    "calories": 379,
+    "protein": 57,
+    "carbs": 227,
+    "fat": 95,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null,
+    "is_sellable": 1
+  }
+]
+
+

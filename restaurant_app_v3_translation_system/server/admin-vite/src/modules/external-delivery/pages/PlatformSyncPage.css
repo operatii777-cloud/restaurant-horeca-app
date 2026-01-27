@@ -1,0 +1,10 @@
+.platform-sync-page {
+  padding: 1.5rem;
+}
+
+.platform-color-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}

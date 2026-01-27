@@ -1,0 +1,381 @@
+/**
+ * PHASE PRODUCTION-READY - Accessibility Enhancements
+ * 
+ * ARIA labels, keyboard navigation, focus management, screen reader support
+ */
+
+/* ============================================
+   KEYBOARD NAVIGATION
+   ============================================ */
+
+/* Focus visible for all interactive elements */
+*:focus-visible {
+  outline: 2px solid var(--windows-accent, #0078d4);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Skip to main content link (hidden until focused) */
+.skip-to-main {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--windows-accent, #0078d4);
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  z-index: 10000;
+  border-radius: 0 0 4px 0;
+}
+
+.skip-to-main:focus {
+  top: 0;
+}
+
+/* ============================================
+   ARIA LABELS & SCREEN READER SUPPORT
+   ============================================ */
+
+/* Visually hidden but accessible to screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Live region for dynamic content updates */
+.live-region {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ============================================
+   BUTTON ACCESSIBILITY
+   ============================================ */
+
+/* Ensure buttons have minimum touch target (44x44px for mobile) */
+button,
+.btn,
+[role="button"] {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 8px 16px;
+}
+
+/* Button focus states */
+button:focus-visible,
+.btn:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--windows-accent, #0078d4);
+  outline-offset: 2px;
+}
+
+/* Disabled button states */
+button:disabled,
+.btn:disabled,
+[role="button"][aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ============================================
+   FORM ACCESSIBILITY
+   ============================================ */
+
+/* Label association */
+label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: var(--windows-font-weight-medium, 500);
+  color: var(--windows-text-primary, #202020);
+}
+
+/* Required field indicator */
+label.required::after {
+  content: " *";
+  color: var(--windows-error, #d13438);
+  font-weight: bold;
+}
+
+/* Input focus states */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--windows-accent, #0078d4);
+  outline-offset: 2px;
+  border-color: var(--windows-accent, #0078d4);
+}
+
+/* Error states */
+input[aria-invalid="true"],
+textarea[aria-invalid="true"],
+select[aria-invalid="true"] {
+  border-color: var(--windows-error, #d13438);
+}
+
+/* Error message */
+.error-message {
+  color: var(--windows-error, #d13438);
+  font-size: var(--windows-font-size-sm, 12px);
+  margin-top: 4px;
+  display: block;
+}
+
+/* ============================================
+   TABLE ACCESSIBILITY
+   ============================================ */
+
+/* Table with proper semantic structure */
+table {
+  border-collapse: collapse;
+}
+
+/* Table header cells */
+th {
+  font-weight: var(--windows-font-weight-semibold, 600);
+  text-align: left;
+  padding: 12px;
+  background: var(--windows-bg-secondary, #f3f3f3);
+}
+
+/* Table data cells */
+td {
+  padding: 12px;
+  border-bottom: 1px solid var(--windows-border, #d1d1d1);
+}
+
+/* Table row hover */
+tbody tr:hover {
+  background: var(--windows-bg-hover, #f3f3f3);
+}
+
+/* Table row focus */
+tbody tr:focus-visible {
+  outline: 2px solid var(--windows-accent, #0078d4);
+  outline-offset: -2px;
+}
+
+/* ============================================
+   MODAL & DIALOG ACCESSIBILITY
+   ============================================ */
+
+/* Modal backdrop */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
+}
+
+/* Modal dialog */
+.modal-dialog {
+  position: relative;
+  z-index: 1050;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: auto;
+}
+
+/* Modal focus trap */
+.modal-dialog:focus {
+  outline: none;
+}
+
+/* ============================================
+   NAVIGATION ACCESSIBILITY
+   ============================================ */
+
+/* Navigation menu */
+nav[role="navigation"] ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Navigation links */
+nav[role="navigation"] a {
+  display: block;
+  padding: 12px 16px;
+  color: var(--windows-text-primary, #202020);
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+nav[role="navigation"] a:hover {
+  background: var(--windows-bg-hover, #f3f3f3);
+}
+
+nav[role="navigation"] a:focus-visible {
+  outline: 2px solid var(--windows-accent, #0078d4);
+  outline-offset: 2px;
+}
+
+nav[role="navigation"] a[aria-current="page"] {
+  background: var(--windows-bg-selected, #e8f4f8);
+  font-weight: var(--windows-font-weight-semibold, 600);
+}
+
+/* ============================================
+   RESPONSIVE ACCESSIBILITY
+   ============================================ */
+
+/* Mobile: Larger touch targets */
+@media (max-width: 768px) {
+  button,
+  .btn,
+  [role="button"],
+  a {
+    min-height: 48px;
+    min-width: 48px;
+    padding: 12px 16px;
+  }
+  
+  input,
+  textarea,
+  select {
+    min-height: 48px;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+/* ============================================
+   COLOR CONTRAST ENHANCEMENTS
+   ============================================ */
+
+/* Ensure sufficient contrast for text */
+.text-primary {
+  color: var(--windows-text-primary, #202020);
+}
+
+.text-secondary {
+  color: var(--windows-text-secondary, #606060);
+}
+
+/* Links with sufficient contrast */
+a {
+  color: var(--windows-accent, #0078d4);
+  text-decoration: underline;
+}
+
+a:hover {
+  color: var(--windows-accent-hover, #106ebe);
+  text-decoration: none;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--windows-accent, #0078d4);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   LOADING STATES ACCESSIBILITY
+   ============================================ */
+
+/* Loading spinner with aria-label */
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--windows-border, #d1d1d1);
+  border-top-color: var(--windows-accent, #0078d4);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Loading text for screen readers */
+.loading-text {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ============================================
+   TOAST NOTIFICATIONS ACCESSIBILITY
+   ============================================ */
+
+/* Toast container with proper ARIA role */
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1060;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 400px;
+}
+
+/* Toast with proper ARIA attributes */
+.toast {
+  padding: 16px;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background: var(--windows-bg-primary, #ffffff);
+  border-left: 4px solid var(--windows-accent, #0078d4);
+}
+
+.toast[aria-live="polite"] {
+  border-left-color: var(--windows-info, #0078d4);
+}
+
+.toast[aria-live="assertive"] {
+  border-left-color: var(--windows-error, #d13438);
+}
+
+/* ============================================
+   REDUCED MOTION SUPPORT
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================
+   HIGH CONTRAST MODE SUPPORT
+   ============================================ */
+
+@media (prefers-contrast: high) {
+  :root {
+    --windows-border: #000000;
+    --windows-text-primary: #000000;
+    --windows-bg-primary: #ffffff;
+  }
+  
+  [data-theme="dark"],
+  .dark {
+    --windows-border: #ffffff;
+    --windows-text-primary: #ffffff;
+    --windows-bg-primary: #000000;
+  }
+  
+  button,
+  .btn {
+    border: 2px solid currentColor;
+  }
+}
+

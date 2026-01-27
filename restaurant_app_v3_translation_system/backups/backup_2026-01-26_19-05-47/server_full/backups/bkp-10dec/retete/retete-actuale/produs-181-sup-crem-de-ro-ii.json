@@ -1,0 +1,17 @@
+{
+  "productId": 181,
+  "productName": "Supă Cremă de Roșii",
+  "productCategory": "Ciorbe",
+  "price": 18,
+  "description": "Supă cremă cu roșii coapte",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "Roșii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

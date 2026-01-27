@@ -1,0 +1,35 @@
+{
+  "productId": 67,
+  "productName": "Șnițel Crocant de Vită",
+  "productCategory": "Fel Principal",
+  "ingredients": [
+    {
+      "ingredientId": 366,
+      "ingredientName": "Carne de vițel (spate)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 180,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 64,
+      "ingredientName": "suc de lămâie",
+      "ingredientCategory": "General",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 538,
+      "ingredientName": "Pesmet Panko/Crocant",
+      "ingredientCategory": "General",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

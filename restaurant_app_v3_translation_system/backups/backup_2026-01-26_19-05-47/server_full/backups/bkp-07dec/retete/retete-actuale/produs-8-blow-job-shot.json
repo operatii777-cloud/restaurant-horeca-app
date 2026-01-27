@@ -1,0 +1,33 @@
+{
+  "productId": 8,
+  "productName": "Blow Job Shot",
+  "productCategory": "Băuturi și Coctailuri",
+  "price": 19,
+  "description": "Shot - Baileys, lichior cafea, frișcă",
+  "ingredients": [
+    {
+      "ingredientId": 187,
+      "ingredientName": "Bailey's",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 188,
+      "ingredientName": "Kahlua",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 22,
+      "ingredientName": "Frișcă",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 10,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}

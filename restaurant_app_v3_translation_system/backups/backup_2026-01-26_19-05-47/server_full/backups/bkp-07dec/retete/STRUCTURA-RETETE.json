@@ -1,0 +1,33 @@
+{
+  "timestamp": "2025-10-20T16:13:14.666Z",
+  "reteteVechi": {
+    "directory": "retete-vechi/retete-raw/",
+    "source": "Baza de date veche (pre-rebuild)",
+    "totalFiles": 335,
+    "description": "Rețete din baza de date înainte de rebuild (20 Oct 2025)"
+  },
+  "reteteActuale": {
+    "directory": "retete-actuale/",
+    "source": "Baza de date actuală (post-rebuild)",
+    "totalFiles": 247,
+    "totalProducts": 247,
+    "description": "Rețete din baza de date după rebuild (20 Oct 2025)"
+  },
+  "diferente": {
+    "totalDiferenta": -88,
+    "motivePosibile": [
+      "Produse duplicate eliminate în rebuild",
+      "Băuturi fără rețete (nu necesită)",
+      "Produse șterse în timpul curățeniei",
+      "Produse noi adăugate"
+    ]
+  },
+  "structura": {
+    "retete-vechi/retete-raw/": "Rețete vechi (335 fișiere)",
+    "retete-actuale/": "Rețete actuale (247 fișiere)",
+    "ingrediente/": "Ingrediente grupate pe categorii",
+    "produse/": "Produse grupate pe categorii",
+    "ambalaje/": "Rețete ambalaje",
+    "analiza/": "Analize și rapoarte"
+  }
+}

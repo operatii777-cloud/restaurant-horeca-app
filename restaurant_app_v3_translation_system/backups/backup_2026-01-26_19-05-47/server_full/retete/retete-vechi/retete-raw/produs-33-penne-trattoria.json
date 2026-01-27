@@ -1,0 +1,55 @@
+﻿Ã¯Â»Â¿{
+  "productId": 33,
+  "productName": "Penne Trattoria",
+  "productCategory": "Penne Al Forno",
+  "ingredients": [
+    {
+      "ingredientId": 583,
+      "ingredientName": "Penne (gÃ„ÂƒÃ†Â’tite)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 3,
+      "ingredientName": "mozzarella",
+      "ingredientCategory": "General",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 327,
+      "ingredientName": "Bacon (cubuleÃƒÂˆÃ¢Â€Âºe)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 587,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 588,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 100,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

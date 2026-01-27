@@ -1,0 +1,46 @@
+﻿Ã¯Â»Â¿{
+  "productId": 122,
+  "productName": "Tiramisu cu Fistic",
+  "productCategory": "Deserturi",
+  "ingredients": [
+    {
+      "ingredientId": 240,
+      "ingredientName": "Espresso",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 404,
+      "ingredientName": "PiÃƒÂˆÃ¢Â„Â¢coturi",
+      "ingredientCategory": "General",
+      "quantityNeeded": 60,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 491,
+      "ingredientName": "Fistic mÃ„ÂƒÃ†Â’runÃƒÂˆÃ¢Â€Âºit",
+      "ingredientCategory": "General",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

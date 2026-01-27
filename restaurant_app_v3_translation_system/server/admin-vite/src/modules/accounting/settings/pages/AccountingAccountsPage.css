@@ -1,0 +1,38 @@
+.accounting-accounts-page {
+  padding: 1.5rem;
+}
+
+.accounting-accounts-page .page-header {
+  margin-bottom: 2rem;
+}
+
+.accounting-accounts-page .page-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.accounting-accounts-page .page-header p {
+  color: #6c757d;
+  margin-bottom: 0;
+}
+
+/* Modal edge-to-edge pe lățime (99%) */
+.accounting-accounts-page .modal-dialog {
+  width: 99vw !important;
+  max-width: 99vw !important;
+  margin: 0 auto !important;
+}
+
+.accounting-accounts-page .modal-content {
+  width: 100%;
+  height: auto;
+  max-height: 95vh;
+  border-radius: 0;
+}
+
+.accounting-accounts-page .modal-body {
+  max-height: calc(95vh - 120px);
+  overflow-y: auto;
+}
+

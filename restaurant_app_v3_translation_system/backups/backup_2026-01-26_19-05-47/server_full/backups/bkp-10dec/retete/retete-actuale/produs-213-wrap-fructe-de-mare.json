@@ -1,0 +1,33 @@
+{
+  "productId": 213,
+  "productName": "Wrap Fructe de Mare",
+  "productCategory": "Fast Food",
+  "price": 45,
+  "description": "Wrap delicios cu creveți, calamari, midii și legume proaspete într-o tortilla moale",
+  "ingredients": [
+    {
+      "ingredientId": 137,
+      "ingredientName": "Creveți",
+      "ingredientCategory": "Peste Fructe de Mare",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 138,
+      "ingredientName": "Midii",
+      "ingredientCategory": "Peste Fructe de Mare",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 139,
+      "ingredientName": "Calamari",
+      "ingredientCategory": "Peste Fructe de Mare",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

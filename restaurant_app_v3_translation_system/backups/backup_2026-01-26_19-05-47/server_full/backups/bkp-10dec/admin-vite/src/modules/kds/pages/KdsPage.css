@@ -1,0 +1,270 @@
+/**
+ * PHASE S10 - KDS Page Styles
+ * 
+ * Styles for Kitchen Display System.
+ * Matches legacy kds.html visual style.
+ */
+
+.kds-page {
+  padding: 20px;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+.kds-header {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.kds-title {
+  margin: 0 0 15px 0;
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+}
+
+.kds-stats {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.kds-stat-item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.kds-stat-label {
+  font-weight: 600;
+  color: #666;
+}
+
+.kds-stat-value {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.kds-orders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.kds-order-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #4CAF50;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.kds-order-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.kds-order-card.warning {
+  border-left-color: #FF9800;
+}
+
+.kds-order-card.urgent {
+  border-left-color: #F44336;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 2px 4px rgba(244, 67, 54, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 12px rgba(244, 67, 54, 0.6);
+  }
+}
+
+.kds-order-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.kds-order-id {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.kds-order-table {
+  background: #E3F2FD;
+  color: #1976D2;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.kds-badge {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.kds-badge-delivery {
+  background: #FFF3E0;
+  color: #E65100;
+}
+
+.kds-badge-takeout {
+  background: #E8F5E9;
+  color: #2E7D32;
+}
+
+.kds-badge-drivethru {
+  background: #F3E5F5;
+  color: #7B1FA2;
+}
+
+.kds-order-items {
+  margin-bottom: 15px;
+}
+
+.kds-item-row {
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.kds-item-row:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.kds-item-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.kds-item-qty {
+  font-weight: bold;
+  color: #1976D2;
+  font-size: 16px;
+}
+
+.kds-item-name {
+  font-size: 16px;
+  color: #333;
+}
+
+.kds-item-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.kds-item-option {
+  background: #F5F5F5;
+  color: #666;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.kds-item-notes {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #666;
+  font-style: italic;
+}
+
+.kds-order-notes {
+  margin-top: 15px;
+  padding: 10px;
+  background: #FFF9C4;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #333;
+}
+
+.kds-order-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 2px solid #eee;
+}
+
+.kds-timer {
+  font-size: 24px;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+}
+
+.kds-timer.normal {
+  color: #4CAF50;
+}
+
+.kds-timer.warning {
+  color: #FF9800;
+}
+
+.kds-timer.urgent {
+  color: #F44336;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.kds-ready-btn {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.kds-ready-btn:hover {
+  background: #45a049;
+}
+
+.kds-ready-btn:active {
+  background: #3d8b40;
+}
+
+.kds-status-ready {
+  color: #4CAF50;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.kds-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #999;
+  font-size: 18px;
+}
+

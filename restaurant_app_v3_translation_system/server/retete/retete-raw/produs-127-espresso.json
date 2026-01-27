@@ -1,0 +1,28 @@
+﻿Ã¯Â»Â¿{
+  "productId": 127,
+  "productName": "Espresso",
+  "productCategory": "Cafea/CiocolatÃ„ÂƒÃ†Â’/Ceai",
+  "ingredients": [
+    {
+      "ingredientId": 245,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 122,
+      "ingredientName": "Cafea boabe",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 7,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

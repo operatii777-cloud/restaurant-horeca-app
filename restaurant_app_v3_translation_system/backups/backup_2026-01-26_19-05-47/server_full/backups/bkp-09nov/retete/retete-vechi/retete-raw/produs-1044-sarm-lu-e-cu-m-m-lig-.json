@@ -1,0 +1,95 @@
+{
+  "productId": 1044,
+  "productName": "Sarmăluțe cu Mămăligă",
+  "productCategory": "Fel Principal",
+  "ingredients": [
+    {
+      "ingredientId": 126,
+      "ingredientName": "Burtă de vită fiartă și tăiată",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 5,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 825,
+      "ingredientName": "Varză albă",
+      "ingredientCategory": "Legume și Fructe",
+      "quantityNeeded": 4,
+      "unit": "buc",
+      "wastePercentage": 10,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 814,
+      "ingredientName": "Orez pentru sarmale",
+      "ingredientCategory": "Cereale și Paste",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 2,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 815,
+      "ingredientName": "Ceapă tocată",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 15,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 816,
+      "ingredientName": "Bulion",
+      "ingredientCategory": "Sosuri și Condimente",
+      "quantityNeeded": 100,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 395,
+      "ingredientName": "Mălai",
+      "ingredientCategory": "General",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 130,
+      "ingredientName": "Smântână",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 5,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 817,
+      "ingredientName": "Ardei iute",
+      "ingredientCategory": "Legume și Fructe",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "wastePercentage": 5,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": [
+    {
+      "ingredientId": 623,
+      "ingredientName": "Ton în conservă",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "itemType": "packaging_delivery"
+    },
+    {
+      "ingredientId": 819,
+      "ingredientName": "Capac farfurie",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "itemType": "packaging_delivery"
+    }
+  ]
+}

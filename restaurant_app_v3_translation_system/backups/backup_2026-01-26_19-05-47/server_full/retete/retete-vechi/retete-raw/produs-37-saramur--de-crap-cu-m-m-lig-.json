@@ -1,0 +1,46 @@
+﻿Ã¯Â»Â¿{
+  "productId": 37,
+  "productName": "SaramurÃ„ÂƒÃ†Â’ de Crap cu MÃ„ÂƒÃ†Â’mÃ„ÂƒÃ†Â’ligÃ„ÂƒÃ†Â’",
+  "productCategory": "Peste Fructe de Mare",
+  "ingredients": [
+    {
+      "ingredientId": 589,
+      "ingredientName": "Crap (felie/porÃƒÂˆÃ¢Â€Âºie)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 590,
+      "ingredientName": "MÃ„ÂƒÃ†Â’mÃ„ÂƒÃ†Â’ligÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 800,
+      "ingredientName": "Sos Usturoi Shaorma",
+      "ingredientCategory": "Sosuri",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 598,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

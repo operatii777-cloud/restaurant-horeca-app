@@ -1,0 +1,27 @@
+﻿Ã¯Â»Â¿{
+  "productId": 327,
+  "productName": "SalatÃ„ÂƒÃ†Â’ de VarÃ„ÂƒÃ†Â’ cu Pui ÃƒÂˆÃ¢Â„Â¢i Avocado",
+  "productCategory": "Salate",
+  "price": 24,
+  "description": "SalatÃ„ÂƒÃ†Â’ de varÃ„ÂƒÃ†Â’ cu pui ÃƒÂˆÃ¢Â„Â¢i avocado",
+  "ingredients": [
+    {
+      "ingredientId": 103,
+      "ingredientName": "SalatÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 107,
+      "ingredientName": "Pui",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

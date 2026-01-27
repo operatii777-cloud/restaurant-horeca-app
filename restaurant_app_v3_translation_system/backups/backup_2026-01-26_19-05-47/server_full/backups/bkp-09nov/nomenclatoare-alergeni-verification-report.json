@@ -1,0 +1,49 @@
+{
+  "timestamp": "2025-11-07T20:35:14.385Z",
+  "tests": "Nomenclatoare & Alergeni (Etapa 1)",
+  "status": "COMPLETED",
+  "features": {
+    "tva": {
+      "tva21": "Implemented",
+      "tva11": "Implemented",
+      "tva5": "Deactivated"
+    },
+    "units": {
+      "total": 19,
+      "categories": [
+        "mass",
+        "volume",
+        "count",
+        "horeca"
+      ]
+    },
+    "allergens": {
+      "total": 14,
+      "regulation": "UE 1169/2011",
+      "critical": [
+        "PEANUTS",
+        "NUTS"
+      ],
+      "high": [
+        "GLUTEN",
+        "MILK",
+        "EGGS",
+        "FISH"
+      ]
+    },
+    "endpoints": {
+      "units": "/api/units-of-measure",
+      "vat": "/api/vat-rates",
+      "allergens": "/api/allergens",
+      "allergensByIngredient": "/api/allergens/by-ingredient/:id",
+      "allergensByProduct": "/api/allergens/by-product/:id",
+      "allergenAssign": "POST /api/allergens/assign",
+      "allergenRecalculate": "POST /api/allergens/recalculate-all"
+    },
+    "ui": {
+      "adminNomenclatore": "/react-modules/nomenclatoare/index.html",
+      "adminAlergeni": "/react-modules/alergeni/index.html",
+      "clientAlergeni": "/js/allergens-client.js"
+    }
+  }
+}

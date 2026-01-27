@@ -1,0 +1,25 @@
+{
+  "productId": 245,
+  "productName": "Somon la Grătar cu Lămâie",
+  "productCategory": "Fel Principal",
+  "price": 42,
+  "description": "Somon la grătar cu lămâie",
+  "ingredients": [
+    {
+      "ingredientId": 101,
+      "ingredientName": "Somon",
+      "ingredientCategory": "Peste Fructe de Mare",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 154,
+      "ingredientName": "Lămâie",
+      "ingredientCategory": "Legume și Fructe",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

@@ -1,0 +1,202 @@
+{
+  "generatedAt": "2025-11-12T07:02:47.661Z",
+  "v3Files": [
+    {
+      "id": "admin",
+      "label": "admin.html",
+      "path": "public\\admin.html"
+    },
+    {
+      "id": "admin-advanced",
+      "label": "admin-advanced.html",
+      "path": "public\\admin-advanced.html"
+    },
+    {
+      "id": "admin-v4-modular",
+      "label": "admin-v4-modular.html",
+      "path": "public\\admin-v4-modular.html"
+    }
+  ],
+  "v3Analysis": {
+    "admin": {
+      "sections": [
+        "catalogProduseSection",
+        "menuSection",
+        "waitersSection",
+        "ordersSection",
+        "reservationsSection",
+        "cancellationAnalyticsSection",
+        "predictionsSection",
+        "stockCorrelationSection",
+        "dashboardSection",
+        "topProductsSection",
+        "archiveSection",
+        "rewardsSection",
+        "dailyOfferSection",
+        "stockSection",
+        "pinsSection",
+        "productDisplaySection",
+        "missingTranslationsSection",
+        "dailyMenuSection",
+        "productPreparationSection"
+      ],
+      "modals": [
+        "catalogCategoryModal",
+        "catalogPriceHistoryModal",
+        "ingredientTraceModal",
+        "catalogDependenciesModal",
+        "catalogBulkPriceModal",
+        "emailTemplateModal",
+        "recipeFTPModal",
+        "productModal",
+        "categoryModal",
+        "waiterModal",
+        "rewardModal",
+        "stockModal",
+        "addIngredientModal",
+        "editIngredientModal",
+        "stockAdjustModal",
+        "messagesModal",
+        "dailyOfferModal",
+        "addFinishedProductModal",
+        "createRecipeModal",
+        "editRecipeModal",
+        "selectIngredientModal",
+        "pdfBuilderModal"
+      ],
+      "endpoints": [
+        "'"
+      ]
+    },
+    "admin-advanced": {
+      "sections": [],
+      "modals": [
+        "newTransferModal",
+        "transferDetailsModal",
+        "newInventoryModal",
+        "inventoryCountingModal",
+        "viewOrderModal",
+        "campaignModal",
+        "editCustomerModal",
+        "happyHourModal",
+        "inventoryTypeModal",
+        "countingModal",
+        "nirDetailsModal",
+        "varianceReportDetailsModal",
+        "portionStandardModal"
+      ],
+      "endpoints": [
+        "'",
+        "\""
+      ]
+    },
+    "admin-v4-modular": {
+      "sections": [],
+      "modals": [],
+      "endpoints": []
+    }
+  },
+  "v4": {
+    "root": "admin-vite\\src",
+    "routes": [
+      "dashboard",
+      "catalog",
+      "ingredients",
+      "recipes",
+      "daily-menu",
+      "lots",
+      "traceability",
+      "backup",
+      "menu-pdf",
+      "waiters",
+      "*"
+    ]
+  },
+  "mappings": {
+    "'": [
+      "admin-vite\\src\\adminv4\\pages\\AdminV4ControlsMap.ts",
+      "admin-vite\\src\\app\\App.tsx",
+      "admin-vite\\src\\main.tsx",
+      "admin-vite\\src\\modules\\backup\\components\\BackupJobDetailsDrawer.tsx",
+      "admin-vite\\src\\modules\\backup\\hooks\\useBackupActions.ts",
+      "admin-vite\\src\\modules\\backup\\hooks\\useBackupProgress.ts",
+      "admin-vite\\src\\modules\\backup\\pages\\BackupPage.tsx",
+      "admin-vite\\src\\modules\\catalog\\components\\ProductEditorModal.tsx",
+      "admin-vite\\src\\modules\\catalog\\pages\\CatalogPage.tsx",
+      "admin-vite\\src\\modules\\daily-menu\\hooks\\useDailyMenuData.ts",
+      "admin-vite\\src\\modules\\daily-menu\\pages\\DailyMenuPage.tsx",
+      "admin-vite\\src\\modules\\dashboard\\pages\\DashboardPage.tsx",
+      "admin-vite\\src\\modules\\ingredients\\components\\IngredientEditorModal.tsx",
+      "admin-vite\\src\\modules\\ingredients\\pages\\IngredientsPage.tsx",
+      "admin-vite\\src\\modules\\layout\\AppLayout.tsx",
+      "admin-vite\\src\\modules\\layout\\components\\Sidebar.tsx",
+      "admin-vite\\src\\modules\\layout\\components\\TopBar.tsx",
+      "admin-vite\\src\\modules\\layout\\constants\\navigation.ts",
+      "admin-vite\\src\\modules\\lots\\components\\LotEditorModal.tsx",
+      "admin-vite\\src\\modules\\lots\\hooks\\useIngredientBatches.ts",
+      "admin-vite\\src\\modules\\lots\\pages\\LotsPage.tsx",
+      "admin-vite\\src\\modules\\menu-pdf\\pages\\MenuPDFBuilderPage.tsx",
+      "admin-vite\\src\\modules\\placeholder\\ComingSoonPage.tsx",
+      "admin-vite\\src\\modules\\recipes\\pages\\RecipesPage.tsx",
+      "admin-vite\\src\\modules\\traceability\\components\\TraceOrderModal.tsx",
+      "admin-vite\\src\\modules\\traceability\\hooks\\useTraceabilityGridData.ts",
+      "admin-vite\\src\\modules\\traceability\\pages\\TraceabilityPage.tsx",
+      "admin-vite\\src\\modules\\waiters\\hooks\\useWaitersData.ts",
+      "admin-vite\\src\\modules\\waiters\\pages\\WaitersPage.tsx",
+      "admin-vite\\src\\shared\\agGrid\\presets.ts",
+      "admin-vite\\src\\shared\\api\\httpClient.ts",
+      "admin-vite\\src\\shared\\components\\Badge.tsx",
+      "admin-vite\\src\\shared\\components\\charts\\MiniBarChart.tsx",
+      "admin-vite\\src\\shared\\components\\charts\\MiniDonutChart.tsx",
+      "admin-vite\\src\\shared\\components\\DataGrid.tsx",
+      "admin-vite\\src\\shared\\components\\InlineAlert.tsx",
+      "admin-vite\\src\\shared\\components\\InlineEditor.tsx",
+      "admin-vite\\src\\shared\\components\\Modal.tsx",
+      "admin-vite\\src\\shared\\components\\PageHeader.tsx",
+      "admin-vite\\src\\shared\\components\\PlaceholderCard.tsx",
+      "admin-vite\\src\\shared\\components\\SideDrawer.tsx",
+      "admin-vite\\src\\shared\\components\\SmartForm.tsx",
+      "admin-vite\\src\\shared\\components\\StatCard.tsx",
+      "admin-vite\\src\\shared\\components\\TableFilter.tsx",
+      "admin-vite\\src\\shared\\hooks\\useApiMutation.ts",
+      "admin-vite\\src\\shared\\hooks\\useApiQuery.ts",
+      "admin-vite\\src\\shared\\hooks\\useDebouncedValue.ts",
+      "admin-vite\\src\\shared\\hooks\\usePaginatedQuery.ts",
+      "admin-vite\\src\\types\\backup.ts"
+    ],
+    "\"": [
+      "admin-vite\\src\\app\\App.tsx",
+      "admin-vite\\src\\modules\\backup\\components\\BackupJobDetailsDrawer.tsx",
+      "admin-vite\\src\\modules\\backup\\pages\\BackupPage.tsx",
+      "admin-vite\\src\\modules\\catalog\\components\\ProductEditorModal.tsx",
+      "admin-vite\\src\\modules\\catalog\\pages\\CatalogPage.tsx",
+      "admin-vite\\src\\modules\\daily-menu\\pages\\DailyMenuPage.tsx",
+      "admin-vite\\src\\modules\\dashboard\\pages\\DashboardPage.tsx",
+      "admin-vite\\src\\modules\\ingredients\\components\\IngredientEditorModal.tsx",
+      "admin-vite\\src\\modules\\ingredients\\pages\\IngredientsPage.tsx",
+      "admin-vite\\src\\modules\\layout\\AppLayout.tsx",
+      "admin-vite\\src\\modules\\layout\\components\\Sidebar.tsx",
+      "admin-vite\\src\\modules\\layout\\components\\TopBar.tsx",
+      "admin-vite\\src\\modules\\lots\\components\\LotEditorModal.tsx",
+      "admin-vite\\src\\modules\\lots\\pages\\LotsPage.tsx",
+      "admin-vite\\src\\modules\\menu-pdf\\pages\\MenuPDFBuilderPage.tsx",
+      "admin-vite\\src\\modules\\placeholder\\ComingSoonPage.tsx",
+      "admin-vite\\src\\modules\\recipes\\pages\\RecipesPage.tsx",
+      "admin-vite\\src\\modules\\traceability\\components\\TraceOrderModal.tsx",
+      "admin-vite\\src\\modules\\traceability\\pages\\TraceabilityPage.tsx",
+      "admin-vite\\src\\modules\\waiters\\pages\\WaitersPage.tsx",
+      "admin-vite\\src\\shared\\components\\Badge.tsx",
+      "admin-vite\\src\\shared\\components\\charts\\MiniBarChart.tsx",
+      "admin-vite\\src\\shared\\components\\charts\\MiniDonutChart.tsx",
+      "admin-vite\\src\\shared\\components\\DataGrid.tsx",
+      "admin-vite\\src\\shared\\components\\InlineEditor.tsx",
+      "admin-vite\\src\\shared\\components\\Modal.tsx",
+      "admin-vite\\src\\shared\\components\\PageHeader.tsx",
+      "admin-vite\\src\\shared\\components\\PlaceholderCard.tsx",
+      "admin-vite\\src\\shared\\components\\SideDrawer.tsx",
+      "admin-vite\\src\\shared\\components\\SmartForm.tsx",
+      "admin-vite\\src\\shared\\components\\StatCard.tsx",
+      "admin-vite\\src\\shared\\components\\TableFilter.tsx"
+    ]
+  }
+}

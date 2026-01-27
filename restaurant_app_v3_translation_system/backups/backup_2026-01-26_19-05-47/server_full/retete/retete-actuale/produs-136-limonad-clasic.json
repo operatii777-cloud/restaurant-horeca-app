@@ -1,0 +1,43 @@
+﻿Ã¯Â»Â¿{
+  "productId": 136,
+  "productName": "LimonadÃ„ÂƒÃ†Â’ ClasicÃ„ÂƒÃ†Â’",
+  "productCategory": "RÃ„ÂƒÃ†Â’coritoare",
+  "price": 23,
+  "description": "LimonadÃ„ÂƒÃ†Â’ proaspÃ„ÂƒÃ†Â’tÃ„ÂƒÃ†Â’ naturalÃ„ÂƒÃ†Â’",
+  "ingredients": [
+    {
+      "ingredientId": 154,
+      "ingredientName": "LÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+      "ingredientCategory": "Legume ÃƒÂˆÃ¢Â„Â¢i Fructe",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 33,
+      "ingredientName": "ZahÃ„ÂƒÃ†Â’r",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 50,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 27,
+      "ingredientName": "ApÃ„ÂƒÃ†Â’ mineralÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 250,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "GheaÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

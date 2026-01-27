@@ -1,0 +1,17 @@
+{
+  "productId": 249,
+  "productName": "Negrini Sauvignon Blanc & Fetească Regală",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 756,
+      "ingredientName": "Negrini Sauvignon Blanc & Fetească Regală",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

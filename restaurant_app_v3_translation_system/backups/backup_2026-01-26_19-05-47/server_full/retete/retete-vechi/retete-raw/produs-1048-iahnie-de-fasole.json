@@ -1,0 +1,81 @@
+﻿Ã¯Â»Â¿{
+  "productId": 1048,
+  "productName": "Iahnie de Fasole",
+  "productCategory": "Fel Principal",
+  "ingredients": [
+    {
+      "ingredientId": 827,
+      "ingredientName": "Fasole boabe",
+      "ingredientCategory": "Cereale ÃƒÂˆÃ¢Â„Â¢i Paste",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 5,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 826,
+      "ingredientName": "Ciolan afumat",
+      "ingredientCategory": "Carne ÃƒÂˆÃ¢Â„Â¢i PeÃƒÂˆÃ¢Â„Â¢te",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 15,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 815,
+      "ingredientName": "CeapÃ„ÂƒÃ†Â’ tocatÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 60,
+      "unit": "g",
+      "wastePercentage": 15,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 23,
+      "ingredientName": "morcovi",
+      "ingredientCategory": "General",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 20,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 798,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii Shaorma",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 80,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 823,
+      "ingredientName": "Boia de ardei dulce",
+      "ingredientCategory": "Sosuri ÃƒÂˆÃ¢Â„Â¢i Condimente",
+      "quantityNeeded": 8,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 821,
+      "ingredientName": "Ulei vegetal",
+      "ingredientCategory": "Uleiuri ÃƒÂˆÃ¢Â„Â¢i GrÃ„ÂƒÃ†Â’simi",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": [
+    {
+      "ingredientId": 623,
+      "ingredientName": "Ton ÃƒÂ®n conservÃ„ÂƒÃ†Â’",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "itemType": "packaging_delivery"
+    }
+  ]
+}
+
+

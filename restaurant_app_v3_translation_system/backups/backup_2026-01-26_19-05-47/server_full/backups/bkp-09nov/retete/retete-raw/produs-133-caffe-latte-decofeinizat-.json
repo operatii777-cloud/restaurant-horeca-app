@@ -1,0 +1,44 @@
+{
+  "productId": 133,
+  "productName": "Caffe Latte Decofeinizată",
+  "productCategory": "Cafea/Ciocolată/Ceai",
+  "ingredients": [
+    {
+      "ingredientId": 278,
+      "ingredientName": "Sirop de Zahăr",
+      "ingredientCategory": "General",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 53,
+      "ingredientName": "lapte",
+      "ingredientCategory": "General",
+      "quantityNeeded": 180,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 248,
+      "ingredientName": "Espresso decofeinizat (dublu)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 60,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 672,
+      "ingredientName": "Cafea decofeinizată",
+      "ingredientCategory": "General",
+      "quantityNeeded": 14,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

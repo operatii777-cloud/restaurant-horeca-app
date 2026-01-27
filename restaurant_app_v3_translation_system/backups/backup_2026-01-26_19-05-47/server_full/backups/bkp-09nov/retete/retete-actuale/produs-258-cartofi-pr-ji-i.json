@@ -1,0 +1,25 @@
+{
+  "productId": 258,
+  "productName": "Cartofi Prăjiți",
+  "productCategory": "Garnituri",
+  "price": 16,
+  "description": "Cartofi prăjiți clasici",
+  "ingredients": [
+    {
+      "ingredientId": 67,
+      "ingredientName": "Cartofi",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 250,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 31,
+      "ingredientName": "Ulei de floarea-soarelui",
+      "ingredientCategory": "Condimente și Sosuri",
+      "quantityNeeded": 50,
+      "unit": "l",
+      "wastePercentage": 0
+    }
+  ]
+}

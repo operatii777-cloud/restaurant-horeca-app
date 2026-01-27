@@ -1,0 +1,13 @@
+# ═══════════════════════════════════════════════════════════════════════════
+# KUBERNETES NAMESPACE - Restaurant App
+# 
+# Namespace pentru izolare
+# ═══════════════════════════════════════════════════════════════════════════
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: restaurant
+  labels:
+    name: restaurant
+    environment: production

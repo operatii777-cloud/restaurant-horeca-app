@@ -1,0 +1,118 @@
+.tables-page {
+  padding: var(--spacing-4);
+}
+
+.tables-page h2 {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Force black text for buttons - maximum specificity to override global styles */
+.tables-page button.btn,
+.tables-page .btn,
+.tables-page .btn-link,
+.tables-page button[class*="btn"],
+.tables-page .btn:not(.btn-primary):not(.btn-success):not(.btn-light):not(.btn-secondary),
+.tables-page .card-header .btn,
+.tables-page .card-header .btn-link,
+.tables-page .card-body .btn,
+.tables-page .card-body .btn-link,
+.tables-page .table .btn,
+.tables-page .table .btn-link,
+.tables-page .modal .btn,
+.tables-page .btn-sm:not(.btn-light):not(.btn-secondary),
+.tables-page .card-header .btn-sm:not(.btn-light):not(.btn-secondary),
+.tables-page .card-body .btn-sm:not(.btn-light):not(.btn-secondary),
+.tables-page .table .btn-sm:not(.btn-light):not(.btn-secondary) {
+  color: #000000 !important;
+}
+
+/* Primary button should have white text on blue background */
+.tables-page .btn-primary,
+.tables-page .card-header .btn-primary,
+.tables-page .card-body .btn-primary,
+.tables-page .modal .btn-primary {
+  color: #ffffff !important;
+  background-color: #007bff !important;
+}
+
+/* Warning button should have black text on yellow background */
+.tables-page .btn-warning,
+.tables-page .card-header .btn-warning,
+.tables-page .card-body .btn-warning,
+.tables-page .modal .btn-warning {
+  color: #000000 !important;
+  background-color: #ffc107 !important;
+}
+
+.tables-page .btn-light,
+.tables-page .card-header .btn-light,
+.tables-page .card-body .btn-light,
+.tables-page .table .btn-light,
+.tables-page .btn-light.btn-sm,
+.tables-page .card-header .btn-light.btn-sm,
+.tables-page .card-body .btn-light.btn-sm,
+.tables-page .table .btn-light.btn-sm {
+  color: #ffffff !important;
+  background-color: #ff8c00 !important;
+  border-color: #ff8c00 !important;
+}
+
+.tables-page .btn-light:hover,
+.tables-page .card-header .btn-light:hover,
+.tables-page .card-body .btn-light:hover,
+.tables-page .table .btn-light:hover,
+.tables-page .btn-light.btn-sm:hover,
+.tables-page .card-header .btn-light.btn-sm:hover,
+.tables-page .card-body .btn-light.btn-sm:hover,
+.tables-page .table .btn-light.btn-sm:hover {
+  background-color: #ff7700 !important;
+  border-color: #ff7700 !important;
+  color: #ffffff !important;
+}
+
+.tables-page .btn-link,
+.tables-page .card-header .btn-link,
+.tables-page .card-body .btn-link,
+.tables-page .table .btn-link,
+.tables-page .btn-link.btn-sm,
+.tables-page .card-header .btn-link.btn-sm,
+.tables-page .card-body .btn-link.btn-sm,
+.tables-page .table .btn-link.btn-sm {
+  color: #000000 !important;
+}
+
+.tables-page .btn-link.text-danger,
+.tables-page .card-header .btn-link.text-danger,
+.tables-page .card-body .btn-link.text-danger {
+  color: #dc3545 !important;
+}
+
+/* Secondary buttons - orange background with white text */
+.tables-page .btn-secondary,
+.tables-page .card-header .btn-secondary,
+.tables-page .card-body .btn-secondary,
+.tables-page .table .btn-secondary,
+.tables-page .modal .btn-secondary,
+.tables-page .btn-secondary.btn-sm,
+.tables-page .card-header .btn-secondary.btn-sm,
+.tables-page .card-body .btn-secondary.btn-sm,
+.tables-page .table .btn-secondary.btn-sm {
+  color: #ffffff !important;
+  background-color: #ff8c00 !important;
+  border-color: #ff8c00 !important;
+}
+
+.tables-page .btn-secondary:hover,
+.tables-page .card-header .btn-secondary:hover,
+.tables-page .card-body .btn-secondary:hover,
+.tables-page .table .btn-secondary:hover,
+.tables-page .modal .btn-secondary:hover,
+.tables-page .btn-secondary.btn-sm:hover,
+.tables-page .card-header .btn-secondary.btn-sm:hover,
+.tables-page .card-body .btn-secondary.btn-sm:hover,
+.tables-page .table .btn-secondary.btn-sm:hover {
+  background-color: #ff7700 !important;
+  border-color: #ff7700 !important;
+  color: #ffffff !important;
+}

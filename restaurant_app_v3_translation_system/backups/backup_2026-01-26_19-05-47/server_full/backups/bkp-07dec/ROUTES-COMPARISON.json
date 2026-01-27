@@ -1,0 +1,625 @@
+{
+  "totalRoutesInApp": 134,
+  "totalPathsInNav": 102,
+  "missingRoutes": [
+    "/dashboard",
+    "/dashboard/monitoring",
+    "/internal-messaging",
+    "/catalog",
+    "/menu",
+    "/catalog/attributes",
+    "/catalog/online",
+    "/ingredients",
+    "/nomenclator/units",
+    "/catalog/prices",
+    "/nomenclator/portion-control",
+    "/nomenclator/variance",
+    "/tipizate",
+    "/menu-pdf",
+    "/recipes",
+    "/lots",
+    "/production/batches",
+    "/orders",
+    "/orders/delivery",
+    "/orders/cancellations",
+    "/queue-monitor",
+    "/couriers",
+    "/dispatch",
+    "/ingredients",
+    "/stocks/allergens",
+    "/stocks/risk-alerts",
+    "/stocks/nir",
+    "/stocks/consume",
+    "/stocks/inventory",
+    "/stocks/inventory/multi",
+    "/stocks/inventory/dashboard",
+    "/stocks/transfer",
+    "/stocks/suppliers",
+    "/stocks/suppliers/orders",
+    "/stocks/labels",
+    "/stocks/waste",
+    "/stocks/dashboard/advanced",
+    "/stocks/fiscal/archive",
+    "/stocks/inventory/import",
+    "/stocks/dashboard/executive",
+    "/reports/sales",
+    "/reports/stock",
+    "/reports/top-products",
+    "/reports/financial",
+    "/reports/profit-loss",
+    "/reports/abc-analysis",
+    "/reports/stock-prediction",
+    "/reports/staff",
+    "/reports/advanced",
+    "/audit/logs",
+    "/audit/security",
+    "/audit/login-history",
+    "/audit/user-activity",
+    "/audit/alerts",
+    "/menu-engineering",
+    "/food-cost",
+    "/gift-cards",
+    "/smart-restock",
+    "/weather-forecast",
+    "/competitors",
+    "/scheduling",
+    "/purchase-orders",
+    "/daily-menu",
+    "/promotions/happy-hour",
+    "/promotions/daily-offer",
+    "/marketing",
+    "/marketing/feedback",
+    "/reservations",
+    "/marketing/loyalty",
+    "/settings",
+    "/settings/locations",
+    "/settings/areas",
+    "/settings/tables",
+    "/waiters",
+    "/settings/schedule",
+    "/settings/printers",
+    "/settings/users",
+    "/settings/notifications",
+    "/settings/localization",
+    "/settings/ui-customization",
+    "/settings/branding",
+    "/settings/product-display",
+    "/settings/missing-translations",
+    "/settings/payment-methods",
+    "/integrations",
+    "/invoices",
+    "/stocks/fiscal/documents/create",
+    "/stocks/fiscal/cash-register",
+    "/marketing/vouchers",
+    "/stocks/costs",
+    "/stocks/fiscal/reports/monthly",
+    "/stocks/fiscal/reports/x",
+    "/stocks/fiscal/reports/z",
+    "/stocks/fiscal/sync",
+    "/stocks/fiscal/anaf-integration",
+    "/settings/vat",
+    "/import",
+    "/export",
+    "/backup",
+    "/archive",
+    "/docs"
+  ],
+  "extraRoutes": [
+    {
+      "path": "/kiosk/login",
+      "component": "KioskLayout"
+    },
+    {
+      "path": "/kiosk/cook-mode/:productId",
+      "component": "KioskLayout"
+    },
+    {
+      "path": "dashboard",
+      "component": "KioskDashboardPage"
+    },
+    {
+      "path": "tables",
+      "component": "KioskTablesPage2D"
+    },
+    {
+      "path": "order/:tableId",
+      "component": "KioskOrderPage"
+    },
+    {
+      "path": "fast-sale",
+      "component": "KioskFastSalePage"
+    },
+    {
+      "path": "reports/staff-live",
+      "component": "KioskStaffLiveReportPage"
+    },
+    {
+      "path": "events",
+      "component": "KioskEventsPage"
+    },
+    {
+      "path": "shift-handover",
+      "component": "KioskShiftHandoverPage"
+    },
+    {
+      "path": "menu-board",
+      "component": "KioskMenuBoardPage"
+    },
+    {
+      "path": "dashboard",
+      "component": "DashboardPage"
+    },
+    {
+      "path": "dashboard/monitoring",
+      "component": "MonitoringPage"
+    },
+    {
+      "path": "internal-messaging",
+      "component": "InternalMessagingPage"
+    },
+    {
+      "path": "menu",
+      "component": "MenuManagementPage"
+    },
+    {
+      "path": "catalog",
+      "component": "CatalogPage"
+    },
+    {
+      "path": "ingredients",
+      "component": "StockManagementPage"
+    },
+    {
+      "path": "stocks",
+      "component": "StockManagementPage"
+    },
+    {
+      "path": "stocks/nir",
+      "component": "NirListPage"
+    },
+    {
+      "path": "stocks/nir/new",
+      "component": "NirCreatePage"
+    },
+    {
+      "path": "stocks/nir/:id",
+      "component": "NirDetailsPage"
+    },
+    {
+      "path": "stocks/consume",
+      "component": "ConsumeListPage"
+    },
+    {
+      "path": "stocks/consume/new",
+      "component": "ConsumeCreatePage"
+    },
+    {
+      "path": "stocks/consume/:id",
+      "component": "ConsumeDetailsPage"
+    },
+    {
+      "path": "stocks/inventory",
+      "component": "InventoryListPage"
+    },
+    {
+      "path": "stocks/inventory/dashboard",
+      "component": "InventoryDashboardPage"
+    },
+    {
+      "path": "stocks/inventory/multi",
+      "component": "MultiInventoryPage"
+    },
+    {
+      "path": "stocks/inventory/new",
+      "component": "InventoryCreatePage"
+    },
+    {
+      "path": "stocks/inventory/:id",
+      "component": "InventoryDetailsPage"
+    },
+    {
+      "path": "stocks/allergens",
+      "component": "AllergensPage"
+    },
+    {
+      "path": "stocks/labels",
+      "component": "LabelsPage"
+    },
+    {
+      "path": "stocks/waste",
+      "component": "WastePage"
+    },
+    {
+      "path": "stocks/costs",
+      "component": "CostsPage"
+    },
+    {
+      "path": "stocks/risk-alerts",
+      "component": "RiskAlertsPage"
+    },
+    {
+      "path": "stocks/suppliers",
+      "component": "SuppliersPage"
+    },
+    {
+      "path": "stocks/suppliers/orders",
+      "component": "SupplierOrdersPage"
+    },
+    {
+      "path": "pos/:orderId",
+      "component": "PosPage"
+    },
+    {
+      "path": "orders/manage",
+      "component": "ManageOrdersPage"
+    },
+    {
+      "path": "stocks/transfer",
+      "component": "TransferListPage"
+    },
+    {
+      "path": "stocks/transfer/new",
+      "component": "TransferCreatePage"
+    },
+    {
+      "path": "stocks/transfer/:id",
+      "component": "TransferDetailsPage"
+    },
+    {
+      "path": "orders",
+      "component": "OrdersManagementPage"
+    },
+    {
+      "path": "orders/delivery",
+      "component": "DeliveryOrdersPage"
+    },
+    {
+      "path": "orders/cancellations",
+      "component": "CancellationsPage"
+    },
+    {
+      "path": "couriers",
+      "component": "CouriersPage"
+    },
+    {
+      "path": "dispatch",
+      "component": "DispatchPage"
+    },
+    {
+      "path": "recipes",
+      "component": "RecipesPage"
+    },
+    {
+      "path": "reservations",
+      "component": "ReservationsPage"
+    },
+    {
+      "path": "daily-menu",
+      "component": "DailyMenuPage"
+    },
+    {
+      "path": "lots",
+      "component": "LotsPage"
+    },
+    {
+      "path": "traceability",
+      "component": "TraceabilityPage"
+    },
+    {
+      "path": "backup",
+      "component": "BackupPage"
+    },
+    {
+      "path": "menu-pdf",
+      "component": "MenuPDFBuilderPage"
+    },
+    {
+      "path": "waiters",
+      "component": "WaitersPage"
+    },
+    {
+      "path": "queue-monitor",
+      "component": "QueueMonitorPage"
+    },
+    {
+      "path": "compliance",
+      "component": "CompliancePage"
+    },
+    {
+      "path": "settings",
+      "component": "SettingsPage"
+    },
+    {
+      "path": "settings/vat",
+      "component": "VatRatesPage"
+    },
+    {
+      "path": "invoices",
+      "component": "InvoicesListPage"
+    },
+    {
+      "path": "invoices/:id",
+      "component": "InvoiceDetailsPage"
+    },
+    {
+      "path": "tipizate",
+      "component": "TipizateHomePage"
+    },
+    {
+      "path": "tipizate/nir",
+      "component": "NirTipizatePage"
+    },
+    {
+      "path": "tipizate/bon-consum",
+      "component": "BonConsumTipizatePage"
+    },
+    {
+      "path": "tipizate/avize",
+      "component": "AvizeTipizatePage"
+    },
+    {
+      "path": "tipizate/chitante",
+      "component": "ChitanteTipizatePage"
+    },
+    {
+      "path": "tipizate/registru-casa",
+      "component": "RegistruCasaPage"
+    },
+    {
+      "path": "tipizate/fisa-magazie",
+      "component": "FisaMagaziePage"
+    },
+    {
+      "path": "tipizate/raport-gestiune",
+      "component": "RaportGestiunePage"
+    },
+    {
+      "path": "tipizate/transfer",
+      "component": "TransferTipizatePage"
+    },
+    {
+      "path": "tipizate/inventar",
+      "component": "InventarTipizatePage"
+    },
+    {
+      "path": "production/batches",
+      "component": "ProductionBatchesListPage"
+    },
+    {
+      "path": "production/batches/:id",
+      "component": "ProductionBatchEditorPage"
+    },
+    {
+      "path": "reports/profit-loss",
+      "component": "ProfitLossPage"
+    },
+    {
+      "path": "reports/abc-analysis",
+      "component": "ABCAnalysisPage"
+    },
+    {
+      "path": "reports/staff",
+      "component": "StaffReportsPage"
+    },
+    {
+      "path": "reports/advanced",
+      "component": "AdvancedReportsPage"
+    },
+    {
+      "path": "reports/sales",
+      "component": "SalesReportsPage"
+    },
+    {
+      "path": "reports/stock",
+      "component": "StockReportsPage"
+    },
+    {
+      "path": "archive",
+      "component": "ArchivePage"
+    },
+    {
+      "path": "reports/top-products",
+      "component": "TopProductsPage"
+    },
+    {
+      "path": "reports/financial",
+      "component": "FinancialReportsPage"
+    },
+    {
+      "path": "settings/locations",
+      "component": "LocationsPage"
+    },
+    {
+      "path": "settings/areas",
+      "component": "AreasPage"
+    },
+    {
+      "path": "settings/tables",
+      "component": "TablesPage"
+    },
+    {
+      "path": "settings/product-display",
+      "component": "ProductDisplayPage"
+    },
+    {
+      "path": "settings/missing-translations",
+      "component": "MissingTranslationsPage"
+    },
+    {
+      "path": "settings/payment-methods",
+      "component": "PaymentMethodsPage"
+    },
+    {
+      "path": "settings/schedule",
+      "component": "SchedulePage"
+    },
+    {
+      "path": "settings/users",
+      "component": "UsersPage"
+    },
+    {
+      "path": "settings/printers",
+      "component": "PrintersPage"
+    },
+    {
+      "path": "settings/notifications",
+      "component": "NotificationsPage"
+    },
+    {
+      "path": "settings/localization",
+      "component": "LocalizationPage"
+    },
+    {
+      "path": "integrations",
+      "component": "IntegrationsPage"
+    },
+    {
+      "path": "settings/ui-customization",
+      "component": "UICustomizationPage"
+    },
+    {
+      "path": "settings/import-export",
+      "component": "ImportExportPage"
+    },
+    {
+      "path": "stocks/fiscal/reports/monthly",
+      "component": "MonthlyReportPage"
+    },
+    {
+      "path": "stocks/fiscal/archive",
+      "component": "FiscalArchivePage"
+    },
+    {
+      "path": "stocks/fiscal/documents/create",
+      "component": "FiscalDocumentsCreatePage"
+    },
+    {
+      "path": "stocks/fiscal/cash-register",
+      "component": "CashRegisterPage"
+    },
+    {
+      "path": "stocks/fiscal/reports/x",
+      "component": "FiscalReportXPage"
+    },
+    {
+      "path": "stocks/fiscal/reports/z",
+      "component": "FiscalReportZPage"
+    },
+    {
+      "path": "stocks/fiscal/sync",
+      "component": "AnafSyncPage"
+    },
+    {
+      "path": "stocks/fiscal/anaf-integration",
+      "component": "AnafIntegrationPage"
+    },
+    {
+      "path": "nomenclator/portion-control",
+      "component": "PortionControlPage"
+    },
+    {
+      "path": "nomenclator/variance",
+      "component": "VarianceReportingPage"
+    },
+    {
+      "path": "nomenclator/units",
+      "component": "UnitsOfMeasurePage"
+    },
+    {
+      "path": "catalog/prices",
+      "component": "PriceUtilitiesPage"
+    },
+    {
+      "path": "catalog/attributes",
+      "component": "AttributeGroupsPage"
+    },
+    {
+      "path": "promotions/happy-hour",
+      "component": "HappyHourPage"
+    },
+    {
+      "path": "promotions/daily-offer",
+      "component": "DailyOfferPage"
+    },
+    {
+      "path": "marketing",
+      "component": "MarketingPage"
+    },
+    {
+      "path": "marketing/feedback",
+      "component": "FeedbackPage"
+    },
+    {
+      "path": "marketing/vouchers",
+      "component": "VouchersPage"
+    },
+    {
+      "path": "marketing/loyalty",
+      "component": "LoyaltyPage"
+    },
+    {
+      "path": "stocks/dashboard/executive",
+      "component": "ExecutiveDashboardPage"
+    },
+    {
+      "path": "reports/stock-prediction",
+      "component": "StockPredictionPage"
+    },
+    {
+      "path": "audit/logs",
+      "component": "AuditLogsPage"
+    },
+    {
+      "path": "audit/security",
+      "component": "SecurityEventsPage"
+    },
+    {
+      "path": "audit/login-history",
+      "component": "LoginHistoryPage"
+    },
+    {
+      "path": "audit/user-activity",
+      "component": "UserActivityPage"
+    },
+    {
+      "path": "audit/alerts",
+      "component": "SecurityAlertsPage"
+    },
+    {
+      "path": "docs",
+      "component": "DocumentationPage"
+    },
+    {
+      "path": "menu-engineering",
+      "component": "MenuEngineeringPage"
+    },
+    {
+      "path": "food-cost",
+      "component": "FoodCostDashboardPage"
+    },
+    {
+      "path": "gift-cards",
+      "component": "GiftCardsPage"
+    },
+    {
+      "path": "smart-restock",
+      "component": "SmartRestockPage"
+    },
+    {
+      "path": "weather-forecast",
+      "component": "WeatherForecastPage"
+    },
+    {
+      "path": "competitors",
+      "component": "CompetitorTrackingPage"
+    },
+    {
+      "path": "scheduling",
+      "component": "EmployeeSchedulingPage"
+    },
+    {
+      "path": "purchase-orders",
+      "component": "AutoPurchaseOrdersPage"
+    }
+  ]
+}

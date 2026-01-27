@@ -1,0 +1,101 @@
+{
+  "product": {
+    "id": 199,
+    "name": "Black Amaretto",
+    "name_en": "Black Amaretto",
+    "category": "Băuturi și Coctailuri",
+    "category_en": "Drinks & Cocktails",
+    "price": 31,
+    "description": "Coctail - Amaretto, Rom, lichior de cafea",
+    "description_en": "Cocktail - Amaretto, Rum, coffee liqueur",
+    "weight": "150ML",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 436,
+        "name": "Amaretto Disaronno",
+        "category": "General",
+        "quantity": 50,
+        "unit": "ml",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 820,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 437,
+        "name": "Lichior Black Sambuca",
+        "category": "General",
+        "quantity": 20,
+        "unit": "ml",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 1980,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 797,
+        "name": "Salată Verde Shaorma",
+        "category": "Legume",
+        "quantity": 1,
+        "unit": "buc",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.5455748291685286,
+        "totalCost": "0.55",
+        "totalCostWithWaste": "0.55",
+        "supplier": "Furnizor Test",
+        "currentStock": 55268.47058823529,
+        "minStock": 100,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "0.55",
+    "totalCostWithWaste": "0.55",
+    "sellingPrice": 31,
+    "profitMargin": 30.45,
+    "markup": 98.24,
+    "foodCostPercentage": "1.76"
+  },
+  "stats": {
+    "totalIngredients": 3,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

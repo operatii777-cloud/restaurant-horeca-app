@@ -1,0 +1,51 @@
+﻿Ã¯Â»Â¿{
+  "productId": 184,
+  "productName": "Cheesecake cu Fructe de PÃ„ÂƒÃ†Â’dure",
+  "productCategory": "Deserturi",
+  "price": 25,
+  "description": "Cheesecake cu fructe de pÃ„ÂƒÃ†Â’dure",
+  "ingredients": [
+    {
+      "ingredientId": 123,
+      "ingredientName": "BrÃƒÂ¢nzÃ„ÂƒÃ†Â’ Philadelphia",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 124,
+      "ingredientName": "BiscuiÃƒÂˆÃ¢Â€Âºi",
+      "ingredientCategory": "PanificaÃƒÂˆÃ¢Â€Âºie",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 33,
+      "ingredientName": "ZahÃ„ÂƒÃ†Â’r",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 80,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 8,
+      "ingredientName": "OuÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "OuÃ„ÂƒÃ†Â’ ÃƒÂˆÃ¢Â„Â¢i lactate",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 60,
+      "ingredientName": "Unt",
+      "ingredientCategory": "Lactate ÃƒÂˆÃ¢Â„Â¢i BrÃƒÂ¢nzeturi",
+      "quantityNeeded": 50,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

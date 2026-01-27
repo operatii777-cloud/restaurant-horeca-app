@@ -1,0 +1,33 @@
+{
+  "productId": 331,
+  "productName": "Salată de Ardei Copt",
+  "productCategory": "Salate Însoțitoare",
+  "price": 18,
+  "description": "Salată de ardei copt, usturoi, mărar",
+  "ingredients": [
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 103,
+      "ingredientName": "Salată",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 63,
+      "ingredientName": "Mărar",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}

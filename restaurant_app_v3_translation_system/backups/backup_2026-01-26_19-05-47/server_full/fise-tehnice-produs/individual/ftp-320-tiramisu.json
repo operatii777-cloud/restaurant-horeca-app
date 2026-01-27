@@ -1,0 +1,118 @@
+{
+  "product": {
+    "id": 320,
+    "name": "Tiramisu",
+    "name_en": "Tiramisu",
+    "category": "Deserturi",
+    "category_en": "Desserts",
+    "price": 22,
+    "description": "Tiramisu (porție)",
+    "description_en": "Tiramisu (porție)",
+    "weight": null,
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 406,
+        "name": "Cacao (pudră)",
+        "category": "General",
+        "quantity": 5,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 240,
+        "name": "Espresso",
+        "category": "General",
+        "quantity": 30,
+        "unit": "ml",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 1640,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 404,
+        "name": "Pișcoturi",
+        "category": "General",
+        "quantity": 60,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 278,
+        "name": "Sirop de Zahăr",
+        "category": "General",
+        "quantity": 100,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.16027284697733232,
+        "totalCost": "16.03",
+        "totalCostWithWaste": "16.03",
+        "supplier": null,
+        "currentStock": 19730,
+        "minStock": 10,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "16.03",
+    "totalCostWithWaste": "16.03",
+    "sellingPrice": 22,
+    "profitMargin": 5.97,
+    "markup": 27.15,
+    "foodCostPercentage": "72.85"
+  },
+  "stats": {
+    "totalIngredients": 4,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

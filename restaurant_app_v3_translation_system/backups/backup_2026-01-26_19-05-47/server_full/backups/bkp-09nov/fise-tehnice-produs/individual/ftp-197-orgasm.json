@@ -1,0 +1,101 @@
+{
+  "product": {
+    "id": 197,
+    "name": "Orgasm",
+    "name_en": "Orgasm",
+    "category": "Băuturi și Coctailuri",
+    "category_en": "Drinks & Cocktails",
+    "price": 31,
+    "description": "Coctail - Vodka, Amaretto, Kahlua, Baileys, frișcă",
+    "description_en": "Cocktail - Vodka, Amaretto, Kahlua, Baileys, whipped cream",
+    "weight": "150ML",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 436,
+        "name": "Amaretto Disaronno",
+        "category": "General",
+        "quantity": 30,
+        "unit": "ml",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 820,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 433,
+        "name": "Kahlua (lichior de cafea)",
+        "category": "General",
+        "quantity": 30,
+        "unit": "ml",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 1890,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 130,
+        "name": "Smântână",
+        "category": "Lactate",
+        "quantity": 30,
+        "unit": "ml",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.045203957751608605,
+        "totalCost": "1.36",
+        "totalCostWithWaste": "1.36",
+        "supplier": "Furnizor Lactate",
+        "currentStock": 69364.21052631579,
+        "minStock": 500,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "1.36",
+    "totalCostWithWaste": "1.36",
+    "sellingPrice": 31,
+    "profitMargin": 29.64,
+    "markup": 95.63,
+    "foodCostPercentage": "4.37"
+  },
+  "stats": {
+    "totalIngredients": 3,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

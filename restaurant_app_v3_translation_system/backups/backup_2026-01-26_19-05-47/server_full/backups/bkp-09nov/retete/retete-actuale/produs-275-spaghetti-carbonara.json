@@ -1,0 +1,49 @@
+{
+  "productId": 275,
+  "productName": "Spaghetti Carbonara",
+  "productCategory": "Paste",
+  "price": 28,
+  "description": "Spaghetti Carbonara clasic",
+  "ingredients": [
+    {
+      "ingredientId": 169,
+      "ingredientName": "Spaghetti",
+      "ingredientCategory": "Cereale și Paste",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 170,
+      "ingredientName": "Pancetta",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 8,
+      "ingredientName": "Ouă",
+      "ingredientCategory": "Ouă și lactate",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 66,
+      "ingredientName": "Parmezan",
+      "ingredientCategory": "Lactate și Brânzeturi",
+      "quantityNeeded": 40,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 32,
+      "ingredientName": "Piper negru",
+      "ingredientCategory": "Condimente și Sosuri",
+      "quantityNeeded": 3,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}

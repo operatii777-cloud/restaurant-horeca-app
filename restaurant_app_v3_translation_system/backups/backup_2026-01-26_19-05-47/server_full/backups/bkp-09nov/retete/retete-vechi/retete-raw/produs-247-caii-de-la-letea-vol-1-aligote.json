@@ -1,0 +1,17 @@
+{
+  "productId": 247,
+  "productName": "Caii de la Letea Vol 1 Aligote",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 742,
+      "ingredientName": "Caii de la Letea Vol 1 Aligote",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

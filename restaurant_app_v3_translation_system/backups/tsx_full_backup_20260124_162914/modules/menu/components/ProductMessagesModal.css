@@ -1,0 +1,157 @@
+.product-messages-layout {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr 320px;
+  min-height: 320px;
+}
+
+@media (max-width: 1024px) {
+  .product-messages-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.product-messages-history {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background-color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-messages-history > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.product-messages-history h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.messages-refresh {
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  color: #4f46e5;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.messages-refresh:hover {
+  background-color: rgba(79, 70, 229, 0.1);
+}
+
+.product-messages-empty {
+  padding: 24px;
+  text-align: center;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.product-messages-list {
+  list-style: none;
+  margin: 0;
+  padding: 12px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 360px;
+  overflow: auto;
+}
+
+.product-message-item {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 14px;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.product-message-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.product-message-sender {
+  font-weight: 600;
+  color: #2563eb;
+}
+
+.product-message-content {
+  margin: 0;
+  font-size: 14px;
+  color: #1f2937;
+}
+
+.product-message-table {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.product-messages-compose {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background-color: #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.product-messages-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.product-messages-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.product-messages-field > span {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.product-messages-field select,
+.product-messages-field textarea {
+  border: 1px solid #cbd5f5;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-messages-field textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.product-messages-field select:focus,
+.product-messages-field textarea:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 1px #6366f1, 0 8px 16px rgba(79, 70, 229, 0.08);
+  outline: none;
+}
+
+.product-messages-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+

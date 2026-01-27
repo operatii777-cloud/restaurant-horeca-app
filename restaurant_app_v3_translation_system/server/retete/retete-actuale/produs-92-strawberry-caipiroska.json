@@ -1,0 +1,51 @@
+﻿Ã¯Â»Â¿{
+  "productId": 92,
+  "productName": "Strawberry Caipiroska",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "price": 31,
+  "description": "Coctail - Vodka, piure de cÃ„ÂƒÃ†Â’pÃƒÂˆÃ¢Â„Â¢uni",
+  "ingredients": [
+    {
+      "ingredientId": 72,
+      "ingredientName": "Vodka",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi Alcoolice",
+      "quantityNeeded": 60,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 208,
+      "ingredientName": "Piure de cÃ„ÂƒÃ†Â’pÃƒÂˆÃ¢Â„Â¢uni",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 60,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 81,
+      "ingredientName": "ZahÃ„ÂƒÃ†Â’r brun",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 83,
+      "ingredientName": "Lime",
+      "ingredientCategory": "Fructe ÃƒÂˆÃ¢Â„Â¢i Legume",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "GheaÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

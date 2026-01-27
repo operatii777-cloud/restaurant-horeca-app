@@ -1,0 +1,41 @@
+{
+  "productId": 348,
+  "productName": "Sos Sweet Chilli",
+  "productCategory": "Sosuri și Pâine",
+  "price": 3,
+  "description": "Sos sweet chilli dulce-picant",
+  "ingredients": [
+    {
+      "ingredientId": 218,
+      "ingredientName": "Ardei roșu",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 33,
+      "ingredientName": "Zahăr",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 80,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 50,
+      "ingredientName": "Oțet",
+      "ingredientCategory": "Condimente și Sosuri",
+      "quantityNeeded": 50,
+      "unit": "l",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

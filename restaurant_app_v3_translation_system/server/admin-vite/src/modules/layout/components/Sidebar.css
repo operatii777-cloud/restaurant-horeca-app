@@ -1,0 +1,258 @@
+.sidebar {
+  width: 230px;
+  min-width: 230px;
+  max-width: 230px;
+  flex-shrink: 0;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 22px;
+  gap: 40px;
+  border-right: 1px solid #e6ebf5;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* Scrollbar styling */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.3) transparent;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.5);
+}
+
+.sidebar__brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sidebar__logo {
+  font-size: 1.6rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #2563eb 0%, #38bdf8 100%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.sidebar__title {
+  font-weight: 600;
+  color: #111827;
+}
+
+.sidebar__subtitle {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6b7280;
+}
+
+.sidebar__nav {
+  display: grid;
+  gap: 6px;
+}
+
+.sidebar__link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  color: #334155;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.sidebar__link:hover {
+  background: rgba(51, 65, 85, 0.08);
+  color: #1f2937;
+}
+
+.sidebar__link--active {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(14, 165, 233, 0.12) 100%);
+  color: #2563eb;
+}
+
+.sidebar__icon {
+  font-size: 1.2rem;
+}
+
+.sidebar__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sidebar__badge {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.12);
+  color: #2563eb;
+}
+
+.sidebar__logout {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  background: rgba(255, 255, 255, 0.6);
+  color: #ef4444;
+  padding: 10px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.sidebar__logout:hover {
+  background: rgba(239, 68, 68, 0.12);
+}
+
+/* ==================== RESPONSIVE SIDEBAR ==================== */
+
+/* Tablets și ecrane medii (max 1024px) */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 200px;
+    min-width: 200px;
+    max-width: 200px;
+    padding: 24px 18px;
+    gap: 32px;
+  }
+
+  .sidebar__logo {
+    width: 42px;
+    height: 42px;
+    font-size: 1.4rem;
+  }
+
+  .sidebar__title {
+    font-size: 0.95rem;
+  }
+
+  .sidebar__subtitle {
+    font-size: 0.7rem;
+  }
+
+  .sidebar__link {
+    padding: 9px 10px;
+    font-size: 0.9rem;
+  }
+
+  .sidebar__icon {
+    font-size: 1.1rem;
+  }
+}
+
+/* Telefoane și ecrane mici (max 768px) */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    max-height: 60vh;
+    border-right: none;
+    border-bottom: 1px solid #e6ebf5;
+    padding: 20px 16px;
+    gap: 24px;
+  }
+
+  .sidebar__brand {
+    gap: 12px;
+  }
+
+  .sidebar__logo {
+    width: 40px;
+    height: 40px;
+    font-size: 1.3rem;
+  }
+
+  .sidebar__title {
+    font-size: 0.9rem;
+  }
+
+  .sidebar__subtitle {
+    font-size: 0.65rem;
+  }
+
+  .sidebar__nav {
+    gap: 4px;
+  }
+
+  .sidebar__link {
+    padding: 8px 10px;
+    font-size: 0.85rem;
+    gap: 10px;
+  }
+
+  .sidebar__icon {
+    font-size: 1rem;
+  }
+
+  .sidebar__logout {
+    margin-top: 16px;
+    padding: 8px 10px;
+    font-size: 0.85rem;
+  }
+}
+
+/* Telefoane foarte mici (max 480px) */
+@media (max-width: 480px) {
+  .sidebar {
+    padding: 16px 12px;
+    gap: 20px;
+    max-height: 50vh;
+  }
+
+  .sidebar__brand {
+    gap: 10px;
+  }
+
+  .sidebar__logo {
+    width: 36px;
+    height: 36px;
+    font-size: 1.2rem;
+  }
+
+  .sidebar__title {
+    font-size: 0.85rem;
+  }
+
+  .sidebar__subtitle {
+    font-size: 0.6rem;
+  }
+
+  .sidebar__link {
+    padding: 7px 8px;
+    font-size: 0.8rem;
+    gap: 8px;
+  }
+
+  .sidebar__icon {
+    font-size: 0.95rem;
+  }
+
+  .sidebar__badge {
+    font-size: 0.6rem;
+    padding: 1px 5px;
+  }
+}

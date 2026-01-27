@@ -1,0 +1,43 @@
+﻿Ã¯Â»Â¿{
+  "productId": 38,
+  "productName": "Green Apple",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "price": 25,
+  "description": "Coctail fÃ„ÂƒÃ†Â’rÃ„ÂƒÃ†Â’ alcool - Suc de mere verzi, lime, zahÃ„ÂƒÃ†Â’r brun",
+  "ingredients": [
+    {
+      "ingredientId": 68,
+      "ingredientName": "Suc de mere",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 150,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 83,
+      "ingredientName": "Lime",
+      "ingredientCategory": "Fructe ÃƒÂˆÃ¢Â„Â¢i Legume",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 81,
+      "ingredientName": "ZahÃ„ÂƒÃ†Â’r brun",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "GheaÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

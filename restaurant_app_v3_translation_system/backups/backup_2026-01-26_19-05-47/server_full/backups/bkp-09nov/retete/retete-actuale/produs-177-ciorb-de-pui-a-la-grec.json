@@ -1,0 +1,17 @@
+{
+  "productId": 177,
+  "productName": "Ciorbă de Pui a la Grec",
+  "productCategory": "Ciorbe",
+  "price": 20,
+  "description": "Ciorbă cu pui în stil grecesc",
+  "ingredients": [
+    {
+      "ingredientId": 107,
+      "ingredientName": "Pui",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

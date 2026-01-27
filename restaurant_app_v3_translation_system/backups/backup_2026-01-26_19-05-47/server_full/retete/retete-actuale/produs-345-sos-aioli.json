@@ -1,0 +1,43 @@
+﻿Ã¯Â»Â¿{
+  "productId": 345,
+  "productName": "Sos Aioli",
+  "productCategory": "Sosuri ÃƒÂˆÃ¢Â„Â¢i PÃƒÂ¢ine",
+  "price": 3.5,
+  "description": "Sos aioli cu usturoi",
+  "ingredients": [
+    {
+      "ingredientId": 43,
+      "ingredientName": "MaionezÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Condimente ÃƒÂˆÃ¢Â„Â¢i Sosuri",
+      "quantityNeeded": 100,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 154,
+      "ingredientName": "LÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+      "ingredientCategory": "Legume ÃƒÂˆÃ¢Â„Â¢i Fructe",
+      "quantityNeeded": 0.5,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 18,
+      "ingredientName": "Ulei de mÃ„ÂƒÃ†Â’sline",
+      "ingredientCategory": "Uleiuri",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

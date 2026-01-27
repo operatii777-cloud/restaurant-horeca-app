@@ -1,0 +1,27 @@
+﻿Ã¯Â»Â¿{
+  "productId": 223,
+  "productName": "CÃƒÂ¢rnaÃˆÂ›i cu Cartofi PrÃ„ÂƒÃ†Â’jiÃƒÂˆÃ¢Â€Âºi",
+  "productCategory": "Fel Principal",
+  "price": 39,
+  "description": "CÃƒÂ¢rnaÃˆÂ›i, cartofi, muÃƒÂˆÃ¢Â„Â¢tar",
+  "ingredients": [
+    {
+      "ingredientId": 67,
+      "ingredientName": "Cartofi",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 250,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 31,
+      "ingredientName": "Ulei de floarea-soarelui",
+      "ingredientCategory": "Condimente ÃƒÂˆÃ¢Â„Â¢i Sosuri",
+      "quantityNeeded": 50,
+      "unit": "l",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

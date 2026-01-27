@@ -1,0 +1,407 @@
+/* 🎨 HEADER UNIFICAT - Design Profesional pentru Bar, KDS, Livrare */
+/* Versiune: 3.0.8 | Data: 06 Nov 2025 */
+
+/* ========================================
+   HEADER PRINCIPAL - 2 Rânduri Organizate
+   ======================================== */
+
+.staff-header {
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 100;
+    border-bottom: 3px solid #f0f0f0;
+}
+
+/* RÂND 1: Titlu + Controale (Conectat Live, Limbă, Logout, Powered by QrOMS) */
+.staff-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+    border-bottom: 1px solid #e8e8e8;
+    min-height: 70px;
+}
+
+.staff-header-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.staff-header-title h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0;
+    color: #2c3e50;
+    white-space: nowrap;
+}
+
+.staff-header-title .subtitle {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    font-weight: 400;
+    margin-left: 8px;
+}
+
+/* Controale Dreapta - Grupate și Organizate */
+.staff-header-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+}
+
+.staff-header-controls > * {
+    flex: 0 0 auto;
+}
+
+.brand-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.95);
+    color: #0a2540;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    line-height: 1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    transition: all 0.2s ease;
+}
+
+.brand-badge img {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.brand-badge span {
+    display: inline-block;
+}
+
+.brand-badge:hover {
+    background: #0a2540;
+    color: #ffffff;
+    border-color: #0a2540;
+}
+
+/* Connection Status */
+.connection-status {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.connection-status.connected {
+    background: #28a745;
+    color: white;
+}
+
+.connection-status.disconnected {
+    background: #dc3545;
+    color: white;
+}
+
+/* Language Switcher */
+.lang-group {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    padding: 4px;
+    background: #f8f9fa;
+    border-radius: 25px;
+}
+
+.lang-btn {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 20px;
+    background: transparent;
+    color: #6c757d;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.lang-btn.active {
+    background: white;
+    color: #667eea;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.lang-btn:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* Action Buttons (Logout, Theme) */
+.action-btn {
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 2px solid;
+    border-radius: 20px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.action-btn.logout {
+    border-color: #dc3545;
+    color: #dc3545;
+}
+
+.action-btn.logout:hover {
+    background: #dc3545;
+    color: white;
+}
+
+.action-btn.theme {
+    border-color: #ff9800;
+    color: #ff9800;
+}
+
+.action-btn.theme:hover {
+    background: #ff9800;
+    color: white;
+}
+
+/* RÂND 2: Statistici + Butoane Filtre */
+.staff-header-bottom {
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+/* Statistici Cards */
+.stats-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 12px 20px;
+    border-radius: 12px;
+    text-align: center;
+    min-width: 120px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    border: 1px solid #dee2e6;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+}
+
+.stat-number {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #667eea;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: #6c757d;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Filter Buttons */
+.filters-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 2px solid;
+    border-radius: 25px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.filter-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border-color: #667eea;
+}
+
+/* Variante Culori pentru Butoane Filtre */
+.filter-btn.orange {
+    border-color: #ff9800;
+    color: #ff9800;
+}
+
+.filter-btn.orange.active,
+.filter-btn.orange:hover {
+    background: #ff9800;
+    color: white;
+}
+
+.filter-btn.green {
+    border-color: #28a745;
+    color: #28a745;
+}
+
+.filter-btn.green.active,
+.filter-btn.green:hover {
+    background: #28a745;
+    color: white;
+}
+
+.filter-btn.red {
+    border-color: #dc3545;
+    color: #dc3545;
+}
+
+.filter-btn.red.active,
+.filter-btn.red:hover {
+    background: #dc3545;
+    color: white;
+}
+
+.filter-btn.blue {
+    border-color: #007bff;
+    color: #007bff;
+}
+
+.filter-btn.blue.active,
+.filter-btn.blue:hover {
+    background: #007bff;
+    color: white;
+}
+
+/* Responsive - Tablete */
+@media (max-width: 1024px) {
+    .staff-header-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 15px 20px;
+    }
+    
+    .staff-header-controls {
+        width: 100%;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .staff-header-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .stats-row,
+    .filters-row {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+    .staff-header-title h1 {
+        font-size: 1.3rem;
+    }
+    
+    .stat-card {
+        min-width: 100px;
+        padding: 10px 15px;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
+    }
+    
+    .filter-btn {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+}
+
+/* Messages Toggle Button - Special */
+.messages-toggle-header {
+    position: absolute;
+    top: 80px;
+    left: 20px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    transition: all 0.3s ease;
+    z-index: 150;
+}
+
+.messages-toggle-header:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+}
+
+.messages-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #dc3545;
+    color: white;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    font-size: 11px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+}
+

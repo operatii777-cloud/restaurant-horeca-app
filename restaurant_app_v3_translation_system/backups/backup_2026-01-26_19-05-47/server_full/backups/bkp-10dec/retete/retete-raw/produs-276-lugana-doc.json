@@ -1,0 +1,17 @@
+{
+  "productId": 276,
+  "productName": "Lugana DOC",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 749,
+      "ingredientName": "Lugana DOC",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

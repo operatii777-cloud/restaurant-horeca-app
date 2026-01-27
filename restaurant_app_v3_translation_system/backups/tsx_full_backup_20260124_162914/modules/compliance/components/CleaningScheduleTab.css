@@ -1,0 +1,13 @@
+.cleaning-schedule-tab {
+  padding: var(--space-lg);
+}
+
+.cleaning-schedule-tab .filters select {
+  width: 200px;
+}
+
+.cleaning-schedule-tab .ag-theme-alpine {
+  height: 500px;
+  width: 100%;
+}
+

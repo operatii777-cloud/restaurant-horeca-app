@@ -1,0 +1,171 @@
+.takeaway-orders-page {
+  padding: 24px;
+  background: rgba(59, 130, 246, 0.1);
+  min-height: 100vh;
+}
+
+.takeaway-orders-page .page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.takeaway-orders-page .page-header h1 {
+  color: #fde047 !important;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.takeaway-orders-page .card {
+  background: var(--navy-deep, #0f172a) !important;
+  border: 1px solid var(--slate-navy, #1e293b) !important;
+  color: #fde047 !important;
+}
+
+.takeaway-orders-page .card-body {
+  color: #f1f5f9 !important;
+}
+
+.takeaway-orders-page .form-label {
+  color: #fde047 !important;
+  font-weight: 600;
+}
+
+.takeaway-orders-page .form-control,
+.takeaway-orders-page .form-select {
+  background: rgba(59, 130, 246, 0.1) !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
+  color: #1e293b !important;
+}
+
+/* Tema alb/negru Excel-like - folosește stilurile globale din tables-edge-to-edge.css */
+.takeaway-orders-page .table {
+  background: #ffffff !important;
+  color: #212529 !important;
+}
+
+.takeaway-orders-page .table thead {
+  background: #f8f9fa !important;
+  border-bottom: 2px solid #dee2e6 !important;
+}
+
+.takeaway-orders-page .table th {
+  color: #212529 !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-color: #dee2e6 !important;
+  border-right: 1px solid #dee2e6 !important;
+  padding: 12px 16px !important;
+}
+
+.takeaway-orders-page .table th:last-child {
+  border-right: none;
+}
+
+.takeaway-orders-page .table td {
+  background-color: inherit !important;
+  background: inherit !important;
+  color: #212529 !important;
+  border-color: #e9ecef !important;
+  border-right: 1px solid #e9ecef !important;
+  padding: 12px 16px !important;
+}
+
+.takeaway-orders-page .table td:last-child {
+  border-right: none;
+}
+
+.takeaway-orders-page .table tbody tr {
+  background-color: #ffffff !important;
+}
+
+.takeaway-orders-page .table tbody tr:nth-child(even) {
+  background-color: #f8f9fa !important;
+}
+
+.takeaway-orders-page .table tbody tr:nth-child(odd) {
+  background-color: #ffffff !important;
+}
+
+/* Hover - TRANSPARENT pe fundal ALB (nu dark) */
+.takeaway-orders-page .table tbody tr:hover,
+.takeaway-orders-page .table.table-hover tbody tr:hover,
+.takeaway-orders-page .table.table-hover > tbody > tr:hover,
+.takeaway-orders-page .table.table-striped.table-hover tbody tr:hover,
+.takeaway-orders-page .table.table-bordered.table-hover tbody tr:hover,
+.takeaway-orders-page .table tbody tr:hover > td,
+.takeaway-orders-page .table.table-hover tbody tr:hover > td {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+  background: rgba(0, 0, 0, 0.05) !important;
+  color: #212529 !important;
+  transition: background-color 0.15s ease;
+}
+
+/* Rânduri active/selectate - TRANSPARENT SUBTIL pe fundal ALB */
+/* Selectori foarte specifici pentru a suprascrie Bootstrap și stilurile dark */
+.takeaway-orders-page .table.table-hover tbody tr.active,
+.takeaway-orders-page .table.table-hover tbody tr.table-active,
+.takeaway-orders-page .table.table-hover tbody tr.selected,
+.takeaway-orders-page .table tbody tr.active,
+.takeaway-orders-page .table tbody tr.table-active,
+.takeaway-orders-page .table tbody tr.selected,
+.takeaway-orders-page .table tbody tr[class*="active"],
+.takeaway-orders-page .table tbody tr[class*="selected"],
+.takeaway-orders-page .table tbody tr[aria-selected="true"],
+.takeaway-orders-page .table.table-hover > tbody > tr.active,
+.takeaway-orders-page .table.table-hover > tbody > tr.table-active,
+.takeaway-orders-page .table.table-hover > tbody > tr.selected,
+.takeaway-orders-page .table tbody tr.active > td,
+.takeaway-orders-page .table tbody tr.table-active > td,
+.takeaway-orders-page .table tbody tr.selected > td {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+  background: rgba(0, 0, 0, 0.08) !important;
+  color: #212529 !important;
+}
+
+.takeaway-orders-page .table.table-hover tbody tr.active:hover,
+.takeaway-orders-page .table.table-hover tbody tr.table-active:hover,
+.takeaway-orders-page .table.table-hover tbody tr.selected:hover,
+.takeaway-orders-page .table tbody tr.active:hover,
+.takeaway-orders-page .table tbody tr.table-active:hover,
+.takeaway-orders-page .table tbody tr.selected:hover,
+.takeaway-orders-page .table.table-hover > tbody > tr.active:hover,
+.takeaway-orders-page .table.table-hover > tbody > tr.table-active:hover,
+.takeaway-orders-page .table.table-hover > tbody > tr.selected:hover,
+.takeaway-orders-page .table tbody tr.active:hover > td,
+.takeaway-orders-page .table tbody tr.table-active:hover > td,
+.takeaway-orders-page .table tbody tr.selected:hover > td {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  background: rgba(0, 0, 0, 0.1) !important;
+  color: #212529 !important;
+}
+
+.takeaway-orders-page .modal-content {
+  background: var(--navy-deep, #0f172a) !important;
+  border: 1px solid var(--slate-navy, #1e293b) !important;
+  color: #fde047 !important;
+}
+
+.takeaway-orders-page .modal-header {
+  background: var(--navy-deep, #0f172a) !important;
+  border-bottom: 1px solid var(--slate-navy, #1e293b) !important;
+  color: #fde047 !important;
+}
+
+.takeaway-orders-page .modal-body {
+  background: var(--navy-deep, #0f172a) !important;
+  color: #f1f5f9 !important;
+}
+
+.takeaway-orders-page .modal-body h6 {
+  color: #fde047 !important;
+}
+
+.takeaway-orders-page .modal-body strong {
+  color: #fde047 !important;
+}
+

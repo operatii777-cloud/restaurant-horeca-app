@@ -1,0 +1,25 @@
+{
+  "productId": 208,
+  "productName": "Shaorma Mix Vită-Pui - Mică",
+  "productCategory": "Fast Food",
+  "price": 23,
+  "description": "Shaorma mix vită și pui cu legume proaspete, sos usturoi - porție mică",
+  "ingredients": [
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 107,
+      "ingredientName": "Pui",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

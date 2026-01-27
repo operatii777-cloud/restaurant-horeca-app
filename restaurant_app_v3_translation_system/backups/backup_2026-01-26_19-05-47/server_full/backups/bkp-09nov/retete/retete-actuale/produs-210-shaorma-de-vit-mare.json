@@ -1,0 +1,17 @@
+{
+  "productId": 210,
+  "productName": "Shaorma de Vită - Mare",
+  "productCategory": "Fast Food",
+  "price": 35,
+  "description": "Shaorma de vită cu legume proaspete, sos usturoi - porție mare",
+  "ingredients": [
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

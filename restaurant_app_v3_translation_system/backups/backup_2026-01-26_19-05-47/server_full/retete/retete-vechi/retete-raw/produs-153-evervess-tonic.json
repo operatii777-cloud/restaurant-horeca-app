@@ -1,0 +1,28 @@
+﻿Ã¯Â»Â¿{
+  "productId": 153,
+  "productName": "Evervess Tonic",
+  "productCategory": "RÃ„ÂƒÃ†Â’coritoare",
+  "ingredients": [
+    {
+      "ingredientId": 270,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 623,
+      "ingredientName": "Ton ÃƒÂ®n conservÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "General",
+      "quantityNeeded": 330,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

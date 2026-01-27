@@ -1,0 +1,35 @@
+{
+  "productId": 61,
+  "productName": "Ciolan cu Fasole Roșie",
+  "productCategory": "Fel Principal",
+  "ingredients": [
+    {
+      "ingredientId": 502,
+      "ingredientName": "Ciolan afumat (porție)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 504,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 503,
+      "ingredientName": "Fasole roșie (fiertă)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

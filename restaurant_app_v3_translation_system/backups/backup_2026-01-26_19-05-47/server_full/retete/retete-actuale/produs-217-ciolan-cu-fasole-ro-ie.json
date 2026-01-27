@@ -1,0 +1,35 @@
+﻿Ã¯Â»Â¿{
+  "productId": 217,
+  "productName": "Ciolan cu Fasole RoÃƒÂˆÃ¢Â„Â¢ie",
+  "productCategory": "Fel Principal",
+  "price": 77,
+  "description": "Stinco casa mondena, fasole roÃƒÂˆÃ¢Â„Â¢ie, ceapÃ„ÂƒÃ†Â’ roÃƒÂˆÃ¢Â„Â¢ie, peperoncino, sos de roÃƒÂˆÃ¢Â„Â¢ii",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 94,
+      "ingredientName": "CeapÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Fructe ÃƒÂˆÃ¢Â„Â¢i Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 14,
+      "ingredientName": "Sos de roÃƒÂˆÃ¢Â„Â¢ii",
+      "ingredientCategory": "Sosuri",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

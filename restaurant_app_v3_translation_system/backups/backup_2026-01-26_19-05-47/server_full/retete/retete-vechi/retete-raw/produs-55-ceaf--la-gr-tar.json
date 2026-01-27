@@ -1,0 +1,28 @@
+﻿Ã¯Â»Â¿{
+  "productId": 55,
+  "productName": "CeafÃ„ÂƒÃ†Â’ la GrÃ„ÂƒÃ†Â’tar",
+  "productCategory": "Fel Principal",
+  "ingredients": [
+    {
+      "ingredientId": 812,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 169,
+      "ingredientName": "Sare de mare",
+      "ingredientCategory": "General",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

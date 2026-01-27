@@ -1,0 +1,118 @@
+{
+  "product": {
+    "id": 4,
+    "name": "Omletă cu Șuncă și Mozzarella",
+    "name_en": "Ham and Mozzarella Omelette",
+    "category": "Mic Dejun",
+    "category_en": "Breakfast",
+    "price": 31,
+    "description": "Omletă clasică cu șuncă și mozzarella",
+    "description_en": "Classic omelette with ham and mozzarella",
+    "weight": "200G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": "ouă, lapte",
+    "allergens_en": "eggs, milk"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 624,
+        "name": "Ingrediente speciale (ex: Prosciutto Crudo, Rucola)",
+        "category": "General",
+        "quantity": 40,
+        "unit": "g",
+        "unitStock": "buc",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.09185370066856817,
+        "totalCost": "3.67",
+        "totalCostWithWaste": "3.67",
+        "supplier": null,
+        "currentStock": 12670,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 560,
+        "name": "Mozzarella (rasă)",
+        "category": "General",
+        "quantity": 30,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 821,
+        "name": "Ulei vegetal",
+        "category": "Uleiuri și Grăsimi",
+        "quantity": 10,
+        "unit": "g",
+        "unitStock": "ml",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.36491973522575893,
+        "totalCost": "3.65",
+        "totalCostWithWaste": "3.65",
+        "supplier": "Uleiuri SRL",
+        "currentStock": 71910,
+        "minStock": 5000,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 1,
+        "name": "ouă",
+        "category": "General",
+        "quantity": 3,
+        "unit": "buc",
+        "unitStock": "buc",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.5,
+        "totalCost": "1.50",
+        "totalCostWithWaste": "1.50",
+        "supplier": null,
+        "currentStock": 1310,
+        "minStock": 20,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "8.82",
+    "totalCostWithWaste": "8.82",
+    "sellingPrice": 31,
+    "profitMargin": 22.18,
+    "markup": 71.54,
+    "foodCostPercentage": "28.46"
+  },
+  "stats": {
+    "totalIngredients": 4,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

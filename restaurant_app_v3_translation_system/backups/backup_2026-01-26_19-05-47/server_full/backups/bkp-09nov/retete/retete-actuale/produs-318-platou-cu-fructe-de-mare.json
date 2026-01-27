@@ -1,0 +1,33 @@
+{
+  "productId": 318,
+  "productName": "Platou cu Fructe de Mare",
+  "productCategory": "Peste și Fructe de Mare",
+  "price": 199,
+  "description": "Midii în cochilie, carne midii, tentacule calamar, inele de calamar, creveți, orez sălbatic",
+  "ingredients": [
+    {
+      "ingredientId": 137,
+      "ingredientName": "Creveți",
+      "ingredientCategory": "Peste Fructe de Mare",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 138,
+      "ingredientName": "Midii",
+      "ingredientCategory": "Peste Fructe de Mare",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 61,
+      "ingredientName": "Orez",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 80,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}

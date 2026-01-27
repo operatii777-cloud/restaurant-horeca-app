@@ -1,0 +1,1084 @@
+/* ========== MODAL REDIMENSIONABIL ȘI CU SCROLL ========== */
+
+/* ========== ELIMINĂ COMPLET OVERLAY-UL (FORȚĂ TOTALĂ) ========== */
+
+/* 1. Elimină backdrop-ul Bootstrap */
+.order-details-modal-modern ~ .modal-backdrop,
+.modal-backdrop.show,
+.modal-backdrop.fade,
+.modal-backdrop {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* 2. Modalul devine COMPLET transparent - FORȚĂ MAXIMĂ */
+.order-details-modal-modern,
+.order-details-modal-modern.modal,
+.order-details-modal-modern.modal.show,
+.order-details-modal-modern.modal.fade.show,
+div.modal.order-details-modal-modern {
+  background-color: transparent !important;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+  pointer-events: none !important;
+}
+
+/* 3. Dialog-ul devine COMPLET transparent */
+.order-details-modal-modern .modal-dialog,
+.order-details-modal-modern .modal-dialog.modal-xl,
+.modal.order-details-modal-modern .modal-dialog,
+div.modal.order-details-modal-modern .modal-dialog {
+  pointer-events: auto !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+/* 4. Content devine COMPLET transparent */
+.order-details-modal-modern .modal-content,
+.order-details-modal-modern .modal-dialog .modal-content,
+.modal.order-details-modal-modern .modal-content {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* 5. ELIMINĂ ORICE border, outline, shadow din TOATE elementele */
+.order-details-modal-modern *:not(.modal-header):not(.modal-body):not(.modal-footer):not(.modal-header *):not(.modal-body *):not(.modal-footer *),
+.order-details-modal-modern::before,
+.order-details-modal-modern::after,
+.order-details-modal-modern .modal-dialog::before,
+.order-details-modal-modern .modal-dialog::after,
+.order-details-modal-modern .modal-content::before,
+.order-details-modal-modern .modal-content::after {
+  border: none !important;
+  outline: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+/* 6. ELIMINĂ focus outline (care poate cauza chenarul galben) */
+.order-details-modal-modern:focus,
+.order-details-modal-modern *:focus,
+.order-details-modal-modern .modal-dialog:focus,
+.order-details-modal-modern .modal-content:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* 7. DOAR conținutul este vizibil - Header, Body, Footer cu shadow */
+
+/* Header - card alb cu shadow */
+.order-details-modal-modern .modal-header {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px 8px 0 0 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  padding: 1rem 1.5rem !important;
+  margin-bottom: 0 !important;
+}
+
+/* Body - card alb conectat cu header */
+.order-details-modal-modern .modal-body {
+  background: #ffffff !important;
+  border-left: 1px solid #e5e7eb !important;
+  border-right: 1px solid #e5e7eb !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  padding: 1.5rem !important;
+  margin-top: -1px !important;
+}
+
+/* Footer - card cu background diferit */
+.order-details-modal-modern .modal-footer {
+  background: #f9fafb !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 0 0 8px 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  padding: 1rem 1.5rem !important;
+  margin-top: -1px !important;
+}
+
+/* 8. ELIMINĂ orice border rezidual care ar putea fi aplicat prin JS */
+.order-details-modal-modern[style*="border"],
+.order-details-modal-modern .modal-dialog[style*="border"],
+.order-details-modal-modern .modal-content[style*="border"] {
+  border: none !important;
+}
+
+/* 9. OVERRIDE pentru orice stil inline aplicat prin JS */
+.order-details-modal-modern[style] {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+.order-details-modal-modern .modal-dialog[style] {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+.order-details-modal-modern .modal-content[style] {
+  background-color: transparent !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+/* ========== VARIANTA ALTERNATIVĂ: UN SINGUR CARD MARE ========== */
+/* Decomentează următoarele linii pentru un singur card */
+
+/*
+.order-details-modal-modern .modal-content {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+  overflow: hidden !important;
+}
+
+.order-details-modal-modern .modal-header {
+  background: #ffffff !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.order-details-modal-modern .modal-body {
+  background: #ffffff !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.order-details-modal-modern .modal-footer {
+  background: #f9fafb !important;
+  border-top: 1px solid #e5e7eb !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+*/
+
+/* ========== ASIGURĂ-TE CĂ DIALOG-UL ESTE INTERACTIV ========== */
+
+.order-details-modal-modern .modal-dialog,
+.order-details-modal-modern .modal-content,
+.order-details-modal-modern .modal-header,
+.order-details-modal-modern .modal-body,
+.order-details-modal-modern .modal-footer {
+  pointer-events: auto !important;
+}
+
+/* ========== FIX PENTRU BUTOANE - TREBUIE SĂ FIE INTERACTIVE ========== */
+
+.order-details-modal-modern button,
+.order-details-modal-modern .btn,
+.order-details-modal-modern .order-details-modal-close-btn,
+.order-details-modal-modern .order-details-modal-close-button,
+.order-details-modal-modern .btn-close {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  z-index: 10 !important;
+  position: relative !important;
+}
+
+/* ========== FIX PENTRU SCROLL ȘI OVERFLOW ========== */
+
+/* Când modalul este deschis, body-ul poate face scroll (fără backdrop/overlay) */
+body.modal-open {
+  overflow: auto !important; /* Permite scroll pe pagină */
+  padding-right: 0 !important;
+}
+
+/* Elimină orice stil de overlay pe body */
+body.modal-open::before,
+body.modal-open::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* ========== Z-INDEX CORECT (FĂRĂ BACKDROP) ========== */
+
+.order-details-modal-modern {
+  z-index: 1050 !important;
+}
+
+.order-details-modal-modern .modal-dialog {
+  z-index: 1051 !important;
+  box-shadow: none !important; /* Shadow-ul este pe header/body/footer */
+}
+
+.modal-resize-handle {
+  z-index: 1052 !important;
+}
+
+/* 1. Modal Container - permite redimensionare */
+.order-details-modal-modern .modal-dialog {
+  pointer-events: auto !important;
+  z-index: 1056 !important;
+  position: relative !important;
+  overflow: visible !important; /* Permite handle-urile să fie vizibile */
+  
+  /* Dimensiuni flexibile pentru redimensionare */
+  width: 900px;
+  min-width: 600px;
+  max-width: 95vw;
+  min-height: 400px;
+  max-height: 90vh;
+  
+  margin: 1.75rem auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  height: auto !important; /* Inițial auto */
+  
+  /* Elimină transform care interferează cu redimensionare */
+  -webkit-transform: none !important;
+  transform: none !important;
+  
+  /* Nu folosi resize: both pe flex - nu funcționează */
+  cursor: default !important;
+  outline: none !important;
+}
+
+/* 2. Modal Content - UN SINGUR CARD PENTRU TOT CONȚINUTUL (Varianta 2) */
+.order-details-modal-modern .modal-dialog .modal-content {
+  pointer-events: auto !important;
+  position: relative !important;
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+  overflow: hidden !important;
+  
+  /* Layout flex pentru header/body/footer */
+  display: flex !important;
+  flex-direction: column !important;
+  
+  /* Ocupă tot spațiul disponibil */
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 400px !important;
+  max-height: 100% !important;
+  
+  padding: 0 !important;
+}
+
+/* 6. DOAR conținutul este vizibil - Header, Body, Footer */
+
+/* Header - card alb cu shadow */
+.order-details-modal-modern .modal-header {
+  pointer-events: auto !important;
+  position: relative !important;
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px 8px 0 0 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  padding: 1rem 1.5rem !important;
+  margin-bottom: 0 !important;
+  flex-shrink: 0 !important;
+  z-index: 1 !important;
+  
+  /* Cursor pentru dragging */
+  cursor: move !important;
+}
+
+.order-details-modal-modern .modal-header::before {
+  content: '⋮⋮' !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  color: rgba(156, 163, 175, 0.25) !important;
+  font-size: 1.5rem !important;
+  letter-spacing: -4px !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  transition: opacity 0.3s ease !important;
+  z-index: 0 !important;
+}
+
+.order-details-modal-modern .modal-header:hover::before {
+  opacity: 1 !important;
+}
+
+.order-details-modal-header {
+  pointer-events: auto !important;
+  position: relative !important;
+  border: none !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  padding: 1rem 1.5rem !important;
+  flex-shrink: 0 !important;
+  background: #ffffff !important;
+  z-index: 1 !important;
+  cursor: move !important;
+}
+
+.order-details-modal-header::after {
+  content: '⋮⋮' !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  color: rgba(156, 163, 175, 0.3) !important;
+  font-size: 1.2rem !important;
+  letter-spacing: -2px !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  transition: opacity 0.2s ease !important;
+}
+
+.order-details-modal-header:hover::after {
+  opacity: 1 !important;
+}
+
+.order-details-modal-header-content {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  width: 100% !important;
+}
+
+.order-details-modal-title {
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  color: #111827 !important;
+  margin: 0 !important;
+}
+
+.order-details-modal-subtitle {
+  font-size: 0.875rem !important;
+  color: #6b7280 !important;
+  margin: 0.25rem 0 0 0 !important;
+}
+
+/* Body - card alb conectat cu header */
+.order-details-modal-modern .modal-body {
+  pointer-events: auto !important;
+  cursor: auto !important;
+  -webkit-user-select: text !important;
+  user-select: text !important;
+  
+  /* CRITIC: Activează scroll-ul */
+  overflow-y: auto !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior: contain !important;
+  
+  /* Layout flexibil - se extinde între header și footer */
+  flex: 1 1 auto !important;
+  min-height: 0 !important; /* Important pentru flex scroll */
+  height: auto !important; /* Se ajustează automat */
+  
+  background: #ffffff !important;
+  border-left: 1px solid #e5e7eb !important;
+  border-right: 1px solid #e5e7eb !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  padding: 1.5rem !important;
+  color: #111827 !important;
+  margin-top: -1px !important;
+  
+  /* Permite body-ul să crească */
+  position: relative !important;
+  display: block !important;
+}
+
+.order-details-modal-modern .order-details-modal-body {
+  pointer-events: auto !important;
+  cursor: auto !important;
+  -webkit-user-select: text !important;
+  user-select: text !important;
+  overflow-y: auto !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior: contain !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  background: #ffffff !important;
+  border-left: 1px solid #e5e7eb !important;
+  border-right: 1px solid #e5e7eb !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  padding: 1.5rem !important;
+  color: #111827 !important;
+  margin-top: -1px !important;
+  position: relative !important;
+  display: block !important;
+}
+
+/* Scrollbar stilizat */
+.order-details-modal-modern .modal-body::-webkit-scrollbar,
+.order-details-modal-modern .order-details-modal-body::-webkit-scrollbar {
+  width: 8px !important;
+  height: 8px !important;
+}
+
+.order-details-modal-modern .modal-body::-webkit-scrollbar-track,
+.order-details-modal-modern .order-details-modal-body::-webkit-scrollbar-track {
+  background: #f3f4f6 !important;
+  border-radius: 4px !important;
+}
+
+.order-details-modal-modern .modal-body::-webkit-scrollbar-thumb,
+.order-details-modal-modern .order-details-modal-body::-webkit-scrollbar-thumb {
+  background: #9ca3af !important;
+  border-radius: 4px !important;
+}
+
+.order-details-modal-modern .modal-body::-webkit-scrollbar-thumb:hover,
+.order-details-modal-modern .order-details-modal-body::-webkit-scrollbar-thumb:hover {
+  background: #6b7280 !important;
+}
+
+/* Footer - card cu background diferit */
+.order-details-modal-modern .modal-footer {
+  pointer-events: auto !important;
+  position: relative !important;
+  background: #f9fafb !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 0 0 8px 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  padding: 1rem 1.5rem !important;
+  margin-top: -1px !important;
+  flex-shrink: 0 !important;
+  z-index: 1 !important;
+}
+
+.order-details-modal-modern .order-details-modal-footer {
+  pointer-events: auto !important;
+  position: relative !important;
+  background: #f9fafb !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 0 0 8px 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  padding: 1rem 1.5rem !important;
+  margin-top: -1px !important;
+  flex-shrink: 0 !important;
+  z-index: 1 !important;
+}
+
+/* 6. Resize Handles - vizuale pentru colțuri și margini */
+.order-details-modal-modern .modal-dialog::after {
+  display: none !important; /* Elimină pseudo-element-ul vechi */
+}
+
+/* ========== HANDLE-URI DE RESIZE VIZIBILE ȘI FUNCȚIONALE ========== */
+
+/* Baza pentru toate handle-urile */
+.modal-resize-handle {
+  position: absolute !important;
+  z-index: 2000 !important; /* Peste tot conținutul modalului */
+  pointer-events: auto !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Est - Margine Dreapta */
+.modal-resize-handle.resize-e {
+  right: -3px !important;
+  top: 20% !important;
+  width: 8px !important;
+  height: 60% !important;
+  cursor: ew-resize !important;
+  background: rgba(59, 130, 246, 0.1) !important;
+  border-right: 3px solid rgba(59, 130, 246, 0.4) !important;
+  border-radius: 4px 0 0 4px !important;
+}
+
+.modal-resize-handle.resize-e:hover,
+.order-details-modal-modern:hover .modal-resize-handle.resize-e {
+  background: rgba(59, 130, 246, 0.2) !important;
+  border-right-color: rgba(59, 130, 246, 0.8) !important;
+  width: 10px !important;
+}
+
+/* Sud - Margine Jos */
+.modal-resize-handle.resize-s {
+  bottom: -3px !important;
+  left: 20% !important;
+  width: 60% !important;
+  height: 8px !important;
+  cursor: ns-resize !important;
+  background: rgba(59, 130, 246, 0.1) !important;
+  border-bottom: 3px solid rgba(59, 130, 246, 0.4) !important;
+  border-radius: 4px 4px 0 0 !important;
+}
+
+.modal-resize-handle.resize-s:hover,
+.order-details-modal-modern:hover .modal-resize-handle.resize-s {
+  background: rgba(59, 130, 246, 0.2) !important;
+  border-bottom-color: rgba(59, 130, 246, 0.8) !important;
+  height: 10px !important;
+}
+
+/* Sud-Est - Colț Dreapta-Jos (cel mai important) */
+.modal-resize-handle.resize-se {
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 32px !important;
+  height: 32px !important;
+  cursor: nwse-resize !important;
+  background: transparent !important;
+  z-index: 2001 !important;
+}
+
+.modal-resize-handle.resize-se::before {
+  content: '' !important;
+  position: absolute !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  border-style: solid !important;
+  border-width: 0 0 20px 20px !important;
+  border-color: transparent transparent #94a3b8 transparent !important;
+  border-bottom-right-radius: 8px !important;
+  transition: border-color 0.2s ease !important;
+}
+
+.modal-resize-handle.resize-se::after {
+  content: '' !important;
+  position: absolute !important;
+  right: 4px !important;
+  bottom: 4px !important;
+  width: 12px !important;
+  height: 12px !important;
+  border-right: 2px solid white !important;
+  border-bottom: 2px solid white !important;
+  border-bottom-right-radius: 3px !important;
+}
+
+.modal-resize-handle.resize-se:hover::before,
+.order-details-modal-modern:hover .modal-resize-handle.resize-se::before {
+  border-color: transparent transparent #3b82f6 transparent !important;
+  border-width: 0 0 24px 24px !important;
+}
+
+/* Vest - Margine Stânga */
+.modal-resize-handle.resize-w {
+  left: -3px !important;
+  top: 20% !important;
+  width: 8px !important;
+  height: 60% !important;
+  cursor: ew-resize !important;
+  background: rgba(59, 130, 246, 0.1) !important;
+  border-left: 3px solid rgba(59, 130, 246, 0.4) !important;
+  border-radius: 0 4px 4px 0 !important;
+}
+
+.modal-resize-handle.resize-w:hover,
+.order-details-modal-modern:hover .modal-resize-handle.resize-w {
+  background: rgba(59, 130, 246, 0.2) !important;
+  border-left-color: rgba(59, 130, 246, 0.8) !important;
+  width: 10px !important;
+}
+
+/* Nord - Margine Sus */
+.modal-resize-handle.resize-n {
+  top: -3px !important;
+  left: 20% !important;
+  width: 60% !important;
+  height: 8px !important;
+  cursor: ns-resize !important;
+  background: rgba(59, 130, 246, 0.1) !important;
+  border-top: 3px solid rgba(59, 130, 246, 0.4) !important;
+  border-radius: 0 0 4px 4px !important;
+}
+
+.modal-resize-handle.resize-n:hover,
+.order-details-modal-modern:hover .modal-resize-handle.resize-n {
+  background: rgba(59, 130, 246, 0.2) !important;
+  border-top-color: rgba(59, 130, 246, 0.8) !important;
+  height: 10px !important;
+}
+
+/* Nord-Est - Colț Dreapta-Sus */
+.modal-resize-handle.resize-ne {
+  right: 0 !important;
+  top: 0 !important;
+  width: 24px !important;
+  height: 24px !important;
+  cursor: nesw-resize !important;
+  background: transparent !important;
+  z-index: 2001 !important;
+}
+
+.modal-resize-handle.resize-ne::before {
+  content: '' !important;
+  position: absolute !important;
+  right: 0 !important;
+  top: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  border-style: solid !important;
+  border-width: 16px 16px 0 0 !important;
+  border-color: rgba(148, 163, 184, 0.6) transparent transparent transparent !important;
+  border-top-right-radius: 8px !important;
+  transition: border-color 0.2s ease !important;
+}
+
+.modal-resize-handle.resize-ne:hover::before,
+.order-details-modal-modern:hover .modal-resize-handle.resize-ne::before {
+  border-color: rgba(59, 130, 246, 0.8) transparent transparent transparent !important;
+  border-width: 20px 20px 0 0 !important;
+}
+
+/* Nord-Vest - Colț Stânga-Sus */
+.modal-resize-handle.resize-nw {
+  left: 0 !important;
+  top: 0 !important;
+  width: 24px !important;
+  height: 24px !important;
+  cursor: nwse-resize !important;
+  background: transparent !important;
+  z-index: 2001 !important;
+}
+
+.modal-resize-handle.resize-nw::before {
+  content: '' !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  border-style: solid !important;
+  border-width: 16px 0 0 16px !important;
+  border-color: transparent transparent transparent rgba(148, 163, 184, 0.6) !important;
+  border-top-left-radius: 8px !important;
+  transition: border-color 0.2s ease !important;
+}
+
+.modal-resize-handle.resize-nw:hover::before,
+.order-details-modal-modern:hover .modal-resize-handle.resize-nw::before {
+  border-color: transparent transparent transparent rgba(59, 130, 246, 0.8) !important;
+  border-width: 20px 0 0 20px !important;
+}
+
+/* Sud-Vest - Colț Stânga-Jos */
+.modal-resize-handle.resize-sw {
+  left: 0 !important;
+  bottom: 0 !important;
+  width: 24px !important;
+  height: 24px !important;
+  cursor: nesw-resize !important;
+  background: transparent !important;
+  z-index: 2001 !important;
+}
+
+.modal-resize-handle.resize-sw::before {
+  content: '' !important;
+  position: absolute !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  border-style: solid !important;
+  border-width: 0 0 16px 16px !important;
+  border-color: transparent transparent rgba(148, 163, 184, 0.6) transparent !important;
+  border-bottom-left-radius: 8px !important;
+  transition: border-color 0.2s ease !important;
+}
+
+.modal-resize-handle.resize-sw:hover::before,
+.order-details-modal-modern:hover .modal-resize-handle.resize-sw::before {
+  border-color: transparent transparent rgba(59, 130, 246, 0.8) transparent !important;
+  border-width: 0 0 20px 20px !important;
+}
+
+/* 7. Tabel cu scroll orizontal în modal */
+.order-details-table-wrapper {
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.order-details-products-table {
+  margin: 0 !important;
+  background: #ffffff !important;
+  width: 100% !important;
+  min-width: 600px !important; /* Forțează scroll orizontal pe ecrane mici */
+}
+
+.order-details-products-table thead {
+  background: #f9fafb !important;
+}
+
+.order-details-products-table thead th {
+  padding: 0.75rem !important;
+  font-weight: 500 !important;
+  font-size: 0.875rem !important;
+  color: #374151 !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  border-right: 1px solid #e5e7eb !important;
+}
+
+.order-details-products-table thead th:last-child {
+  border-right: none !important;
+}
+
+.order-details-products-table tbody td {
+  padding: 0.75rem !important;
+  font-size: 0.875rem !important;
+  color: #111827 !important;
+  border-bottom: 1px solid #f3f4f6 !important;
+  border-right: 1px solid #f3f4f6 !important;
+}
+
+.order-details-products-table tbody td:last-child {
+  border-right: none !important;
+}
+
+.order-details-products-table tbody tr:last-child td {
+  border-bottom: none !important;
+}
+
+.order-details-products-table tbody tr:hover {
+  background: #f9fafb !important;
+}
+
+.order-details-product-name {
+  font-weight: 500 !important;
+}
+
+.order-details-product-total {
+  font-weight: 600 !important;
+  color: #111827 !important;
+}
+
+/* 8. Fix pentru mobile */
+@media (max-width: 768px) {
+  .order-details-modal-modern .modal-dialog {
+    min-width: 95% !important;
+    width: 95% !important;
+    margin: 0.5rem auto !important;
+  }
+  
+  .order-details-modal-modern .modal-body,
+  .order-details-modal-modern .order-details-modal-body {
+    padding: 1rem !important;
+  }
+  
+  /* Pe mobile, handle-urile sunt mai mari pentru touch */
+  .modal-resize-handle.resize-e,
+  .modal-resize-handle.resize-w {
+    width: 12px !important;
+  }
+  
+  .modal-resize-handle.resize-n,
+  .modal-resize-handle.resize-s {
+    height: 12px !important;
+  }
+  
+  .modal-resize-handle.resize-se {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  
+  .modal-resize-handle.resize-se::before {
+    border-width: 0 0 28px 28px !important;
+  }
+}
+
+/* 9. State când modalul este activ pentru resize */
+.order-details-modal-modern.resizing .modal-dialog {
+  transition: none !important;
+  -webkit-user-select: none !important;
+  user-select: none !important;
+}
+
+.order-details-modal-modern.resizing * {
+  cursor: nwse-resize !important;
+  -webkit-user-select: none !important;
+  user-select: none !important;
+}
+
+/* 10. Elimină proprietăți conflictuale */
+.orders-history-page .modal {
+  overflow: visible !important;
+}
+
+.orders-history-page .modal-dialog {
+  overflow: visible !important;
+}
+
+/* 11. Backdrop-ul este eliminat - nu mai este necesar */
+
+/* 12. Butoane și elemente interactive */
+.order-details-modal-close-btn {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  background: none !important;
+  border: none !important;
+  padding: 0.5rem !important;
+  color: #6b7280 !important;
+  border-radius: 6px !important;
+  transition: all 0.15s ease !important;
+}
+
+.order-details-modal-close-btn:hover {
+  background: #f3f4f6 !important;
+  color: #111827 !important;
+}
+
+.order-details-modal-close-button {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  background: #2563eb !important;
+  border: none !important;
+  color: #ffffff !important;
+  padding: 0.625rem 1.5rem !important;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  transition: background-color 0.15s ease !important;
+}
+
+.order-details-modal-close-button:hover {
+  background: #1d4ed8 !important;
+}
+
+/* 13. Badges și secțiuni */
+.order-details-badges {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 0.75rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.order-details-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  padding: 0.375rem 0.75rem !important;
+  border-radius: 9999px !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+}
+
+.order-details-badge-success {
+  background: #d1fae5 !important;
+  color: #065f46 !important;
+}
+
+.order-details-badge-info {
+  background: #dbeafe !important;
+  color: #1e40af !important;
+}
+
+.order-details-badge-neutral {
+  background: #f3f4f6 !important;
+  color: #374151 !important;
+}
+
+.order-details-section {
+  margin-bottom: 1.5rem !important;
+}
+
+.order-details-section:last-child {
+  margin-bottom: 0 !important;
+}
+
+.order-details-section-title {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  color: #111827 !important;
+  margin-bottom: 1rem !important;
+}
+
+.order-details-info-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
+  gap: 0.75rem !important;
+}
+
+.order-details-info-item {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 0.5rem !important;
+  font-size: 0.875rem !important;
+  color: #374151 !important;
+}
+
+.order-details-icon {
+  flex-shrink: 0 !important;
+  color: #6b7280 !important;
+  margin-top: 0.125rem !important;
+}
+
+.order-details-text-break {
+  word-break: break-word !important;
+}
+
+.order-details-payment-section {
+  background: #f9fafb !important;
+  padding: 1rem !important;
+  border-radius: 8px !important;
+}
+
+.order-details-payment-info {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.75rem !important;
+}
+
+.order-details-payment-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  font-size: 0.875rem !important;
+}
+
+.order-details-payment-value {
+  font-weight: 500 !important;
+  color: #111827 !important;
+}
+
+.order-details-payment-paid {
+  color: #059669 !important;
+}
+
+.order-details-payment-unpaid {
+  color: #dc2626 !important;
+}
+
+.order-details-payment-total {
+  display: flex !important;
+  justify-content: space-between !important;
+  padding-top: 0.75rem !important;
+  border-top: 1px solid #e5e7eb !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  color: #111827 !important;
+}
+
+.order-details-payment-total-value {
+  font-size: 1.125rem !important;
+  color: #111827 !important;
+}
+
+/* 14. Rest of the page styles */
+.orders-history-page {
+  padding: 1.5rem;
+}
+
+.orders-history-page h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1.5rem;
+}
+
+/* ========== MODAL CLASIC - DESIGN SIMPLU ========== */
+
+.order-details-modal-classic .modal-dialog {
+  max-width: 101%;
+  width: 101%;
+  margin: 0;
+  max-height: 101vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.order-details-modal-classic .modal-content {
+  max-height: 101vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.order-details-modal-classic .modal-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  flex-shrink: 0;
+  padding: 0.75rem 1rem;
+  margin: 0;
+}
+
+.order-details-modal-classic .modal-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #212529;
+  margin: 0;
+}
+
+.order-details-modal-classic .modal-body {
+  padding: 0;
+  margin: 0;
+  max-height: calc(101vh - 120px);
+  overflow-y: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+  box-sizing: border-box;
+}
+
+/* Wrapper pentru conținut - perfect încadrat în chenarul galben */
+.order-details-modal-classic .order-details-content-wrapper {
+  padding: 1rem;
+  margin: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+}
+
+.order-details-modal-classic .modal-footer {
+  flex-shrink: 0;
+  padding: 0.75rem 1rem;
+  margin: 0;
+}
+
+.order-details-modal-classic .card {
+  border: 1px solid #dee2e6;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.order-details-modal-classic .card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+}
+
+.order-details-modal-classic .card-body {
+  padding: 1rem;
+}
+
+.order-details-modal-classic .card-body p {
+  margin-bottom: 0.5rem;
+  color: #495057;
+}
+
+.order-details-modal-classic .table {
+  margin-bottom: 0;
+}
+
+.order-details-modal-classic .table thead th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.order-details-modal-classic .modal-footer {
+  background-color: #f8f9fa;
+  border-top: 1px solid #dee2e6;
+  padding: 0.75rem 1rem;
+}

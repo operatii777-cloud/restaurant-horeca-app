@@ -1,0 +1,26 @@
+{
+  "productId": 163,
+  "productName": "San Benedetto Ice Tea Piersică",
+  "productCategory": "Răcoritoare",
+  "ingredients": [
+    {
+      "ingredientId": 270,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 708,
+      "ingredientName": "San Benedetto Ice Tea Piersică",
+      "ingredientCategory": "General",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

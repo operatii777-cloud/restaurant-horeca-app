@@ -1,0 +1,2490 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Management System v4.0 - Modular</title>
+    <!-- Translation System -->
+    <script src="/translation/translation.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+            --light-bg: #f8f9fa;
+            --dark-bg: #2c3e50;
+            --white: #ffffff;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --border-color: #dee2e6;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 4px 20px rgba(102, 126, 234, 0.3);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        /* ==================== TOP HEADER ==================== */
+        .top-header {
+            background: var(--white);
+            box-shadow: var(--shadow);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1920px;
+            margin: 0 auto;
+            padding: 10px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .lang-switch {
+            display: flex;
+            gap: 5px;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: 2px solid var(--primary-color);
+            background: var(--white);
+            color: var(--primary-color);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .lang-btn.active {
+            background: var(--primary-color);
+            color: var(--white);
+            font-weight: 700;
+        }
+
+        .lang-btn:hover:not(.active) {
+            background: var(--light-bg);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 16px;
+            background: var(--light-bg);
+            border-radius: 25px;
+        }
+
+        .logout-btn {
+            padding: 8px 20px;
+            background: var(--danger-color);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .logout-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* ==================== MAIN NAVIGATION TABS ==================== */
+        .main-nav {
+            background: var(--dark-bg);
+            box-shadow: var(--shadow);
+            position: fixed;
+            top: 58px;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            overflow-x: auto;
+        }
+
+        .nav-container {
+            max-width: 1920px;
+            margin: 0 auto;
+            display: flex;
+            padding: 0 20px;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .main-tab {
+            padding: 10px 20px;
+            color: var(--white);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .main-tab:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .main-tab.active {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .main-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary-color);
+        }
+
+        /* ==================== SUBMENU BAR ==================== */
+        .submenu-bar {
+            background: var(--light-bg);
+            border-bottom: 1px solid var(--border-color);
+            display: none;
+            position: fixed;
+            top: 140px;
+            left: 0;
+            right: 0;
+            z-index: 1005;
+            animation: slideDown 0.3s ease;
+        }
+
+        .submenu-bar.active {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .submenu-container {
+            max-width: 1920px;
+            margin: 0 auto;
+            padding: 10px 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .submenu-btn,
+        .submenu-button {
+            padding: 8px 16px;
+            background: var(--white);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .submenu-btn:hover,
+        .submenu-button:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .submenu-btn.active,
+        .submenu-button.active {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        /* ==================== MAIN CONTENT AREA ==================== */
+        .main-content {
+            position: fixed;
+            top: 240px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+        }
+
+        .content-panel {
+            display: none;
+            height: 100%;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .content-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* ==================== IFRAME CONTAINER ==================== */
+        .iframe-container {
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+        }
+
+        .module-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        /* ==================== WELCOME SCREEN ==================== */
+        .welcome-screen {
+            text-align: center;
+            padding: 100px 20px;
+            background: var(--white);
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .welcome-screen h2 {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+
+        .welcome-screen p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 40px;
+        }
+
+        .feature-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .feature-card .icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+
+        /* ==================== CATALOG RAPID ==================== */
+        .quick-catalog-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .category-card {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            cursor: pointer;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .category-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .category-card h4 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .product-count {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .primary-btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* ==================== LOADING INDICATOR ==================== */
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.98);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            z-index: 9999; /* FIX: Increased z-index for visibility */
+            transition: opacity 0.3s ease;
+            opacity: 1;
+            pointer-events: none;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none; /* FIX: Don't block interactions when hidden */
+        }
+
+        .loading-text {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* ==================== HIDDEN UTILITY CLASS ==================== */
+        .hidden {
+            display: none !important;
+        }
+
+        .spinner {
+            width: 60px; /* FIX: Larger spinner */
+            height: 60px;
+            border: 6px solid var(--light-bg);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite; /* FIX: Faster spin */
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* FIX: Prevent double-click on buttons */
+        .submenu-btn {
+            pointer-events: all;
+            transition: all 0.2s ease;
+        }
+        
+        .submenu-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .submenu-btn.loading,
+        .submenu-button.loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 1024px) {
+            .nav-container {
+                overflow-x: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .main-tab {
+                padding: 12px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .main-content {
+                top: 250px;
+            }
+        }
+
+        /* ========================================
+           RESPONSIVE DESIGN - MOBILE & TABLET
+           ======================================== */
+        
+        /* Tablets (landscape și portrait) */
+        @media screen and (max-width: 1024px) {
+            .header-container {
+                padding: 10px 15px;
+            }
+            
+            .logo-section h1 {
+                font-size: 1.2rem;
+            }
+            
+            .nav-container {
+                padding: 0 10px;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .main-tab {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+                white-space: nowrap;
+            }
+            
+            .sidebar {
+                width: 220px;
+            }
+            
+            .sidebar-header h2 {
+                font-size: 1rem;
+            }
+            
+            .menu-item {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .content-area {
+                margin-left: 220px;
+            }
+        }
+        
+        /* Mobile devices (portrait și landscape) */
+        @media screen and (max-width: 768px) {
+            body {
+                overflow-y: auto;
+            }
+            
+            .top-header {
+                position: relative;
+            }
+            
+            .header-container {
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px;
+            }
+            
+            .logo-section h1 {
+                font-size: 1rem;
+            }
+            
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+                flex-wrap: wrap;
+            }
+            
+            .user-info {
+                font-size: 0.85rem;
+                padding: 6px 12px;
+            }
+            
+            .logout-btn {
+                padding: 6px 15px;
+                font-size: 0.85rem;
+            }
+            
+            .main-nav {
+                position: relative;
+                top: 0;
+            }
+            
+            .nav-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                padding: 0 5px;
+            }
+            
+            .main-tab {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+            }
+            
+            .app-container {
+                flex-direction: column;
+                margin-top: 0;
+            }
+            
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                max-height: 200px;
+                overflow-y: auto;
+            }
+            
+            .sidebar-header {
+                padding: 10px;
+            }
+            
+            .sidebar-header h2 {
+                font-size: 0.95rem;
+            }
+            
+            .menu-item {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+            }
+            
+            .content-area {
+                margin-left: 0;
+                margin-top: 0;
+                height: calc(100vh - 200px);
+                overflow-y: auto;
+            }
+            
+            .module-iframe {
+                height: 100%;
+                min-height: 500px;
+            }
+        }
+        
+        /* Small mobile devices */
+        @media screen and (max-width: 480px) {
+            .header-container {
+                padding: 8px;
+            }
+            
+            .logo-section h1 {
+                font-size: 0.9rem;
+            }
+            
+            .lang-btn {
+                padding: 6px 10px;
+                font-size: 0.8rem;
+            }
+            
+            .main-tab {
+                padding: 6px 10px;
+                font-size: 0.75rem;
+            }
+            
+            .sidebar {
+                max-height: 150px;
+            }
+            
+            .menu-item {
+                padding: 6px 10px;
+                font-size: 0.8rem;
+            }
+            
+            .content-area {
+                height: calc(100vh - 150px);
+            }
+        }
+        
+        /* Landscape orientation fixes */
+        @media screen and (max-height: 500px) and (orientation: landscape) {
+            .sidebar {
+                max-height: 120px;
+            }
+            
+            .content-area {
+                height: calc(100vh - 120px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- TOP HEADER -->
+    <div class="top-header">
+        <div class="header-container">
+            <div class="logo-section">
+                <h1>🏠 <span id="app-title">Restaurant Management System v4.0</span></h1>
+            </div>
+            <div class="header-actions">
+                <div class="lang-switch">
+                    <button class="lang-btn active" data-lang="ro" onclick="switchLanguage('ro')" data-translate="ui.ro">RO</button>
+                    <button class="lang-btn" data-lang="en" onclick="switchLanguage('en')" data-translate="ui.en">EN</button>
+                </div>
+                <div class="user-info">
+                    <span>👤</span>
+                    <span id="username">Admin</span>
+                </div>
+                <button class="logout-btn" onclick="logout()">
+                    <span id="logout-text">🔓 Deconectare</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN NAVIGATION TABS -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <button class="main-tab" data-tab="welcome" onclick="switchMainTab('welcome')">
+                🏠 <span class="tab-text" data-translate="ui.acasa">Acasă</span>
+            </button>
+            <button class="main-tab active" data-tab="administrare" onclick="switchMainTab('administrare')">
+                📋 <span class="tab-text">Administrare</span>
+            </button>
+            <button class="main-tab" data-tab="stocuri" onclick="switchMainTab('stocuri')">
+                📦 <span class="tab-text">Stocuri</span>
+            </button>
+            <button class="main-tab" data-tab="financiar" onclick="switchMainTab('financiar')">
+                💰 <span class="tab-text">Financiar</span>
+            </button>
+            <button class="main-tab" data-tab="operatiuni" onclick="switchMainTab('operatiuni')">
+                🔧 <span class="tab-text" data-translate="ui.operatiuni">Operațiuni</span>
+            </button>
+            <button class="main-tab" data-tab="raportare" onclick="switchMainTab('raportare')">
+                📊 <span class="tab-text">Raportare</span>
+            </button>
+            <button class="main-tab" data-tab="configurari" onclick="switchMainTab('configurari')">
+                ⚙️ <span class="tab-text" data-translate="ui.configurari">Configurări</span>
+            </button>
+            <button class="main-tab" data-tab="parteneri" onclick="switchMainTab('parteneri')">
+                📢 <span class="tab-text" data-translate="ui.marketing_&_clienti">Marketing & Clienți</span>
+            </button>
+            <button class="main-tab" data-tab="import-export" onclick="switchMainTab('import-export')">
+                📥📤 <span class="tab-text">Import/Export</span>
+            </button>
+            <button class="main-tab" data-tab="nomenclatoare" onclick="switchMainTab('nomenclatoare')">
+                📚 <span class="tab-text">Nomenclatoare</span>
+            </button>
+            <button class="main-tab" data-tab="ajutor" onclick="switchMainTab('ajutor')">
+                ❓ <span class="tab-text">Ajutor</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- SUBMENU BAR (ADMINISTRARE) - INSTANT SWITCHING -->
+    <div id="submenu-administrare" class="submenu-bar active">
+        <div class="submenu-container">
+            <!-- Existente -->
+            <button class="submenu-btn" onclick="loadModule('catalog-produse')">📋 <span data-translate="catalog.catalog_produse">Catalog Produse</span></button>
+            <button class="submenu-btn" onclick="loadModule('gestionare-meniu')">🍽️ <span data-translate="ui.gestionare_meniu">Gestionare Meniu</span></button>
+            <button class="submenu-btn" onclick="loadModule('plan-locatie')">🗺️ <span data-translate="ui.plan_locatie">Plan Locație</span></button>
+            <button class="submenu-btn" onclick="loadModule('personal')">👥 <span>Personal & PIN-uri</span></button>
+            <button class="submenu-btn" onclick="loadModule('promotii')">⏰ <span>Happy Hour</span></button>
+            <button class="submenu-btn" onclick="loadModule('automatizari')">🤖 <span data-translate="ui.arhiva_&_automatizari">Arhivă & Automatizări</span></button>
+            <button class="submenu-btn" onclick="loadModule('dashboard')">📊 <span>Dashboard Live</span></button>
+            
+            <!-- NOI - ADMINISTRARE -->
+            <button class="submenu-btn" onclick="loadModule('rezervari')">📅 <span data-translate="ui.rezervari_avansate">Rezervări Avansate</span></button>
+            <button class="submenu-btn" onclick="loadModule('top-products')">📊 <span>Top Products & Analytics</span></button>
+        </div>
+    </div>
+
+    <!-- SUBMENU BAR (STOCURI) - INSTANT SWITCHING -->
+    <div id="submenu-stocuri" class="submenu-bar">
+        <div class="submenu-container">
+            <!-- React Modules (NEW!) -->
+            <button class="submenu-btn" onclick="loadModule('ingrediente')">🥕 <span>Ingrediente</span></button>
+            <button class="submenu-btn" onclick="loadModule('alergeni')">⚠️ <span>Alergeni</span></button>
+            <button class="submenu-btn" onclick="loadModule('stocuri')">📦 <span>Stocuri</span></button>
+            <button class="submenu-btn" onclick="loadModule('retete')">📋 <span data-translate="ui.retete">Rețete</span></button>
+            <button class="submenu-btn" onclick="loadModule('fise-tehnice')">📄 <span data-translate="ui.fise_tehnice">Fișe Tehnice</span></button>
+            
+            <!-- Legacy -->
+            <button class="submenu-btn" onclick="loadModule('nir')">📦 <span>NIR</span></button>
+            <button class="submenu-btn" onclick="loadModule('inventar')">📋 <span>Inventar Zilnic/Lunar</span></button>
+            <button class="submenu-btn" onclick="loadModule('transferuri')">🔄 <span>Transferuri Gestiuni</span></button>
+            <button class="submenu-btn" onclick="loadModule('multi-inventory')">🏢 <span>Inventar Multi-Gestiune</span></button>
+            <button class="submenu-btn" onclick="loadModule('portion-control')">⚖️ <span>Portion Control</span></button>
+            <button class="submenu-btn" onclick="loadModule('etichete')">🏷️ <span>Etichete Produse</span></button>
+            <button class="submenu-btn" onclick="loadModule('pierderi')">🗑️ <span>Pierderi & Waste Management</span></button>
+            <button class="submenu-btn" data-module="furnizori" onclick="loadModule('furnizori')">🏢 <span>Furnizori</span></button>
+            <button class="submenu-btn" data-module="comenzi-furnizori" onclick="loadModule('comenzi-furnizori')">📦 <span>Comenzi Furnizori</span></button>
+        </div>
+    </div>
+
+    <!-- SUBMENU BAR (FINANCIAR) - INSTANT SWITCHING -->
+    <div id="submenu-financiar" class="submenu-bar">
+        <div class="submenu-container">
+            <!-- Existente -->
+            <button class="submenu-btn" onclick="loadModule('comenzi')">🍽️ <span data-translate="ui.comenzi_&_vinzari">Comenzi & Vânzări</span></button>
+            <button class="submenu-btn" onclick="loadModule('rapoarte-fiscale')">📊 <span>Rapoarte Fiscale</span></button>
+            <button class="submenu-btn" onclick="loadModule('analytics')">📈 <span>Analytics Avansat</span></button>
+            <button class="submenu-btn" onclick="loadModule('analiza-anulari')">📊 <span data-translate="ui.analiza_anulari">Analiză Anulări</span></button>
+            
+            <!-- NOI - FINANCIAR -->
+            <button class="submenu-btn" onclick="loadModule('casa-marcat')">💰 <span data-translate="ui.casa_de_marcat">Casa de Marcat</span></button>
+            <button class="submenu-btn" onclick="loadModule('facturi')">📄 <span>Facturi & Documente</span></button>
+            <button class="submenu-btn" onclick="loadModule('vouchere')">🎫 <span>Vouchere & Bonuri Valorice</span></button>
+            <button class="submenu-btn" onclick="loadModule('metode-plata')">💳 <span data-translate="ui.metode_de_plata">Metode de Plată</span></button>
+            <button class="submenu-btn" onclick="loadModule('costuri-preturi')">💵 <span data-translate="ui.costuri_&_preturi">Costuri & Prețuri</span></button>
+            <button class="submenu-btn" onclick="loadModule('anaf')">🏛️ <span>ANAF Integration</span></button>
+        </div>
+    </div>
+
+    <!-- SUBMENU BAR (OPERAȚIUNI) - NOI TAB -->
+    <div id="submenu-operatiuni" class="submenu-bar">
+        <div class="submenu-container">
+            <button class="submenu-btn" onclick="loadModule('ospatari')">👔 <span data-translate="ui.personal_&_ospatari">Personal & Ospătari</span></button>
+            <button class="submenu-btn" onclick="loadModule('queue-monitor')">📊 <span>Monitor Cozi Comenzi</span></button>
+            <button class="submenu-btn" onclick="loadModule('delivery')">🚚 <span>Comenzi Delivery</span></button>
+            <button class="submenu-btn" onclick="loadModule('program-orar')">⏰ <span>Program & Orar</span></button>
+        </div>
+    </div>
+
+    <!-- SUBMENU BAR (RAPORTARE) - NOI TAB -->
+    <div id="submenu-raportare" class="submenu-bar">
+        <div class="submenu-container">
+            <button class="submenu-btn" onclick="loadModule('dashboard-executiv')">📊 <span>Dashboard Executiv</span></button>
+            <button class="submenu-btn" onclick="loadModule('rapoarte-vanzari')">📈 <span data-translate="ui.rapoarte_vinzari">Rapoarte Vânzări</span></button>
+            <button class="submenu-btn" onclick="loadModule('rapoarte-personal')">👥 <span>Rapoarte Personal</span></button>
+            <button class="submenu-btn" onclick="loadModule('rapoarte-stoc')">📦 <span>Rapoarte Stoc</span></button>
+            <button class="submenu-btn" onclick="loadModule('rapoarte-financiare')">💰 <span>Rapoarte Financiare</span></button>
+            <button class="submenu-btn" onclick="loadModule('variance-reporting')">📉 <span>Variance Reporting</span></button>
+            <button class="submenu-btn" onclick="loadModule('risk-alerts')">⚠️ <span>Stock & Risk Alerts</span></button>
+            <button class="submenu-btn" onclick="loadModule('feedback-clienti')">⭐ <span data-translate="ui.feedback_clienti">Feedback Clienți</span></button>
+            <button class="submenu-btn" onclick="loadModule('audit')">🔍 <span>Audit & Istoric</span></button>
+        </div>
+    </div>
+
+    <!-- SUBMENU BAR (CONFIGURĂRI) - NOI TAB -->
+    <div id="submenu-configurari" class="submenu-bar">
+        <div class="submenu-container">
+            <button class="submenu-btn" onclick="loadModule('setari-generale')">⚙️ <span data-translate="ui.setari_generale">Setări Generale</span></button>
+            <button class="submenu-btn" onclick="loadModule('imprimante')">🖨️ <span>Imprimante & Periferice</span></button>
+            <button class="submenu-btn" onclick="loadModule('integrari')">🔗 <span data-translate="ui.integrari">Integrări</span></button>
+            <button class="submenu-btn" onclick="loadModule('utilizatori')">👤 <span>Utilizatori & Permisiuni</span></button>
+            <button class="submenu-btn" onclick="loadModule('notificari')">🔔 <span data-translate="ui.notificari_&_alerte">Notificări & Alerte</span></button>
+            <!-- ❌ ELIMINAT: Traduceri (DUPLICAT - există în Administrare) -->
+            <button class="submenu-btn" onclick="loadModule('localizare')">🌍 <span>Localizare</span></button>
+            <button class="submenu-btn" onclick="loadModule('personalizare-ui')">🎨 <span>Personalizare UI</span></button>
+        </div>
+    </div>
+
+    <!-- SUBMENU BAR (MARKETING & CLIENȚI) - INSTANT SWITCHING -->
+    <div id="submenu-parteneri" class="submenu-bar">
+        <div class="submenu-container">
+            <button class="submenu-btn" onclick="loadModule('marketing-clienti')">📢 <span data-translate="ui.marketing_&_clienti">Marketing & Clienți</span></button>
+            <button class="submenu-btn" onclick="loadModule('program-loialitate')">🎁 <span>Program Loialitate</span></button>
+            <button class="submenu-btn" onclick="loadModule('marketing')">🚀 <span>Campanii Marketing</span></button>
+            <button class="submenu-btn" onclick="loadModule('oferta-zilei')">⭐ <span data-translate="ui.oferta_zilei_avansata">Oferta Zilei Avansată</span></button>
+            <button class="submenu-btn" onclick="loadModule('branding')">🎨 <span>Aspect & Branding</span></button>
+        </div>
+    </div>
+
+    <!-- SUBMENU BAR (IMPORT/EXPORT) - INSTANT SWITCHING -->
+    <div id="submenu-import-export" class="submenu-bar">
+        <div class="submenu-container">
+            <button class="submenu-btn" onclick="loadModule('backup-restore')">💾 <span>Backup Database</span></button>
+            <button class="submenu-btn" onclick="loadModule('import-date')">📥 <span>Import Date</span></button>
+            <button class="submenu-btn" onclick="loadModule('export-date')">📤 <span>Export Date</span></button>
+        </div>
+    </div>
+
+    <!-- SUBMENU BAR (NOMENCLATOARE) -->
+    <div id="submenu-nomenclatoare" class="submenu-bar">
+        <div class="submenu-container">
+            <button class="submenu-btn" onclick="loadModule('unitati-masura')">📏 <span data-translate="ui.unitati_de_masura">Unități de Măsură</span></button>
+            <button class="submenu-btn" onclick="loadModule('cote-tva')">💹 <span>Cote TVA</span></button>
+        </div>
+    </div>
+
+    <!-- SUBMENU BAR (AJUTOR) -->
+    <div id="submenu-ajutor" class="submenu-bar">
+        <div class="submenu-container">
+            <button class="submenu-btn" onclick="loadModule('documentatie')">📖 <span data-translate="ui.documentatie">Documentație</span></button>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="main-content">
+        <!-- WELCOME SCREEN -->
+        <div id="content-welcome" class="content-panel active">
+            <div class="welcome-screen">
+                <h2><span id="welcome-title" data-translate="ui.bun_venit_la_restaurant_management_system_v40">Bun venit la Restaurant Management System v4.0</span></h2>
+                <p><span id="welcome-subtitle" data-translate="ui.selecteaza_un_modul_din_navigation_bar_pentru_a_in">Selectează un modul din navigation bar pentru a începe</span></p>
+                
+                <div class="feature-cards">
+                    <div class="feature-card" onclick="switchMainTab('administrare')">
+                        <div class="icon">📋</div>
+                        <h3><span>Administrare</span></h3>
+                        <p><span>Catalog, meniu, personal, loialitate (14 module)</span></p>
+                    </div>
+                    <div class="feature-card" onclick="switchMainTab('stocuri')">
+                        <div class="icon">📦</div>
+                        <h3><span>Stocuri</span></h3>
+                        <p><span>Ingrediente, NIR, etichete, furnizori (9 module)</span></p>
+                    </div>
+                    <div class="feature-card" onclick="switchMainTab('financiar')">
+                        <div class="icon">💰</div>
+                        <h3><span>Financiar</span></h3>
+                        <p><span>Casa marcat, facturi, vouchere (9 module)</span></p>
+                    </div>
+                    <div class="feature-card" onclick="switchMainTab('operatiuni')">
+                        <div class="icon">🔧</div>
+                        <h3><span data-translate="ui.operatiuni">Operațiuni</span></h3>
+                        <p><span data-translate="ui.ospatari_delivery_program_3_module">Ospătari, delivery, program (3 module)</span></p>
+                    </div>
+                    <div class="feature-card" onclick="switchMainTab('raportare')">
+                        <div class="icon">📊</div>
+                        <h3><span>Raportare</span></h3>
+                        <p><span>Dashboard executiv, audit (6 module)</span></p>
+                    </div>
+                    <div class="feature-card" onclick="switchMainTab('configurari')">
+                        <div class="icon">⚙️</div>
+                        <h3><span data-translate="ui.configurari">Configurări</span></h3>
+                        <p><span data-translate="ui.setari_imprimante_integrari_7_module">Setări, imprimante, integrări (7 module)</span></p>
+                    </div>
+                    <div class="feature-card" onclick="switchMainTab('parteneri')">
+                        <div class="icon">📢</div>
+                        <h3><span data-translate="ui.marketing_&_clienti">Marketing & Clienți</span></h3>
+                        <p><span data-translate="ui.campanii_marketing_clienti_feedback">Campanii marketing, clienți, feedback</span></p>
+                    </div>
+                    <div class="feature-card" onclick="switchMainTab('import-export')">
+                        <div class="icon">📥📤</div>
+                        <h3><span>Import/Export</span></h3>
+                        <p><span>Backup, import, export date</span></p>
+                    </div>
+                    <div class="feature-card" onclick="switchMainTab('nomenclatoare')">
+                        <div class="icon">📚</div>
+                        <h3><span>Nomenclatoare</span></h3>
+                        <p><span data-translate="ui.unitati_masura_cote_tva">Unități măsură, cote TVA</span></p>
+                    </div>
+                </div>
+                
+                <!-- CATALOG RAPID PRODUSE -->
+                <div class="quick-catalog-section">
+                    <h3 style="text-align: center; margin: 30px 0 20px; color: var(--text-dark); font-size: 1.5rem;">
+                        <span id="quick-catalog-title">📋 Catalog Rapid Produse</span>
+                    </h3>
+                    
+                    <div class="categories-grid">
+                        <div class="category-card" onclick="loadModule('catalog-produse')">
+                            <div class="category-icon">🌅</div>
+                            <h4>Mic Dejun</h4>
+                            <span class="product-count">4 produse</span>
+                        </div>
+                        <div class="category-card" onclick="loadModule('catalog-produse')">
+                            <div class="category-icon">🥘</div>
+                            <h4>Aperitive Calde</h4>
+                            <span class="product-count">6 produse</span>
+                        </div>
+                        <div class="category-card" onclick="loadModule('catalog-produse')">
+                            <div class="category-icon">🥗</div>
+                            <h4>Aperitive Reci</h4>
+                            <span class="product-count">8 produse</span>
+                        </div>
+                        <div class="category-card" onclick="loadModule('catalog-produse')">
+                            <div class="category-icon">🥣</div>
+                            <h4>Ciorbe</h4>
+                            <span class="product-count">11 produse</span>
+                        </div>
+                        <div class="category-card" onclick="loadModule('catalog-produse')">
+                            <div class="category-icon">🥙</div>
+                            <h4>Salate</h4>
+                            <span class="product-count">9 produse</span>
+                        </div>
+                        <div class="category-card" onclick="loadModule('catalog-produse')">
+                            <div class="category-icon">🍕</div>
+                            <h4>Pizza</h4>
+                            <span class="product-count">15 produse</span>
+                        </div>
+                        <div class="category-card" onclick="loadModule('catalog-produse')">
+                            <div class="category-icon">🍝</div>
+                            <h4 data-translate="categories.paste">Paste</h4>
+                            <span class="product-count">20 produse</span>
+                        </div>
+                        <div class="category-card" onclick="loadModule('catalog-produse')">
+                            <div class="category-icon">🍔</div>
+                            <h4>Fast Food</h4>
+                            <span class="product-count">18 produse</span>
+                        </div>
+                        <div class="category-card" onclick="loadModule('catalog-produse')">
+                            <div class="category-icon">🍖</div>
+                            <h4>Fel Principal</h4>
+                            <span class="product-count">41 produse</span>
+                        </div>
+                        <div class="category-card" onclick="loadModule('catalog-produse')">
+                            <div class="category-icon">🐟</div>
+                            <h4 data-translate="ui.peste_si_fructe_de_mare">Peste și Fructe de Mare</h4>
+                            <span class="product-count">10 produse</span>
+                        </div>
+                        <div class="category-card" onclick="loadModule('catalog-produse')">
+                            <div class="category-icon">🍟</div>
+                            <h4>Garnituri</h4>
+                            <span class="product-count">11 produse</span>
+                        </div>
+                        <div class="category-card" onclick="loadModule('catalog-produse')">
+                            <div class="category-icon">🍰</div>
+                            <h4>Deserturi</h4>
+                            <span class="product-count">14 produse</span>
+                        </div>
+                        <div class="category-card" onclick="loadModule('catalog-produse')">
+                            <div class="category-icon">🍹</div>
+                            <h4 data-translate="ui.bauturi_si_coctailuri">Băuturi și Coctailuri</h4>
+                            <span class="product-count">105 produse</span>
+                        </div>
+                        <div class="category-card" onclick="loadModule('catalog-produse')">
+                            <div class="category-icon">🥤</div>
+                            <h4 data-translate="ui.racoritoare">Răcoritoare</h4>
+                            <span class="product-count">30 produse</span>
+                        </div>
+                        <div class="category-card" onclick="loadModule('catalog-produse')">
+                            <div class="category-icon">☕</div>
+                            <h4 data-translate="ui.cafea/ciocolata/ceai">Cafea/Ciocolată/Ceai</h4>
+                            <span class="product-count">19 produse</span>
+                        </div>
+                        <div class="category-card" onclick="loadModule('catalog-produse')">
+                            <div class="category-icon">🍽️</div>
+                            <h4>Platouri</h4>
+                            <span class="product-count">2 produse</span>
+                        </div>
+                        <div class="category-card" onclick="loadModule('catalog-produse')">
+                            <div class="category-icon">🥗</div>
+                            <h4 data-translate="ui.salate_insotitoare">Salate Însoțitoare</h4>
+                            <span class="product-count">8 produse</span>
+                        </div>
+                        <div class="category-card" onclick="loadModule('catalog-produse')">
+                            <div class="category-icon">🍞</div>
+                            <h4 data-translate="ui.sosuri_si_piine">Sosuri și Pâine</h4>
+                            <span class="product-count">11 produse</span>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button class="primary-btn" onclick="switchMainTab('administrare'); loadModule('catalog-produse');">
+                            <span id="view-full-catalog">Vezi Catalogul Complet</span> →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- MODULE CONTAINERS (with PRELOADED iframes for INSTANT switching) -->
+        <div id="module-container" class="content-panel">
+            <div class="iframe-container">
+                <div class="loading-overlay hidden" id="loading-overlay">
+                    <div class="spinner"></div>
+                    <div class="loading-text">Se încarcă modulul...</div>
+                </div>
+                
+                <!-- LAZY-LOADED IFRAMES - Load only when needed! -->
+                <!-- Each iframe has data-src instead of src for lazy loading -->
+                
+                <!-- ==================== ADMINISTRARE (admin.html) ==================== -->
+                <!-- Mapare corectă la secțiunile din admin.html -->
+                
+                <iframe id="iframe-catalog-produse" class="module-iframe hidden" 
+                        data-src="/react-modules/catalog/index.html" 
+                        title="Catalog Produse (React Module)">
+                </iframe>
+                
+                <iframe id="iframe-gestionare-meniu" class="module-iframe hidden" 
+                        data-src="/admin.html?embedded=true" 
+                        data-section="menu" 
+                        title="Gestionare Meniu">
+                </iframe>
+                
+                <iframe id="iframe-tables" class="module-iframe hidden" 
+                        data-src="/admin.html?embedded=true" 
+                        data-section="waiters" 
+                        title="Plan Locație (Waiters)">
+                </iframe>
+                
+                <iframe id="iframe-pins" class="module-iframe hidden" 
+                        data-src="/admin.html?embedded=true" 
+                        data-section="pins" 
+                        title="Personal & PIN-uri">
+                </iframe>
+                
+                <iframe id="iframe-promotii" class="module-iframe hidden" 
+                        data-src="/admin-advanced.html" 
+                        data-tab="happy-hour" 
+                        title="Happy Hour">
+                </iframe>
+                
+                <iframe id="iframe-traduceri" class="module-iframe hidden" 
+                        data-src="/admin.html?embedded=true" 
+                        data-section="missingTranslations" 
+                        title="Traduceri în Așteptare">
+                </iframe>
+                
+                <iframe id="iframe-automatizari" class="module-iframe hidden" 
+                        data-src="/admin.html?embedded=true" 
+                        data-section="archive" 
+                        title="Arhivă Comenzi & Automatizări">
+                </iframe>
+                
+                <iframe id="iframe-dashboard" class="module-iframe hidden" 
+                        data-src="/admin.html?embedded=true" 
+                        data-section="dashboard" 
+                        title="Dashboard Live">
+                </iframe>
+                
+                <!-- ==================== STOCURI (React Modules) ==================== -->
+                
+                <iframe id="iframe-ingrediente" class="module-iframe hidden" 
+                        data-src="/react-modules/ingrediente/index.html" 
+                        title="Ingrediente (React Module)">
+                </iframe>
+                
+                <iframe id="iframe-alergeni" class="module-iframe hidden" 
+                        data-src="/react-modules/alergeni/index.html" 
+                        title="Alergeni (React Module)">
+                </iframe>
+                
+                <iframe id="iframe-stocuri" class="module-iframe hidden" 
+                        data-src="/admin.html?embedded=true" 
+                        data-section="stock"
+                        data-subsection="ingredients" 
+                        title="Stocuri - Ingrediente">
+                </iframe>
+                
+                <iframe id="iframe-retete" class="module-iframe hidden" 
+                        data-src="/admin.html?embedded=true" 
+                        data-section="stock"
+                        data-subsection="recipes" 
+                        title="Rețete">
+                </iframe>
+                
+                <iframe id="iframe-fise-tehnice" class="module-iframe hidden" 
+                        data-src="/admin.html?embedded=true" 
+                        data-section="stock"
+                        data-subsection="recipes"
+                        data-action="openFTP"
+                        title="Fișe Tehnice">
+                </iframe>
+                
+                <!-- ==================== FINANCIAR ==================== -->
+                <!-- Comenzi din admin.html -->
+                <iframe id="iframe-comenzi" class="module-iframe hidden" 
+                        data-src="/admin.html?embedded=true" 
+                        data-section="orders" 
+                        title="Comenzi & Vânzări">
+                </iframe>
+                
+                <!-- NIR și Rapoarte din admin-advanced.html (Bootstrap tabs) -->
+                <iframe id="iframe-nir" class="module-iframe hidden" 
+                        data-src="/admin-advanced.html" 
+                        data-tab="inventory" 
+                        title="NIR (Inventar)">
+                </iframe>
+                
+                <iframe id="iframe-rapoarte" class="module-iframe hidden" 
+                        data-src="/admin-advanced.html" 
+                        data-tab="reports" 
+                        title="Rapoarte Fiscale">
+                </iframe>
+                
+                <iframe id="iframe-analytics" class="module-iframe hidden" 
+                        data-src="/admin-advanced.html" 
+                        data-tab="dashboard" 
+                        title="Analytics Avansat (Advanced Dashboard)">
+                </iframe>
+                
+                <iframe id="iframe-analiza-anulari" class="module-iframe hidden" 
+                        data-src="/admin.html?embedded=true" 
+                        data-section="cancellationAnalytics" 
+                        title="Analiză Anulări">
+                </iframe>
+                
+                <!-- ==================== MARKETING & CLIENȚI ==================== -->
+                <!-- ❌ ELIMINAT: iframe-loialitate (DUPLICAT - există în Administrare, linia 758) -->
+                
+                <iframe id="iframe-marketing-clienti" class="module-iframe hidden" 
+                        data-src="/admin-advanced.html" 
+                        data-tab="marketing" 
+                        title="Marketing & Clienți">
+                </iframe>
+                
+                <!-- ==================== IMPORT/EXPORT ==================== -->
+                <!-- ✅ CORECTAT: Backup folosește secțiunea archive care conține controale backup -->
+                
+                <iframe id="iframe-backup" class="module-iframe hidden" 
+                        data-src="/admin.html?embedded=true" 
+                        data-section="archive" 
+                        title="Backup Database & Arhivă">
+                </iframe>
+                
+                <!-- ==================== PLACEHOLDER IFRAMES - NOI MODULE ==================== -->
+                
+                <!-- ADMINISTRARE - NOI -->
+                <iframe id="iframe-vouchere" class="module-iframe hidden" 
+                        data-src="/admin-modules/vouchere.html" 
+                        title="Vouchere & Bonuri Valorice - White Label">
+                </iframe>
+                <iframe id="iframe-etichete" class="module-iframe hidden" 
+                        data-src="/admin-modules/etichete-produse.html" 
+                        title="Etichete Produse - White Label">
+                </iframe>
+                <iframe id="iframe-rezervari" class="module-iframe hidden" 
+                        data-src="/admin.html?embedded=true" 
+                        data-section="reservations" 
+                        title="Rezervări Avansate">
+                </iframe>
+                <iframe id="iframe-top-products" class="module-iframe hidden" 
+                        data-src="/admin.html?embedded=true" 
+                        data-section="topProducts" 
+                        title="Top Products & Analytics">
+                </iframe>
+                <iframe id="iframe-marketing" class="module-iframe hidden" 
+                        data-src="/coming-soon.html?module=Campanii%20Marketing" 
+                        title="Marketing">
+                </iframe>
+                <iframe id="iframe-oferta-zilei" class="module-iframe hidden" 
+                        data-src="/admin.html?embedded=true" 
+                        data-section="dailyOffer" 
+                        title="Oferta Zilei">
+                </iframe>
+                <iframe id="iframe-branding" class="module-iframe hidden" 
+                        data-src="/admin.html?embedded=true" 
+                        data-section="productDisplay" 
+                        title="Aspect & Afișare Produse">
+                </iframe>
+                
+                <!-- STOCURI - NOI -->
+                <iframe id="iframe-inventar" class="module-iframe hidden" 
+                        data-src="/admin-advanced.html" 
+                        data-tab="inventory"
+                        data-scroll-to="inventar-avansat" 
+                        title="Inventar Zilnic/Lunar (Avansat)">
+                </iframe>
+                
+                <!-- ✅ NOI: Tab-uri Stocuri din admin-advanced neutilizate -->
+                <iframe id="iframe-transferuri" class="module-iframe hidden" 
+                        data-src="/admin-advanced.html" 
+                        data-tab="transfers" 
+                        title="Transferuri Gestiuni">
+                </iframe>
+                <iframe id="iframe-multi-inventory" class="module-iframe hidden" 
+                        data-src="/admin-advanced.html" 
+                        data-tab="multi-inventory" 
+                        title="Inventar Multi-Gestiune">
+                </iframe>
+                <iframe id="iframe-portion-control" class="module-iframe hidden" 
+                        data-src="/admin-advanced.html" 
+                        data-tab="portion-control" 
+                        title="Portion Control">
+                </iframe>
+                <iframe id="iframe-pierderi" class="module-iframe hidden" 
+                        data-src="/react-modules/waste/index.html" 
+                        title="Waste Management - ETAPA 2">
+                </iframe>
+                <iframe id="iframe-furnizori" class="module-iframe hidden" 
+                        data-src="/react-modules/furnizori/index.html" 
+                        title="Furnizori - ETAPA 2">
+                </iframe>
+                <iframe id="iframe-comenzi-furnizori" class="module-iframe hidden" 
+                        data-src="/react-modules/comenzi-furnizori/index.html" 
+                        title="Comenzi Furnizori">
+                </iframe>
+                <iframe id="iframe-alergeni" class="module-iframe hidden" 
+                        data-src="/react-modules/alergeni/index.html" 
+                        title="Alergeni UE 1169/2011">
+                </iframe>
+                
+                <!-- FINANCIAR - NOI -->
+                <iframe id="iframe-casa-marcat" class="module-iframe hidden" 
+                        data-src="/react-modules/casa-marcat/index.html" 
+                        title="Casa de Marcat Fiscală">
+                </iframe>
+                <iframe id="iframe-facturi" class="module-iframe hidden" 
+                        data-src="/admin-advanced.html" 
+                        data-tab="fiscal" 
+                        title="Facturi & Documente Fiscale">
+                </iframe>
+                <iframe id="iframe-metode-plata" class="module-iframe hidden" 
+                        data-src="/coming-soon.html?module=Metode%20de%20Plată" 
+                        title="Metode Plată">
+                </iframe>
+                <iframe id="iframe-costuri-preturi" class="module-iframe hidden" 
+                        data-src="/admin-modules/food-cost.html" 
+                        title="Food Cost & Profitabilitate - White Label">
+                </iframe>
+                <iframe id="iframe-anaf" class="module-iframe hidden" 
+                        data-src="/react-modules/anaf/index.html" 
+                        title="ANAF - ETAPA 3">
+                </iframe>
+                
+                <!-- OPERAȚIUNI - NOI TAB -->
+                <iframe id="iframe-ospatari" class="module-iframe hidden" 
+                        data-src="/admin.html?embedded=true" 
+                        data-section="waiters" 
+                        title="Personal & Ospătari">
+                </iframe>
+                
+                <!-- ✅ NOU: Queue Monitor din admin-advanced -->
+                <iframe id="iframe-queue-monitor" class="module-iframe hidden" 
+                        data-src="/admin-advanced.html" 
+                        data-tab="queue-monitor" 
+                        title="Monitor Cozi Comenzi">
+                </iframe>
+                <iframe id="iframe-delivery" class="module-iframe hidden" 
+                        data-src="/coming-soon.html?module=Comenzi%20Delivery" 
+                        title="Delivery">
+                </iframe>
+                <iframe id="iframe-program-orar" class="module-iframe hidden" 
+                        data-src="/react-modules/program-orar/index.html" 
+                        title="Program & Orar">
+                </iframe>
+                
+                <!-- RAPORTARE - NOI TAB -->
+                <iframe id="iframe-dashboard-executiv" class="module-iframe hidden" 
+                        data-src="/react-modules/dashboard-executiv/index.html" 
+                        title="Dashboard Executiv">
+                </iframe>
+                <iframe id="iframe-rapoarte-vanzari" class="module-iframe hidden" 
+                        data-src="/react-modules/rapoarte-vanzari/index.html" 
+                        title="Rapoarte Vânzări">
+                </iframe>
+                <iframe id="iframe-rapoarte-personal" class="module-iframe hidden" 
+                        data-src="/react-modules/rapoarte-personal/index.html" 
+                        title="Rapoarte Personal">
+                </iframe>
+                <iframe id="iframe-rapoarte-stoc" class="module-iframe hidden" 
+                        data-src="/react-modules/rapoarte-stoc/index.html" 
+                        title="Rapoarte Stoc">
+                </iframe>
+                <iframe id="iframe-rapoarte-financiare" class="module-iframe hidden" 
+                        data-src="/react-modules/rapoarte-financiare/index.html" 
+                        title="Rapoarte Financiare">
+                </iframe>
+                <iframe id="iframe-audit" class="module-iframe hidden" 
+                        data-src="/coming-soon.html?module=Audit%20%26%20Istoric" 
+                        title="Audit">
+                </iframe>
+                
+                <!-- ✅ NOI: Tab-uri din admin-advanced neutilizate -->
+                <iframe id="iframe-variance-reporting" class="module-iframe hidden" 
+                        data-src="/admin-advanced.html" 
+                        data-tab="variance-reporting" 
+                        title="Variance Reporting">
+                </iframe>
+                <iframe id="iframe-risk-alerts" class="module-iframe hidden" 
+                        data-src="/admin-advanced.html" 
+                        data-tab="risk-alerts" 
+                        title="Stock & Risk Alerts">
+                </iframe>
+                <iframe id="iframe-feedback-clienti" class="module-iframe hidden" 
+                        data-src="/admin-advanced.html" 
+                        data-tab="feedback" 
+                        title="Feedback Clienți">
+                </iframe>
+                
+                <!-- CONFIGURĂRI - NOI TAB -->
+                <iframe id="iframe-setari-generale" class="module-iframe hidden" 
+                        data-src="/admin-advanced.html" 
+                        data-tab="restaurant-config" 
+                        title="Setări Restaurant">
+                </iframe>
+                <iframe id="iframe-imprimante" class="module-iframe hidden" 
+                        data-src="/coming-soon.html?module=Imprimante%20%26%20Periferice" 
+                        title="Imprimante">
+                </iframe>
+                <iframe id="iframe-integrari" class="module-iframe hidden" 
+                        data-src="/coming-soon.html?module=Integrări" 
+                        title="Integrări">
+                </iframe>
+                <iframe id="iframe-utilizatori" class="module-iframe hidden" 
+                        data-src="/coming-soon.html?module=Utilizatori%20%26%20Permisiuni" 
+                        title="Utilizatori">
+                </iframe>
+                <iframe id="iframe-notificari" class="module-iframe hidden" 
+                        data-src="/admin.html?embedded=true" 
+                        data-action="toggleMessagesModal" 
+                        title="Notificări & Alerte (Mesaje)">
+                </iframe>
+                <iframe id="iframe-localizare" class="module-iframe hidden" 
+                        data-src="/coming-soon.html?module=Localizare" 
+                        title="Localizare">
+                </iframe>
+                <iframe id="iframe-personalizare-ui" class="module-iframe hidden" 
+                        data-src="/coming-soon.html?module=Personalizare%20UI" 
+                        title="Personalizare UI">
+                </iframe>
+                
+                <!-- IMPORT/EXPORT - NOI -->
+                <iframe id="iframe-import-date" class="module-iframe hidden" 
+                        data-src="/react-modules/import-export/index.html" 
+                        title="Import Date">
+                </iframe>
+                <iframe id="iframe-export-date" class="module-iframe hidden" 
+                        data-src="/react-modules/import-export/index.html" 
+                        title="Export Date">
+                </iframe>
+                
+                <!-- NOMENCLATOARE - NOI -->
+                <iframe id="iframe-unitati-masura" class="module-iframe hidden" 
+                        data-src="/react-modules/nomenclatoare/index.html" 
+                        title="Unități Măsură & Cote TVA">
+                </iframe>
+                <iframe id="iframe-cote-tva" class="module-iframe hidden" 
+                        data-src="/react-modules/nomenclatoare/index.html" 
+                        title="Cote TVA & Unități Măsură">
+                </iframe>
+                
+                <!-- AJUTOR -->
+                <iframe id="iframe-documentatie" class="module-iframe hidden" 
+                        data-src="/setup-guide.html" 
+                        title="Documentație & Ghid Setup">
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== GLOBAL STATE ====================
+        let currentLang = localStorage.getItem('selectedLanguage') || 'ro'; // ✅ IMPORTANT: Sincronizare cu localStorage
+        let currentMainTab = 'administrare';
+        let currentModule = null;
+
+        // ==================== TRANSLATIONS ====================
+        const translations = {
+            ro: {
+                appTitle: 'Restaurant Management System v4.0',
+                logout: '🔓 Deconectare',
+                welcomeTitle: 'Bun venit la Restaurant Management System v4.0',
+                welcomeSubtitle: 'Selectează un modul din navigation bar pentru a începe',
+            },
+            en: {
+                appTitle: 'Restaurant Management System v4.0',
+                logout: '🔓 Logout',
+                welcomeTitle: 'Welcome to Restaurant Management System v4.0',
+                welcomeSubtitle: 'Select a module from the navigation bar to begin',
+            }
+        };
+
+        // ==================== LANGUAGE SWITCH ====================
+        function switchLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('selectedLanguage', lang); // ✅ IMPORTANT: Salvează în localStorage pentru sincronizare
+            localStorage.setItem('language', lang); // Păstrează și pentru compatibilitate
+            
+            // Update button states
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+
+            // Update translations
+            updateTranslations();
+            
+            // Notify iframe if loaded
+            const iframe = document.getElementById('module-iframe');
+            if (iframe.src !== 'about:blank') {
+                try {
+                    iframe.contentWindow.postMessage({ type: 'languageChange', lang }, '*');
+                } catch (e) {
+                    console.log('Could not send message to iframe:', e);
+                }
+            }
+        }
+
+        function updateTranslations() {
+            const t = translations[currentLang];
+            
+            // Update header
+            document.getElementById('app-title').textContent = t.appTitle;
+            document.getElementById('logout-text').textContent = t.logout;
+            
+            // Update welcome screen
+            const welcomeTitle = document.getElementById('welcome-title');
+            const welcomeSubtitle = document.getElementById('welcome-subtitle');
+            if (welcomeTitle) welcomeTitle.textContent = t.welcomeTitle;
+            if (welcomeSubtitle) welcomeSubtitle.textContent = t.welcomeSubtitle;
+        }
+
+        // ==================== MAIN TAB SWITCHING ====================
+        function switchMainTab(tabName) {
+            const resolvedTab = resolveMainTab(tabName);
+            currentMainTab = resolvedTab;
+
+            // 💾 PERSISTENȚĂ: Salvează ultimul main tab vizitat (în formă rezolvată)
+            localStorage.setItem('adminV4_lastMainTab', resolvedTab);
+
+            // Update tab states
+            document.querySelectorAll('.main-tab').forEach(tab => {
+                const tabValue = tab.dataset.tab;
+                const tabResolved = resolveMainTab(tabValue);
+                tab.classList.toggle('active', tabResolved === resolvedTab);
+            });
+
+            // Hide all submenus
+            document.querySelectorAll('.submenu-bar').forEach(submenu => {
+                submenu.classList.remove('active');
+            });
+
+            // Hide all content panels
+            document.querySelectorAll('.content-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+
+            if (tabName === 'welcome' || resolvedTab === 'welcome') {
+                const welcomePanel = document.getElementById('content-welcome');
+                if (welcomePanel) {
+                    welcomePanel.classList.add('active');
+                }
+            } else {
+                const submenu = document.getElementById(`submenu-${resolvedTab}`);
+                if (submenu) {
+                    submenu.classList.add('active');
+                }
+            }
+
+            updateSubmenuButtonClasses(resolvedTab);
+
+            if (tabName !== 'welcome' && resolvedTab !== 'welcome') {
+                highlightActiveModuleButton(currentModule);
+            }
+        }
+
+        // ==================== MODULE MAPPING ====================
+        const moduleIframeMap = {
+            // ADMINISTRARE - Existente
+            'catalog-produse': 'iframe-catalog-produse',
+            'gestionare-meniu': 'iframe-gestionare-meniu',
+            'plan-locatie': 'iframe-tables',
+            'personal': 'iframe-pins',
+            'promotii': 'iframe-promotii',
+            'traduceri': 'iframe-traduceri',
+            'automatizari': 'iframe-automatizari',
+            'dashboard': 'iframe-dashboard',
+            
+            // ADMINISTRARE - NOI
+            'vouchere': 'iframe-vouchere',
+            'etichete': 'iframe-etichete',
+            'rezervari': 'iframe-rezervari',
+            'top-products': 'iframe-top-products',
+            'marketing': 'iframe-marketing',
+            'oferta-zilei': 'iframe-oferta-zilei',
+            'branding': 'iframe-branding',
+            
+            // STOCURI - React Modules
+            'ingrediente': 'iframe-ingrediente',
+            'alergeni': 'iframe-alergeni',
+            'stocuri': 'iframe-stocuri',
+            'retete': 'iframe-retete',
+            'fise-tehnice': 'iframe-fise-tehnice',
+            'nir': 'iframe-nir',
+            
+            // STOCURI - NOI (Legacy)
+            'inventar': 'iframe-inventar',
+            'transferuri': 'iframe-transferuri',
+            'multi-inventory': 'iframe-multi-inventory',
+            'portion-control': 'iframe-portion-control',
+            'pierderi': 'iframe-pierderi',
+            'furnizori': 'iframe-furnizori',
+            'comenzi-furnizori': 'iframe-comenzi-furnizori',
+            
+            // FINANCIAR - Existente
+            'comenzi': 'iframe-comenzi',
+            'rapoarte-fiscale': 'iframe-rapoarte',
+            'analytics': 'iframe-analytics',
+            'analiza-anulari': 'iframe-analiza-anulari',
+            
+            // FINANCIAR - NOI
+            'casa-marcat': 'iframe-casa-marcat',
+            'facturi': 'iframe-facturi',
+            'metode-plata': 'iframe-metode-plata',
+            'costuri-preturi': 'iframe-costuri-preturi',
+            'anaf': 'iframe-anaf',
+            
+            // OPERAȚIUNI - NOI TAB (toate noi)
+            'ospatari': 'iframe-ospatari',
+            'queue-monitor': 'iframe-queue-monitor',
+            'delivery': 'iframe-delivery',
+            'program-orar': 'iframe-program-orar',
+            
+            // RAPORTARE - NOI TAB (toate noi)
+            'dashboard-executiv': 'iframe-dashboard-executiv',
+            'rapoarte-vanzari': 'iframe-rapoarte-vanzari',
+            'rapoarte-personal': 'iframe-rapoarte-personal',
+            'rapoarte-stoc': 'iframe-rapoarte-stoc',
+            'rapoarte-financiare': 'iframe-rapoarte-financiare',
+            'variance-reporting': 'iframe-variance-reporting',
+            'risk-alerts': 'iframe-risk-alerts',
+            'feedback-clienti': 'iframe-feedback-clienti',
+            'audit': 'iframe-audit',
+            
+            // CONFIGURĂRI - NOI TAB (toate noi)
+            'setari-generale': 'iframe-setari-generale',
+            'imprimante': 'iframe-imprimante',
+            'integrari': 'iframe-integrari',
+            'utilizatori': 'iframe-utilizatori',
+            'notificari': 'iframe-notificari',
+            'localizare': 'iframe-localizare',
+            'personalizare-ui': 'iframe-personalizare-ui',
+            
+            // MARKETING & CLIENȚI
+            // ❌ ELIMINAT: 'program-loialitate' (DUPLICAT - există în Administrare)
+            'marketing-clienti': 'iframe-marketing-clienti',
+            
+            // IMPORT/EXPORT - Existente + NOI
+            'backup-restore': 'iframe-backup',
+            'import-date': 'iframe-import-date',
+            'export-date': 'iframe-export-date',
+            
+            // NOMENCLATOARE - NOI
+            'unitati-masura': 'iframe-unitati-masura',
+            'cote-tva': 'iframe-cote-tva',
+            
+            // AJUTOR
+            'documentatie': 'iframe-documentatie'
+        };
+
+        const moduleMainTabMap = {
+            // Administrare
+            'catalog-produse': 'administrare',
+            'gestionare-meniu': 'administrare',
+            'plan-locatie': 'administrare',
+            'personal': 'administrare',
+            'promotii': 'administrare',
+            'traduceri': 'administrare',
+            'automatizari': 'administrare',
+            'dashboard': 'administrare',
+            'program-loialitate': 'marketing-tab',
+            'rezervari': 'administrare',
+            'top-products': 'administrare',
+            'marketing': 'marketing-tab',
+            'oferta-zilei': 'marketing-tab',
+            'branding': 'marketing-tab',
+
+            // Stocuri
+            'ingrediente': 'stocuri',
+            'alergeni': 'stocuri',
+            'stocuri': 'stocuri',
+            'retete': 'stocuri',
+            'fise-tehnice': 'stocuri',
+            'nir': 'stocuri',
+            'inventar': 'stocuri',
+            'transferuri': 'stocuri',
+            'multi-inventory': 'stocuri',
+            'portion-control': 'stocuri',
+            'etichete': 'stocuri',
+            'pierderi': 'stocuri',
+            'furnizori': 'stocuri',
+            'comenzi-furnizori': 'stocuri',
+
+            // Financiar
+            'comenzi': 'financiar',
+            'rapoarte-fiscale': 'financiar',
+            'analytics': 'financiar',
+            'analiza-anulari': 'financiar',
+            'casa-marcat': 'financiar',
+            'facturi': 'financiar',
+            'vouchere': 'financiar',
+            'metode-plata': 'financiar',
+            'costuri-preturi': 'financiar',
+            'anaf': 'financiar',
+
+            // Operațiuni
+            'ospatari': 'operatiuni',
+            'queue-monitor': 'operatiuni',
+            'delivery': 'operatiuni',
+            'program-orar': 'operatiuni',
+
+            // Raportare
+            'dashboard-executiv': 'raportare',
+            'rapoarte-vanzari': 'raportare',
+            'rapoarte-personal': 'raportare',
+            'rapoarte-stoc': 'raportare',
+            'rapoarte-financiare': 'raportare',
+            'variance-reporting': 'raportare',
+            'risk-alerts': 'raportare',
+            'feedback-clienti': 'raportare',
+            'audit': 'raportare',
+
+            // Configurări
+            'setari-generale': 'configurari',
+            'imprimante': 'configurari',
+            'integrari': 'configurari',
+            'utilizatori': 'configurari',
+            'notificari': 'configurari',
+            'localizare': 'configurari',
+            'personalizare-ui': 'configurari',
+
+            // Marketing & Clienți
+            'marketing-clienti': 'marketing-tab',
+
+            // Import / Export
+            'backup-restore': 'import-export',
+            'import-date': 'import-export',
+            'export-date': 'import-export',
+
+            // Nomenclatoare
+            'unitati-masura': 'nomenclatoare',
+            'cote-tva': 'nomenclatoare',
+
+            // Ajutor
+            'documentatie': 'ajutor'
+        };
+
+        const mainTabAliasMap = {
+            'marketing-tab': 'parteneri'
+        };
+
+        function resolveMainTab(tabName) {
+            return mainTabAliasMap[tabName] || tabName;
+        }
+
+        const submenuButtonsMap = {};
+
+        (function initializeSubmenuButtons() {
+            const submenuBars = document.querySelectorAll('[id^="submenu-"]');
+            submenuBars.forEach(bar => {
+                const tabName = bar.id.replace('submenu-', '');
+                const buttons = Array.from(bar.querySelectorAll('button'));
+                submenuButtonsMap[tabName] = buttons;
+                buttons.forEach(btn => {
+                    btn.classList.add('submenu-button');
+                    const onclick = btn.getAttribute('onclick') || '';
+                    const match = onclick.match(/loadModule\('([^']+)'/);
+                    if (match) {
+                        btn.dataset.module = match[1];
+                    }
+                    btn.dataset.mainTab = tabName;
+                });
+            });
+            updateSubmenuButtonClasses(currentMainTab);
+        })();
+
+        function updateSubmenuButtonClasses(activeTab) {
+            Object.entries(submenuButtonsMap).forEach(([tab, buttons]) => {
+                buttons.forEach(btn => {
+                    btn.dataset.mainTab = tab;
+                    btn.dataset.tabVisible = tab === activeTab ? 'true' : 'false';
+                });
+            });
+        }
+
+        function highlightActiveModuleButton(moduleName, addLoadingClass = false) {
+            if (!moduleName) return null;
+            const buttons = submenuButtonsMap[currentMainTab] || [];
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.remove('loading');
+            });
+            const targetButton = buttons.find(btn => btn.dataset.module === moduleName);
+            if (targetButton) {
+                targetButton.classList.add('active');
+                if (addLoadingClass) {
+                    targetButton.classList.add('loading');
+                }
+            }
+            return targetButton || null;
+        }
+
+        function ensureMainTabForModule(moduleName) {
+            const targetTab = moduleMainTabMap[moduleName];
+            if (!targetTab) {
+                console.warn(`⚠️ Modulul ${moduleName} nu are o mapare de tab principal.`);
+                return;
+            }
+            const resolvedTarget = resolveMainTab(targetTab);
+            if (currentMainTab !== resolvedTarget) {
+                console.log(`🔁 Schimbare tab principal către ${resolvedTarget} pentru modulul ${moduleName}`);
+                switchMainTab(targetTab);
+            }
+        }
+
+        const originalGetBoundingClientRect = Element.prototype.getBoundingClientRect;
+        Element.prototype.getBoundingClientRect = function(...args) {
+            if (this && this.classList && this.classList.contains('submenu-btn')) {
+                const moduleName = this.dataset ? this.dataset.module : null;
+                const parentBar = this.closest ? this.closest('.submenu-bar') : null;
+                if (moduleName && parentBar && !parentBar.classList.contains('active')) {
+                    ensureMainTabForModule(moduleName);
+                }
+            }
+            return originalGetBoundingClientRect.apply(this, args);
+        };
+
+        const originalScrollIntoView = Element.prototype.scrollIntoView;
+        Element.prototype.scrollIntoView = function(...args) {
+            if (this && this.classList && this.classList.contains('submenu-btn')) {
+                const moduleName = this.dataset ? this.dataset.module : null;
+                const parentBar = this.closest ? this.closest('.submenu-bar') : null;
+                if (moduleName && parentBar && !parentBar.classList.contains('active')) {
+                    ensureMainTabForModule(moduleName);
+                }
+            }
+            return originalScrollIntoView.apply(this, args);
+        };
+
+        const originalGetClientRects = Element.prototype.getClientRects;
+        Element.prototype.getClientRects = function(...args) {
+            if (this && this.classList && this.classList.contains('submenu-btn')) {
+                const moduleName = this.dataset ? this.dataset.module : null;
+                const parentBar = this.closest ? this.closest('.submenu-bar') : null;
+                if (moduleName && parentBar && !parentBar.classList.contains('active')) {
+                    ensureMainTabForModule(moduleName);
+                }
+            }
+            return originalGetClientRects.apply(this, args);
+        };
+
+        if (typeof Element.prototype.checkVisibility === 'function') {
+            const originalCheckVisibility = Element.prototype.checkVisibility;
+            Element.prototype.checkVisibility = function(...args) {
+                if (this && this.classList && this.classList.contains('submenu-btn')) {
+                    const moduleName = this.dataset ? this.dataset.module : null;
+                    const parentBar = this.closest ? this.closest('.submenu-bar') : null;
+                    if (moduleName && parentBar && !parentBar.classList.contains('active')) {
+                        ensureMainTabForModule(moduleName);
+                    }
+                }
+                return originalCheckVisibility.apply(this, args);
+            };
+        }
+
+        // FIX: Debounce mechanism to prevent rapid clicks
+        let isLoadingModule = false;
+        let loadTimeout = null;
+
+        // ==================== LAZY LOADING + INSTANT MODULE SWITCHING ====================
+        function loadModule(moduleName, moduleUrl) {
+            // FIX: Prevent double-clicks
+            if (isLoadingModule) {
+                console.log('⚠️ Module loading in progress, please wait...');
+                return;
+            }
+            
+            ensureMainTabForModule(moduleName);
+
+            const startTime = performance.now();
+            currentModule = moduleName;
+            isLoadingModule = true;
+            
+            // 💾 PERSISTENȚĂ: Salvează ultimul modul vizitat
+            localStorage.setItem('adminV4_lastModule', moduleName);
+            
+            // Show module container
+            document.getElementById('content-welcome').classList.remove('active');
+            document.getElementById('module-container').classList.add('active');
+            
+            // Update submenu button states
+            const activeButton = highlightActiveModuleButton(moduleName, true);
+            if (!activeButton) {
+                console.warn(`⚠️ Butonul pentru modulul ${moduleName} nu a fost găsit în tab-ul curent.`);
+            }
+            
+            // LAZY LOADING + INSTANT SWITCH
+            const targetIframeId = moduleIframeMap[moduleName];
+            
+            if (targetIframeId) {
+                // Hide ALL iframes
+                document.querySelectorAll('.module-iframe').forEach(iframe => {
+                    iframe.classList.add('hidden');
+                });
+                
+                const targetIframe = document.getElementById(targetIframeId);
+                if (targetIframe) {
+                    // ✅ LAZY LOAD: Load iframe only on first access
+                    // FORCE RELOAD if src is wrong
+                    const expectedSrc = targetIframe.dataset.src;
+                    if (!targetIframe.src || targetIframe.src.indexOf(expectedSrc) === -1) {
+                        const iframeSrc = targetIframe.dataset.src;
+                        const sectionName = targetIframe.dataset.section; // For admin.html (showSection)
+                        const tabName = targetIframe.dataset.tab; // For admin-advanced.html (Bootstrap tabs)
+                        
+                        console.log(`⚡ Lazy loading module: ${moduleName}`);
+                        console.log(`📍 Iframe src: ${iframeSrc}`);
+                        if (sectionName) {
+                            console.log(`📌 Will show section: ${sectionName} (admin.html)`);
+                        }
+                        if (tabName) {
+                            console.log(`📌 Will activate tab: ${tabName} (admin-advanced.html)`);
+                        }
+                        
+                        // FIX: Show loading overlay IMMEDIATELY
+                        const overlay = document.getElementById('loading-overlay');
+                        overlay.classList.remove('hidden');
+                        overlay.style.display = 'flex'; // Force visibility
+                        
+                        // FIX: Update loading text based on language
+                        const loadingText = overlay.querySelector('.loading-text');
+                        if (loadingText) {
+                            loadingText.textContent = currentLang === 'ro' ? 
+                                'Se încarcă modulul...' : 
+                                'Loading module...';
+                        }
+                        
+                        // DEBUG: Log before setting src
+                        console.log(`⏳ Setting iframe src...`);
+                        targetIframe.src = iframeSrc;
+                        console.log(`✓ Iframe src set`);
+                        
+                        // Hide loading when iframe loads + timeout fallback
+                        targetIframe.onload = function() {
+                            console.log(`🎯 Iframe onload triggered for ${moduleName}`);
+                            
+                            // Check if this is a React module (no data-section attribute)
+                            const isReactModule = !sectionName && iframeSrc.includes('/react-modules/');
+                            
+                            if (isReactModule) {
+                                console.log(`✅ React module detected - no function waiting needed`);
+                                // React modules don't need showSection/showStockSubsection
+                                // They expose their own functions (e.g., showAlergeniForm)
+                                // Just hide loading and we're done
+                                setTimeout(() => {
+                                    const overlay = document.getElementById('loading-overlay');
+                                    if (overlay) {
+                                        overlay.classList.add('hidden');
+                                        console.log('✅ Loading overlay hidden for React module');
+                                    }
+                                }, 200);
+                                return; // Skip waitForFunctions for React modules
+                            }
+                            
+                            // NEW: Wait for functions to be available in admin.html
+                            function waitForFunctions(callback, maxAttempts = 20, interval = 200) {
+                                let attempts = 0;
+                                const checkInterval = setInterval(() => {
+                                    attempts++;
+                                    if (targetIframe.contentWindow.showSection && targetIframe.contentWindow.showStockSubsection) {
+                                        clearInterval(checkInterval);
+                                        console.log(`✅ Functions available after ${attempts * interval}ms`);
+                                        callback();
+                                    } else if (attempts >= maxAttempts) {
+                                        clearInterval(checkInterval);
+                                        console.error(`❌ Timeout waiting for functions after ${maxAttempts * interval}ms`);
+                                    }
+                                }, interval);
+                            }
+                            
+                            // Wait for functions, then activate sections (only for admin.html)
+                            waitForFunctions(() => {
+                                try {
+                                    // Option 1: admin.html with showSection()
+                                    if (sectionName) {
+                                        console.log(`🎯 Showing section: ${sectionName}`);
+                                        targetIframe.contentWindow.showSection(sectionName);
+                                        console.log(`✅ Section ${sectionName} activated`);
+                                        
+                                        // NEW: Activate specific subsection if data-subsection is present
+                                        const subsectionName = targetIframe.dataset.subsection;
+                                        if (subsectionName) {
+                                            console.log(`📌 Subsection requested: ${subsectionName}`);
+                                            setTimeout(() => {
+                                                try {
+                                                    if (targetIframe.contentWindow.showStockSubsection) {
+                                                        console.log(`🎯 Calling showStockSubsection('${subsectionName}')`);
+                                                        targetIframe.contentWindow.showStockSubsection(subsectionName, null);
+                                                        console.log(`✅ Subsection ${subsectionName} activated successfully`);
+                                                        
+                                                        // NEW: Handle data-action (e.g., openFTP for Fișe Tehnice)
+                                                        const actionName = targetIframe.dataset.action;
+                                                        if (actionName === 'openFTP') {
+                                                            console.log(`🎯 Action requested: ${actionName}`);
+                                                            setTimeout(() => {
+                                                                try {
+                                                                    if (targetIframe.contentWindow.showRecipeFTPModal) {
+                                                                        console.log(`🎯 Opening FTP Modal...`);
+                                                                        targetIframe.contentWindow.showRecipeFTPModal();
+                                                                        console.log(`✅ FTP Modal opened successfully`);
+                                                                    } else {
+                                                                        console.error(`❌ showRecipeFTPModal function not found in iframe`);
+                                                                    }
+                                                                } catch (actionError) {
+                                                                    console.error(`❌ Error executing action:`, actionError);
+                                                                }
+                                                            }, 500); // Wait for subsection to load
+                                                        }
+                                                    } else {
+                                                        console.error(`❌ showStockSubsection function not found in iframe`);
+                                                    }
+                                                } catch (subsectionError) {
+                                                    console.error(`❌ Error activating subsection:`, subsectionError);
+                                                }
+                                            }, 500); // Wait for section to activate
+                                        }
+                                    }
+                                    // Option 2: admin-advanced.html with Bootstrap tabs
+                                    else if (tabName) {
+                                        console.log(`🎯 Activating Bootstrap tab: ${tabName}`);
+                                        // Try multiple selectors for Bootstrap tabs (pills use href, tabs use data-bs-target)
+                                        const tabEl = targetIframe.contentDocument.querySelector(`a[href="#${tabName}"]`) ||
+                                                     targetIframe.contentDocument.querySelector(`[data-bs-target="#${tabName}"]`);
+                                        if (tabEl) {
+                                            console.log(`✅ Found tab element for: ${tabName}`);
+                                            // Use Bootstrap Tab API (for pills)
+                                            const bootstrap = targetIframe.contentWindow.bootstrap;
+                                            if (bootstrap && bootstrap.Tab) {
+                                                try {
+                                                    const tab = new bootstrap.Tab(tabEl);
+                                                    tab.show();
+                                                    console.log(`✅ Tab ${tabName} activated via Bootstrap API`);
+                                                } catch (tabError) {
+                                                    console.warn(`⚠️ Bootstrap Tab API failed, using click fallback`);
+                                                    tabEl.click();
+                                                    console.log(`✅ Tab ${tabName} activated via click`);
+                                                }
+                                            } else {
+                                                // Fallback: direct click
+                                                console.log(`⚠️ Bootstrap not available, using click`);
+                                                tabEl.click();
+                                                console.log(`✅ Tab ${tabName} activated via click`);
+                                            }
+                                            
+                                            // NEW: Scroll to specific element if data-scroll-to is present
+                                            const scrollToId = targetIframe.dataset.scrollTo;
+                                            if (scrollToId) {
+                                                console.log(`📜 Scroll requested to: #${scrollToId}`);
+                                                setTimeout(() => {
+                                                    try {
+                                                        const scrollTarget = targetIframe.contentDocument.getElementById(scrollToId);
+                                                        if (scrollTarget) {
+                                                            scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                                            console.log(`✅ Scrolled to #${scrollToId}`);
+                                                        } else {
+                                                            console.warn(`⚠️ Scroll target not found: #${scrollToId}`);
+                                                        }
+                                                    } catch (scrollError) {
+                                                        console.error(`❌ Error scrolling: ${scrollError.message}`);
+                                                    }
+                                                }, 300); // Wait for tab transition
+                                            }
+                                        } else {
+                                            console.warn(`⚠️ Tab element not found for: ${tabName}`);
+                                            console.log(`Tried selectors: a[href="#${tabName}"], [data-bs-target="#${tabName}"]`);
+                                        }
+                                    }
+                                    else {
+                                        console.warn(`⚠️ No section or tab configured for: ${moduleName}`);
+                                    }
+                                } catch (e) {
+                                    console.error(`❌ Error activating section/tab: ${e.message}`);
+                                }
+                            }); // End of waitForFunctions callback
+                            
+                            setTimeout(() => {
+                                overlay.classList.add('hidden');
+                                overlay.style.display = ''; // Reset
+                            const loadTime = (performance.now() - startTime).toFixed(2);
+                            console.log(`✅ Module ${moduleName} loaded in ${loadTime}ms`);
+                                
+                                // FIX: Remove loading state from button
+                                document.querySelectorAll('.submenu-btn.loading').forEach(btn => {
+                                    btn.classList.remove('loading');
+                                });
+                                
+                                // FIX: Allow new loads after 300ms
+                                setTimeout(() => { isLoadingModule = false; }, 300);
+                            }, 100); // Small delay to ensure content is rendered
+                        };
+                        
+                        // ERROR HANDLER
+                        targetIframe.onerror = function() {
+                            console.error(`❌ Iframe error for ${moduleName}`);
+                            overlay.classList.add('hidden');
+                            isLoadingModule = false;
+                            alert(`Eroare la încărcarea modulului: ${moduleName}`);
+                        };
+                        
+                        // FIX: Timeout fallback (max 5s pentru debugging)
+                        clearTimeout(loadTimeout);
+                        loadTimeout = setTimeout(() => {
+                            console.warn(`⚠️ Module ${moduleName} load timeout after 5s`);
+                            console.warn(`📍 Iframe src was: ${iframeSrc}`);
+                            console.warn(`📊 Iframe readyState: ${targetIframe.contentDocument?.readyState || 'unknown'}`);
+                            overlay.classList.add('hidden');
+                            isLoadingModule = false;
+                        }, 5000); // REDUCED from 10s to 5s for debugging
+                    } else {
+                        // Already loaded, instant switch
+                        const sectionName = targetIframe.dataset.section;
+                        const tabName = targetIframe.dataset.tab;
+                        const subsectionName = targetIframe.dataset.subsection;
+                        const scrollToId = targetIframe.dataset.scrollTo;
+                        
+                        // Show specific section OR tab
+                        try {
+                            if (sectionName) {
+                                console.log(`🎯 Switching to already loaded section: ${sectionName}`);
+                                if (targetIframe.contentWindow && targetIframe.contentWindow.showSection) {
+                                    targetIframe.contentWindow.showSection(sectionName);
+                                    console.log(`✅ Section ${sectionName} activated instantly`);
+                                    
+                                    // FIX: Activate subsection if specified (for already loaded iframes)
+                                    if (subsectionName) {
+                                        console.log(`📌 Subsection requested: ${subsectionName}`);
+                                        setTimeout(() => {
+                                            try {
+                                                if (targetIframe.contentWindow.showStockSubsection) {
+                                                    console.log(`🎯 Calling showStockSubsection('${subsectionName}')`);
+                                                    targetIframe.contentWindow.showStockSubsection(subsectionName, null);
+                                                    console.log(`✅ Subsection ${subsectionName} activated successfully`);
+                                                } else {
+                                                    console.error(`❌ showStockSubsection function not found in iframe`);
+                                                }
+                                            } catch (subsectionError) {
+                                                console.error(`❌ Error activating subsection:`, subsectionError);
+                                            }
+                                        }, 500); // Delay to ensure section is fully visible
+                                    }
+                                }
+                            } else if (tabName) {
+                                console.log(`🎯 Switching to already loaded tab: ${tabName}`);
+                                const tabEl = targetIframe.contentDocument.querySelector(`a[href="#${tabName}"]`) ||
+                                             targetIframe.contentDocument.querySelector(`[data-bs-target="#${tabName}"]`);
+                                if (tabEl) {
+                                    const bootstrap = targetIframe.contentWindow.bootstrap;
+                                    if (bootstrap && bootstrap.Tab) {
+                                        const tab = new bootstrap.Tab(tabEl);
+                                        tab.show();
+                                    } else {
+                                        tabEl.click();
+                                    }
+                                    console.log(`✅ Tab ${tabName} activated instantly`);
+                                    
+                                    // FIX: Scroll to specific element if specified (for already loaded iframes)
+                                    if (scrollToId) {
+                                        console.log(`📜 Scroll requested to: #${scrollToId}`);
+                                        setTimeout(() => {
+                                            try {
+                                                const scrollTarget = targetIframe.contentDocument.getElementById(scrollToId);
+                                                if (scrollTarget) {
+                                                    scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                                    console.log(`✅ Scrolled to #${scrollToId}`);
+                                                } else {
+                                                    console.error(`❌ Scroll target #${scrollToId} not found`);
+                                                }
+                                            } catch (scrollError) {
+                                                console.error(`❌ Error scrolling:`, scrollError);
+                                            }
+                                        }, 300);
+                                    }
+                                }
+                            }
+                        } catch (e) {
+                            console.error(`❌ Error switching section/tab: ${e.message}`);
+                        }
+                        
+                        isLoadingModule = false;
+                        document.querySelectorAll('.submenu-btn.loading').forEach(btn => {
+                            btn.classList.remove('loading');
+                        });
+                    }
+                    
+                    // Show target iframe INSTANTLY
+                    targetIframe.classList.remove('hidden');
+                    
+                    // Notify iframe about language if loaded
+                    if (targetIframe.src) {
+                        // FIX: Delay message to ensure iframe is ready
+                        setTimeout(() => {
+                        try {
+                            targetIframe.contentWindow.postMessage({ 
+                                type: 'languageChange', 
+                                lang: currentLang 
+                            }, '*');
+                        } catch (e) {
+                            // Iframe not ready yet, will auto-sync on load
+                        }
+                        }, 200);
+                    }
+                    
+                    const switchTime = (performance.now() - startTime).toFixed(2);
+                    if (targetIframe.src && switchTime < 100) {
+                        console.log(`⚡ INSTANT switch to ${moduleName}: ${switchTime}ms`);
+                    }
+                }
+            } else {
+                console.warn('No iframe mapped for:', moduleName);
+                isLoadingModule = false;
+            }
+        }
+
+        // ==================== LOGOUT ====================
+        function logout() {
+            window.location.href = '/';
+        }
+
+        // FIX: Preload critical modules for faster access
+        function preloadCriticalModules() {
+            // TEMPORARY DISABLED - Debugging latency issues
+            console.log('⚠️ Preloading DISABLED for debugging');
+            return;
+            
+            const criticalModules = [
+                'iframe-catalog-produse',
+                'iframe-nir',
+                'iframe-rapoarte'
+            ];
+            
+            // Preload after 2 seconds (user has time to see welcome screen)
+            setTimeout(() => {
+                console.log('🚀 Preloading critical modules...');
+                criticalModules.forEach(iframeId => {
+                    const iframe = document.getElementById(iframeId);
+                    if (iframe && !iframe.src && iframe.dataset.src) {
+                        // Silent preload (no loading overlay)
+                        iframe.src = iframe.dataset.src;
+                        console.log(`✅ Preloaded: ${iframeId}`);
+                    }
+                });
+            }, 2000);
+        }
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🚀 Admin v4.0 Modular initialized');
+            updateTranslations();
+            
+            // FIX: Start preloading critical modules
+            preloadCriticalModules();
+        });
+
+        // ==================== IFRAME MESSAGE HANDLING ====================
+        window.addEventListener('message', (event) => {
+            // Handle messages from iframes if needed
+            if (event.data.type === 'ready') {
+                console.log('Module ready:', event.data.module);
+            }
+            
+            // FIX: Handle authentication complete message from admin.html iframe
+            if (event.data.type === 'adminAuthenticationComplete') {
+                console.log('🔔 Received authentication complete notification');
+                
+                // Find which iframe sent the message
+                const iframes = document.querySelectorAll('.module-iframe');
+                let sourceIframe = null;
+                
+                for (const iframe of iframes) {
+                    try {
+                        if (iframe.contentWindow === event.source) {
+                            sourceIframe = iframe;
+                            break;
+                        }
+                    } catch (e) {
+                        // Cross-origin iframe, skip
+                    }
+                }
+                
+                if (sourceIframe) {
+                    console.log('🎯 Found source iframe:', sourceIframe.id);
+                    
+                    // Check if this iframe has a section to activate
+                    const sectionName = sourceIframe.dataset.section;
+                    const subsectionName = sourceIframe.dataset.subsection;
+                    const actionName = sourceIframe.dataset.action;
+                    
+                    if (sectionName) {
+                        console.log('📌 Activating section after auth:', sectionName);
+                        console.log('   sourceIframe:', sourceIframe);
+                        console.log('   sourceIframe.id:', sourceIframe?.id);
+                        
+                        // FIX: Capture iframe reference in closure to prevent loss
+                        const targetIframe = sourceIframe;
+                        console.log('   targetIframe set:', !!targetIframe);
+                        
+                        const iframeId = targetIframe.id;
+                        console.log('   iframeId:', iframeId);
+                        
+                        console.log('⏱️ Setting timeout for section activation (800ms)...');
+                        
+                        // Wait a bit for the iframe to fully rendered
+                        setTimeout(() => {
+                            console.log('⏰ TIMEOUT FIRED! iframe id:', iframeId);
+                            console.log('⏰ Timer expired, checking iframe state...');
+                            console.log('  contentWindow exists:', !!targetIframe.contentWindow);
+                            console.log('  showSection exists:', !!targetIframe.contentWindow?.showSection);
+                            
+                            try {
+                                if (targetIframe.contentWindow && targetIframe.contentWindow.showSection) {
+                                    console.log('🎯 Calling showSection("' + sectionName + '")...');
+                                    targetIframe.contentWindow.showSection(sectionName);
+                                    console.log('✅ Section activated:', sectionName);
+                                    
+                                    // If there's a subsection, activate it too
+                                    if (subsectionName) {
+                                        console.log('📌 Activating subsection after auth:', subsectionName);
+                                        setTimeout(() => {
+                                            console.log('⏰ Subsection timer expired...');
+                                            console.log('  showStockSubsection exists:', !!targetIframe.contentWindow?.showStockSubsection);
+                                            
+                                            try {
+                                                if (targetIframe.contentWindow.showStockSubsection) {
+                                                    console.log('🎯 Calling showStockSubsection("' + subsectionName + '")...');
+                                                    targetIframe.contentWindow.showStockSubsection(subsectionName, null);
+                                                    console.log('✅ Subsection activated:', subsectionName);
+                                                    
+                                                    // FIX: Manually activate the button since we passed null for event
+                                                    const iframeDoc = targetIframe.contentDocument || targetIframe.contentWindow.document;
+                                                    const buttons = iframeDoc.querySelectorAll('.stock-nav-btn');
+                                                    console.log('  Found', buttons.length, 'stock navigation buttons');
+                                                    for (const btn of buttons) {
+                                                        if (btn.textContent.toLowerCase().includes(subsectionName.toLowerCase()) ||
+                                                            btn.textContent.toLowerCase().includes('recipes') ||
+                                                            btn.textContent.toLowerCase().includes('rețete')) {
+                                                            btn.classList.add('active');
+                                                            console.log('✅ Button marked as active:', btn.textContent.trim());
+                                                            break;
+                                                        }
+                                                    }
+                                                } else {
+                                                    console.error('❌ showStockSubsection not found in iframe');
+                                                }
+                                            } catch (subsectionError) {
+                                                console.error('❌ Error activating subsection:', subsectionError);
+                                                console.error('   Error details:', subsectionError.message, subsectionError.stack);
+                                            }
+                                        }, 500); // Wait for section to be fully visible
+                                    }
+                                } else {
+                                    console.error('❌ showSection not found in iframe');
+                                    if (!targetIframe.contentWindow) {
+                                        console.error('   contentWindow is null or undefined');
+                                    } else {
+                                        console.error('   contentWindow exists but showSection is missing');
+                                        console.error('   Available functions:', Object.keys(targetIframe.contentWindow).filter(k => typeof targetIframe.contentWindow[k] === 'function').slice(0, 20).join(', '));
+                                    }
+                                }
+                            } catch (sectionError) {
+                                console.error('❌ Error activating section:', sectionError);
+                                console.error('   Error details:', sectionError.message, sectionError.stack);
+                            }
+                        }, 800); // Increased wait time to 800ms for admin panel to be fully rendered
+                    } else if (actionName) {
+                        // FIX: Handle custom actions (like toggleMessagesModal)
+                        console.log('📌 Executing action after auth:', actionName);
+                        
+                        const targetIframe = sourceIframe;
+                        const iframeId = targetIframe.id;
+                        
+                        console.log('⏱️ Setting timeout for action execution (800ms)...');
+                        
+                        setTimeout(() => {
+                            console.log('⏰ ACTION TIMEOUT FIRED! iframe id:', iframeId);
+                            console.log('⏰ Executing action:', actionName);
+                            
+                            try {
+                                if (targetIframe.contentWindow && targetIframe.contentWindow[actionName]) {
+                                    console.log('🎯 Calling ' + actionName + '()...');
+                                    targetIframe.contentWindow[actionName]();
+                                    console.log('✅ Action executed:', actionName);
+                                } else {
+                                    console.error('❌ Action function not found:', actionName);
+                                    if (!targetIframe.contentWindow) {
+                                        console.error('   contentWindow is null or undefined');
+                                    } else {
+                                        console.error('   Function "' + actionName + '" does not exist');
+                                    }
+                                }
+                            } catch (actionError) {
+                                console.error('❌ Error executing action:', actionError);
+                                console.error('   Error details:', actionError.message, actionError.stack);
+                            }
+                        }, 800);
+                    }
+                } else {
+                    console.warn('⚠️ Could not find source iframe');
+                }
+            }
+        });
+        
+        // ============================================================
+        // 💾 TAB PERSISTENCE: Restore last visited tab/module on page load
+        // ============================================================
+        (function() {
+            console.log('💾 Inițializare Tab Persistence pentru admin-v4-modular.html');
+            
+            // Așteaptă ca DOM-ul să fie complet încărcat
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    const lastMainTab = localStorage.getItem('adminV4_lastMainTab');
+                    const lastModule = localStorage.getItem('adminV4_lastModule');
+                    
+                    console.log('💾 Restaurare stare salvată:');
+                    console.log('   - Main Tab:', lastMainTab || 'none');
+                    console.log('   - Module:', lastModule || 'none');
+                    
+                    // Restaurează main tab-ul
+                    if (lastMainTab && lastMainTab !== 'welcome') {
+                        console.log('🔄 Restaurare main tab:', lastMainTab);
+                        switchMainTab(lastMainTab);
+                        
+                        // Așteaptă un pic și apoi restaurează modulul
+                        if (lastModule) {
+                            setTimeout(function() {
+                                console.log('🔄 Restaurare modul:', lastModule);
+                                
+                                // Găsește butonul corespunzător modulului
+                                const moduleButtons = document.querySelectorAll('.submenu-btn');
+                                let targetButton = null;
+                                
+                                moduleButtons.forEach(function(btn) {
+                                    const onclickAttr = btn.getAttribute('onclick');
+                                    if (onclickAttr && onclickAttr.includes(`'${lastModule}'`)) {
+                                        targetButton = btn;
+                                    }
+                                });
+                                
+                                if (targetButton) {
+                                    // Simulează click pe buton
+                                    targetButton.click();
+                                    console.log('✅ Modul restaurat cu succes:', lastModule);
+                                } else {
+                                    console.log('⚠️  Buton pentru modulul', lastModule, 'nu a fost găsit');
+                                }
+                            }, 300);
+                        }
+                    } else {
+                        console.log('ℹ️  Nu există stare salvată, se activează tab-ul Administrare implicit');
+                        switchMainTab('administrare');
+                    }
+                }, 500); // Așteaptă 500ms ca totul să se încarce
+            });
+            
+            console.log('✅ Tab Persistence inițializat pentru admin-v4-modular.html');
+        })();
+        
+        // ==================== FIX P6: showWelcomeScreen() Function ====================
+        
+        function showWelcomeScreen() {
+            console.log('👋 Afișare Welcome Screen');
+            
+            const moduleContainer = document.getElementById('moduleContainer');
+            const submenuContent = document.getElementById('submenuContent');
+            
+            // Ascunde submenu-ul
+            if (submenuContent) {
+                submenuContent.style.display = 'none';
+            }
+            
+            // Afișează welcome screen în moduleContainer
+            if (moduleContainer) {
+                moduleContainer.innerHTML = `
+                    <div class="welcome-screen" style="text-align: center; padding: 100px 50px;">
+                        <h1 style="color: #667eea; font-size: 3rem; margin-bottom: 20px;">
+                            🍽️ Restaurant App
+                        </h1>
+                        <h3 style="color: #764ba2; margin-bottom: 30px;" data-translate="ui.bine_ai_venit_in_panoul_de_administrare">
+                            Bine ai venit în panoul de administrare!
+                        </h3>
+                        <p style="font-size: 1.2rem; color: #666; max-width: 600px; margin: 0 auto 40px;">
+                            Selectează un modul din meniul din stânga pentru a începe.
+                        </p>
+                        <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                            <div style="padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px; min-width: 200px;">
+                                <i class="fas fa-utensils fa-2x mb-2"></i>
+                                <h5 data-translate="ui.gestionare_meniu">Gestionare Meniu</h5>
+                                <p style="font-size: 0.9rem;">Catalog, Ingrediente, Rețete</p>
+                            </div>
+                            <div style="padding: 20px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border-radius: 10px; min-width: 200px;">
+                                <i class="fas fa-boxes fa-2x mb-2"></i>
+                                <h5>Gestiune Stocuri</h5>
+                                <p style="font-size: 0.9rem;">Stocuri, NIR, Transferuri</p>
+                            </div>
+                            <div style="padding: 20px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; border-radius: 10px; min-width: 200px;">
+                                <i class="fas fa-chart-line fa-2x mb-2"></i>
+                                <h5>Rapoarte & BI</h5>
+                                <p style="font-size: 0.9rem;">Dashboard, Analize, KPI</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                console.log('✅ Welcome Screen afișat');
+            }
+        }
+    </script>
+
+</body>
+    <!-- Validare Manuală Ingrediente - Anti-Duplicate System -->
+    <script src="/js/ingredient-validator.js"></script>
+    <script src="/branding/qroms-badge.js"></script>
+</html>
+
+

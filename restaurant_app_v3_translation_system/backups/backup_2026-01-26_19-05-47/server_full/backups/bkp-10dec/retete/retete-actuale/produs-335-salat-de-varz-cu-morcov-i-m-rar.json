@@ -1,0 +1,49 @@
+{
+  "productId": 335,
+  "productName": "Salată de Varză cu Morcov și Mărar",
+  "productCategory": "Salate Însoțitoare",
+  "price": 16,
+  "description": "Varză, morcov, mărar",
+  "ingredients": [
+    {
+      "ingredientId": 175,
+      "ingredientName": "Varză albă",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 111,
+      "ingredientName": "Morcov",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 176,
+      "ingredientName": "Mărar proaspăt",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 50,
+      "ingredientName": "Oțet",
+      "ingredientCategory": "Condimente și Sosuri",
+      "quantityNeeded": 20,
+      "unit": "l",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 33,
+      "ingredientName": "Zahăr",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 10,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}

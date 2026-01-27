@@ -1,0 +1,49 @@
+{
+  "productId": 172,
+  "productName": "Ciorbă de Burtă",
+  "productCategory": "Ciorbe",
+  "price": 30,
+  "description": "Burtă de vită, smântână, ou, usturoi, morcov, oțet",
+  "ingredients": [
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 111,
+      "ingredientName": "Morcov",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 113,
+      "ingredientName": "Smântână",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 96,
+      "ingredientName": "Ou",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 50,
+      "ingredientName": "Oțet",
+      "ingredientCategory": "Condimente și Sosuri",
+      "quantityNeeded": 20,
+      "unit": "l",
+      "wastePercentage": 0
+    }
+  ]
+}

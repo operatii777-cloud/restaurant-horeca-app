@@ -1,0 +1,3823 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <!-- 🌐 Translation System V3.0.0 -->
+    <script src="/translation/translation.js"></script>
+    <script src="/translation/translation-compat.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comandă - Trattoria</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <script src="config.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-padding-top: 120px; }
+        body {
+        }
+        
+        .language-switch {
+            display: flex;
+            gap: 5px;
+            margin: 10px 0;
+            justify-content: center;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: #666;
+        }
+
+        .lang-btn:hover {
+            border-color: #ff6b35;
+            color: #ff6b35;
+            transform: translateY(-2px);
+        }
+
+        .lang-btn.active {
+            background: #ff6b35;
+            border-color: #ff6b35;
+            color: white;
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+        }
+        
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f4f4; color: #333; }
+        .top-bar { position: sticky; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; background: white; padding: 5px 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 101; min-height: 60px; }
+        .restaurant-name { font-weight: bold; font-size: 1.1rem; color: #ff6b35; }
+        .header-actions { display: flex; align-items: center; gap: 15px; }
+        .table-info-compact { background: #ff6b35; color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.9rem; font-weight: bold; }
+        .icon-btn-labeled { background: transparent; border: none; cursor: pointer; padding: 5px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: inherit; color: #333; transition: all 0.3s ease; }
+        .icon-btn-labeled .icon { font-size: 1.5rem; }
+        .icon-btn-labeled .label { font-size: 0.65rem; font-weight: 600; line-height: 1; margin-top: 2px; }
+        .icon-btn-labeled.active { background: #ff6b35; border-radius: 8px; color: white; }
+        .icon-btn-labeled.active .label { font-weight: bold; }
+        .icon-btn-labeled:hover { background: #f0f0f0; border-radius: 8px; }
+        .icon-btn-labeled.active:hover { background: #e05a2a; }
+        .categories { 
+            position: sticky; 
+            top: 0; /* Schimbat de la 60px la 0 pentru a fi în partea de sus */
+            background: white; 
+            padding: 15px; /* Mărit padding pentru mai mult spațiu */
+            z-index: 1000; /* Mărit z-index pentru a fi deasupra tuturor elementelor */
+            border-bottom: 2px solid #eee; /* Border mai vizibil */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Adăugat shadow pentru separare */
+            transition: all 0.3s ease;
+        }
+        .category-buttons { 
+            display: flex; 
+            overflow-x: auto; 
+            gap: 12px; /* Mărit gap pentru mai mult spațiu */
+            padding: 8px 0; /* Mărit padding */
+            scroll-behavior: smooth; /* Derulare smooth */
+        }
+        .category-buttons::-webkit-scrollbar { 
+            height: 6px; /* Scrollbar vizibil pentru derulare orizontală */
+        }
+        .category-buttons::-webkit-scrollbar-track {
+            background: #f4f4f4;
+            border-radius: 3px;
+        }
+        .category-buttons::-webkit-scrollbar-thumb {
+            background: #ff6b35;
+            border-radius: 3px;
+        }
+        .category-buttons::-webkit-scrollbar-thumb:hover {
+            background: #e05a2a;
+        }
+        .category-btn { 
+            padding: 10px 18px; /* Mărit padding pentru butoane mai mari */
+            background: #f0f0f0; 
+            border: none; 
+            border-radius: 25px; /* Border radius mai mare pentru aspect modern */
+            font-size: 0.95rem; /* Font size optimizat */
+            cursor: pointer; 
+            white-space: nowrap; 
+            transition: all 0.3s ease; /* Tranziție smooth */
+            color: #333;
+            font-weight: 500; /* Font weight mai bold */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow subtil */
+            min-width: fit-content; /* Lățime minimă pentru conținut */
+        }
+        .category-btn:hover { 
+            background: #e0e0e0; 
+            transform: translateY(-2px); /* Efect de hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Shadow mai mare la hover */
+        }
+        .category-btn.active { 
+            background: #ff6b35; 
+            color: white; 
+            font-weight: bold; 
+            transform: translateY(-1px); /* Efect pentru butonul activ */
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Shadow pentru butonul activ */
+        }
+        
+        /* Daily Offer Button Styles */
+        .daily-offer-btn {
+            background: linear-gradient(45deg, #ff6b35, #ff8c42) !important;
+            color: white !important;
+            font-weight: bold !important;
+            animation: pulse 2s infinite;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+        
+        .daily-offer-btn:hover {
+            background: linear-gradient(45deg, #e05a2a, #ff6b35) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .page-container { padding: 15px; }
+        .order-type-section { background: white; padding: 20px; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .order-type-section h3 { color: #ff6b35; margin-bottom: 15px; text-align: center; }
+        .order-type-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .order-type-btn { padding: 12px 24px; border: 2px solid #ff6b35; background: white; color: #ff6b35; border-radius: 25px; font-weight: bold; cursor: pointer; }
+        .order-type-btn.active { background: #ff6b35; color: white; }
+        
+        /* Stiluri pentru Supervisor */
+        .supervisor-section, .supervisor-input-section, .unpaid-orders-section { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 15px; 
+            margin-bottom: 20px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05); 
+        }
+        
+        .pin-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .pin-input-group label {
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1rem;
+        }
+        
+        .pin-input-group input {
+            width: 200px;
+            padding: 12px;
+            border: 2px solid #ff6b35;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+        
+        .pin-input-group input:focus {
+            outline: none;
+            border-color: #e05a2a;
+            box-shadow: 0 0 10px rgba(255, 107, 53, 0.3);
+        }
+        .supervisor-section h3, .supervisor-input-section h3, .unpaid-orders-section h3 { 
+            color: #ff6b35; 
+            margin-bottom: 15px; 
+            text-align: center; 
+        }
+        .supervisor-buttons { 
+            display: flex; 
+            gap: 15px; 
+            justify-content: center; 
+            flex-wrap: wrap; 
+        }
+        .supervisor-btn { 
+            padding: 12px 24px; 
+            border: 2px solid #28a745; 
+            background: white; 
+            color: #28a745; 
+            border-radius: 25px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: all 0.3s ease;
+        }
+        .supervisor-btn:hover { 
+            background: #28a745; 
+            color: white; 
+            transform: translateY(-2px); 
+        }
+        .input-group { 
+            margin-bottom: 15px; 
+        }
+        .input-group label { 
+            display: block; 
+            margin-bottom: 5px; 
+            font-weight: bold; 
+            color: #333; 
+        }
+        .input-group input { 
+            width: 100%; 
+            padding: 10px; 
+            border: 2px solid #ddd; 
+            border-radius: 8px; 
+            font-size: 1rem; 
+        }
+        .input-group input:focus { 
+            outline: none; 
+            border-color: #28a745; 
+        }
+        .unpaid-orders-list { 
+            max-height: 400px; 
+            overflow-y: auto; 
+        }
+        .unpaid-order-item { 
+            background: #f8f9fa; 
+            padding: 15px; 
+            margin-bottom: 10px; 
+            border-radius: 10px; 
+            border-left: 4px solid #ff6b35; 
+        }
+        .unpaid-order-item h4 { 
+            color: #ff6b35; 
+            margin-bottom: 8px; 
+        }
+        .unpaid-order-item .order-details { 
+            font-size: 0.9rem; 
+            color: #666; 
+            margin-bottom: 10px; 
+        }
+        .unpaid-order-item .order-items { 
+            font-size: 0.85rem; 
+            color: #888; 
+        }
+        
+        .menu-container { padding-bottom: 100px; }
+        .product-card { background: white; border-radius: 15px; padding: 15px; margin-bottom: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .product-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+        .product-name-wrapper { display: flex; align-items: center; gap: 8px; }
+        .product-name { font-size: 1.1rem; font-weight: bold; }
+        .info-icon { font-size: 1rem; color: #007bff; cursor: pointer; font-weight: bold; }
+        .product-price { font-size: 1.1rem; font-weight: bold; color: #ff6b35; }
+        .product-description { color: #666; margin-bottom: 15px; line-height: 1.4; }
+        .product-actions { display: flex; justify-content: flex-end; align-items: center; gap: 10px; }
+        .add-to-cart-btn { background: #ff6b35; color: white; border: none; border-radius: 8px; padding: 10px 18px; font-weight: bold; cursor: pointer; transition: background-color 0.2s; }
+        .add-to-cart-btn:hover { background: #e05a2a; }
+        .quantity-controls { display: flex; align-items: center; gap: 10px; }
+        .qty-btn { background: #ff6b35; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .qty-display { font-size: 1.1rem; font-weight: bold; min-width: 25px; text-align: center; }
+        .customization-section { margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 8px; }
+        .customization-option { display: flex; align-items: center; margin-bottom: 8px; }
+        .cart-summary { position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 15px; border-top: 1px solid #eee; box-shadow: 0 -4px 20px rgba(0,0,0,0.1); z-index: 1000; }
+        
+        /* Animații pentru coș */
+        .cart-updated {
+            animation: cartPulse 0.3s ease-in-out;
+            background-color: #ff6b35 !important;
+            transform: scale(1.02);
+        }
+        
+        @keyframes cartPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Reward Section Styles */
+        .rewards-section { background: linear-gradient(135deg, #28a745, #20c997); color: white; padding: 12px; border-radius: 10px; margin-bottom: 15px; }
+        
+        /* Daily Offer Section Styles */
+        .daily-offer-section {
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+            text-align: center;
+        }
+        
+        .daily-offer-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .daily-offer-description {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            opacity: 0.95;
+        }
+        
+        .daily-offer-conditions {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .daily-offer-conditions h4 {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .condition-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .condition-item:last-child {
+            border-bottom: none;
+        }
+        
+        .condition-category {
+            font-weight: 600;
+        }
+        
+        .condition-quantity {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-weight: bold;
+        }
+        
+        .daily-offer-benefits {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .daily-offer-benefits h4 {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 0;
+        }
+        
+        .benefit-icon {
+            font-size: 1.2rem;
+        }
+        
+        .daily-offer-actions {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+        
+        .offer-selection {
+            margin-bottom: 20px;
+        }
+        
+        .offer-condition-selection,
+        .offer-benefit-selection {
+            margin-bottom: 15px;
+        }
+        
+        .offer-condition-selection h5,
+        .offer-benefit-selection h5 {
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .offer-product-select,
+        .offer-benefit-select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            background: white;
+            color: #333;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .benefit-product-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            margin-bottom: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .offer-add-btn {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            margin-right: 5px;
+        }
+        
+        .free-price {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .free-badge {
+            background: #28a745;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        
+        .item-price {
+            margin-top: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .no-offer-message {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+        
+        .no-offer-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+        .rewards-section h4 { margin: 0 0 8px 0; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+        .reward-item { background: rgba(255,255,255,0.2); padding: 8px 12px; border-radius: 6px; margin-bottom: 8px; font-size: 0.9rem; }
+        .reward-item:last-child { margin-bottom: 0; }
+        .reward-icon { font-size: 1.2rem; margin-right: 8px; }
+        .no-rewards { text-align: center; color: rgba(255,255,255,0.8); font-style: italic; font-size: 0.9rem; }
+        .cart-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .cart-total { font-size: 1.3rem; font-weight: bold; color: #ff6b35; }
+        .cart-items { font-size: 0.9rem; color: #666; }
+        .order-btn { width: 100%; background: linear-gradient(45deg, #ff6b35, #f7931e); color: white; border: none; padding: 15px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; }
+        .loading { text-align: center; padding: 50px; color: #666; }
+        .notification { position: fixed; top: 70px; right: 20px; background: #28a745; color: white; padding: 15px 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 2001; font-weight: bold; }
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); }
+        .modal-content { background-color: #fefefe; margin: 20% auto; padding: 20px; width: 90%; max-width: 500px; border-radius: 15px; box-shadow: 0 5px 25px rgba(0,0,0,0.2); text-align: center; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
+        .modal-header h2 { color: #ff6b35; }
+        .close-btn { color: #aaa; font-size: 28px; font-weight: bold; cursor: pointer; }
+        .modal-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+        .item-info { text-align: left; flex-grow: 1; margin-right: 10px; }
+        .item-info .item-name { font-weight: bold; }
+        .item-info .item-customs { font-size: 0.8rem; color: #666; margin-top: 5px; }
+        .item-actions { display: flex; align-items: center; gap: 10px; }
+        .place-order-btn { background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .pdf-btn { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .cancel-order-btn { background: #dc3545; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; animation: pulse-red 2s infinite; }
+        .cancel-order-btn:disabled { background: #6c757d; cursor: not-allowed; animation: none; }
+        @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); } 100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); } }
+        .modal-footer { margin-top: 20px; }
+        .modal-buttons { display: flex; gap: 10px; justify-content: center; margin-top: 15px; }
+        
+        /* CSS pentru modalul de anulare */
+        #cancelOrderModal .modal-content {
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .cancel-timer {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #dc3545;
+            margin: 15px 0;
+            padding: 10px;
+            background: #fff3cd;
+            border-radius: 8px;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .cancel-reason-section {
+            margin: 20px 0;
+        }
+        
+        .cancel-reason-section label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .cancel-reason-section textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 80px;
+            box-sizing: border-box;
+        }
+        
+        .cancel-reason-section textarea:focus {
+            border-color: #dc3545;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.2);
+        }
+        
+        #cancelOrderModal .modal-buttons {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        #cancelOrderModal .cancel-order-btn,
+        #cancelOrderModal .pdf-btn {
+            flex: 1;
+            min-width: 150px;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        #cancelOrderModal .cancel-order-btn {
+            background: #dc3545;
+            color: white;
+            border: 2px solid #dc3545;
+        }
+        
+        #cancelOrderModal .cancel-order-btn:hover {
+            background: #c82333;
+            border-color: #c82333;
+            transform: translateY(-2px);
+        }
+        
+        #cancelOrderModal .pdf-btn {
+            background: #6c757d;
+            color: white;
+            border: 2px solid #6c757d;
+        }
+        
+        #cancelOrderModal .pdf-btn:hover {
+            background: #5a6268;
+            border-color: #5a6268;
+            transform: translateY(-2px);
+        }
+        
+        /* Stilizarea secțiunii de mentiuni */
+        .order-notes-section {
+            margin: 16px 0;
+            padding: 16px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .notes-category {
+            margin-bottom: 16px;
+        }
+        
+        .notes-category:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Funcționalitate pentru contorul de caractere */
+        .notes-counter {
+            transition: color 0.3s ease;
+        }
+        
+        .notes-counter.warning {
+            color: #ffc107;
+        }
+        
+        .notes-counter.danger {
+            color: #dc3545;
+        }
+        #paymentModal .modal-content { padding: 30px; }
+        #paymentModal h4 { font-size: 1.2rem; margin-bottom: 25px; color: #333; }
+        .payment-options { display: flex; gap: 15px; justify-content: center; margin-bottom: 20px; }
+        .payment-btn { flex: 1; padding: 15px; font-size: 1rem; font-weight: bold; border-radius: 10px; border: 2px solid; cursor: pointer; }
+        .payment-btn.cash { border-color: #28a745; color: #28a745; background: white; }
+        .payment-btn.card { border-color: #007bff; color: #007bff; background: white; }
+        .cancel-btn { background: none; border: none; color: #6c757d; cursor: pointer; margin-top: 10px; }
+        #allergenModalBody { text-align: left; padding: 10px; }
+        #allergenModalBody h3 { margin-bottom: 10px; }
+        #allergenModalBody p { line-height: 1.6; }
+        .pdf-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 2px solid #ff6b35;
+            color: #ff6b35;
+            background-color: #fff;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .pdf-btn:hover {
+            background-color: #ff6b35;
+            color: white;
+        }
+        
+        /* 🎉 Stiluri Balon Happy Hour */
+        .happy-hour-note {
+            position: relative; /* Changed from fixed/sticky to relative */
+            margin: 0; /* No margin for flexbox */
+            padding: 12px 20px 12px 15px; /* Optimized padding */
+            border-radius: 15px; 
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1050; 
+            transform: none; /* No rotation */
+            transition: all 0.5s ease-in-out;
+            max-width: 280px; /* Optimized width for left positioning */
+            min-width: 250px; /* Minimum width */
+            text-align: center; /* Centered text */
+            background: #fffbe9;
+            border: 1px solid #d4c185;
+            color: #1a365d !important; /* Dark blue forced */
+            font-family: 'Dancing Script', cursive; 
+            font-size: 1.1em; /* Slightly smaller font */
+            line-height: 1.2;
+        }
+        .happy-hour-note strong {
+            font-weight: 700;
+            color: #2c5282 !important; /* Darker blue forced */
+        }
+        .happy-hour-note .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 2em;
+            color: #1a365d !important; /* Dark blue forced */
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        .happy-hour-note .close-btn:hover {
+            opacity: 1;
+        }
+        .happy-hour-note * { /* Ensure all child elements inherit dark blue */
+            color: #1a365d !important;
+        }
+        
+        /* ==================== MEDIA QUERIES PENTRU DESIGN RESPONSIVE ==================== */
+        
+        /* Ecrane foarte mari (4K, ultra-wide) */
+        @media (min-width: 1920px) {
+            .container {
+                max-width: 1800px;
+                padding: 20px 40px;
+            }
+            
+            .top-bar {
+                padding: 10px 40px;
+            }
+            
+            .restaurant-name {
+                font-size: 1.4rem;
+            }
+            
+            .product-card {
+                padding: 20px;
+                margin-bottom: 25px;
+            }
+            
+            .product-name {
+                font-size: 1.3rem;
+            }
+            
+            .product-price {
+                font-size: 1.2rem;
+            }
+            
+            .category-btn {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+        }
+        
+        /* Laptopuri mari */
+        @media (min-width: 1440px) and (max-width: 1919px) {
+            .container {
+                max-width: 1400px;
+                padding: 15px 30px;
+            }
+            
+            .top-bar {
+                padding: 8px 30px;
+            }
+            
+            .restaurant-name {
+                font-size: 1.3rem;
+            }
+            
+            .product-card {
+                padding: 18px;
+                margin-bottom: 22px;
+            }
+            
+            .product-name {
+                font-size: 1.2rem;
+            }
+            
+            .product-price {
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* Laptopuri standard */
+        @media (max-width: 1400px) {
+            .restaurant-name {
+                font-size: 1.1rem;
+            }
+            
+            .product-card {
+                padding: 16px;
+                margin-bottom: 20px;
+            }
+            
+            .product-name {
+                font-size: 1.1rem;
+            }
+            
+            .product-price {
+                font-size: 1rem;
+            }
+            
+            .category-btn {
+                padding: 10px 16px;
+                font-size: 0.95rem;
+            }
+        }
+        
+        /* Tablete mari */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 12px 20px;
+            }
+            
+            .top-bar {
+                padding: 6px 20px;
+            }
+            
+            .restaurant-name {
+                font-size: 1rem;
+            }
+            
+            .product-card {
+                padding: 14px;
+                margin-bottom: 18px;
+            }
+            
+            .product-name {
+                font-size: 1rem;
+            }
+            
+            .product-price {
+                font-size: 0.95rem;
+            }
+            
+            .category-btn {
+                padding: 8px 14px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Tablete mici */
+        @media (max-width: 992px) {
+            .container {
+                padding: 10px 15px;
+            }
+            
+            .top-bar {
+                padding: 5px 15px;
+            }
+            
+            .restaurant-name {
+                font-size: 0.95rem;
+            }
+            
+            .product-card {
+                padding: 12px;
+                margin-bottom: 16px;
+            }
+            
+            .product-name {
+                font-size: 0.95rem;
+            }
+            
+            .product-price {
+                font-size: 0.9rem;
+            }
+            
+            .category-btn {
+                padding: 7px 12px;
+                font-size: 0.85rem;
+            }
+            
+            .modal-content {
+                width: 95%;
+                max-width: 600px;
+                margin: 5% auto;
+                padding: 20px;
+            }
+        }
+        
+        /* Telefoane mari */
+        @media (max-width: 768px) {
+            .container {
+                padding: 8px 12px;
+            }
+            
+            .top-bar {
+                padding: 4px 12px;
+                min-height: 50px;
+            }
+            
+            .restaurant-name {
+                font-size: 0.9rem;
+            }
+            
+            .product-card {
+                padding: 10px;
+                margin-bottom: 14px;
+            }
+            
+            .product-name {
+                font-size: 0.9rem;
+            }
+            
+            .product-price {
+                font-size: 0.85rem;
+            }
+            
+            .category-btn {
+                padding: 6px 10px;
+                font-size: 0.8rem;
+            }
+            
+            .supervisor-btn {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+            }
+            
+            .icon-btn-labeled .icon {
+                font-size: 1.2rem;
+            }
+            
+            .icon-btn-labeled .label {
+                font-size: 0.6rem;
+            }
+            
+            .modal-content {
+                width: 98%;
+                max-width: 500px;
+                margin: 2% auto;
+                padding: 15px;
+            }
+            
+            .header-actions {
+                gap: 10px;
+            }
+            
+            .table-info-compact {
+                padding: 4px 8px;
+                font-size: 0.8rem;
+            }
+        }
+        
+        /* Telefoane mici */
+        @media (max-width: 576px) {
+            .container {
+                padding: 6px 10px;
+            }
+            
+            .top-bar {
+                padding: 3px 10px;
+                min-height: 45px;
+            }
+            
+            .restaurant-name {
+                font-size: 0.85rem;
+            }
+            
+            .product-card {
+                padding: 8px;
+                margin-bottom: 12px;
+            }
+            
+            .product-name {
+                font-size: 0.85rem;
+            }
+            
+            .product-price {
+                font-size: 0.8rem;
+            }
+            
+            .category-btn {
+                padding: 5px 8px;
+                font-size: 0.75rem;
+            }
+            
+            .supervisor-btn {
+                padding: 6px 10px;
+                font-size: 0.8rem;
+            }
+            
+            .icon-btn-labeled .icon {
+                font-size: 1rem;
+            }
+            
+            .icon-btn-labeled .label {
+                font-size: 0.55rem;
+            }
+            
+            .modal-content {
+                width: 98%;
+                max-width: 400px;
+                margin: 1% auto;
+                padding: 12px;
+            }
+            
+            .header-actions {
+                gap: 8px;
+            }
+            
+            .table-info-compact {
+                padding: 3px 6px;
+                font-size: 0.75rem;
+            }
+            
+            .supervisor-section {
+                padding: 10px;
+            }
+            
+            .supervisor-input-section {
+                padding: 8px;
+            }
+            
+            .unpaid-orders-section {
+                padding: 8px;
+            }
+            
+            .supervisor-section h3,
+            .supervisor-input-section h3,
+            .unpaid-orders-section h3 {
+                font-size: 1.1rem;
+                margin-bottom: 8px;
+            }
+            
+            .input-group {
+                margin-bottom: 12px;
+            }
+            
+            .input-group label {
+                font-size: 0.85rem;
+                margin-bottom: 4px;
+            }
+            
+            .input-group input {
+                padding: 8px;
+                font-size: 0.85rem;
+            }
+            
+            .unpaid-order-item {
+                padding: 10px;
+                margin-bottom: 10px;
+                font-size: 0.85rem;
+            }
+            
+            .unpaid-order-item h4 {
+                font-size: 0.95rem;
+                margin-bottom: 6px;
+            }
+            
+            .unpaid-order-item .order-details,
+            .unpaid-order-item .order-items {
+                padding: 6px;
+                margin-bottom: 6px;
+            }
+        }
+        
+        /* Orientare landscape pe telefoane */
+        @media (max-height: 600px) and (orientation: landscape) {
+            .top-bar {
+                min-height: 40px;
+                padding: 2px 10px;
+            }
+            
+            .restaurant-name {
+                font-size: 0.8rem;
+            }
+            
+            .product-card {
+                padding: 6px;
+                margin-bottom: 10px;
+            }
+            
+            .product-name {
+                font-size: 0.8rem;
+            }
+            
+            .product-price {
+                font-size: 0.75rem;
+            }
+            
+            .category-btn {
+                padding: 4px 6px;
+                font-size: 0.7rem;
+            }
+            
+            .supervisor-btn {
+                padding: 4px 8px;
+                font-size: 0.75rem;
+            }
+            
+            .container {
+                padding: 4px 8px;
+            }
+            
+            .modal-content {
+                margin: 1% auto;
+                padding: 8px;
+            }
+        }
+        
+        /* Ecrane ultra-wide */
+        @media (min-aspect-ratio: 21/9) {
+            .container {
+                max-width: 2000px;
+                padding: 25px 50px;
+            }
+            
+            .top-bar {
+                padding: 12px 50px;
+            }
+            
+            .restaurant-name {
+                font-size: 1.5rem;
+            }
+            
+            .product-card {
+                padding: 25px;
+                margin-bottom: 30px;
+            }
+            
+            .product-name {
+                font-size: 1.4rem;
+            }
+            
+            .product-price {
+                font-size: 1.3rem;
+            }
+            
+            .category-btn {
+                padding: 15px 25px;
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* Ajustări pentru secțiunile supervisor */
+        @media (max-width: 992px) {
+            .order-type-buttons,
+            .supervisor-buttons {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .order-type-buttons,
+            .supervisor-buttons {
+                gap: 6px;
+            }
+        }
+        
+        /* Ajustări pentru notificări */
+        @media (max-width: 768px) {
+            .notification {
+                left: 10px;
+                right: 10px;
+                top: 60px;
+                font-size: 0.85rem;
+                padding: 8px 12px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .notification {
+                left: 5px;
+                right: 5px;
+                top: 55px;
+                font-size: 0.8rem;
+                padding: 6px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="top-bar">
+        <div class="restaurant-name">Trattoria</div>
+        <div class="header-actions">
+            <div class="table-info-compact" id="tableInfo">...</div>
+            <div>
+                <button class="icon-btn-labeled" onclick="changeLanguage('ro')" aria-label="Română"><span class="icon">🇷🇴</span><span class="label">RO</span></button>
+                <button class="icon-btn-labeled" onclick="changeLanguage('en')" aria-label="English"><span class="icon">🇬🇧</span><span class="label">EN</span></button>
+            </div>
+            <button class="icon-btn-labeled" onclick="callWaiter('assistance')" aria-label="Cheamă Ospătarul">
+                <span class="icon">🛎️</span>
+                <span class="label">Ospătar</span>
+            </button>
+            <button class="icon-btn-labeled" onclick="openPaymentModal()" aria-label="Cere Nota">
+                <span class="icon">🧾</span>
+                <span class="label">Nota</span>
+            </button>
+        </div>
+    </header>
+
+    <div style="text-align: center; margin: 20px auto; padding-bottom: 25px; border-bottom: 1px solid #eee; max-width: 800px;">
+        <p id="classicMenuPrompt" style="margin-bottom: 15px; font-size: 1rem; color: #555;">Doriți să consultați meniul clasic?</p>
+        <div style="display: flex; gap: 15px; justify-content: center; align-items: center;">
+            <!-- Balon Happy Hour în stânga butoanelor PDF -->
+            <div id="happyHourBanner" class="happy-hour-note" style="display:none;">
+                <span id="happyHourMessage"></span>
+                <button class="close-btn" onclick="document.getElementById('happyHourBanner').style.display='none';">&times;</button>
+            </div>
+            
+            <a id="foodMenuBtn" href="/api/menu/pdf/food/ro" target="_blank" class="pdf-btn">📖 Meniu Mâncare</a>
+            <a id="drinksMenuBtn" href="/api/menu/pdf/drinks/ro" target="_blank" class="pdf-btn">🍹 Meniu Băuturi</a>
+            <button onclick="openReservationModal()" class="pdf-btn" style="border: none; cursor: pointer;"><i class="fas fa-calendar-check me-2"></i>Rezervări</button>
+        </div>
+    </div>
+
+    <div class="categories">
+        <div class="category-buttons" id="categoryButtons"></div>
+    </div>
+
+    <div class="page-container">
+        <!-- Secțiunea de autentificare PIN -->
+        <div class="supervisor-section" id="pinAuthSection">
+            <h3>🔐 Autentificare Supervisor</h3>
+            <div class="pin-input-group">
+                <label for="pinInput">Introduceți PIN-ul:</label>
+                <div style="position: relative; display: inline-block;">
+                    <input type="password" id="pinInput" placeholder="Ex: 5555" maxlength="4" required>
+                    <button type="button" id="pinToggleBtn" onclick="togglePinVisibility()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 1.2rem;" title="Arată PIN-ul">👁️</button>
+                </div>
+                <button class="supervisor-btn" id="pinLoginBtn">🔓 Conectare</button>
+            </div>
+            <div class="pin-error" id="pinError" style="display: none; color: #d32f2f; margin-top: 10px; text-align: center;">
+                PIN incorect! Vă rugăm să încercați din nou.
+            </div>
+        </div>
+
+        <!-- Secțiunea pentru Supervisor -->
+        <div class="supervisor-section" id="supervisorSection" style="display: none;">
+            <h3>👨‍💼 Comandă Supervisor</h3>
+            <div class="supervisor-buttons">
+                <button class="supervisor-btn" id="newOrderBtn">➕ Comandă Nouă</button>
+                <button class="supervisor-btn" id="unpaidOrdersBtn">📋 Comenzi Neachitate</button>
+            </div>
+        </div>
+
+        <!-- Secțiunea pentru introducerea mesei și clientului -->
+        <div class="supervisor-input-section" id="supervisorInputSection" style="display: none;">
+            <h3>📝 Detalii Comandă</h3>
+            <div class="input-group">
+                <label for="tableNumberInput">Numărul mesei:</label>
+                <input type="text" id="tableNumberInput" placeholder="Ex: 5" required>
+            </div>
+            <div class="input-group">
+                <label for="clientNumberInput">Numărul clientului:</label>
+                <input type="text" id="clientNumberInput" placeholder="Ex: 1" required>
+            </div>
+            <button class="supervisor-btn" id="startOrderBtn">🚀 Începe Comanda</button>
+        </div>
+
+        <!-- Secțiunea pentru comenzi neachitate -->
+        <div class="unpaid-orders-section" id="unpaidOrdersSection" style="display: none;">
+            <h3>📋 Comenzi Neachitate</h3>
+            <div class="unpaid-orders-list" id="unpaidOrdersList">
+                <!-- Comenzile neachitate vor fi afișate aici -->
+            </div>
+        </div>
+
+        <div class="order-type-section" id="orderTypeSection" style="display: none;">
+            <h3>🍽️ Tipul comenzii</h3>
+            <div class="order-type-buttons">
+                <button class="order-type-btn active" data-type="here" data-together="true">👥 Comandă împreună</button>
+                <button class="order-type-btn" data-type="here" data-together="false">👤 Comandă separat</button>
+                <button class="order-type-btn" data-type="takeout" data-together="true">🏠 Comandă pentru Acasă</button>
+            </div>
+        </div>
+        <div class="menu-container" id="fullMenuContainer">
+            <div class="loading" id="loadingMessage">🔄 Se încarcă meniul...</div>
+        </div>
+    </div>
+
+    <div class="cart-summary" id="cartSummary" style="display: none;">
+        <!-- Secțiunea Recompense -->
+        <div class="rewards-section" id="rewardsSection" style="display: none;">
+            <h4>🎁 Recompense Disponibile</h4>
+            <div id="rewardsList">
+                <!-- Recompensele vor fi afișate aici -->
+            </div>
+        </div>
+        
+        <div class="cart-info">
+            <div>
+                <div class="cart-items" id="cartItems">0 articole</div>
+                <div class="cart-total" id="cartTotal">0.00 RON</div>
+            </div>
+        </div>
+        <button class="order-btn" id="orderBtn" onclick="openCartModal()">🛒 Vezi Coșul și finalizează</button>
+    </div>
+    
+    <div id="cartModal" class="modal">
+        <div class="modal-content" style="text-align:left;">
+            <div class="modal-header"><h2 id="cartTitleHeading">🛒 Coșul tău</h2><span class="close-btn" onclick="closeCartModal()">&times;</span></div>
+            <div class="modal-body" id="cartModalBody"></div>
+            
+            <!-- Secțiunea pentru mentiuni -->
+            <div class="order-notes-section">
+                <h4 id="notesTitle" style="color: #ff6b35; margin-bottom: 15px; text-align: center;">📝 Mentiuni pentru comandă (opțional)</h4>
+                
+                <div class="notes-category">
+                    <label id="foodNotesLabel" for="foodNotes" style="display: block; margin-bottom: 8px; font-weight: 600; color: #495057;">🍽️ Mentiuni pentru mâncare:</label>
+                    <textarea id="foodNotes" data-placeholder-ro="Ex: Vreau ca mâncarea să fie adusă pe rând, nu toată odată..." data-placeholder-en="Ex: I want the food to be brought one by one, not all at once..." placeholder="Ex: Vreau ca mâncarea să fie adusă pe rând, nu toată odată..." rows="2" maxlength="200" style="width: 100%; padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; font-family: inherit; resize: vertical; min-height: 50px;"></textarea>
+                    <small class="notes-counter" style="display: block; text-align: right; color: #6c757d; font-size: 12px; margin-top: 4px;">0/200 <span class="characters-text">caractere</span></small>
+                </div>
+                
+                <div class="notes-category">
+                    <label id="drinkNotesLabel" for="drinkNotes" style="display: block; margin-bottom: 8px; font-weight: 600; color: #495057;">🥤 Mentiuni pentru băuturi:</label>
+                    <textarea id="drinkNotes" data-placeholder-ro="Ex: Fără gheață, cu lămâie..." data-placeholder-en="Ex: No ice, with lemon..." placeholder="Ex: Fără gheață, cu lămâie..." rows="2" maxlength="200" style="width: 100%; padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; font-family: inherit; resize: vertical; min-height: 50px;"></textarea>
+                    <small class="notes-counter" style="display: block; text-align: right; color: #6c757d; font-size: 12px; margin-top: 4px;">0/200 <span class="characters-text">caractere</span></small>
+                </div>
+                
+                <div class="notes-category">
+                    <label id="generalNotesLabel" for="generalNotes" style="display: block; margin-bottom: 8px; font-weight: 600; color: #495057;">📋 Mentiuni generale:</label>
+                    <textarea id="generalNotes" data-placeholder-ro="Ex: Comandă urgentă, client VIP..." data-placeholder-en="Ex: Urgent order, VIP client..." placeholder="Ex: Comandă urgentă, client VIP..." rows="2" maxlength="200" style="width: 100%; padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; font-family: inherit; resize: vertical; min-height: 50px;"></textarea>
+                    <small class="notes-counter" style="display: block; text-align: right; color: #6c757d; font-size: 12px; margin-top: 4px;">0/200 <span class="characters-text">caractere</span></small>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <div class="total-price" id="cartModalTotal" style="font-size: 1.2rem; font-weight: bold; color: #ff6b35; text-align: center; margin-bottom: 15px;">Total: 0.00 RON</div>
+                <div class="modal-buttons">
+                    <button class="place-order-btn" onclick="submitOrder()">📤 Plasează Comanda</button>
+                    <button class="cancel-order-btn" id="cancelOrderBtn" onclick="showCancelOrderModal()" style="display: none;">❌ Anulează Comanda</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <h4 id="paymentTitle">Cum doriți să plătiți?</h4>
+            <div class="payment-options">
+                <button class="payment-btn cash" onclick="requestBill('cash')" id="cashBtn">💰 Numerar</button>
+                <button class="payment-btn card" onclick="requestBill('card')" id="cardBtn">💳 Card</button>
+            </div>
+            <button class="cancel-btn" onclick="closePaymentModal()" id="cancelPaymentBtn">Anulează</button>
+        </div>
+    </div>
+
+    <!-- Modal pentru anularea comenzii -->
+    <div id="cancelOrderModal" class="modal">
+        <div class="modal-content">
+            <h4 id="cancelOrderTitle">❌ Anulează Comanda</h4>
+            <div class="cancel-timer" id="cancelTimer" style="text-align: center; font-size: 1.2rem; color: #dc3545; margin: 15px 0;">
+                ⏰ <span id="timeRemainingLabel">Timp rămas:</span> <span id="timeRemaining">2:00</span>
+            </div>
+            <div class="cancel-reason-section">
+                <label for="cancelReason" id="cancelReasonLabel">Motivul anulării (opțional):</label>
+                <textarea id="cancelReason" placeholder="Ex: Produsul nu mai este disponibil, am schimbat părerea..." rows="3" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; margin-top: 8px;"></textarea>
+            </div>
+            <div class="modal-buttons" style="margin-top: 20px;">
+                <button class="cancel-order-btn" onclick="confirmCancelOrder()" id="confirmCancelBtn">✅ Confirmă Anularea</button>
+                <button class="pdf-btn" onclick="closeCancelOrderModal()" id="dontCancelBtn">❌ Nu Anula</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="orderConfirmationScreen" class="modal" style="z-index: 3000;">
+        <div class="modal-content" style="max-width: 600px; text-align: left;">
+            <div class="modal-header">
+                <h2 style="color: #28a745;" id="orderSuccessTitle">✅ Comanda trimisă cu succes!</h2>
+                <span class="close-btn" onclick="closeOrderConfirmation()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h3 style="color: #ff6b35;" id="orderNumberLabel">Comanda #<span id="confirmOrderId">---</span></h3>
+                        <span style="background: #007bff; color: white; padding: 5px 12px; border-radius: 15px; font-size: 0.9rem;" id="confirmOrderType">🍽️ Restaurant</span>
+                    </div>
+                    <div style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">
+                        <strong id="tableLabel">Masa:</strong> <span id="confirmTableNumber">---</span> | 
+                        <strong id="orderedAtLabel">Comandată:</strong> <span id="confirmDateTime">---</span>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #28a745;">
+                        <h4 style="margin-bottom: 10px; color: #333;" id="orderedProductsTitle">📋 Produsele comandate:</h4>
+                        <div id="confirmOrderItems"></div>
+                    </div>
+                </div>
+                
+                <div style="background: #fff3cd; padding: 15px; border-radius: 10px; border-left: 4px solid #ffc107;">
+                    <h4 style="color: #856404; margin-bottom: 10px;" id="orderTotalTitle">💰 Totalul acestei comenzi</h4>
+                    <div style="font-size: 1.3rem; font-weight: bold; color: #856404;" id="confirmOrderTotal">0.00 RON</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                    <button class="pdf-btn" onclick="downloadConfirmationPDF()" id="confirmPdfBtn" style="flex: 1; min-width: 200px;">📄 Salvează Dovada PDF</button>
+                    <button class="cancel-order-btn" id="cancelOrderBtnConfirm" onclick="showCancelOrderModal()" style="flex: 1; min-width: 200px; display: none;">❌ Anulează Comanda</button>
+                    <button class="place-order-btn" onclick="closeOrderConfirmation(); scrollToTop();" id="orderAgainBtn" style="flex: 1; min-width: 200px;">🍽️ Comandă din nou</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="allergenModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header"><h2>ℹ️ <span id="allergenModalTitle">Informații Alergeni</span></h2><span class="close-btn" onclick="closeAllergenModal()">&times;</span></div>
+            <div class="modal-body" id="allergenModalBody"></div>
+        </div>
+    </div>
+
+    
+    <!-- Modal pentru rezervări -->
+    <div id="reservationModal" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-calendar-check me-2"></i>Rezervare Masă</h2>
+                <span class="close-btn" onclick="closeReservationModal()"><i class="fas fa-times"></i></span>
+            </div>
+            <div class="modal-body" style="text-align: left;">
+                <form id="reservationForm" onsubmit="submitReservation(event)">
+                    <div class="form-group" style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Nume și Prenume *</label>
+                        <input type="text" id="customerName" required 
+                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;"
+                               placeholder="Ex: Ion Popescu">
+                    </div>
+                    
+                    <div class="form-group" style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Telefon *</label>
+                        <input type="tel" id="customerPhone" required 
+                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;"
+                               placeholder="Ex: 0712345678">
+                    </div>
+                    
+                    <div class="form-group" style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Email</label>
+                        <input type="email" id="customerEmail" 
+                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;"
+                               placeholder="Ex: ion.popescu@email.com">
+                    </div>
+                    
+                    <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                        <div class="form-group">
+                            <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Data *</label>
+                            <input type="date" id="reservationDate" required 
+                                   style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Ora *</label>
+                            <input type="time" id="reservationTime" required 
+                                   style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Număr Persoane *</label>
+                        <input type="number" id="partySize" required min="1" max="20" value="2"
+                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;">
+                    </div>
+                    
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Cereri Speciale</label>
+                        <textarea id="specialRequests" rows="3" 
+                                  style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem; resize: vertical;"
+                                  placeholder="Ex: Zi de naștere, aniversare, alergii..."></textarea>
+                    </div>
+                    
+                    <div class="modal-buttons" style="display: flex; gap: 10px; justify-content: center;">
+                        <button type="submit" class="place-order-btn" style="flex: 1;">
+                            <i class="fas fa-calendar-check me-2"></i>Confirmă Rezervarea
+                        </button>
+                        <button type="button" class="cancel-btn" onclick="closeReservationModal()" style="flex: 1; background: #6c757d; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer;">
+                            <i class="fas fa-times me-2"></i>Anulează
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funcție pentru formatarea timpului la ora locală a României
+        function formatToLocalTime(utcTimestamp) {
+            if (!utcTimestamp) return 'N/A';
+            const options = {
+                year: '2-digit', month: '2-digit', day: '2-digit',
+                hour: '2-digit', minute: '2-digit', second: '2-digit',
+                hour12: false,
+                timeZone: 'Europe/Bucharest'
+            };
+            try {
+                return new Date(utcTimestamp).toLocaleString('ro-RO', options);
+            } catch (e) {
+                return utcTimestamp; // Returnează valoarea originală dacă formatul e invalid
+            }
+        }
+
+        let menuItems = [], categories = [], cart = [];
+        let orderType = { type: 'here', isTogether: true };
+        let socket;
+        let currentOrderId = null; // ID-ul comenzii curente pentru anulare
+        let cancelTimer = null; // Timer pentru cronometrul de anulare
+        let cancelCountdown = 120; // 2 minute în secunde
+        let currentConfirmedOrder = null;
+        let tableNumber;
+        let currentLang = 'ro';
+        let clientIdentifier = null;
+        let clientToken = null;
+        let sessionTimer = null;
+
+        function updateHeaderDisplay() {
+            const tableInfoElement = document.getElementById('tableInfo');
+            
+            // Pentru comenzile supervisor
+            if (window.isSupervisorOrder && window.tableNumber && window.clientIdentifier) {
+                let displayText = `Masa ${window.tableNumber}`;
+                if (orderType && orderType.type === 'takeout') {
+                    displayText += ' - Acasă';
+                }
+                displayText += ` - ${window.clientIdentifier}`;
+                tableInfoElement.textContent = displayText;
+                return;
+            }
+            
+            // Pentru comenzile normale
+            const localTableNumber = localStorage.getItem('tableNumber') || 'necunoscută';
+            
+            let displayText = `Masa ${localTableNumber}`;
+            if (orderType && orderType.type === 'takeout') {
+                displayText += ' - Acasă';
+            }
+            
+            if (clientIdentifier) {
+                displayText += ` - Client ${clientIdentifier}`;
+            }
+            
+            tableInfoElement.textContent = displayText;
+        }
+
+        async function initializeClientSession() {
+            try {
+                // Generează sau obține clientToken-ul
+                clientToken = localStorage.getItem('clientToken');
+                if (!clientToken) {
+                    clientToken = 'client_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                    localStorage.setItem('clientToken', clientToken);
+                }
+                
+                // Trimite cerere de identificare la server
+                const response = await fetch(`${SERVER_IP}/api/session/start`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        tableNumber: tableNumber,
+                        clientToken: clientToken
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                if (data.success) {
+                    clientIdentifier = data.clientIdentifier;
+                    updateHeaderDisplay();
+                    console.log('Client identificat:', clientIdentifier);
+            } else {
+                    console.error('Eroare la identificarea clientului:', data.error);
+                }
+            } catch (error) {
+                console.error('Eroare la inițializarea sesiunii client:', error);
+            }
+        }
+
+        // Verificare conexiune server
+        async function checkServerHealth() {
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+                
+                const response = await fetch(`${SERVER_IP}/api/health`, { 
+                    signal: controller.signal,
+                    method: 'GET'
+                });
+                clearTimeout(timeoutId);
+                return response.ok;
+            } catch (error) {
+                console.warn('Server health check failed:', error);
+                return false;
+            }
+        }
+
+        // Fallback pentru meniu offline
+        function handleOfflineMode() {
+            const offlineMenu = localStorage.getItem('lastKnownMenu');
+            if (offlineMenu) {
+                showNotification('Conexiunea este instabilă. Se folosește ultimul meniu cunoscut.', 'warning');
+                return JSON.parse(offlineMenu);
+            }
+            showNotification('Nu există conexiune la server și nu este disponibil un meniu offline.', 'error');
+            return null;
+        }
+
+        // Salvare meniu pentru offline
+        function saveMenuForOffline(menuData) {
+            try {
+                localStorage.setItem('lastKnownMenu', JSON.stringify(menuData));
+                localStorage.setItem('lastKnownMenuTimestamp', Date.now().toString());
+            } catch (error) {
+                console.warn('Nu s-a putut salva meniul pentru offline:', error);
+            }
+        }
+
+        // Verificare conexiune server
+        async function checkServerHealth() {
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+                
+                const response = await fetch(`${SERVER_IP}/api/health`, { 
+                    signal: controller.signal,
+                    method: 'GET'
+                });
+                clearTimeout(timeoutId);
+                return response.ok;
+            } catch (error) {
+                console.warn('Server health check failed:', error);
+                return false;
+            }
+        }
+
+        // Fallback pentru meniu offline
+        function handleOfflineMode() {
+            const offlineMenu = localStorage.getItem('lastKnownMenu');
+            if (offlineMenu) {
+                showNotification('Conexiunea este instabilă. Se folosește ultimul meniu cunoscut.', 'warning');
+                return JSON.parse(offlineMenu);
+            }
+            showNotification('Nu există conexiune la server și nu este disponibil un meniu offline.', 'error');
+            return null;
+        }
+
+        // Salvare meniu pentru offline
+        function saveMenuForOffline(menuData) {
+            try {
+                localStorage.setItem('lastKnownMenu', JSON.stringify(menuData));
+                localStorage.setItem('lastKnownMenuTimestamp', Date.now().toString());
+            } catch (error) {
+                console.warn('Nu s-a putut salva meniul pentru offline:', error);
+            }
+        }
+
+        async function loadMenu() {
+            try {
+                // Verific conexiunea server înainte de a încărca meniul
+                const serverOK = await checkServerHealth();
+                
+                if (serverOK) {
+                    // Server OK - încarc meniul normal
+                    const response = await fetch(`${SERVER_IP}/api/menu/all?lang=${currentLang}`);
+                    if (!response.ok) { throw new Error(`HTTP error! status: ${response.status}`); }
+                    const data = await response.json();
+                    menuItems = data.data || [];
+                    
+                    // Salvez meniul pentru offline
+                    saveMenuForOffline(data);
+                    
+                } else {
+                    // Server DOWN - folosesc meniul offline
+                    const offlineData = handleOfflineMode();
+                    if (offlineData && offlineData.data) {
+                        menuItems = offlineData.data || [];
+                    } else {
+                        throw new Error('Nu există meniu offline disponibil');
+                    }
+                }
+                
+                categories = [...new Set(menuItems.map(item => item.category))];
+                renderCategories();
+                if (categories.length > 0) setActiveCategory(categories[0]);
+                
+                const loadingElement = document.getElementById('loadingMessage');
+                if (loadingElement) loadingElement.style.display = 'none';
+                
+            } catch (error) {
+                console.error("Menu loading failed:", error);
+                const loadingElement = document.getElementById('loadingMessage');
+                if (loadingElement) loadingElement.innerHTML = '❌ Eroare la încărcarea meniului';
+            }
+        }
+        
+        function connectWebSocket() {
+            if (typeof SERVER_IP === 'undefined') { console.error("SERVER_IP nu este definit!"); return; }
+            socket = io(SERVER_IP);
+            socket.on('connect', () => console.log('Conectat la server'));
+            socket.on('disconnect', () => console.log('Deconectat'));
+        }
+
+        async function initializeApp() {
+            updateHeaderDisplay();
+            initializeSupervisorApp();
+            loadMenu();
+            connectWebSocket();
+        }
+        
+        function initializeSupervisorApp() {
+            // Verifică autentificarea salvată
+            const isAuthenticated = localStorage.getItem('supervisorAuth') === 'true';
+            
+            if (isAuthenticated) {
+                showSupervisorInterface();
+            } else {
+                showPinAuth();
+            }
+            
+            // Ascunde secțiunile normale
+            document.getElementById('orderTypeSection').style.display = 'none';
+            document.getElementById('fullMenuContainer').style.display = 'none';
+        }
+        
+        function showPinAuth() {
+            document.getElementById('pinAuthSection').style.display = 'block';
+            document.getElementById('supervisorSection').style.display = 'none';
+            
+            // Adaugă event listeners pentru autentificare
+            document.getElementById('pinLoginBtn').addEventListener('click', authenticatePin);
+            document.getElementById('pinInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    authenticatePin();
+                }
+            });
+        }
+        
+        function showSupervisorInterface() {
+            document.getElementById('pinAuthSection').style.display = 'none';
+            document.getElementById('supervisorSection').style.display = 'block';
+            
+            // Afișează secțiunea de tip comandă pentru supervisor
+            document.getElementById('orderTypeSection').style.display = 'block';
+            document.getElementById('fullMenuContainer').style.display = 'block';
+            
+            // Adaugă event listeners pentru butoanele supervisor
+            document.getElementById('newOrderBtn').addEventListener('click', showNewOrderForm);
+            document.getElementById('unpaidOrdersBtn').addEventListener('click', showUnpaidOrders);
+            document.getElementById('startOrderBtn').addEventListener('click', startSupervisorOrder);
+        }
+        
+        function logoutSupervisor() {
+            // Șterge autentificarea
+            localStorage.removeItem('supervisorAuth');
+            localStorage.removeItem('supervisorAuthTime');
+            localStorage.removeItem('supervisorId');
+            
+            // Revine la ecranul de autentificare
+            showPinAuth();
+            console.log('🚪 Supervisor 2 deconectat');
+        }
+        
+        function togglePinVisibility() {
+            const pinInput = document.getElementById('pinInput');
+            const toggleBtn = document.getElementById('pinToggleBtn');
+            const t = translations[currentLang];
+            
+            if (pinInput.type === 'password') {
+                pinInput.type = 'text';
+                toggleBtn.textContent = '🙈';
+                toggleBtn.title = t.hidePin;
+            } else {
+                pinInput.type = 'password';
+                toggleBtn.textContent = '👁️';
+                toggleBtn.title = t.showPin;
+            }
+        }
+        
+        async function authenticatePin() {
+            const pinInput = document.getElementById('pinInput');
+            const pinError = document.getElementById('pinError');
+            const enteredPin = pinInput.value.trim();
+            const t = translations[currentLang];
+            
+            try {
+                const response = await fetch('/api/verify-supervisor-pin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        pin: enteredPin,
+                        supervisorId: 5 // Supervisor ID pentru comanda-supervisor5.html
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Salvează autentificarea pentru persistență
+                    localStorage.setItem('supervisorAuth', 'true');
+                    localStorage.setItem('supervisorAuthTime', Date.now().toString());
+                    localStorage.setItem('supervisorId', '5');
+                    
+                    // Ascunde eroarea și afișează interfața supervisor
+                    pinError.style.display = 'none';
+                    pinInput.value = '';
+                    showSupervisorInterface();
+                    
+                    console.log('✅ Autentificare supervisor 5 reușită');
+                    showNotification(t.authenticationSuccess);
+                } else {
+                    // PIN incorect - afișează eroarea
+                    pinError.style.display = 'block';
+                    pinInput.value = '';
+                    pinInput.focus();
+                    
+                    console.log('❌ PIN incorect pentru supervisor 5:', enteredPin);
+                    showNotification(t.authenticationFailed);
+                }
+            } catch (error) {
+                console.error('Eroare la autentificare:', error);
+                pinError.style.display = 'block';
+                pinError.textContent = t.connectionError;
+                pinInput.value = '';
+                pinInput.focus();
+            }
+        }
+        
+        
+        function showNewOrderForm() {
+            // Ascunde secțiunea supervisor
+            document.getElementById('supervisorSection').style.display = 'none';
+            // Afișează secțiunea de input
+            document.getElementById('supervisorInputSection').style.display = 'block';
+            
+            // Păstrează vizibile secțiunile de tip comandă și meniu
+            document.getElementById('orderTypeSection').style.display = 'block';
+            document.getElementById('fullMenuContainer').style.display = 'block';
+        }
+        
+        async function showUnpaidOrders() {
+            try {
+                // Ascunde secțiunea supervisor
+                document.getElementById('supervisorSection').style.display = 'none';
+                
+                // Afișează secțiunea de comenzi neachitate
+                document.getElementById('unpaidOrdersSection').style.display = 'block';
+                
+                // Păstrează vizibile secțiunile de tip comandă și meniu
+                document.getElementById('orderTypeSection').style.display = 'block';
+                document.getElementById('fullMenuContainer').style.display = 'block';
+                
+                // Încarcă comenzi neachitate
+                await loadUnpaidOrders();
+            } catch (error) {
+                console.error('Eroare la încărcarea comenzilor neachitate:', error);
+                alert(translations[currentLang].loadUnpaidOrdersError);
+            }
+        }
+        
+        async function loadUnpaidOrders() {
+            try {
+                const response = await fetch(`${SERVER_IP}/api/supervisor/unpaid-orders`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                const ordersList = document.getElementById('unpaidOrdersList');
+                
+                if (data.orders && data.orders.length > 0) {
+                    ordersList.innerHTML = '';
+                    
+                    data.orders.forEach(order => {
+                        const orderItem = document.createElement('div');
+                        orderItem.className = 'unpaid-order-item';
+                        orderItem.innerHTML = `
+                            <h4>Masa ${order.table_number} - ${order.client_identifier}</h4>
+                            <div class="order-details">
+                                <strong>Status:</strong> ${order.status} | 
+                                <strong>Data:</strong> ${new Date(order.timestamp).toLocaleString('ro-RO')}
+                            </div>
+                            <div class="order-items">
+                                ${order.items.map(item => `${item.quantity}x ${item.name}`).join(', ')}
+                            </div>
+                            <button class="supervisor-btn" onclick="continueOrder(${order.id})">
+                                ${translations[currentLang].addProducts}
+                            </button>
+                        `;
+                        ordersList.appendChild(orderItem);
+                    });
+                } else {
+                    ordersList.innerHTML = `<p style="text-align: center; color: #666;">${translations[currentLang].noUnpaidOrders}</p>`;
+                }
+            } catch (error) {
+                console.error('Eroare la încărcarea comenzilor:', error);
+                document.getElementById('unpaidOrdersList').innerHTML = 
+                    `<p style="text-align: center; color: #dc3545;">${translations[currentLang].loadOrdersError}</p>`;
+            }
+        }
+        
+        async function startSupervisorOrder() {
+            const tableNumber = document.getElementById('tableNumberInput').value.trim();
+            const clientNumber = document.getElementById('clientNumberInput').value.trim();
+            
+            if (!tableNumber || !clientNumber) {
+                alert('Vă rugăm completați toate câmpurile!');
+                return;
+            }
+            
+            try {
+                // Generează clientIdentifier pentru supervisor
+                const clientIdentifier = `Client ${clientNumber}`;
+                
+                // Setează variabilele globale
+                window.tableNumber = tableNumber;
+                window.clientIdentifier = clientIdentifier;
+                window.isSupervisorOrder = true;
+                
+                // Ascunde secțiunea de input
+                document.getElementById('supervisorInputSection').style.display = 'none';
+                
+                // Afișează secțiunea de tip comandă și meniul
+                document.getElementById('orderTypeSection').style.display = 'block';
+                document.getElementById('fullMenuContainer').style.display = 'block';
+                
+                // Actualizează header-ul
+                updateHeaderDisplay();
+                
+                console.log('Comandă supervisor inițiată:', { tableNumber, clientIdentifier });
+                
+            } catch (error) {
+                console.error('Eroare la inițierea comenzii supervisor:', error);
+                alert('Eroare la inițierea comenzii!');
+            }
+        }
+        
+        async function continueOrder(orderId) {
+            try {
+                // Obține detaliile comenzii
+                const response = await fetch(`${SERVER_IP}/api/supervisor/order/${orderId}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                const order = data.order;
+                
+                // Setează variabilele globale
+                window.tableNumber = order.table_number;
+                window.clientIdentifier = order.client_identifier;
+                window.isSupervisorOrder = true;
+                window.existingOrderId = orderId;
+                
+                // Ascunde secțiunea de comenzi neachitate
+                document.getElementById('unpaidOrdersSection').style.display = 'none';
+                
+                // Afișează secțiunea de tip comandă și meniul
+                document.getElementById('orderTypeSection').style.display = 'block';
+                document.getElementById('fullMenuContainer').style.display = 'block';
+                
+                // Actualizează header-ul
+                updateHeaderDisplay();
+                
+                console.log('Continuare comandă supervisor:', { orderId, tableNumber: order.table_number, clientIdentifier: order.client_identifier });
+                
+            } catch (error) {
+                console.error('Eroare la continuarea comenzii:', error);
+                alert('Eroare la continuarea comenzii!');
+            }
+        }
+
+        function checkQRSession() {
+            // Pentru comenzile supervisor, nu verificăm QR-ul
+            if (window.isSupervisorOrder) {
+                return true;
+            }
+            
+            const qrTimestamp = localStorage.getItem('qrScanTime');
+            if (!qrTimestamp) {
+                // Nu a fost scanat QR-ul
+                redirectToQRScan();
+                return false;
+            }
+            
+            const now = Date.now();
+            const thirtyMinutes = 30 * 60 * 1000; // 30 minute în milisecunde
+            
+            if (now - qrTimestamp > thirtyMinutes) {
+                // QR-ul a expirat - dar nu șterge timestamp-ul, doar afișează mesajul
+                showExpirationMessage();
+                return false;
+            }
+            
+            return true; // QR-ul este valid
+        }
+
+        function redirectToQRScan() {
+            // Pentru comenzile supervisor, nu afișăm eroarea QR
+            if (window.isSupervisorOrder) {
+                return;
+            }
+            
+            document.body.innerHTML = `<div style="text-align: center; padding: 50px; font-family: sans-serif; color: #d32f2f;"><h1>Eroare</h1><p>Cod QR invalid sau expirat. Vă rugăm să scanați un cod QR valid de la masa dumneavoastră.</p></div>`;
+        }
+
+        function showExpirationMessage() {
+            // Pentru comenzile supervisor, nu afișăm eroarea QR
+            if (window.isSupervisorOrder) {
+                return;
+            }
+            
+            document.body.innerHTML = `<div style="text-align: center; padding: 50px; font-family: sans-serif; color: #d32f2f;"><h1>Sesiunea dumneavoastră anterioară a expirat</h1><p>Pentru a comanda, vă rugăm să scanați codul QR de la masa dumneavoastră. Vă mulțumim!!!</p></div>`;
+        }
+
+        function startSessionTimer() {
+            // Șterge timer-ul existent dacă există
+            if (sessionTimer) {
+                clearInterval(sessionTimer);
+            }
+            
+            let timeLeft = 30 * 60; // 30 minute în secunde
+            
+            // Afișează timer-ul în header
+            const timerElement = document.createElement('div');
+            timerElement.id = 'sessionTimer';
+            timerElement.style.cssText = 'background: #ff6b35; color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.9rem; font-weight: bold; margin-left: 10px;';
+            document.querySelector('.header-actions').appendChild(timerElement);
+            
+            function updateTimer() {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerElement.textContent = `⏰ ${minutes}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(sessionTimer);
+                    showExpirationMessage();
+                    return;
+                }
+                
+                timeLeft--;
+            }
+            
+            updateTimer(); // Afișează imediat
+            sessionTimer = setInterval(updateTimer, 1000); // Actualizează la fiecare secundă
+        }
+
+        // Funcții pentru contorul de caractere în mentiuni
+        function updateCharacterCounter(textareaId, counterId) {
+            const textarea = document.getElementById(textareaId);
+            const counter = document.querySelector(`#${textareaId}`).nextElementSibling;
+            
+            if (textarea && counter) {
+                const length = textarea.value.length;
+                const maxLength = parseInt(textarea.getAttribute('maxlength'));
+                
+                counter.textContent = `${length}/${maxLength} ${translations[currentLang].characters}`;
+                
+                // Schimbă culoarea în funcție de lungime
+                counter.className = 'notes-counter';
+                if (length > maxLength * 0.8) {
+                    counter.classList.add('warning');
+                }
+                if (length > maxLength * 0.95) {
+                    counter.classList.add('danger');
+                }
+            }
+        }
+        
+        function setupCharacterCounters() {
+            const textareas = ['foodNotes', 'drinkNotes', 'generalNotes'];
+            
+            textareas.forEach(textareaId => {
+                const textarea = document.getElementById(textareaId);
+                if (textarea) {
+                    // Actualizează contorul la încărcare
+                    updateCharacterCounter(textareaId);
+                    
+                    // Actualizează contorul la fiecare modificare
+                    textarea.addEventListener('input', () => {
+                        updateCharacterCounter(textareaId);
+                    });
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Pentru aplicația supervisor, nu verificăm parametrul table din URL
+            // CORECTARE: Setează qrScanTime imediat la încărcarea paginii
+            localStorage.setItem('qrScanTime', Date.now().toString());
+            console.log('🔍 QR timestamp setat:', localStorage.getItem('qrScanTime'));
+            
+            // Verifică și afișează Happy Hour-ul activ
+            checkAndDisplayHappyHour();
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const tableNumberFromUrl = urlParams.get('table');
+
+            // Pentru aplicația supervisor, nu verificăm parametrul table
+            // Doar pentru aplicația normală (non-supervisor) verificăm table-ul
+            if (!window.location.pathname.includes('supervisor')) {
+                // Verifică dacă există un număr de masă valid
+                if (!tableNumberFromUrl || isNaN(tableNumberFromUrl)) {
+                    document.body.innerHTML = `<div style="text-align: center; padding: 50px; font-family: sans-serif; color: #d32f2f;"><h1>Eroare</h1><p>Cod QR invalid sau expirat. Vă rugăm să scanați un cod QR valid de la masa dumneavoastră.</p></div>`;
+                    return;
+                }
+                
+                // Verifică dacă masa este în intervalul valid (1-200)
+                const tableNum = parseInt(tableNumberFromUrl);
+                if (tableNum < 1 || tableNum > 200) {
+                    document.body.innerHTML = `<div style="text-align: center; padding: 50px; font-family: sans-serif; color: #d32f2f;"><h1>Eroare</h1><p>Masa ${tableNum} nu este validă. Mesele trebuie să fie între 1 și 200.</p></div>`;
+                    return;
+                }
+            }
+
+            // Pentru aplicația supervisor, nu actualizăm tableNumber din URL
+            if (!window.location.pathname.includes('supervisor')) {
+                // FORȚEAZĂ actualizarea localStorage cu masa din URL
+                console.log('🔍 FORCING tableNumber update from URL:', tableNumberFromUrl);
+                localStorage.removeItem('tableNumber'); // Șterge vechea valoare
+                localStorage.setItem('tableNumber', tableNumberFromUrl);
+                console.log('🔍 localStorage now contains:', localStorage.getItem('tableNumber'));
+                
+                // Verificare suplimentară
+                if (localStorage.getItem('tableNumber') !== tableNumberFromUrl) {
+                    console.error('❌ EROARE: localStorage nu s-a actualizat corect!');
+                    console.error('❌ Expected:', tableNumberFromUrl);
+                    console.error('❌ Actual:', localStorage.getItem('tableNumber'));
+                }
+            }
+
+            // Verifică dacă sesiunea anterioară a expirat (qrScanTime deja setat mai sus)
+            if (!checkQRSession()) {
+                return;
+            }
+
+            // Inițializează limba corect
+            const savedLang = localStorage.getItem('selectedLanguage');
+            if (savedLang && (savedLang === 'en' || savedLang === 'ro')) {
+                currentLang = savedLang;
+            } else {
+                currentLang = 'ro'; // Default
+                try {
+                    const r = await fetch(`${SERVER_IP}/api/lang`);
+                    const j = await r.json();
+                    if (j && (j.lang === 'en' || j.lang === 'ro')) {
+                        currentLang = j.lang;
+                        localStorage.setItem('selectedLanguage', currentLang);
+                    }
+                } catch (_) {}
+            }
+
+            // Setează butonul de limbă corect ca activ
+            document.querySelectorAll('.icon-btn-labeled').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            const selectedBtn = document.querySelector(`button[onclick="changeLanguage('${currentLang}')"]`);
+            if (selectedBtn) {
+                selectedBtn.classList.add('active');
+            }
+
+                tableNumber = tableNumberFromUrl;
+                // localStorage deja actualizat mai sus
+                console.log('🔍 Final tableNumber:', tableNumber);
+                initializeApp();
+        });        // ✅ Traducerile gestionate de TranslationManager V3.0.0
+        // Obiectul "translations" e acum un Proxy către TM (compatibility layer)
+        // Cod vechi ca translations["Preț"]["ro"] funcționează automat!
+
+        // Funcție utilitară pentru a verifica dacă o zi din DB corespunde zilei curente
+        function isDayActive(dayDbValue, currentDayIndex) {
+            const dayMappings = {
+                '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 0, 
+                'luni': 1, 'marti': 2, 'miercuri': 3, 'joi': 4, 'vineri': 5, 'sambata': 6, 'duminica': 0
+            };
+            const mappedDay = dayMappings[String(dayDbValue).toLowerCase().trim()];
+            return mappedDay === currentDayIndex;
+        }
+
+        // Funcție pentru a formata days_of_week într-un text lizibil
+        function formatDays(daysArray) {
+            const fullDays = {
+                '1': 'Luni', '2': 'Marți', '3': 'Miercuri', '4': 'Joi', 
+                '5': 'Vineri', '6': 'Sâmbătă', '7': 'Duminică', 'all': 'Toate Zilele'
+            };
+            if (Array.isArray(daysArray)) {
+                if (daysArray.length === 7 || daysArray.includes('all')) return 'Toate Zilele';
+                return daysArray.map(day => fullDays[String(day).trim().toLowerCase()] || day).join(', ');
+            }
+            if (String(daysArray).toLowerCase().trim() === 'all') {
+                return 'Toate Zilele';
+            }
+            return fullDays[String(daysArray).trim()] || 'Zile Specifice';
+        }
+
+        // Funcție pentru traducerea zilelor în engleză
+        function translateDaysToEnglish(daysText) {
+            const translations = {
+                'Luni': 'Monday', 'Marți': 'Tuesday', 'Miercuri': 'Wednesday', 'Joi': 'Thursday', 
+                'Vineri': 'Friday', 'Sâmbătă': 'Saturday', 'Duminică': 'Sunday', 
+                'Toate Zilele': 'Every Day', 'Zile Specifice': 'Specific Days'
+            };
+            let translatedText = daysText;
+            for (const [ro, en] of Object.entries(translations)) {
+                translatedText = translatedText.replace(new RegExp(ro, 'g'), en);
+            }
+            return translatedText;
+        }
+
+        async function checkAndDisplayHappyHour() {
+            const banner = document.getElementById('happyHourBanner');
+            const messageElement = document.getElementById('happyHourMessage');
+            try {
+                const response = await fetch(`${SERVER_IP}/api/happyhour/active`);
+                if (!response.ok) { throw new Error('Server response not OK'); }
+                const result = await response.json();
+                const activeHappyHours = result.settings || [];
+                if (!activeHappyHours || activeHappyHours.length === 0) {
+                    banner.style.display = 'none';
+                    return;
+                }
+                const now = new Date();
+                const currentDay = now.getDay();
+                const currentHour = now.getHours() * 60 + now.getMinutes();
+                let relevantHappyHour = null;
+                for (const hh of activeHappyHours) {
+                    let daysArray = hh.days_of_week;
+                    if (typeof daysArray === 'string' && daysArray.startsWith('[')) {
+                        try { daysArray = JSON.parse(daysArray); } catch(e) { daysArray = [daysArray]; }
+                    } else if (typeof daysArray === 'string') {
+                        daysArray = [daysArray.trim()];
+                    }
+                    const isRelevantDay = daysArray.includes('all') || daysArray.some(day => isDayActive(day, currentDay));
+                    if (isRelevantDay) {
+                        const [startH, startM] = hh.start_time.split(':').map(Number);
+                        const [endH, endM] = hh.end_time.split(':').map(Number);
+                        const startMinutes = startH * 60 + startM;
+                        const endMinutes = endH * 60 + endM;
+                        if (currentHour >= startMinutes && currentHour <= endMinutes) {
+                            relevantHappyHour = hh;
+                            break;
+                        }
+                    }
+                }
+                if (relevantHappyHour) {
+                    const daysText = formatDays(relevantHappyHour.days_of_week);
+                    const discount = relevantHappyHour.discount_percentage || 'O Reducere Specială';
+                    const currentLanguage = localStorage.getItem('selectedLanguage') || 'ro';
+                    if (currentLanguage === 'en') {
+                        const translatedDays = translateDaysToEnglish(daysText);
+                        messageElement.innerHTML = `
+                            🎉 <strong>Active Happy Hour!</strong> ${relevantHappyHour.name} (${translatedDays})
+                            <br>
+                            ⏰ Today, from <strong>${relevantHappyHour.start_time}</strong> to <strong>${relevantHappyHour.end_time}</strong>.
+                            <br>
+                            💰 Order now and get <strong>${discount}% discount!</strong>
+                        `;
+                    } else {
+                        messageElement.innerHTML = `
+                            🎉 <strong>Happy Hour Activ!</strong> ${relevantHappyHour.name} (${daysText})
+                            <br>
+                            ⏰ Astăzi, de la <strong>${relevantHappyHour.start_time}</strong> la <strong>${relevantHappyHour.end_time}</strong>.
+                            <br>
+                            💰 Comandă acum și beneficiezi de <strong>${discount}% reducere!</strong>
+                        `;
+                    }
+                    banner.style.display = 'block';
+                } else {
+                    banner.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Eroare la verificarea Happy Hour:', error);
+                banner.style.display = 'none';
+            }
+        }
+
+        function changeLanguage(lang) {
+            currentLang = lang === 'en' ? 'en' : 'ro';
+            localStorage.setItem('selectedLanguage', currentLang);
+            try { fetch(`${SERVER_IP}/api/lang`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ lang: currentLang }) }); } catch(e) {}
+            applyTranslations();
+            loadMenu();
+            
+            // Actualizează balonul Happy Hour cu noua limbă
+            checkAndDisplayHappyHour();
+            
+            // Actualizează butoanele de limbă
+            document.querySelectorAll('.icon-btn-labeled').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Adaugă clasa active la butonul selectat
+            const selectedBtn = document.querySelector(`button[onclick="changeLanguage('${currentLang}')"]`);
+            if (selectedBtn) {
+                selectedBtn.classList.add('active');
+            }
+        }
+
+        function applyTranslations() {
+            const t = translations[currentLang];
+            document.querySelector('.order-type-section h3').textContent = t.orderTypeTitle;
+            const buttons = document.querySelectorAll('.order-type-btn');
+            if (buttons.length >= 3) {
+                buttons[0].textContent = t.together;
+                buttons[1].textContent = t.separate;
+                buttons[2].textContent = t.takeout;
+            }
+            const viewCartBtn = document.getElementById('orderBtn');
+            if (viewCartBtn) viewCartBtn.textContent = t.viewCart;
+            const placeOrderBtn = document.querySelector('#cartModal .place-order-btn');
+            if (placeOrderBtn) placeOrderBtn.textContent = t.placeOrder;
+            const cancelOrderBtn = document.getElementById('cancelOrderBtn');
+            if (cancelOrderBtn) cancelOrderBtn.textContent = t.cancelOrder;
+            const cancelOrderBtnConfirm = document.getElementById('cancelOrderBtnConfirm');
+            if (cancelOrderBtnConfirm) cancelOrderBtnConfirm.textContent = t.cancelOrder;
+            const savePdfBtn = document.getElementById('confirmPdfBtn');
+            if (savePdfBtn) savePdfBtn.textContent = t.savePdf;
+            // Nu schimbăm textele de sub butoanele de limbă, doar cele de ospătar și notă
+            const waiterBtn = document.querySelectorAll('.icon-btn-labeled .label')[2]; // Al 3-lea buton (ospătar)
+            const billBtn = document.querySelectorAll('.icon-btn-labeled .label')[3]; // Al 4-lea buton (notă)
+            if (waiterBtn) waiterBtn.textContent = t.waiter;
+            if (billBtn) billBtn.textContent = t.bill;
+            
+            // Actualizează titlul modalului de alergeni
+            const allergenModalTitle = document.getElementById('allergenModalTitle');
+            if (allergenModalTitle) allergenModalTitle.textContent = t.allergenInfo;
+
+            const classicMenuPrompt = document.getElementById('classicMenuPrompt');
+            const foodMenuBtn = document.getElementById('foodMenuBtn');
+            const drinksMenuBtn = document.getElementById('drinksMenuBtn');
+            if (classicMenuPrompt) classicMenuPrompt.textContent = t.classicMenuPrompt;
+            if (foodMenuBtn) foodMenuBtn.textContent = t.foodMenu;
+            if (drinksMenuBtn) drinksMenuBtn.textContent = t.drinksMenu;
+
+            const cartTitleHeading = document.getElementById('cartTitleHeading');
+            if (cartTitleHeading) cartTitleHeading.textContent = t.cartTitle;
+            const paymentTitle = document.getElementById('paymentTitle');
+            if (paymentTitle) paymentTitle.textContent = t.paymentTitle;
+            const cashBtn = document.getElementById('cashBtn');
+            if (cashBtn) cashBtn.textContent = t.cash;
+            const cardBtn = document.getElementById('cardBtn');
+            if (cardBtn) cardBtn.textContent = t.card;
+            const cancelPaymentBtn = document.getElementById('cancelPaymentBtn');
+            if (cancelPaymentBtn) cancelPaymentBtn.textContent = t.cancel;
+
+            const orderSuccessTitle = document.getElementById('orderSuccessTitle');
+            if (orderSuccessTitle) orderSuccessTitle.textContent = t.orderSuccess;
+            const orderNumberLabel = document.getElementById('orderNumberLabel');
+            if (orderNumberLabel) orderNumberLabel.childNodes[0].textContent = t.orderNumber;
+            const tableLabel = document.getElementById('tableLabel');
+            if (tableLabel) tableLabel.textContent = t.table;
+            const orderedAtLabel = document.getElementById('orderedAtLabel');
+            if (orderedAtLabel) orderedAtLabel.textContent = t.orderedAt;
+            const orderedProductsTitle = document.getElementById('orderedProductsTitle');
+            if (orderedProductsTitle) orderedProductsTitle.textContent = t.orderedProducts;
+            const orderTotalTitle = document.getElementById('orderTotalTitle');
+            if (orderTotalTitle) orderTotalTitle.textContent = t.orderTotalTitle;
+            const orderAgainBtn = document.getElementById('orderAgainBtn');
+            if (orderAgainBtn) orderAgainBtn.textContent = t.orderAgain;
+            const loadingMessage = document.getElementById('loadingMessage');
+            if (loadingMessage) loadingMessage.textContent = t.loadingMenu;
+
+            // Update visible Add to Cart buttons
+            document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+                btn.textContent = t.addToCart;
+            });
+
+            // Update notes section translations
+            const notesTitle = document.getElementById('notesTitle');
+            if (notesTitle) notesTitle.textContent = t.notesTitle;
+            
+            const foodNotesLabel = document.getElementById('foodNotesLabel');
+            if (foodNotesLabel) foodNotesLabel.textContent = t.foodNotesLabel;
+            
+            const drinkNotesLabel = document.getElementById('drinkNotesLabel');
+            if (drinkNotesLabel) drinkNotesLabel.textContent = t.drinkNotesLabel;
+            
+            const generalNotesLabel = document.getElementById('generalNotesLabel');
+            if (generalNotesLabel) generalNotesLabel.textContent = t.generalNotesLabel;
+            
+            // Update cancel modal buttons
+            const confirmCancelBtn = document.getElementById('confirmCancelBtn');
+            if (confirmCancelBtn) confirmCancelBtn.textContent = t.confirmCancel;
+            
+            const dontCancelBtn = document.getElementById('dontCancelBtn');
+            if (dontCancelBtn) dontCancelBtn.textContent = t.dontCancel;
+            
+            // Update cancel modal title and labels
+            const cancelOrderTitle = document.getElementById('cancelOrderTitle');
+            if (cancelOrderTitle) cancelOrderTitle.textContent = t.cancelOrderTitle;
+            
+            const timeRemainingLabel = document.getElementById('timeRemainingLabel');
+            if (timeRemainingLabel) timeRemainingLabel.textContent = t.timeRemaining;
+            
+            const cancelReasonLabel = document.getElementById('cancelReasonLabel');
+            if (cancelReasonLabel) cancelReasonLabel.textContent = t.cancelReasonLabel;
+            
+            // Update placeholders for textareas
+            const foodNotes = document.getElementById('foodNotes');
+            if (foodNotes) {
+                foodNotes.placeholder = currentLang === 'en' ? foodNotes.dataset.placeholderEn : foodNotes.dataset.placeholderRo;
+            }
+            
+            const drinkNotes = document.getElementById('drinkNotes');
+            if (drinkNotes) {
+                drinkNotes.placeholder = currentLang === 'en' ? drinkNotes.dataset.placeholderEn : drinkNotes.dataset.placeholderRo;
+            }
+            
+            const generalNotes = document.getElementById('generalNotes');
+            if (generalNotes) {
+                generalNotes.placeholder = currentLang === 'en' ? generalNotes.dataset.placeholderEn : generalNotes.dataset.placeholderRo;
+            }
+            
+            // Update supervisor section title
+            const supervisorTitle = document.querySelector('#supervisorSection h3');
+            if (supervisorTitle) supervisorTitle.textContent = t.supervisorOrderTitle;
+            
+            // Update supervisor buttons
+            const newOrderBtn = document.getElementById('newOrderBtn');
+            if (newOrderBtn) newOrderBtn.textContent = t.newOrder;
+            
+            const unpaidOrdersBtn = document.getElementById('unpaidOrdersBtn');
+            if (unpaidOrdersBtn) unpaidOrdersBtn.textContent = t.unpaidOrders;
+            
+            // Update supervisor form labels and button
+            const orderDetailsTitle = document.querySelector('#supervisorInputSection h3');
+            if (orderDetailsTitle) orderDetailsTitle.textContent = t.orderDetailsLabel;
+            
+            const tableNumberLabel = document.querySelector('label[for="tableNumberInput"]');
+            if (tableNumberLabel) tableNumberLabel.textContent = t.tableNumberLabel;
+            
+            const clientNumberLabel = document.querySelector('label[for="clientNumberInput"]');
+            if (clientNumberLabel) clientNumberLabel.textContent = t.clientNumberLabel;
+            
+            const startOrderBtn = document.getElementById('startOrderBtn');
+            if (startOrderBtn) startOrderBtn.textContent = t.startOrder;
+            
+            // Update character counters
+            document.querySelectorAll('.characters-text').forEach(span => {
+                span.textContent = t.characters;
+            });
+            
+            // Update PIN toggle button tooltip
+            const pinToggleBtn = document.getElementById('pinToggleBtn');
+            if (pinToggleBtn) {
+                const pinInput = document.getElementById('pinInput');
+                if (pinInput && pinInput.type === 'password') {
+                    pinToggleBtn.title = t.showPin;
+                } else {
+                    pinToggleBtn.title = t.hidePin;
+                }
+            }
+        }
+
+        function scrollToTop() { 
+            window.scrollTo({ top: 0, behavior: 'smooth' }); 
+        }
+        
+        function showOrderConfirmation(orderData, orderId) { 
+            const robustOrderData = JSON.parse(JSON.stringify(orderData));
+            currentConfirmedOrder = { orderData: robustOrderData, orderId };
+            currentOrderId = orderId; // Salvează ID-ul pentru anulare
+            
+            document.getElementById('confirmOrderId').textContent = orderId;
+            document.getElementById('confirmTableNumber').textContent = orderType.type === 'here' ? `Masa ${tableNumber}` : `Masa ${tableNumber} - Acasă`;
+            
+            // Afișează butonul de anulare
+            const cancelBtn = document.getElementById('cancelOrderBtn');
+            if (cancelBtn) cancelBtn.style.display = 'inline-block';
+            
+            // Afișează butonul de anulare în modalul de confirmare
+            const cancelBtnConfirm = document.getElementById('cancelOrderBtnConfirm');
+            if (cancelBtnConfirm) cancelBtnConfirm.style.display = 'inline-block';
+            document.getElementById('confirmDateTime').textContent = formatToLocalTime(new Date());
+            
+            let orderTypeText = '';
+            let orderTypeIcon = '';
+            if (orderType.type === 'here') {
+                orderTypeText = orderType.isTogether ? 'Comandă împreună' : 'Comandă separat';
+                orderTypeIcon = '🍽️';
+            } else {
+                orderTypeText = 'Comandă pentru acasă';
+                orderTypeIcon = '🏠';
+            }
+            document.getElementById('confirmOrderType').innerHTML = `${orderTypeIcon} ${orderTypeText}`;
+            
+            const itemsContainer = document.getElementById('confirmOrderItems');
+            itemsContainer.innerHTML = '';
+            robustOrderData.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.style.cssText = 'padding: 10px 0; border-bottom: 1px solid #eee;';
+                
+                const customizationsHTML = item.customizations.map(c => 
+                    `<div style="font-size: 0.8rem; color: #666; margin-left: 20px;">&bull; <strong>${c.option_name}</strong></div>`
+                ).join('');
+                
+                const itemPrice = (item.product.price + item.customizations.reduce((sum, c) => sum + c.extra_price, 0)) * item.quantity;
+                const displayPrice = item.isFree ? 0 : itemPrice;
+                
+                itemDiv.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div style="flex: 1;">
+                            <div style="font-weight: bold; color: #333;">
+                                ${item.quantity}x ${item.product.name}
+                                ${item.isFree ? '<span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 0.8em; margin-left: 8px;">GRATUIT</span>' : ''}
+                            </div>
+                            ${customizationsHTML}
+                        </div>
+                        <div style="font-weight: bold; color: #ff6b35; font-size: 1.1rem;">
+                            ${item.isFree ? 
+                                `<span style="text-decoration: line-through; color: #999; margin-right: 5px;">${itemPrice.toFixed(2)} RON</span><span style="color: #28a745;">0.00 RON</span>` : 
+                                `${displayPrice.toFixed(2)} RON`
+                            }
+                        </div>
+                    </div>
+                `;
+                itemsContainer.appendChild(itemDiv);
+            });
+            
+            const orderTotal = calculateTotalPrice(robustOrderData);
+            document.getElementById('confirmOrderTotal').textContent = `${orderTotal.toFixed(2)} RON`;
+            
+            document.getElementById('orderConfirmationScreen').style.display = 'block';
+        }
+
+        function closeOrderConfirmation() { 
+            document.getElementById('orderConfirmationScreen').style.display = 'none';
+            currentConfirmedOrder = null;
+        }
+
+        function downloadConfirmationPDF() {
+            if (!currentConfirmedOrder) {
+                showNotification('❌ Eroare: Nu există o comandă confirmată pentru a genera PDF.');
+                return;
+            }
+
+            const btn = document.getElementById('confirmPdfBtn');
+            btn.disabled = true;
+            btn.textContent = '📄 Se generează...';
+
+            // Creează link-ul pentru download
+            const orderId = currentConfirmedOrder.orderId;
+            const downloadUrl = `${SERVER_IP}/api/orders/${orderId}/receipt?lang=${currentLang}`;
+
+            // Deschide PDF-ul în tab nou pentru download
+            window.open(downloadUrl, '_blank');
+
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.textContent = '📄 Salvează Dovada PDF';
+                showNotification('📄 PDF-ul se descarcă!');
+            }, 1000);
+        }
+
+        function openPaymentModal() { 
+            document.getElementById('paymentModal').style.display = 'block'; 
+        }
+
+        function closePaymentModal() { 
+            document.getElementById('paymentModal').style.display = 'none'; 
+        }
+
+        function showAllergens(productId) {
+            const product = menuItems.find(item => item.id === productId);
+            if (!product) return;
+            document.getElementById('allergenModalBody').innerHTML = `<h3>${product.name}</h3><p><strong>Alergeni:</strong> ${product.allergens ? product.allergens : 'Niciun alergen comun specificat.'}</p>`;
+            document.getElementById('allergenModal').style.display = 'block';
+        }
+
+        function closeAllergenModal() { 
+            document.getElementById('allergenModal').style.display = 'none'; 
+        }
+
+        function normalizeRomanian(text) {
+            if (!text) return '';
+            return text
+                .replace(/ă/g, 'a').replace(/Ă/g, 'A')
+                .replace(/â/g, 'a').replace(/Â/g, 'A')
+                .replace(/î/g, 'i').replace(/Î/g, 'I')
+                .replace(/ș/g, 's').replace(/Ș/g, 'S')
+                .replace(/ţ/g, 't').replace(/ț/g, 't').replace(/Ţ/g, 'T').replace(/Ț/g, 'T')
+                .toLowerCase();
+        }
+
+        function parseOptionName(optionName) {
+            const original = optionName || '';
+            const norm = normalizeRomanian(original.trim());
+            let type = null;
+            let baseOriginal = original;
+            if (original.startsWith('Extra ') || original.startsWith('extra ') || original.startsWith('EXTRA ') ) {
+                type = 'extra';
+                baseOriginal = original.substring(original.indexOf(' ') + 1);
+            } else if (original.startsWith('Fără ') || original.toLowerCase().startsWith('fara ') || original.startsWith('No ') || original.startsWith('NO ') || original.startsWith('no ')) {
+                type = 'fara';
+                baseOriginal = original.substring(original.indexOf(' ') + 1);
+            } else if (original.startsWith('Cu ') || original.startsWith('cu ') || original.startsWith('With ') || original.startsWith('WITH ') || original.startsWith('with ')) {
+                type = 'cu';
+                baseOriginal = original.substring(original.indexOf(' ') + 1);
+            } else {
+                if (norm.startsWith('extra ')) { type = 'extra'; baseOriginal = original.substring(original.indexOf(' ') + 1); }
+                else if (norm.startsWith('fara ')) { type = 'fara'; baseOriginal = original.substring(original.indexOf(' ') + 1); }
+                else if (norm.startsWith('cu ')) { type = 'cu'; baseOriginal = original.substring(original.indexOf(' ') + 1); }
+                else if (original.toLowerCase().startsWith('no ')) { type = 'fara'; baseOriginal = original.substring(original.indexOf(' ') + 1); }
+                else if (original.toLowerCase().startsWith('with ')) { type = 'cu'; baseOriginal = original.substring(original.indexOf(' ') + 1); }
+            }
+            const baseKey = normalizeRomanian(baseOriginal.trim());
+            return { type, baseOriginal: baseOriginal.trim(), baseKey };
+        }
+
+        function setupCustomizationExclusivityForProduct(productId, customizations) {
+            const container = document.getElementById(`custom-${productId}`);
+            if (!container || !customizations || customizations.length === 0) return;
+
+            const checkboxNodes = Array.from(container.querySelectorAll('input[type="checkbox"][data-custom-id]'));
+            const boxes = checkboxNodes.map(cb => {
+                const customId = parseInt(cb.dataset.customId);
+                const custom = (customizations || []).find(c => c.id === customId) || {};
+                const parsed = parseOptionName(custom.option_name || '');
+                return { checkbox: cb, id: customId, optionName: custom.option_name || '', parsed };
+            });
+
+            function findConflicts(current) {
+                if (!current.parsed.type || !current.parsed.baseKey) return [];
+                return boxes.filter(b => {
+                    if (b === current) return false;
+                    if (!b.parsed.type || !b.parsed.baseKey) return false;
+                    if (b.parsed.baseKey !== current.parsed.baseKey) return false;
+                    if (current.parsed.type === 'extra' && b.parsed.type === 'fara') return true;
+                    if (current.parsed.type === 'fara' && (b.parsed.type === 'extra' || b.parsed.type === 'cu')) return true;
+                    if (current.parsed.type === 'cu' && b.parsed.type === 'fara') return true;
+                    return false;
+                });
+            }
+
+            boxes.forEach(box => {
+                box.checkbox.addEventListener('change', () => {
+                    if (!box.checkbox.checked) return;
+                    const conflicts = findConflicts(box);
+                    const conflictingChecked = conflicts.filter(c => c.checkbox.checked);
+                    if (conflictingChecked.length > 0) {
+                        box.checkbox.checked = false;
+                        const base = box.parsed.baseOriginal || '';
+                        const t = translations[currentLang];
+                        const msg = (t.conflictOption || '⚠️ Opposite option already selected for "{base}". Uncheck the opposite option before continuing.').replace('{base}', base);
+                        showNotification(msg);
+                    }
+                });
+            });
+        }
+
+        function openCartModal() {
+            const modalBody = document.getElementById('cartModalBody');
+            modalBody.innerHTML = cart.length === 0 ? '<p>Coșul tău este gol.</p>' : '';
+            if (cart.length > 0) {
+                cart.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'modal-item';
+                    const customizationsHTML = item.customizations.map(c => `<div>- ${c.option_name}</div>`).join('');
+                    
+                    // Calculează prețul final
+                    const basePrice = item.product.price;
+                    const customPrice = item.customizations.reduce((sum, custom) => sum + custom.extra_price, 0);
+                    const finalPrice = basePrice + customPrice;
+                    
+                    // Afișează prețul corect (tăiat pentru produsele gratuite)
+                    const priceHTML = item.isFree 
+                        ? `<div class="item-price"><span class="original-price">${finalPrice.toFixed(2)} RON</span> <span class="free-price">0 RON</span></div>`
+                        : `<div class="item-price">${finalPrice.toFixed(2)} RON</div>`;
+                    
+                    itemDiv.innerHTML = `
+                        <div class="item-info">
+                            <div class="item-name">${item.product.name} ${item.isFree ? '<span class="free-badge">GRATUIT</span>' : ''}</div>
+                            <div class="item-customs">${customizationsHTML}</div>
+                            ${priceHTML}
+                        </div>
+                        <div class="item-actions">
+                            <div class="quantity-controls">
+                                <button class="qty-btn" onclick="updateCartQuantity('${item.cartId}', -1)">-</button>
+                                <span class="qty-display">${item.quantity}</span>
+                                <button class="qty-btn" onclick="updateCartQuantity('${item.cartId}', 1)">+</button>
+                            </div>
+                        </div>`;
+                    modalBody.appendChild(itemDiv);
+                });
+            }
+            updateCartTotalInModal();
+            setupCharacterCounters(); // Inițializează contoarele de caractere pentru mentiuni
+            document.getElementById('cartModal').style.display = 'block';
+        }
+
+        function closeCartModal() { 
+            document.getElementById('cartModal').style.display = 'none'; 
+        }
+        
+        function requestBill(method) { 
+            callWaiter('bill', method); 
+            closePaymentModal(); 
+        }
+
+        function callWaiter(requestType, paymentMethod = null) {
+            // Verifică dacă QR-ul este încă valid înainte de apelare
+            if (!checkQRSession()) {
+                return;
+            }
+            
+            if (!socket || !socket.connected) { alert("Eroare de conexiune."); return; }
+            let requestText = requestType === 'assistance' ? 'asistență' : 'nota de plată';
+            const eventData = { 
+                tableNumber: localStorage.getItem('tableNumber'), 
+                requestType: requestType,
+                clientIdentifier: clientIdentifier
+            };
+            if (paymentMethod) { eventData.paymentMethod = paymentMethod; requestText += ` (${paymentMethod})`; }
+            socket.emit('callWaiter', eventData);
+            showNotification(`✅ Cererea de ${requestText} a fost trimisă!`);
+        }
+
+        function renderCategories() {
+            const container = document.getElementById('categoryButtons');
+            container.innerHTML = '';
+            
+            console.log('renderCategories called, categories:', categories);
+            console.log('currentLang:', currentLang);
+            
+            // Ordinea specificată pentru butoanele de categorii (în română)
+            const orderedCategoriesRO = [
+                'Oferta Zilei', // Special
+                'Meniul Zilei',
+                'Băuturi și Coctailuri',
+                'Cafea/Ciocolată/Ceai',
+                'Răcoritoare'
+            ];
+            
+            // Ordinea specificată pentru butoanele de categorii (în engleză)
+            const orderedCategoriesEN = [
+                'Daily Offer', // Special
+                'Daily Menu',
+                'Drinks & Cocktails',
+                'Coffee/Chocolate/Tea',
+                'Soft Drinks'
+            ];
+            
+            // Adaugă butonul "Oferta Zilei" primul (special)
+            const dailyOfferBtn = document.createElement('button');
+            dailyOfferBtn.className = 'category-btn daily-offer-btn';
+            dailyOfferBtn.textContent = currentLang === 'en' ? '🎁 Special Offer!' : '🎁 Oferta Zilei!';
+            dailyOfferBtn.onclick = () => showDailyOffer();
+            container.appendChild(dailyOfferBtn);
+            
+            // Adaugă butonul "Meniul Zilei" al doilea (special)
+            const dailyMenuBtn = document.createElement('button');
+            dailyMenuBtn.className = 'category-btn daily-offer-btn';
+            dailyMenuBtn.textContent = currentLang === 'en' ? '🍲 Daily Menu' : '🍲 Meniul Zilei';
+            dailyMenuBtn.onclick = () => showDailyMenu();
+            container.appendChild(dailyMenuBtn);
+            
+            // Adaugă butoanele în ordinea specificată
+            const orderedCategories = currentLang === 'en' ? orderedCategoriesEN : orderedCategoriesRO;
+            
+            orderedCategories.forEach(categoryName => {
+                if (categoryName === 'Oferta Zilei' || categoryName === 'Daily Offer' || 
+                    categoryName === 'Meniul Zilei' || categoryName === 'Daily Menu') return; // Deja adăugate mai sus
+                
+                // Caută categoria în array-ul de categorii din meniu
+                let categoryIndex = -1;
+                let realCategoryName = categoryName;
+                
+                if (currentLang === 'en') {
+                    // Pentru engleză, caută direct categoria în engleză
+                    categoryIndex = categories.indexOf(categoryName);
+                    realCategoryName = categoryName;
+                    
+                    // Special case pentru Daily Menu -> Meniul Zilei
+                    if (categoryName === 'Daily Menu') {
+                        categoryIndex = categories.indexOf('Meniul Zilei');
+                        realCategoryName = 'Meniul Zilei';
+                    }
+                    
+                    // Debug: afișează informații despre căutare
+                    console.log(`Searching for: ${categoryName}, found at index: ${categoryIndex}, real name: ${realCategoryName}`);
+                } else {
+                    // Pentru română, caută direct categoria
+                    categoryIndex = categories.indexOf(categoryName);
+                    realCategoryName = categoryName;
+                }
+                
+                console.log(`Looking for category: ${categoryName}, found index: ${categoryIndex}, real name: ${realCategoryName}`);
+                
+                if (categoryIndex !== -1) {
+                    const button = document.createElement('button');
+                    button.className = 'category-btn';
+                    button.textContent = categoryName; // Folosește textul tradus
+                    button.onclick = () => setActiveCategory(realCategoryName); // Folosește numele real din meniu
+                    container.appendChild(button);
+                }
+            });
+            
+            // Adaugă restul categoriilor în ordine alfabetică (excluzând cele deja adăugate)
+            const remainingCategories = categories
+                .filter(category => !orderedCategoriesRO.includes(category) && !orderedCategoriesEN.includes(category))
+                .sort();
+            
+            remainingCategories.forEach(category => {
+                const button = document.createElement('button');
+                button.className = 'category-btn';
+                button.textContent = category;
+                button.onclick = () => setActiveCategory(category);
+                container.appendChild(button);
+            });
+        }
+
+        function setActiveCategory(category) {
+            // Dezactivează toate butoanele
+            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+            
+            // Activează butonul corespunzător
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                if (btn.onclick && btn.onclick.toString().includes(`setActiveCategory('${category}')`)) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Dacă nu s-a găsit butonul prin onclick, încearcă să-l găsești prin textul afișat
+            if (!document.querySelector('.category-btn.active')) {
+                document.querySelectorAll('.category-btn').forEach(btn => {
+                    // Verifică dacă textul butonului corespunde cu categoria căutată
+                    const buttonText = btn.textContent.trim();
+                    if (buttonText === category || 
+                        (category === 'Meniul Zilei' && (buttonText === 'Daily Menu' || buttonText === '🍲 Daily Menu' || buttonText === '🍲 Meniul Zilei')) ||
+                        (category === 'Oferta Zilei' && (buttonText === 'Special Offer!' || buttonText === '🎁 Special Offer!' || buttonText === '🎁 Oferta Zilei!')) ||
+                        (buttonText.includes('Daily Menu') && category === 'Meniul Zilei') ||
+                        (buttonText.includes('Meniul Zilei') && category === 'Meniul Zilei')) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+            
+            renderMenuForCategory(category);
+        }
+
+        function renderMenuForCategory(category) {
+            const container = document.getElementById('fullMenuContainer');
+            container.innerHTML = '';
+            
+            const categoryItems = menuItems.filter(item => item.category === category);
+            
+            categoryItems.forEach(item => {
+                const productDiv = document.createElement('div');
+                productDiv.className = 'product-card';
+                productDiv.innerHTML = `
+                    <div class="product-image" style="width: 100%; height: 120px; background: #f8f9fa; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 3rem; margin-bottom: 15px; overflow: hidden;">
+                        ${item.image_url ? `<img src="${SERVER_IP}${item.image_url}" alt="${item.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">` : '🤗'}
+                    </div>
+                    <div class="product-header">
+                        <div class="product-name-wrapper">
+                            <span class="product-name">${item.name}</span>
+                            ${item.allergens ? `<span class="info-icon" onclick="showAllergens(${item.id})">ℹ️</span>` : ''}
+                        </div>
+                        <div class="product-price">${item.price.toFixed(2)} RON</div>
+                    </div>
+                    <div class="product-description">${item.description || ''}</div>
+                    ${(item.customizations && item.customizations.length > 0) ? `<div class="customization-section" id="custom-${item.id}">${item.customizations.map(custom => `<div class="customization-option"><input type="checkbox" data-product-id="${item.id}" id="custom-check-${item.id}-${custom.id}" data-custom-id="${custom.id}"><label for="custom-check-${item.id}-${custom.id}">${custom.option_name} ${custom.extra_price > 0 ? `(+${custom.extra_price.toFixed(2)} RON)` : ''}</label></div>`).join('')}</div>` : ''}
+                    <div class="product-actions">
+                        <button class="add-to-cart-btn" onclick="addToCart(${item.id})">${translations[currentLang].addToCart}</button>
+                    </div>
+                `;
+                container.appendChild(productDiv);
+                if (item.customizations && item.customizations.length > 0) {
+                    setupCustomizationExclusivityForProduct(item.id, item.customizations);
+                }
+            });
+        }
+
+        function generateCartId(productId, customizations) {
+            if (customizations.length === 0) return `${productId}`;
+            const customIds = customizations.map(c => c.id).sort((a, b) => a - b).join('-');
+            return `${productId}_${customIds}`;
+        }
+
+        function addToCart(productId, quantity = 1, customizations = [], isFree = false) {
+            const product = menuItems.find(item => item.id === productId);
+            if (!product) return;
+            
+            // Haptic feedback pentru mobile
+            if ('vibrate' in navigator) {
+                navigator.vibrate(50); // Vibrație scurtă de 50ms
+            }
+            
+            // Loading state pentru butonul de adăugare
+            const addButton = document.querySelector(`[onclick*="addToCart(${productId})"]`);
+            if (addButton) {
+                setButtonLoading(addButton, true, '⏳ Se adaugă...');
+            }
+            
+            const selectedCustoms = customizations.length > 0 ? customizations : [];
+            let checkboxes = [];
+            if (selectedCustoms.length === 0) {
+                checkboxes = document.querySelectorAll(`#custom-${productId} input[type="checkbox"]:checked`);
+                checkboxes.forEach(box => {
+                    const customId = parseInt(box.dataset.customId);
+                    const custom = product.customizations.find(c => c.id === customId);
+                    if (custom) selectedCustoms.push(custom);
+                });
+            }
+            
+            const cartId = generateCartId(product.id, selectedCustoms);
+            let cartItem = cart.find(item => item.cartId === cartId);
+            if (cartItem) {
+                cartItem.quantity += quantity;
+                // Actualizează statusul gratuit dacă este necesar
+                if (isFree) {
+                    cartItem.isFree = true;
+                }
+            } else {
+                cartItem = {
+                    cartId: cartId,
+                    product: product,
+                    quantity: quantity,
+                    customizations: selectedCustoms,
+                    isFree: isFree
+                };
+                cart.push(cartItem);
+            }
+            
+            const message = isFree 
+                ? `${product.name} a fost adăugat GRATUIT în coș!`
+                : `${product.name} a fost adăugat în coș!`;
+            showNotification(message);
+            checkboxes.forEach(box => box.checked = false); 
+            updateCartSummary();
+            
+            // Verifică oferta zilnică după adăugarea în coș
+            checkDailyOffer();
+            
+            // Resetez loading state-ul pentru buton
+            if (addButton) {
+                setButtonLoading(addButton, false);
+            }
+        }
+
+        // Animații pentru actualizări coș
+        function animateCartUpdate() {
+            const cartSummary = document.getElementById('cartSummary');
+            if (cartSummary) {
+                cartSummary.classList.add('cart-updated');
+                setTimeout(() => cartSummary.classList.remove('cart-updated'), 300);
+            }
+        }
+
+        function updateCartQuantity(cartId, change) {
+            // Haptic feedback pentru mobile
+            if ('vibrate' in navigator) {
+                navigator.vibrate([30, 50, 30]); // Vibrație scurtă-lungă-scurtă
+            }
+            
+            let cartItem = cart.find(item => item.cartId === cartId);
+            if (cartItem) {
+                cartItem.quantity += change;
+                if (cartItem.quantity <= 0) {
+                    cart = cart.filter(item => item.cartId !== cartId);
+                }
+            }
+            openCartModal();
+            updateCartSummary();
+            animateCartUpdate(); // Animație pentru actualizare coș
+        }
+
+        function calculateTotalPrice(cartData) {
+            return cartData.reduce((sum, item) => {
+                if (item.isFree) return sum; // Ignoră produsele gratuite
+                const basePrice = item.product.price;
+                const customPrice = item.customizations.reduce((cSum, c) => cSum + c.extra_price, 0);
+                return sum + (basePrice + customPrice) * item.quantity;
+            }, 0);
+        }
+
+        function updateCartSummary() {
+            const cartSummary = document.getElementById('cartSummary');
+            if (cart.length === 0) { 
+                cartSummary.style.display = 'none'; 
+                return; 
+            }
+            cartSummary.style.display = 'block';
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const totalPrice = calculateTotalPrice(cart);
+            document.getElementById('cartItems').textContent = `${totalItems} ${totalItems === 1 ? 'articol' : 'articole'}`;
+            document.getElementById('cartTotal').textContent = `${totalPrice.toFixed(2)} RON`;
+            
+            // Verifică recompensele eligibile
+            checkEligibleRewards();
+            
+            // Animație pentru actualizare coș
+            animateCartUpdate();
+        }
+
+        function updateCartTotalInModal() {
+            const totalPrice = calculateTotalPrice(cart);
+            document.getElementById('cartModalTotal').textContent = `Total: ${totalPrice.toFixed(2)} RON`;
+        }
+
+        // Funcții pentru gestionarea recompenselor
+        async function checkEligibleRewards() {
+            if (cart.length === 0) {
+                hideRewardsSection();
+                return;
+            }
+
+            try {
+                const response = await fetch(`${SERVER_IP}/api/rewards/check`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ cartItems: cart })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    displayRewards(data.eligibleRewards);
+                } else {
+                    console.error('Eroare la verificarea recompenselor');
+                    hideRewardsSection();
+                }
+            } catch (error) {
+                console.error('Eroare la verificarea recompenselor:', error);
+                hideRewardsSection();
+            }
+        }
+
+        function displayRewards(rewards) {
+            const rewardsSection = document.getElementById('rewardsSection');
+            const rewardsList = document.getElementById('rewardsList');
+
+            if (!rewards || rewards.length === 0) {
+                hideRewardsSection();
+                return;
+            }
+
+            rewardsList.innerHTML = rewards.map(reward => `
+                <div class="reward-item">
+                    <span class="reward-icon">🎁</span>
+                    <strong>${reward.name}</strong><br>
+                    <small>${reward.description}</small>
+                </div>
+            `).join('');
+
+            rewardsSection.style.display = 'block';
+        }
+
+        function hideRewardsSection() {
+            const rewardsSection = document.getElementById('rewardsSection');
+            rewardsSection.style.display = 'none';
+        }
+
+        // Funcție pentru a adăuga automat produsul gratuit la comandă
+        function applyReward(reward) {
+            // Găsește produsul gratuit în meniu
+            const freeProduct = menu.find(item => item.id === reward.free_product_id);
+            if (freeProduct) {
+                // Adaugă produsul gratuit în coș
+                addToCart(freeProduct, 1, [], true); // ultimul parametru indică că este gratuit
+                showAlert(`🎉 Ai primit ${freeProduct.name} gratis!`, 'success');
+            }
+        }
+
+        document.querySelectorAll('.order-type-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.order-type-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                orderType = { type: this.dataset.type, isTogether: this.dataset.together === 'true' };
+                updateHeaderDisplay();
+            });
+        });
+
+        // Loading states pentru butoane
+        function setButtonLoading(button, isLoading, loadingText = '⏳ Se procesează...') {
+            if (isLoading) {
+                button.disabled = true;
+                button.dataset.originalText = button.textContent;
+                button.innerHTML = `<span style="opacity:0.7">${loadingText}</span>`;
+            } else {
+                button.disabled = false;
+                button.textContent = button.dataset.originalText || button.textContent;
+            }
+        }
+
+        // OPTIMIZARE: Submit instantanee fără retry logic
+        async function submitOrderInstant(orderData) {
+            // Folosește AbortController pentru timeout personalizat (2 secunde)
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 2000);
+            
+            try {
+                // Pentru comenzile supervisor, folosește endpoint-ul special
+                const endpoint = orderData.order_source === 'supervisor' ? 
+                    `${SERVER_IP}/api/supervisor/orders` : 
+                    `${SERVER_IP}/api/orders`;
+                
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(orderData),
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    const message = orderData.order_source === 'supervisor' ? 
+                        '✅ Comanda supervisor a fost trimisă!' : 
+                        '✅ Comanda a fost trimisă instant!';
+                    showNotification(message);
+                    return result;
+                } else {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Serverul a returnat o eroare la trimiterea comenzii.');
+                }
+            } catch (error) {
+                clearTimeout(timeoutId);
+                if (error.name === 'AbortError') {
+                    throw new Error('Timeout: Serverul nu răspunde în 2 secunde');
+                }
+                throw error;
+            }
+        }
+
+        async function submitOrder() {
+            // Pentru comenzile supervisor, nu verificăm QR-ul
+            if (!window.isSupervisorOrder) {
+                // Verifică dacă QR-ul este încă valid înainte de comandă
+                if (!checkQRSession()) {
+                    return;
+                }
+            }
+            
+            if (cart.length === 0) { alert('Coșul este gol!'); return; }
+            const orderBtn = document.querySelector('#cartModal .place-order-btn');
+            orderBtn.disabled = true;
+            orderBtn.textContent = 'Se trimite...';
+            const cartForProcessing = JSON.parse(JSON.stringify(cart));
+            
+            let finalTableNumber;
+            let finalClientIdentifier;
+            
+            // Pentru comenzile supervisor
+            if (window.isSupervisorOrder) {
+                finalTableNumber = window.tableNumber;
+                finalClientIdentifier = window.clientIdentifier;
+                console.log('🔍 Submitting supervisor order:', { 
+                finalTableNumber, 
+                finalClientIdentifier, 
+                existingOrderId: window.existingOrderId,
+                order_source: window.isSupervisorOrder ? 'supervisor' : 'client',
+                itemsCount: cart.length
+            });
+            } else {
+                // Pentru comenzile normale
+                const urlParams = new URLSearchParams(window.location.search);
+                const tableFromUrl = urlParams.get('table');
+                finalTableNumber = tableFromUrl || localStorage.getItem('tableNumber');
+                finalClientIdentifier = clientIdentifier;
+                
+                console.log('🔍 Submitting normal order with tableNumber:', finalTableNumber);
+                console.log('🔍 URL table:', tableFromUrl);
+                console.log('🔍 localStorage table:', localStorage.getItem('tableNumber'));
+                
+                // Verificare critică pentru comenzile normale
+                if (!finalTableNumber || finalTableNumber === '21') {
+                    console.error('❌ EROARE CRITICĂ: tableNumber este invalid!');
+                    console.error('❌ finalTableNumber:', finalTableNumber);
+                    console.error('❌ tableFromUrl:', tableFromUrl);
+                    console.error('❌ localStorage:', localStorage.getItem('tableNumber'));
+                    alert('Eroare: Nu s-a putut determina masa! Vă rugăm să reîncărcați pagina.');
+                    return;
+                }
+            }
+            
+            // Verificare suplimentară pentru intervalul valid (1-200)
+            const tableNum = parseInt(finalTableNumber);
+            if (isNaN(tableNum) || tableNum < 1 || tableNum > 200) {
+                console.error('❌ EROARE CRITICĂ: Masa este în afara intervalului valid!');
+                console.error('❌ tableNum:', tableNum);
+                console.error('❌ finalTableNumber:', finalTableNumber);
+                alert(`Eroare: Masa ${tableNum} nu este validă! Mesele trebuie să fie între 1 și 200.`);
+                return;
+            }
+            
+            const orderData = {
+                type: orderType.type, 
+                isTogether: orderType.isTogether,
+                tableNumber: finalTableNumber,
+                clientIdentifier: finalClientIdentifier,
+                food_notes: document.getElementById('foodNotes')?.value || '',
+                drink_notes: document.getElementById('drinkNotes')?.value || '',
+                general_notes: document.getElementById('generalNotes')?.value || '',
+                order_source: window.isSupervisorOrder ? 'supervisor' : 'client',
+                existing_order_id: window.existingOrderId || null,
+                items: cart.map(item => ({
+                    productId: item.product.id,
+                    quantity: item.quantity,
+                    finalPrice: item.product.price + item.customizations.reduce((sum, custom) => sum + custom.extra_price, 0),
+                    isFree: item.isFree || false, // Adaugă flag-ul pentru produsele gratuite
+                    customizations: item.customizations.map(custom => ({
+                        id: custom.id,
+                        name: custom.option_name,
+                        name_ro: (custom.option_name_ro ? custom.option_name_ro : (currentLang === 'ro' ? custom.option_name : '')),
+                        name_en: (currentLang === 'en' ? custom.option_name : ''),
+                        price_change: custom.extra_price
+                    }))
+                }))
+            };
+            try {
+                // OPTIMIZARE: Submit instantanee fără retry logic
+                const result = await submitOrderInstant(orderData);
+                showOrderConfirmation(cartForProcessing, result.orderId);
+                cart = [];
+                updateCartSummary();
+                closeCartModal();
+            } catch (error) {
+                console.error('Eroare la submitOrder:', error);
+                showNotification(`❌ Eroare: ${error.message}`);
+            } finally {
+                orderBtn.disabled = false;
+                orderBtn.textContent = '📤 Plasează Comanda';
+            }
+        }
+
+        // Funcții pentru anularea comenzii
+        function showCancelOrderModal() {
+            console.log('🔴 showCancelOrderModal() apelată');
+            const modal = document.getElementById('cancelOrderModal');
+            console.log('🔴 Modal găsit:', modal);
+            
+            if (!modal) {
+                console.error('❌ Modal cancelOrderModal nu a fost găsit!');
+                return;
+            }
+            
+            modal.style.display = 'block';
+            console.log('🔴 Modal afișat');
+            
+            // Reset timer
+            cancelCountdown = 120;
+            console.log('🔴 Timer resetat la:', cancelCountdown);
+            updateCancelTimer();
+            
+            // Start countdown
+            cancelTimer = setInterval(() => {
+                cancelCountdown--;
+                console.log('🔴 Timer:', cancelCountdown);
+                updateCancelTimer();
+                
+                if (cancelCountdown <= 0) {
+                    console.log('🔴 Timer expirat, închid modal');
+                    closeCancelOrderModal();
+                }
+            }, 1000);
+            
+            console.log('🔴 Timer pornit');
+        }
+
+        function closeCancelOrderModal() {
+            const modal = document.getElementById('cancelOrderModal');
+            modal.style.display = 'none';
+            
+            if (cancelTimer) {
+                clearInterval(cancelTimer);
+                cancelTimer = null;
+            }
+            
+            // Reset form
+            document.getElementById('cancelReason').value = '';
+        }
+
+        function updateCancelTimer() {
+            const minutes = Math.floor(cancelCountdown / 60);
+            const seconds = cancelCountdown % 60;
+            const timeString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            console.log('🔴 Actualizez timer la:', timeString);
+            
+            const timeElement = document.getElementById('timeRemaining');
+            console.log('🔴 Element timeRemaining găsit:', timeElement);
+            
+            if (timeElement) {
+                timeElement.textContent = timeString;
+                console.log('🔴 Timer actualizat în DOM');
+            } else {
+                console.error('❌ Element timeRemaining nu a fost găsit!');
+            }
+        }
+
+        async function confirmCancelOrder() {
+            const reason = document.getElementById('cancelReason').value.trim();
+            
+            // Dacă comanda nu a fost plasată încă, doar golim coșul
+            if (!currentOrderId) {
+                showNotification('✅ Comanda a fost anulată! Coșul a fost golit.');
+                closeCancelOrderModal();
+                
+                // Golește coșul
+                cart = [];
+                updateCartSummary();
+                closeCartModal();
+                
+                // Hide cancel button in cart modal
+                const cancelBtn = document.getElementById('cancelOrderBtn');
+                if (cancelBtn) cancelBtn.style.display = 'none';
+                
+                return;
+            }
+
+            // Dacă comanda a fost plasată, anulează-o pe server
+            try {
+                const response = await fetch(`${SERVER_IP}/api/orders/${currentOrderId}/cancel`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        reason: reason || 'Anulată de client',
+                        tableNumber: tableNumber,
+                        clientIdentifier: clientIdentifier
+                    })
+                });
+
+                if (response.ok) {
+                    showNotification('✅ Comanda a fost anulată cu succes!');
+                    closeCancelOrderModal();
+                    
+                    // Hide cancel button
+                    const cancelBtn = document.getElementById('cancelOrderBtn');
+                    if (cancelBtn) cancelBtn.style.display = 'none';
+                    
+                    // Hide cancel button in confirmation modal
+                    const cancelBtnConfirm = document.getElementById('cancelOrderBtnConfirm');
+                    if (cancelBtnConfirm) cancelBtnConfirm.style.display = 'none';
+                    
+                    // Reset current order
+                    currentOrderId = null;
+                } else {
+                    const errorData = await response.json();
+                    let errorMessage;
+                    
+                    if (errorData.code === 'ORDER_ALREADY_PROCESSED') {
+                        // Afișează mesajul în limba selectată
+                        errorMessage = currentLang === 'en' ? errorData.error_en : errorData.error;
+                    } else {
+                        // Mesaj generic de eroare
+                        errorMessage = currentLang === 'en' 
+                            ? `❌ Error cancelling order: ${errorData.error || 'Unknown error'}`
+                            : `❌ Eroare la anularea comenzii: ${errorData.error || 'Eroare necunoscută'}`;
+                    }
+                    
+                    showNotification(errorMessage);
+                }
+            } catch (error) {
+                console.error('Eroare la anularea comenzii:', error);
+                showNotification(`❌ Eroare: ${error.message}`);
+            }
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => { notification.remove(); }, 3000);
+        }
+
+        // =======================================================
+        // ========= FUNCȚII PENTRU OFERTA ZILNICĂ ===============
+        // =======================================================
+
+        let currentDailyOffer = null;
+
+        async function showDailyOffer() {
+            const container = document.getElementById('fullMenuContainer');
+            container.innerHTML = `<div class="loading">${translations[currentLang].loadingMenu}</div>`;
+
+            // Activează butonul corespunzător
+            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                if (btn.textContent.includes('Offer') || btn.textContent.includes('Oferta')) {
+                    btn.classList.add('active');
+                }
+            });
+
+            try {
+                const response = await fetch(`${SERVER_IP}/api/daily-offer`);
+                if (!response.ok) {
+                    throw new Error('No active offer');
+                }
+                const data = await response.json();
+                currentDailyOffer = data.offer;
+                renderDailyOfferUI();
+            } catch (error) {
+                showNoOfferMessage();
+            }
+        }
+
+        function renderDailyOfferUI() {
+            const container = document.getElementById('fullMenuContainer');
+            const t = translations[currentLang];
+            
+            if (!currentDailyOffer) {
+                showNoOfferMessage();
+                return;
+            }
+
+            const offerTitle = currentLang === 'en' && currentDailyOffer.title_en ? currentDailyOffer.title_en : currentDailyOffer.title;
+            const offerDescription = currentLang === 'en' && currentDailyOffer.description_en ? currentDailyOffer.description_en : currentDailyOffer.description;
+
+            let conditionSelectorsHTML = '';
+            currentDailyOffer.conditions.forEach((condition, index) => {
+                // Generează un dropdown pentru fiecare cantitate necesară
+                for (let i = 1; i <= condition.quantity; i++) {
+                    const label = currentLang === 'en' ? `Choose ${condition.category} #${i}` : `Alege ${condition.category} #${i}`;
+                    conditionSelectorsHTML += `
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label style="font-weight: bold; display: block; margin-bottom: 5px;">${label}</label>
+                            <select class="form-control offer-condition-select" data-condition-index="${index}" required>
+                                <option value="">-- ${currentLang === 'en' ? 'Select a product' : 'Selectează un produs'} --</option>
+                                ${condition.products.map(p => `<option value="${p.id}">${p.name} - ${p.price.toFixed(2)} RON</option>`).join('')}
+                            </select>
+                        </div>
+                    `;
+                }
+            });
+
+            // ================== PARTEA CRITICĂ PENTRU BENEFICIU ==================
+            let benefitSelectorsHTML = '';
+            // Verificăm dacă lista de produse pentru beneficiu a fost primită corect de la server
+            if (currentDailyOffer.benefit_products && currentDailyOffer.benefit_products.length > 0) {
+                // Generează un dropdown pentru fiecare cantitate de beneficiu
+                for (let i = 1; i <= currentDailyOffer.benefit_quantity; i++) {
+                    const label = currentLang === 'en' ? `Choose Benefit #${i} (Free)` : `Alege Beneficiu #${i} (Gratuit)`;
+                    benefitSelectorsHTML += `
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label style="font-weight: bold; color: #28a745; display: block; margin-bottom: 5px;">${label}</label>
+                            <select class="form-control offer-benefit-select" required>
+                                <option value="">-- ${currentLang === 'en' ? 'Select a free product' : 'Selectează un produs gratuit'} --</option>
+                                ${currentDailyOffer.benefit_products.map(p => `<option value="${p.id}">${p.name} - ${p.price.toFixed(2)} RON</option>`).join('')}
+                            </select>
+                        </div>
+                    `;
+                }
+            } else {
+                // Dacă lista de beneficii este goală, afișăm o eroare clară
+                benefitSelectorsHTML = `<p style="color: #dc3545; font-weight: bold; text-align: center;">Eroare: Nu s-au găsit produse eligibile pentru beneficiu. Verificați configurația ofertei în panoul de admin.</p>`;
+            }
+            // =======================================================================
+
+            container.innerHTML = `
+                <div class="daily-offer-section" style="padding: 20px;">
+                    <div class="daily-offer-title">${offerTitle}</div>
+                    <div class="daily-offer-description">${offerDescription}</div>
+
+                    <div class="offer-selection-form" style="background: white; padding: 25px; border-radius: 10px; margin-top: 20px; text-align: left; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        <h4 style="color: #333; margin-bottom: 20px; font-size: 1.2rem;">Pasul 1: Alege produsele pentru ofertă</h4>
+                        ${conditionSelectorsHTML}
+
+                        <h4 style="color: #333; margin-top: 30px; margin-bottom: 20px; font-size: 1.2rem;">Pasul 2: Alege beneficiul gratuit</h4>
+                        ${benefitSelectorsHTML}
+
+                        <button class="add-to-cart-btn" style="width: 100%; padding: 15px; font-size: 1.2rem; margin-top: 20px;" onclick="addOfferItemsToCart()">
+                            ${translations[currentLang].addCompleteOffer}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showNoOfferMessage() {
+            const container = document.getElementById('fullMenuContainer');
+            const t = translations[currentLang];
+            container.innerHTML = `
+                <div class="no-offer-message">
+                    <div class="no-offer-icon">📋</div>
+                    <h3>${t.noActiveOffer || 'Nu există ofertă activă'}</h3>
+                    <p>${t.noActiveOfferDesc1 || 'În acest moment nu există o ofertă zilnică activă.'}</p>
+                    <p>${t.noActiveOfferDesc2 || 'Vă rugăm să consultați meniul nostru pentru a vedea toate produsele disponibile.'}</p>
+                </div>
+            `;
+        }
+
+        function addOfferItemsToCart() {
+            const conditionSelects = document.querySelectorAll('.offer-condition-select');
+            const benefitSelects = document.querySelectorAll('.offer-benefit-select');
+            let isValid = true;
+
+            console.log('Adding offer to cart:', {
+                conditionSelects: conditionSelects.length,
+                benefitSelects: benefitSelects.length
+            });
+
+            // Adaugă produsele din condiții
+            conditionSelects.forEach((select, index) => {
+                const productId = parseInt(select.value);
+                console.log(`Condition ${index}:`, productId);
+                if (productId) {
+                    addToCart(productId, 1, [], false); // Adaugă cu preț normal
+                } else {
+                    isValid = false;
+                }
+            });
+
+            // Adaugă produsele din beneficii
+            benefitSelects.forEach((select, index) => {
+                const productId = parseInt(select.value);
+                console.log(`Benefit ${index}:`, productId);
+                if (productId) {
+                    addToCart(productId, 1, [], true); // Adaugă ca fiind GRATUIT
+                } else {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                showNotification('Te rugăm să selectezi toate produsele pentru a beneficia de ofertă.');
+            } else {
+                showNotification('Oferta a fost adăugată cu succes în coș!');
+            }
+        }
+
+        // Funcție pentru verificarea ofertei zilnice la adăugarea în coș
+        async function checkDailyOffer() {
+            if (!currentDailyOffer || !currentDailyOffer.is_active) {
+                return;
+            }
+
+            try {
+                const cartItems = cart.map(item => ({
+                    id: item.product.id,
+                    category: item.product.category,
+                    quantity: item.quantity,
+                    price: item.product.price
+                }));
+
+                const response = await fetch('/api/daily-offer/check', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ cartItems })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.hasOffer && data.discountItem) {
+                        applyDailyOfferDiscount(data.discountItem);
+                    }
+                }
+            } catch (error) {
+                console.error('Eroare la verificarea ofertei zilnice:', error);
+            }
+        }
+
+        function applyDailyOfferDiscount(discountItem) {
+            // Găsește produsul în coș și îl marchează ca gratuit
+            const cartItem = cart.find(item => item.product.id === discountItem.itemId);
+            if (cartItem) {
+                cartItem.isFree = true;
+                cartItem.originalPrice = cartItem.product.price;
+                cartItem.product.price = 0;
+                updateCartSummary();
+                const t = translations[currentLang];
+                const message = currentLang === 'en' 
+                    ? `🎉 ${cartItem.product.name} is now free thanks to the daily offer!`
+                    : `🎉 ${cartItem.product.name} este acum gratuit datorită ofertei zilnice!`;
+                showNotification(message);
+            }
+        }
+
+        // ========= FUNCȚII PENTRU MENIUL ZILEI ===============
+        // =====================================================
+
+        async function showDailyMenu() {
+            const container = document.getElementById('fullMenuContainer');
+            container.innerHTML = `<div class="loading">${translations[currentLang].loadingMenu || 'Se încarcă meniul...'}</div>`;
+
+            // Activează butonul meniului zilei
+            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                const buttonText = btn.textContent.trim();
+                if (buttonText.includes('Daily Menu') || buttonText.includes('Meniul Zilei')) {
+                    btn.classList.add('active');
+                }
+            });
+
+            try {
+                const response = await fetch(`${SERVER_IP}/api/daily-menu`);
+                if (!response.ok) throw new Error('No daily menu');
+                const dailyMenuData = await response.json();
+
+                const soup = dailyMenuData.soup;
+                const mainCourse = dailyMenuData.mainCourse;
+
+                if (!soup || !mainCourse) throw new Error('Menu items not found');
+
+                // Folosește traducerile corecte în funcție de limba selectată
+                const soupName = currentLang === 'en' ? (soup.name_en || soup.name) : soup.name;
+                const soupDescription = currentLang === 'en' ? (soup.description_en || soup.description) : soup.description;
+                const soupAllergens = currentLang === 'en' ? (soup.allergens_en || soup.allergens) : soup.allergens;
+                const mainCourseName = currentLang === 'en' ? (mainCourse.name_en || mainCourse.name) : mainCourse.name;
+                const mainCourseDescription = currentLang === 'en' ? (mainCourse.description_en || mainCourse.description) : mainCourse.description;
+                const mainCourseAllergens = currentLang === 'en' ? (mainCourse.allergens_en || mainCourse.allergens) : mainCourse.allergens;
+
+                const originalPrice = soup.price + mainCourse.price;
+                const promotionalPrice = originalPrice - dailyMenuData.discount;
+
+                const t = translations[currentLang];
+                const menuTitle = currentLang === 'en' ? 'Daily Menu' : 'Meniul Zilei';
+                const addToCartText = t.addToCart || (currentLang === 'en' ? 'Add to Cart' : 'Adaugă în Coș');
+                const priceText = currentLang === 'en' ? 'Offer Price' : 'Preț Ofertă';
+                const totalText = currentLang === 'en' ? 'Total' : 'Total';
+
+                 container.innerHTML = `
+                     <div class="product-card daily-menu-card" style="border: 2px solid #ff6b35; background: #fff5f0;">
+                         <div style="text-align: center; margin-bottom: 20px;">
+                             <h2 style="color: #d84315; font-size: 1.8rem;">${menuTitle}</h2>
+                         </div>
+                        <div class="daily-menu-items">
+                            <div class="menu-item-display">
+                                <div class="product-header">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <img src="${soup.image_url || 'images/menu/default.jpg'}" 
+                                             alt="${soup.name}" 
+                                             style="width: 40px; height: 40px; object-fit: cover; border-radius: 8px;"
+                                             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iOCIgZmlsbD0iI2ZmNmIzNSIvPgo8dGV4dCB4PSIyMCIgeT0iMjUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyMCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPvCfk7s8L3RleHQ+Cjwvc3ZnPgo='; this.alt='🍲';">
+                                        <span class="product-name">${soupName}</span>
+                                    </div>
+                                    <span class="product-price">${soup.price.toFixed(2)} RON</span>
+                                </div>
+                                <p class="product-description">${soupDescription || ''}</p>
+                                ${soupAllergens ? `<div class="allergens-info" style="margin-top: 8px; font-size: 0.9rem; color: #666;">
+                                    <strong>${currentLang === 'en' ? 'Allergens:' : 'Alergeni:'}</strong> ${soupAllergens}
+                                </div>` : ''}
+                            </div>
+                             <div style="text-align: center; font-size: 1.5rem; color: #ff6b35; margin: 10px 0;">+</div>
+                            <div class="menu-item-display">
+                                <div class="product-header">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <img src="${mainCourse.image_url || 'images/menu/default.jpg'}" 
+                                             alt="${mainCourse.name}" 
+                                             style="width: 40px; height: 40px; object-fit: cover; border-radius: 8px;"
+                                             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iOCIgZmlsbD0iI2ZmNmIzNSIvPgo8dGV4dCB4PSIyMCIgeT0iMjUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyMCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPvCfk7s8L3RleHQ+Cjwvc3ZnPgo='; this.alt='🍲';">
+                                        <span class="product-name">${mainCourseName}</span>
+                                    </div>
+                                    <span class="product-price">${mainCourse.price.toFixed(2)} RON</span>
+                                </div>
+                                <p class="product-description">${mainCourseDescription || ''}</p>
+                                ${mainCourseAllergens ? `<div class="allergens-info" style="margin-top: 8px; font-size: 0.9rem; color: #666;">
+                                    <strong>${currentLang === 'en' ? 'Allergens:' : 'Alergeni:'}</strong> ${mainCourseAllergens}
+                                </div>` : ''}
+                            </div>
+                        </div>
+                        <hr style="margin: 20px 0; border: 1px dashed #ddd;">
+                        <div style="text-align: center; margin-top: 15px;">
+                            <div style="margin-bottom: 15px;">
+                                <span style="font-size: 1rem; color: #666; text-decoration: line-through;">${totalText}: ${originalPrice.toFixed(2)} RON</span><br>
+                                 <span style="font-size: 1.8rem; font-weight: bold; color: #ff6b35;">${priceText}: ${promotionalPrice.toFixed(2)} RON</span>
+                            </div>
+                             <button class="add-to-cart-btn daily-menu-btn" style="padding: 15px 30px; font-size: 1.2rem; background: #ff6b35;"
+                                onclick='addDailyMenuToCart(${JSON.stringify({ soup, mainCourse, promotionalPrice })})'>
+                                ${addToCartText}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                const t = translations[currentLang];
+                const noMenuTitle = currentLang === 'en' ? 'No Daily Menu Today' : 'Nu există Meniu al Zilei astăzi';
+                const noMenuDesc = currentLang === 'en' ? 'Please check back tomorrow.' : 'Te rugăm să revii mâine.';
+                
+                container.innerHTML = `
+                    <div class="no-offer-message">
+                        <div class="no-offer-icon">🍲</div>
+                        <h3>${noMenuTitle}</h3>
+                        <p>${noMenuDesc}</p>
+                    </div>
+                `;
+            }
+        }
+
+        function addDailyMenuToCart(menuData) {
+            // Folosește traducerile corecte pentru numele produselor
+            const soupName = currentLang === 'en' ? (menuData.soup.name_en || menuData.soup.name) : menuData.soup.name;
+            const mainCourseName = currentLang === 'en' ? (menuData.mainCourse.name_en || menuData.mainCourse.name) : menuData.mainCourse.name;
+            
+            // Adaugă supa cu ID-ul real
+            const soupCartId = `daily_soup_${menuData.soup.id}`;
+            const existingSoup = cart.find(item => item.cartId === soupCartId);
+            if (existingSoup) {
+                existingSoup.quantity += 1;
+            } else {
+                const soupItem = {
+                    cartId: soupCartId,
+                    product: {
+                        id: menuData.soup.id, // ID real din baza de date
+                        name: soupName,
+                        price: menuData.soup.price,
+                        category: menuData.soup.category
+                    },
+                    quantity: 1,
+                    customizations: [],
+                    isDailyMenu: true // Marchează ca fiind din meniul zilei
+                };
+                cart.push(soupItem);
+            }
+            
+            // Adaugă felul principal cu ID-ul real
+            const mainCourseCartId = `daily_main_${menuData.mainCourse.id}`;
+            const existingMainCourse = cart.find(item => item.cartId === mainCourseCartId);
+            if (existingMainCourse) {
+                existingMainCourse.quantity += 1;
+            } else {
+                const mainCourseItem = {
+                    cartId: mainCourseCartId,
+                    product: {
+                        id: menuData.mainCourse.id, // ID real din baza de date
+                        name: mainCourseName,
+                        price: menuData.mainCourse.price,
+                        category: menuData.mainCourse.category
+                    },
+                    quantity: 1,
+                    customizations: [],
+                    isDailyMenu: true // Marchează ca fiind din meniul zilei
+                };
+                cart.push(mainCourseItem);
+            }
+            
+            const t = translations[currentLang];
+            const message = currentLang === 'en' 
+                ? 'Daily Menu added to cart!'
+                : 'Meniul Zilei a fost adăugat în coș!';
+            showNotification(message);
+            updateCartSummary();
+        }
+
+
+        // === FUNCȚII PENTRU REZERVĂRI ===
+        async function openReservationModal() {
+            document.getElementById('reservationModal').style.display = 'block';
+            
+            // Setează data minimă (astăzi)
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('reservationDate').min = today;
+            
+            // Setează data implicită (mâine)
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('reservationDate').value = tomorrow.toISOString().split('T')[0];
+            
+            // Setează ora implicită (19:00)
+            document.getElementById('reservationTime').value = '19:00';
+        }
+        
+        function closeReservationModal() {
+            document.getElementById('reservationModal').style.display = 'none';
+            document.getElementById('reservationForm').reset();
+        }
+        
+        async function submitReservation(event) {
+            event.preventDefault();
+            
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Se trimite...';
+            
+            const reservationData = {
+                customerName: document.getElementById('customerName').value.trim(),
+                customerPhone: document.getElementById('customerPhone').value.trim(),
+                customerEmail: document.getElementById('customerEmail').value.trim() || null,
+                reservationDate: document.getElementById('reservationDate').value,
+                reservationTime: document.getElementById('reservationTime').value,
+                partySize: parseInt(document.getElementById('partySize').value),
+                specialRequests: document.getElementById('specialRequests').value.trim() || null
+            };
+            
+            try {
+                console.log('📤 Trimit rezervare cu datele:', reservationData);
+                
+                const response = await fetch(`${SERVER_IP}/api/reservations`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(reservationData)
+                });
+                
+                console.log('📡 Response status:', response.status);
+                const result = await response.json();
+                console.log('📋 Response data:', result);
+                
+                if (response.ok && result.success) {
+                    // Afișează mesaj de succes cu codul de confirmare
+                    showReservationConfirmation(result.reservation);
+                    closeReservationModal();
+                    showNotification(`✅ Rezervare confirmată! Cod: ${result.reservation.confirmation_code}`);
+                } else {
+                    console.error('❌ Eroare server:', result);
+                    showNotification(`❌ Eroare: ${result.error || 'Nu s-a putut crea rezervarea'}`);
+                    alert(`Detalii eroare: ${result.error || 'Eroare necunoscută'}`);
+                }
+                
+            } catch (error) {
+                console.error('Eroare la trimiterea rezervării:', error);
+                showNotification('❌ Eroare de conexiune. Vă rugăm să încercați din nou.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-calendar-check me-2"></i>Confirmă Rezervarea';
+            }
+        }
+        
+        function showReservationConfirmation(reservation) {
+            const message = `
+                <div style="text-align: center; padding: 20px;">
+                    <h3 style="color: #28a745; margin-bottom: 15px;">✅ Rezervare Confirmată!</h3>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin: 15px 0; text-align: left;">
+                        <p><strong>Cod Confirmare:</strong> <span style="color: #ff6b35; font-size: 1.2rem; font-weight: bold;">${reservation.confirmation_code}</span></p>
+                        <p><strong>Nume:</strong> ${reservation.customer_name}</p>
+                        <p><strong>Data:</strong> ${new Date(reservation.reservation_date).toLocaleDateString('ro-RO')}</p>
+                        <p><strong>Ora:</strong> ${reservation.reservation_time}</p>
+                        <p><strong>Persoane:</strong> ${reservation.party_size}</p>
+                        ${reservation.table_number ? `<p><strong>Masă:</strong> Masa ${reservation.table_number}</p>` : ''}
+                    </div>
+                    <p style="color: #666; font-size: 0.9rem;">Vă vom trimite un email de confirmare${reservation.customer_email ? ` la ${reservation.customer_email}` : ''}.</p>
+                    <p style="color: #666; font-size: 0.9rem; margin-top: 10px;">Păstrați codul de confirmare pentru referințe viitoare.</p>
+                </div>
+            `;
+            
+            // Creează un modal temporar pentru confirmare
+            const confirmModal = document.createElement('div');
+            confirmModal.className = 'modal';
+            confirmModal.style.display = 'block';
+            confirmModal.innerHTML = `
+                <div class="modal-content" style="max-width: 500px;">
+                    ${message}
+                    <button class="place-order-btn" onclick="this.closest('.modal').remove()" style="width: 100%; margin-top: 15px;">
+                        <i class="fas fa-check me-2"></i>OK
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(confirmModal);
+        }
+    </script>
+</body>
+    <script src="/branding/qroms-badge.js"></script>
+</html>

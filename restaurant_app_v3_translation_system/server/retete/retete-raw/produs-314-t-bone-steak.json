@@ -1,0 +1,37 @@
+﻿Ã¯Â»Â¿{
+  "productId": 314,
+  "productName": "T-Bone Steak",
+  "productCategory": "Fel Principal",
+  "ingredients": [
+    {
+      "ingredientId": 386,
+      "ingredientName": "T-Bone Steak",
+      "ingredientCategory": "General",
+      "quantityNeeded": 450,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 169,
+      "ingredientName": "Sare de mare",
+      "ingredientCategory": "General",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 812,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

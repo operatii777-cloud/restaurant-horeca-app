@@ -1,0 +1,47 @@
+/* Hostess Map - Light Theme */
+.hostess-map-page {
+  padding: 24px;
+  background: #fff;
+  min-height: 100vh;
+  color: #1e293b;
+}
+
+.table-card {
+  background: #fff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+  padding: 16px !important;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.table-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  border-color: #3b82f6;
+}
+
+.table-card.free {
+  border-left: 4px solid #22c55e !important;
+}
+
+.table-card.occupied {
+  border-left: 4px solid #ef4444 !important;
+  background: #fff !important;
+}
+
+.table-card h5 {
+  color: #1e293b !important;
+  font-weight: 700;
+}
+
+.table-card p {
+  color: #64748b !important;
+}
+
+.table-card hr {
+  margin: 0.75rem 0;
+  border-color: #e2e8f0 !important;
+}
+

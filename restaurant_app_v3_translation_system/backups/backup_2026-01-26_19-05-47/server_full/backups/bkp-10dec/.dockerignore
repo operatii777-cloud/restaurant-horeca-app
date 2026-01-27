@@ -1,0 +1,84 @@
+# ============================================
+# .dockerignore - Exclude from Docker build
+# ============================================
+
+# CRITICAL: Allow admin-vite source files FIRST (before any exclusions)
+!admin-vite/**
+
+# Node modules (will be installed in container)
+node_modules
+npm-debug.log
+
+# Logs (ONLY server logs folder at root, NOT admin-vite paths)
+/logs
+*.log
+# CRITICAL: Explicitly allow admin-vite audit logs
+!admin-vite/src/modules/audit/logs/**
+
+# Development files
+.git
+.gitignore
+.env
+.env.*
+*.md
+README.md
+
+# Test files
+__tests__
+coverage
+*.test.js
+*.spec.js
+playwright-report
+
+# Backup files
+backups/*
+*.backup
+*.bak
+
+# IDE files
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Development tools
+.editorconfig
+.prettierrc
+.eslintrc
+
+# Documentation
+docs
+documentation
+
+# Screenshots
+screenshots
+*.png
+*.jpg
+*.jpeg
+!public/images/**
+
+# Temporary files
+tmp
+temp
+*.tmp
+
+# Build artifacts (if any)
+dist
+build
+# Note: admin-vite/** is allowed at the top of this file
+
+# CI/CD files (not needed in container)
+.github
+.gitlab-ci.yml
+.travis.yml
+
+# Docker files (already in image)
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+

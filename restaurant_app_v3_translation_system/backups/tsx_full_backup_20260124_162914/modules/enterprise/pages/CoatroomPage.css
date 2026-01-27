@@ -1,0 +1,18 @@
+/* Coatroom - Light Theme */
+.coatroom-page {
+  padding: 24px;
+  background: #fff;
+  min-height: 100vh;
+  color: #1e293b;
+}
+
+.ticket-code {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  color: white;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
+}
+

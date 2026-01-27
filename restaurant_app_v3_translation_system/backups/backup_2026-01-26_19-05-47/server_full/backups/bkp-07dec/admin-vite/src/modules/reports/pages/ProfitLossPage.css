@@ -1,0 +1,70 @@
+.profit-loss-page {
+  padding: 0;
+}
+
+.profit-loss-page .card {
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profit-loss-page .card-header {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 1rem 1.5rem;
+}
+
+.profit-loss-page .card-body {
+  padding: 1.5rem;
+}
+
+.profit-loss-page .row.text-center {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 2rem;
+}
+
+.profit-loss-page .row.text-center .col {
+  padding: 1rem;
+}
+
+.profit-loss-page .row.text-center h4 {
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.profit-loss-page .row.text-center small {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.profit-loss-page .table {
+  margin-top: 1rem;
+}
+
+.profit-loss-page .table thead th {
+  background-color: #f8fafc;
+  font-weight: 600;
+  color: #0f172a;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.profit-loss-page .table tbody td {
+  vertical-align: middle;
+}
+
+.profit-loss-page .btn-primary {
+  background: linear-gradient(135deg, #2563eb 0%, #38bdf8 100%);
+  border: none;
+  box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+}
+
+.profit-loss-page .btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+}
+
+.profit-loss-page .btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+

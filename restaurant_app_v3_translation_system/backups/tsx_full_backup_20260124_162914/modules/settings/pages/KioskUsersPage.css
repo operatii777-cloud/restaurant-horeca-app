@@ -1,0 +1,17 @@
+.kiosk-users-page {
+  padding: 1.5rem;
+}
+
+.kiosk-users-page .table-responsive {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.kiosk-users-page .table th {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 10;
+  border-bottom: 2px solid #dee2e6;
+}
+

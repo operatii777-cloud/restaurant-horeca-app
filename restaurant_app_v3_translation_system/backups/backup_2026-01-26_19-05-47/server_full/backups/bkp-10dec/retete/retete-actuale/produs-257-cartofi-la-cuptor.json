@@ -1,0 +1,17 @@
+{
+  "productId": 257,
+  "productName": "Cartofi La Cuptor",
+  "productCategory": "Garnituri",
+  "price": 10,
+  "description": "Cartofi la cuptor cu rozmarin",
+  "ingredients": [
+    {
+      "ingredientId": 67,
+      "ingredientName": "Cartofi",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 200,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}

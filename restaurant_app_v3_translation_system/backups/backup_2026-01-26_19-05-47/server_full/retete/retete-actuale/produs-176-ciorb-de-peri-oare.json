@@ -1,0 +1,51 @@
+﻿Ã¯Â»Â¿{
+  "productId": 176,
+  "productName": "CiorbÃ„ÂƒÃ†Â’ de PeriÃƒÂˆÃ¢Â„Â¢oare",
+  "productCategory": "Ciorbe",
+  "price": 25,
+  "description": "PulpÃ„ÂƒÃ†Â’ de porc, ceapÃ„ÂƒÃ†Â’ albÃ„ÂƒÃ†Â’, morcov, ÃƒÂˆÃ¢Â€ÂºelinÃ„ÂƒÃ†Â’, ardei kapia, ou, borÃƒÂˆÃ¢Â„Â¢, pÃ„ÂƒÃ†Â’trunjel",
+  "ingredients": [
+    {
+      "ingredientId": 94,
+      "ingredientName": "CeapÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Fructe ÃƒÂˆÃ¢Â„Â¢i Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 109,
+      "ingredientName": "Ardei kapia",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 111,
+      "ingredientName": "Morcov",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 112,
+      "ingredientName": "PÃ„ÂƒÃ†Â’trunjel",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 96,
+      "ingredientName": "Ou",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

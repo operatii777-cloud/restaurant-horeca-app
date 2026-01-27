@@ -1,0 +1,43 @@
+﻿Ã¯Â»Â¿{
+  "productId": 104,
+  "productName": "Virgin Colada",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "price": 25,
+  "description": "Coctail fÃ„ÂƒÃ†Â’rÃ„ÂƒÃ†Â’ alcool - Suc de ananas, piure de cocos, friÃƒÂˆÃ¢Â„Â¢cÃ„ÂƒÃ†Â’ lichidÃ„ÂƒÃ†Â’",
+  "ingredients": [
+    {
+      "ingredientId": 190,
+      "ingredientName": "Suc de ananas",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 192,
+      "ingredientName": "Piure de cocos",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 60,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 22,
+      "ingredientName": "FriÃƒÂˆÃ¢Â„Â¢cÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "GheaÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

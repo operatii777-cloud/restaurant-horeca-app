@@ -1,0 +1,37 @@
+﻿Ã¯Â»Â¿{
+  "productId": 2,
+  "productName": "OmletÃ„ÂƒÃ†Â’ ÃƒÂˆÃ…Â¡Ã„ÂƒÃ†Â’rÃ„ÂƒÃ†Â’neascÃ„ÂƒÃ†Â’",
+  "productCategory": "Mic Dejun",
+  "ingredients": [
+    {
+      "ingredientId": 1,
+      "ingredientName": "ouÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "General",
+      "quantityNeeded": 3,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 624,
+      "ingredientName": "Ingrediente speciale (ex: Prosciutto Crudo, Rucola)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 0.15,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 3,
+      "ingredientName": "mozzarella",
+      "ingredientCategory": "General",
+      "quantityNeeded": 0.1,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

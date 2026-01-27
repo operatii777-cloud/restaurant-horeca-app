@@ -1,0 +1,35 @@
+{
+  "productId": 95,
+  "productName": "Pizza Piccante",
+  "productCategory": "Pizza",
+  "ingredients": [
+    {
+      "ingredientId": 604,
+      "ingredientName": "Blat de pizza (standard)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 250,
+      "unit": "buc",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 3,
+      "ingredientName": "mozzarella",
+      "ingredientCategory": "General",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 614,
+      "ingredientName": "Salam Picant (Pepperoni/Ventricina)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 70,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

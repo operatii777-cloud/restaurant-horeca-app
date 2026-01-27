@@ -1,0 +1,39 @@
+// server/stock/stockMoveConstants.js
+// Enum-uri standardizate pentru tipurile de mișcări de stoc și surse
+
+const STOCK_MOVE_REASON = {
+  // IN
+  NIR_IN: "NIR_IN",
+  TRANSFER_IN: "TRANSFER_IN",
+  ADJUST_IN: "ADJUST_IN",
+  PRODUCTION_IN: "PRODUCTION_IN",
+  CANCEL_SALE_IN: "CANCEL_SALE_IN",
+
+  // OUT
+  CONSUME_OUT: "CONSUME_OUT",
+  TRANSFER_OUT: "TRANSFER_OUT",
+  ADJUST_OUT: "ADJUST_OUT",
+  SALE_OUT: "SALE_OUT",
+  PRODUCTION_OUT: "PRODUCTION_OUT",
+  WASTE_OUT: "WASTE_OUT",
+};
+
+const STOCK_MOVE_SOURCE = {
+  NIR: "NIR",
+  POS: "POS",
+  KIOSK: "KIOSK",
+  QR: "QR",
+  DELIVERY: "DELIVERY",
+  SUPERVISOR: "SUPERVISOR",
+  INVENTORY: "INVENTORY",
+  TRANSFER: "TRANSFER",
+  PRODUCTION: "PRODUCTION",
+  MANUAL: "MANUAL",
+};
+
+module.exports = {
+  STOCK_MOVE_REASON,
+  STOCK_MOVE_SOURCE,
+};
+
+

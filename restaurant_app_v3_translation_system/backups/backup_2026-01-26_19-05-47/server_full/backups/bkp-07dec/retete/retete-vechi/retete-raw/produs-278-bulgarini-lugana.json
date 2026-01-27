@@ -1,0 +1,17 @@
+{
+  "productId": 278,
+  "productName": "Bulgarini Lugana",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 740,
+      "ingredientName": "Bulgarini Lugana",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

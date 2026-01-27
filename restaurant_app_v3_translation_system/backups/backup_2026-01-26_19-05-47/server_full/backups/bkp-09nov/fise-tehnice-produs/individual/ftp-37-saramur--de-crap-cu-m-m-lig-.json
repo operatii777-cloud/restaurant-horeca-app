@@ -1,0 +1,101 @@
+{
+  "product": {
+    "id": 37,
+    "name": "Saramură de Crap cu Mămăligă",
+    "name_en": "Carp Brine with Polenta",
+    "category": "Peste Fructe de Mare",
+    "category_en": "Fish & Seafood",
+    "price": 55,
+    "description": "Crap în saramură cu mămăligă",
+    "description_en": "Carp in brine with polenta",
+    "weight": "200/200/100G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": "pește",
+    "allergens_en": "fish"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 589,
+        "name": "Crap (felie/porție)",
+        "category": "General",
+        "quantity": 200,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 590,
+        "name": "Mămăligă",
+        "category": "General",
+        "quantity": 150,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 800,
+        "name": "Sos Usturoi Shaorma",
+        "category": "Sosuri",
+        "quantity": 10,
+        "unit": "g",
+        "unitStock": "ml",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 1.1303157632422682,
+        "totalCost": "11.30",
+        "totalCostWithWaste": "11.30",
+        "supplier": "Furnizor Test",
+        "currentStock": 64752.76470588235,
+        "minStock": 100,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "11.30",
+    "totalCostWithWaste": "11.30",
+    "sellingPrice": 55,
+    "profitMargin": 43.7,
+    "markup": 79.45,
+    "foodCostPercentage": "20.55"
+  },
+  "stats": {
+    "totalIngredients": 3,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

@@ -1,0 +1,43 @@
+﻿Ã¯Â»Â¿{
+  "productId": 200,
+  "productName": "Halloumi Burger",
+  "productCategory": "Fast Food",
+  "price": 58,
+  "description": "ChiflÃ„ÂƒÃ†Â’, halloumi, roÃƒÂˆÃ¢Â„Â¢ii, salatÃ„ÂƒÃ†Â’ verde, sos sweet chilli, cartofi prÃ„ÂƒÃ†Â’jiÃƒÂˆÃ¢Â€Âºi",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 103,
+      "ingredientName": "SalatÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 67,
+      "ingredientName": "Cartofi",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 200,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 96,
+      "ingredientName": "Ou",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

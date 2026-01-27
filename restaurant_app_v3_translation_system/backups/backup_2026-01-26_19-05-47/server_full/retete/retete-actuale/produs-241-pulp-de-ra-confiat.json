@@ -1,0 +1,51 @@
+﻿Ã¯Â»Â¿{
+  "productId": 241,
+  "productName": "PulpÃ„ÂƒÃ†Â’ de RaÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’ ConfiatÃ„ÂƒÃ†Â’",
+  "productCategory": "Fel Principal",
+  "price": 99,
+  "description": "PulpÃ„ÂƒÃ†Â’ de raÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’, sos de rodie, piure cu trufe",
+  "ingredients": [
+    {
+      "ingredientId": 151,
+      "ingredientName": "PulpÃ„ÂƒÃ†Â’ de raÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 300,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 152,
+      "ingredientName": "GrÃ„ÂƒÃ†Â’sime de raÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Condimente ÃƒÂˆÃ¢Â„Â¢i Sosuri",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 15,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 57,
+      "ingredientName": "Cimbru",
+      "ingredientCategory": "Condimente ÃƒÂˆÃ¢Â„Â¢i Sosuri",
+      "quantityNeeded": 5,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 65,
+      "ingredientName": "Sare",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 10,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

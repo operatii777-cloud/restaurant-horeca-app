@@ -1,0 +1,19 @@
+﻿Ã¯Â»Â¿{
+  "productId": 123,
+  "productName": "Irish Coffee",
+  "productCategory": "Cafea/CiocolatÃ„ÂƒÃ†Â’/Ceai",
+  "price": 22,
+  "description": "Espresso, Irish whiskey, zahÃ„ÂƒÃ†Â’r brun, friÃƒÂˆÃ¢Â„Â¢cÃ„ÂƒÃ†Â’",
+  "ingredients": [
+    {
+      "ingredientId": 33,
+      "ingredientName": "ZahÃ„ÂƒÃ†Â’r",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 10,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

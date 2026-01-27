@@ -1,0 +1,41 @@
+{
+  "productId": 232,
+  "productName": "Pastramă de Oaie la Tigaie",
+  "productCategory": "Fel Principal",
+  "price": 59,
+  "description": "Pastramă de oaie, vin alb, roșii cherry, unt, pătrunjel, mămăligă la grătar",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "Roșii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 112,
+      "ingredientName": "Pătrunjel",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 60,
+      "ingredientName": "Unt",
+      "ingredientCategory": "Lactate și Brânzeturi",
+      "quantityNeeded": 20,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 149,
+      "ingredientName": "Vin alb",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}

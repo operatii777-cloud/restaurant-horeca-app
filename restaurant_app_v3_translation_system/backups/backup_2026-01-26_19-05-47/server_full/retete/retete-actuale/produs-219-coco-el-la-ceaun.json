@@ -1,0 +1,19 @@
+﻿Ã¯Â»Â¿{
+  "productId": 219,
+  "productName": "CocoÃƒÂˆÃ¢Â„Â¢el la Ceaun",
+  "productCategory": "Fel Principal",
+  "price": 65,
+  "description": "CocoÃƒÂˆÃ¢Â„Â¢el, cartofi prÃ„ÂƒÃ†Â’jiÃƒÂˆÃ¢Â€Âºi",
+  "ingredients": [
+    {
+      "ingredientId": 67,
+      "ingredientName": "Cartofi",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 200,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

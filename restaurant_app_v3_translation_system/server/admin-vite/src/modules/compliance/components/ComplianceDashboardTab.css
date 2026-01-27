@@ -1,0 +1,119 @@
+.compliance-dashboard-tab {
+  padding: var(--space-lg);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+.dashboard-section {
+  background: white;
+  padding: var(--space-lg);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.dashboard-section h3 {
+  margin-bottom: var(--space-lg);
+  font-size: var(--font-size-lg);
+}
+
+.alerts-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.alert-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  border-radius: var(--border-radius);
+  border-left: 4px solid;
+}
+
+.alert-item.danger {
+  background: #f8d7da;
+  border-left-color: var(--danger);
+  color: #721c24;
+}
+
+.no-alerts {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-lg);
+  color: var(--secondary);
+  text-align: center;
+  justify-content: center;
+}
+
+.maintenance-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.maintenance-item {
+  padding: var(--space-md);
+  border-bottom: 1px solid #e9ecef;
+}
+
+.maintenance-item:last-child {
+  border-bottom: none;
+}
+
+.chart-section {
+  margin-top: var(--space-xl);
+}
+
+.checklist-section {
+  margin-top: var(--space-lg);
+}
+
+.checklist-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.checklist-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.checkbox-label span.checked {
+  text-decoration: line-through;
+  color: var(--secondary);
+}
+
+.checked-by {
+  font-size: var(--font-size-sm);
+  color: var(--secondary);
+  margin-left: 28px;
+}
+
+.signature-section {
+  margin-top: var(--space-lg);
+  padding-top: var(--space-lg);
+  border-top: 1px solid #e9ecef;
+}
+

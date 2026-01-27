@@ -1,0 +1,249 @@
+/* ===================================================================== */
+/* DRIVE-THRU PAGE STYLES */
+/* ===================================================================== */
+
+.drive-thru-page {
+  padding: 20px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f5f5f5;
+}
+
+.drive-thru-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  background: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.drive-thru-header h2 {
+  margin: 0;
+  color: #2c3e50;
+}
+
+.drive-thru-kpis {
+  display: flex;
+  gap: 15px;
+}
+
+.kpi-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 15px 25px;
+  border-radius: 8px;
+  text-align: center;
+  min-width: 120px;
+}
+
+.kpi-card.alert-kpi {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+.kpi-value {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.kpi-label {
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.drive-thru-content {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 20px;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Products Section */
+.drive-thru-products {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.category-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.category-buttons .btn {
+  border-radius: 20px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 15px;
+  overflow-y: auto;
+  flex: 1;
+  padding: 10px 5px;
+}
+
+.product-card {
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 2px solid transparent;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  border-color: #007bff;
+}
+
+.product-card .card-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.product-price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #28a745;
+  margin: 0;
+}
+
+/* Order Section */
+.drive-thru-order {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow-y: auto;
+}
+
+.cart-items {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.cart-item:last-child {
+  border-bottom: none;
+}
+
+.cart-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.cart-item-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cart-qty {
+  min-width: 30px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.cart-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.cart-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.cart-actions button {
+  flex: 1;
+}
+
+/* Queue List */
+.queue-list {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.queue-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  border-left: 4px solid #28a745;
+}
+
+.queue-item.slow {
+  border-left-color: #dc3545;
+  background: #fff5f5;
+}
+
+.queue-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .drive-thru-content {
+    grid-template-columns: 1fr 350px;
+  }
+  
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .drive-thru-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .drive-thru-order {
+    max-height: 500px;
+  }
+  
+  .drive-thru-kpis {
+    flex-wrap: wrap;
+  }
+  
+  .kpi-card {
+    min-width: 100px;
+    padding: 10px 15px;
+  }
+}
+

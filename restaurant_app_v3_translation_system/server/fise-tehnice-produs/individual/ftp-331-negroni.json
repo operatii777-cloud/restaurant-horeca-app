@@ -1,0 +1,118 @@
+{
+  "product": {
+    "id": 331,
+    "name": "Negroni",
+    "name_en": "Negroni",
+    "category": "Băuturi și Coctailuri",
+    "category_en": "Drinks",
+    "price": 20,
+    "description": "Negroni clasic",
+    "description_en": "Negroni clasic",
+    "weight": null,
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 432,
+        "name": "Campari",
+        "category": "General",
+        "quantity": 30,
+        "unit": "ml",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 1870,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 447,
+        "name": "Felie/coajă de Portocală",
+        "category": "General",
+        "quantity": 5,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 7385,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 431,
+        "name": "Vermouth Roșu (Sweet)",
+        "category": "General",
+        "quantity": 30,
+        "unit": "ml",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 1970,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 59,
+        "name": "gin",
+        "category": "General",
+        "quantity": 30,
+        "unit": "ml",
+        "unitStock": "l",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 9.90028906681588,
+        "totalCost": "297.01",
+        "totalCostWithWaste": "297.01",
+        "supplier": null,
+        "currentStock": 1910,
+        "minStock": 0.2,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "297.01",
+    "totalCostWithWaste": "297.01",
+    "sellingPrice": 20,
+    "profitMargin": -277.01,
+    "markup": -1385.04,
+    "foodCostPercentage": "1485.04"
+  },
+  "stats": {
+    "totalIngredients": 4,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

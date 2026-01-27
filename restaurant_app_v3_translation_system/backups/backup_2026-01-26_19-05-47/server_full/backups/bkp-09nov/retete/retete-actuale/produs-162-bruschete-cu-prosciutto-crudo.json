@@ -1,0 +1,41 @@
+{
+  "productId": 162,
+  "productName": "Bruschete cu Prosciutto Crudo",
+  "productCategory": "Aperitive Reci",
+  "price": 34,
+  "description": "Baghetă, cremă de brânză, roșii uscate, ceapă roșie, prosciutto crudo, brânză dură",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "Roșii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 94,
+      "ingredientName": "Ceapă",
+      "ingredientCategory": "Fructe și Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 99,
+      "ingredientName": "Prosciutto",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 13,
+      "ingredientName": "Brânză dură",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

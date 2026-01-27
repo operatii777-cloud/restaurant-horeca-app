@@ -1,0 +1,64 @@
+{
+  "job": {
+    "id": "order_116",
+    "data": {
+      "orderId": 116,
+      "finalItems": [
+        {
+          "itemId": "it_1762621035094_437937704",
+          "productId": 126,
+          "name": "7 Up",
+          "quantity": 1,
+          "finalPrice": 13,
+          "isFree": false,
+          "customizations": [],
+          "status": "pending",
+          "station": "bar"
+        },
+        {
+          "itemId": "it_1762621035094_121073529",
+          "productId": 130,
+          "name": "Apă Plată Mare",
+          "quantity": 1,
+          "finalPrice": 18,
+          "isFree": false,
+          "customizations": [],
+          "status": "pending",
+          "station": "bar"
+        },
+        {
+          "itemId": "it_1762621035094_466389465",
+          "productId": 166,
+          "name": "Bruschete cu Ton",
+          "quantity": 1,
+          "finalPrice": 33,
+          "isFree": false,
+          "customizations": [],
+          "status": "pending",
+          "station": "kitchen"
+        },
+        {
+          "itemId": "it_1762621035094_55591284",
+          "productId": 169,
+          "name": "Platou Quattro Formaggi",
+          "quantity": 1,
+          "finalPrice": 64,
+          "isFree": false,
+          "customizations": [],
+          "status": "pending",
+          "station": "kitchen"
+        }
+      ],
+      "orderType": "here"
+    },
+    "priority": 1,
+    "retries": 3,
+    "addedAt": 1762621035142,
+    "status": "waiting"
+  },
+  "error": {
+    "message": "SQLITE_CONSTRAINT: NOT NULL constraint failed: ingredient_batches.remaining_quantity",
+    "stack": "Error: SQLITE_CONSTRAINT: NOT NULL constraint failed: ingredient_batches.remaining_quantity"
+  },
+  "failedAt": "2025-11-08T16:57:15.662Z"
+}

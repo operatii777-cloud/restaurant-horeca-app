@@ -1,0 +1,84 @@
+{
+  "product": {
+    "id": 144,
+    "name": "Ciocolată Caldă",
+    "name_en": "Hot Chocolate",
+    "category": "Cafea/Ciocolată/Ceai",
+    "category_en": "Coffee/Chocolate/Tea",
+    "price": 18,
+    "description": "Albă/neagră",
+    "description_en": "White/dark",
+    "weight": "230ML",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 257,
+        "name": "Frișcă (opțional)",
+        "category": "General",
+        "quantity": 20,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 1960,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 53,
+        "name": "lapte",
+        "category": "General",
+        "quantity": 150,
+        "unit": "ml",
+        "unitStock": "l",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 4.3131870672107615,
+        "totalCost": "646.98",
+        "totalCostWithWaste": "646.98",
+        "supplier": null,
+        "currentStock": 23357,
+        "minStock": 0.4,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "646.98",
+    "totalCostWithWaste": "646.98",
+    "sellingPrice": 18,
+    "profitMargin": -628.98,
+    "markup": -3494.32,
+    "foodCostPercentage": "3594.32"
+  },
+  "stats": {
+    "totalIngredients": 2,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

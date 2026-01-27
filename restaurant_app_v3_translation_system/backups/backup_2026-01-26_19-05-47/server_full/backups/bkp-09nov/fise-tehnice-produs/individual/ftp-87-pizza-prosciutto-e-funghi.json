@@ -1,0 +1,118 @@
+{
+  "product": {
+    "id": 87,
+    "name": "Pizza Prosciutto e Funghi",
+    "name_en": "Pizza Prosciutto e Funghi",
+    "category": "Pizza",
+    "category_en": "Pizza",
+    "price": 41,
+    "description": "Blat pizza, sos de roșii, mozzarella, șuncă, ciuperci",
+    "description_en": "Pizza dough, tomato sauce, mozzarella, ham, mushrooms",
+    "weight": "",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": "gluten, lapte",
+    "allergens_en": "gluten, milk"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 604,
+        "name": "Blat de pizza (standard)",
+        "category": "General",
+        "quantity": 250,
+        "unit": "buc",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": -5000,
+        "minStock": 10,
+        "stockStatus": "LOW"
+      },
+      {
+        "id": 624,
+        "name": "Ingrediente speciale (ex: Prosciutto Crudo, Rucola)",
+        "category": "General",
+        "quantity": 50,
+        "unit": "g",
+        "unitStock": "buc",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.09185370066856817,
+        "totalCost": "4.59",
+        "totalCostWithWaste": "4.59",
+        "supplier": null,
+        "currentStock": 12670,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 17,
+        "name": "ciuperci",
+        "category": "General",
+        "quantity": 50,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 7.389001223451439,
+        "totalCost": "369.45",
+        "totalCostWithWaste": "369.45",
+        "supplier": null,
+        "currentStock": 2040,
+        "minStock": 0.4,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 3,
+        "name": "mozzarella",
+        "category": "General",
+        "quantity": 100,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 30,
+        "totalCost": "3000.00",
+        "totalCostWithWaste": "3000.00",
+        "supplier": null,
+        "currentStock": 95,
+        "minStock": 0.5,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "3374.04",
+    "totalCostWithWaste": "3374.04",
+    "sellingPrice": 41,
+    "profitMargin": -3333.04,
+    "markup": -8129.37,
+    "foodCostPercentage": "8229.37"
+  },
+  "stats": {
+    "totalIngredients": 4,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 1
+  }
+}

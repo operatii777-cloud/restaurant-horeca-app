@@ -1,0 +1,25 @@
+{
+  "productId": 229,
+  "productName": "Mușchi de Vită cu Piper Verde",
+  "productCategory": "Fel Principal",
+  "price": 100,
+  "description": "Mușchi de vită, piper verde, cognac, cartofi la cuptor",
+  "ingredients": [
+    {
+      "ingredientId": 67,
+      "ingredientName": "Cartofi",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 200,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 98,
+      "ingredientName": "Piper",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

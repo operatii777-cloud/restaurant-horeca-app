@@ -1,0 +1,421 @@
+/* 📖 Rețete Module - App Specific Styles */
+
+.App {
+  text-align: center;
+}
+
+/* Split Layout: Products List (Left) + Recipe Builder (Right) */
+.split-layout {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 24px;
+  min-height: 700px;
+}
+
+@media (max-width: 1200px) {
+  .split-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Products List Panel */
+.products-list-panel {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 16px;
+  border: 2px solid #e9ecef;
+  overflow-y: auto;
+  max-height: 700px;
+}
+
+.products-list-panel h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.product-list-item {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.product-list-item:hover {
+  border-color: #3498db;
+  background: #e3f2fd;
+}
+
+.product-list-item.active {
+  border-color: #27ae60;
+  background: #d4edda;
+  font-weight: 600;
+}
+
+.product-list-item.no-recipe {
+  opacity: 0.6;
+}
+
+.product-list-item-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.product-list-item-content {
+  flex: 1;
+}
+
+.product-list-item-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #2c3e50;
+  margin-bottom: 4px;
+}
+
+.product-list-item-info {
+  font-size: 12px;
+  color: #6c757d;
+}
+
+/* Recipe Builder Panel */
+.recipe-builder-panel {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.recipe-builder-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.recipe-builder-header h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #2c3e50;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.recipe-builder-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Add Ingredient Section */
+.add-ingredient-section {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 16px;
+  border: 2px dashed #ced4da;
+}
+
+.add-ingredient-form {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  gap: 12px;
+  align-items: end;
+}
+
+@media (max-width: 768px) {
+  .add-ingredient-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-group-inline {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group-inline label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #6c757d;
+}
+
+.form-group-inline select,
+.form-group-inline input {
+  padding: 8px 12px;
+  border: 2px solid #e9ecef;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.form-group-inline select:focus,
+.form-group-inline input:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+/* Ingredients Table */
+.ingredients-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.ingredients-table thead {
+  background: #f8f9fa;
+}
+
+.ingredients-table th {
+  padding: 12px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: #2c3e50;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.ingredients-table td {
+  padding: 12px;
+  border-bottom: 1px solid #e9ecef;
+  font-size: 14px;
+}
+
+.ingredients-table tbody tr:hover {
+  background: #f1f3f5;
+}
+
+.ingredients-table-empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: #adb5bd;
+  font-size: 14px;
+}
+
+/* Cost Summary */
+.cost-summary {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  color: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+}
+
+.cost-summary-item {
+  text-align: center;
+}
+
+.cost-summary-label {
+  font-size: 12px;
+  opacity: 0.9;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cost-summary-value {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  color: #adb5bd;
+}
+
+.empty-state-icon {
+  font-size: 72px;
+  margin-bottom: 20px;
+}
+
+.empty-state-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #6c757d;
+  margin-bottom: 12px;
+}
+
+.empty-state-subtitle {
+  font-size: 14px;
+  color: #adb5bd;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+/* Modal Content */
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Modal Header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #95a5a6;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+  background: #f1f3f5;
+  color: #2c3e50;
+}
+
+/* Modal Body */
+.modal-body {
+  padding: 24px;
+}
+
+/* Modal Actions */
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 2px solid #e9ecef;
+}
+
+/* Stock Validation Alert */
+.stock-validation-alert {
+  background: #fff3cd;
+  border: 2px solid #ffc107;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 20px 0;
+}
+
+.stock-validation-alert-title {
+  font-weight: 600;
+  color: #856404;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stock-validation-item {
+  font-size: 13px;
+  color: #856404;
+  margin: 6px 0;
+  padding-left: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .btn {
+    flex: 1;
+    min-width: 120px;
+    justify-content: center;
+  }
+
+  .stats-container {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .modal-content {
+    margin: 10px;
+    max-width: calc(100% - 20px);
+  }
+
+  .modal-actions {
+    flex-direction: column;
+  }
+
+  .modal-actions .btn {
+    width: 100%;
+  }
+
+  .cost-summary {
+    grid-template-columns: 1fr;
+  }
+}
+
+

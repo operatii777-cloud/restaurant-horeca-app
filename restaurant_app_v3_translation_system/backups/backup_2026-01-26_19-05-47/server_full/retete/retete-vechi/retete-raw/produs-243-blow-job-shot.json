@@ -1,0 +1,37 @@
+﻿Ã¯Â»Â¿{
+  "productId": 243,
+  "productName": "Blow Job Shot",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 433,
+      "ingredientName": "Kahlua (lichior de cafea)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 438,
+      "ingredientName": "FriÃƒÂˆÃ¢Â„Â¢cÃ„ÂƒÃ†Â’ (pentru topping)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

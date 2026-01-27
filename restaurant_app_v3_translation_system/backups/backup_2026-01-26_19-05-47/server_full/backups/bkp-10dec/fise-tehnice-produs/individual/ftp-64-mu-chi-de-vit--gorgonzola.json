@@ -1,0 +1,101 @@
+{
+  "product": {
+    "id": 64,
+    "name": "Mușchi de Vită Gorgonzola",
+    "name_en": "Beef Tenderloin with Gorgonzola",
+    "category": "Fel Principal",
+    "category_en": "Main Course",
+    "price": 100,
+    "description": "Mușchi de vită, cremă vegetală, gorgonzola, cartofi la cuptor, sote de ciuperci",
+    "description_en": "Beef tenderloin, vegetable cream, gorgonzola, baked potatoes, sautéed mushrooms",
+    "weight": "380G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": "lapte",
+    "allergens_en": "milk"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 126,
+        "name": "Burtă de vită fiartă și tăiată",
+        "category": "Carne",
+        "quantity": 200,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.21643509653792728,
+        "totalCost": "43.29",
+        "totalCostWithWaste": "43.29",
+        "supplier": "Furnizor Carne",
+        "currentStock": 299528.47826086957,
+        "minStock": 1000,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 130,
+        "name": "Smântână",
+        "category": "Lactate",
+        "quantity": 80,
+        "unit": "ml",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.045203957751608605,
+        "totalCost": "3.62",
+        "totalCostWithWaste": "3.62",
+        "supplier": "Furnizor Lactate",
+        "currentStock": 69364.21052631579,
+        "minStock": 500,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 50,
+        "name": "brânză feta",
+        "category": "General",
+        "quantity": 40,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.5405837481795882,
+        "totalCost": "21.62",
+        "totalCostWithWaste": "21.62",
+        "supplier": null,
+        "currentStock": 30030,
+        "minStock": 0.4,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "68.53",
+    "totalCostWithWaste": "68.53",
+    "sellingPrice": 100,
+    "profitMargin": 31.47,
+    "markup": 31.47,
+    "foodCostPercentage": "68.53"
+  },
+  "stats": {
+    "totalIngredients": 3,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

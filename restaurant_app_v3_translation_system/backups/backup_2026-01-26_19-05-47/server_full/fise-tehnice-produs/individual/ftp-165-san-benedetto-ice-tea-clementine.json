@@ -1,0 +1,67 @@
+{
+  "product": {
+    "id": 165,
+    "name": "San Benedetto Ice Tea Clementine",
+    "name_en": "San Benedetto Ice Tea Clementine",
+    "category": "Răcoritoare",
+    "category_en": "Soft Drinks",
+    "price": 18,
+    "description": "Ceai rece premium cu aromă de clementine",
+    "description_en": "Premium clementine flavored ice tea",
+    "weight": "330ML",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 706,
+        "name": "San Benedetto Ice Tea Clementine",
+        "category": "General",
+        "quantity": 1,
+        "unit": "buc",
+        "unitStock": "buc",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 1999,
+        "minStock": 10,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "0.00",
+    "totalCostWithWaste": "0.00",
+    "sellingPrice": 18,
+    "profitMargin": 18,
+    "markup": 100,
+    "foodCostPercentage": "0.00"
+  },
+  "stats": {
+    "totalIngredients": 1,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

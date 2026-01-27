@@ -1,0 +1,33 @@
+{
+  "productId": 243,
+  "productName": "Păstrăv la Plită",
+  "productCategory": "Fel Principal",
+  "price": 38,
+  "description": "Păstrăv la plită",
+  "ingredients": [
+    {
+      "ingredientId": 153,
+      "ingredientName": "Păstrăv proaspăt",
+      "ingredientCategory": "Peste Fructe de Mare",
+      "quantityNeeded": 250,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 154,
+      "ingredientName": "Lămâie",
+      "ingredientCategory": "Legume și Fructe",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 18,
+      "ingredientName": "Ulei de măsline",
+      "ingredientCategory": "Uleiuri",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}

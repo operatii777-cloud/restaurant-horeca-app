@@ -1,0 +1,49 @@
+{
+  "productId": 138,
+  "productName": "Limonadă cu Fructul Pasiunii",
+  "productCategory": "Răcoritoare",
+  "price": 27,
+  "description": "Limonadă cu aromă exotică de fructul pasiunii",
+  "ingredients": [
+    {
+      "ingredientId": 207,
+      "ingredientName": "Fructul pasiunii",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 2,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 154,
+      "ingredientName": "Lămâie",
+      "ingredientCategory": "Legume și Fructe",
+      "quantityNeeded": 1,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 33,
+      "ingredientName": "Zahăr",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 50,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 27,
+      "ingredientName": "Apă minerală",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 250,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "Gheață",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

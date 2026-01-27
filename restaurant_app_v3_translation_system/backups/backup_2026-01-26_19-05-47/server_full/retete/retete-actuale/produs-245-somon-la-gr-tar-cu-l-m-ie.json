@@ -1,0 +1,27 @@
+﻿Ã¯Â»Â¿{
+  "productId": 245,
+  "productName": "Somon la GrÃ„ÂƒÃ†Â’tar cu LÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+  "productCategory": "Fel Principal",
+  "price": 42,
+  "description": "Somon la grÃ„ÂƒÃ†Â’tar cu lÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+  "ingredients": [
+    {
+      "ingredientId": 101,
+      "ingredientName": "Somon",
+      "ingredientCategory": "Peste Fructe de Mare",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 154,
+      "ingredientName": "LÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+      "ingredientCategory": "Legume ÃƒÂˆÃ¢Â„Â¢i Fructe",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

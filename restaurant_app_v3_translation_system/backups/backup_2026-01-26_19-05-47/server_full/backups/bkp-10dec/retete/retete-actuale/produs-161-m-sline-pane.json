@@ -1,0 +1,17 @@
+{
+  "productId": 161,
+  "productName": "Măsline Pane",
+  "productCategory": "Aperitive Calde",
+  "price": 27,
+  "description": "Măsline panate și prăjite",
+  "ingredients": [
+    {
+      "ingredientId": 37,
+      "ingredientName": "Măsline",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 20,
+      "unit": "buc",
+      "wastePercentage": 0
+    }
+  ]
+}

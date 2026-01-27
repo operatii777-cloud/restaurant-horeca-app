@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 Demo Teme Dinamice - ${BRAND_CONFIG.restaurantName}</title>
+    <style>
+        /* 🎨 MOTOR DE TEME DINAMICE - Variabile CSS */
+        :root {
+            /* Tema Default (Trattoria) */
+            --color-primary: #ff6b35;
+            --color-primary-hover: #e05a2a;
+            --color-primary-light: #ff8c42;
+            --color-text: #333;
+            --color-text-light: #666;
+            --color-text-inverse: white;
+            --bg-main: #f4f4f4;
+            --bg-top-bar: white;
+            --bg-card: white;
+            --bg-button: #f0f0f0;
+            --bg-button-hover: #e0e0e0;
+            --bg-gradient-primary: linear-gradient(45deg, #ff6b35, #ff8c42);
+            --shadow-light: 0 2px 5px rgba(0,0,0,0.1);
+            --shadow-medium: 0 4px 15px rgba(255, 107, 53, 0.3);
+            --border-light: #eee;
+            --border-medium: #ddd;
+            --bg-image: none;
+            --bg-image-opacity: 1;
+            --theme-transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: var(--bg-main); 
+            color: var(--color-text);
+            background-image: var(--bg-image);
+            background-repeat: repeat;
+            background-attachment: fixed;
+            transition: var(--theme-transition);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: var(--bg-top-bar);
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--shadow-light);
+            margin-bottom: 30px;
+            transition: var(--theme-transition);
+        }
+
+        .header h1 {
+            color: var(--color-primary);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            transition: var(--theme-transition);
+        }
+
+        .header p {
+            color: var(--color-text-light);
+            font-size: 1.1rem;
+            transition: var(--theme-transition);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .theme-section {
+            background: var(--bg-card);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-light);
+            transition: var(--theme-transition);
+        }
+
+        .theme-section h2 {
+            color: var(--color-primary);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            transition: var(--theme-transition);
+        }
+
+        .theme-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .theme-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border-light);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: var(--theme-transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-card:hover {
+            border-color: var(--color-primary);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .theme-card.active {
+            border-color: var(--color-primary);
+            background: var(--bg-button);
+        }
+
+        .theme-preview {
+            width: 100%;
+            height: 80px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 2px solid var(--border-medium);
+            transition: var(--theme-transition);
+        }
+
+        .theme-preview[data-theme="default"] {
+            background: linear-gradient(45deg, #ff6b35, #ff8c42);
+        }
+
+        .theme-preview[data-theme="christmas"] {
+            background: linear-gradient(45deg, #DC143C, #228B22);
+        }
+
+        .theme-preview[data-theme="autumn"] {
+            background: linear-gradient(45deg, #B85400, #FF8C00);
+        }
+
+        .theme-preview[data-theme="spring"] {
+            background: linear-gradient(45deg, #32CD32, #98FB98);
+        }
+
+        .theme-preview[data-theme="dark"] {
+            background: linear-gradient(45deg, #78C4E8, #2D2D2D);
+        }
+
+        .theme-preview[data-theme="auto"] {
+            background: linear-gradient(45deg, #ff6b35, #32CD32, #B85400, #DC143C);
+            animation: rainbow 3s ease-in-out infinite;
+        }
+
+        @keyframes rainbow {
+            0%, 100% { background: linear-gradient(45deg, #ff6b35, #32CD32, #B85400, #DC143C); }
+            25% { background: linear-gradient(45deg, #32CD32, #B85400, #DC143C, #ff6b35); }
+            50% { background: linear-gradient(45deg, #B85400, #DC143C, #ff6b35, #32CD32); }
+            75% { background: linear-gradient(45deg, #DC143C, #ff6b35, #32CD32, #B85400); }
+        }
+
+        .theme-name {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--color-text);
+            margin-bottom: 8px;
+            transition: var(--theme-transition);
+        }
+
+        .theme-description {
+            color: var(--color-text-light);
+            font-size: 0.9rem;
+            line-height: 1.4;
+            transition: var(--theme-transition);
+        }
+
+        .theme-check {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--color-primary);
+            color: var(--color-text-inverse);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .demo-elements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .demo-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 20px;
+            transition: var(--theme-transition);
+        }
+
+        .demo-card h3 {
+            color: var(--color-primary);
+            margin-bottom: 15px;
+            transition: var(--theme-transition);
+        }
+
+        .demo-button {
+            background: var(--color-primary);
+            color: var(--color-text-inverse);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--theme-transition);
+            margin: 5px;
+        }
+
+        .demo-button:hover {
+            background: var(--color-primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .demo-button.secondary {
+            background: var(--bg-button);
+            color: var(--color-text);
+            border: 1px solid var(--border-medium);
+        }
+
+        .demo-button.secondary:hover {
+            background: var(--bg-button-hover);
+        }
+
+        .demo-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-medium);
+            border-radius: 6px;
+            background: var(--bg-card);
+            color: var(--color-text);
+            margin: 5px 0;
+            transition: var(--theme-transition);
+        }
+
+        .demo-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2);
+        }
+
+        .demo-progress {
+            width: 100%;
+            height: 8px;
+            background: var(--bg-button);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .demo-progress-bar {
+            height: 100%;
+            background: var(--bg-gradient-primary);
+            width: 75%;
+            transition: var(--theme-transition);
+        }
+
+        .theme-transition * {
+            transition: all 0.3s ease !important;
+        }
+
+        .status-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--color-primary);
+            color: var(--color-text-inverse);
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            z-index: 9999;
+            opacity: 0.9;
+            transition: var(--theme-transition);
+        }
+        
+        /* Responsive Design pentru Theme Demo */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 15px;
+            }
+            .theme-section {
+                padding: 25px;
+            }
+            .theme-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 18px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+            .header h1 {
+                font-size: 2rem;
+                margin-bottom: 8px;
+            }
+            .header p {
+                font-size: 1rem;
+            }
+            .container {
+                padding: 0 10px;
+            }
+            .theme-section {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .theme-section h2 {
+                font-size: 1.5rem;
+                margin-bottom: 15px;
+            }
+            .theme-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .theme-card {
+                padding: 15px;
+            }
+            .theme-card h3 {
+                font-size: 1.2rem;
+                margin-bottom: 8px;
+            }
+            .theme-card p {
+                font-size: 0.9rem;
+                margin-bottom: 10px;
+            }
+            .theme-btn {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+            }
+            .demo-section {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .demo-section h2 {
+                font-size: 1.5rem;
+                margin-bottom: 15px;
+            }
+            .demo-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .demo-card {
+                padding: 15px;
+            }
+            .demo-card h3 {
+                font-size: 1.1rem;
+                margin-bottom: 8px;
+            }
+            .status-indicator {
+                font-size: 0.8rem;
+                padding: 8px 12px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .header {
+                padding: 12px;
+            }
+            .header h1 {
+                font-size: 1.7rem;
+                margin-bottom: 6px;
+            }
+            .header p {
+                font-size: 0.9rem;
+            }
+            .container {
+                padding: 0 8px;
+            }
+            .theme-section {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            .theme-section h2 {
+                font-size: 1.3rem;
+                margin-bottom: 12px;
+            }
+            .theme-grid {
+                gap: 12px;
+            }
+            .theme-card {
+                padding: 12px;
+            }
+            .theme-card h3 {
+                font-size: 1.1rem;
+                margin-bottom: 6px;
+            }
+            .theme-card p {
+                font-size: 0.85rem;
+                margin-bottom: 8px;
+            }
+            .theme-btn {
+                padding: 6px 10px;
+                font-size: 0.8rem;
+            }
+            .demo-section {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            .demo-section h2 {
+                font-size: 1.3rem;
+                margin-bottom: 12px;
+            }
+            .demo-grid {
+                gap: 12px;
+            }
+            .demo-card {
+                padding: 12px;
+            }
+            .demo-card h3 {
+                font-size: 1rem;
+                margin-bottom: 6px;
+            }
+            .status-indicator {
+                font-size: 0.75rem;
+                padding: 6px 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            .header p {
+                font-size: 0.85rem;
+            }
+            .theme-section {
+                padding: 12px;
+            }
+            .theme-section h2 {
+                font-size: 1.2rem;
+            }
+            .theme-card {
+                padding: 10px;
+            }
+            .theme-card h3 {
+                font-size: 1rem;
+            }
+            .theme-card p {
+                font-size: 0.8rem;
+            }
+            .theme-btn {
+                padding: 5px 8px;
+                font-size: 0.75rem;
+            }
+            .demo-section {
+                padding: 12px;
+            }
+            .demo-section h2 {
+                font-size: 1.2rem;
+            }
+            .demo-card {
+                padding: 10px;
+            }
+            .demo-card h3 {
+                font-size: 0.95rem;
+            }
+            .status-indicator {
+                font-size: 0.7rem;
+                padding: 5px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="status-indicator" id="themeStatus">🎨 Tema Activă: Default</div>
+    
+    <div class="header">
+        <h1>🎨 Demo Teme Dinamice</h1>
+        <p>Experimentează cu diferitele teme vizuale ale aplicației Restaurant App</p>
+    </div>
+
+    <div class="container">
+        <div class="theme-section">
+            <h2>🌈 Alege Tema</h2>
+            <div class="theme-grid">
+                <div class="theme-card" onclick="applyTheme('default')">
+                    <div class="theme-preview" data-theme="default"></div>
+                    <div class="theme-name">🍝 Trattoria</div>
+                    <div class="theme-description">Tema clasică restaurant cu culorile portocaliu și alb</div>
+                </div>
+                
+                <div class="theme-card" onclick="applyTheme('christmas')">
+                    <div class="theme-preview" data-theme="christmas"></div>
+                    <div class="theme-name">🎄 Crăciun</div>
+                    <div class="theme-description">Tema sărbătoarească cu roșu și verde Crăciun</div>
+                </div>
+                
+                <div class="theme-card" onclick="applyTheme('autumn')">
+                    <div class="theme-preview" data-theme="autumn"></div>
+                    <div class="theme-name">🍂 Toamnă</div>
+                    <div class="theme-description">Culori calde de toamnă cu portocaliu și maro</div>
+                </div>
+                
+                <div class="theme-card" onclick="applyTheme('spring')">
+                    <div class="theme-preview" data-theme="spring"></div>
+                    <div class="theme-name">🌸 Primăvară</div>
+                    <div class="theme-description">Verde proaspăt și alb pentru primăvară</div>
+                </div>
+                
+                <div class="theme-card" onclick="applyTheme('dark')">
+                    <div class="theme-preview" data-theme="dark"></div>
+                    <div class="theme-name">🌙 Întuneric</div>
+                    <div class="theme-description">Tema întunecată elegantă cu albastru accent</div>
+                </div>
+                
+                <div class="theme-card" onclick="applyTheme('auto')">
+                    <div class="theme-preview" data-theme="auto"></div>
+                    <div class="theme-name">🔄 Automat</div>
+                    <div class="theme-description">Se schimbă automat cu sezonul</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="theme-section">
+            <h2>🎯 Elemente Demo</h2>
+            <div class="demo-elements">
+                <div class="demo-card">
+                    <h3>Butoane</h3>
+                    <button class="demo-button">Buton Principal</button>
+                    <button class="demo-button secondary">Buton Secundar</button>
+                </div>
+                
+                <div class="demo-card">
+                    <h3>Input-uri</h3>
+                    <input type="text" class="demo-input" placeholder="Introduceți text...">
+                    <input type="email" class="demo-input" placeholder="email@exemplu.com">
+                </div>
+                
+                <div class="demo-card">
+                    <h3>Progress Bar</h3>
+                    <div class="demo-progress">
+                        <div class="demo-progress-bar"></div>
+                    </div>
+                    <p style="color: var(--color-text-light); font-size: 0.9rem;">75% completat</p>
+                </div>
+                
+                <div class="demo-card">
+                    <h3>Text și Culori</h3>
+                    <p style="color: var(--color-text);">Text principal</p>
+                    <p style="color: var(--color-text-light);">Text secundar</p>
+                    <p style="color: var(--color-primary); font-weight: bold;">Text accent</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Definirea temelor cu seturi de variabile CSS
+        const THEME_DATA = {
+            'default': {}, // Va folosi variabilele definite în :root
+            
+            'christmas': {
+                '--color-primary': '#DC143C',
+                '--color-primary-hover': '#B22222',
+                '--color-primary-light': '#FF6347',
+                '--color-text': '#2F1B14',
+                '--color-text-light': '#8B4513',
+                '--color-text-inverse': '#FFFFFF',
+                '--bg-main': '#FFF8DC',
+                '--bg-top-bar': 'linear-gradient(135deg, #228B22, #DC143C)',
+                '--bg-card': '#FFFFFF',
+                '--bg-button': '#F0F8FF',
+                '--bg-button-hover': '#E6F3FF',
+                '--bg-gradient-primary': 'linear-gradient(45deg, #DC143C, #228B22)',
+                '--shadow-light': '0 2px 5px rgba(220, 20, 60, 0.1)',
+                '--shadow-medium': '0 4px 15px rgba(220, 20, 60, 0.3)',
+                '--border-light': '#FFE4E1',
+                '--border-medium': '#FFB6C1',
+                '--bg-image': 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'20\' height=\'20\' viewBox=\'0 0 20 20\'%3E%3Cg fill=\'%23FFE4E1\' fill-opacity=\'0.1\'%3E%3Cpath d=\'M10 0L12 6L18 6L14 10L16 16L10 12L4 16L6 10L2 6L8 6L10 0Z\'/%3E%3C/g%3E%3C/svg%3E")',
+                '--bg-image-opacity': '0.05'
+            },
+            
+            'autumn': {
+                '--color-primary': '#B85400',
+                '--color-primary-hover': '#A0522D',
+                '--color-primary-light': '#FF8C00',
+                '--color-text': '#2F1B14',
+                '--color-text-light': '#8B4513',
+                '--color-text-inverse': '#FFFFFF',
+                '--bg-main': '#FFF8DC',
+                '--bg-top-bar': 'linear-gradient(135deg, #D2691E, #FF8C00)',
+                '--bg-card': '#FFFFFF',
+                '--bg-button': '#FFF5EE',
+                '--bg-button-hover': '#FFE4B5',
+                '--bg-gradient-primary': 'linear-gradient(45deg, #B85400, #FF8C00)',
+                '--shadow-light': '0 2px 5px rgba(184, 84, 0, 0.1)',
+                '--shadow-medium': '0 4px 15px rgba(184, 84, 0, 0.3)',
+                '--border-light': '#FFE4B5',
+                '--border-medium': '#FFA07A',
+                '--bg-image': 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'20\' height=\'20\' viewBox=\'0 0 20 20\'%3E%3Cg fill=\'%23FFE4B5\' fill-opacity=\'0.1\'%3E%3Cpath d=\'M10 2C6 2 2 6 2 10C2 14 6 18 10 18C14 18 18 14 18 10C18 6 14 2 10 2Z\'/%3E%3C/g%3E%3C/svg%3E")',
+                '--bg-image-opacity': '0.05'
+            },
+            
+            'dark': {
+                '--color-primary': '#78C4E8',
+                '--color-primary-hover': '#5A9FD4',
+                '--color-primary-light': '#9DD3F0',
+                '--color-text': '#E0E0E0',
+                '--color-text-light': '#B0B0B0',
+                '--color-text-inverse': '#1E1E1E',
+                '--bg-main': '#1E1E1E',
+                '--bg-top-bar': '#2D2D2D',
+                '--bg-card': '#2D2D2D',
+                '--bg-button': '#3A3A3A',
+                '--bg-button-hover': '#4A4A4A',
+                '--bg-gradient-primary': 'linear-gradient(45deg, #78C4E8, #5A9FD4)',
+                '--shadow-light': '0 2px 5px rgba(0, 0, 0, 0.3)',
+                '--shadow-medium': '0 4px 15px rgba(120, 196, 232, 0.3)',
+                '--border-light': '#404040',
+                '--border-medium': '#505050',
+                '--bg-image': 'none',
+                '--bg-image-opacity': '1'
+            },
+            
+            'spring': {
+                '--color-primary': '#32CD32',
+                '--color-primary-hover': '#228B22',
+                '--color-primary-light': '#90EE90',
+                '--color-text': '#2F4F2F',
+                '--color-text-light': '#556B2F',
+                '--color-text-inverse': '#FFFFFF',
+                '--bg-main': '#F0FFF0',
+                '--bg-top-bar': 'linear-gradient(135deg, #98FB98, #32CD32)',
+                '--bg-card': '#FFFFFF',
+                '--bg-button': '#F0FFF0',
+                '--bg-button-hover': '#E6FFE6',
+                '--bg-gradient-primary': 'linear-gradient(45deg, #32CD32, #98FB98)',
+                '--shadow-light': '0 2px 5px rgba(50, 205, 50, 0.1)',
+                '--shadow-medium': '0 4px 15px rgba(50, 205, 50, 0.3)',
+                '--border-light': '#E6FFE6',
+                '--border-medium': '#C0FFC0',
+                '--bg-image': 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'20\' height=\'20\' viewBox=\'0 0 20 20\'%3E%3Cg fill=\'%23E6FFE6\' fill-opacity=\'0.1\'%3E%3Cpath d=\'M10 0C4.5 0 0 4.5 0 10C0 15.5 4.5 20 10 20C15.5 20 20 15.5 20 10C20 4.5 15.5 0 10 0Z\'/%3E%3C/g%3E%3C/svg%3E")',
+                '--bg-image-opacity': '0.05'
+            }
+        };
+
+        // Funcție pentru aplicarea temei
+        function applyTheme(themeName) {
+            const theme = THEME_DATA[themeName] || THEME_DATA['default'];
+            
+            // Aplică fiecare variabilă pe elementul rădăcină (<html>)
+            for (const [key, value] of Object.entries(theme)) {
+                document.documentElement.style.setProperty(key, value);
+            }
+            
+            // Salvează tema curentă în localStorage
+            localStorage.setItem('currentTheme', themeName);
+            
+            // Actualizează indicatorul de status
+            const themeNames = {
+                'default': '🍝 Trattoria',
+                'christmas': '🎄 Crăciun',
+                'autumn': '🍂 Toamnă',
+                'spring': '🌸 Primăvară',
+                'dark': '🌙 Întuneric',
+                'auto': '🔄 Automat'
+            };
+            
+            document.getElementById('themeStatus').textContent = `🎨 Tema Activă: ${themeNames[themeName]}`;
+            
+            // Actualizează cardurile active
+            document.querySelectorAll('.theme-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            event.target.closest('.theme-card').classList.add('active');
+            
+            console.log(`🎨 Tema '${themeName}' aplicată cu succes!`);
+            
+            // Adaugă o clasă pentru animații suplimentare
+            document.body.classList.add('theme-transition');
+            setTimeout(() => {
+                document.body.classList.remove('theme-transition');
+            }, 300);
+        }
+
+        // Inițializare la încărcarea paginii
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentTheme = localStorage.getItem('currentTheme') || 'default';
+            applyTheme(currentTheme);
+            
+            // Marchează cardul activ
+            document.querySelectorAll('.theme-card').forEach(card => {
+                if (card.onclick.toString().includes(`'${currentTheme}'`)) {
+                    card.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

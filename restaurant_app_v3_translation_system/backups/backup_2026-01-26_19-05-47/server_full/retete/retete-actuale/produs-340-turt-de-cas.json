@@ -1,0 +1,59 @@
+﻿Ã¯Â»Â¿{
+  "productId": 340,
+  "productName": "TurtÃ„ÂƒÃ†Â’ de CasÃ„ÂƒÃ†Â’",
+  "productCategory": "Sosuri ÃƒÂˆÃ¢Â„Â¢i PÃƒÂ¢ine",
+  "price": 6,
+  "description": "TurtÃ„ÂƒÃ†Â’ tradiÃƒÂˆÃ¢Â€ÂºionalÃ„ÂƒÃ†Â’ de casÃ„ÂƒÃ†Â’, proaspÃ„ÂƒÃ†Â’tÃ„ÂƒÃ†Â’",
+  "ingredients": [
+    {
+      "ingredientId": 30,
+      "ingredientName": "FÃ„ÂƒÃ†Â’inÃ„ÂƒÃ†Â’ albÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 400,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 219,
+      "ingredientName": "Miere",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 81,
+      "ingredientName": "ZahÃ„ÂƒÃ†Â’r brun",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 220,
+      "ingredientName": "ScorÃƒÂˆÃ¢Â€ÂºiÃƒÂˆÃ¢Â„Â¢oarÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 221,
+      "ingredientName": "Cuisoare",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 156,
+      "ingredientName": "ApÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

@@ -1,0 +1,73 @@
+.drivethru-performance-page {
+  padding: 24px;
+  background: var(--navy-black, #020617);
+  min-height: 100vh;
+}
+
+.drivethru-performance-page .page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.drivethru-performance-page .page-header h1 {
+  color: #fde047 !important;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.drivethru-performance-page .card {
+  background: var(--navy-deep, #0f172a) !important;
+  border: 1px solid var(--slate-navy, #1e293b) !important;
+  color: #fde047 !important;
+}
+
+.drivethru-performance-page .card-header {
+  background: var(--slate-navy, #1e293b) !important;
+  border-bottom: 1px solid var(--slate, #334155) !important;
+  color: #fde047 !important;
+}
+
+.drivethru-performance-page .card-header h5 {
+  color: #fde047 !important;
+  margin: 0;
+}
+
+.drivethru-performance-page .card-body {
+  color: #f1f5f9 !important;
+}
+
+.drivethru-performance-page .form-label {
+  color: #fde047 !important;
+  font-weight: 600;
+}
+
+.drivethru-performance-page .form-control {
+  background: var(--slate-navy, #1e293b) !important;
+  border: 1px solid var(--slate, #334155) !important;
+  color: #f1f5f9 !important;
+}
+
+.drivethru-performance-page .table {
+  background: var(--navy-deep, #0f172a) !important;
+  color: #f1f5f9 !important;
+}
+
+.drivethru-performance-page .table thead {
+  background: var(--slate-navy, #1e293b) !important;
+}
+
+.drivethru-performance-page .table th {
+  color: #fde047 !important;
+}
+
+.drivethru-performance-page .table td {
+  color: #f1f5f9 !important;
+}
+
+.drivethru-performance-page strong {
+  color: #fde047 !important;
+}
+

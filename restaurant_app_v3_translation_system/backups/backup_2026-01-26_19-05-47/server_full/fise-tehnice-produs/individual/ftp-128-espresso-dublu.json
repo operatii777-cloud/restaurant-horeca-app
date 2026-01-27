@@ -1,0 +1,67 @@
+{
+  "product": {
+    "id": 128,
+    "name": "Espresso Dublu",
+    "name_en": "Double Espresso",
+    "category": "Cafea/Ciocolată/Ceai",
+    "category_en": "Coffee/Chocolate/Tea",
+    "price": 19,
+    "description": "Espresso dublu",
+    "description_en": "Double espresso",
+    "weight": "60ML",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 122,
+        "name": "Cafea boabe",
+        "category": "Băuturi",
+        "quantity": 14,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 30,
+        "totalCost": "420.00",
+        "totalCostWithWaste": "420.00",
+        "supplier": "Furnizor Băuturi",
+        "currentStock": 7188,
+        "minStock": 4,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "420.00",
+    "totalCostWithWaste": "420.00",
+    "sellingPrice": 19,
+    "profitMargin": -401,
+    "markup": -2110.53,
+    "foodCostPercentage": "2210.53"
+  },
+  "stats": {
+    "totalIngredients": 1,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

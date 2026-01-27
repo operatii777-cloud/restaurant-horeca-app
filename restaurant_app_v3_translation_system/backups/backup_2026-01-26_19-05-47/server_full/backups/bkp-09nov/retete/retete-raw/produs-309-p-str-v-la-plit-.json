@@ -1,0 +1,35 @@
+{
+  "productId": 309,
+  "productName": "Păstrăv la Plită",
+  "productCategory": "Fel Principal",
+  "ingredients": [
+    {
+      "ingredientId": 373,
+      "ingredientName": "Păstrăv întreg (eviscerat)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 250,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 800,
+      "ingredientName": "Sos Usturoi Shaorma",
+      "ingredientCategory": "Sosuri",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 375,
+      "ingredientName": "Mălai (pentru pané)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

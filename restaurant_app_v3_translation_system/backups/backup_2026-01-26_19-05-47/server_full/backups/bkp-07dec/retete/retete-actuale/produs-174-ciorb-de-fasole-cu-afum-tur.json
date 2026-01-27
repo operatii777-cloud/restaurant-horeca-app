@@ -1,0 +1,65 @@
+{
+  "productId": 174,
+  "productName": "Ciorbă de Fasole cu Afumătură",
+  "productCategory": "Ciorbe",
+  "price": 24,
+  "description": "Ciorbă cu fasole și afumătură",
+  "ingredients": [
+    {
+      "ingredientId": 114,
+      "ingredientName": "Fasole boabe",
+      "ingredientCategory": "Cereale și Paste",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 115,
+      "ingredientName": "Ciolan afumat",
+      "ingredientCategory": "Carne și Pește",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 94,
+      "ingredientName": "Ceapă",
+      "ingredientCategory": "Fructe și Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 111,
+      "ingredientName": "Morcov",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 109,
+      "ingredientName": "Ardei kapia",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 116,
+      "ingredientName": "Borș",
+      "ingredientCategory": "Condimente și Sosuri",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 112,
+      "ingredientName": "Pătrunjel",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

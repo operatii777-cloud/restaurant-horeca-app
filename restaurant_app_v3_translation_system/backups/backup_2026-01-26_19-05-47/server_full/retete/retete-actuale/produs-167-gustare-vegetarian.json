@@ -1,0 +1,27 @@
+﻿Ã¯Â»Â¿{
+  "productId": 167,
+  "productName": "Gustare VegetarianÃ„ÂƒÃ†Â’",
+  "productCategory": "Aperitive Reci",
+  "price": 59,
+  "description": "BaghetÃ„ÂƒÃ†Â’, cremÃ„ÂƒÃ†Â’ de brÃƒÂ¢nzÃ„ÂƒÃ†Â’ picantÃ„ÂƒÃ†Â’, zacuscÃ„ÂƒÃ†Â’, salatÃ„ÂƒÃ†Â’ de vinete, humus",
+  "ingredients": [
+    {
+      "ingredientId": 103,
+      "ingredientName": "SalatÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 104,
+      "ingredientName": "Vinete",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 60,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

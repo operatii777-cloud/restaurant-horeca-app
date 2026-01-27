@@ -1,0 +1,38 @@
+/* 🏷️ Alergeni Page - Styles */
+
+.allergens-page {
+  padding: 1.5rem;
+}
+
+.allergen-checkboxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.allergen-checkbox {
+  padding: 10px;
+  background: #f8f9fa;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.allergen-checkbox:hover {
+  background: #e8eaf6;
+  border-color: #5c6bc0;
+}
+
+.allergen-checkbox input[type="checkbox"] {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .allergen-checkboxes {
+    grid-template-columns: 1fr;
+  }
+}
+

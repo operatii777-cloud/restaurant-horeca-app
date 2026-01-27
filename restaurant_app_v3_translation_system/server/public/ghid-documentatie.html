@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghid Setup - Restaurant App</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .hero {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 10px 0;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            margin: 5px 0;
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: -20px auto 40px;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .card h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: #4b5563;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .option-box {
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .option-box:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+
+        .option-box h3 {
+            color: #1f2937;
+            margin: 15px 0;
+        }
+
+        .option-icon {
+            font-size: 3rem;
+        }
+
+        .steps {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .steps h3 {
+            color: #1e40af;
+            margin-top: 0;
+        }
+
+        .steps ol {
+            margin: 10px 0 10px 20px;
+        }
+
+        .steps li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 10px 5px;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #10b981;
+        }
+
+        .btn-secondary:hover {
+            background: #059669;
+        }
+
+        .info-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .success-box {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-badge">🚀 White Label Solution</div>
+        <h1>Restaurant App</h1>
+        <p>Ghid Complet de Setup pentru Clienți Noi</p>
+        <p style="font-size: 0.9rem;">Versiune 2.1.0 | Actualizat: 24 Octombrie 2025</p>
+    </div>
+
+    <div class="content">
+        <div class="card">
+            <h2>👋 Bine ai venit în Restaurant App!</h2>
+            <p>Ai primit aplicația completă pentru gestionarea restaurantului tău. Acest ghid te va ajuta să populezi ingredientele, stocurile, rețetele și meniul clientului în doar câteva ore.</p>
+            
+            <div class="success-box">
+                <strong>✅ Sistemul include deja:</strong>
+                <ul style="margin: 10px 0 0 20px;">
+                    <li>797 ingrediente predefinite</li>
+                    <li>336 produse în meniu</li>
+                    <li>1,367 rețete complete</li>
+                    <li>14 alergeni conform normelor UE</li>
+                </ul>
+            </div>
+
+            <p><strong>Setup estimat: 2-10 ore</strong> (în funcție de opțiunea aleasă)</p>
+
+            <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
+
+            <h3>Alege o opțiune pentru a începe:</h3>
+
+            <div class="options">
+                <div class="option-box">
+                    <div class="option-icon">⚡</div>
+                    <h3>Opțiunea A: Template Populate</h3>
+                    <p>Pornești cu 336 produse gata configurate</p>
+                    <p><strong>Timp: 3-5 ore</strong></p>
+                    <a href="#template" class="btn">Detalii →</a>
+                </div>
+
+                <div class="option-box">
+                    <div class="option-icon">🏗️</div>
+                    <h3>Opțiunea B: Setup de la Zero</h3>
+                    <p>Construiești meniul complet manual</p>
+                    <p><strong>Timp: 8-12 ore</strong></p>
+                    <a href="#zero" class="btn">Detalii →</a>
+                </div>
+            </div>
+
+            <div id="template" class="steps">
+                <h3>⚡ Opțiunea A: Template Populate (RECOMANDAT)</h3>
+                <ol>
+                    <li><strong>Explorează meniul:</strong> Intră în comanda.html și vezi toate produsele</li>
+                    <li><strong>Șterge produsele nefolosite:</strong> Din Catalog Produse (1-2 ore)</li>
+                    <li><strong>Ajustează prețurile:</strong> Pentru produsele păstrate (1 oră)</li>
+                    <li><strong>Modifică rețetele:</strong> Dacă e necesar (30 min)</li>
+                    <li><strong>Adaugă produsele tale speciale:</strong> Dacă nu există în template (30 min)</li>
+                    <li><strong>Populează stocurile:</strong> Prin NIR cu cantitățile reale (30 min)</li>
+                </ol>
+                <div class="info-box">
+                    <strong>💡 Recomandare:</strong> Pregătește o listă în Excel: Păstrează / Șterge / Modifică / Adaugă
+                </div>
+            </div>
+
+            <div id="zero" class="steps">
+                <h3>🏗️ Opțiunea B: Setup de la Zero</h3>
+                <ol>
+                    <li><strong>Adaugă ingredientele:</strong> Manual sau prin import CSV (2-3 ore)</li>
+                    <li><strong>Definește produsele:</strong> În Catalog Produse (2-3 ore)</li>
+                    <li><strong>Creează rețetele:</strong> Pentru fiecare produs (1-2 ore)</li>
+                    <li><strong>Adaugă customizări:</strong> Opțiuni extra (30 min)</li>
+                    <li><strong>Populează stocurile:</strong> Prin NIR (30 min)</li>
+                    <li><strong>Testare completă:</strong> End-to-end (1 oră)</li>
+                </ol>
+                <div class="info-box">
+                    <strong>💡 Recomandare:</strong> Folosește import CSV pentru 50+ ingrediente (economisești 3+ ore)
+                </div>
+            </div>
+
+            <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
+
+            <h3>🍕 Cum să Adaugi un Produs Nou în Meniul Clientului</h3>
+            
+            <div class="steps">
+                <h3>FLUX COMPLET (Produs cu Gestionare Stocuri):</h3>
+                <p style="text-align: center; font-size: 1.1rem; font-weight: 600; margin: 20px 0;">
+                    1️⃣ Verifică Ingredientele → 2️⃣ Adaugă în Catalog → 3️⃣ Creează Rețeta → 4️⃣ Verifică Fișa Tehnică
+                </p>
+
+                <div style="background: white; padding: 20px; border-radius: 8px; margin: 15px 0;">
+                    <h4 style="color: #667eea; margin-top: 0;">PASUL 1: Verifică Ingredientele 🥕</h4>
+                    <p><strong>Unde:</strong> Admin v4 → Stocuri → Ingrediente</p>
+                    <ul>
+                        <li>Verifică dacă toate ingredientele necesare există</li>
+                        <li>Dacă lipsește ceva → <strong>Adaugă ingredientul</strong> mai întâi</li>
+                        <li>Definește: nume (RO + EN), categorie, unitate, preț de cost, stoc</li>
+                    </ul>
+                    <div class="info-box">
+                        <strong>📝 Exemplu:</strong> Mozzarella | Mozzarella Cheese | Lactate | kg | 45 RON/kg | 20 kg
+                    </div>
+                </div>
+
+                <div style="background: white; padding: 20px; border-radius: 8px; margin: 15px 0;">
+                    <h4 style="color: #667eea; margin-top: 0;">PASUL 2: Adaugă Produsul în Catalog 📋</h4>
+                    <p><strong>Unde:</strong> Admin v4 → Administrare → Catalog Produse → ➕ Adaugă Produs</p>
+                    <ul>
+                        <li><strong>Nume (RO + EN):</strong> Ex: "Pizza Margherita" / "Margherita Pizza"</li>
+                        <li><strong>Categorie:</strong> Pizza, Paste, Ciorbe, Băuturi, etc.</li>
+                        <li><strong>Preț:</strong> Ex: 35 RON (estimativ inițial)</li>
+                        <li><strong>Descriere (RO + EN):</strong> Descriere apetisantă</li>
+                        <li><strong>Alergeni, Gramaj, Timp preparare, Imagine</strong></li>
+                    </ul>
+                    <div class="success-box">
+                        <strong>✅ IMPORTANT:</strong> După salvare, notează ID-ul produsului (ex: 343) - vei avea nevoie pentru rețetă!<br>
+                        <strong>🎉 Produsul va apărea IMEDIAT în meniul clientului!</strong>
+                    </div>
+                </div>
+
+                <div style="background: white; padding: 20px; border-radius: 8px; margin: 15px 0;">
+                    <h4 style="color: #667eea; margin-top: 0;">PASUL 3: Creează Rețeta 📝</h4>
+                    <p><strong>Unde:</strong> Admin v4 → Stocuri → Rețete</p>
+                    <ol>
+                        <li>Click "Selectează Produs" → Alege produsul nou (ex: ID 343)</li>
+                        <li>Click "➕ Adaugă Ingredient"</li>
+                        <li>Selectează ingredientul (ex: Mozzarella)</li>
+                        <li>Introdu cantitatea (ex: 200g)</li>
+                        <li>Repetă pentru toate ingredientele</li>
+                        <li>Click "💾 Salvează Rețeta"</li>
+                    </ol>
+                    <div class="info-box">
+                        <strong>⚠️ CRUCIAL:</strong> Fără rețetă, stocurile NU se scad automat la vânzare!<br>
+                        Se creează automat: <code>server/retete/retete-actuale/produs-343-pizza-margherita.json</code>
+                    </div>
+                </div>
+
+                <div style="background: white; padding: 20px; border-radius: 8px; margin: 15px 0;">
+                    <h4 style="color: #667eea; margin-top: 0;">PASUL 4: Verifică Fișa Tehnică 💰</h4>
+                    <p><strong>Unde:</strong> Admin v4 → Stocuri → Fișe Tehnice</p>
+                    <ol>
+                        <li>Selectează produsul (ID 343)</li>
+                        <li>Sistemul calculează <strong>AUTOMAT</strong>:
+                            <ul>
+                                <li>Cost ingrediente (ex: 12.50 RON)</li>
+                                <li>Preț vânzare (ex: 35 RON)</li>
+                                <li>Marja profit (ex: 22.50 RON = 64.3%)</li>
+                            </ul>
+                        </li>
+                        <li>Dacă marja e prea mică/mare → Ajustează prețul în Catalog</li>
+                    </ol>
+                    <div class="success-box">
+                        <strong>🎯 REZULTAT FINAL:</strong><br>
+                        ✅ Produsul apare în meniul clientului (Pasul 2)<br>
+                        ✅ Stocurile se scad automat (Pasul 3)<br>
+                        ✅ Costurile calculate corect (Pasul 4)<br>
+                        ✅ Preț optimizat pentru profit maxim
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <strong>💡 VARIANTĂ RAPIDĂ:</strong> Dacă vrei doar să apară produsul în meniu (fără gestionare stocuri), completează doar <strong>Pasul 2</strong>! Rețeta și Fișa Tehnică le poți face mai târziu.
+                </div>
+            </div>
+
+            <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
+
+            <h3>🚀 Primii Pași Rapizi:</h3>
+            <div class="success-box">
+                <ol style="margin: 10px 0 0 20px;">
+                    <li><strong>Testează aplicația:</strong> Deschide comanda.html și plasează o comandă test</li>
+                    <li><strong>Verifică stocurile:</strong> Vezi cum scad automat la comenzi</li>
+                    <li><strong>Explorează modulele:</strong> Ingrediente, Catalog, Rețete, NIR, Rapoarte</li>
+                    <li><strong>Personalizează:</strong> Ajustează prețuri și șterge ce nu folosești</li>
+                </ol>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="/admin.html" class="btn">⚙️ Panou Administrare</a>
+                <a href="/comanda.html" target="_blank" class="btn btn-secondary">🍽️ Testează Comanda</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        console.log('✅ Ghid documentație loaded - acest fișier funcționează 100% în iframe');
+    </script>
+</body>
+    <script src="/branding/qroms-badge.js"></script>
+</html>
+

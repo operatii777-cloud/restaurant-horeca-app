@@ -1,0 +1,101 @@
+{
+  "product": {
+    "id": 89,
+    "name": "Pizza Carnivore",
+    "name_en": "Pizza Carnivore",
+    "category": "Pizza",
+    "category_en": "Pizza",
+    "price": 45,
+    "description": "Blat pizza, sos de roșii, mozzarella, șuncă, salam, bacon, cârnaţi",
+    "description_en": "Pizza dough, tomato sauce, mozzarella, ham, salami, bacon, sausages",
+    "weight": "",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": "gluten, lapte",
+    "allergens_en": "gluten, milk"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 604,
+        "name": "Blat de pizza (standard)",
+        "category": "General",
+        "quantity": 250,
+        "unit": "buc",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": -5000,
+        "minStock": 10,
+        "stockStatus": "LOW"
+      },
+      {
+        "id": 614,
+        "name": "Salam Picant (Pepperoni/Ventricina)",
+        "category": "General",
+        "quantity": 150,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.3592814371257485,
+        "totalCost": "53.89",
+        "totalCostWithWaste": "53.89",
+        "supplier": null,
+        "currentStock": 6680,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 3,
+        "name": "mozzarella",
+        "category": "General",
+        "quantity": 100,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 30,
+        "totalCost": "3000.00",
+        "totalCostWithWaste": "3000.00",
+        "supplier": null,
+        "currentStock": 95,
+        "minStock": 0.5,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "3053.89",
+    "totalCostWithWaste": "3053.89",
+    "sellingPrice": 45,
+    "profitMargin": -3008.89,
+    "markup": -6686.43,
+    "foodCostPercentage": "6786.43"
+  },
+  "stats": {
+    "totalIngredients": 3,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 1
+  }
+}

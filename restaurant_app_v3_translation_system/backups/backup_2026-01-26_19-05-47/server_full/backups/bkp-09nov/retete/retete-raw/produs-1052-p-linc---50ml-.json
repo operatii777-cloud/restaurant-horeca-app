@@ -1,0 +1,25 @@
+{
+  "productId": 1052,
+  "productName": "Pălincă (50ml)",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 834,
+      "ingredientName": "Pălincă de prune",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": [
+    {
+      "ingredientId": 835,
+      "ingredientName": "Pahar shot",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "itemType": "packaging_restaurant"
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+.bulk-table-config-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 8px 0;
+}
+
+.bulk-table-config-form__info {
+  padding: 12px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.bulk-table-config-form__info p {
+  margin: 0;
+  color: #334155;
+  font-size: 0.95rem;
+}
+
+.bulk-table-config-form__count {
+  display: block;
+  margin-top: 4px;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+.bulk-table-config-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bulk-table-config-form__label {
+  font-weight: 500;
+  color: #334155;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bulk-table-config-form__input {
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.bulk-table-config-form__input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.bulk-table-config-form__checkbox-label {
+  font-weight: normal;
+  margin-left: 8px;
+}
+
+.bulk-table-config-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 8px;
+  border-top: 1px solid #e6ebf5;
+}
+
+.bulk-table-config-form__btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bulk-table-config-form__btn--primary {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.bulk-table-config-form__btn--primary:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.bulk-table-config-form__btn--primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.bulk-table-config-form__btn--secondary {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+.bulk-table-config-form__btn--secondary:hover:not(:disabled) {
+  background: #e2e8f0;
+}
+
+.bulk-table-config-form__btn--secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+

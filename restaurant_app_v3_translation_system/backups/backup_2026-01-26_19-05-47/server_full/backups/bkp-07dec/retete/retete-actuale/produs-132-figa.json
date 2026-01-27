@@ -1,0 +1,33 @@
+{
+  "productId": 132,
+  "productName": "Figa",
+  "productCategory": "Răcoritoare",
+  "price": 23,
+  "description": "Băutură premium",
+  "ingredients": [
+    {
+      "ingredientId": 215,
+      "ingredientName": "Smochine",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 3,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 156,
+      "ingredientName": "Apă",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 200,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 33,
+      "ingredientName": "Zahăr",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 30,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}

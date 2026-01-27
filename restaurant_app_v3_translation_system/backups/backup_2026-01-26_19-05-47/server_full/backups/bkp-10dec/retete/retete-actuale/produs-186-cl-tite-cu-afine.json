@@ -1,0 +1,65 @@
+{
+  "productId": 186,
+  "productName": "Clătite cu Afine",
+  "productCategory": "Deserturi",
+  "price": 30,
+  "description": "Clătite clasice umplute cu dulceață de afine",
+  "ingredients": [
+    {
+      "ingredientId": 95,
+      "ingredientName": "Făină",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 8,
+      "ingredientName": "Ouă",
+      "ingredientCategory": "Ouă și lactate",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 20,
+      "ingredientName": "Lapte",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 200,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 33,
+      "ingredientName": "Zahăr",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 20,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 65,
+      "ingredientName": "Sare",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 2,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 126,
+      "ingredientName": "Afine proaspete",
+      "ingredientCategory": "Legume și Fructe",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 127,
+      "ingredientName": "Zahăr pudră",
+      "ingredientCategory": "Condimente și Sosuri",
+      "quantityNeeded": 20,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

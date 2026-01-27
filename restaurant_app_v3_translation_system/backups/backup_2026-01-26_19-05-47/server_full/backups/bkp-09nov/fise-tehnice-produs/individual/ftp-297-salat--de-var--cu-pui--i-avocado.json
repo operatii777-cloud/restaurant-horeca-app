@@ -1,0 +1,118 @@
+{
+  "product": {
+    "id": 297,
+    "name": "Salată de Vară cu Pui și Avocado",
+    "name_en": "Salată de Vară with Chicken și Avocado",
+    "category": "Salate",
+    "category_en": "Salads",
+    "price": 24,
+    "description": "Salată de vară cu pui și avocado",
+    "description_en": "Salată de vară with chicken și avocado",
+    "weight": null,
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 317,
+        "name": "Avocado",
+        "category": "General",
+        "quantity": 50,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 363,
+        "name": "Piept de pui",
+        "category": "General",
+        "quantity": 80,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 11.147430571690123,
+        "totalCost": "891.79",
+        "totalCostWithWaste": "891.79",
+        "supplier": "Metro Cash & Carry",
+        "currentStock": 114355.14519450802,
+        "minStock": 0.01,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 797,
+        "name": "Salată Verde Shaorma",
+        "category": "Legume",
+        "quantity": 100,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.5455748291685286,
+        "totalCost": "54.56",
+        "totalCostWithWaste": "54.56",
+        "supplier": "Furnizor Test",
+        "currentStock": 55268.47058823529,
+        "minStock": 100,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 64,
+        "name": "suc de lămâie",
+        "category": "General",
+        "quantity": 40,
+        "unit": "ml",
+        "unitStock": "l",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.770198325996813,
+        "totalCost": "30.81",
+        "totalCostWithWaste": "30.81",
+        "supplier": null,
+        "currentStock": 42848,
+        "minStock": 0.2,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "977.16",
+    "totalCostWithWaste": "977.16",
+    "sellingPrice": 24,
+    "profitMargin": -953.16,
+    "markup": -3971.5,
+    "foodCostPercentage": "4071.50"
+  },
+  "stats": {
+    "totalIngredients": 4,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

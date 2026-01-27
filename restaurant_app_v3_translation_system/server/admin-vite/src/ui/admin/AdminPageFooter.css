@@ -1,0 +1,28 @@
+/**
+ * AdminPageFooter Styles
+ */
+
+@import './tokens.css';
+
+.admin-page-footer {
+  flex-shrink: 0;
+  min-height: var(--admin-footer-height); /* 48px */
+  padding: 0 var(--admin-spacing-md); /* 12px horizontal */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--admin-spacing-md);
+  background: var(--admin-bg-header);
+  border-top: 1px solid var(--admin-border-subtle);
+  font-size: 12px;
+  color: var(--admin-text-secondary);
+}
+
+.admin-page-footer__left {
+  flex: 1;
+}
+
+.admin-page-footer__right {
+  flex-shrink: 0;
+}
+

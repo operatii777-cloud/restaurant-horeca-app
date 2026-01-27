@@ -1,0 +1,51 @@
+﻿Ã¯Â»Â¿{
+  "productId": 319,
+  "productName": "SalatÃ„ÂƒÃ†Â’ Caesar",
+  "productCategory": "Salate",
+  "price": 41,
+  "description": "SalatÃ„ÂƒÃ†Â’ iceberg, piept de pui, bacon, dressing caesar, anchios, crutoane",
+  "ingredients": [
+    {
+      "ingredientId": 103,
+      "ingredientName": "SalatÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 6,
+      "ingredientName": "SalatÃ„ÂƒÃ†Â’ iceberg",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 107,
+      "ingredientName": "Pui",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 110,
+      "ingredientName": "Piept de pui",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 69,
+      "ingredientName": "Bacon",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 40,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

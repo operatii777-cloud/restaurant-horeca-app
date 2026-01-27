@@ -1,0 +1,37 @@
+﻿Ã¯Â»Â¿{
+  "productId": 1,
+  "productName": "Mic Dejun Trattoria",
+  "productCategory": "Mic Dejun",
+  "ingredients": [
+    {
+      "ingredientId": 1,
+      "ingredientName": "ouÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "General",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 10.5,
+      "variableConsumption": "{\"Dublu\": 2, \"Triplu\": 3}"
+    },
+    {
+      "ingredientId": 624,
+      "ingredientName": "Ingrediente speciale (ex: Prosciutto Crudo, Rucola)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 0.1,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 3,
+      "ingredientName": "mozzarella",
+      "ingredientCategory": "General",
+      "quantityNeeded": 0.05,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Raport Lunar Vânzări - {LUNA_AN}</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            width: 1000px; 
+            margin: auto; 
+            border: 1px solid #ccc; 
+            padding: 20px; 
+        }
+        h2 { 
+            text-align: center; 
+            color: #28a745; 
+        }
+        h3 {
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+        }
+        h4 {
+            color: #6c757d;
+            margin-top: 25px;
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 10px; 
+        }
+        th, td { 
+            border: 1px solid #ddd; 
+            padding: 6px; 
+            text-align: right; 
+            font-size: 11px; 
+        }
+        th { 
+            background: #f8f9fa; 
+            font-weight: bold; 
+        }
+        .left { 
+            text-align: left; 
+        }
+        .luna-total td { 
+            background-color: #d1ecf1; 
+            font-weight: bold; 
+        }
+        .company-info {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .summary-cards {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .summary-card {
+            flex: 1;
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .summary-card h4 {
+            margin: 0 0 10px 0;
+            color: #495057;
+        }
+        .summary-card .value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #28a745;
+        }
+        .footer-info {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h2>RAPORT LUNAR VÂNZĂRI</h2>
+    <h3>Luna: {LUNA_NUME} {AN}</h3>
+    
+    <div class="company-info">
+        <p><strong>Societate:</strong> {DENUMIRE_FIRMA}</p>
+        <p><strong>CUI:</strong> {CUI}</p>
+        <p><strong>Perioada:</strong> {LUNA_NUME} {AN}</p>
+        <p><strong>Generat la:</strong> {DATA_GENERARE} {ORA_GENERARE}</p>
+    </div>
+
+    <div class="summary-cards">
+        <div class="summary-card">
+            <h4>Total Vânzări</h4>
+            <div class="value">{LUNA_TOTAL_BRUT} RON</div>
+        </div>
+        <div class="summary-card">
+            <h4>Bonuri Emise</h4>
+            <div class="value">{LUNA_NR_BONURI}</div>
+        </div>
+        <div class="summary-card">
+            <h4>Zile Lucrătoare</h4>
+            <div class="value">{LUNA_ZILE_LUCRATOARE}</div>
+        </div>
+        <div class="summary-card">
+            <h4>Medie Zilnică</h4>
+            <div class="value">{LUNA_MEDIE_ZILNICA} RON</div>
+        </div>
+    </div>
+    
+    <h4>1. Sumar Zilnic (Agregare Rapoarte Z)</h4>
+    <table>
+        <tr>
+            <th class="left">Data</th>
+            <th>Total Brut</th>
+            <th>TVA 11%</th>
+            <th>TVA 21%</th>
+            <th>Nr. Bonuri</th>
+            <th>Cash</th>
+            <th>Card</th>
+        </tr>
+        <!-- Zilele vor fi populate dinamic -->
+        {TABEL_ZILNIC}
+        <tr class="luna-total">
+            <td class="left">TOTAL LUNĂ</td>
+            <td>{LUNA_TOTAL_BRUT}</td>
+            <td>{LUNA_TOTAL_TVA_11}</td>
+            <td>{LUNA_TOTAL_TVA_21}</td>
+            <td>{LUNA_NR_BONURI}</td>
+            <td>{LUNA_TOTAL_CASH}</td>
+            <td>{LUNA_TOTAL_CARD}</td>
+        </tr>
+    </table>
+    
+    <h4>2. Defalcare pe cote TVA (Total Lunar)</h4>
+    <table>
+        <tr>
+            <th class="left">Cota TVA</th>
+            <th>Bază (fără TVA)</th>
+            <th>TVA Colectată</th>
+            <th>Total (cu TVA)</th>
+        </tr>
+        <tr>
+            <td class="left">11% (HoReCa)</td>
+            <td>{LUNA_BAZA_11}</td>
+            <td>{LUNA_TOTAL_TVA_11}</td>
+            <td>{LUNA_TOTAL_11}</td>
+        </tr>
+        <tr>
+            <td class="left">21% (Standard)</td>
+            <td>{LUNA_BAZA_21}</td>
+            <td>{LUNA_TOTAL_TVA_21}</td>
+            <td>{LUNA_TOTAL_21}</td>
+        </tr>
+        <tr>
+            <td class="left">0% (Scutiri)</td>
+            <td>{LUNA_BAZA_0}</td>
+            <td>0.00</td>
+            <td>{LUNA_TOTAL_0}</td>
+        </tr>
+        <tr class="luna-total">
+            <td class="left">TOTAL GENERAL</td>
+            <td>{LUNA_TOTAL_BAZA}</td>
+            <td>{LUNA_TOTAL_TVA}</td>
+            <td>{LUNA_TOTAL_BRUT}</td>
+        </tr>
+    </table>
+
+    <h4>3. Analiză Performanță</h4>
+    <table>
+        <tr>
+            <th class="left">Indicator</th>
+            <th>Valoare</th>
+            <th class="left">Observații</th>
+        </tr>
+        <tr>
+            <td class="left">Cea mai bună zi</td>
+            <td>{ZI_MAX_VANZARI}</td>
+            <td class="left">{DATA_ZI_MAX}</td>
+        </tr>
+        <tr>
+            <td class="left">Cea mai slabă zi</td>
+            <td>{ZI_MIN_VANZARI}</td>
+            <td class="left">{DATA_ZI_MIN}</td>
+        </tr>
+        <tr>
+            <td class="left">Medie bon</td>
+            <td>{MEDIE_BON}</td>
+            <td class="left">RON per comandă</td>
+        </tr>
+        <tr>
+            <td class="left">Procent cash</td>
+            <td>{PROCENT_CASH}%</td>
+            <td class="left">din total vânzări</td>
+        </tr>
+        <tr>
+            <td class="left">Procent card</td>
+            <td>{PROCENT_CARD}%</td>
+            <td class="left">din total vânzări</td>
+        </tr>
+    </table>
+
+    <h4>4. Rapoarte Z Generate</h4>
+    <table>
+        <tr>
+            <th class="left">Data</th>
+            <th class="left">Număr Raport Z</th>
+            <th>Status</th>
+            <th class="left">Observații</th>
+        </tr>
+        {TABEL_RAPOARTE_Z}
+    </table>
+    
+    <div class="footer-info">
+        <p><strong>Raport generat automat de:</strong> FriendsPOS v1.0</p>
+        <p><strong>Checksum:</strong> {CHECKSUM_RAPORT}</p>
+        <p><em>Acest raport este necesar pentru contabilitate și arhivare. Conține agregarea tuturor rapoartelor Z din luna {LUNA_NUME} {AN}.</em></p>
+        <p><em>Pentru transmitere ANAF, folosiți rapoartele Z individuale generate zilnic.</em></p>
+    </div>
+</body>
+</html>

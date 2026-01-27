@@ -1,0 +1,101 @@
+{
+  "product": {
+    "id": 296,
+    "name": "Salată Caprese",
+    "name_en": "Salată Caprese",
+    "category": "Salate",
+    "category_en": "Salads",
+    "price": 20,
+    "description": "Salată Caprese cu mozzarella",
+    "description_en": "Salată Caprese with mozzarella",
+    "weight": null,
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 333,
+        "name": "Mozzarella (bocconcini/felii)",
+        "category": "General",
+        "quantity": 100,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 798,
+        "name": "Roșii Shaorma",
+        "category": "Legume",
+        "quantity": 100,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 15,
+        "variableConsumption": null,
+        "costPerUnit": 0.034257682745826516,
+        "totalCost": "3.43",
+        "totalCostWithWaste": "3.94",
+        "supplier": "Furnizor Test",
+        "currentStock": 127522.22222222222,
+        "minStock": 100,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 821,
+        "name": "Ulei vegetal",
+        "category": "Uleiuri și Grăsimi",
+        "quantity": 5,
+        "unit": "g",
+        "unitStock": "ml",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.36491973522575893,
+        "totalCost": "1.82",
+        "totalCostWithWaste": "1.82",
+        "supplier": "Uleiuri SRL",
+        "currentStock": 71910,
+        "minStock": 5000,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "5.25",
+    "totalCostWithWaste": "5.76",
+    "sellingPrice": 20,
+    "profitMargin": 14.24,
+    "markup": 71.18,
+    "foodCostPercentage": "28.82"
+  },
+  "stats": {
+    "totalIngredients": 3,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

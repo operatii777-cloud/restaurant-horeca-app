@@ -1,0 +1,42 @@
+/* Lost & Found Dashboard - Dark Navy Premium */
+.lostfound-dashboard-page {
+  padding: 24px;
+  background: #020617;
+  min-height: 100vh;
+}
+
+.kpi-card {
+  background: #0f172a !important;
+  border: 1px solid #1e293b !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.35) !important;
+}
+
+.kpi-label {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.kpi-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.chart-card {
+  background: #0f172a !important;
+  border: 1px solid #1e293b !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.35) !important;
+  margin-bottom: 16px;
+}
+
+.chart-title {
+  color: #f1f5f9 !important;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+

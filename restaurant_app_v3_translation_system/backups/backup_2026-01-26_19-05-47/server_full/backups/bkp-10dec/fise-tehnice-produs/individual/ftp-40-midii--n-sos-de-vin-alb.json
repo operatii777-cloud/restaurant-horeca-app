@@ -1,0 +1,101 @@
+{
+  "product": {
+    "id": 40,
+    "name": "Midii în Sos de Vin Alb",
+    "name_en": "Mussels in White Wine Sauce",
+    "category": "Peste Fructe de Mare",
+    "category_en": "Fish & Seafood",
+    "price": 56,
+    "description": "Midii în cochilie, vin alb, ceapă roșie, roșii cherry, unt, usturoi, pătrunjel, pâine de casă",
+    "description_en": "Mussels in shell, white wine, red onion, cherry tomatoes, butter, garlic, parsley, homemade bread",
+    "weight": "300G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": "moluște, lapte, gluten",
+    "allergens_en": "molluscs, milk, gluten"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 800,
+        "name": "Sos Usturoi Shaorma",
+        "category": "Sosuri",
+        "quantity": 5,
+        "unit": "g",
+        "unitStock": "ml",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 1.1303157632422682,
+        "totalCost": "5.65",
+        "totalCostWithWaste": "5.65",
+        "supplier": "Furnizor Test",
+        "currentStock": 64752.76470588235,
+        "minStock": 100,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 821,
+        "name": "Ulei vegetal",
+        "category": "Uleiuri și Grăsimi",
+        "quantity": 10,
+        "unit": "g",
+        "unitStock": "ml",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.36491973522575893,
+        "totalCost": "3.65",
+        "totalCostWithWaste": "3.65",
+        "supplier": "Uleiuri SRL",
+        "currentStock": 71910,
+        "minStock": 5000,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 354,
+        "name": "Vin Alb sec",
+        "category": "General",
+        "quantity": 100,
+        "unit": "ml",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0,
+        "totalCost": "0.00",
+        "totalCostWithWaste": "0.00",
+        "supplier": null,
+        "currentStock": 2000,
+        "minStock": 10,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "9.30",
+    "totalCostWithWaste": "9.30",
+    "sellingPrice": 56,
+    "profitMargin": 46.7,
+    "markup": 83.39,
+    "foodCostPercentage": "16.61"
+  },
+  "stats": {
+    "totalIngredients": 3,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

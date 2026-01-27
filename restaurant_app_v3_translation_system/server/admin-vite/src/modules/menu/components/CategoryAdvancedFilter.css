@@ -1,0 +1,15 @@
+.category-advanced-filter {
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+}
+
+.category-advanced-filter .card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+  user-select: none;
+}
+
+.category-advanced-filter .card-header:hover {
+  background-color: #e9ecef;
+}
+

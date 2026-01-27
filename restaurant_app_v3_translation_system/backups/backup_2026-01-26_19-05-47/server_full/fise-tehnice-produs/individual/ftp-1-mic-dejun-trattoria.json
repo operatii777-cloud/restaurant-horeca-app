@@ -1,0 +1,101 @@
+{
+  "product": {
+    "id": 1,
+    "name": "Mic Dejun Trattoria",
+    "name_en": "Trattoria Breakfast",
+    "category": "Mic Dejun",
+    "category_en": "Breakfast",
+    "price": 37,
+    "description": "Ouă, bacon, brânză telemea, roșii cherry, cartofi prăjiți",
+    "description_en": "Eggs, bacon, telemea cheese, cherry tomatoes, french fries",
+    "weight": "100/20/50/60/170G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": "ouă, lapte",
+    "allergens_en": "eggs, milk"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 624,
+        "name": "Ingrediente speciale (ex: Prosciutto Crudo, Rucola)",
+        "category": "General",
+        "quantity": 0.1,
+        "unit": "g",
+        "unitStock": "buc",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.09185370066856817,
+        "totalCost": "0.01",
+        "totalCostWithWaste": "0.01",
+        "supplier": null,
+        "currentStock": 12670,
+        "minStock": 10,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 3,
+        "name": "mozzarella",
+        "category": "General",
+        "quantity": 0.05,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 30,
+        "totalCost": "1.50",
+        "totalCostWithWaste": "1.50",
+        "supplier": null,
+        "currentStock": 95,
+        "minStock": 0.5,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 1,
+        "name": "ouă",
+        "category": "General",
+        "quantity": 2,
+        "unit": "g",
+        "unitStock": "buc",
+        "wastePercentage": 10.5,
+        "variableConsumption": "{\"Dublu\": 2, \"Triplu\": 3}",
+        "costPerUnit": 0.5,
+        "totalCost": "1.00",
+        "totalCostWithWaste": "1.10",
+        "supplier": null,
+        "currentStock": 1310,
+        "minStock": 20,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "2.51",
+    "totalCostWithWaste": "2.61",
+    "sellingPrice": 37,
+    "profitMargin": 34.39,
+    "markup": 92.93,
+    "foodCostPercentage": "7.07"
+  },
+  "stats": {
+    "totalIngredients": 3,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

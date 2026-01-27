@@ -1,0 +1,315 @@
+.menu-management-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+.menu-management-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.menu-management-header h1 {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+.menu-management-header p {
+  margin: 0.25rem 0 0;
+  color: var(--text-secondary, #4a5568);
+}
+
+.menu-management-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.menu-management-actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 0.5rem;
+  border: none;
+  background: linear-gradient(135deg, #6366f1, #4338ca);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.25), 0 4px 6px -4px rgba(99, 102, 241, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.menu-management-actions button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 20px -3px rgba(67, 56, 202, 0.25), 0 6px 10px -5px rgba(67, 56, 202, 0.25);
+}
+
+.menu-management-hero {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: minmax(0, 2fr);
+}
+
+.menu-management-hero__intro {
+  padding: 1.75rem;
+  border-radius: 1rem;
+  background: linear-gradient(145deg, rgba(244, 246, 255, 0.95), rgba(229, 231, 255, 0.9));
+  box-shadow: inset 0 1px 0 rgba(99, 102, 241, 0.15), 0 10px 30px -15px rgba(79, 70, 229, 0.25);
+}
+
+.menu-management-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.menu-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  background: rgba(99, 102, 241, 0.1);
+  color: #4338ca;
+  font-weight: 600;
+}
+
+.menu-chip--primary {
+  background: rgba(16, 185, 129, 0.12);
+  color: #047857;
+}
+
+.menu-management-hero__intro h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.9rem;
+  color: #1f2937;
+}
+
+.menu-management-hero__intro p {
+  margin: 0;
+  color: #4b5563;
+  max-width: 60ch;
+  line-height: 1.6;
+}
+
+.menu-management-stats {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.menu-management-analytics {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.menu-analytics-card {
+  padding: 1.25rem;
+  border-radius: 1rem;
+  background: #ffffff;
+  box-shadow: 0 12px 25px -18px rgba(15, 23, 42, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.menu-analytics-card header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.menu-analytics-card header span:first-child {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.menu-analytics-helper {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.menu-analytics-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.menu-analytics-legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.menu-analytics-legend li span:first-child {
+  display: inline-flex;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+}
+
+.menu-analytics-legend li div {
+  flex: 1;
+}
+
+.menu-management-grid {
+  border-radius: 1rem;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(241, 245, 249, 0.85));
+  box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.35);
+  padding: 1rem;
+}
+
+.cell-active {
+  color: #047857;
+  font-weight: 600;
+}
+
+.cell-inactive {
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+.menu-management-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.03);
+  box-shadow: inset 0 1px 0 rgba(15, 23, 42, 0.04);
+}
+
+.menu-management-filters {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.menu-management-filter-select {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  color: #4b5563;
+}
+
+.menu-management-filter-select select {
+  min-width: 220px;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.menu-management-filter-select select:focus {
+  outline: none;
+  border-color: rgba(99, 102, 241, 0.6);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18);
+}
+
+.menu-management-filters label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+  color: #4b5563;
+  gap: 0.35rem;
+}
+
+.menu-management-filters select {
+  min-width: 220px;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.menu-management-filters select:focus {
+  outline: none;
+  border-color: rgba(99, 102, 241, 0.6);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18);
+}
+
+.menu-management-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.menu-management-selection {
+  font-size: 0.9rem;
+  color: #475569;
+  font-weight: 600;
+}
+
+.menu-management-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 0.6rem;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  background: #fff;
+  color: #1f2937;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+  box-shadow: 0 4px 12px -6px rgba(15, 23, 42, 0.2);
+}
+
+.menu-management-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px -12px rgba(15, 23, 42, 0.28);
+}
+
+.menu-management-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.menu-management-button--primary {
+  background: linear-gradient(135deg, #34d399, #10b981);
+  color: #fff;
+  border-color: transparent;
+}
+
+.menu-management-button--danger {
+  background: linear-gradient(135deg, #f87171, #dc2626);
+  color: #fff;
+  border-color: transparent;
+}
+
+.menu-management-feedback {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.menu-management-spacer {
+  height: 1px;
+}
+

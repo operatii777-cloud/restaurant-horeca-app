@@ -1,0 +1,54 @@
+.welcome-page {
+  padding: 2rem;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.welcome-hero {
+  padding: 3rem 0;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-features {
+  margin-top: 3rem;
+}
+
+.feature-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15) !important;
+}
+
+.feature-icon {
+  transition: transform 0.2s;
+}
+
+.feature-card:hover .feature-icon {
+  transform: scale(1.1);
+}
+
+.welcome-stats {
+  margin-top: 3rem;
+}
+
+/* Stil custom pentru butonul "Accesează" de la cardul Setări */
+.feature-card:has(.btn-warning) .btn-warning {
+  background-color: #ffc107 !important;
+  border-color: #ffc107 !important;
+  color: #000 !important;
+  font-weight: 500;
+}
+
+.feature-card:has(.btn-warning) .btn-warning:hover {
+  background-color: #ffb300 !important;
+  border-color: #ffb300 !important;
+  color: #000 !important;
+}
+

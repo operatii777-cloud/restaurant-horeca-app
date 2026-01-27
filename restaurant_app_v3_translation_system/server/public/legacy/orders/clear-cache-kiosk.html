@@ -1,0 +1,211 @@
+﻿<!--
+  ============================================
+  LEGACY UI - Deprecated after PHASE S2
+  ============================================
+  
+  This file has been moved to /public/legacy/ as part of PHASE S3 cleanup.
+  
+  DO NOT MODIFY.
+  Reference only.
+  To be removed after PHASE S5.
+  
+  Original path: /public/clear-cache-kiosk.html
+  Moved: 2025-12-07
+  ============================================
+-->
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Cache KIOSK</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #ff6b35; }
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #ff6b35;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 5px;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+        }
+        .button:hover {
+            background: #e05a2a;
+        }
+        .success {
+            background: #28a745;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            display: none;
+        }
+        .info {
+            background: #17a2b8;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🔄 Clear Cache KIOSK</h1>
+        
+        <div class="info">
+            <strong>Acest script șterge:</strong>
+            <ul>
+                <li>localStorage (categorii, produse, setări)</li>
+                <li>sessionStorage</li>
+                <li>Cache-ul browser-ului pentru această pagină</li>
+            </ul>
+        </div>
+        
+        <button class="button" onclick="clearAllCaches()">🗑️ Șterge TOATE Cache-urile</button>
+        <button class="button" onclick="clearMenuCache()">📦 Șterge doar Cache-ul Meniului</button>
+        <button class="button" onclick="clearKioskCache()">🖥️ Șterge doar Cache-ul KIOSK</button>
+        
+        <div id="success" class="success"></div>
+        
+        <div style="margin-top: 30px;">
+            <h2>📋 Ce se șterge:</h2>
+            <ul id="clearedItems"></ul>
+        </div>
+    </div>
+
+    <script>
+        const clearedItems = [];
+        
+        function showSuccess(message) {
+            const successDiv = document.getElementById('success');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            setTimeout(() => {
+                successDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        function updateClearedList() {
+            const list = document.getElementById('clearedItems');
+            if (clearedItems.length === 0) {
+                list.innerHTML = '<li>Nimic șters încă</li>';
+            } else {
+                list.innerHTML = clearedItems.map(item => `<li>✅ ${item}</li>`).join('');
+            }
+        }
+        
+        function clearAllCaches() {
+            clearedItems.length = 0;
+            
+            // 1. Clear localStorage
+            const localStorageKeys = Object.keys(localStorage);
+            localStorageKeys.forEach(key => {
+                if (key.includes('menu') || key.includes('category') || key.includes('playwright') || key.includes('kiosk')) {
+                    localStorage.removeItem(key);
+                    clearedItems.push(`localStorage.${key}`);
+                }
+            });
+            
+            // 2. Clear sessionStorage
+            sessionStorage.clear();
+            clearedItems.push('sessionStorage (toate)');
+            
+            // 3. Clear cache pentru această pagină
+            if ('caches' in window) {
+                caches.keys().then(names => {
+                    names.forEach(name => {
+                        caches.delete(name);
+                        clearedItems.push(`Cache: ${name}`);
+                    });
+                    updateClearedList();
+                });
+            }
+            
+            // 4. Clear toate localStorage-urile care conțin "Playwright"
+            Object.keys(localStorage).forEach(key => {
+                const value = localStorage.getItem(key);
+                if (value && value.toLowerCase().includes('playwright')) {
+                    localStorage.removeItem(key);
+                    if (!clearedItems.includes(`localStorage.${key}`)) {
+                        clearedItems.push(`localStorage.${key} (conținea Playwright)`);
+                    }
+                }
+            });
+            
+            updateClearedList();
+            showSuccess('✅ Toate cache-urile au fost șterse! Fă refresh (Ctrl+Shift+R)');
+        }
+        
+        function clearMenuCache() {
+            clearedItems.length = 0;
+            
+            // Șterge doar cache-ul meniului
+            Object.keys(localStorage).forEach(key => {
+                if (key.includes('menu') || key.includes('category') || key.includes('product')) {
+                    localStorage.removeItem(key);
+                    clearedItems.push(`localStorage.${key}`);
+                }
+            });
+            
+            updateClearedList();
+            showSuccess('✅ Cache-ul meniului a fost șters!');
+        }
+        
+        function clearKioskCache() {
+            clearedItems.length = 0;
+            
+            // Șterge doar cache-ul KIOSK
+            Object.keys(localStorage).forEach(key => {
+                if (key.includes('kiosk') || key.includes('KIOSK')) {
+                    localStorage.removeItem(key);
+                    clearedItems.push(`localStorage.${key}`);
+                }
+            });
+            
+            sessionStorage.clear();
+            clearedItems.push('sessionStorage');
+            
+            updateClearedList();
+            showSuccess('✅ Cache-ul KIOSK a fost șters!');
+        }
+        
+        // La încărcare, afișează ce există în cache
+        window.addEventListener('load', () => {
+            const menuKeys = Object.keys(localStorage).filter(k => 
+                k.includes('menu') || k.includes('category') || k.includes('playwright')
+            );
+            
+            if (menuKeys.length > 0) {
+                console.log('📋 Chei găsite în localStorage care ar putea conține categorii:');
+                menuKeys.forEach(key => {
+                    const value = localStorage.getItem(key);
+                    if (value && value.toLowerCase().includes('playwright')) {
+                        console.log(`   ⚠️  ${key}: conține "Playwright"`);
+                    }
+                });
+            }
+        });
+        
+        updateClearedList();
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,83 @@
+﻿Ã¯Â»Â¿{
+  "productId": 192,
+  "productName": "PapanaÃƒÂˆÃ¢Â„Â¢i",
+  "productCategory": "Deserturi",
+  "price": 38,
+  "description": "DulceaÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’ fructe de pÃ„ÂƒÃ†Â’dure/viÃƒÂˆÃ¢Â„Â¢ine/afine/ciocolatÃ„ÂƒÃ†Â’",
+  "ingredients": [
+    {
+      "ingredientId": 133,
+      "ingredientName": "BrÃƒÂ¢nzÃ„ÂƒÃ†Â’ de vaci",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 250,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 95,
+      "ingredientName": "FÃ„ÂƒÃ†Â’inÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 96,
+      "ingredientName": "Ou",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 2,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 33,
+      "ingredientName": "ZahÃ„ÂƒÃ†Â’r",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 30,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 134,
+      "ingredientName": "Bicarbonat",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 65,
+      "ingredientName": "Sare",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 2,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 113,
+      "ingredientName": "SmÃƒÂ¢ntÃƒÂ¢nÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 130,
+      "ingredientName": "DulceaÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’ de viÃƒÂˆÃ¢Â„Â¢ine",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 31,
+      "ingredientName": "Ulei de floarea-soarelui",
+      "ingredientCategory": "Condimente ÃƒÂˆÃ¢Â„Â¢i Sosuri",
+      "quantityNeeded": 50,
+      "unit": "l",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

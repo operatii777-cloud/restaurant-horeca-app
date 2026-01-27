@@ -1,0 +1,425 @@
+[
+  {
+    "path": "/admin-vite/kiosk/pos-split",
+    "name": "Kiosk POS Split",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\kiosk_pos_split.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/kiosk/tables",
+    "name": "Kiosk Tables",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\kiosk_tables.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/kiosk/dashboard",
+    "name": "Kiosk Dashboard",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\kiosk_dashboard.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/pos-fullscreen",
+    "name": "POS Fullscreen",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\pos_fullscreen.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/dashboard",
+    "name": "Dashboard",
+    "status": "error",
+    "error": "Page contains error message",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\dashboard.png",
+    "attempts": 3
+  },
+  {
+    "path": "/admin-vite/menu",
+    "name": "Menu Management",
+    "status": "error",
+    "error": "Page contains error message",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\menu_management.png",
+    "attempts": 3
+  },
+  {
+    "path": "/admin-vite/catalog",
+    "name": "Catalog",
+    "status": "error",
+    "error": "Page contains error message",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\catalog.png",
+    "attempts": 3
+  },
+  {
+    "path": "/admin-vite/stocks",
+    "name": "Stocks",
+    "status": "error",
+    "error": "Page contains error message",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\stocks.png",
+    "attempts": 3
+  },
+  {
+    "path": "/admin-vite/orders",
+    "name": "Orders",
+    "status": "error",
+    "error": "Page contains error message",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\orders.png",
+    "attempts": 3
+  },
+  {
+    "path": "/admin-vite/reservations",
+    "name": "Reservations",
+    "status": "error",
+    "error": "Page contains error message",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\reservations.png",
+    "attempts": 3
+  },
+  {
+    "path": "/admin-vite/recipes",
+    "name": "Recipes",
+    "status": "error",
+    "error": "Page contains error message",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\recipes.png",
+    "attempts": 3
+  },
+  {
+    "path": "/admin-vite/waiters",
+    "name": "Waiters",
+    "status": "error",
+    "error": "Page contains error message",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\waiters.png",
+    "attempts": 3
+  },
+  {
+    "path": "/admin-vite/settings",
+    "name": "Settings",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\settings.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/stocks/inventory",
+    "name": "Inventory",
+    "status": "error",
+    "error": "Page contains error message",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\inventory.png",
+    "attempts": 3
+  },
+  {
+    "path": "/admin-vite/stocks/inventory/dashboard",
+    "name": "Inventory Dashboard",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\inventory_dashboard.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/stocks/allergens",
+    "name": "Allergens",
+    "status": "error",
+    "error": "Page contains error message",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\allergens.png",
+    "attempts": 3
+  },
+  {
+    "path": "/admin-vite/stocks/labels",
+    "name": "Labels",
+    "status": "error",
+    "error": "Page contains error message",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\labels.png",
+    "attempts": 3
+  },
+  {
+    "path": "/admin-vite/stocks/waste",
+    "name": "Waste",
+    "status": "error",
+    "error": "Page contains error message",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\waste.png",
+    "attempts": 3
+  },
+  {
+    "path": "/admin-vite/stocks/suppliers",
+    "name": "Suppliers",
+    "status": "error",
+    "error": "Page contains error message",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\suppliers.png",
+    "attempts": 3
+  },
+  {
+    "path": "/admin-vite/orders/manage",
+    "name": "Manage Orders",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\manage_orders.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/orders/history",
+    "name": "Orders History",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\orders_history.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/orders/delivery",
+    "name": "Delivery Orders",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\delivery_orders.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/orders/drive-thru",
+    "name": "Drive Thru Orders",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\drive_thru_orders.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/orders/takeaway",
+    "name": "Takeaway Orders",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\takeaway_orders.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/orders/cancellations",
+    "name": "Cancellations",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\cancellations.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/settings/locations",
+    "name": "Locations",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\locations.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/settings/areas",
+    "name": "Areas",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\areas.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/settings/tables",
+    "name": "Tables",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\tables.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/settings/users",
+    "name": "Users",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\users.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/settings/printers",
+    "name": "Printers",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\printers.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/settings/payment-methods",
+    "name": "Payment Methods",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\payment_methods.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/reports",
+    "name": "Reports",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\reports.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/reports/advanced",
+    "name": "Advanced Reports",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\advanced_reports.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/reports/sales",
+    "name": "Sales Reports",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\sales_reports.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/reports/stock",
+    "name": "Stock Reports",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\stock_reports.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/reports/financial",
+    "name": "Financial Reports",
+    "status": "error",
+    "error": "Page contains error message",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\financial_reports.png",
+    "attempts": 3
+  },
+  {
+    "path": "/admin-vite/tipizate-enterprise/nir",
+    "name": "NIR List",
+    "status": "error",
+    "error": "Page contains error message",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\nir_list.png",
+    "attempts": 3
+  },
+  {
+    "path": "/admin-vite/tipizate-enterprise/bon-consum",
+    "name": "Bon Consum List",
+    "status": "error",
+    "error": "Page contains error message",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\bon_consum_list.png",
+    "attempts": 3
+  },
+  {
+    "path": "/admin-vite/tipizate-enterprise/transfer",
+    "name": "Transfer List",
+    "status": "error",
+    "error": "Page contains error message",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\transfer_list.png",
+    "attempts": 3
+  },
+  {
+    "path": "/admin-vite/tipizate-enterprise/inventar",
+    "name": "Inventar List",
+    "status": "error",
+    "error": "Page contains error message",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\inventar_list.png",
+    "attempts": 3
+  },
+  {
+    "path": "/admin-vite/profitability",
+    "name": "Profitability",
+    "status": "error",
+    "error": "Page contains error message",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\profitability.png",
+    "attempts": 3
+  },
+  {
+    "path": "/admin-vite/stocks/costs",
+    "name": "Costs",
+    "status": "error",
+    "error": "Page contains error message",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\costs.png",
+    "attempts": 3
+  },
+  {
+    "path": "/admin-vite/delivery/kpi",
+    "name": "Delivery KPI",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\delivery_kpi.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/delivery-monitor",
+    "name": "Delivery Monitor",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\delivery_monitor.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/delivery-dashboard",
+    "name": "Delivery Dashboard",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\delivery_dashboard.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/couriers",
+    "name": "Couriers",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\couriers.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/dispatch",
+    "name": "Dispatch",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\dispatch.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/kiosk/pontaj",
+    "name": "Kiosk Pontaj",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\kiosk_pontaj.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/kiosk/scoreboard",
+    "name": "Kiosk Scoreboard",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\kiosk_scoreboard.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/kiosk/hostess-map",
+    "name": "Kiosk Hostess Map",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\kiosk_hostess_map.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/daily-menu",
+    "name": "Daily Menu",
+    "status": "error",
+    "error": "Page contains error message",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\daily_menu.png",
+    "attempts": 3
+  },
+  {
+    "path": "/admin-vite/lots",
+    "name": "Lots",
+    "status": "error",
+    "error": "Page contains error message",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\lots.png",
+    "attempts": 3
+  },
+  {
+    "path": "/admin-vite/traceability",
+    "name": "Traceability",
+    "status": "error",
+    "error": "Page contains error message",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\traceability.png",
+    "attempts": 3
+  },
+  {
+    "path": "/admin-vite/backup",
+    "name": "Backup",
+    "status": "error",
+    "error": "Page contains error message",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\backup.png",
+    "attempts": 3
+  },
+  {
+    "path": "/admin-vite/queue-monitor",
+    "name": "Queue Monitor",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\queue_monitor.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/compliance",
+    "name": "Compliance",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\compliance.png",
+    "attempts": 1
+  },
+  {
+    "path": "/admin-vite/training",
+    "name": "Training",
+    "status": "success",
+    "screenshot": "E:\\RESTAURANT\\restaurant_app\\restaurant_app_v3_translation_system\\server\\screenshots\\training.png",
+    "attempts": 1
+  }
+]

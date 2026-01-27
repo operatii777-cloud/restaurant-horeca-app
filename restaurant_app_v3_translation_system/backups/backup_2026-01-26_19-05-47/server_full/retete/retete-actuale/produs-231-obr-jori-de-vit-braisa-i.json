@@ -1,0 +1,19 @@
+﻿Ã¯Â»Â¿{
+  "productId": 231,
+  "productName": "ObrÃ„ÂƒÃ†Â’jori de VitÃ„ÂƒÃ†Â’ BraisaÃƒÂˆÃ¢Â€Âºi",
+  "productCategory": "Fel Principal",
+  "price": 48,
+  "description": "ObrÃ„ÂƒÃ†Â’jori de vitÃ„ÂƒÃ†Â’ braisaÃƒÂˆÃ¢Â€Âºi ÃƒÂ®n vin roÃƒÂˆÃ¢Â„Â¢u cu legume ÃƒÂˆÃ¢Â„Â¢i ierburi aromate - preparat premium",
+  "ingredients": [
+    {
+      "ingredientId": 144,
+      "ingredientName": "Vin roÃƒÂˆÃ¢Â„Â¢u",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

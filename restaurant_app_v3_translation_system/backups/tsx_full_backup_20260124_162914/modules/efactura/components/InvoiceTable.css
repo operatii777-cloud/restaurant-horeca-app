@@ -1,0 +1,101 @@
+/**
+ * PHASE S11 - Invoice Table Styles
+ */
+
+.invoice-table-container {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.invoice-table-header {
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: #666;
+}
+
+.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.invoice-table thead {
+  background: #f5f5f5;
+}
+
+.invoice-table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #ddd;
+}
+
+.invoice-table tbody tr {
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.invoice-table tbody tr:hover {
+  background: #f9f9f9;
+}
+
+.invoice-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.invoice-number {
+  font-weight: 600;
+  color: #1976d2;
+}
+
+.invoice-amount {
+  font-weight: 600;
+  color: #333;
+}
+
+.invoice-source-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.invoice-source-orders {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.invoice-source-tipizate {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
+.invoice-view-btn {
+  padding: 6px 12px;
+  border: 1px solid #1976d2;
+  background: white;
+  color: #1976d2;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.invoice-view-btn:hover {
+  background: #1976d2;
+  color: white;
+}
+
+.invoice-table-loading,
+.invoice-table-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+  background: white;
+  border-radius: 8px;
+}
+

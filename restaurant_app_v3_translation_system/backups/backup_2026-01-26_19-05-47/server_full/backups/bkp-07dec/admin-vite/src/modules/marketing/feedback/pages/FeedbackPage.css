@@ -1,0 +1,8 @@
+.feedback-page {
+  padding: 1.5rem;
+}
+
+.feedback-page [data-page-ready="true"] {
+  opacity: 1;
+}
+

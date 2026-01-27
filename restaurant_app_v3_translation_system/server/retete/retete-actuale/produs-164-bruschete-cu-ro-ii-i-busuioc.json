@@ -1,0 +1,59 @@
+﻿Ã¯Â»Â¿{
+  "productId": 164,
+  "productName": "Bruschete cu RoÃƒÂˆÃ¢Â„Â¢ii ÃƒÂˆÃ¢Â„Â¢i Busuioc",
+  "productCategory": "Aperitive Reci",
+  "price": 25,
+  "description": "BaghetÃ„ÂƒÃ†Â’, roÃƒÂˆÃ¢Â„Â¢ii, busuioc, usturoi, ulei de mÃ„ÂƒÃ†Â’sline",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 15,
+      "ingredientName": "Usturoi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 37,
+      "ingredientName": "MÃ„ÂƒÃ†Â’sline",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 20,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 17,
+      "ingredientName": "Busuioc",
+      "ingredientCategory": "Condimente",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 18,
+      "ingredientName": "Ulei de mÃ„ÂƒÃ†Â’sline",
+      "ingredientCategory": "Uleiuri",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 100,
+      "ingredientName": "Ulei",
+      "ingredientCategory": "Condimente ÃƒÂˆÃ¢Â„Â¢i Sosuri",
+      "quantityNeeded": 20,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

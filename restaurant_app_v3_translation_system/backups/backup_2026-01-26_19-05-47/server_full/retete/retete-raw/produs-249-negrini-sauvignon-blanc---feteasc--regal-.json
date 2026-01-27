@@ -1,0 +1,19 @@
+﻿Ã¯Â»Â¿{
+  "productId": 249,
+  "productName": "Negrini Sauvignon Blanc & FeteascÃ„ÂƒÃ†Â’ RegalÃ„ÂƒÃ†Â’",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 756,
+      "ingredientName": "Negrini Sauvignon Blanc & FeteascÃ„ÂƒÃ†Â’ RegalÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

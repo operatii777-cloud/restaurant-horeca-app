@@ -1,0 +1,17 @@
+{
+  "productId": 271,
+  "productName": "Fettuccine Alfredo",
+  "productCategory": "Paste",
+  "price": 26,
+  "description": "Fettuccine Alfredo cu smântână",
+  "ingredients": [
+    {
+      "ingredientId": 113,
+      "ingredientName": "Smântână",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

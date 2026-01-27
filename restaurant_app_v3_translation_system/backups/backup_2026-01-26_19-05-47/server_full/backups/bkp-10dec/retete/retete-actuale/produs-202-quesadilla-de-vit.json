@@ -1,0 +1,25 @@
+{
+  "productId": 202,
+  "productName": "Quesadilla de Vită",
+  "productCategory": "Fast Food",
+  "price": 59,
+  "description": "Ragu, fasole roșie, porumb, ceddar, mozzarella, cartofi prăjiți",
+  "ingredients": [
+    {
+      "ingredientId": 67,
+      "ingredientName": "Cartofi",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 200,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 38,
+      "ingredientName": "Mozzarella",
+      "ingredientCategory": "Lactate și Brânzeturi",
+      "quantityNeeded": 150,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}

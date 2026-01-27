@@ -1,0 +1,43 @@
+﻿Ã¯Â»Â¿{
+  "productId": 22,
+  "productName": "Campari Orange",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "price": 31,
+  "description": "Coctail clasic - Campari, suc de portocale, portocalÃ„ÂƒÃ†Â’",
+  "ingredients": [
+    {
+      "ingredientId": 193,
+      "ingredientName": "Campari",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 46,
+      "ingredientName": "Suc de portocale",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 100,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 194,
+      "ingredientName": "PortocalÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 1,
+      "unit": "felie",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "GheaÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

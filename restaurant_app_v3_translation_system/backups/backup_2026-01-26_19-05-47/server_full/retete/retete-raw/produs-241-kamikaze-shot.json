@@ -1,0 +1,37 @@
+﻿Ã¯Â»Â¿{
+  "productId": 241,
+  "productName": "Kamikaze Shot",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 434,
+      "ingredientName": "Cointreau/Triple Sec",
+      "ingredientCategory": "General",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 456,
+      "ingredientName": "VodcÃ„ÂƒÃ†Â’ (Smirnoff/Ketel One)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 457,
+      "ingredientName": "Suc de Lime (proaspÃ„ÂƒÃ†Â’t)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 15,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

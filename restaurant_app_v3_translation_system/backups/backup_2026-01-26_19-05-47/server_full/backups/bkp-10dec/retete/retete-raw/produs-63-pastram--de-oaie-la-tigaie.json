@@ -1,0 +1,35 @@
+{
+  "productId": 63,
+  "productName": "Pastramă de Oaie la Tigaie",
+  "productCategory": "Fel Principal",
+  "ingredients": [
+    {
+      "ingredientId": 811,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 61,
+      "ingredientName": "vin roșu",
+      "ingredientCategory": "General",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 525,
+      "ingredientName": "Mămăligă (servire)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

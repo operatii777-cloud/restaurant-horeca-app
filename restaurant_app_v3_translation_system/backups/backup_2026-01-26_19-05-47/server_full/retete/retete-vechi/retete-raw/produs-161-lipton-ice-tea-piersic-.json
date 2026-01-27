@@ -1,0 +1,28 @@
+﻿Ã¯Â»Â¿{
+  "productId": 161,
+  "productName": "Lipton Ice Tea PiersicÃ„ÂƒÃ†Â’",
+  "productCategory": "RÃ„ÂƒÃ†Â’coritoare",
+  "ingredients": [
+    {
+      "ingredientId": 270,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 623,
+      "ingredientName": "Ton ÃƒÂ®n conservÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "General",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

@@ -1,0 +1,44 @@
+.temperature-log-tab {
+  padding: var(--space-lg);
+}
+
+.tab-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-lg);
+  gap: var(--space-md);
+}
+
+.tab-toolbar .filters {
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+}
+
+.chart-section {
+  margin-bottom: var(--space-xl);
+  background: white;
+  padding: var(--space-lg);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.ag-grid-container {
+  margin-top: var(--space-lg);
+}
+
+.temperature-log-tab .filters select,
+.temperature-log-tab .filters input[type="date"] {
+  width: 250px;
+}
+
+.temperature-log-tab .filters input[type="date"] {
+  width: 150px;
+}
+
+.ag-grid-container .ag-theme-alpine {
+  height: 500px;
+  width: 100%;
+}
+

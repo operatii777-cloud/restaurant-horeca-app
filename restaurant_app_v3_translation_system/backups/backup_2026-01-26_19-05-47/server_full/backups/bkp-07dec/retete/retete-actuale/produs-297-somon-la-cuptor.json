@@ -1,0 +1,41 @@
+{
+  "productId": 297,
+  "productName": "Somon la Cuptor",
+  "productCategory": "Peste și Fructe de Mare",
+  "price": 75,
+  "description": "Somon, orez sălbatic, broccoli, lămâie",
+  "ingredients": [
+    {
+      "ingredientId": 160,
+      "ingredientName": "Broccoli",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 80,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 101,
+      "ingredientName": "Somon",
+      "ingredientCategory": "Peste Fructe de Mare",
+      "quantityNeeded": 150,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 61,
+      "ingredientName": "Orez",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 80,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 154,
+      "ingredientName": "Lămâie",
+      "ingredientCategory": "Legume și Fructe",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

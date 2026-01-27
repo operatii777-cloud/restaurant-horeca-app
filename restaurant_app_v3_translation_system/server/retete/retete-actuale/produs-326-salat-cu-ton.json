@@ -1,0 +1,43 @@
+﻿Ã¯Â»Â¿{
+  "productId": 326,
+  "productName": "SalatÃ„ÂƒÃ†Â’ cu Ton",
+  "productCategory": "Salate",
+  "price": 42,
+  "description": "Mix salatÃ„ÂƒÃ†Â’, ton, avocado, porumb, ceapÃ„ÂƒÃ†Â’ roÃƒÂˆÃ¢Â„Â¢ie, roÃƒÂˆÃ¢Â„Â¢ii cherry, dressing",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 94,
+      "ingredientName": "CeapÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Fructe ÃƒÂˆÃ¢Â„Â¢i Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 103,
+      "ingredientName": "SalatÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 102,
+      "ingredientName": "Ton",
+      "ingredientCategory": "Peste Fructe de Mare",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

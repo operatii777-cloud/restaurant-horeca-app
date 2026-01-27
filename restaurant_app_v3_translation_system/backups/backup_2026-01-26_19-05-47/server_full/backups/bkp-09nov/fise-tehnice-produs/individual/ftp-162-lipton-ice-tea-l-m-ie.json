@@ -1,0 +1,67 @@
+{
+  "product": {
+    "id": 162,
+    "name": "Lipton Ice Tea Lămâie",
+    "name_en": "Lipton Ice Tea Lemon",
+    "category": "Răcoritoare",
+    "category_en": "Soft Drinks",
+    "price": 13,
+    "description": "Ceai rece cu aromă de lămâie",
+    "description_en": "Lemon flavored ice tea",
+    "weight": "250ML",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 64,
+        "name": "suc de lămâie",
+        "category": "General",
+        "quantity": 1,
+        "unit": "buc",
+        "unitStock": "l",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.770198325996813,
+        "totalCost": "0.77",
+        "totalCostWithWaste": "0.77",
+        "supplier": null,
+        "currentStock": 42848,
+        "minStock": 0.2,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "0.77",
+    "totalCostWithWaste": "0.77",
+    "sellingPrice": 13,
+    "profitMargin": 12.23,
+    "markup": 94.08,
+    "foodCostPercentage": "5.92"
+  },
+  "stats": {
+    "totalIngredients": 1,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

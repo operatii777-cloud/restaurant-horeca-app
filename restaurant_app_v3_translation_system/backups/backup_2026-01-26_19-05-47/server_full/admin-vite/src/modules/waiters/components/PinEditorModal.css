@@ -1,0 +1,77 @@
+.pin-editor__form {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.pin-editor__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pin-editor__field label {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.pin-editor__field input {
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  border-radius: 12px;
+  padding: 0.75rem 0.9rem;
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  text-align: center;
+}
+
+.pin-editor__field input:focus {
+  outline: 2px solid rgba(99, 102, 241, 0.4);
+  outline-offset: 2px;
+}
+
+.pin-editor__error {
+  font-size: 0.85rem;
+  color: #dc2626;
+}
+
+.pin-editor__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.pin-editor__button {
+  border: none;
+  border-radius: 999px;
+  padding: 0.65rem 1.6rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.pin-editor__button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.pin-editor__button--secondary {
+  background: rgba(148, 163, 184, 0.18);
+  color: #374151;
+}
+
+.pin-editor__button--secondary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 16px rgba(148, 163, 184, 0.25);
+}
+
+.pin-editor__button--primary {
+  background: linear-gradient(135deg, #6366f1, #4338ca);
+  color: #ffffff;
+}
+
+.pin-editor__button--primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(79, 70, 229, 0.25);
+}
+
+

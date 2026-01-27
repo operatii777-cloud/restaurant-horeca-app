@@ -1,0 +1,101 @@
+{
+  "product": {
+    "id": 109,
+    "name": "Salată de Varză cu Morcov și Mărar",
+    "name_en": "Cabbage Salad with Carrot and Dill",
+    "category": "Salate Însoțitoare",
+    "category_en": "Side Salads",
+    "price": 16,
+    "description": "Varză, morcov, mărar",
+    "description_en": "Cabbage, carrot, dill",
+    "weight": "200G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 1,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": null,
+    "allergens_en": ""
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 830,
+        "name": "Rozmarin",
+        "category": "Sosuri și Condimente",
+        "quantity": 15,
+        "unit": "ml",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.03998665331998665,
+        "totalCost": "0.60",
+        "totalCostWithWaste": "0.60",
+        "supplier": "Spice World SRL",
+        "currentStock": 8991,
+        "minStock": 200,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 825,
+        "name": "Varză albă",
+        "category": "Legume și Fructe",
+        "quantity": 120,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.009660102173841598,
+        "totalCost": "1.16",
+        "totalCostWithWaste": "1.16",
+        "supplier": "Legume Proaspete SRL",
+        "currentStock": 121709.77777777778,
+        "minStock": 10000,
+        "stockStatus": "OK"
+      },
+      {
+        "id": 23,
+        "name": "morcovi",
+        "category": "General",
+        "quantity": 30,
+        "unit": "g",
+        "unitStock": "kg",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 9.564774813926666,
+        "totalCost": "286.94",
+        "totalCostWithWaste": "286.94",
+        "supplier": null,
+        "currentStock": 50667.5,
+        "minStock": 0.8,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "288.70",
+    "totalCostWithWaste": "288.70",
+    "sellingPrice": 16,
+    "profitMargin": -272.7,
+    "markup": -1704.39,
+    "foodCostPercentage": "1804.39"
+  },
+  "stats": {
+    "totalIngredients": 3,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

@@ -1,0 +1,7 @@
+# REGULĂ OBLIGATORIE - Dev-Files
+
+Toate fișierele non-production (teste, audit, rapoarte, scripturi temporare) 
+trebuie să fie păstrate EXCLUSIV în Dev-Files/ și NU în root/server.
+
+Consultă: Dev-Files/REGULI-OBLIGATORII.md pentru detalii complete.
+

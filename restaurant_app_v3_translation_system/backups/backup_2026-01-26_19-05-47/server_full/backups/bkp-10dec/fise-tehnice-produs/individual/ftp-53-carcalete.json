@@ -1,0 +1,67 @@
+{
+  "product": {
+    "id": 53,
+    "name": "Carcalete",
+    "name_en": "Carcalete",
+    "category": "Fel Principal",
+    "category_en": "Main Course",
+    "price": 52,
+    "description": "Ceafă de porc, cartofi prăjiți, telemea, ou",
+    "description_en": "Pork neck, french fries, telemea cheese, egg",
+    "weight": "200/170/50/30G",
+    "prep_time": null,
+    "spice_level": 0,
+    "is_vegetarian": 0,
+    "is_spicy": 0,
+    "is_takeout_only": 0,
+    "allergens": "lapte, ouă",
+    "allergens_en": "milk, eggs"
+  },
+  "nutrition": {
+    "calories": null,
+    "protein": null,
+    "carbs": null,
+    "fat": null,
+    "fiber": null,
+    "sodium": null,
+    "sugar": null,
+    "salt": null
+  },
+  "recipe": {
+    "ingredients": [
+      {
+        "id": 497,
+        "name": "Cârnați afumați",
+        "category": "General",
+        "quantity": 50,
+        "unit": "g",
+        "unitStock": "g",
+        "wastePercentage": 0,
+        "variableConsumption": null,
+        "costPerUnit": 0.004127958007804014,
+        "totalCost": "0.21",
+        "totalCostWithWaste": "0.21",
+        "supplier": null,
+        "currentStock": 12112.526315789473,
+        "minStock": 10,
+        "stockStatus": "OK"
+      }
+    ],
+    "packagingRestaurant": [],
+    "packagingDelivery": []
+  },
+  "costs": {
+    "totalIngredientsCost": "0.21",
+    "totalCostWithWaste": "0.21",
+    "sellingPrice": 52,
+    "profitMargin": 51.79,
+    "markup": 99.6,
+    "foodCostPercentage": "0.40"
+  },
+  "stats": {
+    "totalIngredients": 1,
+    "totalPackagingItems": 0,
+    "hasNutritionalInfo": false,
+    "lowStockIngredients": 0
+  }
+}

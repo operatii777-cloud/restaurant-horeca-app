@@ -1,0 +1,51 @@
+﻿Ã¯Â»Â¿{
+  "productId": 343,
+  "productName": "Sos de MaionezÃ„ÂƒÃ†Â’ SimplÃ„ÂƒÃ†Â’",
+  "productCategory": "Sosuri ÃƒÂˆÃ¢Â„Â¢i PÃƒÂ¢ine",
+  "price": 3,
+  "description": "Sos de maionezÃ„ÂƒÃ†Â’ simplÃ„ÂƒÃ†Â’",
+  "ingredients": [
+    {
+      "ingredientId": 8,
+      "ingredientName": "OuÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "OuÃ„ÂƒÃ†Â’ ÃƒÂˆÃ¢Â„Â¢i lactate",
+      "quantityNeeded": 2,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 100,
+      "ingredientName": "Ulei",
+      "ingredientCategory": "Condimente ÃƒÂˆÃ¢Â„Â¢i Sosuri",
+      "quantityNeeded": 250,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 154,
+      "ingredientName": "LÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+      "ingredientCategory": "Legume ÃƒÂˆÃ¢Â„Â¢i Fructe",
+      "quantityNeeded": 0.5,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 58,
+      "ingredientName": "MuÃƒÂˆÃ¢Â„Â¢tar",
+      "ingredientCategory": "Condimente ÃƒÂˆÃ¢Â„Â¢i Sosuri",
+      "quantityNeeded": 10,
+      "unit": "buc",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 65,
+      "ingredientName": "Sare",
+      "ingredientCategory": "Panificatie",
+      "quantityNeeded": 3,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

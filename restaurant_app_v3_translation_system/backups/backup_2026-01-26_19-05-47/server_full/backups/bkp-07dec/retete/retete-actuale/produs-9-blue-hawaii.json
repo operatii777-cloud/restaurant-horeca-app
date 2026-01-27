@@ -1,0 +1,41 @@
+{
+  "productId": 9,
+  "productName": "Blue Hawaii",
+  "productCategory": "Băuturi și Coctailuri",
+  "price": 25,
+  "description": "Coctail fără alcool - Suc de ananas, blue curacao, piure de cocos",
+  "ingredients": [
+    {
+      "ingredientId": 190,
+      "ingredientName": "Suc de ananas",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 100,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 191,
+      "ingredientName": "Sirop blue curacao",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 30,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 192,
+      "ingredientName": "Piure de cocos",
+      "ingredientCategory": "Diverse",
+      "quantityNeeded": 40,
+      "unit": "ml",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 71,
+      "ingredientName": "Gheață",
+      "ingredientCategory": "Băuturi",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}

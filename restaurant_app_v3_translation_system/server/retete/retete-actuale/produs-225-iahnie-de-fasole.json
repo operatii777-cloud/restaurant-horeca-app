@@ -1,0 +1,19 @@
+﻿Ã¯Â»Â¿{
+  "productId": 225,
+  "productName": "Iahnie de Fasole",
+  "productCategory": "Fel Principal",
+  "price": 24,
+  "description": "Iahnie tradiÃƒÂˆÃ¢Â€ÂºionalÃ„ÂƒÃ†Â’ de fasole cu ceapÃ„ÂƒÃ†Â’ cÃ„ÂƒÃ†Â’litÃ„ÂƒÃ†Â’, boia de ardei ÃƒÂˆÃ¢Â„Â¢i condimente",
+  "ingredients": [
+    {
+      "ingredientId": 94,
+      "ingredientName": "CeapÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Fructe ÃƒÂˆÃ¢Â„Â¢i Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

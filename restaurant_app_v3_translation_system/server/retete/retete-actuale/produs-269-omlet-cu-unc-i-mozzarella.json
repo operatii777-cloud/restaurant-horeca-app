@@ -1,0 +1,27 @@
+﻿Ã¯Â»Â¿{
+  "productId": 269,
+  "productName": "OmletÃ„ÂƒÃ†Â’ cu ÃƒÂˆÃ‹ÂœuncÃ„ÂƒÃ†Â’ ÃƒÂˆÃ¢Â„Â¢i Mozzarella",
+  "productCategory": "Mic Dejun",
+  "price": 31,
+  "description": "OmletÃ„ÂƒÃ†Â’ clasicÃ„ÂƒÃ†Â’ cu ÃƒÂˆÃ¢Â„Â¢uncÃ„ÂƒÃ†Â’ ÃƒÂˆÃ¢Â„Â¢i mozzarella",
+  "ingredients": [
+    {
+      "ingredientId": 140,
+      "ingredientName": "ÃƒÂˆÃ‹ÂœuncÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 38,
+      "ingredientName": "Mozzarella",
+      "ingredientCategory": "Lactate ÃƒÂˆÃ¢Â„Â¢i BrÃƒÂ¢nzeturi",
+      "quantityNeeded": 150,
+      "unit": "kg",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

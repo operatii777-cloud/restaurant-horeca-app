@@ -1,0 +1,114 @@
+{
+  "restaurant_id": 1,
+  "tenant_code": "trattoria-al-forno",
+  
+  "basic_info": {
+    "name": "Restaurant App",
+    "industry": "restaurant",
+    "business_type": "full_service",
+    "cuisine_type": "italian",
+    "seating_capacity": 200,
+    "total_tables": 200
+  },
+  
+  "subscription": {
+    "plan": "enterprise",
+    "status": "active",
+    "started_at": "2025-01-01",
+    "expires_at": null
+  },
+  
+  "regional": {
+    "currency": "RON",
+    "locale": "ro-RO",
+    "timezone": "Europe/Bucharest",
+    "tax_id": "",
+    "fiscal_code": ""
+  },
+  
+  "features": {
+    "pos": true,
+    "inventory": true,
+    "recipes": true,
+    "tech_sheets": true,
+    "nir": true,
+    "stock_management": true,
+    "waste_tracking": true,
+    "delivery": false,
+    "takeaway": true,
+    "reservations": true,
+    "loyalty_program": true,
+    "happy_hour": true,
+    "daily_menu": true,
+    "promotions": true,
+    "analytics": true,
+    "bi_dashboard": true,
+    "staff_management": true,
+    "customer_feedback": true,
+    "marketing": true,
+    "fiscal_integration": true
+  },
+  
+  "modules": {
+    "orders": true,
+    "kitchen": true,
+    "bar": true,
+    "waiter": true,
+    "cashier": true,
+    "manager": true,
+    "admin": true,
+    "reports": true
+  },
+  
+  "operational": {
+    "auto_accept_orders": false,
+    "require_payment_confirmation": true,
+    "allow_cash_payment": true,
+    "allow_card_payment": true,
+    "allow_online_payment": false,
+    "tax_included_in_prices": true,
+    "default_vat_rate": 9,
+    "service_charge_enabled": false,
+    "service_charge_percent": 0,
+    "min_order_value": 0,
+    "delivery_fee": 0,
+    "free_delivery_threshold": 0
+  },
+  
+  "kpi_config": {
+    "enabled_kpis": [
+      "gross_revenue",
+      "net_profit",
+      "table_turnover",
+      "table_utilization",
+      "avg_order_value",
+      "customer_retention",
+      "satisfaction_score",
+      "cancellation_rate"
+    ],
+    "default_period": "month",
+    "refresh_interval": 300000
+  },
+  
+  "notifications": {
+    "email_enabled": true,
+    "sms_enabled": false,
+    "push_enabled": false,
+    "order_notifications": true,
+    "stock_alerts": true,
+    "low_stock_threshold": 10
+  },
+  
+  "integrations": {
+    "anaf": false,
+    "smartbill": false,
+    "fgo": false,
+    "glovo": false,
+    "foodpanda": false,
+    "tazz": false
+  },
+  
+  "version": "2.2.0",
+  "last_updated": "2025-10-28"
+}
+

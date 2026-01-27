@@ -1,0 +1,38 @@
+.missing-translations-page {
+  padding: 20px;
+}
+
+.missing-translations-page code {
+  background: #f4f4f4;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: #d63384;
+}
+
+.missing-translations-page .card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 12px;
+}
+
+.missing-translations-page .card-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 12px 12px 0 0;
+  padding: 15px 20px;
+}
+
+.missing-translations-page .table {
+  margin-bottom: 0;
+}
+
+.missing-translations-page .table thead {
+  background: #f8f9fa;
+}
+
+.missing-translations-page .table tbody tr:hover {
+  background-color: #f5f7ff;
+}
+

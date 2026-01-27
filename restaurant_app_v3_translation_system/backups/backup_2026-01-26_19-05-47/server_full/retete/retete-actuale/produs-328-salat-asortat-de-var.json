@@ -1,0 +1,43 @@
+﻿Ã¯Â»Â¿{
+  "productId": 328,
+  "productName": "SalatÃ„ÂƒÃ†Â’ AsortatÃ„ÂƒÃ†Â’ de VarÃ„ÂƒÃ†Â’",
+  "productCategory": "Salate ÃƒÂƒÃ…Â½nsoÃƒÂˆÃ¢Â€Âºitoare",
+  "price": 18,
+  "description": "RoÃƒÂˆÃ¢Â„Â¢ii, castraveÃƒÂˆÃ¢Â€Âºi, ardei kapia, ceapÃ„ÂƒÃ†Â’ roÃƒÂˆÃ¢Â„Â¢ie",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 94,
+      "ingredientName": "CeapÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Fructe ÃƒÂˆÃ¢Â„Â¢i Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 109,
+      "ingredientName": "Ardei kapia",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 5,
+      "ingredientName": "CastraveÃƒÂˆÃ¢Â€Âºi",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

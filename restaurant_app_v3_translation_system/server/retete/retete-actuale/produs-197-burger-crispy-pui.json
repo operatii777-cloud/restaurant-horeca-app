@@ -1,0 +1,43 @@
+﻿Ã¯Â»Â¿{
+  "productId": 197,
+  "productName": "Burger Crispy Pui",
+  "productCategory": "Fast Food",
+  "price": 56,
+  "description": "ChiflÃ„ÂƒÃ†Â’, pui crispy, salatÃ„ÂƒÃ†Â’ verde, ceddar, roÃƒÂˆÃ¢Â„Â¢ii, sos calypso, cartofi prÃ„ÂƒÃ†Â’jiÃƒÂˆÃ¢Â€Âºi",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 103,
+      "ingredientName": "SalatÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 67,
+      "ingredientName": "Cartofi",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 200,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 107,
+      "ingredientName": "Pui",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

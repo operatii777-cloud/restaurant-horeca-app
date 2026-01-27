@@ -1,0 +1,17 @@
+{
+  "productId": 322,
+  "productName": "Salată Halloumi",
+  "productCategory": "Salate",
+  "price": 44,
+  "description": "Legume la grătar, halloumi la grătar, dressing",
+  "ingredients": [
+    {
+      "ingredientId": 96,
+      "ingredientName": "Ou",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 1,
+      "unit": "buc",
+      "wastePercentage": 0
+    }
+  ]
+}

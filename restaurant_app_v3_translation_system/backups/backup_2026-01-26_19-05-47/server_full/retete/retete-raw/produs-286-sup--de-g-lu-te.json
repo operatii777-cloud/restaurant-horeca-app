@@ -1,0 +1,55 @@
+﻿Ã¯Â»Â¿{
+  "productId": 286,
+  "productName": "SupÃ„ÂƒÃ†Â’ de GÃ„ÂƒÃ†Â’luÃƒÂˆÃ¢Â„Â¢te",
+  "productCategory": "Ciorbe",
+  "ingredients": [
+    {
+      "ingredientId": 290,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 400,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 23,
+      "ingredientName": "morcovi",
+      "ingredientCategory": "General",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 126,
+      "ingredientName": "BurtÃ„ÂƒÃ†Â’ de vitÃ„ÂƒÃ†Â’ fiartÃ„ÂƒÃ†Â’ ÃƒÂˆÃ¢Â„Â¢i tÃ„ÂƒÃ†Â’iatÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 297,
+      "ingredientName": "GÃ„ÂƒÃ†Â’luÃƒÂˆÃ¢Â„Â¢te de griÃƒÂˆÃ¢Â„Â¢",
+      "ingredientCategory": "General",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 26,
+      "ingredientName": "pÃ„ÂƒÃ†Â’trunjel",
+      "ingredientCategory": "General",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

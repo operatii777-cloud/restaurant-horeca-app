@@ -1,0 +1,26 @@
+{
+  "productId": 179,
+  "productName": "Bucur Brună",
+  "productCategory": "Băuturi și Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 270,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 775,
+      "ingredientName": "Bucur Brună",
+      "ingredientCategory": "General",
+      "quantityNeeded": 500,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}

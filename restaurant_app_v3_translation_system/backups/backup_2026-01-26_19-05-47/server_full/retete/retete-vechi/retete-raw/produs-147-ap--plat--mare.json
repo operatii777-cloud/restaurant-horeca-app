@@ -1,0 +1,28 @@
+﻿Ã¯Â»Â¿{
+  "productId": 147,
+  "productName": "ApÃ„ÂƒÃ†Â’ PlatÃ„ÂƒÃ†Â’ Mare",
+  "productCategory": "RÃ„ÂƒÃ†Â’coritoare",
+  "ingredients": [
+    {
+      "ingredientId": 683,
+      "ingredientName": "ApÃ„ÂƒÃ†Â’ platÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "General",
+      "quantityNeeded": 500,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 270,
+      "ingredientName": null,
+      "ingredientCategory": null,
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

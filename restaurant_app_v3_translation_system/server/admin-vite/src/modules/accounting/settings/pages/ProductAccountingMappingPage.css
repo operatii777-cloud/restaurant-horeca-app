@@ -1,0 +1,53 @@
+.product-accounting-mapping-page {
+  padding: 20px;
+}
+
+.page-header {
+  margin-bottom: 30px;
+}
+
+.page-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1976d2;
+  margin-bottom: 10px;
+}
+
+.page-header p {
+  color: #666;
+  font-size: 1rem;
+}
+
+/* Fix pentru dropdown-ul de selectare ingredient */
+.product-accounting-mapping-page select,
+.product-accounting-mapping-page .form-control {
+  color: #000 !important;
+  background-color: #fff !important;
+}
+
+.product-accounting-mapping-page select option {
+  color: #000 !important;
+  background-color: #fff !important;
+}
+
+.product-accounting-mapping-page select:focus,
+.product-accounting-mapping-page .form-control:focus {
+  color: #000 !important;
+  background-color: #fff !important;
+  border-color: #0d6efd;
+}
+
+/* Asigură că textul din dropdown este vizibil */
+.product-accounting-mapping-page .form-select,
+.product-accounting-mapping-page select.form-control {
+  color: #212529 !important;
+  background-color: #fff !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+}
+
+.product-accounting-mapping-page .form-select option,
+.product-accounting-mapping-page select option {
+  color: #212529 !important;
+  background-color: #fff !important;
+}
+

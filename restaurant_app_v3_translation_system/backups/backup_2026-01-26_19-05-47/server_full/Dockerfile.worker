@@ -1,0 +1,18 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Instalează dependențe
+COPY package.json package-lock.json* ./
+RUN npm install --production
+
+# Copiază fișierele necesare
+COPY queue.js worker.js ./
+
+# Copiază .env.queue dacă există (optional)
+COPY queue-config.env.example .env.queue* ./
+
+EXPOSE 3000
+
+CMD ["node", "worker.js"]
+

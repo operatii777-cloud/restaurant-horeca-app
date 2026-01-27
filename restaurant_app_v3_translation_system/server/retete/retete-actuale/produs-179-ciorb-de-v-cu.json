@@ -1,0 +1,51 @@
+﻿Ã¯Â»Â¿{
+  "productId": 179,
+  "productName": "CiorbÃ„ÂƒÃ†Â’ de VÃ„ÂƒÃ†Â’cuÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’",
+  "productCategory": "Ciorbe",
+  "price": 28,
+  "description": "PulpÃ„ÂƒÃ†Â’ de vitÃ„ÂƒÃ†Â’, ceapÃ„ÂƒÃ†Â’ albÃ„ÂƒÃ†Â’, morcov, mazÃ„ÂƒÃ†Â’re, ÃƒÂˆÃ¢Â€ÂºelinÃ„ÂƒÃ†Â’, ardei kapia, fasole verde, cartofi, borÃƒÂˆÃ¢Â„Â¢, pÃ„ÂƒÃ†Â’trunjel",
+  "ingredients": [
+    {
+      "ingredientId": 94,
+      "ingredientName": "CeapÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Fructe ÃƒÂˆÃ¢Â„Â¢i Legume",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 109,
+      "ingredientName": "Ardei kapia",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 111,
+      "ingredientName": "Morcov",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 67,
+      "ingredientName": "Cartofi",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 200,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 112,
+      "ingredientName": "PÃ„ÂƒÃ†Â’trunjel",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 10,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

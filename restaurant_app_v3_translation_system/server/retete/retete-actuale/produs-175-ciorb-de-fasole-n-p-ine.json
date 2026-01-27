@@ -1,0 +1,27 @@
+﻿Ã¯Â»Â¿{
+  "productId": 175,
+  "productName": "CiorbÃ„ÂƒÃ†Â’ de Fasole ÃƒÂ®n PÃƒÂ¢ine",
+  "productCategory": "Ciorbe",
+  "price": 30,
+  "description": "CiorbÃ„ÂƒÃ†Â’ de fasole servitÃ„ÂƒÃ†Â’ ÃƒÂ®n pÃƒÂ¢ine evidatÃ„ÂƒÃ†Â’, cu afumÃ„ÂƒÃ†Â’turÃ„ÂƒÃ†Â’ ÃƒÂˆÃ¢Â„Â¢i smÃƒÂ¢ntÃƒÂ¢nÃ„ÂƒÃ†Â’",
+  "ingredients": [
+    {
+      "ingredientId": 113,
+      "ingredientName": "SmÃƒÂ¢ntÃƒÂ¢nÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 117,
+      "ingredientName": "PÃƒÂ¢ine",
+      "ingredientCategory": "PanificaÃƒÂˆÃ¢Â€Âºie",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

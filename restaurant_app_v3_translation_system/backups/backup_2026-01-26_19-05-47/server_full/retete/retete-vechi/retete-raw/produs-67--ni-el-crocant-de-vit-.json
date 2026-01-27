@@ -1,0 +1,37 @@
+﻿Ã¯Â»Â¿{
+  "productId": 67,
+  "productName": "ÃƒÂˆÃ‹ÂœniÃƒÂˆÃ¢Â€Âºel Crocant de VitÃ„ÂƒÃ†Â’",
+  "productCategory": "Fel Principal",
+  "ingredients": [
+    {
+      "ingredientId": 366,
+      "ingredientName": "Carne de viÃƒÂˆÃ¢Â€Âºel (spate)",
+      "ingredientCategory": "General",
+      "quantityNeeded": 180,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 64,
+      "ingredientName": "suc de lÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
+      "ingredientCategory": "General",
+      "quantityNeeded": 5,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    },
+    {
+      "ingredientId": 538,
+      "ingredientName": "Pesmet Panko/Crocant",
+      "ingredientCategory": "General",
+      "quantityNeeded": 40,
+      "unit": "g",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+

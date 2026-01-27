@@ -1,0 +1,59 @@
+﻿Ã¯Â»Â¿{
+  "productId": 284,
+  "productName": "Spaghete Bolognese",
+  "productCategory": "Paste",
+  "price": 42,
+  "description": "Paste fresh, carne de vitÃ„ÂƒÃ†Â’, sos de roÃƒÂˆÃ¢Â„Â¢ii, brÃƒÂ¢nzÃ„ÂƒÃ†Â’ durÃ„ÂƒÃ†Â’, vin roÃƒÂˆÃ¢Â„Â¢u",
+  "ingredients": [
+    {
+      "ingredientId": 7,
+      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii",
+      "ingredientCategory": "Legume",
+      "quantityNeeded": 50,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 108,
+      "ingredientName": "Carne de vitÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Carne",
+      "quantityNeeded": 200,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 13,
+      "ingredientName": "BrÃƒÂ¢nzÃ„ÂƒÃ†Â’ durÃ„ÂƒÃ†Â’",
+      "ingredientCategory": "Lactate",
+      "quantityNeeded": 30,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 64,
+      "ingredientName": "Paste",
+      "ingredientCategory": "Altele",
+      "quantityNeeded": 200,
+      "unit": "kg",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 14,
+      "ingredientName": "Sos de roÃƒÂˆÃ¢Â„Â¢ii",
+      "ingredientCategory": "Sosuri",
+      "quantityNeeded": 100,
+      "unit": "g",
+      "wastePercentage": 0
+    },
+    {
+      "ingredientId": 144,
+      "ingredientName": "Vin roÃƒÂˆÃ¢Â„Â¢u",
+      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
+      "quantityNeeded": 50,
+      "unit": "ml",
+      "wastePercentage": 0
+    }
+  ]
+}
+
+

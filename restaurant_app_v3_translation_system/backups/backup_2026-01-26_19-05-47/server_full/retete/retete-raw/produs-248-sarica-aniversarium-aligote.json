@@ -1,0 +1,19 @@
+﻿Ã¯Â»Â¿{
+  "productId": 248,
+  "productName": "Sarica Aniversarium Aligote",
+  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
+  "ingredients": [
+    {
+      "ingredientId": 765,
+      "ingredientName": "Sarica Aniversarium Aligote",
+      "ingredientCategory": "General",
+      "quantityNeeded": 150,
+      "unit": "ml",
+      "wastePercentage": 0,
+      "variableConsumption": null
+    }
+  ],
+  "packaging": []
+}
+
+
