@@ -1,27 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 215,
-  "productName": "Carcalete",
-  "productCategory": "Fel Principal",
-  "price": 52,
-  "description": "CeafÃ„ÂƒÃ†Â’ de porc, cartofi prÃ„ÂƒÃ†Â’jiÃƒÂˆÃ¢Â€Âºi, telemea, ou",
-  "ingredients": [
-    {
-      "ingredientId": 67,
-      "ingredientName": "Cartofi",
-      "ingredientCategory": "Altele",
-      "quantityNeeded": 200,
-      "unit": "kg",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 96,
-      "ingredientName": "Ou",
-      "ingredientCategory": "Lactate",
-      "quantityNeeded": 1,
-      "unit": "buc",
-      "wastePercentage": 0
-    }
-  ]
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:db3f75db5767cac97508033f256976470e5dbde36e7543b6dfa19d401462f089
+size 664

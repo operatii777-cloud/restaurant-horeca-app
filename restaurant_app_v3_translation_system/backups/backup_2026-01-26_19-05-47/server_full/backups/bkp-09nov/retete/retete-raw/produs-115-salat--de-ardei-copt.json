@@ -1,26 +1,3 @@
-{
-  "productId": 115,
-  "productName": "Salată de Ardei Copt",
-  "productCategory": "Salate Însoțitoare",
-  "ingredients": [
-    {
-      "ingredientId": 661,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 150,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 800,
-      "ingredientName": "Sos Usturoi Shaorma",
-      "ingredientCategory": "Sosuri",
-      "quantityNeeded": 15,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:c5886164150b01446586e60d38df7281fc27cf6d5db1226a2af50caf2a4215e2
+size 600

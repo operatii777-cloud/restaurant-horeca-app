@@ -1,27 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 264,
-  "productName": "Orez SÃ„ÂƒÃ†Â’lbatic",
-  "productCategory": "Garnituri",
-  "price": 18,
-  "description": "Orez sÃ„ÂƒÃ†Â’lbatic aromat",
-  "ingredients": [
-    {
-      "ingredientId": 162,
-      "ingredientName": "Orez sÃ„ÂƒÃ†Â’lbatic",
-      "ingredientCategory": "Cereale ÃƒÂˆÃ¢Â„Â¢i Paste",
-      "quantityNeeded": 80,
-      "unit": "g",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 156,
-      "ingredientName": "ApÃ„ÂƒÃ†Â’",
-      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
-      "quantityNeeded": 200,
-      "unit": "ml",
-      "wastePercentage": 0
-    }
-  ]
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:ec514cac838c6ba42be63374e6cf68e59f798cb92910e404bbcb729e62f9693c
+size 713

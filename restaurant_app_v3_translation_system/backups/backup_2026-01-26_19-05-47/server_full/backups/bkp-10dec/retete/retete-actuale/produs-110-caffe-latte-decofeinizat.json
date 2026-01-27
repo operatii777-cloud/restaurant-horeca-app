@@ -1,25 +1,3 @@
-{
-  "productId": 110,
-  "productName": "Caffe Latte Decofeinizată",
-  "productCategory": "Cafea/Ciocolată/Ceai",
-  "price": 19,
-  "description": "Latte fără cofeină",
-  "ingredients": [
-    {
-      "ingredientId": 25,
-      "ingredientName": "Cafea boabe",
-      "ingredientCategory": "Băuturi",
-      "quantityNeeded": 18,
-      "unit": "kg",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 20,
-      "ingredientName": "Lapte",
-      "ingredientCategory": "Lactate",
-      "quantityNeeded": 200,
-      "unit": "ml",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:11b1139c31f9ffd0148cbce94e8dbd637ca6ef78b1609e047011e89dcfe79f82
+size 575

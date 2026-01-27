@@ -1,26 +1,3 @@
-{
-  "productId": 156,
-  "productName": "Red Bull",
-  "productCategory": "Răcoritoare",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 705,
-      "ingredientName": "Red Bull",
-      "ingredientCategory": "General",
-      "quantityNeeded": 1,
-      "unit": "buc",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:149f64f263e04a9725515e7d71adcf022227138f128ed350c9a3f6c7fb007635
+size 569

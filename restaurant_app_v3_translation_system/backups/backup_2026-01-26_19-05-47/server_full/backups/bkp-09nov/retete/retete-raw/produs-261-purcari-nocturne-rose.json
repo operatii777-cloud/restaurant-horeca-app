@@ -1,17 +1,3 @@
-{
-  "productId": 261,
-  "productName": "Purcari Nocturne Rose",
-  "productCategory": "Băuturi și Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 761,
-      "ingredientName": "Purcari Nocturne Rose",
-      "ingredientCategory": "General",
-      "quantityNeeded": 150,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:d08b3e8bc646bbd762300542b48109b881c816cd20edeb0af80e76a003ed7e73
+size 393

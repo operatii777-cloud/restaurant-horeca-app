@@ -1,35 +1,3 @@
-{
-  "productId": 36,
-  "productName": "Crap Prăjit cu Mămăligă",
-  "productCategory": "Peste Fructe de Mare",
-  "ingredients": [
-    {
-      "ingredientId": 375,
-      "ingredientName": "Mălai (pentru pané)",
-      "ingredientCategory": "General",
-      "quantityNeeded": 10,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 589,
-      "ingredientName": "Crap (felie/porție)",
-      "ingredientCategory": "General",
-      "quantityNeeded": 200,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 590,
-      "ingredientName": "Mămăligă",
-      "ingredientCategory": "General",
-      "quantityNeeded": 150,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:d176c3dc40c1cf26ecea4cdbe66306492e6fa58bccfa1be4f19892fbeaf70583
+size 858

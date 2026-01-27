@@ -1,28 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 150,
-  "productName": "Pepsi Twist",
-  "productCategory": "RÃ„ÂƒÃ†Â’coritoare",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 700,
-      "ingredientName": "Pepsi Twist",
-      "ingredientCategory": "General",
-      "quantityNeeded": 1,
-      "unit": "buc",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:6ca9a5903570e8873fd749c77feb23d8b6fa467e42ee43889fb0d5b21832c0c8
+size 638

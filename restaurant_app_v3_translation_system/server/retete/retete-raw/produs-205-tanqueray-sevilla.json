@@ -1,28 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 205,
-  "productName": "Tanqueray Sevilla",
-  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 737,
-      "ingredientName": "Tanqueray Sevilla",
-      "ingredientCategory": "General",
-      "quantityNeeded": 50,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:f528589ab7609d35a1235ca9835c8b1ff9aeb20cbf554bf3c3b1a21f23015abf
+size 680

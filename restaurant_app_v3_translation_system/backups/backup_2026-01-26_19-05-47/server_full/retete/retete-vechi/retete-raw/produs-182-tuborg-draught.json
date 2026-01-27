@@ -1,28 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 182,
-  "productName": "Tuborg Draught",
-  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 781,
-      "ingredientName": "Tuborg Draught",
-      "ingredientCategory": "General",
-      "quantityNeeded": 500,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:094a082679e72a9399813d1c83b4563ec7dcc4d88e5a9588fe44f7966a0fd191
+size 675

@@ -1,26 +1,3 @@
-{
-  "productId": 213,
-  "productName": "Captain Morgan White",
-  "productCategory": "Băuturi și Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 714,
-      "ingredientName": "Captain Morgan White",
-      "ingredientCategory": "General",
-      "quantityNeeded": 50,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:ce64d0dbadd5d13ac7ec734ad5a7b6ab8a6ccc48e1eba5e435293aa571788cda
+size 604

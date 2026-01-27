@@ -1,17 +1,3 @@
-{
-  "productId": 225,
-  "productName": "Iahnie de Fasole",
-  "productCategory": "Fel Principal",
-  "price": 24,
-  "description": "Iahnie tradițională de fasole cu ceapă călită, boia de ardei și condimente",
-  "ingredients": [
-    {
-      "ingredientId": 94,
-      "ingredientName": "Ceapă",
-      "ingredientCategory": "Fructe și Legume",
-      "quantityNeeded": 30,
-      "unit": "g",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:fe9961cebd26f186cfdbc2a16c2fd24a1a47ab22e73e01738628cf071c0d0e3c
+size 432

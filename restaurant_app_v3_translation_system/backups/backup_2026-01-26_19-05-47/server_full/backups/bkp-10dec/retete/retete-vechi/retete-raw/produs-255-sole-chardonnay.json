@@ -1,17 +1,3 @@
-{
-  "productId": 255,
-  "productName": "Sole Chardonnay",
-  "productCategory": "Băuturi și Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 770,
-      "ingredientName": "Sole Chardonnay",
-      "ingredientCategory": "General",
-      "quantityNeeded": 150,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:dd81f39680bf4a1e62f702ebec7f1fe52e919799bfc84e7176c22acea310a680
+size 381

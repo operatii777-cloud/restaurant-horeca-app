@@ -1,35 +1,3 @@
-{
-  "productId": 113,
-  "productName": "Salată Asortată de Vară",
-  "productCategory": "Salate Însoțitoare",
-  "ingredients": [
-    {
-      "ingredientId": 815,
-      "ingredientName": "Ceapă tocată",
-      "ingredientCategory": "Diverse",
-      "quantityNeeded": 20,
-      "unit": "g",
-      "wastePercentage": 15,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 655,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 150,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 821,
-      "ingredientName": "Ulei vegetal",
-      "ingredientCategory": "Uleiuri și Grăsimi",
-      "quantityNeeded": 10,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:d044d86c547f767c80802861c11e5d76330998ea691171f7195f6797224b2677
+size 843

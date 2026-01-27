@@ -1,26 +1,3 @@
-{
-  "productId": 177,
-  "productName": "Tuborg Nonalcoolic",
-  "productCategory": "Băuturi și Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 782,
-      "ingredientName": "Tuborg Nonalcoolic",
-      "ingredientCategory": "General",
-      "quantityNeeded": 500,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:33df676fd9eb603bc836cb9ff6b53c7302462f45aa52e1bd6b159020524ff2a3
+size 601

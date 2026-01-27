@@ -1,35 +1,3 @@
-{
-  "productId": 89,
-  "productName": "Pizza Carnivore",
-  "productCategory": "Pizza",
-  "ingredients": [
-    {
-      "ingredientId": 604,
-      "ingredientName": "Blat de pizza (standard)",
-      "ingredientCategory": "General",
-      "quantityNeeded": 250,
-      "unit": "buc",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 3,
-      "ingredientName": "mozzarella",
-      "ingredientCategory": "General",
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 614,
-      "ingredientName": "Salam Picant (Pepperoni/Ventricina)",
-      "ingredientCategory": "General",
-      "quantityNeeded": 150,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:3659ecad615950d39500844d8c35fafd81badc144f53fe2da2d05324764da853
+size 849

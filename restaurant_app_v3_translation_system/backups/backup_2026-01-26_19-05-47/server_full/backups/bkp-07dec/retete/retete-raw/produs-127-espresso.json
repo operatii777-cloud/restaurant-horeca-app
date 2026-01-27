@@ -1,26 +1,3 @@
-{
-  "productId": 127,
-  "productName": "Espresso",
-  "productCategory": "Cafea/Ciocolată/Ceai",
-  "ingredients": [
-    {
-      "ingredientId": 245,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 30,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 122,
-      "ingredientName": "Cafea boabe",
-      "ingredientCategory": "Băuturi",
-      "quantityNeeded": 7,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:be48db4789ac3d4944998f60343b8d4ea6a09747335b1aa206098a04aa75d7bc
+size 580

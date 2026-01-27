@@ -1,17 +1,3 @@
-{
-  "productId": 3,
-  "productName": "Aperol Spritz",
-  "productCategory": "Băuturi și Coctailuri",
-  "price": 31,
-  "description": "Coctail clasic - Aperol, Prosecco, apă minerală, portocală",
-  "ingredients": [
-    {
-      "ingredientId": 71,
-      "ingredientName": "Gheață",
-      "ingredientCategory": "Băuturi",
-      "quantityNeeded": 50,
-      "unit": "g",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:2f9d417a3af87cfaa19fe8e38db276d035790d787a22e739363635a88538e7ea
+size 411

@@ -1,25 +1,3 @@
-{
-  "productId": 214,
-  "productName": "Antricot de Vită la Grătar",
-  "productCategory": "Fel Principal",
-  "price": 92,
-  "description": "Antricot de vită, cartofi la cuptor, ciuperci sote",
-  "ingredients": [
-    {
-      "ingredientId": 92,
-      "ingredientName": "Ciuperci",
-      "ingredientCategory": "Legume",
-      "quantityNeeded": 60,
-      "unit": "g",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 67,
-      "ingredientName": "Cartofi",
-      "ingredientCategory": "Altele",
-      "quantityNeeded": 200,
-      "unit": "kg",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:e492655ecc26dd53127b431c7eb7d96042ae85dc3c21cce27561f74c8f773956
+size 594

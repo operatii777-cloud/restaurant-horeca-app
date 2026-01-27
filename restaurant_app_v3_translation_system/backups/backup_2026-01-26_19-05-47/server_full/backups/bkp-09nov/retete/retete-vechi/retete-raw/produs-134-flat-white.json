@@ -1,35 +1,3 @@
-{
-  "productId": 134,
-  "productName": "Flat White",
-  "productCategory": "Cafea/Ciocolată/Ceai",
-  "ingredients": [
-    {
-      "ingredientId": 259,
-      "ingredientName": "Espresso (dublu Ristretto)",
-      "ingredientCategory": "General",
-      "quantityNeeded": 60,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 53,
-      "ingredientName": "lapte",
-      "ingredientCategory": "General",
-      "quantityNeeded": 120,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 247,
-      "ingredientName": "Espresso (dublu)",
-      "ingredientCategory": "General",
-      "quantityNeeded": 60,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:4e01963bf7767d50d6f12af085534bb664829cbdbb05331fd544644f83487686
+size 839

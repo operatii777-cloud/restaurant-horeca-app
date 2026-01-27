@@ -1,25 +1,3 @@
-{
-  "productId": 209,
-  "productName": "Shaorma de Pui",
-  "productCategory": "Fast Food",
-  "price": 25,
-  "description": "Shaorma de pui cu legume proaspete, sos usturoi și lipie",
-  "ingredients": [
-    {
-      "ingredientId": 15,
-      "ingredientName": "Usturoi",
-      "ingredientCategory": "Legume",
-      "quantityNeeded": 10,
-      "unit": "g",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 107,
-      "ingredientName": "Pui",
-      "ingredientCategory": "Carne",
-      "quantityNeeded": 200,
-      "unit": "g",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:20a007ba1104ff262620020b3d29b85ff647ee69c86b8d330694310cb4f4deb9
+size 576

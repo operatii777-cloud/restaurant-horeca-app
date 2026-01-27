@@ -1,15 +1,3 @@
-[
-  {
-    "id": 150,
-    "name": "Sos ro?ii",
-    "category": "Conserve",
-    "unit": "L",
-    "current_stock": 400,
-    "min_stock": 5,
-    "cost_per_unit": 12,
-    "supplier": "Furnizor Conserve",
-    "is_available": 1,
-    "created_at": "2025-09-27 13:44:01",
-    "last_updated": "2025-09-27 13:44:01"
-  }
-]
+version https://git-lfs.github.com/spec/v1
+oid sha256:6d82fb8bd039d5547c9609eeb1b20af2ffdb2d48f9b5f81566f9affa84fd8873
+size 310

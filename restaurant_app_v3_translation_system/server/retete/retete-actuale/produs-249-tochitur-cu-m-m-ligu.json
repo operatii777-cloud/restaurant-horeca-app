@@ -1,35 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 249,
-  "productName": "TochiturÃ„ÂƒÃ†Â’ cu MÃ„ÂƒÃ†Â’mÃ„ÂƒÃ†Â’liguÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’",
-  "productCategory": "Fel Principal",
-  "price": 34,
-  "description": "TochiturÃ„ÂƒÃ†Â’ tradiÃƒÂˆÃ¢Â€ÂºionalÃ„ÂƒÃ†Â’ moldoveneascÃ„ÂƒÃ†Â’ cu carne de porc, mÃ„ÂƒÃ†Â’mÃ„ÂƒÃ†Â’ligÃ„ÂƒÃ†Â’, smÃƒÂ¢ntÃƒÂ¢nÃ„ÂƒÃ†Â’ ÃƒÂˆÃ¢Â„Â¢i ou",
-  "ingredients": [
-    {
-      "ingredientId": 158,
-      "ingredientName": "Carne de porc",
-      "ingredientCategory": "Carne",
-      "quantityNeeded": 200,
-      "unit": "g",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 113,
-      "ingredientName": "SmÃƒÂ¢ntÃƒÂ¢nÃ„ÂƒÃ†Â’",
-      "ingredientCategory": "Lactate",
-      "quantityNeeded": 50,
-      "unit": "g",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 96,
-      "ingredientName": "Ou",
-      "ingredientCategory": "Lactate",
-      "quantityNeeded": 1,
-      "unit": "buc",
-      "wastePercentage": 0
-    }
-  ]
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:ded1c1c5f02e56eadb3f8bfb19c5ba093292d3598dcb656381a25d2e38d97880
+size 1164

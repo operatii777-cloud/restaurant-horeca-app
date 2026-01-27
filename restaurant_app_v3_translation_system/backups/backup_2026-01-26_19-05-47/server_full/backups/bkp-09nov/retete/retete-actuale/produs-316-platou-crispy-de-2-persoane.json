@@ -1,33 +1,3 @@
-{
-  "productId": 316,
-  "productName": "Platou Crispy de 2 Persoane",
-  "productCategory": "Platouri",
-  "price": 155,
-  "description": "Pui crispy, cartofi prăjiți, salată coleslaw, sos calypso, sos aioli",
-  "ingredients": [
-    {
-      "ingredientId": 103,
-      "ingredientName": "Salată",
-      "ingredientCategory": "Legume",
-      "quantityNeeded": 30,
-      "unit": "g",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 67,
-      "ingredientName": "Cartofi",
-      "ingredientCategory": "Altele",
-      "quantityNeeded": 200,
-      "unit": "kg",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 107,
-      "ingredientName": "Pui",
-      "ingredientCategory": "Carne",
-      "quantityNeeded": 200,
-      "unit": "g",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:4b8b9740e762eed93fee4c51619bd8a53ec1f6896835a20f74703bda2b800b57
+size 792

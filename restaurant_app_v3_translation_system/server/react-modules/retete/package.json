@@ -1,27 +1,3 @@
-{
-  "name": "retete-module",
-  "version": "1.0.0",
-  "description": "Modul React pentru gestionarea rețetelor și fișelor tehnice - Restaurant App",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "ag-grid-react": "^31.3.2",
-    "ag-grid-community": "^31.3.2",
-    "axios": "^1.7.2",
-    "recharts": "^2.12.7"
-  },
-  "devDependencies": {
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react": "^4.3.1",
-    "vite": "^5.3.4"
-  }
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:7556575f24ff6600a41604a71a22ee47cdf0da343f9206dd91dac63a92c1b771
+size 644

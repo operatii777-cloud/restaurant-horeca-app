@@ -1,26 +1,3 @@
-{
-  "productId": 203,
-  "productName": "Tanqueray London Dry",
-  "productCategory": "Băuturi și Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 735,
-      "ingredientName": "Tanqueray London Dry",
-      "ingredientCategory": "General",
-      "quantityNeeded": 50,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:637a7f479af10236ad9fe6dc412d1007a79e62bef141788202962c78d63ea5aa
+size 604

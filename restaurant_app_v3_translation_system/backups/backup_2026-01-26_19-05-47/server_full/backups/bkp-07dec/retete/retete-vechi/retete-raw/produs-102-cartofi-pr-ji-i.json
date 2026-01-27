@@ -1,35 +1,3 @@
-{
-  "productId": 102,
-  "productName": "Cartofi Prăjiți",
-  "productCategory": "Garnituri",
-  "ingredients": [
-    {
-      "ingredientId": 169,
-      "ingredientName": "Sare de mare",
-      "ingredientCategory": "General",
-      "quantityNeeded": 2,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 32,
-      "ingredientName": "cartofi",
-      "ingredientCategory": "General",
-      "quantityNeeded": 200,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 821,
-      "ingredientName": "Ulei vegetal",
-      "ingredientCategory": "Uleiuri și Grăsimi",
-      "quantityNeeded": 1,
-      "unit": "cantitate necesară",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:37cd134cd78ccb7d17bed5aaf196bb0871def72b57a5d390a09ea5de0757739c
+size 844

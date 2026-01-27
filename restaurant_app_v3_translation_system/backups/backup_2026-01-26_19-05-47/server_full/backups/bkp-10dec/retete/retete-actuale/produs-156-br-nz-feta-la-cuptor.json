@@ -1,33 +1,3 @@
-{
-  "productId": 156,
-  "productName": "Brânză Feta la Cuptor",
-  "productCategory": "Aperitive Calde",
-  "price": 46,
-  "description": "Brânză feta, măsline kalamata, roșii cherry",
-  "ingredients": [
-    {
-      "ingredientId": 7,
-      "ingredientName": "Roșii",
-      "ingredientCategory": "Legume",
-      "quantityNeeded": 50,
-      "unit": "g",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 37,
-      "ingredientName": "Măsline",
-      "ingredientCategory": "Altele",
-      "quantityNeeded": 20,
-      "unit": "buc",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 90,
-      "ingredientName": "Brânză feta",
-      "ingredientCategory": "Lactate",
-      "quantityNeeded": 60,
-      "unit": "g",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:c66aaed46eba5600864b365033b0b96a35af6e1bada7d57b34a56a60b09ad08f
+size 778

@@ -1,28 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 218,
-  "productName": "Grey Goose",
-  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 720,
-      "ingredientName": "Grey Goose",
-      "ingredientCategory": "General",
-      "quantityNeeded": 50,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:336bef313fe7c127f0f46fac49d75e70b7f711894c9a8172233a377443198334
+size 666

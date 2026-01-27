@@ -1,35 +1,3 @@
-{
-  "productId": 119,
-  "productName": "Clătite cu Dulceață de Vișine",
-  "productCategory": "Deserturi",
-  "ingredients": [
-    {
-      "ingredientId": 401,
-      "ingredientName": "Clătite (aluat)",
-      "ingredientCategory": "General",
-      "quantityNeeded": 2,
-      "unit": "buc",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 130,
-      "ingredientName": "Smântână",
-      "ingredientCategory": "Lactate",
-      "quantityNeeded": 20,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 487,
-      "ingredientName": "Dulceață de Vișine",
-      "ingredientCategory": "General",
-      "quantityNeeded": 50,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:4a967f18275ea627f8089eff3738bc28d85ca342f17b6407f083a5d7a6998dda
+size 849

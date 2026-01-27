@@ -1,28 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 165,
-  "productName": "San Benedetto Ice Tea Clementine",
-  "productCategory": "RÃ„ÂƒÃ†Â’coritoare",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 706,
-      "ingredientName": "San Benedetto Ice Tea Clementine",
-      "ingredientCategory": "General",
-      "quantityNeeded": 1,
-      "unit": "buc",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:52c7ae36a8692ebbf9e01971f2fdd80ec800aec3766e3fff86fe5da31b0e628b
+size 680

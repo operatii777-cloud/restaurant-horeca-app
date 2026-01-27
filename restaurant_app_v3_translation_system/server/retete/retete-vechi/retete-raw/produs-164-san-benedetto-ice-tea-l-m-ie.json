@@ -1,28 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 164,
-  "productName": "San Benedetto Ice Tea LÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
-  "productCategory": "RÃ„ÂƒÃ†Â’coritoare",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 64,
-      "ingredientName": "suc de lÃ„ÂƒÃ†Â’mÃƒÂ¢ie",
-      "ingredientCategory": "General",
-      "quantityNeeded": 1,
-      "unit": "buc",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:2c7dd48c794456113ebb169885465073e3998db9eae2eab951963de78e697d9a
+size 706

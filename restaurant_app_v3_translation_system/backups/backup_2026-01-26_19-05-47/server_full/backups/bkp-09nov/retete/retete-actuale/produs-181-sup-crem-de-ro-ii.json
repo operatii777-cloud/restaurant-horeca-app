@@ -1,17 +1,3 @@
-{
-  "productId": 181,
-  "productName": "Supă Cremă de Roșii",
-  "productCategory": "Ciorbe",
-  "price": 18,
-  "description": "Supă cremă cu roșii coapte",
-  "ingredients": [
-    {
-      "ingredientId": 7,
-      "ingredientName": "Roșii",
-      "ingredientCategory": "Legume",
-      "quantityNeeded": 50,
-      "unit": "g",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:e5cd20ff6ef39897193be2e7d74fa1367046e28f792460e5234c0c6296336e5b
+size 368

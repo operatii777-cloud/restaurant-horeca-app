@@ -1,33 +1,3 @@
-{
-  "productId": 158,
-  "productName": "Ciuperci Quattro Formaggie",
-  "productCategory": "Aperitive Calde",
-  "price": 38,
-  "description": "Ciuperci champinion, gorgonzola, parmesan, mozzarella, brie",
-  "ingredients": [
-    {
-      "ingredientId": 92,
-      "ingredientName": "Ciuperci",
-      "ingredientCategory": "Legume",
-      "quantityNeeded": 60,
-      "unit": "g",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 38,
-      "ingredientName": "Mozzarella",
-      "ingredientCategory": "Lactate și Brânzeturi",
-      "quantityNeeded": 150,
-      "unit": "kg",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 93,
-      "ingredientName": "Gorgonzola",
-      "ingredientCategory": "Lactate",
-      "quantityNeeded": 40,
-      "unit": "g",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:aafa4f006566bdc0154d692266dd035f2d8031122fa9691203d439f86e6be422
+size 812

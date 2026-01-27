@@ -1,35 +1,3 @@
-{
-  "productId": 86,
-  "productName": "Pizza Margherita",
-  "productCategory": "Pizza",
-  "ingredients": [
-    {
-      "ingredientId": 604,
-      "ingredientName": "Blat de pizza (standard)",
-      "ingredientCategory": "General",
-      "quantityNeeded": 250,
-      "unit": "buc",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 3,
-      "ingredientName": "mozzarella",
-      "ingredientCategory": "General",
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 821,
-      "ingredientName": "Ulei vegetal",
-      "ingredientCategory": "Uleiuri și Grăsimi",
-      "quantityNeeded": 2,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:ab83a86e6591f002b9005e242e691c22f0678a065c3ee0007a532b3d80625d86
+size 838

@@ -1,26 +1,3 @@
-{
-  "productId": 114,
-  "productName": "Salată de Murături",
-  "productCategory": "Salate Însoțitoare",
-  "ingredients": [
-    {
-      "ingredientId": 803,
-      "ingredientName": "Castraveți Murați Shaorma",
-      "ingredientCategory": "Legume și Fructe",
-      "quantityNeeded": 150,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 821,
-      "ingredientName": "Ulei vegetal",
-      "ingredientCategory": "Uleiuri și Grăsimi",
-      "quantityNeeded": 5,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:34dabace2cafa288a04c7df14541652fb92f62664d4b9dd459f30145d0da54e1
+size 645

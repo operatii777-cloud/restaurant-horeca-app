@@ -1,28 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 204,
-  "productName": "Tanqueray Grapefruit",
-  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 734,
-      "ingredientName": "Tanqueray Grapefruit",
-      "ingredientCategory": "General",
-      "quantityNeeded": 50,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:adc29a1d7d68de2a911a0e8505d2bf06300091530bb8af00b08abe58493ff22d
+size 686

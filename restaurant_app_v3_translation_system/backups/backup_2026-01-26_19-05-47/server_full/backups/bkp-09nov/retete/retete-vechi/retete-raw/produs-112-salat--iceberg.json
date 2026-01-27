@@ -1,26 +1,3 @@
-{
-  "productId": 112,
-  "productName": "Salată Iceberg",
-  "productCategory": "Salate Însoțitoare",
-  "ingredients": [
-    {
-      "ingredientId": 797,
-      "ingredientName": "Salată Verde Shaorma",
-      "ingredientCategory": "Legume",
-      "quantityNeeded": 150,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 821,
-      "ingredientName": "Ulei vegetal",
-      "ingredientCategory": "Uleiuri și Grăsimi",
-      "quantityNeeded": 10,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:d58c20a16345a352f48238e067c404c90e4719a66c6d660936689704d4eb2d71
+size 624

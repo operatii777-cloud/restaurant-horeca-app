@@ -1,17 +1,3 @@
-{
-  "productId": 171,
-  "productName": "Ciorbă Rădăuțeană de Pui",
-  "productCategory": "Ciorbe",
-  "price": 25,
-  "description": "Ciorbă tradițională rădăuțeană cu pulpă de pui",
-  "ingredients": [
-    {
-      "ingredientId": 107,
-      "ingredientName": "Pui",
-      "ingredientCategory": "Carne",
-      "quantityNeeded": 200,
-      "unit": "g",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:65f5adcd6953db4b0bb7811f34a1352023ed10689522291eaa7827c7a3392303
+size 399

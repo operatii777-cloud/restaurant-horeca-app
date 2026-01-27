@@ -1,28 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 220,
-  "productName": "Johnnie Walker Black Label",
-  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 723,
-      "ingredientName": "Johnnie Walker Black Label",
-      "ingredientCategory": "General",
-      "quantityNeeded": 50,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:80f4b59e85ead5a5587ae0e79e82a3ec64290296cd1ca199e78afcb3a59fa5f3
+size 698

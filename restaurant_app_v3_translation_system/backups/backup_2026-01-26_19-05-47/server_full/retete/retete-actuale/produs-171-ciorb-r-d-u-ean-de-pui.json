@@ -1,19 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 171,
-  "productName": "CiorbÃ„ÂƒÃ†Â’ RÃ„ÂƒÃ†Â’dÃ„ÂƒÃ†Â’uÃƒÂˆÃ¢Â€ÂºeanÃ„ÂƒÃ†Â’ de Pui",
-  "productCategory": "Ciorbe",
-  "price": 25,
-  "description": "CiorbÃ„ÂƒÃ†Â’ tradiÃƒÂˆÃ¢Â€ÂºionalÃ„ÂƒÃ†Â’ rÃ„ÂƒÃ†Â’dÃ„ÂƒÃ†Â’uÃƒÂˆÃ¢Â€ÂºeanÃ„ÂƒÃ†Â’ cu pulpÃ„ÂƒÃ†Â’ de pui",
-  "ingredients": [
-    {
-      "ingredientId": 107,
-      "ingredientName": "Pui",
-      "ingredientCategory": "Carne",
-      "quantityNeeded": 200,
-      "unit": "g",
-      "wastePercentage": 0
-    }
-  ]
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:26ff29d9d762aceec25f8a22b2d91c6c9da15d3e613fc7e028c1b31ff9fb9146
+size 663

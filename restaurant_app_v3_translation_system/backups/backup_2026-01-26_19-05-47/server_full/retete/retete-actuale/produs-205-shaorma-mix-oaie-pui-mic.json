@@ -1,27 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 205,
-  "productName": "Shaorma Mix Oaie-Pui - MicÃ„ÂƒÃ†Â’",
-  "productCategory": "Fast Food",
-  "price": 24,
-  "description": "Shaorma mix oaie ÃƒÂˆÃ¢Â„Â¢i pui cu legume proaspete, sos usturoi - porÃƒÂˆÃ¢Â€Âºie micÃ„ÂƒÃ†Â’",
-  "ingredients": [
-    {
-      "ingredientId": 15,
-      "ingredientName": "Usturoi",
-      "ingredientCategory": "Legume",
-      "quantityNeeded": 10,
-      "unit": "g",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 107,
-      "ingredientName": "Pui",
-      "ingredientCategory": "Carne",
-      "quantityNeeded": 200,
-      "unit": "g",
-      "wastePercentage": 0
-    }
-  ]
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:3c5671ea923d738c5c0b3cbf0db05dddd1140b9d144934b0ff69a2b655a3f5bf
+size 723

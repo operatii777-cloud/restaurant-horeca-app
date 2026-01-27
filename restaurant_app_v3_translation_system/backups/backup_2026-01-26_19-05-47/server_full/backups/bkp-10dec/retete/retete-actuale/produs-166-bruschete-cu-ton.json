@@ -1,33 +1,3 @@
-{
-  "productId": 166,
-  "productName": "Bruschete cu Ton",
-  "productCategory": "Aperitive Reci",
-  "price": 33,
-  "description": "Baghetă, ton, maioneză, măsline kalamata, capere",
-  "ingredients": [
-    {
-      "ingredientId": 37,
-      "ingredientName": "Măsline",
-      "ingredientCategory": "Altele",
-      "quantityNeeded": 20,
-      "unit": "buc",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 42,
-      "ingredientName": "Capere",
-      "ingredientCategory": "Altele",
-      "quantityNeeded": 10,
-      "unit": "buc",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 102,
-      "ingredientName": "Ton",
-      "ingredientCategory": "Peste Fructe de Mare",
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:e8d7f07a44c819da9b8c0f21f572881d189f1836a4680b860c6e39ab66c2a911
+size 782

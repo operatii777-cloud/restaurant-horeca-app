@@ -1,17 +1,3 @@
-﻿Ã¯Â»Â¿[
-  {
-    "id": 800,
-    "name": "Sos Usturoi Shaorma",
-    "category": "Sosuri",
-    "unit": "ml",
-    "current_stock": 64752.76470588235,
-    "min_stock": 100,
-    "cost_per_unit": 1.1303157632422682,
-    "supplier": "Furnizor Test",
-    "is_available": 1,
-    "created_at": "2025-10-10 16:40:34",
-    "last_updated": "2025-10-13 15:11:13"
-  }
-]
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:c6651e561af3d890b8e4377a01ef7e4112454422c92fba446da6de3d72635a21
+size 382

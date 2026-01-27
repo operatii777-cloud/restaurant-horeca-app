@@ -1,26 +1,3 @@
-{
-  "productId": 174,
-  "productName": "Fresh Mix",
-  "productCategory": "Răcoritoare",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 686,
-      "ingredientName": "Fresh Mix",
-      "ingredientCategory": "General",
-      "quantityNeeded": 250,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:7b22e34d21a6df81ccfa6b6732f9c35c10f971689999dc4ecc691c33a6efee51
+size 572

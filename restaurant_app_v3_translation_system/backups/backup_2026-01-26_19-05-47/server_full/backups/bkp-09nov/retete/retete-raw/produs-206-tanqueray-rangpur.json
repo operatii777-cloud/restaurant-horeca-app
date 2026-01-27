@@ -1,26 +1,3 @@
-{
-  "productId": 206,
-  "productName": "Tanqueray Rangpur",
-  "productCategory": "Băuturi și Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 736,
-      "ingredientName": "Tanqueray Rangpur",
-      "ingredientCategory": "General",
-      "quantityNeeded": 50,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:f07a09bba061dc8ceef7ac16e1f86f3e6589ebe814cbbc3ff6d8d044470497b7
+size 598

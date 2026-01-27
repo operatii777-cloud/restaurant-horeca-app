@@ -1,35 +1,3 @@
-{
-  "productId": 118,
-  "productName": "Clătite cu Dulceață de Fructe de Pădure",
-  "productCategory": "Deserturi",
-  "ingredients": [
-    {
-      "ingredientId": 401,
-      "ingredientName": "Clătite (aluat)",
-      "ingredientCategory": "General",
-      "quantityNeeded": 2,
-      "unit": "buc",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 482,
-      "ingredientName": "Afine proaspete/dulceață",
-      "ingredientCategory": "General",
-      "quantityNeeded": 50,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 130,
-      "ingredientName": "Smântână",
-      "ingredientCategory": "Lactate",
-      "quantityNeeded": 20,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:bd1e28ed2990431d4708b9dce6d4dd914b85eed69dbb7b66bb96315131d244f8
+size 864

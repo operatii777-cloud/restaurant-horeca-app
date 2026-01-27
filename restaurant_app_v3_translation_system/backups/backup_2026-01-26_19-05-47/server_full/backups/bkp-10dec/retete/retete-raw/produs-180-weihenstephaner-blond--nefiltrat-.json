@@ -1,26 +1,3 @@
-{
-  "productId": 180,
-  "productName": "Weihenstephaner Blondă Nefiltrată",
-  "productCategory": "Băuturi și Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 783,
-      "ingredientName": "Weihenstephaner Blondă Nefiltrată",
-      "ingredientCategory": "General",
-      "quantityNeeded": 500,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:77f159fd24a64d0f0bc74759ac9ab144f6169e927ee701426fc95e4b52e19f3b
+size 635

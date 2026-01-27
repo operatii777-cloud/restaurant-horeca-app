@@ -1,28 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 69,
-  "productName": "PulpÃ„ÂƒÃ†Â’ de RaÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’ ConfiatÃ„ÂƒÃ†Â’",
-  "productCategory": "Fel Principal",
-  "ingredients": [
-    {
-      "ingredientId": 368,
-      "ingredientName": "PulpÃ„ÂƒÃ†Â’ de raÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’",
-      "ingredientCategory": "General",
-      "quantityNeeded": 250,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 169,
-      "ingredientName": "Sare de mare",
-      "ingredientCategory": "General",
-      "quantityNeeded": 5,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:d27cabc829008a8899b6dbbb51f89ab5673db5bd54e19802db27b9868169139a
+size 777

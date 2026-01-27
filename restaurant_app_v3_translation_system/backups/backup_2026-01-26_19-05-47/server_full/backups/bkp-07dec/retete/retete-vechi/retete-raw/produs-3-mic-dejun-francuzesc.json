@@ -1,35 +1,3 @@
-{
-  "productId": 3,
-  "productName": "Mic Dejun Francuzesc",
-  "productCategory": "Mic Dejun",
-  "ingredients": [
-    {
-      "ingredientId": 555,
-      "ingredientName": "Croissant",
-      "ingredientCategory": "General",
-      "quantityNeeded": 1,
-      "unit": "buc",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 812,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 40,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 557,
-      "ingredientName": "Espresso/Café Latte",
-      "ingredientCategory": "General",
-      "quantityNeeded": 1,
-      "unit": "porție",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:6ff0fc7e12ba101cdbeaa209abeae6d6757d2bb11b97221b88ddab3ea961b956
+size 817

@@ -1,26 +1,3 @@
-{
-  "productId": 220,
-  "productName": "Johnnie Walker Black Label",
-  "productCategory": "Băuturi și Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 723,
-      "ingredientName": "Johnnie Walker Black Label",
-      "ingredientCategory": "General",
-      "quantityNeeded": 50,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:9bb7e8e5b69c6e2e3c3a5b50cf75d55ae64d9e0ee5c454f77fa6987286d784ac
+size 616

@@ -1,35 +1,3 @@
-{
-  "productId": 209,
-  "productName": "Virgin Colada",
-  "productCategory": "Băuturi și Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 71,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 60,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 276,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 250,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 460,
-      "ingredientName": "Suc de Portocale/Ananas",
-      "ingredientCategory": "General",
-      "quantityNeeded": 150,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:2902da123974c332b791d1dfbdb0b515093f8dde9eb20be35508b2e0f375cec1
+size 814

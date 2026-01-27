@@ -7,6 +7,16 @@ package-lock.json
 restaurant_app_backup_*/
 tipizate_fixed_backup_*/
 
+# Exclude project backup and build folders
+restaurant_app_v3_translation_system/backups/
+restaurant_app_v3_translation_system/server/backups/
+restaurant_app_v3_translation_system/courier-flutter-app/build/
+restaurant_app_v3_translation_system/courier-flutter-app/.dart_tool/
+
+# Exclude large investigation and report files
+restaurant_app_v3_translation_system/server/admin-vite/errorboundary-investigation.json
+restaurant_app_v3_translation_system/server/backups/bkp-10dec/DEV-REPORTS/backend-route-audit.json
+
 # Exclude logs and reports
 *.log
 *.csv

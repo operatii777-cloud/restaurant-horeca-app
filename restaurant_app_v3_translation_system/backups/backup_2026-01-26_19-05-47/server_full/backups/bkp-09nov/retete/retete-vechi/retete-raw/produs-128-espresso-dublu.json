@@ -1,26 +1,3 @@
-{
-  "productId": 128,
-  "productName": "Espresso Dublu",
-  "productCategory": "Cafea/Ciocolată/Ceai",
-  "ingredients": [
-    {
-      "ingredientId": 122,
-      "ingredientName": "Cafea boabe",
-      "ingredientCategory": "Băuturi",
-      "quantityNeeded": 14,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 245,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 60,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:e6129311d888329a51d5fd56234f8e80176b97d7cc5e5b42c97a2d584d987e74
+size 587

@@ -1,35 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 64,
-  "productName": "Mimosa",
-  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
-  "price": 31,
-  "description": "Coctail clasic - Prosecco, fresh de portocale, triplu sec",
-  "ingredients": [
-    {
-      "ingredientId": 198,
-      "ingredientName": "Prosecco",
-      "ingredientCategory": "Diverse",
-      "quantityNeeded": 100,
-      "unit": "ml",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 46,
-      "ingredientName": "Suc de portocale",
-      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
-      "quantityNeeded": 100,
-      "unit": "buc",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 73,
-      "ingredientName": "Triple Sec",
-      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi Alcoolice",
-      "quantityNeeded": 15,
-      "unit": "ml",
-      "wastePercentage": 0
-    }
-  ]
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:8c4386911e39fe2e540f90b065c4c7715f166a7ac9b223661c5f35f3650f7068
+size 928

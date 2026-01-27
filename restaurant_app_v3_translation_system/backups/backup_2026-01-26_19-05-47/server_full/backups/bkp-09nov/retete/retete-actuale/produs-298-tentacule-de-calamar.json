@@ -1,25 +1,3 @@
-{
-  "productId": 298,
-  "productName": "Tentacule de Calamar",
-  "productCategory": "Peste și Fructe de Mare",
-  "price": 69,
-  "description": "Tentacule de calamar, roșii cherry, vin, unt",
-  "ingredients": [
-    {
-      "ingredientId": 7,
-      "ingredientName": "Roșii",
-      "ingredientCategory": "Legume",
-      "quantityNeeded": 50,
-      "unit": "g",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 60,
-      "ingredientName": "Unt",
-      "ingredientCategory": "Lactate și Brânzeturi",
-      "quantityNeeded": 20,
-      "unit": "kg",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:f0ad82b931d9ac372d29d6af27018bb66ea669bc458198ef02deced92f824039
+size 600

@@ -1,17 +1,3 @@
-{
-  "productId": 135,
-  "productName": "Fresh de Portocală",
-  "productCategory": "Răcoritoare",
-  "price": 27,
-  "description": "Suc proaspăt de portocale",
-  "ingredients": [
-    {
-      "ingredientId": 194,
-      "ingredientName": "Portocală",
-      "ingredientCategory": "Diverse",
-      "quantityNeeded": 4,
-      "unit": "felie",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:4dd844a44c8b9b2e5e2fb891c467cbf798111c46e4dd052329b817fe0b041b94
+size 378

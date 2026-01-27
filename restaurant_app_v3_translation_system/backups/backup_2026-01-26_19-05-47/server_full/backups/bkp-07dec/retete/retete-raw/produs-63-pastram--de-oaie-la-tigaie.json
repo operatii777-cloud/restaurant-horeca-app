@@ -1,35 +1,3 @@
-{
-  "productId": 63,
-  "productName": "Pastramă de Oaie la Tigaie",
-  "productCategory": "Fel Principal",
-  "ingredients": [
-    {
-      "ingredientId": 811,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 200,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 61,
-      "ingredientName": "vin roșu",
-      "ingredientCategory": "General",
-      "quantityNeeded": 50,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 525,
-      "ingredientName": "Mămăligă (servire)",
-      "ingredientCategory": "General",
-      "quantityNeeded": 150,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:f3c1e1bfd3d81b9261fe3f5cef98ce29ae42112f883ffc60f867ab8cd7eeae48
+size 826

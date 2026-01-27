@@ -1,34 +1,3 @@
-{
-  "job": {
-    "id": "order_148",
-    "data": {
-      "orderId": 148,
-      "finalItems": [
-        {
-          "itemId": "it_1762803281120_581496801",
-          "productId": 5,
-          "name": "B52 Shot",
-          "quantity": 1,
-          "finalPrice": 20,
-          "isFree": false,
-          "customizations": [],
-          "status": "pending",
-          "station": "bar"
-        }
-      ],
-      "orderType": {
-        "type": "individual",
-        "isTogether": false
-      }
-    },
-    "priority": 1,
-    "retries": 3,
-    "addedAt": 1762803281159,
-    "status": "waiting"
-  },
-  "error": {
-    "message": "Stoc insuficient pentru Triple Sec: necesar 20 ml, disponibil 0 ml",
-    "stack": "Error: Stoc insuficient pentru Triple Sec: necesar 20 ml, disponibil 0 ml\n    at Statement.<anonymous> (C:\\restaurant_app\\restaurant_app_v3_translation_system\\server\\database.js:2948:35)\n    at Statement.replacement (C:\\restaurant_app\\restaurant_app_v3_translation_system\\server\\node_modules\\sqlite3\\lib\\trace.js:25:27)\n    at Statement.replacement (C:\\restaurant_app\\restaurant_app_v3_translation_system\\server\\node_modules\\sqlite3\\lib\\trace.js:25:27)"
-  },
-  "failedAt": "2025-11-10T19:34:43.260Z"
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:c0a0b4d23770738c2432de70805ffc304ef455e1758fb9b2b7ac0328dd592e61
+size 1223

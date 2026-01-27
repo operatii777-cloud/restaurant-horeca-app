@@ -1,34 +1,3 @@
-{
-  "job": {
-    "id": "order_263",
-    "data": {
-      "orderId": 263,
-      "finalItems": [
-        {
-          "itemId": "it_1763125864411_566124908",
-          "productId": 5,
-          "name": "B52 Shot",
-          "quantity": 1,
-          "finalPrice": 18,
-          "isFree": false,
-          "customizations": [],
-          "status": "pending",
-          "station": "bar"
-        }
-      ],
-      "orderType": {
-        "type": "individual",
-        "isTogether": false
-      }
-    },
-    "priority": 1,
-    "retries": 3,
-    "addedAt": 1763125864421,
-    "status": "waiting"
-  },
-  "error": {
-    "message": "Stoc insuficient pentru Baileys Irish Cream: necesar 20 ml, disponibil 0 ml",
-    "stack": "Error: Stoc insuficient pentru Baileys Irish Cream: necesar 20 ml, disponibil 0 ml\n    at Statement.<anonymous> (C:\\restaurant_app\\restaurant_app_v3_translation_system\\server\\database.js:3164:35)\n    at Statement.replacement (C:\\restaurant_app\\restaurant_app_v3_translation_system\\server\\node_modules\\sqlite3\\lib\\trace.js:25:27)\n    at Statement.replacement (C:\\restaurant_app\\restaurant_app_v3_translation_system\\server\\node_modules\\sqlite3\\lib\\trace.js:25:27)"
-  },
-  "failedAt": "2025-11-14T13:11:04.710Z"
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:c2da1b8f8e9f6cfa7447a70076bb5af6f15ad1a39a6427266c1697ff2ee87bac
+size 1241

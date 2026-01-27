@@ -1,34 +1,3 @@
-﻿Ã¯Â»Â¿[
-  {
-    "id": 1055,
-    "name": "SalatÃƒÂƒÃ¢Â€ÂžÃƒÂ†Ã¢Â€Â™ Cesar",
-    "name_en": "SalatÃƒÂƒÃ¢Â€ÂžÃƒÂ†Ã¢Â€Â™ Cesar",
-    "description": "Produs generat automat cu ingredientele: salatÃ„ÂƒÃ†Â’ verde, piept de pui, parmezan, crutoane, ulei de mÃ„ÂƒÃ†Â’sline, ouÃ„ÂƒÃ†Â’, sare, piper",
-    "description_en": "Produs generat automat with ingredientele: salatÃ„ÂƒÃ†Â’ verde, chicken breast, parmezan, crutoane, olive oil, ouÃ„ÂƒÃ†Â’, sare, piper",
-    "category": "default",
-    "category_en": "default",
-    "price": 85.89,
-    "image_url": null,
-    "allergens": "ConÃƒÂˆÃ¢Â€Âºine gluten, lactozÃ„ÂƒÃ†Â’",
-    "allergens_en": "ConÃƒÂˆÃ¢Â€Âºine gluten, lactozÃ„ÂƒÃ†Â’",
-    "weight": "300g",
-    "is_vegetarian": 0,
-    "is_spicy": 0,
-    "is_takeout_only": 0,
-    "info": null,
-    "ingredients": null,
-    "prep_time": 15,
-    "spice_level": 0,
-    "calories": 859,
-    "protein": 129,
-    "carbs": 515,
-    "fat": 215,
-    "fiber": null,
-    "sodium": null,
-    "sugar": null,
-    "salt": null,
-    "is_sellable": 1
-  }
-]
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:3e589aae3d28a9ae16e56f1deb0596390ffd1c646b294b7ddd7f877870315b23
+size 1221

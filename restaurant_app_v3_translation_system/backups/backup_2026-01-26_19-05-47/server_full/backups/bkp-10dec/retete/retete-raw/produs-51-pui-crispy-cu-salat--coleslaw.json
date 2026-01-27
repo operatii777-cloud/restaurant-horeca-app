@@ -1,35 +1,3 @@
-{
-  "productId": 51,
-  "productName": "Pui Crispy cu Salată Coleslaw",
-  "productCategory": "Fel Principal",
-  "ingredients": [
-    {
-      "ingredientId": 363,
-      "ingredientName": "Piept de pui",
-      "ingredientCategory": "General",
-      "quantityNeeded": 180,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 23,
-      "ingredientName": "morcovi",
-      "ingredientCategory": "General",
-      "quantityNeeded": 150,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 535,
-      "ingredientName": "Pané Crispy (Fulgi de porumb)",
-      "ingredientCategory": "General",
-      "quantityNeeded": 30,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:561420ed714af42c87c45c6627ee3e9e08cacae2f90602a24b3db142cc104ba5
+size 850

@@ -1,28 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 108,
-  "productName": "Legume la GrÃ„ÂƒÃ†Â’tar",
-  "productCategory": "Garnituri",
-  "ingredients": [
-    {
-      "ingredientId": 821,
-      "ingredientName": "Ulei vegetal",
-      "ingredientCategory": "Uleiuri ÃƒÂˆÃ¢Â„Â¢i GrÃ„ÂƒÃ†Â’simi",
-      "quantityNeeded": 5,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 551,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 150,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:b377037da1fed8f7e809e45ffa68860e0778c4ec55394e6d3968c38511285ae9
+size 690

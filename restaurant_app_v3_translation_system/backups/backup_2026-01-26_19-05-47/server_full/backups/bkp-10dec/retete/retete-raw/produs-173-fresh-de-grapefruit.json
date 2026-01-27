@@ -1,26 +1,3 @@
-{
-  "productId": 173,
-  "productName": "Fresh de Grapefruit",
-  "productCategory": "Răcoritoare",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 687,
-      "ingredientName": "Fresh de Grapefruit",
-      "ingredientCategory": "General",
-      "quantityNeeded": 250,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:be24583d5f9226dc36f5c5ede25916d242d42d5a19f92dc87cbaeb74d72c99e8
+size 592

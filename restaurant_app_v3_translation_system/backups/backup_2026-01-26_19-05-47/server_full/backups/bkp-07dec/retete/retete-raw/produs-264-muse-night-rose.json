@@ -1,17 +1,3 @@
-{
-  "productId": 264,
-  "productName": "Muse Night Rose",
-  "productCategory": "Băuturi și Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 751,
-      "ingredientName": "Muse Night Rose",
-      "ingredientCategory": "General",
-      "quantityNeeded": 150,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:1badd6c753c7400467e39c0b41fac2011c0161a4dccd66d98780457aed5c90bd
+size 381

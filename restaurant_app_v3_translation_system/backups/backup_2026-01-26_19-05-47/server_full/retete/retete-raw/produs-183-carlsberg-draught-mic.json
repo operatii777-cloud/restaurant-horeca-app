@@ -1,28 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 183,
-  "productName": "Carlsberg Draught Mic",
-  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 778,
-      "ingredientName": "Carlsberg Draught Mic",
-      "ingredientCategory": "General",
-      "quantityNeeded": 330,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:042954e964d441b7025404da835eca896d54576a08813a6a645a9d585b6e73ad
+size 689

@@ -1,26 +1,3 @@
-{
-  "productId": 181,
-  "productName": "Holsten Nefiltrată",
-  "productCategory": "Băuturi și Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 779,
-      "ingredientName": "Holsten Nefiltrată",
-      "ingredientCategory": "General",
-      "quantityNeeded": 500,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:e5262a1e3e57ef84e5e2f3c30668b38b47b7fd33bcb2184e22da6ad2ac32c648
+size 603

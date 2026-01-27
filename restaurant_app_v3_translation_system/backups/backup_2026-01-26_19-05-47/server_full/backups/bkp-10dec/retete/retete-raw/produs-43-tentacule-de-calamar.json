@@ -1,35 +1,3 @@
-{
-  "productId": 43,
-  "productName": "Tentacule de Calamar",
-  "productCategory": "Peste Fructe de Mare",
-  "ingredients": [
-    {
-      "ingredientId": 638,
-      "ingredientName": "Calamari prăjiți",
-      "ingredientCategory": "General",
-      "quantityNeeded": 150,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 64,
-      "ingredientName": "suc de lămâie",
-      "ingredientCategory": "General",
-      "quantityNeeded": 30,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 602,
-      "ingredientName": "Făină/Pané",
-      "ingredientCategory": "General",
-      "quantityNeeded": 10,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:88f1897732558f95c0599ee1be68c4fd0f232c25ef066dd143c659270b23f93a
+size 844

@@ -1,33 +1,3 @@
-{
-  "productId": 293,
-  "productName": "Fritto Misto Tempura",
-  "productCategory": "Peste și Fructe de Mare",
-  "price": 67,
-  "description": "Carne midii, inele de calamar, creveți, tentacule de calamar, lămâie, sos aioli, sweet chilli",
-  "ingredients": [
-    {
-      "ingredientId": 137,
-      "ingredientName": "Creveți",
-      "ingredientCategory": "Peste Fructe de Mare",
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 138,
-      "ingredientName": "Midii",
-      "ingredientCategory": "Peste Fructe de Mare",
-      "quantityNeeded": 80,
-      "unit": "g",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 154,
-      "ingredientName": "Lămâie",
-      "ingredientCategory": "Legume și Fructe",
-      "quantityNeeded": 30,
-      "unit": "g",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:6719ab3b21ade45f4ec233cc2efa501e2059df16128c3dfaa8874a1c4cdf319d
+size 868

@@ -1,28 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 163,
-  "productName": "San Benedetto Ice Tea PiersicÃ„ÂƒÃ†Â’",
-  "productCategory": "RÃ„ÂƒÃ†Â’coritoare",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 708,
-      "ingredientName": "San Benedetto Ice Tea PiersicÃ„ÂƒÃ†Â’",
-      "ingredientCategory": "General",
-      "quantityNeeded": 1,
-      "unit": "buc",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:6a1e789fc704bdb007cb3ed426494fb55a519607c74071bea68369591ede13b7
+size 712

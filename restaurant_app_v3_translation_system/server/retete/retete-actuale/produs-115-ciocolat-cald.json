@@ -1,35 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 115,
-  "productName": "CiocolatÃ„ÂƒÃ†Â’ CaldÃ„ÂƒÃ†Â’",
-  "productCategory": "Cafea/CiocolatÃ„ÂƒÃ†Â’/Ceai",
-  "price": 18,
-  "description": "AlbÃ„ÂƒÃ†Â’/neagrÃ„ÂƒÃ†Â’",
-  "ingredients": [
-    {
-      "ingredientId": 89,
-      "ingredientName": "CiocolatÃ„ÂƒÃ†Â’ neagrÃ„ÂƒÃ†Â’",
-      "ingredientCategory": "Diverse",
-      "quantityNeeded": 50,
-      "unit": "g",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 20,
-      "ingredientName": "Lapte",
-      "ingredientCategory": "Lactate",
-      "quantityNeeded": 200,
-      "unit": "ml",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 33,
-      "ingredientName": "ZahÃ„ÂƒÃ†Â’r",
-      "ingredientCategory": "Panificatie",
-      "quantityNeeded": 10,
-      "unit": "kg",
-      "wastePercentage": 0
-    }
-  ]
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:4fe79ae9ca5925242b8a1ab15a7aa99825d64ad360386404e4838929cc2ef5e2
+size 943

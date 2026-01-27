@@ -1,35 +1,3 @@
-{
-  "productId": 129,
-  "productName": "Cafea Decofeinizată",
-  "productCategory": "Cafea/Ciocolată/Ceai",
-  "ingredients": [
-    {
-      "ingredientId": 245,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 150,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 244,
-      "ingredientName": "Cafea decofeinizată măcinată",
-      "ingredientCategory": "General",
-      "quantityNeeded": 7,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 672,
-      "ingredientName": "Cafea decofeinizată",
-      "ingredientCategory": "General",
-      "quantityNeeded": 7,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:d996a256ea5287a6b91495422b27cb0f53918348b5b5ff29650cbc9115267c7a
+size 847

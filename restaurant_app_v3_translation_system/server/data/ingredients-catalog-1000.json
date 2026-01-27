@@ -1,25 +1,3 @@
-{
-  "meta": {
-    "version": "1.0",
-    "total": 1000,
-    "generated": "2025-12-03",
-    "sources": ["USDA", "ANSES", "Manual RO"]
-  },
-  "categories": {
-    "cereale": 60,
-    "lactate": 80,
-    "oua": 10,
-    "carne": 120,
-    "peste": 80,
-    "legume": 150,
-    "fructe": 100,
-    "condimente": 150,
-    "uleiuri": 40,
-    "bauturi": 50,
-    "conserve": 60,
-    "congelate": 60,
-    "deserturi": 40
-  },
-  "note": "Pentru generare completă (1000 ingrediente), folosește: node scripts/expand-catalog-ai.js sau import din USDA API"
-}
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:94d612bf3036850e7ee92cd6039e94251bcc91670ac68353dbf2bf18582ce5b9
+size 564

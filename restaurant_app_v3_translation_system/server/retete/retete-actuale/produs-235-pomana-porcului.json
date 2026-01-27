@@ -1,27 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 235,
-  "productName": "Pomana Porcului",
-  "productCategory": "Fel Principal",
-  "price": 46,
-  "description": "CeafÃ„ÂƒÃ†Â’ de porc, vin alb, usturoi, cimbru, mÃ„ÂƒÃ†Â’mÃ„ÂƒÃ†Â’ligÃ„ÂƒÃ†Â’ la grÃ„ÂƒÃ†Â’tar",
-  "ingredients": [
-    {
-      "ingredientId": 15,
-      "ingredientName": "Usturoi",
-      "ingredientCategory": "Legume",
-      "quantityNeeded": 10,
-      "unit": "g",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 149,
-      "ingredientName": "Vin alb",
-      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
-      "quantityNeeded": 50,
-      "unit": "ml",
-      "wastePercentage": 0
-    }
-  ]
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:ba0c14a1f5a139667b6c157d0efa41f592e3cc49a459071187bef3a680503002
+size 742

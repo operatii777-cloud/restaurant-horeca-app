@@ -1,35 +1,3 @@
-{
-  "productId": 107,
-  "productName": "Broccoli Sote",
-  "productCategory": "Garnituri",
-  "ingredients": [
-    {
-      "ingredientId": 800,
-      "ingredientName": "Sos Usturoi Shaorma",
-      "ingredientCategory": "Sosuri",
-      "quantityNeeded": 2,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 821,
-      "ingredientName": "Ulei vegetal",
-      "ingredientCategory": "Uleiuri și Grăsimi",
-      "quantityNeeded": 10,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 544,
-      "ingredientName": "Broccoli (buchețele)",
-      "ingredientCategory": "General",
-      "quantityNeeded": 150,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:e4c51a5266635075a91ba81c5e340331eab29cc87f626612afcc3f0a2980a193
+size 844

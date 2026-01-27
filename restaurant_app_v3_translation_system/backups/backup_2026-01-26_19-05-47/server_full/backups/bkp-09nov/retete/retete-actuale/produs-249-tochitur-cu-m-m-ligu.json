@@ -1,33 +1,3 @@
-{
-  "productId": 249,
-  "productName": "Tochitură cu Mămăliguță",
-  "productCategory": "Fel Principal",
-  "price": 34,
-  "description": "Tochitură tradițională moldovenească cu carne de porc, mămăligă, smântână și ou",
-  "ingredients": [
-    {
-      "ingredientId": 158,
-      "ingredientName": "Carne de porc",
-      "ingredientCategory": "Carne",
-      "quantityNeeded": 200,
-      "unit": "g",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 113,
-      "ingredientName": "Smântână",
-      "ingredientCategory": "Lactate",
-      "quantityNeeded": 50,
-      "unit": "g",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 96,
-      "ingredientName": "Ou",
-      "ingredientCategory": "Lactate",
-      "quantityNeeded": 1,
-      "unit": "buc",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:682da76468a5d45ca20c419936ae015177f389059cd5673268d6c06458650f1c
+size 826

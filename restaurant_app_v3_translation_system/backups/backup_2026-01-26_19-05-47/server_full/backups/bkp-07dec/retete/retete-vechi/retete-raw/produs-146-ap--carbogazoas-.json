@@ -1,26 +1,3 @@
-{
-  "productId": 146,
-  "productName": "Apă Carbogazoasă",
-  "productCategory": "Răcoritoare",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 682,
-      "ingredientName": "Apă carbogazoasă",
-      "ingredientCategory": "General",
-      "quantityNeeded": 330,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:a79d42067aa582431b42bcffce9949c6540c50601982275487eb517bc96cb5c7
+size 590

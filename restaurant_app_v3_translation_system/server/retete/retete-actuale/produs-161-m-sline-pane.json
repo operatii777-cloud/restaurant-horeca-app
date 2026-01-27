@@ -1,19 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 161,
-  "productName": "MÃ„ÂƒÃ†Â’sline Pane",
-  "productCategory": "Aperitive Calde",
-  "price": 27,
-  "description": "MÃ„ÂƒÃ†Â’sline panate ÃƒÂˆÃ¢Â„Â¢i prÃ„ÂƒÃ†Â’jite",
-  "ingredients": [
-    {
-      "ingredientId": 37,
-      "ingredientName": "MÃ„ÂƒÃ†Â’sline",
-      "ingredientCategory": "Altele",
-      "quantityNeeded": 20,
-      "unit": "buc",
-      "wastePercentage": 0
-    }
-  ]
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:57ad20dee0811529ddd4d9c898d2ce05e08fdaf7bb278c8d2393c9a4b230a81c
+size 496

@@ -1,26 +1,3 @@
-{
-  "productId": 168,
-  "productName": "Limonadă cu Mango",
-  "productCategory": "Răcoritoare",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 692,
-      "ingredientName": "Limonadă cu Mango",
-      "ingredientCategory": "General",
-      "quantityNeeded": 1,
-      "unit": "buc",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:597e796658dc0d88b33d6d566c22236129efce2705ea47c8df8db8a500ab12e2
+size 589

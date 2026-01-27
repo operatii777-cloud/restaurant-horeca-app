@@ -1,17 +1,3 @@
-{
-  "productId": 258,
-  "productName": "Negrini Rose",
-  "productCategory": "Băuturi și Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 754,
-      "ingredientName": "Negrini Rose",
-      "ingredientCategory": "General",
-      "quantityNeeded": 150,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:599a8868fc4f5ebbc468b402f0bbc46a784978af884e893f587fab1f9c438405
+size 375

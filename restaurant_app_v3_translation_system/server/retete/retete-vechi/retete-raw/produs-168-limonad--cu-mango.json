@@ -1,28 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 168,
-  "productName": "LimonadÃ„ÂƒÃ†Â’ cu Mango",
-  "productCategory": "RÃ„ÂƒÃ†Â’coritoare",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 692,
-      "ingredientName": "LimonadÃ„ÂƒÃ†Â’ cu Mango",
-      "ingredientCategory": "General",
-      "quantityNeeded": 1,
-      "unit": "buc",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:217f8c6dfcef48b6ff7c23abb326639871f7322575a5eb5d98bb54adbc295828
+size 686

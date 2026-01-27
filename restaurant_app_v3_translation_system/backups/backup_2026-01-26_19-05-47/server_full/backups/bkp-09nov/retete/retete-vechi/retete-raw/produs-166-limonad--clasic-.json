@@ -1,26 +1,3 @@
-{
-  "productId": 166,
-  "productName": "Limonadă Clasică",
-  "productCategory": "Răcoritoare",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 689,
-      "ingredientName": "Limonadă Clasică",
-      "ingredientCategory": "General",
-      "quantityNeeded": 1,
-      "unit": "buc",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:f22545c7d059e19e7bca8fd827682ecb4d575fd7164cbc14202b9e5c59ed7809
+size 589

@@ -1,26 +1,3 @@
-{
-  "productId": 162,
-  "productName": "Lipton Ice Tea Lămâie",
-  "productCategory": "Răcoritoare",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 64,
-      "ingredientName": "suc de lămâie",
-      "ingredientCategory": "General",
-      "quantityNeeded": 1,
-      "unit": "buc",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:5668585e40a548c47fca29d0ee12bd92e30e95c9fdb331caca94f9bbfa1cd9be
+size 590

@@ -1,17 +1,3 @@
-{
-  "productId": 254,
-  "productName": "Muse Day",
-  "productCategory": "Băuturi și Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 750,
-      "ingredientName": "Muse Day",
-      "ingredientCategory": "General",
-      "quantityNeeded": 150,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:0fa68fabf4a1c28b6d86b407bf7b3ac59273b3714fc12ab0a62487b9b8b38395
+size 367

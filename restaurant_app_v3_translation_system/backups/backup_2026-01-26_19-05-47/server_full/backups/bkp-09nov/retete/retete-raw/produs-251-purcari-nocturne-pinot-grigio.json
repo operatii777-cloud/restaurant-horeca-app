@@ -1,17 +1,3 @@
-{
-  "productId": 251,
-  "productName": "Purcari Nocturne Pinot Grigio",
-  "productCategory": "Băuturi și Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 759,
-      "ingredientName": "Purcari Nocturne Pinot Grigio",
-      "ingredientCategory": "General",
-      "quantityNeeded": 150,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:712adaf2ad5f6b72b116d12524f60ed4bbf2e7a2f327c587a0e5a96e398fdeac
+size 409

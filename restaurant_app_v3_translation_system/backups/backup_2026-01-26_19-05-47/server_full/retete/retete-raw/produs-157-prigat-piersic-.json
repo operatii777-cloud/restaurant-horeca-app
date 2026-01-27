@@ -1,28 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 157,
-  "productName": "Prigat PiersicÃ„ÂƒÃ†Â’",
-  "productCategory": "RÃ„ÂƒÃ†Â’coritoare",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 703,
-      "ingredientName": "Prigat PiersicÃ„ÂƒÃ†Â’",
-      "ingredientCategory": "General",
-      "quantityNeeded": 330,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:52113eb7e2a72c227a2f85e12825261a0753d62acc06cd93247c0c046e376df7
+size 683

@@ -1,17 +1,3 @@
-{
-  "productId": 211,
-  "productName": "Shaorma de Vită - Medie",
-  "productCategory": "Fast Food",
-  "price": 28,
-  "description": "Shaorma de vită cu legume proaspete, sos usturoi - porție medie",
-  "ingredients": [
-    {
-      "ingredientId": 15,
-      "ingredientName": "Usturoi",
-      "ingredientCategory": "Legume",
-      "quantityNeeded": 10,
-      "unit": "g",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:9568a38a991d29b4d33bddf4dc9faf3a26dcbc7e0a07ece8c67ce113fb39e740
+size 411

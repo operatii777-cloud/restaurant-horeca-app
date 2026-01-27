@@ -1,32 +1,3 @@
-[
-  {
-    "id": 1055,
-    "name": "SalatÄƒ Cesar",
-    "name_en": "SalatÄƒ Cesar",
-    "description": "Produs generat automat cu ingredientele: salată verde, piept de pui, parmezan, crutoane, ulei de măsline, ouă, sare, piper",
-    "description_en": "Produs generat automat with ingredientele: salată verde, chicken breast, parmezan, crutoane, olive oil, ouă, sare, piper",
-    "category": "default",
-    "category_en": "default",
-    "price": 85.89,
-    "image_url": null,
-    "allergens": "Conține gluten, lactoză",
-    "allergens_en": "Conține gluten, lactoză",
-    "weight": "300g",
-    "is_vegetarian": 0,
-    "is_spicy": 0,
-    "is_takeout_only": 0,
-    "info": null,
-    "ingredients": null,
-    "prep_time": 15,
-    "spice_level": 0,
-    "calories": 859,
-    "protein": 129,
-    "carbs": 515,
-    "fat": 215,
-    "fiber": null,
-    "sodium": null,
-    "sugar": null,
-    "salt": null,
-    "is_sellable": 1
-  }
-]
+version https://git-lfs.github.com/spec/v1
+oid sha256:a7662aa915d375c476b5f6aaad9bda55ce5260336dd9818ff112978aa35dd70a
+size 932

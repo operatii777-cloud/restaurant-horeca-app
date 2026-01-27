@@ -1,26 +1,3 @@
-{
-  "productId": 150,
-  "productName": "Pepsi Twist",
-  "productCategory": "Răcoritoare",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 700,
-      "ingredientName": "Pepsi Twist",
-      "ingredientCategory": "General",
-      "quantityNeeded": 1,
-      "unit": "buc",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:0cf0c94deb20956a211926bc9fe8862bf16585f83b8229b74b4d15e1dec8ab3b
+size 575

@@ -1,26 +1,3 @@
-{
-  "productId": 59,
-  "productName": "Mici cu Cartofi Prăjiți",
-  "productCategory": "Fel Principal",
-  "ingredients": [
-    {
-      "ingredientId": 518,
-      "ingredientName": "Mici",
-      "ingredientCategory": "General",
-      "quantityNeeded": 3,
-      "unit": "buc",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 32,
-      "ingredientName": "cartofi",
-      "ingredientCategory": "General",
-      "quantityNeeded": 200,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:f3cd352e8ee8328569add5cce924b7833e29bed94478aee0fd3a86eebe8445f6
+size 591

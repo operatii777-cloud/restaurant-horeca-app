@@ -1,17 +1,3 @@
-{
-  "productId": 231,
-  "productName": "Obrăjori de Vită Braisați",
-  "productCategory": "Fel Principal",
-  "price": 48,
-  "description": "Obrăjori de vită braisați în vin roșu cu legume și ierburi aromate - preparat premium",
-  "ingredients": [
-    {
-      "ingredientId": 144,
-      "ingredientName": "Vin roșu",
-      "ingredientCategory": "Băuturi",
-      "quantityNeeded": 50,
-      "unit": "ml",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:beee03ea8b412addc2ad06ea209c839b720b53f199e0cd5700b94758bc211970
+size 451

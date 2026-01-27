@@ -1,33 +1,3 @@
-{
-  "timestamp": "2025-10-20T16:13:14.666Z",
-  "reteteVechi": {
-    "directory": "retete-vechi/retete-raw/",
-    "source": "Baza de date veche (pre-rebuild)",
-    "totalFiles": 335,
-    "description": "Rețete din baza de date înainte de rebuild (20 Oct 2025)"
-  },
-  "reteteActuale": {
-    "directory": "retete-actuale/",
-    "source": "Baza de date actuală (post-rebuild)",
-    "totalFiles": 247,
-    "totalProducts": 247,
-    "description": "Rețete din baza de date după rebuild (20 Oct 2025)"
-  },
-  "diferente": {
-    "totalDiferenta": -88,
-    "motivePosibile": [
-      "Produse duplicate eliminate în rebuild",
-      "Băuturi fără rețete (nu necesită)",
-      "Produse șterse în timpul curățeniei",
-      "Produse noi adăugate"
-    ]
-  },
-  "structura": {
-    "retete-vechi/retete-raw/": "Rețete vechi (335 fișiere)",
-    "retete-actuale/": "Rețete actuale (247 fișiere)",
-    "ingrediente/": "Ingrediente grupate pe categorii",
-    "produse/": "Produse grupate pe categorii",
-    "ambalaje/": "Rețete ambalaje",
-    "analiza/": "Analize și rapoarte"
-  }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:9f417d237c840a12a11fc8fc766a6ab7be7a31cb1fa0fe1235686f733b30fbd2
+size 1084

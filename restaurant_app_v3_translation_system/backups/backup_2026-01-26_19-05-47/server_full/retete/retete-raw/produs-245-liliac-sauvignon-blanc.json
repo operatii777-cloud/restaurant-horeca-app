@@ -1,19 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 245,
-  "productName": "Liliac Sauvignon Blanc",
-  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 748,
-      "ingredientName": "Liliac Sauvignon Blanc",
-      "ingredientCategory": "General",
-      "quantityNeeded": 150,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:09f147d769e14bef4d400a961c25cac3636b1d5e17f4b0af80660f6ad0f132f4
+size 468

@@ -1,28 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 223,
-  "productName": "Chivas 18 YO",
-  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 716,
-      "ingredientName": "Chivas 18 YO",
-      "ingredientCategory": "General",
-      "quantityNeeded": 50,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:4e89cb3a3e439ff1e0ddda14c2362b542269b2b8f1adb36534eebbe62cd74243
+size 670

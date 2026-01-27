@@ -1,27 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 116,
-  "productName": "Classic Cappuccino",
-  "productCategory": "Cafea/CiocolatÃ„ÂƒÃ†Â’/Ceai",
-  "price": 16,
-  "description": "Cappuccino clasic",
-  "ingredients": [
-    {
-      "ingredientId": 25,
-      "ingredientName": "Cafea boabe",
-      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
-      "quantityNeeded": 18,
-      "unit": "kg",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 20,
-      "ingredientName": "Lapte",
-      "ingredientCategory": "Lactate",
-      "quantityNeeded": 150,
-      "unit": "ml",
-      "wastePercentage": 0
-    }
-  ]
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:cb6280ab47059ad36c127ffa1e388d3f1f3a5bf846cb2d1a3ae9bfc231409efd
+size 642

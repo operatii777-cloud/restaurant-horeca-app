@@ -1,28 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 234,
-  "productName": "PÃ„ÂƒÃ†Â’lincÃ„ÂƒÃ†Â’ Bran",
-  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 731,
-      "ingredientName": "PÃ„ÂƒÃ†Â’lincÃ„ÂƒÃ†Â’ Bran",
-      "ingredientCategory": "General",
-      "quantityNeeded": 50,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:5eb0f4b214fc8513f8ce18064863444f89065b9b2f692eb9008ceb97b0d5723d
+size 742

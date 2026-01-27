@@ -1,25 +1,3 @@
-{
-  "productId": 327,
-  "productName": "Salată de Vară cu Pui și Avocado",
-  "productCategory": "Salate",
-  "price": 24,
-  "description": "Salată de vară cu pui și avocado",
-  "ingredients": [
-    {
-      "ingredientId": 103,
-      "ingredientName": "Salată",
-      "ingredientCategory": "Legume",
-      "quantityNeeded": 30,
-      "unit": "g",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 107,
-      "ingredientName": "Pui",
-      "ingredientCategory": "Carne",
-      "quantityNeeded": 200,
-      "unit": "g",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:8ad323f9778df3bdaf07dac09d1b986fa9a1259f837d7a30035a49506c4236c9
+size 573

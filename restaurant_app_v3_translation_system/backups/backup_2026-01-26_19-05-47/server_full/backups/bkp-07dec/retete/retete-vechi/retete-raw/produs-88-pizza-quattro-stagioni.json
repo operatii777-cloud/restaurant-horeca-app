@@ -1,35 +1,3 @@
-{
-  "productId": 88,
-  "productName": "Pizza Quattro Stagioni",
-  "productCategory": "Pizza",
-  "ingredients": [
-    {
-      "ingredientId": 3,
-      "ingredientName": "mozzarella",
-      "ingredientCategory": "General",
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 604,
-      "ingredientName": "Blat de pizza (standard)",
-      "ingredientCategory": "General",
-      "quantityNeeded": 250,
-      "unit": "buc",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 821,
-      "ingredientName": "Ulei vegetal",
-      "ingredientCategory": "Uleiuri și Grăsimi",
-      "quantityNeeded": 120,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:17a80800752324925e5875eb82d354864fc02a5536b10be73a382defd88b3f61
+size 846

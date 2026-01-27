@@ -1,35 +1,3 @@
-{
-  "productId": 135,
-  "productName": "Classic Cappuccino",
-  "productCategory": "Cafea/Ciocolată/Ceai",
-  "ingredients": [
-    {
-      "ingredientId": 240,
-      "ingredientName": "Espresso",
-      "ingredientCategory": "General",
-      "quantityNeeded": 30,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 53,
-      "ingredientName": "lapte",
-      "ingredientCategory": "General",
-      "quantityNeeded": 120,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 278,
-      "ingredientName": "Sirop de Zahăr",
-      "ingredientCategory": "General",
-      "quantityNeeded": 5,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:f62d3366b7d5102ae881e64c2feecd1b01d43f1cbd1e783967c67f34c3753c92
+size 826

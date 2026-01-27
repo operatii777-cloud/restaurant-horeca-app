@@ -1,35 +1,3 @@
-{
-  "productId": 70,
-  "productName": "Mușchi de Vită la Grătar",
-  "productCategory": "Fel Principal",
-  "ingredients": [
-    {
-      "ingredientId": 126,
-      "ingredientName": "Burtă de vită fiartă și tăiată",
-      "ingredientCategory": "Carne",
-      "quantityNeeded": 200,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 169,
-      "ingredientName": "Sare de mare",
-      "ingredientCategory": "General",
-      "quantityNeeded": 5,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 821,
-      "ingredientName": "Ulei vegetal",
-      "ingredientCategory": "Uleiuri și Grăsimi",
-      "quantityNeeded": 10,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:b860bdd4f24f3b901929584e5acf16f2274b0ccfac2d2ccf8ac1a31d25dc7c4f
+size 868

@@ -1,17 +1,3 @@
-{
-  "productId": 230,
-  "productName": "Mușchi de Vită la Grătar",
-  "productCategory": "Fel Principal",
-  "price": 95,
-  "description": "Mușchi de vită, cartofi zdrobiți și sos chimichurri",
-  "ingredients": [
-    {
-      "ingredientId": 67,
-      "ingredientName": "Cartofi",
-      "ingredientCategory": "Altele",
-      "quantityNeeded": 200,
-      "unit": "kg",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:68196025befc47e4f6846f0bcf25ce75b7269dd6d351b3949c33cce64889e340
+size 410

@@ -1,17 +1,3 @@
-{
-  "productId": 257,
-  "productName": "Liliac Rose",
-  "productCategory": "Băuturi și Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 747,
-      "ingredientName": "Liliac Rose",
-      "ingredientCategory": "General",
-      "quantityNeeded": 150,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:656178e9668d48f190689e6f98e0b42a7cdb4c2b8373874afe6bd7114d8b862e
+size 373

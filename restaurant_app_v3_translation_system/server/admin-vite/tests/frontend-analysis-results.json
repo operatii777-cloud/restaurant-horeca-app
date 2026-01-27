@@ -1,21 +1,3 @@
-{
-  "summary": {
-    "totalConsoleErrors": 0,
-    "totalAPIErrors": 0,
-    "totalButtonErrors": 0,
-    "totalPDFErrors": 0,
-    "totalReportErrors": 0,
-    "totalFormErrors": 0,
-    "totalNavigationErrors": 0,
-    "timestamp": "2026-01-26T17:16:32.627Z"
-  },
-  "issues": {
-    "consoleErrors": [],
-    "apiErrors": [],
-    "buttonErrors": [],
-    "pdfErrors": [],
-    "reportErrors": [],
-    "formErrors": [],
-    "navigationErrors": []
-  }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:46ead916f1c6ca9c99b1bb1224fc3e3b70f02a3d94580cf5f4880031e94f5cd5
+size 442

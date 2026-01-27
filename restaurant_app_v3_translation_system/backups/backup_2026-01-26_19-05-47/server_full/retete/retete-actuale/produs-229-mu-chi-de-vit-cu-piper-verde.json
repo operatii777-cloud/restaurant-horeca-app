@@ -1,27 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 229,
-  "productName": "MuÃƒÂˆÃ¢Â„Â¢chi de VitÃ„ÂƒÃ†Â’ cu Piper Verde",
-  "productCategory": "Fel Principal",
-  "price": 100,
-  "description": "MuÃƒÂˆÃ¢Â„Â¢chi de vitÃ„ÂƒÃ†Â’, piper verde, cognac, cartofi la cuptor",
-  "ingredients": [
-    {
-      "ingredientId": 67,
-      "ingredientName": "Cartofi",
-      "ingredientCategory": "Altele",
-      "quantityNeeded": 200,
-      "unit": "kg",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 98,
-      "ingredientName": "Piper",
-      "ingredientCategory": "Condimente",
-      "quantityNeeded": 2,
-      "unit": "g",
-      "wastePercentage": 0
-    }
-  ]
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:12c25f7f745894499a6a6489f94d05bb68a48b03c87f51bf5617f703fd214619
+size 720

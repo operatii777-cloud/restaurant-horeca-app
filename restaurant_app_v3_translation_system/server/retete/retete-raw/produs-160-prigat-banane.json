@@ -1,28 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 160,
-  "productName": "Prigat Banane",
-  "productCategory": "RÃ„ÂƒÃ†Â’coritoare",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 480,
-      "ingredientName": "Banane (caramelizate/sotate)",
-      "ingredientCategory": "General",
-      "quantityNeeded": 330,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:306708cac16d184c4b0d1dd8b683d64913b6c47b5f32cfd8d7858719ca5a1932
+size 658

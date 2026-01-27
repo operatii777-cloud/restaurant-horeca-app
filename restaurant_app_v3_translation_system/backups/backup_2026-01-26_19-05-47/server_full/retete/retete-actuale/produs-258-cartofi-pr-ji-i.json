@@ -1,27 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 258,
-  "productName": "Cartofi PrÃ„ÂƒÃ†Â’jiÃƒÂˆÃ¢Â€Âºi",
-  "productCategory": "Garnituri",
-  "price": 16,
-  "description": "Cartofi prÃ„ÂƒÃ†Â’jiÃƒÂˆÃ¢Â€Âºi clasici",
-  "ingredients": [
-    {
-      "ingredientId": 67,
-      "ingredientName": "Cartofi",
-      "ingredientCategory": "Altele",
-      "quantityNeeded": 250,
-      "unit": "kg",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 31,
-      "ingredientName": "Ulei de floarea-soarelui",
-      "ingredientCategory": "Condimente ÃƒÂˆÃ¢Â„Â¢i Sosuri",
-      "quantityNeeded": 50,
-      "unit": "l",
-      "wastePercentage": 0
-    }
-  ]
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:6b6e2f12b8b91efb06415685f922e56b6aea64f1735cb50c3855e2c55c05fc24
+size 720

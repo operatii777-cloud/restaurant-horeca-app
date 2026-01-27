@@ -1,35 +1,3 @@
-{
-  "productId": 109,
-  "productName": "Salată de Varză cu Morcov și Mărar",
-  "productCategory": "Salate Însoțitoare",
-  "ingredients": [
-    {
-      "ingredientId": 825,
-      "ingredientName": "Varză albă",
-      "ingredientCategory": "Legume și Fructe",
-      "quantityNeeded": 120,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 830,
-      "ingredientName": "Rozmarin",
-      "ingredientCategory": "Sosuri și Condimente",
-      "quantityNeeded": 15,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 23,
-      "ingredientName": "morcovi",
-      "ingredientCategory": "General",
-      "quantityNeeded": 30,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:eaa132662395c62aca330bf6c36bf0094b5574bf5c5816ad2aff4e93c01996c3
+size 868

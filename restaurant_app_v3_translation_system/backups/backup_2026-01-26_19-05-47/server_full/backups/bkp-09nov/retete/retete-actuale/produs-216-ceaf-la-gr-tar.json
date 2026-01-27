@@ -1,17 +1,3 @@
-{
-  "productId": 216,
-  "productName": "Ceafă la Grătar",
-  "productCategory": "Fel Principal",
-  "price": 44,
-  "description": "Ceafă de porc, cartofi prăjiți",
-  "ingredients": [
-    {
-      "ingredientId": 67,
-      "ingredientName": "Cartofi",
-      "ingredientCategory": "Altele",
-      "quantityNeeded": 200,
-      "unit": "kg",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:d1f7c4718b648d202275510fd2472c7bf10a81d950115344fa8893bfbbb688c6
+size 378

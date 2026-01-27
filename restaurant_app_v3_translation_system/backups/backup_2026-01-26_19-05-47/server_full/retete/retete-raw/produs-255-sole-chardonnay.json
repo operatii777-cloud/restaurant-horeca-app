@@ -1,19 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 255,
-  "productName": "Sole Chardonnay",
-  "productCategory": "BÃ„ÂƒÃ†Â’uturi ÃƒÂˆÃ¢Â„Â¢i Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 770,
-      "ingredientName": "Sole Chardonnay",
-      "ingredientCategory": "General",
-      "quantityNeeded": 150,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:d15bf27244eeefdc08a56e9f7fb4089613597a7bcd815f1faa5e1c9e9a1f328f
+size 454

@@ -1,35 +1,3 @@
-{
-  "productId": 306,
-  "productName": "Șnițel Vienez",
-  "productCategory": "Fel Principal",
-  "ingredients": [
-    {
-      "ingredientId": 364,
-      "ingredientName": "Pesmet/Făină/Ou (pané)",
-      "ingredientCategory": "General",
-      "quantityNeeded": 30,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 366,
-      "ingredientName": "Carne de vițel (spate)",
-      "ingredientCategory": "General",
-      "quantityNeeded": 180,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 64,
-      "ingredientName": "suc de lămâie",
-      "ingredientCategory": "General",
-      "quantityNeeded": 5,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:580ce609eaeb167a43b45f1de8e876f410a75ce5a7db41ba2ccb6c90b4b8c32b
+size 848

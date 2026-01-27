@@ -1,25 +1,3 @@
-{
-  "productId": 269,
-  "productName": "Omletă cu Șuncă și Mozzarella",
-  "productCategory": "Mic Dejun",
-  "price": 31,
-  "description": "Omletă clasică cu șuncă și mozzarella",
-  "ingredients": [
-    {
-      "ingredientId": 140,
-      "ingredientName": "Șuncă",
-      "ingredientCategory": "Carne",
-      "quantityNeeded": 50,
-      "unit": "g",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 38,
-      "ingredientName": "Mozzarella",
-      "ingredientCategory": "Lactate și Brânzeturi",
-      "quantityNeeded": 150,
-      "unit": "kg",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:e732b31785963c856fd6a76bd08a613bdcd69b15ac3a00ab6168eb4af1124e82
+size 605

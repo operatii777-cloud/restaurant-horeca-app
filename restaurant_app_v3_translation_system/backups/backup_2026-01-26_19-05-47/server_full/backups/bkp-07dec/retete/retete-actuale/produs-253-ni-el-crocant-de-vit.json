@@ -1,17 +1,3 @@
-{
-  "productId": 253,
-  "productName": "Șnițel Crocant de Vită",
-  "productCategory": "Fel Principal",
-  "price": 91,
-  "description": "Mușchi de vită, cartofi prăjiți, sos brânzeturi",
-  "ingredients": [
-    {
-      "ingredientId": 67,
-      "ingredientName": "Cartofi",
-      "ingredientCategory": "Altele",
-      "quantityNeeded": 200,
-      "unit": "kg",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:4dd14a294252195ee59ead7a661fdc7efd292ba1a3dc573c8b46f7651b2986e6
+size 405

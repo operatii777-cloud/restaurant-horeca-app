@@ -1,17 +1,3 @@
-{
-  "productId": 280,
-  "productName": "Asti Martini Dolce",
-  "productCategory": "Băuturi și Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 739,
-      "ingredientName": "Asti Martini Dolce",
-      "ingredientCategory": "General",
-      "quantityNeeded": 150,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:2f29e55212e5e6864b35b0d67327c9c0506127cdfbeebcfee481b717b14f362e
+size 387

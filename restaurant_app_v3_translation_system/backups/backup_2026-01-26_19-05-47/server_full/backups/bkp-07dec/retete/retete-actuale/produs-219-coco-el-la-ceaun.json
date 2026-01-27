@@ -1,17 +1,3 @@
-{
-  "productId": 219,
-  "productName": "Cocoșel la Ceaun",
-  "productCategory": "Fel Principal",
-  "price": 65,
-  "description": "Cocoșel, cartofi prăjiți",
-  "ingredients": [
-    {
-      "ingredientId": 67,
-      "ingredientName": "Cartofi",
-      "ingredientCategory": "Altele",
-      "quantityNeeded": 200,
-      "unit": "kg",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:e0cb69f15597f64195f14cae5264de4ec428776e8cc77417d49f996717c1d75f
+size 372

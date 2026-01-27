@@ -1,28 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 65,
-  "productName": "MuÃƒÂˆÃ¢Â„Â¢chi de VitÃ„ÂƒÃ†Â’ cu Piper Verde",
-  "productCategory": "Fel Principal",
-  "ingredients": [
-    {
-      "ingredientId": 126,
-      "ingredientName": "BurtÃ„ÂƒÃ†Â’ de vitÃ„ÂƒÃ†Â’ fiartÃ„ÂƒÃ†Â’ ÃƒÂˆÃ¢Â„Â¢i tÃ„ÂƒÃ†Â’iatÃ„ÂƒÃ†Â’",
-      "ingredientCategory": "Carne",
-      "quantityNeeded": 200,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 117,
-      "ingredientName": "Piper negru",
-      "ingredientCategory": "Condimente ÃƒÂˆÃ¢Â„Â¢i Sosuri",
-      "quantityNeeded": 100,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:09fd703aaefccd738c9045ff5ae8005965eccaf0f73ac8b9c370ede2a75ccd50
+size 852

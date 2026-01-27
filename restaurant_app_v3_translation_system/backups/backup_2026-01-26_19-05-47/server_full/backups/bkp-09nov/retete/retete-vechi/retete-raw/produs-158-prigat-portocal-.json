@@ -1,26 +1,3 @@
-{
-  "productId": 158,
-  "productName": "Prigat Portocală",
-  "productCategory": "Răcoritoare",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 447,
-      "ingredientName": "Felie/coajă de Portocală",
-      "ingredientCategory": "General",
-      "quantityNeeded": 330,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:3bfc012dcfe2db6d2507733bb3a4ef1c6dffcac57c3191b6a1e252ca52331d66
+size 597

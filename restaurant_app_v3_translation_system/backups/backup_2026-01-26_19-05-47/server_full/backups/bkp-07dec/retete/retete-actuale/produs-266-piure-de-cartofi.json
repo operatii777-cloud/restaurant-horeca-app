@@ -1,33 +1,3 @@
-{
-  "productId": 266,
-  "productName": "Piure de Cartofi",
-  "productCategory": "Garnituri",
-  "price": 18,
-  "description": "Piure de cartofi cremos",
-  "ingredients": [
-    {
-      "ingredientId": 67,
-      "ingredientName": "Cartofi",
-      "ingredientCategory": "Altele",
-      "quantityNeeded": 250,
-      "unit": "kg",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 20,
-      "ingredientName": "Lapte",
-      "ingredientCategory": "Lactate",
-      "quantityNeeded": 50,
-      "unit": "ml",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 60,
-      "ingredientName": "Unt",
-      "ingredientCategory": "Lactate și Brânzeturi",
-      "quantityNeeded": 20,
-      "unit": "kg",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:d7938c04178e346e3f361b860110fbb0f3fa7d873a68cfe548e0d84f4fc238ed
+size 749

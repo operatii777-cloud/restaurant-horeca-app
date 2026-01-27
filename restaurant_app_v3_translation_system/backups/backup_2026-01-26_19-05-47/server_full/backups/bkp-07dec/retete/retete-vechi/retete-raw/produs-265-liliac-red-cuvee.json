@@ -1,17 +1,3 @@
-{
-  "productId": 265,
-  "productName": "Liliac Red Cuvee",
-  "productCategory": "Băuturi și Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 746,
-      "ingredientName": "Liliac Red Cuvee",
-      "ingredientCategory": "General",
-      "quantityNeeded": 150,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:2949540bbf6dbad36a4ea443e8f3a43f6da4614a4e3e22a9843b99306adf5a78
+size 383

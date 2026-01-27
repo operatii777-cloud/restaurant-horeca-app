@@ -1,27 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 110,
-  "productName": "Caffe Latte DecofeinizatÃ„ÂƒÃ†Â’",
-  "productCategory": "Cafea/CiocolatÃ„ÂƒÃ†Â’/Ceai",
-  "price": 19,
-  "description": "Latte fÃ„ÂƒÃ†Â’rÃ„ÂƒÃ†Â’ cofeinÃ„ÂƒÃ†Â’",
-  "ingredients": [
-    {
-      "ingredientId": 25,
-      "ingredientName": "Cafea boabe",
-      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
-      "quantityNeeded": 18,
-      "unit": "kg",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 20,
-      "ingredientName": "Lapte",
-      "ingredientCategory": "Lactate",
-      "quantityNeeded": 200,
-      "unit": "ml",
-      "wastePercentage": 0
-    }
-  ]
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:b4dbbeafaa16647c87d2c43d3064ab6e9c57d6aba69b55a3b015f3358bfb3d2e
+size 722

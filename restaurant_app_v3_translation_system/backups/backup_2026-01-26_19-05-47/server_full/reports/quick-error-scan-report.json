@@ -1,12 +1,3 @@
-{
-  "timestamp": "2026-01-19T18:21:58.989Z",
-  "summary": {
-    "pagesScanned": 11,
-    "issuesFound": 0,
-    "criticalIssues": 0,
-    "highIssues": 0,
-    "mediumIssues": 0,
-    "lowIssues": 0
-  },
-  "issues": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:e2ed66a661153f0732d913006d2ef0b133958f7ad344a381e5e5fe6bb3e31c0b
+size 215

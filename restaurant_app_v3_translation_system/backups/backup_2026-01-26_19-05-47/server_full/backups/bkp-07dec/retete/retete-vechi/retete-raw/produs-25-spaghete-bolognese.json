@@ -1,35 +1,3 @@
-{
-  "productId": 25,
-  "productName": "Spaghete Bolognese",
-  "productCategory": "Paste Fresca",
-  "ingredients": [
-    {
-      "ingredientId": 573,
-      "ingredientName": "Spaghete (paste proaspete)",
-      "ingredientCategory": "General",
-      "quantityNeeded": 150,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 48,
-      "ingredientName": "parmezan",
-      "ingredientCategory": "General",
-      "quantityNeeded": 10,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 576,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 150,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:113f3e6b7f306fe5d57418e6a59782efa82c5cb5495b39988f54be3864b41611
+size 819

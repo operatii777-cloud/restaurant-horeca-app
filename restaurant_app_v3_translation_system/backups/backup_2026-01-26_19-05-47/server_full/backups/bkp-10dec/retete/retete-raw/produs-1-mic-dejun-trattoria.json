@@ -1,35 +1,3 @@
-{
-  "productId": 1,
-  "productName": "Mic Dejun Trattoria",
-  "productCategory": "Mic Dejun",
-  "ingredients": [
-    {
-      "ingredientId": 1,
-      "ingredientName": "ouă",
-      "ingredientCategory": "General",
-      "quantityNeeded": 2,
-      "unit": "g",
-      "wastePercentage": 10.5,
-      "variableConsumption": "{\"Dublu\": 2, \"Triplu\": 3}"
-    },
-    {
-      "ingredientId": 624,
-      "ingredientName": "Ingrediente speciale (ex: Prosciutto Crudo, Rucola)",
-      "ingredientCategory": "General",
-      "quantityNeeded": 0.1,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 3,
-      "ingredientName": "mozzarella",
-      "ingredientCategory": "General",
-      "quantityNeeded": 0.05,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:724260d5ecb3ca974136b350bcb7b565c85262f0b133c56f4d8b58b3b5b5fee9
+size 877

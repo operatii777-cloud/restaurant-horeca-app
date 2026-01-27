@@ -1,26 +1,3 @@
-{
-  "productId": 216,
-  "productName": "Smirnoff Red",
-  "productCategory": "Băuturi și Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 732,
-      "ingredientName": "Smirnoff Red",
-      "ingredientCategory": "General",
-      "quantityNeeded": 50,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:ea307754bc5fb51472181fa731dedaf5ae4e31110d32242949c1b77fd0d1fcab
+size 588

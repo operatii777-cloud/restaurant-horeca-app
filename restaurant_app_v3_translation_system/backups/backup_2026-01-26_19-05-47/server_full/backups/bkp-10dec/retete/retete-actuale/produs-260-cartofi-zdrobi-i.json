@@ -1,17 +1,3 @@
-{
-  "productId": 260,
-  "productName": "Cartofi Zdrobiți",
-  "productCategory": "Garnituri",
-  "price": 18,
-  "description": "Cartofi zdrobiți cu ierburi",
-  "ingredients": [
-    {
-      "ingredientId": 67,
-      "ingredientName": "Cartofi",
-      "ingredientCategory": "Altele",
-      "quantityNeeded": 200,
-      "unit": "kg",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:9db3d96dbc23c31e940abea4ab43869cca7a84520f335f4e7b0b293096dcbbd9
+size 369

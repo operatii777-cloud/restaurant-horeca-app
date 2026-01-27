@@ -1,26 +1,3 @@
-{
-  "productId": 307,
-  "productName": "Pulpă de Rață Confit",
-  "productCategory": "Fel Principal",
-  "ingredients": [
-    {
-      "ingredientId": 368,
-      "ingredientName": "Pulpă de rață",
-      "ingredientCategory": "General",
-      "quantityNeeded": 250,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 169,
-      "ingredientName": "Sare de mare",
-      "ingredientCategory": "General",
-      "quantityNeeded": 5,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:2587e390899af462bdbf68d79321ab12f175a9d76b9c572a52c25bfacc7c4b04
+size 606

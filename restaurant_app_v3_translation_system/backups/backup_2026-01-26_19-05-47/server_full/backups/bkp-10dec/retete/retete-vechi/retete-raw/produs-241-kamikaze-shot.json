@@ -1,35 +1,3 @@
-{
-  "productId": 241,
-  "productName": "Kamikaze Shot",
-  "productCategory": "Băuturi și Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 434,
-      "ingredientName": "Cointreau/Triple Sec",
-      "ingredientCategory": "General",
-      "quantityNeeded": 15,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 456,
-      "ingredientName": "Vodcă (Smirnoff/Ketel One)",
-      "ingredientCategory": "General",
-      "quantityNeeded": 30,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 457,
-      "ingredientName": "Suc de Lime (proaspăt)",
-      "ingredientCategory": "General",
-      "quantityNeeded": 15,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:aeb1a5d5b262989fdf03e4c8947cfdf8aa050bd8dd0f7bd62b5afc9ea048f90b
+size 867

@@ -1,26 +1,3 @@
-{
-  "productId": 229,
-  "productName": "Lunazul Fumee",
-  "productCategory": "Băuturi și Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 729,
-      "ingredientName": "Lunazul Fumee",
-      "ingredientCategory": "General",
-      "quantityNeeded": 50,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:545cd48e152cf5adcb4dd66abe40fc2c7376f7712adfd894474d0c66c5a9c794
+size 590

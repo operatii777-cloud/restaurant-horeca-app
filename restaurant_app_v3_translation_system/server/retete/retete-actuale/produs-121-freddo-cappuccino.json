@@ -1,27 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 121,
-  "productName": "Freddo Cappuccino",
-  "productCategory": "Cafea/CiocolatÃ„ÂƒÃ†Â’/Ceai",
-  "price": 16,
-  "description": "Espresso, cremÃ„ÂƒÃ†Â’ de lapte, gheaÃƒÂˆÃ¢Â€ÂºÃ„ÂƒÃ†Â’",
-  "ingredients": [
-    {
-      "ingredientId": 25,
-      "ingredientName": "Cafea boabe",
-      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
-      "quantityNeeded": 18,
-      "unit": "kg",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 20,
-      "ingredientName": "Lapte",
-      "ingredientCategory": "Lactate",
-      "quantityNeeded": 150,
-      "unit": "ml",
-      "wastePercentage": 0
-    }
-  ]
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:32aa328d9fdfeb2f19d263f62af8f845c64e83c3e1d202fee1f51537abf52026
+size 712

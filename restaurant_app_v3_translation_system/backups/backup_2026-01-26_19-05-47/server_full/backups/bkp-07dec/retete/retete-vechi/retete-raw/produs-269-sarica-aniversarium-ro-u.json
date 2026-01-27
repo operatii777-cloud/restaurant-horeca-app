@@ -1,17 +1,3 @@
-{
-  "productId": 269,
-  "productName": "Sarica Aniversarium Roșu",
-  "productCategory": "Băuturi și Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 768,
-      "ingredientName": "Sarica Aniversarium Roșu",
-      "ingredientCategory": "General",
-      "quantityNeeded": 150,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:70c4bfe14855ed0f9121b596dda12281779e5a503dcfa707edaf3a67c348ff48
+size 401

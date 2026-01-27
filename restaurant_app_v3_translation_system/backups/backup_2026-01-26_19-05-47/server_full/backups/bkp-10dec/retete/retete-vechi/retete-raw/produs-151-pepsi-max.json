@@ -1,26 +1,3 @@
-{
-  "productId": 151,
-  "productName": "Pepsi Max",
-  "productCategory": "Răcoritoare",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 699,
-      "ingredientName": "Pepsi Max",
-      "ingredientCategory": "General",
-      "quantityNeeded": 1,
-      "unit": "buc",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:a1accadf29069ae4f62fd7b59f442ee5c1cb8f38395451a48ba4a4588de80302
+size 571

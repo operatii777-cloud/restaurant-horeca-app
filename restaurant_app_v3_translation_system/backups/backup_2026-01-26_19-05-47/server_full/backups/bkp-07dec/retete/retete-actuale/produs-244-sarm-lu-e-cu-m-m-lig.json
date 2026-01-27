@@ -1,33 +1,3 @@
-{
-  "productId": 244,
-  "productName": "Sarmăluțe cu Mămăligă",
-  "productCategory": "Fel Principal",
-  "price": 32,
-  "description": "Sarmale tradiționale cu carne de porc și orez, servite cu mămăligă, smântână și ardei iute",
-  "ingredients": [
-    {
-      "ingredientId": 155,
-      "ingredientName": "Mălai",
-      "ingredientCategory": "Cereale și Paste",
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 156,
-      "ingredientName": "Apă",
-      "ingredientCategory": "Băuturi",
-      "quantityNeeded": 300,
-      "unit": "ml",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 65,
-      "ingredientName": "Sare",
-      "ingredientCategory": "Panificatie",
-      "quantityNeeded": 5,
-      "unit": "kg",
-      "wastePercentage": 0
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:c7d19c40b1bf4350c482d323ed403eaa51674617ac936e5a3ec50502c43dbab9
+size 839

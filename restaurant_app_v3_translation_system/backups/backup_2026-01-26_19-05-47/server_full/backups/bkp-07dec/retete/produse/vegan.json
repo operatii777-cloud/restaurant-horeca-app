@@ -1,32 +1,3 @@
-[
-  {
-    "id": 1033,
-    "name": "Burger vegan",
-    "name_en": "Burger vegan",
-    "description": "",
-    "description_en": "",
-    "category": "Vegan",
-    "category_en": "Vegan",
-    "price": 60,
-    "image_url": null,
-    "allergens": "",
-    "allergens_en": "",
-    "weight": "1 porție",
-    "is_vegetarian": 0,
-    "is_spicy": 0,
-    "is_takeout_only": 0,
-    "info": null,
-    "ingredients": null,
-    "prep_time": null,
-    "spice_level": 0,
-    "calories": null,
-    "protein": null,
-    "carbs": null,
-    "fat": null,
-    "fiber": null,
-    "sodium": null,
-    "sugar": null,
-    "salt": null,
-    "is_sellable": 1
-  }
-]
+version https://git-lfs.github.com/spec/v1
+oid sha256:d6f5939cdbdee8b3973687781780dba83f2c6a5d2b5b11e4e7b14f106dcb9255
+size 633

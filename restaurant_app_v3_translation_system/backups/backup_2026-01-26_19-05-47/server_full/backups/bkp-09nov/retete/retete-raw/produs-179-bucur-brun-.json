@@ -1,26 +1,3 @@
-{
-  "productId": 179,
-  "productName": "Bucur Brună",
-  "productCategory": "Băuturi și Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 270,
-      "ingredientName": null,
-      "ingredientCategory": null,
-      "quantityNeeded": 100,
-      "unit": "g",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    },
-    {
-      "ingredientId": 775,
-      "ingredientName": "Bucur Brună",
-      "ingredientCategory": "General",
-      "quantityNeeded": 500,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:ca9f47cb50f48b957dc57ca7ec65abf08fe5e062901d838e4998fe27189e9af2
+size 589

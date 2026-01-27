@@ -1,19 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 177,
-  "productName": "CiorbÃ„ÂƒÃ†Â’ de Pui a la Grec",
-  "productCategory": "Ciorbe",
-  "price": 20,
-  "description": "CiorbÃ„ÂƒÃ†Â’ cu pui ÃƒÂ®n stil grecesc",
-  "ingredients": [
-    {
-      "ingredientId": 107,
-      "ingredientName": "Pui",
-      "ingredientCategory": "Carne",
-      "quantityNeeded": 200,
-      "unit": "g",
-      "wastePercentage": 0
-    }
-  ]
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:81bd02a7a03c3e6289a8d44d32845e367a9b0e34ce12493a3dc91139f9f2283b
+size 448

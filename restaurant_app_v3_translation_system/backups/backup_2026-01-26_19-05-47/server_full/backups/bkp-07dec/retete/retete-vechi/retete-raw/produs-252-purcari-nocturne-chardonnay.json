@@ -1,17 +1,3 @@
-{
-  "productId": 252,
-  "productName": "Purcari Nocturne Chardonnay",
-  "productCategory": "Băuturi și Coctailuri",
-  "ingredients": [
-    {
-      "ingredientId": 758,
-      "ingredientName": "Purcari Nocturne Chardonnay",
-      "ingredientCategory": "General",
-      "quantityNeeded": 150,
-      "unit": "ml",
-      "wastePercentage": 0,
-      "variableConsumption": null
-    }
-  ],
-  "packaging": []
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:a4a4e1c195189a323a46842be1e5fe01c1359df96d185009f204e796f350b5e3
+size 405

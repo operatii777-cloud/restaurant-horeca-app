@@ -1,35 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 156,
-  "productName": "BrÃƒÂ¢nzÃ„ÂƒÃ†Â’ Feta la Cuptor",
-  "productCategory": "Aperitive Calde",
-  "price": 46,
-  "description": "BrÃƒÂ¢nzÃ„ÂƒÃ†Â’ feta, mÃ„ÂƒÃ†Â’sline kalamata, roÃƒÂˆÃ¢Â„Â¢ii cherry",
-  "ingredients": [
-    {
-      "ingredientId": 7,
-      "ingredientName": "RoÃƒÂˆÃ¢Â„Â¢ii",
-      "ingredientCategory": "Legume",
-      "quantityNeeded": 50,
-      "unit": "g",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 37,
-      "ingredientName": "MÃ„ÂƒÃ†Â’sline",
-      "ingredientCategory": "Altele",
-      "quantityNeeded": 20,
-      "unit": "buc",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 90,
-      "ingredientName": "BrÃƒÂ¢nzÃ„ÂƒÃ†Â’ feta",
-      "ingredientCategory": "Lactate",
-      "quantityNeeded": 60,
-      "unit": "g",
-      "wastePercentage": 0
-    }
-  ]
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:b1a1cc2d74c6bc9db4688621b42313da7c74788adc7024e6749d4d2cc4b39311
+size 972

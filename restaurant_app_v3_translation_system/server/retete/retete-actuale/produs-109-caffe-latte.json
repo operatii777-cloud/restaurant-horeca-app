@@ -1,27 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 109,
-  "productName": "Caffe Latte",
-  "productCategory": "Cafea/CiocolatÃ„ÂƒÃ†Â’/Ceai",
-  "price": 17,
-  "description": "Cafea cu lapte",
-  "ingredients": [
-    {
-      "ingredientId": 25,
-      "ingredientName": "Cafea boabe",
-      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
-      "quantityNeeded": 18,
-      "unit": "kg",
-      "wastePercentage": 0
-    },
-    {
-      "ingredientId": 20,
-      "ingredientName": "Lapte",
-      "ingredientCategory": "Lactate",
-      "quantityNeeded": 200,
-      "unit": "ml",
-      "wastePercentage": 0
-    }
-  ]
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:8107bb75c941de827ea43379294f963cb4a364de89d67fa4959c8e3688cbdb16
+size 632

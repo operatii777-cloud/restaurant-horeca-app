@@ -1,19 +1,3 @@
-﻿Ã¯Â»Â¿{
-  "productId": 108,
-  "productName": "Cafea DecofeinizatÃ„ÂƒÃ†Â’",
-  "productCategory": "Cafea/CiocolatÃ„ÂƒÃ†Â’/Ceai",
-  "price": 13,
-  "description": "Cafea fÃ„ÂƒÃ†Â’rÃ„ÂƒÃ†Â’ cofeinÃ„ÂƒÃ†Â’",
-  "ingredients": [
-    {
-      "ingredientId": 86,
-      "ingredientName": "Cafea boabe decofeinizatÃ„ÂƒÃ†Â’",
-      "ingredientCategory": "BÃ„ÂƒÃ†Â’uturi",
-      "quantityNeeded": 18,
-      "unit": "g",
-      "wastePercentage": 0
-    }
-  ]
-}
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:4070818b9263d2c6dfe5a47c401f97c782cf494efff733d71d12571b7dfa604c
+size 552
