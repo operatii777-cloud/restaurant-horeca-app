@@ -19,8 +19,8 @@ interface StockFinishedProductsTabProps {
 const isTrue = (value: unknown) => value === true || value === 1 || value === '1';
 
 export const StockFinishedProductsTab = ({ onSummary, onFeedback }: StockFinishedProductsTabProps) => {
-//   const { t } = useTranslation();
-  const { data, loading, error, refetch } = useApiQuery<FinishedProductStock[]>('/api/stock/finished-products');
+  //   const { t } = useTranslation();
+  const { data, loading, error, refetch } = useApiQuery<FinishedProductStock[]>('/api/stocks/finished-products');
   const products = useMemo<FinishedProductStock[]>(() => (Array.isArray(data) ? data : []), [data]);
 
   const decoratedProducts = useMemo<FinishedProductStock[]>(() =>
@@ -86,28 +86,28 @@ export const StockFinishedProductsTab = ({ onSummary, onFeedback }: StockFinishe
       },
       {
         headerName: 'Stoc curent',
-        field: "Stoc Actual",
+        field: 'current_stock' as any,
         width: 140,
       },
       {
         headerName: 'Stoc minim',
-        field: "Stoc Minim",
+        field: 'min_stock' as any,
         width: 130,
       },
       {
         headerName: 'Stoc maxim',
-        field: "Stoc Maxim",
+        field: 'max_stock' as any,
         width: 130,
       },
       {
         headerName: 'Auto',
-        field: "Auto-gestionat",
+        field: 'is_auto_managed' as any,
         width: 110,
         valueFormatter: ({ value }) => (isTrue(value) ? 'Da' : 'Nu'),
       },
       {
         headerName: 'Status',
-        field: "Status Stoc",
+        field: 'stock_status' as any,
         width: 130,
         valueFormatter: ({ value }) =>
           value === 'out' ? 'Epuizat' : value === 'critical' ? 'Critic' : value === 'low' ? 'Scăzut' : 'OK',
@@ -117,12 +117,13 @@ export const StockFinishedProductsTab = ({ onSummary, onFeedback }: StockFinishe
         colId: 'actions',
         width: 220,
         pinned: 'right',
-        cellRenderer: () =>
-          `<div class="stock-finished__row-actions">
-            <button data-action="edit">âÅ“ÂÃ¯Â¸Â Editare</button>
-            <button data-action="recipe">ðŸ“‹ Rețetă</button>
-            <button data-action="delete">ðŸ—‘ï¸ È˜terge</button>
-          </div>`,
+        cellRenderer: () => (
+          <div className="stock-finished__row-actions">
+            <button data-action="edit">📝 Editare</button>
+            <button data-action="recipe">📋 Rețetă</button>
+            <button data-action="delete">🗑️ Șterge</button>
+          </div>
+        ),
       },
     ],
     [],
@@ -156,7 +157,7 @@ export const StockFinishedProductsTab = ({ onSummary, onFeedback }: StockFinishe
           product_category: event.data.category ?? 'Nespecificat',
           recipe_count: Number((event.data as { recipe_count?: number }).recipe_count ?? 0),
         });
-      } else if (action === "Delete") {
+      } else if (action === "delete") {
         if (confirm('Sigur dorești să ștergi stocul configurat pentru acest produs finit?')) {
           httpClient
             .delete(`/api/stock/finished-products/${event.data.product_id}`)
@@ -165,7 +166,7 @@ export const StockFinishedProductsTab = ({ onSummary, onFeedback }: StockFinishe
               await refreshData();
             })
             .catch((error) => {
-              console.error('âÂÅ’ Eroare la ștergerea produsului finit:', error);
+              console.error('❌ Eroare la ștergerea produsului finit:', error);
               const message = error instanceof Error ? error.message : 'Nu s-a putut șterge stocul produsului.';
               onFeedback(message, 'error');
             });
@@ -189,10 +190,10 @@ export const StockFinishedProductsTab = ({ onSummary, onFeedback }: StockFinishe
         </div>
         <div className="stock-finished__toolbar-actions">
           <button type="button" className="btn btn-ghost" onClick={refreshData}>
-            âÅ¸Â³ Reîmprospătează
+            🔄 Reîmprospătează
           </button>
           <button type="button" className="btn btn-primary" onClick={handleAdd}>
-            âÅ¾"¢ Adaugă produs finit
+            ➕ Adaugă produs finit
           </button>
         </div>
       </div>

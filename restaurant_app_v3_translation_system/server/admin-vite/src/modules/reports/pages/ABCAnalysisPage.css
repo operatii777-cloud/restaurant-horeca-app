@@ -51,9 +51,7 @@
   color: #000 !important;
   font-weight: bold !important;
   border: 2px solid #90caf9 !important;
-}
-
-.abc-analysis-page .form-select-blue:focus {
+}.abc-analysis-page .form-select-blue:focus {
   background-color: #bbdefb !important;
   color: #000 !important;
   border-color: #64b5f6 !important;

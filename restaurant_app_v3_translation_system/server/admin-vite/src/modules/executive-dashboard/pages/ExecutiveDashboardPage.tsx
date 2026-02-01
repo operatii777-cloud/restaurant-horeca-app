@@ -43,7 +43,7 @@ const PLATFORM_LABELS: Record<string, string> = {
 };
 
 export const ExecutiveDashboardPage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [metrics, setMetrics] = useState<ExecutiveMetrics | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -51,7 +51,7 @@ export const ExecutiveDashboardPage: React.FC = () => {
 
   useEffect(() => {
     loadMetrics();
-    
+
     // Auto-refresh every 5 minutes
     const interval = setInterval(() => {
       loadMetrics();
@@ -304,7 +304,7 @@ export const ExecutiveDashboardPage: React.FC = () => {
         <Col md={6}>
           <Card>
             <Card.Header>
-              <h5 className="mb-0">"rate anulare per platforma"</h5>
+              <h5 className="mb-0">Rată Anulare per Platformă</h5>
             </Card.Header>
             <Card.Body>
               <ResponsiveContainer width="100%" height={300}>

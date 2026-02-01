@@ -20,6 +20,7 @@ export const KioskPaymentsModal = ({
   onPaymentComplete,
 }) => {
   const [paymentMethod, setPaymentMethod] = useState('CASH');
+  // Amount este setat automat la total (sau la restul de plată dacă există plăți parțiale)
   const [amount, setAmount] = useState('');
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -37,8 +38,10 @@ export const KioskPaymentsModal = ({
         // Load split bill status from backend
         loadSplitBillStatus();
       }
+      // Set amount automat la total (sau la restul de plată dacă există plăți parțiale)
+      setAmount(total ? total.toFixed(2) : '');
     }
-  }, [show, orderId, splitBillData]);
+  }, [show, orderId, splitBillData, total]);
 
   const loadSplitBillStatus = async () => {
     if (!orderId) return;
@@ -309,7 +312,7 @@ export const KioskPaymentsModal = ({
                 value={amount}
                 onChange={setAmount}
                 remaining={remaining}
-                disabled={loading}
+                disabled={true} // inputul este dezactivat, suma nu poate fi modificată
                 onUseExact={handleUseExact}
               />
             </Form.Group>

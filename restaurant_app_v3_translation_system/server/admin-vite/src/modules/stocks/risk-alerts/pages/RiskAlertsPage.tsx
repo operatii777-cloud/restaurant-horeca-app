@@ -27,7 +27,7 @@ interface RiskSummary {
 }
 
 export const RiskAlertsPage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [products, setProducts] = useState<RiskProduct[]>([]);
   const [summary, setSummary] = useState<RiskSummary | null>(null);
   const [loading, setLoading] = useState(true);
@@ -42,11 +42,11 @@ export const RiskAlertsPage: React.FC = () => {
       setLoading(true);
       const response = await fetch('/api/analytics/stock-cancellation-correlation');
       if (!response.ok) throw new Error('Failed to load risk data');
-      
+
       const data = await response.json();
       setProducts(data.products || []);
       setSummary(data.summary || null);
-      
+
       // Generate recommendations
       const recs: string[] = [];
       if (data.summary?.high_risk_products > 0) {
@@ -64,17 +64,17 @@ export const RiskAlertsPage: React.FC = () => {
   };
 
   const columnDefs = [
-    { field: 'name', headerName: 'Produs', width: 200 },
-    { field: 'category', headerName: 'Categorie', width: 150 },
-    { field: "Stoc Actual", headerName: 'Stoc Actual', width: 120 },
-    { field: "Stoc Minim", headerName: 'Stoc Min', width: 120 },
-    { field: 'stock_ratio', headerName: 'Rate Stoc', width: 120 },
-    { field: 'total_cancellations', headerName: 'Anulări Totale', width: 150 },
-    { field: 'stock_related_cancellations', headerName: 'Anulări Stoc', width: 150 },
-    { field: 'cancelled_value', headerName: 'Valoare Pierdută', width: 150, valueFormatter: (params: any) => `${params.value.toFixed(2)} RON` },
+    { field: 'name' as any, headerName: 'Produs', width: 200 },
+    { field: 'category' as any, headerName: 'Categorie', width: 150 },
+    { field: 'current_stock' as any, headerName: 'Stoc Actual', width: 120 },
+    { field: 'min_stock' as any, headerName: 'Stoc Min', width: 120 },
+    { field: 'stock_ratio' as any, headerName: 'Rate Stoc', width: 120 },
+    { field: 'total_cancellations' as any, headerName: 'Anulări Totale', width: 150 },
+    { field: 'stock_related_cancellations' as any, headerName: 'Anulări Stoc', width: 150 },
+    { field: 'cancelled_value' as any, headerName: 'Valoare Pierdută', width: 150, valueFormatter: (params: any) => `${params.value.toFixed(2)} RON` },
     {
-      field: 'risk_level',
-      headerName: 'Risc',
+      field: 'risk_level' as any,
+      headerName: 'Risc' as any,
       width: 120,
       cellRenderer: (params: any) => {
         const level = params.value;
@@ -83,7 +83,7 @@ export const RiskAlertsPage: React.FC = () => {
           'medium': 'warning',
           'low': 'success'
         };
-        return `<span class="badge bg-${colors[level] || 'secondary'}">${level}</span>`;
+        return <span className={`badge bg-${colors[level] || 'secondary'}`}>{level}</span>;
       }
     }
   ];

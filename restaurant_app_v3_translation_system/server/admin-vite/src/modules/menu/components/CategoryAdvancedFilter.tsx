@@ -22,7 +22,7 @@ export const CategoryAdvancedFilter = ({
   onSortChange,
   onClear,
 }: CategoryAdvancedFilterProps) => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -43,12 +43,12 @@ export const CategoryAdvancedFilter = ({
           <Row>
             <Col md={6}>
               <Form.Group>
-                <Form.Label>"filtrare dupa categorie"</Form.Label>
+                <Form.Label>Filtrare după categorie</Form.Label>
                 <Form.Select
                   value={selectedCategory}
                   onChange={(e) => onCategoryChange(e.target.value)}
                 >
-                  <option value="">"toate categoriile"</option>
+                  <option value="">Toate categoriile</option>
                   {categories.map((cat) => (
                     <option key={cat} value={cat}>
                       {cat}
@@ -59,14 +59,14 @@ export const CategoryAdvancedFilter = ({
             </Col>
             <Col md={3}>
               <Form.Group>
-                <Form.Label>"sortare dupa"</Form.Label>
+                <Form.Label>Sortare după</Form.Label>
                 <Form.Select
                   value={sortBy}
                   onChange={(e) => onSortChange(e.target.value as 'name' | 'productCount' | 'price', sortOrder)}
                 >
                   <option value="name">Nume</option>
-                  <option value="productCount">"numar produse"</option>
-                  <option value="price">"pret mediu"</option>
+                  <option value="productCount">Număr produse</option>
+                  <option value="price">Preț mediu</option>
                 </Form.Select>
               </Form.Group>
             </Col>
@@ -77,8 +77,8 @@ export const CategoryAdvancedFilter = ({
                   value={sortOrder}
                   onChange={(e) => onSortChange(sortBy, e.target.value as 'asc' | 'desc')}
                 >
-                  <option value="asc">"Crescător"</option>
-                  <option value="desc">"Descrescător"</option>
+                  <option value="asc">Crescător</option>
+                  <option value="desc">Descrescător</option>
                 </Form.Select>
               </Form.Group>
             </Col>

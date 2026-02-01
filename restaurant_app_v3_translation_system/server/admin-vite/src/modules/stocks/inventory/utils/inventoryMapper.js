@@ -4,11 +4,11 @@ const normalizeLine = (line) => {
   const diff =
     Number(
       line?.diff ??
-        line?.diff_qty ??
-        stock_counted - stock_system,
+      line?.diff_qty ??
+      stock_counted - stock_system,
     ) || 0;
   return {
-    id: line?.id ?? line?.line_id ?? crypto.randomUUID?.() ?? `inventory-line-${Date.now()}-${Math.random()}`,
+    id: line?.id ?? line?.line_id ?? line?.ingredient_id ?? crypto.randomUUID?.() ?? `inventory-line-${Date.now()}-${Math.random()}`,
     ingredient_id: line?.ingredient_id ?? null,
     ingredient_name: line?.ingredient_name ?? "",
     unit: line?.unit ?? "",
@@ -45,32 +45,35 @@ export const toInventoryPayload = (inventoryState = {}) => {
 export const fromInventoryPayload = (apiPayload = {}) => {
   const header = apiPayload.header
     ? {
-        id: apiPayload.header.id ?? apiPayload.id ?? null,
-        document_number: apiPayload.header.document_number ?? apiPayload.document_number ?? "",
-        document_date: apiPayload.header.document_date ?? apiPayload.document_date ?? "",
-        location: apiPayload.header.location ?? apiPayload.location ?? "",
-        responsible: apiPayload.header.responsible ?? apiPayload.responsible ?? "",
-        notes: apiPayload.header.notes ?? apiPayload.notes ?? "",
-      }
+      id: apiPayload.header.id ?? apiPayload.id ?? null,
+      document_number: apiPayload.header.document_number ?? apiPayload.document_number ?? "",
+      document_date: apiPayload.header.document_date ?? apiPayload.document_date ?? "",
+      location: apiPayload.header.location ?? apiPayload.location ?? "",
+      responsible: apiPayload.header.responsible ?? apiPayload.responsible ?? "",
+      notes: apiPayload.header.notes ?? apiPayload.notes ?? "",
+    }
     : {
-        id: apiPayload.id ?? null,
-        document_number: apiPayload.document_number ?? "",
-        document_date: apiPayload.document_date ?? "",
-        location: apiPayload.location ?? "",
-        responsible: apiPayload.responsible ?? "",
-        notes: apiPayload.notes ?? "",
-      };
+      id: apiPayload.id ?? null,
+      document_number: apiPayload.document_number ?? "",
+      document_date: apiPayload.document_date ?? "",
+      location: apiPayload.location ?? "",
+      responsible: apiPayload.responsible ?? "",
+      notes: apiPayload.notes ?? "",
+    };
 
-  const lines =
-    Array.isArray(apiPayload.lines) && apiPayload.lines.length
-      ? apiPayload.lines.map((line) =>
-          normalizeLine({
-            ...line,
-            diff: line?.diff ?? line?.diff_qty,
-            unit: line?.unit ?? line?.ingredient_unit,
-          }),
-        )
-      : [];
+  const sourceLines = Array.isArray(apiPayload.items) ? apiPayload.items : (Array.isArray(apiPayload.lines) ? apiPayload.lines : []);
+
+  const lines = sourceLines.length
+    ? sourceLines.map((line) =>
+      normalizeLine({
+        ...line,
+        ingredient_name: line.ingredient_name || line.name,
+        stock_system: line.stock_system ?? line.theoretical_stock,
+        diff: line?.diff ?? line?.diff_qty,
+        unit: line?.unit ?? line?.ingredient_unit,
+      }),
+    )
+    : [];
 
   const totals =
     apiPayload.totals ??

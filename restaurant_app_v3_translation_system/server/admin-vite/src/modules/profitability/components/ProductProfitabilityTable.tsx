@@ -10,6 +10,7 @@ import type { ColDef } from 'ag-grid-community';
 import { Button, Badge } from 'react-bootstrap';
 
 import type { ProductTableRow } from '../utils/profitabilityMappers';
+import { syncCogs } from '../api/profitabilityApi';
 // AG Grid CSS imported globally with theme="legacy"
 import './ProductProfitabilityTable.css';
 
@@ -24,9 +25,9 @@ export const ProductProfitabilityTable = ({
   loading = false,
   onSyncComplete,
 }: ProductProfitabilityTableProps) => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const handleSyncCogs = async (productId: number) => {
-//   const { t } = useTranslation();
+    //   const { t } = useTranslation();
     try {
       const result = await syncCogs(productId);
       if (result.success) {
@@ -141,7 +142,7 @@ export const ProductProfitabilityTable = ({
         ),
       },
     ],
-    'onSyncComplete'
+    [onSyncComplete]
   );
 
   const defaultColDef: ColDef = useMemo(

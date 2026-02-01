@@ -2,7 +2,7 @@ import { AgGridReact } from "ag-grid-react";
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useManageOrders } from "./useManageOrders";
-import { getOrdersColumns } from "./OrdersColumns";
+import { getOrdersColumns } from "./OrdersColumns.jsx";
 import { useCreateInvoiceFromPosOrder } from "../../invoices/useInvoices";
 
 export default function ManageOrdersGrid({ onSelectOrder }) {

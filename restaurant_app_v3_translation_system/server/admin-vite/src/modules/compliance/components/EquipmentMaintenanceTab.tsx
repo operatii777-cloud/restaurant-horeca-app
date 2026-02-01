@@ -8,10 +8,10 @@ import { MaintenanceFormModal } from './MaintenanceFormModal';
 import './EquipmentMaintenanceTab.css';
 
 export const EquipmentMaintenanceTab = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [showFormModal, setShowFormModal] = useState(false);
   const [filterStatus, setFilterStatus] = useState<string>('all');
-  
+
   const { data: equipment } = useApiQuery('/api/compliance/equipment');
   // Construim URL-ul cu query params
   const maintenanceUrl = useMemo(() => {
@@ -20,43 +20,51 @@ export const EquipmentMaintenanceTab = () => {
     const queryString = params.toString();
     return queryString ? `/api/compliance/equipment-maintenance?${queryString}` : '/api/compliance/equipment-maintenance';
   }, [filterStatus]);
-  
+
   const { data: maintenance, loading, refetch } = useApiQuery(maintenanceUrl);
 
   const columnDefs = [
     { field: 'equipment_name', headerName: 'Echipament', width: 200 },
-    { field: 'maintenance_type', headerName: 'Tip', width: 150, valueFormatter: (params: any) => {
-      const types: any = {
-        preventive: 'Preventivă',
-        repair: 'Reparație',
-        calibration: 'Calibrare',
-      };
-      return types[params.value] || params.value;
-    }},
-    { field: 'scheduled_date', headerName: 'Data Programată', width: 180, valueFormatter: (params: any) => {
-      if (!params.value) return '-';
-      return new Date(params.value).toLocaleString('ro-RO');
-    }},
-    { field: 'completed_date', headerName: 'Data Completată', width: 180, valueFormatter: (params: any) => {
-      if (!params.value) return '-';
-      return new Date(params.value).toLocaleString('ro-RO');
-    }},
+    {
+      field: 'maintenance_type', headerName: 'Tip', width: 150, valueFormatter: (params: any) => {
+        const types: any = {
+          preventive: 'Preventivă',
+          repair: 'Reparație',
+          calibration: 'Calibrare',
+        };
+        return types[params.value] || params.value;
+      }
+    },
+    {
+      field: 'scheduled_date', headerName: 'Data Programată', width: 180, valueFormatter: (params: any) => {
+        if (!params.value) return '-';
+        return new Date(params.value).toLocaleString('ro-RO');
+      }
+    },
+    {
+      field: 'completed_date', headerName: 'Data Completată', width: 180, valueFormatter: (params: any) => {
+        if (!params.value) return '-';
+        return new Date(params.value).toLocaleString('ro-RO');
+      }
+    },
     { field: 'operator_name', headerName: 'Operator', width: 150 },
-    { field: 'result', headerName: 'Rezultat', width: 120, cellRenderer: (params: any) => {
-      const result = params.value;
-      if (!result) return '-';
-      const colors: any = {
-        ok: 'success',
-        needs_repair: 'warning',
-        replaced: 'info',
-      };
-      const labels: any = {
-        ok: 'OK',
-        needs_repair: 'Necesită Reparație',
-        replaced: 'ÃŽnlocuit',
-      };
-      return `<span class="badge bg-${colors[result] || 'secondary'}">${labels[result] || result}</span>`;
-    }},
+    {
+      field: 'result', headerName: 'Rezultat', width: 120, cellRenderer: (params: any) => {
+        const result = params.value;
+        if (!result) return '-';
+        const colors: any = {
+          ok: 'success',
+          needs_repair: 'warning',
+          replaced: 'info',
+        };
+        const labels: any = {
+          ok: 'OK',
+          needs_repair: 'Necesită Reparație',
+          replaced: 'Înlocuit',
+        };
+        return `<span class="badge bg-${colors[result] || 'secondary'}">${labels[result] || result}</span>`;
+      }
+    },
     { field: 'status', headerName: 'Status', width: 120 },
   ];
 
@@ -83,25 +91,25 @@ export const EquipmentMaintenanceTab = () => {
             className="form-control form-select"
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
-            title="filtreaza dupa status"
-            aria-label="filtreaza dupa status"
+            title="Filtrează după status"
+            aria-label="Filtrează după status"
           >
-            <option value="all">"toate statusurile"</option>
+            <option value="all">Toate statusurile</option>
             <option value="scheduled">Programate</option>
-            <option value="ÃŽn progres">"in progres"</option>
+            <option value="În progres">În progres</option>
             <option value="completed">Completate</option>
           </select>
         </div>
-        
+
         <button className="btn btn-primary" onClick={handleAddMaintenance}>
-          <i className="fas fa-plus me-2"></i>"programeaza mentenanta"</button>
+          <i className="fas fa-plus me-2"></i>Programează mentenanță</button>
       </div>
 
       <div className="ag-grid-container">
         <div className="ag-theme-alpine-dark">
           <AgGridReact
             theme="legacy"
-            rowData={maintenance?.data || []}
+            rowData={(maintenance as any)?.data || []}
             columnDefs={columnDefs}
             pagination={true}
             paginationPageSize={20}
@@ -117,7 +125,7 @@ export const EquipmentMaintenanceTab = () => {
 
       {showFormModal && (
         <MaintenanceFormModal
-          equipment={equipment?.data || []}
+          equipment={(equipment as any)?.data || []}
           onSave={handleSaveMaintenance}
           onClose={() => setShowFormModal(false)}
         />

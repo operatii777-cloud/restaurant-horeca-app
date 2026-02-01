@@ -26,7 +26,7 @@ interface CostStats {
 }
 
 export const CostsPage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState<ProductCost[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<ProductCost[]>([]);
@@ -131,13 +131,13 @@ export const CostsPage: React.FC = () => {
 
   const getFoodCostLevel = (foodCostPercent: number) => {
     if (foodCostPercent < 25) {
-      return { label: 'Excelent', badge: 'success', icon: '[Check]' };
+      return { label: 'Excelent', badge: 'success', icon: '✅' };
     } else if (foodCostPercent < 30) {
-      return { label: 'Bun', badge: 'info', icon: 'ðŸ‘' };
+      return { label: 'Bun', badge: 'info', icon: '👍' };
     } else if (foodCostPercent < 35) {
-      return { label: 'Atenție', badge: 'warning', icon: 'âš ï¸' };
+      return { label: 'Atenție', badge: 'warning', icon: '⚠️' };
     } else {
-      return { label: 'Pericol', badge: 'danger', icon: 'âŒ' };
+      return { label: 'Pericol', badge: 'danger', icon: '❌' };
     }
   };
 
@@ -172,7 +172,7 @@ export const CostsPage: React.FC = () => {
   return (
     <div className="costs-page">
       <PageHeader
-        title='ðŸ’µ costuri & preturi'
+        title='💸 Costuri & Prețuri'
         description="Analiză costuri, prețuri și profitabilitate produse"
       />
 
@@ -213,7 +213,7 @@ export const CostsPage: React.FC = () => {
                 </div>
                 <div>
                   <div className="stat-value">{formatPercent(stats.avgMargin)}</div>
-                  <div className="stat-label">"marja medie"</div>
+                  <div className="stat-label">Marjă medie</div>
                 </div>
               </div>
             </Card.Body>
@@ -261,20 +261,20 @@ export const CostsPage: React.FC = () => {
         <Card.Body>
           <div className="row">
             <div className="col-md-3 mb-3">
-              <Badge bg="success" className="p-2 mb-2 d-block">[Check] Excelent: &lt; 25%</Badge>
-              <p className="small text-muted mb-0">"profitabilitate foarte buna"</p>
+              <Badge bg="success" className="p-2 mb-2 d-block">✅ Excelent: &lt; 25%</Badge>
+              <p className="small text-muted mb-0">Profitabilitate foarte bună</p>
             </div>
             <div className="col-md-3 mb-3">
-              <Badge bg="info" className="p-2 mb-2 d-block">ðŸ‘ Bun: 25-30%</Badge>
-              <p className="small text-muted mb-0">"profitabilitate acceptabila"</p>
+              <Badge bg="info" className="p-2 mb-2 d-block">👍 Bun: 25-30%</Badge>
+              <p className="small text-muted mb-0">Profitabilitate acceptabilă</p>
             </div>
             <div className="col-md-3 mb-3">
-              <Badge bg="warning" className="p-2 mb-2 d-block">âš ï¸ Atenție: 30-35%</Badge>
-              <p className="small text-muted mb-0">"necesita optimizare"</p>
+              <Badge bg="warning" className="p-2 mb-2 d-block">⚠️ Atenție: 30-35%</Badge>
+              <p className="small text-muted mb-0">Necesită optimizare</p>
             </div>
             <div className="col-md-3 mb-3">
-              <Badge bg="danger" className="p-2 mb-2 d-block">âŒ Pericol: &gt; 35%</Badge>
-              <p className="small text-muted mb-0">"pierdere sau profit minim"</p>
+              <Badge bg="danger" className="p-2 mb-2 d-block">❌ Pericol: &gt; 35%</Badge>
+              <p className="small text-muted mb-0">Pierdere sau profit minim</p>
             </div>
           </div>
         </Card.Body>
@@ -284,10 +284,10 @@ export const CostsPage: React.FC = () => {
       <Card className="mb-4">
         <Card.Header className="d-flex justify-content-between align-items-center">
           <h5 className="mb-0">
-            <i className="fas fa-list me-2"></i>"analiza produse"</h5>
+            <i className="fas fa-list me-2"></i>Analiză produse</h5>
           <div>
             <Button variant="success" className="me-2" onClick={loadProducts}>
-              <i className="fas fa-sync-alt me-2"></i>"Reîncarcă"</Button>
+              <i className="fas fa-sync-alt me-2"></i>Reîncarcă</Button>
           </div>
         </Card.Header>
         <Card.Body>
@@ -296,7 +296,7 @@ export const CostsPage: React.FC = () => {
             <div className="col-md-4">
               <Form.Control
                 type="text"
-                placeholder='[ðŸ”_cauta_produs]'
+                placeholder='🔍 Caută produs...'
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -307,14 +307,14 @@ export const CostsPage: React.FC = () => {
                 onChange={(e) => setCategoryFilter(e.target.value)}
               >
                 <option value="">Toate Categoriile</option>
-                <option value="aperitive">"Aperitive"</option>
+                <option value="aperitive">Aperitive</option>
                 <option value="ciorbe">Ciorbe</option>
-                <option value="salate">"Salate"</option>
+                <option value="salate">Salate</option>
                 <option value="pizza">Pizza</option>
                 <option value="paste">Paste</option>
                 <option value="Feluri Principale">Feluri Principale</option>
-                <option value="deserturi">"Deserturi"</option>
-                <option value="bauturi">"Băuturi"</option>
+                <option value="deserturi">Deserturi</option>
+                <option value="bauturi">Băuturi</option>
               </Form.Select>
             </div>
             <div className="col-md-4">
@@ -322,11 +322,11 @@ export const CostsPage: React.FC = () => {
                 value={foodCostFilter}
                 onChange={(e) => setFoodCostFilter(e.target.value)}
               >
-                <option value="">"toate nivelurile"</option>
-                <option value="excellent">[Check] Excelent (&lt;25%)</option>
-                <option value="good">ðŸ‘ Bun (25-30%)</option>
-                <option value="warning">âš ï¸ Atenție (30-35%)</option>
-                <option value="danger">âŒ Pericol (&gt;35%)</option>
+                <option value="">Toate nivelurile</option>
+                <option value="excellent">✅ Excelent (&lt;25%)</option>
+                <option value="good">👍 Bun (25-30%)</option>
+                <option value="warning">⚠️ Atenție (30-35%)</option>
+                <option value="danger">❌ Pericol (&gt;35%)</option>
               </Form.Select>
             </div>
           </div>
@@ -341,7 +341,7 @@ export const CostsPage: React.FC = () => {
             <div className="text-center py-5">
               <i className="fas fa-calculator fa-4x text-muted mb-3"></i>
               <h5>Nu există date</h5>
-              <p className="text-muted">"produsele cu retete definite vor aparea aici autom"</p>
+              <p className="text-muted">Produsele cu rețete definite vor apărea aici automat.</p>
             </div>
           ) : (
             <Table striped hover responsive>
@@ -349,9 +349,9 @@ export const CostsPage: React.FC = () => {
                 <tr>
                   <th>Produs</th>
                   <th>Cost Ingrediente</th>
-                  <th>"pret vanzare"</th>
+                  <th>Preț vânzare</th>
                   <th>Food Cost %</th>
-                  <th>"Marjă"</th>
+                  <th>Marjă</th>
                   <th>Profit/Porție</th>
                   <th>Recomandare</th>
                 </tr>

@@ -16,13 +16,13 @@ const ORDER_STATUSES = [
   { value: 'draft', label: 'Draft', color: 'secondary' },
   { value: 'sent', label: 'Trimis', color: 'info' },
   { value: 'confirmed', label: 'Confirmat', color: 'primary' },
-  { value: "ÃŽn Tranzit", label: 'ÃŽn Tranzit', color: 'warning' },
+  { value: 'in_transit', label: 'În tranzit', color: 'warning' },
   { value: 'delivered', label: 'Livrat', color: 'success' },
   { value: 'cancelled', label: 'Anulat', color: 'danger' },
 ];
 
 export const SupplierOrdersPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [orders, setOrders] = useState<SupplierOrder[]>([]);
   const [suppliers, setSuppliers] = useState<Supplier[]>([]);
   const [loading, setLoading] = useState(true);
@@ -47,7 +47,7 @@ export const SupplierOrdersPage = () => {
       setOrders(ordersData);
       setSuppliers(suppliersData);
     } catch (err: any) {
-      console.error('âŒ Eroare la încărcarea datelor:', err);
+      console.error('❌ Eroare la încărcarea datelor:', err);
       setError(err.message || 'Eroare la încărcarea datelor');
     } finally {
       setLoading(false);
@@ -96,7 +96,7 @@ export const SupplierOrdersPage = () => {
       handleCloseModal();
       await fetchData();
     } catch (err: any) {
-      console.error('âŒ Eroare la salvare:', err);
+      console.error('❌ Eroare la salvare:', err);
       setFeedback({ type: 'error', message: 'Eroare la salvare: ' + (err.message || 'Eroare necunoscută') });
     }
   };
@@ -109,7 +109,7 @@ export const SupplierOrdersPage = () => {
       setFeedback({ type: 'success', message: 'Comandă ștearsă cu succes!' });
       await fetchData();
     } catch (err: any) {
-      console.error('âŒ Eroare la ștergere:', err);
+      console.error('❌ Eroare la ștergere:', err);
       setFeedback({ type: 'error', message: 'Eroare la ștergere: ' + (err.message || 'Eroare necunoscută') });
     }
   };
@@ -120,24 +120,24 @@ export const SupplierOrdersPage = () => {
   };
 
   const columnDefs = [
-    { field: 'id', headerName: 'ID', width: 80 },
-    { field: 'supplier_name', headerName: 'Furnizor', flex: 1 },
-    { field: 'order_date', headerName: 'Data Comandă', width: 120 },
-    { field: 'expected_delivery_date', headerName: 'Data Livrare', width: 120 },
+    { field: 'id' as any, headerName: 'ID', width: 80 },
+    { field: 'supplier_name' as any, headerName: 'Furnizor', flex: 1 },
+    { field: 'order_date' as any, headerName: 'Data Comandă', width: 120 },
+    { field: 'expected_delivery_date' as any, headerName: 'Data Livrare', width: 120 },
     {
-      field: 'status',
+      field: 'status' as any,
       headerName: 'Status',
       width: 120,
       cellRenderer: (params: any) => getStatusBadge(params.value),
     },
     {
-      field: 'total_amount',
+      field: 'total_amount' as any,
       headerName: 'Total',
       width: 120,
       cellRenderer: (params: any) => `${(params.value || 0).toFixed(2)} RON`,
     },
     {
-      field: 'actions',
+      field: 'actions' as any,
       headerName: 'Acțiuni',
       width: 150,
       cellRenderer: (params: any) => (
@@ -156,7 +156,7 @@ export const SupplierOrdersPage = () => {
   return (
     <div className="supplier-orders-page">
       <PageHeader
-        title="ðŸ“¦ Comenzi Furnizori"
+        title='📦 Comenzi furnizori'
         description="Gestionare comenzi către furnizori"
         actions={[
           {
@@ -208,7 +208,7 @@ export const SupplierOrdersPage = () => {
                 onChange={(e) => setFormData({ ...formData, supplier_id: Number(e.target.value) })}
                 required
               >
-                <option value={0}>"selecteaza furnizor"</option>
+                <option value={0}>Selectează furnizor</option>
                 {suppliers.map((supplier) => (
                   <option key={supplier.id} value={supplier.id}>
                     {supplier.company_name}
@@ -228,7 +228,7 @@ export const SupplierOrdersPage = () => {
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Form.Label>"data livrare asteptata"</Form.Label>
+              <Form.Label>Data livrare așteptată</Form.Label>
               <Form.Control
                 type="date"
                 value={formData.expected_delivery_date || ''}
@@ -261,7 +261,7 @@ export const SupplierOrdersPage = () => {
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseModal}>"Anulează"</Button>
+            <Button variant="secondary" onClick={handleCloseModal}>Anulează</Button>
             <Button variant="primary" type="submit">
               {editingOrder ? 'Actualizează' : 'Creează'}
             </Button>

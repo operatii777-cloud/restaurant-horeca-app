@@ -14,6 +14,7 @@
 
 const { dbPromise } = require('../../../../database');
 const stockConsumptionService = require('../../stocks/services/stockConsumption.service');
+const fiscalPrintQueueService = require('../../fiscal/services/fiscalPrintQueue.service');
 
 // Logger fallback
 let logger;
@@ -69,7 +70,7 @@ class OrderProcessingPipeline {
   async processOrderAfterCreation(orderId, orderData = {}) {
     try {
       const db = await dbPromise;
-      
+
       // Get order details if not provided
       let order = orderData;
       if (!order || !order.id) {
@@ -122,13 +123,18 @@ class OrderProcessingPipeline {
       // This is the KEY feature - automatic stock consumption regardless of source
       const stockResult = await this.consumeStockForOrder(orderId, order, items, source);
 
+      // ✅ CRITICAL: Trigger fiscal printing if paid
+      if (order.is_paid) {
+        await this.triggerFiscalPrinting(orderId, order, items);
+      }
+
       // Execute post-create hooks
-      await this.executeHooks('postCreate', { 
-        order, 
-        items, 
-        platform, 
-        source, 
-        stockResult 
+      await this.executeHooks('postCreate', {
+        order,
+        items,
+        platform,
+        source,
+        stockResult
       });
 
       return {
@@ -158,7 +164,7 @@ class OrderProcessingPipeline {
     try {
       // Check if stock is already consumed (idempotent)
       const alreadyConsumed = await stockConsumptionService.isStockConsumedForOrder(orderId);
-      
+
       if (alreadyConsumed) {
         logger.info(`[OrderPipeline] Stock already consumed for order ${orderId}, skipping`);
         return {
@@ -190,7 +196,7 @@ class OrderProcessingPipeline {
 
     } catch (error) {
       logger.error(`[OrderPipeline] Stock consumption failed for order ${orderId}:`, error);
-      
+
       // Emit alert but don't fail order creation
       if (global.io) {
         global.io.emit('alert:stock-consumption-failed', {
@@ -269,6 +275,9 @@ class OrderProcessingPipeline {
       if (oldOrder.is_paid !== 1 && newOrder.is_paid === 1) {
         logger.info(`[OrderPipeline] Order ${orderId} was just paid, ensuring stock consumption`);
         await this.processOrderAfterCreation(orderId, newOrder);
+
+        // Trigger fiscal printing
+        await this.triggerFiscalPrinting(orderId, newOrder, newOrder.items || []);
       }
 
       // Execute post-update hooks
@@ -281,6 +290,28 @@ class OrderProcessingPipeline {
       return { success: false, error: error.message };
     }
   }
+
+  /**
+   * Trigger fiscal printing
+   */
+  async triggerFiscalPrinting(orderId, order, items) {
+    try {
+      logger.info(`[OrderPipeline] Triggering fiscal printing for order ${orderId}`);
+
+      // Enqueue job
+      const job = await fiscalPrintQueueService.enqueue(orderId, {
+        order,
+        items,
+        timestamp: new Date().toISOString()
+      });
+
+      logger.info(`[OrderPipeline] Fiscal print job enqueued: ${job.id}`);
+      return { success: true, jobId: job.id };
+    } catch (error) {
+      logger.error(`[OrderPipeline] Failed to trigger fiscal printing for order ${orderId}:`, error);
+      return { success: false, error: error.message };
+    }
+  }
 }
 
 // Singleton instance
@@ -289,7 +320,7 @@ const orderProcessingPipeline = new OrderProcessingPipeline();
 // Register default hooks
 orderProcessingPipeline.registerHook('postCreate', async (context) => {
   const { order, platform, source } = context;
-  
+
   // Emit Socket.IO events
   if (global.io) {
     global.io.emit('order:processed', {

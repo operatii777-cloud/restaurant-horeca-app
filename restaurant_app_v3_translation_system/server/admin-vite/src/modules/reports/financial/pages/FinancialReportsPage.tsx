@@ -1,6 +1,6 @@
 // import { useTranslation } from '@/i18n/I18nContext';
 import React, { useState } from 'react';
-import { Card, Button, Form, Alert, Row, Col, Tabs, Tab } from 'react-bootstrap';
+import { Card, Button, Form, Alert, Row, Col, Tabs, Tab, Table } from 'react-bootstrap';
 import { ProfitLossPage } from '@/modules/reports/pages/ProfitLossPage';
 import {
   useDailyFinancialSummary,
@@ -18,7 +18,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import './FinancialReportsPage.css';
 
 export const FinancialReportsPage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<string>('overview');
   const [startDate, setStartDate] = useState(() => {
     const date = new Date();
@@ -65,7 +65,7 @@ export const FinancialReportsPage: React.FC = () => {
       </div>
 
       {error && (
-        <Alert variant="danger" dismissible onClose={() => {}} className="mt-3">
+        <Alert variant="danger" dismissible onClose={() => { }} className="mt-3">
           {error}
         </Alert>
       )}
@@ -75,7 +75,7 @@ export const FinancialReportsPage: React.FC = () => {
         <Row className="mb-4">
           <Col md={3}>
             <FinancialKpiCard
-              title="total revenue"
+              title="Venit Total"
               value={pnl.data?.revenue ?? 0}
               variant="success"
               format="currency"
@@ -83,7 +83,7 @@ export const FinancialReportsPage: React.FC = () => {
           </Col>
           <Col md={3}>
             <FinancialKpiCard
-              title="Total COGS"
+              title="Costuri (COGS)"
               value={pnl.data?.cogsTotal ?? 0}
               variant="danger"
               format="currency"
@@ -91,7 +91,7 @@ export const FinancialReportsPage: React.FC = () => {
           </Col>
           <Col md={3}>
             <FinancialKpiCard
-              title="Gross Profit"
+              title="Profit Brut"
               value={pnl.data?.grossProfit ?? 0}
               variant="success"
               format="currency"
@@ -112,16 +112,16 @@ export const FinancialReportsPage: React.FC = () => {
         <Row className="mb-4">
           <Col md={3}>
             <FinancialKpiCard
-              title="Net Profit"
+              title="Profit Net"
               value={pnl.data?.netProfit ?? 0}
               variant={(pnl.data?.netProfit ?? 0) >= 0 ? 'success' : 'danger'}
               format="currency"
-              subtitle={(pnl.data?.operatingExpenses ?? 0) > 0 ? 'After operating expenses' : 'Estimated (no operating expenses)'}
+              subtitle={(pnl.data?.operatingExpenses ?? 0) > 0 ? 'După cheltuieli operaționale' : 'Estimat (fără cheltuieli op.)'}
             />
           </Col>
           <Col md={3}>
             <FinancialKpiCard
-              title="Margin %"
+              title="Marjă %"
               value={pnl.data?.marginPercent ?? 0}
               variant={(pnl.data?.marginPercent ?? 0) > 60 ? 'success' : (pnl.data?.marginPercent ?? 0) > 40 ? 'warning' : 'danger'}
               format="percent"
@@ -131,7 +131,7 @@ export const FinancialReportsPage: React.FC = () => {
             <>
               <Col md={3}>
                 <FinancialKpiCard
-                  title="Net Cashflow"
+                  title="Flux numerar net"
                   value={cashflow.data?.netCashflow ?? 0}
                   variant={(cashflow.data?.netCashflow ?? 0) >= 0 ? 'success' : 'danger'}
                   format="currency"
@@ -139,7 +139,7 @@ export const FinancialReportsPage: React.FC = () => {
               </Col>
               <Col md={3}>
                 <FinancialKpiCard
-                  title="Total Inflows"
+                  title="Intrări totale"
                   value={cashflow.data?.inflows?.total ?? 0}
                   variant="primary"
                   format="currency"
@@ -237,11 +237,11 @@ export const FinancialReportsPage: React.FC = () => {
                   <CategoryMixChart
                     categories={categoryMix.data.categories}
                     chartType="bar"
-                    title="category mix revenue share"
+                    title="Distribuție venituri pe categorii"
                   />
                   <Card className="mt-4">
                     <Card.Header>
-                      <h5 className="mb-0">"category details"</h5>
+                      <h5 className="mb-0">Detalii categorii</h5>
                     </Card.Header>
                     <Card.Body>
                       <Table striped hover responsive>
@@ -277,8 +277,8 @@ export const FinancialReportsPage: React.FC = () => {
                                       (cat.foodCostPercent ?? 0) > 40
                                         ? 'text-danger'
                                         : (cat.foodCostPercent ?? 0) > 30
-                                        ? 'text-warning'
-                                        : 'text-success'
+                                          ? 'text-warning'
+                                          : 'text-success'
                                     }
                                   >
                                     {(cat.foodCostPercent ?? 0).toFixed(1)}%
@@ -290,8 +290,8 @@ export const FinancialReportsPage: React.FC = () => {
                                       (cat.marginPercent ?? 0) > 60
                                         ? 'text-success'
                                         : (cat.marginPercent ?? 0) > 40
-                                        ? 'text-warning'
-                                        : 'text-danger'
+                                          ? 'text-warning'
+                                          : 'text-danger'
                                     }
                                   >
                                     {(cat.marginPercent ?? 0).toFixed(1)}%

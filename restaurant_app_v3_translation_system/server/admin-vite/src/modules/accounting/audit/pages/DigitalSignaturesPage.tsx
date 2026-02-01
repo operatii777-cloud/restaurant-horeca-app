@@ -13,6 +13,7 @@ import { Card, Button, Table, Alert, Badge, Modal, Form } from 'react-bootstrap'
 import { httpClient } from '@/shared/api/httpClient';
 // Removed: Bootstrap CSS import - already loaded globally
 // Removed: FontAwesome CSS import - already loaded globally
+import { HelpButton } from '@/shared/components/HelpButton';
 import './DigitalSignaturesPage.css';
 
 interface DigitalSignature {
@@ -31,7 +32,7 @@ interface DigitalSignature {
 }
 
 export const DigitalSignaturesPage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [signatures, setSignatures] = useState<DigitalSignature[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -48,7 +49,7 @@ export const DigitalSignaturesPage: React.FC = () => {
     try {
       const response = await httpClient.get('/api/accounting/audit/signatures');
       console.log('DigitalSignaturesPage Response:', response.data);
-      
+
       let signaturesList: DigitalSignature[] = [];
       if (response.data && response.data.success && Array.isArray(response.data.data)) {
         signaturesList = response.data.data;
@@ -57,12 +58,12 @@ export const DigitalSignaturesPage: React.FC = () => {
       } else if (response.data && response.data.data && Array.isArray(response.data.data)) {
         signaturesList = response.data.data;
       }
-      
+
       if (!Array.isArray(signaturesList)) {
         console.warn('DigitalSignaturesPage signaturesList is not an array, setting to empty array');
         signaturesList = [];
       }
-      
+
       console.log('DigitalSignaturesPage Loaded signatures:', signaturesList.length);
       setSignatures(signaturesList);
     } catch (err: any) {
@@ -117,32 +118,32 @@ export const DigitalSignaturesPage: React.FC = () => {
     <div className="digital-signatures-page">
       <div className="page-header d-flex justify-content-between align-items-center">
         <div>
-          <h1>âœï¸ Semnături Digitale</h1>
-          <p>"gestionare si verificare semnaturi digitale pentru"</p>
+          <h1>✍️ Semnături Digitale</h1>
+          <p>Gestionare și verificare semnături digitale pentru documente contabile</p>
         </div>
         <HelpButton
-          title="ajutor semnaturi digitale"
+          title="Ajutor semnături digitale"
           content={
             <div>
-              <h5>âœï¸ Ce sunt semnăturile digitale?</h5>
+              <h5>✍️ Ce sunt semnăturile digitale?</h5>
               <p>
-                Semnăturile digitale asigură integritatea și autenticitatea documentelor contabile. 
+                Semnăturile digitale asigură integritatea și autenticitatea documentelor contabile.
                 Fiecare document important (facturi, rapoarte Z, etc.) poate fi semnat digital.
               </p>
-              <h5 className="mt-4">ðŸ” Funcționalități</h5>
+              <h5 className="mt-4">🔍 Funcționalități</h5>
               <ul>
-                <li><strong>"generare semnatura"</strong> - Creează o semnătură digitală pentru un document</li>
-                <li><strong>"verificare semnatura"</strong> - Verifică dacă un document a fost modificat</li>
+                <li><strong>Generare semnătură</strong> - Creează o semnătură digitală pentru un document</li>
+                <li><strong>Verificare semnătură</strong> - Verifică dacă un document a fost modificat</li>
                 <li><strong>Istoric</strong> - Vezi toate semnăturile generate</li>
-                <li><strong>"Detalii"</strong> - Vezi informații despre semnătură (hash, timestamp, etc.)</li>
+                <li><strong>Detalii</strong> - Vezi informații despre semnătură (hash, timestamp, etc.)</li>
               </ul>
-              <h5 className="mt-4">ðŸ”’ Securitate</h5>
+              <h5 className="mt-4">🔒 Securitate</h5>
               <p>
-                Semnăturile digitale folosesc algoritmi criptografici pentru a asigura că documentul 
+                Semnăturile digitale folosesc algoritmi criptografici pentru a asigura că documentul
                 nu a fost modificat după semnare. Orice modificare va invalida semnătura.
               </p>
               <div className="alert alert-warning mt-4">
-                <strong>âš ï¸ Important:</strong> Semnăturile digitale nu înlocuiesc semnăturile legale. 
+                <strong>⚠️ Important:</strong> Semnăturile digitale nu înlocuiesc semnăturile legale.
                 Consultă întotdeauna un avocat pentru aspecte legale.
               </div>
             </div>
@@ -158,9 +159,9 @@ export const DigitalSignaturesPage: React.FC = () => {
 
       <Card className="mb-4">
         <Card.Header className="d-flex justify-content-between align-items-center">
-          <h5 className="mb-0">"lista semnaturi"</h5>
+          <h5 className="mb-0">Lista semnături</h5>
           <Button variant="outline-primary" onClick={loadSignatures}>
-            <i className="fas fa-sync me-2"></i>"Reîncarcă"</Button>
+            <i className="fas fa-sync me-2"></i>Reîncarcă</Button>
         </Card.Header>
         <Card.Body>
           {loading ? (
@@ -171,13 +172,13 @@ export const DigitalSignaturesPage: React.FC = () => {
             <Table striped hover responsive>
               <thead>
                 <tr>
-                  <th>"Document"</th>
+                  <th>Document</th>
                   <th>Tip Document</th>
-                  <th>"semnat de"</th>
-                  <th>"data semnatura"</th>
+                  <th>Semnat de</th>
+                  <th>Data semnătură</th>
                   <th>Metodă</th>
                   <th>Status</th>
-                  <th>"Acțiuni"</th>
+                  <th>Acțiuni</th>
                 </tr>
               </thead>
               <tbody>
@@ -227,7 +228,7 @@ export const DigitalSignaturesPage: React.FC = () => {
                   } else {
                     return (
                       <tr>
-                        <td colSpan={7} className="text-center text-muted py-4">"nu exista semnaturi digitale semnaturile vor apare"</td>
+                        <td colSpan={7} className="text-center text-muted py-4">Nu există semnături digitale. Semnăturile vor apărea aici.</td>
                       </tr>
                     );
                   }
@@ -242,13 +243,13 @@ export const DigitalSignaturesPage: React.FC = () => {
       <Modal show={showDetailsModal} onHide={() => setShowDetailsModal(false)} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>
-            <i className="fas fa-info-circle me-2"></i>"detalii semnatura digitala"</Modal.Title>
+            <i className="fas fa-info-circle me-2"></i>Detalii semnătură digitală</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {selectedSignature && (
             <div>
               <Form.Group className="mb-3">
-                <Form.Label><strong>"id semnatura"</strong></Form.Label>
+                <Form.Label><strong>ID semnătură</strong></Form.Label>
                 <Form.Control type="text" value={selectedSignature.id} readOnly />
               </Form.Group>
               <Form.Group className="mb-3">
@@ -256,43 +257,43 @@ export const DigitalSignaturesPage: React.FC = () => {
                 <div>{getDocumentTypeBadge(selectedSignature.document_type)}</div>
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label><strong>"id document"</strong></Form.Label>
+                <Form.Label><strong>ID Document</strong></Form.Label>
                 <Form.Control type="text" value={selectedSignature.document_id} readOnly />
               </Form.Group>
               {selectedSignature.document_number && (
                 <Form.Group className="mb-3">
-                  <Form.Label><strong>"numar document"</strong></Form.Label>
+                  <Form.Label><strong>Număr Document</strong></Form.Label>
                   <Form.Control type="text" value={selectedSignature.document_number} readOnly />
                 </Form.Group>
               )}
               <Form.Group className="mb-3">
-                <Form.Label><strong>"semnat de"</strong></Form.Label>
+                <Form.Label><strong>Semnat de</strong></Form.Label>
                 <Form.Control type="text" value={selectedSignature.signed_by} readOnly />
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label><strong>"data semnatura"</strong></Form.Label>
+                <Form.Label><strong>Data semnătură</strong></Form.Label>
                 <Form.Control type="text" value={formatDate(selectedSignature.signature_time)} readOnly />
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label><strong>"metoda semnatura"</strong></Form.Label>
+                <Form.Label><strong>Metodă semnătură</strong></Form.Label>
                 <Form.Control type="text" value={selectedSignature.signature_method} readOnly />
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label><strong>"hash semnatura"</strong></Form.Label>
-                <Form.Control 
-                  type="text" 
-                  value={selectedSignature.signature_hash} 
-                  readOnly 
+                <Form.Label><strong>Hash semnătură</strong></Form.Label>
+                <Form.Control
+                  type="text"
+                  value={selectedSignature.signature_hash}
+                  readOnly
                   className="font-monospace small"
                 />
               </Form.Group>
               {selectedSignature.certificate_info && (
                 <Form.Group className="mb-3">
-                  <Form.Label><strong>"informatii certificat"</strong></Form.Label>
-                  <Form.Control 
-                    type="text" 
-                    value={selectedSignature.certificate_info} 
-                    readOnly 
+                  <Form.Label><strong>Informații certificat</strong></Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={selectedSignature.certificate_info}
+                    readOnly
                   />
                 </Form.Group>
               )}
@@ -307,12 +308,12 @@ export const DigitalSignaturesPage: React.FC = () => {
               {selectedSignature.verified_at && (
                 <>
                   <Form.Group className="mb-3">
-                    <Form.Label><strong>"verificat la"</strong></Form.Label>
+                    <Form.Label><strong>Verificat la</strong></Form.Label>
                     <Form.Control type="text" value={formatDate(selectedSignature.verified_at)} readOnly />
                   </Form.Group>
                   {selectedSignature.verified_by && (
                     <Form.Group className="mb-3">
-                      <Form.Label><strong>"verificat de"</strong></Form.Label>
+                      <Form.Label><strong>Verificat de</strong></Form.Label>
                       <Form.Control type="text" value={selectedSignature.verified_by} readOnly />
                     </Form.Group>
                   )}
@@ -322,13 +323,13 @@ export const DigitalSignaturesPage: React.FC = () => {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowDetailsModal(false)}>"ÃŽnchide"</Button>
+          <Button variant="secondary" onClick={() => setShowDetailsModal(false)}>Închide</Button>
           {selectedSignature && !selectedSignature.is_valid && (
             <Button variant="warning" onClick={() => {
               handleVerifySignature(selectedSignature.id);
               setShowDetailsModal(false);
             }}>
-              <i className="fas fa-check-circle me-2"></i>"verifica semnatura"</Button>
+              <i className="fas fa-check-circle me-2"></i>Verifică semnătura</Button>
           )}
         </Modal.Footer>
       </Modal>

@@ -24,7 +24,7 @@ const formatQty = (value?: number) =>
 const palette = ['#2563eb', '#38bdf8', '#6366f1', '#f97316', '#22c55e', '#ec4899'];
 
 export const TraceabilityPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [quickFilter, setQuickFilter] = useState('');
   const [selectedIngredientId, setSelectedIngredientId] = useState<number | null>(null);
   const [orderModalOpen, setOrderModalOpen] = useState(false);
@@ -227,10 +227,10 @@ export const TraceabilityPage = () => {
 
         <div className="trace-hero__stats">
           <StatCard
-            title="inregistrari trasabilitate"
+            title="Înregistrări trasabilitate"
             helper={selectedIngredient ? `Ingredient: ${selectedIngredient.name}` : 'Selectează un ingredient'}
             value={`${totalTraceRecords}`}
-            trendLabel="cantitate totala"
+            trendLabel="Cantitate totală"
             trendValue={`${formatQty(totalQuantityUsed)} ${selectedIngredient?.unit ?? ''}`}
             trendDirection={totalQuantityUsed > 0 ? 'up' : 'flat'}
             icon={<span>🔗</span>}
@@ -273,7 +273,7 @@ export const TraceabilityPage = () => {
 
           <div className="trace-analytics-card">
             <header>
-              <span className="trace-analytics-title">"distributie status comenzi"</span>
+              <span className="trace-analytics-title">Distribuție status comenzi</span>
               <span className="trace-analytics-helper">% din total înregistrări</span>
             </header>
             <MiniDonutChart
@@ -310,7 +310,7 @@ export const TraceabilityPage = () => {
 
           <div className="trace-analytics-card">
             <header>
-              <span className="trace-analytics-title">"status plata"</span>
+              <span className="trace-analytics-title">Status plată</span>
               <span className="trace-analytics-helper">% din total comenzi trasate</span>
             </header>
             <MiniDonutChart
@@ -356,7 +356,7 @@ export const TraceabilityPage = () => {
           <TableFilter
             value={quickFilter}
             onChange={setQuickFilter}
-            placeholder="cauta ingredient dupa nume categorie lot furnizor "
+            placeholder="Caută ingredient după nume, categorie, lot, furnizor..."
             aria-label="Filtru rapid trasabilitate"
           />
           <label className="trace-toggle">
@@ -407,7 +407,7 @@ export const TraceabilityPage = () => {
         <section className="trace-grid__panel">
           <header>
             <div>
-              <h3>"consum si mapare loturi"</h3>
+              <h3>Consum și mapare loturi</h3>
               <p>
                 {selectedIngredient
                   ? `Ingredient selectat: ${selectedIngredient.name} (${selectedIngredient.unit ?? ''})`

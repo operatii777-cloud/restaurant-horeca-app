@@ -12,7 +12,7 @@ import './LabelsPage.css';
 type LabelTemplate = 'standard' | 'minimal' | 'premium';
 
 export const LabelsPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [products, setProducts] = useState<LabelProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -69,7 +69,7 @@ export const LabelsPage = () => {
     if (!printWindow) return;
 
     const labelContent = document.getElementById('labelTemplate')?.outerHTML || '';
-    
+
     printWindow.document.write(`
       <html>
       <head>
@@ -108,7 +108,7 @@ export const LabelsPage = () => {
       </body>
       </html>
     `);
-    
+
     printWindow.document.close();
     setTimeout(() => {
       printWindow.print();
@@ -184,10 +184,10 @@ export const LabelsPage = () => {
       />
 
       {feedback && (
-        <InlineAlert 
-          type={feedback.type} 
-          message={feedback.message} 
-          onClose={() => setFeedback(null)} 
+        <InlineAlert
+          type={feedback.type}
+          message={feedback.message}
+          onClose={() => setFeedback(null)}
         />
       )}
       {error && <InlineAlert type="error" message={error} onClose={() => setError(null)} />}
@@ -197,17 +197,17 @@ export const LabelsPage = () => {
         <div className="col-md-6">
           <Card className="shadow-sm mb-4">
             <Card.Header className="bg-white">
-              <h5 className="mb-0"><i className="fas fa-cog me-2"></i>"configurare eticheta"</h5>
+              <h5 className="mb-0"><i className="fas fa-cog me-2"></i>Configurare etichetă</h5>
             </Card.Header>
             <Card.Body>
               <Form>
                 <Form.Group className="mb-3">
                   <Form.Label>Produs *</Form.Label>
-                  <Form.Select 
-                    value={selectedProduct?.id || ''} 
+                  <Form.Select
+                    value={selectedProduct?.id || ''}
                     onChange={(e) => handleProductSelect(e.target.value)}
                   >
-                    <option value="">"selecteaza produs"</option>
+                    <option value="">Selectează produs</option>
                     {products.map(product => (
                       <option key={product.id} value={product.id}>
                         {product.name} - {product.price.toFixed(2)} RON
@@ -238,7 +238,7 @@ export const LabelsPage = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-3">
-                  <Form.Label>"cod de bare"</Form.Label>
+                  <Form.Label>Cod de bare</Form.Label>
                   <div className="d-flex gap-2">
                     <Form.Control
                       type="text"
@@ -248,7 +248,7 @@ export const LabelsPage = () => {
                       readOnly
                     />
                     <Button variant="secondary" onClick={generateBarcode}>
-                      <i className="fas fa-sync-alt"></i>"Generează"</Button>
+                      <i className="fas fa-sync-alt"></i>Generează</Button>
                   </div>
                 </Form.Group>
 
@@ -269,33 +269,33 @@ export const LabelsPage = () => {
           {/* Template Selection */}
           <Card className="shadow-sm">
             <Card.Header className="bg-white">
-              <h5 className="mb-0"><i className="fas fa-th me-2"></i>"Șabloane"</h5>
+              <h5 className="mb-0"><i className="fas fa-th me-2"></i>Șabloane</h5>
             </Card.Header>
             <Card.Body>
               <div className="template-grid">
-                <div 
+                <div
                   className={`template-card ${currentTemplate === 'standard' ? 'active' : ''}`}
                   onClick={() => setCurrentTemplate('standard')}
                 >
                   <i className="fas fa-file-alt fa-3x mb-2"></i>
                   <p><strong>Standard</strong></p>
-                  <small>"eticheta clasica"</small>
+                  <small>Etichetă clasică</small>
                 </div>
-                <div 
+                <div
                   className={`template-card ${currentTemplate === 'minimal' ? 'active' : ''}`}
                   onClick={() => setCurrentTemplate('minimal')}
                 >
                   <i className="fas fa-minus-square fa-3x mb-2"></i>
                   <p><strong>Minimal</strong></p>
-                  <small>"design simplu"</small>
+                  <small>Design simplu</small>
                 </div>
-                <div 
+                <div
                   className={`template-card ${currentTemplate === 'premium' ? 'active' : ''}`}
                   onClick={() => setCurrentTemplate('premium')}
                 >
                   <i className="fas fa-star fa-3x mb-2"></i>
                   <p><strong>Premium</strong></p>
-                  <small>"design elegant"</small>
+                  <small>Design elegant</small>
                 </div>
               </div>
             </Card.Body>
@@ -309,14 +309,14 @@ export const LabelsPage = () => {
               <h5 className="mb-0"><i className="fas fa-eye me-2"></i>Previzualizare</h5>
               <div className="d-flex gap-2">
                 <Button variant="success" onClick={handlePrintLabel}>
-                  <i className="fas fa-print me-2"></i>"Imprimă"</Button>
+                  <i className="fas fa-print me-2"></i>Imprimă</Button>
                 <Button variant="primary" onClick={handleDownloadPDF}>
-                  <i className="fas fa-download me-2"></i>"descarca pdf"</Button>
+                  <i className="fas fa-download me-2"></i>Descarcă PDF</Button>
               </div>
             </Card.Header>
             <Card.Body>
               <div className="label-preview">
-                <div 
+                <div
                   id="labelTemplate"
                   className="label-template"
                   style={getTemplateStyles(currentTemplate)}
@@ -337,11 +337,11 @@ export const LabelsPage = () => {
           {/* Batch Printing */}
           <Card className="shadow-sm">
             <Card.Header className="bg-white">
-              <h5 className="mb-0"><i className="fas fa-layer-group me-2"></i>"imprimare in lot"</h5>
+              <h5 className="mb-0"><i className="fas fa-layer-group me-2"></i>Imprimare în lot</h5>
             </Card.Header>
             <Card.Body>
               <Form.Group className="mb-3">
-                <Form.Label>"numar etichete"</Form.Label>
+                <Form.Label>Număr etichete</Form.Label>
                 <Form.Control
                   type="number"
                   min="1"
@@ -351,7 +351,7 @@ export const LabelsPage = () => {
                 />
               </Form.Group>
               <Button variant="warning" onClick={handlePrintBatch} className="w-100">
-                <i className="fas fa-print me-2"></i>"imprima in lot"</Button>
+                <i className="fas fa-print me-2"></i>Imprimă în lot</Button>
             </Card.Body>
           </Card>
         </div>

@@ -8,6 +8,7 @@ import { useState, useMemo } from 'react';
 import { Card, Row, Col, Button, Form, Alert, Badge } from 'react-bootstrap';
 import { PageHeader } from '@/shared/components/PageHeader';
 import { useProductProfitability } from '../hooks/useProductProfitability';
+import { syncAllCogs } from '../api/profitabilityApi';
 import { ProfitabilityKpiCard } from '../components/ProfitabilityKpiCard';
 import { ProductProfitabilityTable } from '../components/ProductProfitabilityTable';
 
@@ -16,7 +17,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import './CostsPage.css';
 
 export const CostsPage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [dateFrom, setDateFrom] = useState(() => {
     const date = new Date();
     date.setMonth(date.getMonth() - 1);
@@ -150,12 +151,12 @@ export const CostsPage: React.FC = () => {
   return (
     <div className="costs-page">
       <PageHeader
-        title='💵 costuri & preturi'
+        title='💵 Costuri & Prețuri'
         description="Analiză costuri, prețuri și profitabilitate produse cu S13 COGS Engine"
       />
 
       {error && (
-        <Alert variant="danger" dismissible onClose={() => {}}>
+        <Alert variant="danger" dismissible onClose={() => { }}>
           <i className="fas fa-exclamation-triangle me-2"></i>
           {error}
         </Alert>
@@ -206,7 +207,7 @@ export const CostsPage: React.FC = () => {
         <Card.Body>
           <Row>
             <Col md={3}>
-              <Form.Label>"perioada de"</Form.Label>
+              <Form.Label>Perioada de la</Form.Label>
               <Form.Control
                 type="date"
                 value={dateFrom}
@@ -215,7 +216,7 @@ export const CostsPage: React.FC = () => {
               />
             </Col>
             <Col md={3}>
-              <Form.Label>"perioada pana"</Form.Label>
+              <Form.Label>Perioada până la</Form.Label>
               <Form.Control
                 type="date"
                 value={dateTo}
@@ -224,10 +225,10 @@ export const CostsPage: React.FC = () => {
               />
             </Col>
             <Col md={3}>
-              <Form.Label>"cauta produs"</Form.Label>
+              <Form.Label>Caută produs</Form.Label>
               <Form.Control
                 type="text"
-                placeholder='[🔍_cauta_produs]'
+                placeholder='🔍 Caută produs...'
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -235,7 +236,7 @@ export const CostsPage: React.FC = () => {
             <Col md={3}>
               <Form.Label>Food Cost Level:</Form.Label>
               <Form.Select value={foodCostFilter} onChange={(e) => setFoodCostFilter(e.target.value)}>
-                <option value="">"toate nivelurile"</option>
+                <option value="">Toate nivelurile</option>
                 <option value="excellent">✅ Excelent (&lt;25%)</option>
                 <option value="good">👍 Bun (25-30%)</option>
                 <option value="warning">⚠️ Atenție (30-35%)</option>
@@ -305,17 +306,17 @@ export const CostsPage: React.FC = () => {
             </Card.Header>
             <Card.Body>
               {bottomProducts.length === 0 ? (
-                <p className="text-muted text-center">"nu exista produse cu food cost ridicat"</p>
+                <p className="text-muted text-center">Nu există produse cu Food Cost ridicat.</p>
               ) : (
                 bottomProducts.map((product, index) => {
                   const level =
                     product.foodCostPercent < 25
                       ? { label: 'Excelent', badge: 'success' }
                       : product.foodCostPercent < 30
-                      ? { label: 'Bun', badge: 'info' }
-                      : product.foodCostPercent < 35
-                      ? { label: 'Atenție', badge: 'warning' }
-                      : { label: 'Pericol', badge: 'danger' };
+                        ? { label: 'Bun', badge: 'info' }
+                        : product.foodCostPercent < 35
+                          ? { label: 'Atenție', badge: 'warning' }
+                          : { label: 'Pericol', badge: 'danger' };
 
                   return (
                     <div

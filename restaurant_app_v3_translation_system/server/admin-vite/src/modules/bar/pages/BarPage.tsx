@@ -19,7 +19,7 @@ import './BarPage.css';
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
-  return `"M":${s.toString().padStart(2, '0')}`;
+  return `${m}:${s.toString().padStart(2, '0')}`;
 }
 
 /**
@@ -35,7 +35,7 @@ function getTimeClass(elapsed: number): string {
  * Bar Page Component
  */
 export function BarPage() {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   // Access store methods using selector (same pattern as KdsPage)
   // CRITICAL: Add defensive checks to prevent "Cannot read properties of undefined"
   const getBarOrders = useBarStore((state) => state?.getBarOrders);
@@ -43,20 +43,20 @@ export function BarPage() {
   const getPendingCount = useBarStore((state) => state?.getPendingCount);
   const getPreparingCount = useBarStore((state) => state?.getPreparingCount);
   const getReadyCount = useBarStore((state) => state?.getReadyCount);
-  
+
   // Sync with order events
   useBarEvents();
-  
+
   // Get orders with defensive check
   const orders = getBarOrders?.() || [];
-  
+
   // Sort by creation time (oldest first)
   const sortedOrders = [...orders].sort((a, b) => {
     const tA = a.timestamps?.created_at ? new Date(a.timestamps.created_at).getTime() : 0;
     const tB = b.timestamps?.created_at ? new Date(b.timestamps.created_at).getTime() : 0;
     return tA - tB;
   });
-  
+
   // Handle "Ready" button
   const handleReady = async (orderId: number | string) => {
     try {
@@ -67,7 +67,7 @@ export function BarPage() {
       alert('Eroare la marcarea comenzii ca gata');
     }
   };
-  
+
   // Update timer every second
   const [now, setNow] = useState(Date.now());
   useEffect(() => {
@@ -76,14 +76,14 @@ export function BarPage() {
     }, 1000);
     return () => clearInterval(interval);
   }, []);
-  
+
   return (
     <div className="bar-page">
       <header className="bar-header">
         <h1 className="bar-title">Bar – Comenzi Active</h1>
         <div className="bar-stats">
           <span className="bar-stat-item">
-            <span className="bar-stat-label">"Pending:"</span>
+            <span className="bar-stat-label">Pending:</span>
             <span className="bar-stat-value">{getPendingCount?.() || 0}</span>
           </span>
           <span className="bar-stat-item">
@@ -100,17 +100,17 @@ export function BarPage() {
           </span>
         </div>
       </header>
-      
+
       <div className="bar-orders-grid">
         {sortedOrders.map((order) => {
           const elapsed = getElapsedSeconds?.(order) || 0;
           const timeClass = getTimeClass(elapsed);
-          
+
           // Filter bar items only
           const barItems = order.items.filter((item) => item.station === 'bar');
-          
+
           if (barItems.length === 0) return null;
-          
+
           return (
             <div key={order.id} className={`bar-order-card ${timeClass}`}>
               <div className="bar-order-header">
@@ -119,13 +119,13 @@ export function BarPage() {
                   <div className="bar-order-table">Masa {order.table}</div>
                 )}
                 {order.type === "Delivery" && (
-                  <div className="bar-badge bar-badge-delivery">"Delivery"</div>
+                  <div className="bar-badge bar-badge-delivery">Delivery</div>
                 )}
                 {order.type === 'takeout' && (
                   <div className="bar-badge bar-badge-takeout">Takeout</div>
                 )}
               </div>
-              
+
               <div className="bar-order-items">
                 {barItems.map((item) => (
                   <div key={item.id || `${item.product_id}-${item.name}`} className="bar-item-row">
@@ -133,7 +133,7 @@ export function BarPage() {
                       <span className="bar-item-qty">{item.qty}×</span>
                       <span className="bar-item-name">{item.name}</span>
                     </div>
-                    
+
                     {item.options && item.options.length > 0 && (
                       <div className="bar-item-options">
                         {item.options.map((opt, idx) => (
@@ -143,7 +143,7 @@ export function BarPage() {
                         ))}
                       </div>
                     )}
-                    
+
                     {item.notes && (
                       <div className="bar-item-notes">
                         <strong>Note:</strong> {item.notes}
@@ -152,18 +152,18 @@ export function BarPage() {
                   </div>
                 ))}
               </div>
-              
+
               {order.notes?.bar && (
                 <div className="bar-order-notes">
                   <strong>Note bar:</strong> {order.notes.bar}
                 </div>
               )}
-              
+
               <div className="bar-order-footer">
                 <div className={`bar-timer ${timeClass}`}>
                   {formatTime(elapsed)}
                 </div>
-                
+
                 {order.status !== 'ready' && (
                   <button
                     className="bar-ready-btn"
@@ -172,7 +172,7 @@ export function BarPage() {
                     Gata
                   </button>
                 )}
-                
+
                 {order.status === 'ready' && (
                   <div className="bar-status-ready">✓ Gata</div>
                 )}
@@ -181,15 +181,12 @@ export function BarPage() {
           );
         })}
       </div>
-      
+
       {sortedOrders.length === 0 && (
         <div className="bar-empty">
-          <p>"nu exista comenzi active pentru bar"</p>
+          <p>Nu există comenzi active pentru bar</p>
         </div>
       )}
     </div>
   );
 }
-
-
-

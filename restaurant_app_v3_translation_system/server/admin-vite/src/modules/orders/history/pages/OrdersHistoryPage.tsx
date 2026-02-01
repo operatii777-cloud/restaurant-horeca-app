@@ -28,23 +28,23 @@ interface Order {
 }
 
 const ORDER_TYPE_LABELS: Record<string, { label: string; icon: string; color: string }> = {
-  DINE_IN: { label: 'DINE-IN', icon: 'ðŸ½ï¸', color: 'secondary' },
-  TAKEOUT: { label: 'TAKEAWAY', icon: 'ðŸ“¦', color: 'success' },
-  DELIVERY: { label: 'DELIVERY', icon: 'ðŸšš', color: 'primary' },
-  DRIVE_THRU: { label: 'DRIVE-THRU', icon: 'ðŸš—', color: 'warning' },
+  DINE_IN: { label: 'DINE-IN', icon: '🍽️', color: 'secondary' },
+  TAKEOUT: { label: 'TAKEAWAY', icon: '📦', color: 'success' },
+  DELIVERY: { label: 'DELIVERY', icon: '🚚', color: 'primary' },
+  DRIVE_THRU: { label: 'DRIVE-THRU', icon: '🚗', color: 'warning' },
 };
 
 const PLATFORM_ICONS: Record<string, string> = {
-  glovo: 'ðŸšš',
-  wolt: 'ðŸ“±',
-  bolt_food: 'ðŸ´',
-  friendsride: 'ðŸš—',
-  tazz: 'âš¡',
-  phone: 'ðŸ“ž',
-  online: 'ðŸŒ',
-  pos: 'ðŸ’°',
-  delivery: 'ðŸšš',
-  drive_thru: 'ðŸš—'
+  glovo: '🚚',
+  wolt: '📱',
+  bolt_food: '🥡',
+  friendsride: '🚗',
+  tazz: '⚡',
+  phone: '📞',
+  online: '🌐',
+  pos: '💰',
+  delivery: '🚚',
+  drive_thru: '🚗'
 };
 
 const STATUS_COLORS: Record<string, string> = {
@@ -59,7 +59,7 @@ const STATUS_COLORS: Record<string, string> = {
 };
 
 export const OrdersHistoryPage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterOrderSource, setFilterOrderSource] = useState('all');
@@ -71,7 +71,7 @@ export const OrdersHistoryPage: React.FC = () => {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-    const [pageSize] = useState(50);
+  const [pageSize] = useState(50);
 
   useEffect(() => {
     fetchOrders();
@@ -80,14 +80,14 @@ export const OrdersHistoryPage: React.FC = () => {
   // NU mai prevenim scroll-ul paginii - fără overlay, pagină rămâne interactivă
   // useEffect pentru scroll a fost eliminat - pagină poate face scroll când modalul este deschis
 
-  // ÃŽnchide modalul la apăsarea tastei Escape
+  // Închide modalul la apăsarea tastei Escape
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && showDetailsModal) {
         setShowDetailsModal(false);
       }
     };
-    
+
     if (showDetailsModal) {
       document.addEventListener('keydown', handleEscape);
       return () => document.removeEventListener('keydown', handleEscape);
@@ -102,11 +102,11 @@ export const OrdersHistoryPage: React.FC = () => {
       if (dateRange.start) params.append('startDate', dateRange.start);
       if (dateRange.end) params.append('endDate', dateRange.end);
       params.append('limit', '1000'); // Get more orders for filtering
-      
+
       const response = await httpClient.get<{ data?: Order[]; orders?: Order[] }>(
         `/api/orders-delivery?${params.toString()}`
       );
-      
+
       // Suport pentru ambele formate (data sau orders)
       if (response.data) {
         const ordersData = response.data.data || response.data.orders || [];
@@ -147,23 +147,23 @@ export const OrdersHistoryPage: React.FC = () => {
     // Filtru după platform (suportă și delivery/drive_thru ca order_source)
     if (filterPlatform !== 'all') {
       if (filterPlatform === "Delivery") {
-        filtered = filtered.filter(o => 
-          o.platform === "Delivery" || 
-          o.order_source === 'DELIVERY' || 
+        filtered = filtered.filter(o =>
+          o.platform === "Delivery" ||
+          o.order_source === 'DELIVERY' ||
           o.type === "Delivery"
         );
       } else if (filterPlatform === "Drive-Thru") {
-        filtered = filtered.filter(o => 
-          o.platform === "Drive-Thru" || 
-          o.order_source === 'DRIVE_THRU' || 
-          o.type === "Drive-Thru" || 
+        filtered = filtered.filter(o =>
+          o.platform === "Drive-Thru" ||
+          o.order_source === 'DRIVE_THRU' ||
+          o.type === "Drive-Thru" ||
           o.type === 'drive-thru'
         );
       } else if (filterPlatform === 'pos') {
-        filtered = filtered.filter(o => 
-          o.platform === 'pos' || 
-          o.order_source === 'POS' || 
-          o.order_source === 'KIOSK' || 
+        filtered = filtered.filter(o =>
+          o.platform === 'pos' ||
+          o.order_source === 'POS' ||
+          o.order_source === 'KIOSK' ||
           o.order_source === 'QR'
         );
       } else {
@@ -201,12 +201,12 @@ export const OrdersHistoryPage: React.FC = () => {
     const total = filteredOrders.length;
     const bySource = filteredOrders.reduce((acc, o) => {
       const source = o.order_source || 'UNKNOWN';
-        acc[source] = (acc[source] || 0) + 1;
+      acc[source] = (acc[source] || 0) + 1;
       return acc;
     }, {} as Record<string, number>);
     const byType = filteredOrders.reduce((acc, o) => {
       const type = o.type?.toLowerCase() || 'unknown';
-        acc[type] = (acc[type] || 0) + 1;
+      acc[type] = (acc[type] || 0) + 1;
       return acc;
     }, {} as Record<string, number>);
     const totalValue = filteredOrders.reduce((sum, o) => sum + (o.total || 0), 0);
@@ -226,22 +226,22 @@ export const OrdersHistoryPage: React.FC = () => {
 
   const getOrderTypeInfo = (order: Order) => {
     const source = order.order_source || 'UNKNOWN';
-    const typeInfo = ORDER_TYPE_labels[source] || { label: source, icon: 'ðŸ“‹', color: 'secondary' };
+    const typeInfo = ORDER_TYPE_LABELS[source] || { label: source, icon: '📄', color: 'secondary' };
     return typeInfo;
   };
 
   const getOrderDisplayInfo = (order: Order) => {
     if (order.order_source === 'DRIVE_THRU') {
-      return `ðŸš— ${order.car_plate || 'N/A'} ${order.lane_number ? `(Lane ${order.lane_number})` : ''}`;
+      return `🚗 ${order.car_plate || 'N/A'} ${order.lane_number ? `(Lane ${order.lane_number})` : ''}`;
     }
     if (order.order_source === 'DELIVERY') {
-      return `ðŸšš ${order.delivery_address || 'N/A'}`;
+      return `🚚 ${order.delivery_address || 'N/A'}`;
     }
     if (order.order_source === 'TAKEOUT' || order.type === 'takeout' || order.type === 'takeaway') {
-      return `ðŸ“¦ ${order.customer_name || 'Takeaway'}`;
+      return `📦 ${order.customer_name || 'Takeaway'}`;
     }
     if (order.table_number) {
-      return `ðŸ½ï¸ Masa ${order.table_number}`;
+      return `🍽️ Masa ${order.table_number}`;
     }
     return 'N/A';
   };
@@ -265,7 +265,7 @@ export const OrdersHistoryPage: React.FC = () => {
             title="Total Comenzi"
             value={stats.total.toString()}
             helper={`Valoare: ${stats.totalValue.toFixed(2)} RON`}
-            icon={<span>ðŸ“¦</span>}
+            icon={<span>📦</span>}
           />
         </Col>
         <Col md={3}>
@@ -273,7 +273,7 @@ export const OrdersHistoryPage: React.FC = () => {
             title="Dine-In"
             value={String(stats.bySource['POS'] || stats.bySource['KIOSK'] || stats.bySource['QR'] || '0')}
             helper="Comenzi restaurant"
-            icon={<span>ðŸ½ï¸</span>}
+            icon={<span>🍽️</span>}
           />
         </Col>
         <Col md={3}>
@@ -281,7 +281,7 @@ export const OrdersHistoryPage: React.FC = () => {
             title="Delivery"
             value={stats.bySource['DELIVERY']?.toString() || '0'}
             helper="Comenzi livrare"
-            icon={<span>ðŸšš</span>}
+            icon={<span>🚚</span>}
           />
         </Col>
         <Col md={3}>
@@ -289,7 +289,7 @@ export const OrdersHistoryPage: React.FC = () => {
             title="Drive-Thru"
             value={stats.bySource['DRIVE_THRU']?.toString() || '0'}
             helper="Comenzi drive-thru"
-            icon={<span>ðŸš—</span>}
+            icon={<span>🚗</span>}
           />
         </Col>
       </Row>
@@ -299,7 +299,7 @@ export const OrdersHistoryPage: React.FC = () => {
         <Card.Body>
           <Row className="g-3">
             <Col md={2}>
-              <Form.Label>"tip sursa"</Form.Label>
+              <Form.Label>Tip Sursă</Form.Label>
               <Form.Select value={filterOrderSource} onChange={(e) => setFilterOrderSource(e.target.value)}>
                 <option value="all">Toate</option>
                 <option value="POS">POS</option>
@@ -316,7 +316,7 @@ export const OrdersHistoryPage: React.FC = () => {
                 <option value="all">Toate</option>
                 <option value="Dine-In">Dine-In</option>
                 <option value="takeaway">Takeaway</option>
-                <option value="delivery">"Delivery"</option>
+                <option value="delivery">Delivery</option>
                 <option value="Drive-Thru">Drive-Thru</option>
               </Form.Select>
             </Col>
@@ -324,8 +324,8 @@ export const OrdersHistoryPage: React.FC = () => {
               <Form.Label>Status</Form.Label>
               <Form.Select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
                 <option value="all">Toate</option>
-                <option value="pending">în așteptare</option>
-                <option value="preparing">în preparare</option>
+                <option value="pending">În Așteptare</option>
+                <option value="preparing">În Preparare</option>
                 <option value="ready">Gata</option>
                 <option value="completed">Finalizat</option>
                 <option value="delivered">Livrat</option>
@@ -337,12 +337,12 @@ export const OrdersHistoryPage: React.FC = () => {
               <Form.Label>Platformă</Form.Label>
               <Form.Select value={filterPlatform} onChange={(e) => setFilterPlatform(e.target.value)}>
                 <option value="all">Toate</option>
-                <option value="delivery">ðŸšš Delivery</option>
-                <option value="Drive-Thru">ðŸš— Drive-Thru</option>
-                <option value="pos">ðŸ’° POS</option>
+                <option value="delivery">🚚 Delivery</option>
+                <option value="Drive-Thru">🚗 Drive-Thru</option>
+                <option value="pos">💰 POS</option>
                 {platforms.filter(p => p !== 'pos' && p !== "Delivery" && p !== "Drive-Thru").map(p => (
                   <option key={p} value={p}>
-                    {PLATFORM_icons[p] || 'ðŸ“±'} {p}
+                    {PLATFORM_ICONS[p] || '📱'} {p}
                   </option>
                 ))}
               </Form.Select>
@@ -370,7 +370,7 @@ export const OrdersHistoryPage: React.FC = () => {
                 <InputGroup.Text><i className="fas fa-search"></i></InputGroup.Text>
                 <Form.Control
                   type="text"
-                  placeholder="cauta dupa id nume telefon adresa masa numar masin"
+                  placeholder="Caută după ID, nume, telefon, adresă, masă, număr mașină"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -407,7 +407,7 @@ export const OrdersHistoryPage: React.FC = () => {
                       <th>Produse</th>
                       <th>Total</th>
                       <th>Status</th>
-                      <th>"Acțiuni"</th>
+                      <th>Acțiuni</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -415,7 +415,7 @@ export const OrdersHistoryPage: React.FC = () => {
                       <tr>
                         <td colSpan={8} className="text-center py-5">
                           <i className="fas fa-inbox fa-3x text-muted mb-3"></i>
-                          <p className="text-muted">"nu exista comenzi care sa corespunda filtrelor sel"</p>
+                          <p className="text-muted">Nu există comenzi care să corespundă filtrelor selectate</p>
                         </td>
                       </tr>
                     ) : (
@@ -431,7 +431,7 @@ export const OrdersHistoryPage: React.FC = () => {
                               </Badge>
                               {order.platform && (
                                 <Badge bg="light" text="dark" className="ms-1">
-                                  {PLATFORM_ICONS[order.platform] || 'ðŸ“±'} {order.platform}
+                                  {PLATFORM_ICONS[order.platform] || '📱'} {order.platform}
                                 </Badge>
                               )}
                             </td>
@@ -450,7 +450,7 @@ export const OrdersHistoryPage: React.FC = () => {
                                 size="sm"
                                 onClick={() => openDetails(order)}
                               >
-                                <i className="fas fa-eye"></i>"Detalii"</Button>
+                                <i className="fas fa-eye"></i> Detalii</Button>
                             </td>
                           </tr>
                         );
@@ -485,7 +485,7 @@ export const OrdersHistoryPage: React.FC = () => {
                       size="sm"
                       disabled={currentPage === totalPages}
                       onClick={() => setCurrentPage(p => p + 1)}
-                    >"Următor"<i className="fas fa-chevron-right"></i>
+                    >Următor <i className="fas fa-chevron-right"></i>
                     </Button>
                   </div>
                 </div>
@@ -537,13 +537,13 @@ export const OrdersHistoryPage: React.FC = () => {
                 <Card className="mb-3">
                   <Card.Header>
                     <strong>
-                      <User size={16} className="me-2" style={{ verticalAlign: 'middle' }} />"informatii client"</strong>
+                      <User size={16} className="me-2" style={{ verticalAlign: 'middle' }} />Informații Client</strong>
                   </Card.Header>
                   <Card.Body>
                     {selectedOrder.customer_name && (
                       <p className="mb-2">
                         <User size={16} className="me-2 text-muted" style={{ verticalAlign: 'middle' }} />
-                        <strong>"Nume:"</strong> {selectedOrder.customer_name}
+                        <strong>Nume:</strong> {selectedOrder.customer_name}
                       </p>
                     )}
                     {selectedOrder.customer_phone && (
@@ -555,19 +555,19 @@ export const OrdersHistoryPage: React.FC = () => {
                     {selectedOrder.delivery_address && (
                       <p className="mb-2">
                         <MapPin size={16} className="me-2 text-muted" style={{ verticalAlign: 'middle' }} />
-                        <strong>"Adresă:"</strong> {selectedOrder.delivery_address}
+                        <strong>Adresă:</strong> {selectedOrder.delivery_address}
                       </p>
                     )}
                     {selectedOrder.table_number && (
                       <p className="mb-2">
                         <MapPin size={16} className="me-2 text-muted" style={{ verticalAlign: 'middle' }} />
-                        <strong>"Masă:"</strong> {selectedOrder.table_number}
+                        <strong>Masă:</strong> {selectedOrder.table_number}
                       </p>
                     )}
                     {selectedOrder.car_plate && (
                       <p className="mb-0">
                         <MapPin size={16} className="me-2 text-muted" style={{ verticalAlign: 'middle' }} />
-                        <strong>"numar masina"</strong> {selectedOrder.car_plate}
+                        <strong>Număr Mașină:</strong> {selectedOrder.car_plate}
                         {selectedOrder.lane_number && ` (Lane ${selectedOrder.lane_number})`}
                       </p>
                     )}
@@ -589,7 +589,7 @@ export const OrdersHistoryPage: React.FC = () => {
                       <tr>
                         <th>Produs</th>
                         <th className="text-center">Cant.</th>
-                        <th className="text-end">"Preț"</th>
+                        <th className="text-end">Preț</th>
                         <th className="text-end">Total</th>
                       </tr>
                     </thead>
@@ -619,16 +619,16 @@ export const OrdersHistoryPage: React.FC = () => {
                 </Card.Header>
                 <Card.Body>
                   <div className="d-flex justify-content-between mb-2">
-                    <span><strong>"Metodă:"</strong></span>
+                    <span><strong>Metodă:</strong></span>
                     <span>{selectedOrder.payment_method || 'N/A'}</span>
                   </div>
                   <div className="d-flex justify-content-between mb-2">
                     <span><strong>Status:</strong></span>
                     <span>
                       {selectedOrder.is_paid ? (
-                        <Badge bg="success">[Check] Plătit</Badge>
+                        <Badge bg="success">✅ Plătit</Badge>
                       ) : (
-                        <Badge bg="danger">âŒ Neplătit</Badge>
+                        <Badge bg="danger">❌ Neplătit</Badge>
                       )}
                     </span>
                   </div>
@@ -643,7 +643,7 @@ export const OrdersHistoryPage: React.FC = () => {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowDetailsModal(false)}>"ÃŽnchide"</Button>
+          <Button variant="secondary" onClick={() => setShowDetailsModal(false)}>Închide</Button>
         </Modal.Footer>
       </Modal>
     </div>

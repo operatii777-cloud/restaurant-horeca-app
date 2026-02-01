@@ -94,19 +94,23 @@ export default defineConfig({
           if (id.includes('node_modules')) {
             // CRITICAL: Keep ALL React-dependent libraries in one chunk to prevent scope issues
             // This is ESSENTIAL to prevent ESM module scope isolation
-            if (id.includes('react') || 
-                id.includes('react-dom') || 
-                id.includes('react-bootstrap') || 
-                id.includes('@restart') ||
-                id.includes('react-hook-form') ||
-                id.includes('@hookform') ||
-                id.includes('react-router') ||
-                id.includes('react-query') ||
-                id.includes('@tanstack/react-query') ||
-                id.includes('zustand') ||
-                id.includes('immer') ||
-                id.includes('use-sync-external-store') ||
-                id.includes('scheduler')) {
+            if (id.includes('react') ||
+              id.includes('react-dom') ||
+              id.includes('react-bootstrap') ||
+              id.includes('@restart') ||
+              id.includes('react-hook-form') ||
+              id.includes('@hookform') ||
+              id.includes('react-router') ||
+              id.includes('react-query') ||
+              id.includes('@tanstack/react-query') ||
+              id.includes('zustand') ||
+              id.includes('immer') ||
+              id.includes('use-sync-external-store') ||
+              id.includes('scheduler') ||
+              id.includes('framer-motion') ||
+              id.includes('classnames') ||
+              id.includes('prop-types') ||
+              id.includes('dom-helpers')) {
               return 'react-vendor';
             }
             if (id.includes('ag-grid')) {

@@ -19,6 +19,16 @@
 const { dbPromise } = require('../../database');
 
 /**
+ * Check if a hostname is an IPv4 address
+ */
+function isIPAddress(hostname) {
+  if (!hostname) return false;
+  // IPv4 pattern: 4 groups of 1-3 digits separated by dots
+  const ipPattern = /^(\d{1,3}\.){3}\d{1,3}$/;
+  return ipPattern.test(hostname.split(':')[0]);
+}
+
+/**
  * Extract tenant ID from subdomain
  * Examples:
  * - client1.qroms.ro → tenant_id = 1
@@ -26,25 +36,28 @@ const { dbPromise } = require('../../database');
  */
 function extractTenantFromSubdomain(hostname) {
   if (!hostname) return null;
-  
+
+  // Skip extraction if it's an IP address (local/direct access)
+  if (isIPAddress(hostname)) return null;
+
   // Remove port if present
   const host = hostname.split(':')[0];
-  
+
   // Check for subdomain pattern: client1.qroms.ro
   const subdomainMatch = host.match(/^([^.]+)\./);
   if (subdomainMatch) {
     const subdomain = subdomainMatch[1];
-    
+
     // Try numeric tenant ID first
     const numericId = parseInt(subdomain);
     if (!isNaN(numericId)) {
       return numericId;
     }
-    
+
     // Try tenant_code lookup (async - will be done in middleware)
     return subdomain;
   }
-  
+
   return null;
 }
 
@@ -69,7 +82,7 @@ function extractTenantFromJWT(req) {
       // Invalid token format, ignore
     }
   }
-  
+
   return null;
 }
 
@@ -78,7 +91,7 @@ function extractTenantFromJWT(req) {
  */
 async function loadBrandingConfig(tenantId) {
   if (!tenantId) return null;
-  
+
   try {
     const db = await dbPromise;
     const branding = await new Promise((resolve, reject) => {
@@ -91,7 +104,7 @@ async function loadBrandingConfig(tenantId) {
         }
       );
     });
-    
+
     if (branding) {
       return {
         brand_name: branding.brand_name,
@@ -107,7 +120,7 @@ async function loadBrandingConfig(tenantId) {
   } catch (error) {
     console.error('[TenantMiddleware] Error loading branding:', error);
   }
-  
+
   return null;
 }
 
@@ -116,7 +129,7 @@ async function loadBrandingConfig(tenantId) {
  */
 async function lookupTenantByCode(tenantCode) {
   if (!tenantCode) return null;
-  
+
   try {
     const db = await dbPromise;
     const tenant = await new Promise((resolve, reject) => {
@@ -129,7 +142,7 @@ async function lookupTenantByCode(tenantCode) {
         }
       );
     });
-    
+
     return tenant ? tenant.id : null;
   } catch (error) {
     console.error('[TenantMiddleware] Error looking up tenant:', error);
@@ -144,7 +157,7 @@ async function tenantMiddleware(req, res, next) {
   try {
     let tenantId = null;
     let locationId = null;
-    
+
     // Priority 1: Explicit headers (for API calls)
     if (req.headers['x-tenant-id']) {
       tenantId = parseInt(req.headers['x-tenant-id']);
@@ -152,7 +165,7 @@ async function tenantMiddleware(req, res, next) {
     if (req.headers['x-location-id']) {
       locationId = parseInt(req.headers['x-location-id']);
     }
-    
+
     // Priority 2: JWT token
     if (!tenantId) {
       const jwtTenantId = extractTenantFromJWT(req);
@@ -160,7 +173,7 @@ async function tenantMiddleware(req, res, next) {
         tenantId = jwtTenantId;
       }
     }
-    
+
     // Priority 3: Subdomain
     if (!tenantId) {
       const subdomainTenant = extractTenantFromSubdomain(req.hostname || req.headers.host);
@@ -173,7 +186,7 @@ async function tenantMiddleware(req, res, next) {
         }
       }
     }
-    
+
     // Priority 4: Session (for POS/KIOSK local devices)
     if (!tenantId && req.session && req.session.tenantId) {
       tenantId = req.session.tenantId;
@@ -181,7 +194,7 @@ async function tenantMiddleware(req, res, next) {
     if (!locationId && req.session && req.session.locationId) {
       locationId = req.session.locationId;
     }
-    
+
     // Priority 5: Default tenant (for single-tenant mode or development)
     if (!tenantId) {
       // Check if there's a default tenant in database
@@ -196,7 +209,7 @@ async function tenantMiddleware(req, res, next) {
           }
         );
       });
-      
+
       if (defaultTenant) {
         tenantId = defaultTenant.id;
       } else {
@@ -204,7 +217,7 @@ async function tenantMiddleware(req, res, next) {
         tenantId = 1;
       }
     }
-    
+
     // Default location (if not specified, use first active location for tenant)
     if (!locationId && tenantId) {
       const db = await dbPromise;
@@ -218,7 +231,7 @@ async function tenantMiddleware(req, res, next) {
           }
         );
       });
-      
+
       if (defaultLocation) {
         locationId = defaultLocation.id;
       } else {
@@ -226,7 +239,7 @@ async function tenantMiddleware(req, res, next) {
         locationId = 1;
       }
     }
-    
+
     // Validate tenant exists and is active
     if (tenantId) {
       const db = await dbPromise;
@@ -240,12 +253,12 @@ async function tenantMiddleware(req, res, next) {
           }
         );
       });
-      
+
       if (!tenant) {
         // Pentru endpoint-uri publice (login, etc.) și kiosk/mobile, nu blochează request-ul
         // doar loghează warning-ul și folosește default tenant
         if (req.path && (
-          req.path.includes('/login') || 
+          req.path.includes('/login') ||
           req.path.includes('/register') ||
           req.path.includes('/public') ||
           req.path.includes('/kiosk/') ||
@@ -264,7 +277,7 @@ async function tenantMiddleware(req, res, next) {
               }
             );
           });
-          
+
           if (defaultTenant) {
             tenantId = defaultTenant.id;
             req.tenantId = tenantId;
@@ -274,20 +287,20 @@ async function tenantMiddleware(req, res, next) {
             req.tenantId = 1;
           }
         } else {
-          return res.status(404).json({ 
+          return res.status(404).json({
             error: 'Tenant not found',
-            tenantId 
+            tenantId
           });
         }
       } else if (tenant.status !== 'active') {
-        return res.status(403).json({ 
+        return res.status(403).json({
           error: 'Tenant is not active',
           tenantId,
-          status: tenant.status 
+          status: tenant.status
         });
       }
     }
-    
+
     // Validate location exists and is active (if specified)
     if (locationId) {
       const db = await dbPromise;
@@ -301,26 +314,26 @@ async function tenantMiddleware(req, res, next) {
           }
         );
       });
-      
+
       if (!location) {
-        return res.status(404).json({ 
+        return res.status(404).json({
           error: 'Location not found',
-          locationId 
+          locationId
         });
       }
-      
+
       if (!location.is_active) {
-        return res.status(403).json({ 
+        return res.status(403).json({
           error: 'Location is not active',
-          locationId 
+          locationId
         });
       }
     }
-    
+
     // Inject into request
     req.tenantId = tenantId;
     req.locationId = locationId;
-    
+
     // Load branding config (async, but don't block request)
     loadBrandingConfig(tenantId).then(branding => {
       req.brandingConfig = branding;
@@ -328,14 +341,14 @@ async function tenantMiddleware(req, res, next) {
       console.error('[TenantMiddleware] Error loading branding:', err);
       req.brandingConfig = null;
     });
-    
+
     // Continue to next middleware
     next();
   } catch (error) {
     console.error('[TenantMiddleware] Error:', error);
-    return res.status(500).json({ 
+    return res.status(500).json({
       error: 'Tenant middleware error',
-      message: error.message 
+      message: error.message
     });
   }
 }
@@ -346,9 +359,9 @@ async function tenantMiddleware(req, res, next) {
  */
 function requireTenant(req, res, next) {
   if (!req.tenantId) {
-    return res.status(400).json({ 
+    return res.status(400).json({
       error: 'Tenant ID is required',
-      hint: 'Provide X-Tenant-ID header or valid JWT token' 
+      hint: 'Provide X-Tenant-ID header or valid JWT token'
     });
   }
   next();
@@ -360,9 +373,9 @@ function requireTenant(req, res, next) {
  */
 function requireLocation(req, res, next) {
   if (!req.locationId) {
-    return res.status(400).json({ 
+    return res.status(400).json({
       error: 'Location ID is required',
-      hint: 'Provide X-Location-ID header or set default location' 
+      hint: 'Provide X-Location-ID header or set default location'
     });
   }
   next();

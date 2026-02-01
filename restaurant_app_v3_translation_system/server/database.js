@@ -73,7 +73,7 @@ const dbPromise = new Promise((resolve, reject) => {
       reject(err);
     } else {
       console.log('✅ Conectat la baza de date SQLite. Se inițializează...');
-      
+
       // Gestionare erori pentru baza de date
       db.on('error', (error) => {
         // Ignoră erorile de tip "no such column: status" din trigger-e (sunt rezolvate prin migrare)
@@ -91,10 +91,10 @@ const dbPromise = new Promise((resolve, reject) => {
         // Nu oprim serverul - continuă să ruleze
         console.log('⚠️ Serverul continuă să ruleze (eroarea a fost logată)');
       });
-      
+
       // Configurare timeout pentru a preveni blocarea (mărit pentru high concurrency)
       db.configure('busyTimeout', 10000); // 10 secunde
-      
+
       // Optimizări pentru high concurrency (200+ clienți simultan)
       db.run("PRAGMA journal_mode = WAL", (err) => {
         if (err) {
@@ -103,7 +103,7 @@ const dbPromise = new Promise((resolve, reject) => {
           console.log('✅ WAL mode enabled for concurrent access');
         }
       });
-      
+
       db.run("PRAGMA synchronous = NORMAL", (err) => {
         if (err) {
           console.warn('⚠️ Error setting synchronous mode:', err.message);
@@ -111,7 +111,7 @@ const dbPromise = new Promise((resolve, reject) => {
           console.log('✅ Synchronous mode set to NORMAL (optimized for WAL)');
         }
       });
-      
+
       db.run("PRAGMA cache_size = -64000", (err) => { // 64MB cache
         if (err) {
           console.warn('⚠️ Error setting cache size:', err.message);
@@ -119,7 +119,7 @@ const dbPromise = new Promise((resolve, reject) => {
           console.log('✅ Cache size set to 64MB');
         }
       });
-      
+
       db.run("PRAGMA temp_store = MEMORY", (err) => {
         if (err) {
           console.warn('⚠️ Error setting temp_store:', err.message);
@@ -127,7 +127,7 @@ const dbPromise = new Promise((resolve, reject) => {
           console.log('✅ Temp store set to MEMORY');
         }
       });
-      
+
       // TEMPORAR: Foreign keys dezactivate pentru a permite înregistrarea și autentificarea clienților
       // Foreign keys vor fi activate doar pentru operațiuni admin
       db.run("PRAGMA foreign_keys = OFF", (err) => {
@@ -137,7 +137,7 @@ const dbPromise = new Promise((resolve, reject) => {
         } else {
           console.log('⚠️ Foreign keys TEMPORAR dezactivate pentru customer auth');
         }
-        
+
         // Continuă cu inițializarea după ce foreign keys sunt dezactivate
         initializeDb(db)
           .then(() => {
@@ -160,7 +160,7 @@ const dbPromise = new Promise((resolve, reject) => {
                   console.warn('⚠️ Could not check customers table structure:', err.message);
                   return resolveMigration(); // Continuă oricum
                 }
-                
+
                 const hasPasswordHash = cols.some(col => col.name === 'password_hash');
                 if (!hasPasswordHash) {
                   db.run('ALTER TABLE customers ADD COLUMN password_hash TEXT', (alterErr) => {
@@ -178,7 +178,80 @@ const dbPromise = new Promise((resolve, reject) => {
             });
           })
           .then(() => {
-            console.log('✅ Baza de date inițializată cu succes (including Enterprise tables)');
+            // Promisify database methods for cleaner async/await usage
+            const { promisify } = require('util');
+            db.allAsync = promisify(db.all).bind(db);
+            db.getAsync = promisify(db.get).bind(db);
+            db.runAsync = promisify(db.run).bind(db);
+            db.execAsync = promisify(db.exec).bind(db);
+
+            // Add legacy compatibility: some modules use await db.all()
+            // We'll wrap the original methods to return promises if no callback is provided
+            const originalAll = db.all.bind(db);
+            db.all = function (sql, params, callback) {
+              if (typeof params === 'function') {
+                callback = params;
+                params = [];
+              }
+              if (typeof callback === 'function') {
+                return originalAll(sql, params, callback);
+              }
+              return new Promise((resolve, reject) => {
+                originalAll(sql, params, (err, rows) => {
+                  if (err) reject(err);
+                  else resolve(rows || []);
+                });
+              });
+            };
+
+            const originalGet = db.get.bind(db);
+            db.get = function (sql, params, callback) {
+              if (typeof params === 'function') {
+                callback = params;
+                params = [];
+              }
+              if (typeof callback === 'function') {
+                return originalGet(sql, params, callback);
+              }
+              return new Promise((resolve, reject) => {
+                originalGet(sql, params, (err, row) => {
+                  if (err) reject(err);
+                  else resolve(row);
+                });
+              });
+            };
+
+            const originalRun = db.run.bind(db);
+            db.run = function (sql, params, callback) {
+              if (typeof params === 'function') {
+                callback = params;
+                params = [];
+              }
+              if (typeof callback === 'function') {
+                return originalRun(sql, params, callback);
+              }
+              return new Promise((resolve, reject) => {
+                originalRun(sql, params, function (err) {
+                  if (err) reject(err);
+                  else resolve({ lastID: this.lastID, changes: this.changes });
+                });
+              });
+            };
+
+            const originalExec = db.exec.bind(db);
+            db.exec = function (sql, callback) {
+              if (typeof callback === 'function') {
+                return originalExec(sql, callback);
+              }
+              return new Promise((resolve, reject) => {
+                originalExec(sql, (err) => {
+                  if (err) reject(err);
+                  else resolve();
+                });
+              });
+            };
+
+            console.log('✅ Baza de date inițializată cu succes (including Enterprise tables and promisified methods)');
             resolve(db);
           })
           .catch((error) => {
@@ -221,19 +294,19 @@ function initializeDb(db) {
         console.log('✅ Tabelă order_items creată/verificată (pre-serialize)');
       }
     });
-    
+
     db.serialize(() => {
       // Șterge trigger-urile vechi înainte de orice altă operație (pentru a evita erorile "no such column: status")
-      db.run(`DROP TRIGGER IF EXISTS recalculate_recipe_costs_on_ingredient_update`, () => {});
-      db.run(`DROP TRIGGER IF EXISTS recalculate_recipe_costs_on_subrecipe_update`, () => {});
-      db.run(`DROP TRIGGER IF EXISTS calculate_cogs_on_order_insert`, () => {});
-      db.run(`DROP TRIGGER IF EXISTS calculate_cogs_on_order_update`, () => {});
-      db.run(`DROP TRIGGER IF EXISTS record_stock_move_on_order`, () => {});
-      
+      db.run(`DROP TRIGGER IF EXISTS recalculate_recipe_costs_on_ingredient_update`, () => { });
+      db.run(`DROP TRIGGER IF EXISTS recalculate_recipe_costs_on_subrecipe_update`, () => { });
+      db.run(`DROP TRIGGER IF EXISTS calculate_cogs_on_order_insert`, () => { });
+      db.run(`DROP TRIGGER IF EXISTS calculate_cogs_on_order_update`, () => { });
+      db.run(`DROP TRIGGER IF EXISTS record_stock_move_on_order`, () => { });
+
       // Creăm direct schema corectă și completă
       db.run(`CREATE TABLE IF NOT EXISTS menu (id INTEGER PRIMARY KEY, name TEXT, category TEXT, price REAL, description TEXT, weight TEXT, is_vegetarian BOOLEAN DEFAULT 0, is_spicy BOOLEAN DEFAULT 0, is_takeout_only BOOLEAN DEFAULT 0, allergens TEXT, name_en TEXT, description_en TEXT, category_en TEXT, allergens_en TEXT, info TEXT, ingredients TEXT, prep_time INTEGER, spice_level INTEGER DEFAULT 0, calories REAL, protein REAL, carbs REAL, fat REAL, fiber REAL, sodium REAL, sugar REAL, salt REAL, image_url TEXT, is_sellable BOOLEAN DEFAULT 1)`);
-      db.run(`CREATE TABLE IF NOT EXISTS customization_options (id INTEGER PRIMARY KEY, menu_item_id INTEGER, option_name TEXT, option_type TEXT, extra_price REAL DEFAULT 0, option_name_en TEXT, FOREIGN KEY (menu_item_id) REFERENCES menu (id))`);
-      db.run(`CREATE TABLE IF NOT EXISTS app_settings (key TEXT PRIMARY KEY, value TEXT)`);
+      db.run(`CREATE TABLE IF NOT EXISTS customization_options (id INTEGER PRIMARY KEY, menu_item_id INTEGER, option_name TEXT, option_type TEXT, extra_price REAL DEFAULT 0, option_name_en TEXT, FOREIGN KEY (menu_item_id) REFERENCES menu (id))`);
+      db.run(`CREATE TABLE IF NOT EXISTS app_settings (key TEXT PRIMARY KEY, value TEXT)`);
       db.run(`CREATE TABLE IF NOT EXISTS orders (id INTEGER PRIMARY KEY, type TEXT, isTogether BOOLEAN, items TEXT, status TEXT, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP, completed_timestamp DATETIME, delivered_timestamp DATETIME, cancelled_timestamp DATETIME, cancelled_reason TEXT, table_number TEXT, client_identifier TEXT, is_paid BOOLEAN DEFAULT 0, paid_timestamp DATETIME, food_notes TEXT, drink_notes TEXT, general_notes TEXT, total REAL, location_id INTEGER DEFAULT 1, friendsride_order_id TEXT, friendsride_restaurant_id TEXT, delivery_pickup_code TEXT, delivery_pickup_code_verified BOOLEAN DEFAULT 0, delivery_pickup_code_verified_at DATETIME, friendsride_webhook_url TEXT, delivery_address TEXT, payment_method TEXT, customer_phone TEXT, customer_name TEXT, split_bill TEXT)`, (err) => {
         if (err) {
           console.error('❌ Eroare la crearea tabelei orders:', err.message);
@@ -310,7 +383,7 @@ function initializeDb(db) {
           });
         }
       });
-      
+
       // IMPORTANT: order_items trebuie creată IMEDIAT după orders pentru a evita erorile
       // Tabelă order_items (pentru itemi din comenzi clienți) - CREATĂ IMEDIAT DUPĂ ORDERS
       db.run(`CREATE TABLE IF NOT EXISTS order_items (
@@ -325,6 +398,7 @@ function initializeDb(db) {
         station TEXT,
         notes TEXT,
         customizations TEXT,
+        status TEXT DEFAULT 'pending', 
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (order_id) REFERENCES orders (id) ON DELETE CASCADE,
         FOREIGN KEY (product_id) REFERENCES menu (id) ON DELETE SET NULL
@@ -339,9 +413,18 @@ function initializeDb(db) {
               console.error('Eroare la crearea indexului order_items:', err.message);
             }
           });
+
+          // Migrare: Adaugă coloana status dacă linsește
+          db.run(`ALTER TABLE order_items ADD COLUMN status TEXT DEFAULT 'pending'`, (err) => {
+            if (err && !err.message.includes('duplicate column')) {
+              console.error('⚠️ Notă migrare order_items.status:', err.message);
+            } else if (!err) {
+              console.log('✅ Coloană status adăugată în order_items (migrare)');
+            }
+          });
         }
       });
-      
+
       // PHASE S12 - Payment Engine V3: Tabel payments
       db.run(`CREATE TABLE IF NOT EXISTS payments (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -372,9 +455,9 @@ function initializeDb(db) {
               console.error('⚠️ Eroare la verificarea coloanelor payments:', err.message);
               return;
             }
-            
+
             const hasStatus = columns && columns.some(col => col.name === 'status');
-            
+
             if (!hasStatus) {
               // Adaugă coloana status dacă lipsește
               db.run(`ALTER TABLE payments ADD COLUMN status TEXT DEFAULT 'PENDING'`, (err) => {
@@ -406,7 +489,7 @@ function initializeDb(db) {
         }
       });
       db.run(`CREATE TABLE IF NOT EXISTS notifications (id INTEGER PRIMARY KEY, type TEXT, table_number TEXT, order_id INTEGER, title TEXT, message TEXT, status TEXT DEFAULT 'unread', created_at DATETIME DEFAULT CURRENT_TIMESTAMP, read_at DATETIME)`);
-      
+
       // Migration: Add multilingual support to notifications
       db.run(`ALTER TABLE notifications ADD COLUMN title_en TEXT`, (err) => {
         if (err && !err.message.includes('duplicate column')) {
@@ -420,7 +503,7 @@ function initializeDb(db) {
           console.log('✅ Added multilingual support to notifications table');
         }
       });
-      
+
       // PHASE - Idempotency Keys Table pentru Payments
       db.run(`CREATE TABLE IF NOT EXISTS idempotency_keys (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -515,14 +598,14 @@ function initializeDb(db) {
           console.log('✅ Tabelă user_pins creată/verificată');
         }
       });
-      
+
       // Index pentru order_items
       db.run(`CREATE INDEX IF NOT EXISTS idx_order_items_order_id ON order_items(order_id)`, (err) => {
         if (err && !err.message.includes('already exists')) {
           console.error('Eroare la crearea indexului order_items:', err.message);
         }
       });
-      
+
       db.run(`CREATE TABLE IF NOT EXISTS feedback (id INTEGER PRIMARY KEY AUTOINCREMENT, order_id INTEGER, client_identifier TEXT, table_number TEXT, rating INTEGER NOT NULL, comment TEXT, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (order_id) REFERENCES orders (id))`);
       // Tabele pentru sistemul de fidelizare avansat
       db.run(`CREATE TABLE IF NOT EXISTS loyalty_points (
@@ -538,7 +621,7 @@ function initializeDb(db) {
           created_at DATETIME DEFAULT CURRENT_TIMESTAMP, 
           updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )`);
-      
+
       db.run(`CREATE TABLE IF NOT EXISTS rewards (
           id INTEGER PRIMARY KEY AUTOINCREMENT, 
           name TEXT, 
@@ -552,7 +635,7 @@ function initializeDb(db) {
           is_active BOOLEAN DEFAULT 1, 
           created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )`);
-      
+
       db.run(`CREATE TABLE IF NOT EXISTS points_history (
           id INTEGER PRIMARY KEY AUTOINCREMENT, 
           client_token TEXT, 
@@ -564,7 +647,7 @@ function initializeDb(db) {
           created_at DATETIME DEFAULT CURRENT_TIMESTAMP, 
           FOREIGN KEY (order_id) REFERENCES orders (id)
       )`);
-      
+
       // Tabelă pentru nivelurile VIP
       db.run(`CREATE TABLE IF NOT EXISTS vip_levels (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -576,7 +659,7 @@ function initializeDb(db) {
           color TEXT DEFAULT '#8B4513',
           created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )`);
-      
+
       // Tabelă pentru recompensele utilizate
       db.run(`CREATE TABLE IF NOT EXISTS reward_usage (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -591,7 +674,7 @@ function initializeDb(db) {
       )`);
 
       // ==================== SISTEM ROLURI GRANULARE ====================
-      
+
       // Tabelă pentru roluri
       db.run(`CREATE TABLE IF NOT EXISTS user_roles (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -601,7 +684,7 @@ function initializeDb(db) {
           created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
           updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )`);
-      
+
       // Tabelă pentru permisiuni
       db.run(`CREATE TABLE IF NOT EXISTS permissions (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -611,7 +694,7 @@ function initializeDb(db) {
           action TEXT NOT NULL,
           created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )`);
-      
+
       // Tabelă pentru asocierea rol-permisiuni
       db.run(`CREATE TABLE IF NOT EXISTS role_permissions (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -624,7 +707,7 @@ function initializeDb(db) {
           FOREIGN KEY (granted_by) REFERENCES waiters (id),
           UNIQUE(role_id, permission_id)
       )`);
-      
+
       // Tabelă pentru utilizatori (extinde waiters)
       db.run(`CREATE TABLE IF NOT EXISTS users (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -638,7 +721,7 @@ function initializeDb(db) {
           updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
           FOREIGN KEY (role_id) REFERENCES user_roles (id)
       )`);
-      
+
       // Tabelă pentru sesiuni active
       db.run(`CREATE TABLE IF NOT EXISTS user_sessions (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -649,7 +732,7 @@ function initializeDb(db) {
           created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
           FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
       )`);
-      
+
       // Tabelă pentru audit log
       db.run(`CREATE TABLE IF NOT EXISTS audit_log (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -664,7 +747,7 @@ function initializeDb(db) {
           timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
           FOREIGN KEY (user_id) REFERENCES users (id)
       )`);
-      
+
       // Tabelă pentru system alerts
       db.run(`CREATE TABLE IF NOT EXISTS system_alerts (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -680,7 +763,7 @@ function initializeDb(db) {
       )`);
 
       // ==================== MIGRARE MFA & SESSION MANAGEMENT ====================
-      
+
       // Adaugă câmpuri MFA în users (dacă nu există)
       db.run(`ALTER TABLE users ADD COLUMN mfa_secret TEXT`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
@@ -689,7 +772,7 @@ function initializeDb(db) {
           console.log('✅ Coloană mfa_secret adăugată în users');
         }
       });
-      
+
       db.run(`ALTER TABLE users ADD COLUMN mfa_enabled BOOLEAN DEFAULT 0`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
           console.error('⚠️ Eroare la adăugarea coloanei mfa_enabled:', err);
@@ -697,7 +780,7 @@ function initializeDb(db) {
           console.log('✅ Coloană mfa_enabled adăugată în users');
         }
       });
-      
+
       // Adaugă coloana pin în users (pentru autentificare PIN)
       db.run(`ALTER TABLE users ADD COLUMN pin TEXT`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
@@ -706,7 +789,7 @@ function initializeDb(db) {
           console.log('✅ Coloană pin adăugată în users');
         }
       });
-      
+
       // Adaugă last_activity în user_sessions (dacă nu există)
       // FIX: SQLite nu permite DEFAULT CURRENT_TIMESTAMP în ALTER TABLE
       db.run(`ALTER TABLE user_sessions ADD COLUMN last_activity DATETIME`, (err) => {
@@ -720,7 +803,7 @@ function initializeDb(db) {
       });
 
       // ==================== SISTEM REZERVĂRI ====================
-      
+
       // Tabelă pentru mesele restaurantului
       db.run(`CREATE TABLE IF NOT EXISTS tables (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -733,7 +816,7 @@ function initializeDb(db) {
           created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
           updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )`);
-      
+
       // Tabelă pentru rezervări
       db.run(`CREATE TABLE IF NOT EXISTS reservations (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -754,7 +837,7 @@ function initializeDb(db) {
           updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
           FOREIGN KEY (table_id) REFERENCES tables (id)
       )`);
-      
+
       // Tabelă pentru configurarea rezervărilor
       db.run(`CREATE TABLE IF NOT EXISTS reservation_settings (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -784,7 +867,7 @@ function initializeDb(db) {
           console.error('❌ Eroare la crearea tabelei areas:', err.message);
         } else {
           console.log('✅ Tabelă areas creată/verificată cu succes');
-          
+
           // Verifică dacă coloana is_active există (pentru tabele existente)
           db.all(`PRAGMA table_info(areas)`, [], (err, columns) => {
             if (!err) {
@@ -803,7 +886,7 @@ function initializeDb(db) {
           });
         }
       });
-      
+
       // Tabelă pentru notificări rezervări
       db.run(`CREATE TABLE IF NOT EXISTS reservation_notifications (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -826,7 +909,7 @@ function initializeDb(db) {
 
       db.run(`CREATE INDEX IF NOT EXISTS idx_reservation_events_reservation_id
         ON reservation_events (reservation_id, created_at)`);
-      
+
       // Migration: Add location_id and tenant_id to reservations if they don't exist
       db.run(`ALTER TABLE reservations ADD COLUMN location_id INTEGER`, (err) => {
         if (err && !err.message.includes('duplicate column')) {
@@ -838,7 +921,7 @@ function initializeDb(db) {
           console.warn('⚠️ Could not add tenant_id to reservations:', err.message);
         }
       });
-      
+
       // Tabelă pentru disponibilitatea meselor
       db.run(`CREATE TABLE IF NOT EXISTS table_availability (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -881,7 +964,7 @@ function initializeDb(db) {
       db.run(`CREATE INDEX IF NOT EXISTS idx_waitlist_location ON waitlist(location_id, tenant_id)`);
 
       // ==================== SISTEM E-FACTURA ȘI E-TRANSPORT ====================
-      
+
       // Tabelă pentru configurarea sistemului fiscal
       db.run(`CREATE TABLE IF NOT EXISTS fiscal_config (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -891,7 +974,7 @@ function initializeDb(db) {
           is_encrypted BOOLEAN DEFAULT 0,
           updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )`);
-      
+
       // Tabelă pentru documentele fiscale transmise la ANAF
       db.run(`CREATE TABLE IF NOT EXISTS fiscal_documents (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -915,7 +998,7 @@ function initializeDb(db) {
           updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
           FOREIGN KEY (order_id) REFERENCES orders (id)
       )`);
-      
+
       // Tabelă pentru log-ul transmisiunilor către ANAF
       db.run(`CREATE TABLE IF NOT EXISTS anaf_transmission_log (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -955,9 +1038,9 @@ function initializeDb(db) {
               console.error('⚠️ Eroare la verificarea coloanelor invoices:', err.message);
               return;
             }
-            
+
             const hasStatus = columns && columns.some(col => col.name === 'status');
-            
+
             if (!hasStatus) {
               db.run(`ALTER TABLE invoices ADD COLUMN status TEXT NOT NULL DEFAULT 'generated'`, (err) => {
                 if (err) {
@@ -967,7 +1050,7 @@ function initializeDb(db) {
                 }
               });
             }
-            
+
             // Creează indexurile
             db.run(`CREATE INDEX IF NOT EXISTS idx_invoices_order_id ON invoices(order_id)`, (err) => {
               if (err) console.error('⚠️ Eroare la crearea indexului invoices.order_id:', err.message);
@@ -998,10 +1081,10 @@ function initializeDb(db) {
       // Indexuri pentru performanță
       db.run(`CREATE INDEX IF NOT EXISTS idx_fiscal_print_jobs_status
           ON fiscal_print_jobs(status)`);
-      
+
       db.run(`CREATE INDEX IF NOT EXISTS idx_fiscal_print_jobs_scheduled
           ON fiscal_print_jobs(status, scheduled_at)`);
-      
+
       // Tabelă pentru clienții cu CUI (pentru facturi)
       // Tabelă pentru utilizatori KIOSK
       db.run(`CREATE TABLE IF NOT EXISTS kiosk_users (
@@ -1019,7 +1102,7 @@ function initializeDb(db) {
           console.error('❌ Eroare la crearea tabelei kiosk_users:', err.message);
         } else {
           console.log('✅ Tabelă kiosk_users creată/verificată');
-          
+
           // Inserează utilizatorul admin default dacă nu există
           db.get('SELECT id FROM kiosk_users WHERE username = ?', ['admin'], (err, row) => {
             if (err) {
@@ -1031,11 +1114,11 @@ function initializeDb(db) {
               const salt = crypto.randomBytes(16).toString('hex');
               const hash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
               const password_hash = `${salt}:${hash}`;
-              
+
               db.run(
                 'INSERT INTO kiosk_users (username, password_hash, role, full_name, is_active) VALUES (?, ?, ?, ?, ?)',
                 ['admin', password_hash, 'admin', 'Administrator', 1],
-                function(err) {
+                function (err) {
                   if (err) {
                     console.error('❌ Eroare la crearea utilizatorului admin:', err.message);
                   } else {
@@ -1047,7 +1130,7 @@ function initializeDb(db) {
           });
         }
       });
-      
+
       // Tabele pentru audit KIOSK
       db.run(`CREATE TABLE IF NOT EXISTS kiosk_login_history (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1117,7 +1200,7 @@ function initializeDb(db) {
           });
         }
       });
-      
+
       db.run(`CREATE TABLE IF NOT EXISTS kiosk_actions_log (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -1135,7 +1218,7 @@ function initializeDb(db) {
           console.log('✅ Tabelă kiosk_actions_log creată/verificată');
         }
       });
-      
+
       db.run(`CREATE TABLE IF NOT EXISTS customers (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           customer_name TEXT NOT NULL,
@@ -1153,7 +1236,7 @@ function initializeDb(db) {
           created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
           updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )`);
-      
+
       // Adaugă coloana password_hash dacă tabelul există deja fără ea (migration)
       db.all("PRAGMA table_info(customers)", [], (err, cols) => {
         if (!err) {
@@ -1169,7 +1252,7 @@ function initializeDb(db) {
           }
         }
       });
-      
+
       // Tabelă pentru configurarea TVA
       db.run(`CREATE TABLE IF NOT EXISTS vat_rates (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1223,7 +1306,7 @@ function initializeDb(db) {
       )`);
 
       // ==================== SETĂRI RESTAURANT ====================
-      
+
       // Tabelă pentru metode de plată
       db.run(`CREATE TABLE IF NOT EXISTS payment_methods (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1511,7 +1594,7 @@ function initializeDb(db) {
           console.error('Eroare la adăugarea coloanei product_combinations:', err);
         }
       });
-      
+
       db.run(`ALTER TABLE rewards ADD COLUMN free_product_id INTEGER`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
           console.error('Eroare la adăugarea coloanei free_product_id:', err);
@@ -1524,19 +1607,19 @@ function initializeDb(db) {
           console.error('Eroare la adăugarea coloanei food_notes:', err);
         }
       });
-      
+
       db.run(`ALTER TABLE orders ADD COLUMN drink_notes TEXT`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
           console.error('Eroare la adăugarea coloanei drink_notes:', err);
         }
       });
-      
+
       db.run(`ALTER TABLE orders ADD COLUMN general_notes TEXT`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
           console.error('Eroare la adăugarea coloanei general_notes:', err);
         }
       });
-      
+
       // Adaugă coloana paid_timestamp la tabelul orders
       db.run(`ALTER TABLE orders ADD COLUMN paid_timestamp DATETIME`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
@@ -1550,13 +1633,13 @@ function initializeDb(db) {
           console.error('Eroare la adăugarea coloanei cancelled_timestamp:', err);
         }
       });
-      
+
       db.run(`ALTER TABLE orders ADD COLUMN cancelled_reason TEXT`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
           console.error('Eroare la adăugarea coloanei cancelled_reason:', err);
         }
       });
-      
+
       db.run(`ALTER TABLE orders ADD COLUMN total REAL`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
           console.error('Eroare la adăugarea coloanei total:', err);
@@ -1645,7 +1728,7 @@ function initializeDb(db) {
       )`);
 
       // ==================== SISTEM MULTI-GESTIUNE (ETAPA 1) ====================
-      
+
       // Tabel pentru gestiuni (locații de stocare/operaționale)
       db.run(`CREATE TABLE IF NOT EXISTS management_locations (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1665,7 +1748,7 @@ function initializeDb(db) {
           console.error('❌ Eroare la crearea tabelei management_locations:', err.message);
         } else {
           console.log('✅ Tabelă management_locations creată/verificată cu succes');
-          
+
           // Migrare: Adaugă coloana is_active dacă lipsește (pentru tabele existente)
           db.all(`PRAGMA table_info(management_locations)`, [], (err, columns) => {
             if (!err) {
@@ -1744,18 +1827,18 @@ function initializeDb(db) {
             { name: 'Bucătărie', type: 'operational', description: 'Bucătărie - preparare mâncăruri', can_receive_deliveries: 0, can_consume: 1 },
             { name: 'Pizzerie', type: 'operational', description: 'Stație pizza', can_receive_deliveries: 0, can_consume: 1 }
           ];
-          
+
           defaultLocations.forEach(loc => {
             db.run(`INSERT INTO management_locations (name, type, description, can_receive_deliveries, can_consume, can_transfer_out, can_transfer_in) 
-                    VALUES (?, ?, ?, ?, ?, 1, 1)`, 
-                    [loc.name, loc.type, loc.description, loc.can_receive_deliveries, loc.can_consume],
-                    (err) => {
-                      if (err) {
-                        console.error(`❌ Eroare la inițializare gestiune ${loc.name}:`, err.message);
-                      } else {
-                        console.log(`✅ Gestiune creată: ${loc.name}`);
-                      }
-                    });
+                    VALUES (?, ?, ?, ?, ?, 1, 1)`,
+              [loc.name, loc.type, loc.description, loc.can_receive_deliveries, loc.can_consume],
+              (err) => {
+                if (err) {
+                  console.error(`❌ Eroare la inițializare gestiune ${loc.name}:`, err.message);
+                } else {
+                  console.log(`✅ Gestiune creată: ${loc.name}`);
+                }
+              });
           });
         }
       });
@@ -1763,7 +1846,7 @@ function initializeDb(db) {
       // Seed date default pentru users, payment_methods, printers (apelat mai jos, după toate tabelele)
 
       // ==================== TRANSFERURI ÎNTRE GESTIUNI (ETAPA 2) ====================
-      
+
       // Tabel pentru transferuri de stocuri între gestiuni
       db.run(`CREATE TABLE IF NOT EXISTS stock_transfers (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1818,7 +1901,7 @@ function initializeDb(db) {
       // ==========================================
       // ETAPA 6: PORTION CONTROL - Tabele
       // ==========================================
-      
+
       // Tabelă pentru standardele de porții
       db.run(`CREATE TABLE IF NOT EXISTS portion_standards (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1872,7 +1955,7 @@ function initializeDb(db) {
       // ==========================================
       // ETAPA 7: VARIANCE REPORTING - Tabele
       // ==========================================
-      
+
       // Tabelă pentru rapoarte de varianță
       db.run(`CREATE TABLE IF NOT EXISTS variance_reports (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -2499,7 +2582,7 @@ function initializeDb(db) {
       db.run(`CREATE INDEX IF NOT EXISTS idx_ingredient_batches_batch_number ON ingredient_batches (batch_number)`);
 
       // ==================== BI LAYER - BUSINESS INTELLIGENCE ====================
-      
+
       // Tabel pentru cheltuieli și costuri operaționale
       db.run(`CREATE TABLE IF NOT EXISTS expenses (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -2676,12 +2759,12 @@ function initializeDb(db) {
             ['cancellation_rate', 2.0, 5.0, 10.0, '>', 'Rata anulări (ideal: sub 2%)'],
             ['avg_rating', 4.5, 4.0, 3.5, '<', 'Rating mediu clienți (ideal: >4.5)']
           ];
-          
+
           thresholds.forEach(([kpi_name, target, warning, critical, operator, description]) => {
-            db.run(`INSERT OR IGNORE INTO bi_kpi_thresholds (kpi_name, target_value, warning_threshold, critical_threshold, comparison_operator, description) VALUES (?, ?, ?, ?, ?, ?)`, 
+            db.run(`INSERT OR IGNORE INTO bi_kpi_thresholds (kpi_name, target_value, warning_threshold, critical_threshold, comparison_operator, description) VALUES (?, ?, ?, ?, ?, ?)`,
               [kpi_name, target, warning, critical, operator, description]);
           });
-          
+
           console.log('✅ BI KPI Thresholds populați cu succes');
         }
       });
@@ -2723,25 +2806,25 @@ function initializeDb(db) {
           console.error('Eroare la adăugarea coloanei waiter_id:', err.message);
         }
       });
-      
+
       db.run(`ALTER TABLE orders ADD COLUMN tips REAL DEFAULT 0`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
           console.error('Eroare la adăugarea coloanei tips:', err.message);
         }
       });
-      
+
       db.run(`ALTER TABLE orders ADD COLUMN prep_started_at DATETIME`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
           console.error('Eroare la adăugarea coloanei prep_started_at:', err.message);
         }
       });
-      
+
       db.run(`ALTER TABLE orders ADD COLUMN prep_completed_at DATETIME`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
           console.error('Eroare la adăugarea coloanei prep_completed_at:', err.message);
         }
       });
-      
+
       db.run(`ALTER TABLE orders ADD COLUMN served_at DATETIME`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
           console.error('Eroare la adăugarea coloanei served_at:', err.message);
@@ -2751,7 +2834,7 @@ function initializeDb(db) {
       console.log('✅ BI Layer - Tabele create cu succes');
 
       // ==================== WHITE-LABEL MULTI-TENANT SCHEMA ====================
-      
+
       // Tabela principală pentru tenants (restaurante, hoteluri, baruri, etc.)
       db.run(`CREATE TABLE IF NOT EXISTS tenants (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -2870,12 +2953,12 @@ function initializeDb(db) {
             ['avg_rating', 'Average Rating', 'customer', 'Average satisfaction score', 'calcAvgRating', '["restaurant","hotel","bar","cafe","fast_food","catering","spa","club"]', ''],
             ['nps_score', 'Net Promoter Score', 'customer', 'Customer loyalty metric', 'calcNPSScore', '["restaurant","hotel","bar","cafe","fast_food","catering","spa","club"]', '']
           ];
-          
+
           kpis.forEach(([kpi_key, kpi_name, kpi_category, description, calculation_function, industries, unit]) => {
-            db.run(`INSERT OR IGNORE INTO kpi_registry (kpi_key, kpi_name, kpi_category, description, calculation_function, industries, unit) VALUES (?, ?, ?, ?, ?, ?, ?)`, 
+            db.run(`INSERT OR IGNORE INTO kpi_registry (kpi_key, kpi_name, kpi_category, description, calculation_function, industries, unit) VALUES (?, ?, ?, ?, ?, ?, ?)`,
               [kpi_key, kpi_name, kpi_category, description, calculation_function, industries, unit]);
           });
-          
+
           console.log('✅ KPI Registry populat cu 16 metrice standard');
         }
       });
@@ -2887,46 +2970,46 @@ function initializeDb(db) {
             tenant_code, tenant_name, industry, status, subscription_plan,
             owner_name, owner_email, currency, locale, timezone,
             subscription_started_at, created_at
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))`, 
-          ['trattoria-al-forno', 'Restaurant App', 'restaurant', 'active', 'enterprise',
-           'Florin', 'contact@trattoria.ro', 'RON', 'ro-RO', 'Europe/Bucharest', '2025-01-01'],
-          function(err) {
-            if (!err) {
-              const tenantId = this.lastID;
-              
-              // Config
-              db.run(`INSERT INTO tenant_config (tenant_id, modules, features, industry_settings, business_hours) VALUES (?, ?, ?, ?, ?)`,
-                [tenantId, 
-                 '{"inventory":true,"delivery":true,"hr":true,"reservations":true,"fiscal":true,"loyalty":true}',
-                 '{"ai_insights":true,"forecasting":true,"multi_location":false,"white_label":true}',
-                 '{"table_count":200,"room_count":0,"delivery_radius_km":10,"kitchen_stations":3}',
-                 '{"open":"08:00","close":"03:00","days":[1,2,3,4,5,6,7]}']);
-              
-              // KPI Config
-              const kpiConfigs = [
-                ['gross_revenue', 1, 1, 'line'],
-                ['net_profit', 1, 2, 'line'],
-                ['food_cost_pct', 1, 3, 'gauge'],
-                ['labor_cost_pct', 1, 4, 'gauge'],
-                ['prime_cost_pct', 1, 5, 'gauge'],
-                ['net_margin_pct', 1, 6, 'gauge'],
-                ['avg_order_value', 1, 7, 'trend'],
-                ['avg_rating', 1, 8, 'number']
-              ];
-              
-              kpiConfigs.forEach(([kpi_key, is_enabled, display_order, chart_type]) => {
-                db.run(`INSERT INTO tenant_kpi_config (tenant_id, kpi_key, is_enabled, display_order, chart_type) VALUES (?, ?, ?, ?, ?)`,
-                  [tenantId, kpi_key, is_enabled, display_order, chart_type]);
-              });
-              
-              // Branding
-              db.run(`INSERT INTO tenant_branding (tenant_id, brand_name, colors, layout_type) VALUES (?, ?, ?, ?)`,
-                [tenantId, 'Restaurant App', 
-                 '{"primary":"#667eea","secondary":"#764ba2","accent":"#f59e0b"}', 'executive']);
-              
-              console.log('✅ Tenant "Restaurant App" creat cu ID:', tenantId);
-            }
-          });
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))`,
+            ['trattoria-al-forno', 'Restaurant App', 'restaurant', 'active', 'enterprise',
+              'Florin', 'contact@trattoria.ro', 'RON', 'ro-RO', 'Europe/Bucharest', '2025-01-01'],
+            function (err) {
+              if (!err) {
+                const tenantId = this.lastID;
+
+                // Config
+                db.run(`INSERT INTO tenant_config (tenant_id, modules, features, industry_settings, business_hours) VALUES (?, ?, ?, ?, ?)`,
+                  [tenantId,
+                    '{"inventory":true,"delivery":true,"hr":true,"reservations":true,"fiscal":true,"loyalty":true}',
+                    '{"ai_insights":true,"forecasting":true,"multi_location":false,"white_label":true}',
+                    '{"table_count":200,"room_count":0,"delivery_radius_km":10,"kitchen_stations":3}',
+                    '{"open":"08:00","close":"03:00","days":[1,2,3,4,5,6,7]}']);
+
+                // KPI Config
+                const kpiConfigs = [
+                  ['gross_revenue', 1, 1, 'line'],
+                  ['net_profit', 1, 2, 'line'],
+                  ['food_cost_pct', 1, 3, 'gauge'],
+                  ['labor_cost_pct', 1, 4, 'gauge'],
+                  ['prime_cost_pct', 1, 5, 'gauge'],
+                  ['net_margin_pct', 1, 6, 'gauge'],
+                  ['avg_order_value', 1, 7, 'trend'],
+                  ['avg_rating', 1, 8, 'number']
+                ];
+
+                kpiConfigs.forEach(([kpi_key, is_enabled, display_order, chart_type]) => {
+                  db.run(`INSERT INTO tenant_kpi_config (tenant_id, kpi_key, is_enabled, display_order, chart_type) VALUES (?, ?, ?, ?, ?)`,
+                    [tenantId, kpi_key, is_enabled, display_order, chart_type]);
+                });
+
+                // Branding
+                db.run(`INSERT INTO tenant_branding (tenant_id, brand_name, colors, layout_type) VALUES (?, ?, ?, ?)`,
+                  [tenantId, 'Restaurant App',
+                    '{"primary":"#667eea","secondary":"#764ba2","accent":"#f59e0b"}', 'executive']);
+
+                console.log('✅ Tenant "Restaurant App" creat cu ID:', tenantId);
+              }
+            });
         }
       });
 
@@ -2953,13 +3036,13 @@ function initializeDb(db) {
           console.error('Eroare la crearea tabelei recipes:', err.message);
         }
       });
-      
+
       // ✅ SĂPTĂMÂNA 1 - ZIUA 2: Adaugă coloane pentru sub-rețete (migrare)
       const recipeSubRecipeColumns = [
         ['recipe_id', 'INTEGER'],
         ['is_semi_finished', 'BOOLEAN DEFAULT 0']
       ];
-      
+
       recipeSubRecipeColumns.forEach(([column, type]) => {
         db.run(`ALTER TABLE recipes ADD COLUMN ${column} ${type}`, (err) => {
           if (err && !err.message.includes('duplicate column')) {
@@ -2969,7 +3052,7 @@ function initializeDb(db) {
           }
         });
       });
-      
+
       // ✅ SĂPTĂMÂNA 1 - ZIUA 4: Adaugă coloane pentru Yield & Max Stock
       // 1. Servings în menu (pentru yield/randament)
       db.run(`ALTER TABLE menu ADD COLUMN servings INTEGER DEFAULT 1`, (err) => {
@@ -2979,7 +3062,7 @@ function initializeDb(db) {
           console.log('✅ Coloană servings adăugată în menu (migrare)');
         }
       });
-      
+
       db.run(`ALTER TABLE menu ADD COLUMN serving_size REAL DEFAULT 0`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
           console.error('⚠️ Eroare la adăugarea coloanei serving_size la menu:', err.message);
@@ -2987,7 +3070,7 @@ function initializeDb(db) {
           console.log('✅ Coloană serving_size adăugată în menu (migrare)');
         }
       });
-      
+
       db.run(`ALTER TABLE menu ADD COLUMN serving_unit TEXT DEFAULT 'buc'`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
           console.error('⚠️ Eroare la adăugarea coloanei serving_unit la menu:', err.message);
@@ -2995,7 +3078,7 @@ function initializeDb(db) {
           console.log('✅ Coloană serving_unit adăugată în menu (migrare)');
         }
       });
-      
+
       // 2. Max stock și safety stock în ingredients
       db.run(`ALTER TABLE ingredients ADD COLUMN max_stock REAL DEFAULT 0`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
@@ -3004,7 +3087,7 @@ function initializeDb(db) {
           console.log('✅ Coloană max_stock adăugată în ingredients (migrare)');
         }
       });
-      
+
       db.run(`ALTER TABLE ingredients ADD COLUMN safety_stock REAL DEFAULT 0`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
           console.error('⚠️ Eroare la adăugarea coloanei safety_stock la ingredients:', err.message);
@@ -3012,7 +3095,7 @@ function initializeDb(db) {
           console.log('✅ Coloană safety_stock adăugată în ingredients (migrare)');
         }
       });
-      
+
       db.run(`ALTER TABLE ingredients ADD COLUMN reorder_quantity REAL DEFAULT 0`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
           console.error('⚠️ Eroare la adăugarea coloanei reorder_quantity la ingredients:', err.message);
@@ -3020,7 +3103,7 @@ function initializeDb(db) {
           console.log('✅ Coloană reorder_quantity adăugată în ingredients (migrare)');
         }
       });
-      
+
       // ✅ SĂPTĂMÂNA 2 - ZIUA 4: Purchase Units & Conversion Factors
       db.run(`ALTER TABLE ingredients ADD COLUMN purchase_unit TEXT`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
@@ -3029,7 +3112,7 @@ function initializeDb(db) {
           console.log('✅ Coloană purchase_unit adăugată în ingredients (migrare)');
         }
       });
-      
+
       db.run(`ALTER TABLE ingredients ADD COLUMN recipe_unit TEXT`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
           console.error('⚠️ Eroare la adăugarea coloanei recipe_unit la ingredients:', err.message);
@@ -3037,7 +3120,7 @@ function initializeDb(db) {
           console.log('✅ Coloană recipe_unit adăugată în ingredients (migrare)');
         }
       });
-      
+
       db.run(`ALTER TABLE ingredients ADD COLUMN inventory_unit TEXT`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
           console.error('⚠️ Eroare la adăugarea coloanei inventory_unit la ingredients:', err.message);
@@ -3045,7 +3128,7 @@ function initializeDb(db) {
           console.log('✅ Coloană inventory_unit adăugată în ingredients (migrare)');
         }
       });
-      
+
       db.run(`ALTER TABLE ingredients ADD COLUMN purchase_to_inventory_factor REAL DEFAULT 1`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
           console.error('⚠️ Eroare la adăugarea coloanei purchase_to_inventory_factor la ingredients:', err.message);
@@ -3053,7 +3136,7 @@ function initializeDb(db) {
           console.log('✅ Coloană purchase_to_inventory_factor adăugată în ingredients (migrare)');
         }
       });
-      
+
       db.run(`ALTER TABLE ingredients ADD COLUMN inventory_to_recipe_factor REAL DEFAULT 1`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
           console.error('⚠️ Eroare la adăugarea coloanei inventory_to_recipe_factor la ingredients:', err.message);
@@ -3061,7 +3144,7 @@ function initializeDb(db) {
           console.log('✅ Coloană inventory_to_recipe_factor adăugată în ingredients (migrare)');
         }
       });
-      
+
       // ✅ SĂPTĂMÂNA 2 - ZIUA 2: Trigger pentru recalculare cost mediu la intrare NIR
       db.run(`
         CREATE TRIGGER IF NOT EXISTS update_average_cost_on_nir
@@ -3088,7 +3171,7 @@ function initializeDb(db) {
           console.log('✅ Trigger update_average_cost_on_nir creat/verificat');
         }
       });
-      
+
       // ✅ SĂPTĂMÂNA 2 - ZIUA 2: Trigger pentru recalculare cost mediu la update lot
       db.run(`
         CREATE TRIGGER IF NOT EXISTS update_average_cost_on_batch_update
@@ -3116,7 +3199,7 @@ function initializeDb(db) {
           console.log('✅ Trigger update_average_cost_on_batch_update creat/verificat');
         }
       });
-      
+
       // ✅ SĂPTĂMÂNA 2 - ZIUA 3: Tabel pentru istoric costuri ingrediente
       db.run(`CREATE TABLE IF NOT EXISTS ingredient_cost_history (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -3134,7 +3217,7 @@ function initializeDb(db) {
           console.error('⚠️ Eroare la crearea tabelei ingredient_cost_history:', err.message);
         } else if (!err) {
           console.log('✅ Tabelă ingredient_cost_history creată/verificată');
-          
+
           // Indexuri
           db.run(`CREATE INDEX IF NOT EXISTS idx_cost_history_ingredient ON ingredient_cost_history(ingredient_id)`, (err) => {
             if (err && !err.message.includes('duplicate')) {
@@ -3143,7 +3226,7 @@ function initializeDb(db) {
               console.log('✅ Index idx_cost_history_ingredient creat/verificat');
             }
           });
-          
+
           db.run(`CREATE INDEX IF NOT EXISTS idx_cost_history_date ON ingredient_cost_history(created_at)`, (err) => {
             if (err && !err.message.includes('duplicate')) {
               console.error('⚠️ Eroare la crearea index idx_cost_history_date:', err.message);
@@ -3153,7 +3236,7 @@ function initializeDb(db) {
           });
         }
       });
-      
+
       // ✅ SĂPTĂMÂNA 2 - ZIUA 3: Trigger pentru logging automat modificări cost
       db.run(`
         CREATE TRIGGER IF NOT EXISTS log_cost_changes
@@ -3181,7 +3264,7 @@ function initializeDb(db) {
           console.log('✅ Trigger log_cost_changes creat/verificat');
         }
       });
-      
+
       // ✅ SĂPTĂMÂNA 2 - ZIUA 1: Tabel pentru configurare metoda evaluare stoc
       db.run(`CREATE TABLE IF NOT EXISTS stock_valuation_config (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -3197,7 +3280,7 @@ function initializeDb(db) {
           console.error('⚠️ Eroare la crearea tabelei stock_valuation_config:', err.message);
         } else if (!err) {
           console.log('✅ Tabelă stock_valuation_config creată/verificată');
-          
+
           // Inserează default global setting dacă nu există
           db.get('SELECT id FROM stock_valuation_config WHERE ingredient_id IS NULL AND location_id IS NULL', (err, row) => {
             if (!err && !row) {
@@ -3212,12 +3295,12 @@ function initializeDb(db) {
           });
         }
       });
-      
+
       // ✅ SĂPTĂMÂNA 1 - ZIUA 5: Tabel pentru queue recalculare cost rețete
       // IMPORTANT: Șterge trigger-urile vechi înainte de crearea tabelei (sincron)
       db.run(`DROP TRIGGER IF EXISTS recalculate_recipe_costs_on_ingredient_update`);
       db.run(`DROP TRIGGER IF EXISTS recalculate_recipe_costs_on_subrecipe_update`);
-      
+
       db.run(`CREATE TABLE IF NOT EXISTS recipe_recalculation_queue (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         product_id INTEGER NOT NULL,
@@ -3233,7 +3316,7 @@ function initializeDb(db) {
         } else if (!err) {
           console.log('✅ Tabelă recipe_recalculation_queue creată/verificată');
         }
-        
+
         // Migrare: Adaugă coloana status dacă nu există (pentru baze existente)
         db.run(`ALTER TABLE recipe_recalculation_queue ADD COLUMN status TEXT DEFAULT 'pending'`, (err) => {
           if (err && !err.message.includes('duplicate column')) {
@@ -3242,20 +3325,20 @@ function initializeDb(db) {
           } else {
             console.log('✅ Coloană status adăugată/verificată în recipe_recalculation_queue');
           }
-          
+
           // Verifică dacă coloana status există înainte de a crea indexul și trigger-ele
           db.all(`PRAGMA table_info(recipe_recalculation_queue)`, (err, columns) => {
             if (err) {
               console.error('⚠️ Eroare la verificarea coloanelor recipe_recalculation_queue:', err.message);
               return;
             }
-            
+
             const hasStatus = columns.some(col => col.name === 'status');
             if (!hasStatus) {
               console.error('❌ Coloana status nu există în recipe_recalculation_queue! Nu se pot crea trigger-ele.');
               return;
             }
-            
+
             // Index pentru queue
             db.run(`CREATE INDEX IF NOT EXISTS idx_recalc_queue_status ON recipe_recalculation_queue(status, created_at)`, (err) => {
               if (err && !err.message.includes('duplicate')) {
@@ -3264,7 +3347,7 @@ function initializeDb(db) {
               } else if (!err) {
                 console.log('✅ Index idx_recalc_queue_status creat/verificat');
               }
-              
+
               // ✅ Trigger pentru recalculare automată când se modifică cost ingredient
               db.run(`
                 CREATE TRIGGER IF NOT EXISTS recalculate_recipe_costs_on_ingredient_update
@@ -3287,7 +3370,7 @@ function initializeDb(db) {
                 } else if (!err) {
                   console.log('✅ Trigger recalculate_recipe_costs_on_ingredient_update creat/verificat');
                 }
-                
+
                 // ✅ Trigger pentru recalculare când se modifică o sub-rețetă
                 db.run(`
                   CREATE TRIGGER IF NOT EXISTS recalculate_recipe_costs_on_subrecipe_update
@@ -3317,7 +3400,7 @@ function initializeDb(db) {
           });
         });
       });
-      
+
       // Index pentru recipe_id
       db.run(`CREATE INDEX IF NOT EXISTS idx_recipes_recipe_id ON recipes(recipe_id)`, (err) => {
         if (err && !err.message.includes('duplicate')) {
@@ -3326,7 +3409,7 @@ function initializeDb(db) {
           console.log('✅ Index idx_recipes_recipe_id creat/verificat');
         }
       });
-      
+
       // Trigger pentru validare: doar unul din ingredient_id sau recipe_id
       db.run(`
         CREATE TRIGGER IF NOT EXISTS validate_recipe_ingredient_or_recipe
@@ -3423,7 +3506,7 @@ function initializeDb(db) {
           FOREIGN KEY (order_id) REFERENCES orders (id),
           FOREIGN KEY (z_report_id) REFERENCES daily_z_reports (id)
       )`);
-      
+
       // Tabel pentru stocarea Rapoartelor Z (Închideri zilnice)
       db.run(`CREATE TABLE IF NOT EXISTS daily_z_reports (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -3436,7 +3519,7 @@ function initializeDb(db) {
           total_receipts INTEGER NOT NULL,
           created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )`);
-      
+
       // PHASE S8.2 - Extended invoices table for e-Factura
       db.run(`CREATE TABLE IF NOT EXISTS invoices (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -3482,7 +3565,7 @@ function initializeDb(db) {
           description TEXT,
           created_at TEXT NOT NULL DEFAULT (datetime('now'))
       )`);
-      
+
       // Migrare: adaugă coloana tenant_id dacă nu există (pentru baze vechi)
       db.run(`ALTER TABLE vat_rates ADD COLUMN tenant_id INTEGER DEFAULT 1`, (err) => {
         if (err && !err.message.includes('duplicate column')) {
@@ -3497,7 +3580,7 @@ function initializeDb(db) {
           });
         }
       });
-      
+
       // Migrare: adaugă coloanele noi dacă nu există
       const vatRatesColumns = [
         'code TEXT',
@@ -3507,7 +3590,7 @@ function initializeDb(db) {
         'valid_from TEXT',
         'valid_to TEXT'
       ];
-      
+
       vatRatesColumns.forEach(colDef => {
         const colName = colDef.split(' ')[0];
         db.run(`ALTER TABLE vat_rates ADD COLUMN ${colDef}`, (err) => {
@@ -3516,13 +3599,13 @@ function initializeDb(db) {
           }
         });
       });
-      
+
       db.run('CREATE INDEX IF NOT EXISTS idx_vat_rates_tenant ON vat_rates (tenant_id)');
-      
+
       // ============ MIGRARE TVA 2024: 19%→21%, 9%→11% ============
       // Actualizează ratele TVA în toate tabelele relevante
       console.log('🔄 Verificare migrare cote TVA (19%→21%, 9%→11%)...');
-      
+
       // Actualizare vat_rates table
       db.run(`UPDATE vat_rates SET rate = 21 WHERE rate = 19`, (err) => {
         if (!err) console.log('   ✅ vat_rates: 19% → 21%');
@@ -3530,7 +3613,7 @@ function initializeDb(db) {
       db.run(`UPDATE vat_rates SET rate = 11 WHERE rate = 9`, (err) => {
         if (!err) console.log('   ✅ vat_rates: 9% → 11%');
       });
-      
+
       // Actualizare menu_products / catalog_products / products
       db.run(`UPDATE menu_products SET vat_rate = 21 WHERE vat_rate = 19`, (err) => {
         if (!err) console.log('   ✅ menu_products: 19% → 21%');
@@ -3538,26 +3621,26 @@ function initializeDb(db) {
       db.run(`UPDATE menu_products SET vat_rate = 11 WHERE vat_rate = 9`, (err) => {
         if (!err) console.log('   ✅ menu_products: 9% → 11%');
       });
-      db.run(`UPDATE catalog_products SET vat_rate = 21 WHERE vat_rate = 19`, () => {});
-      db.run(`UPDATE catalog_products SET vat_rate = 11 WHERE vat_rate = 9`, () => {});
-      db.run(`UPDATE products SET vat_rate = 21 WHERE vat_rate = 19`, () => {});
-      db.run(`UPDATE products SET vat_rate = 11 WHERE vat_rate = 9`, () => {});
-      
+      db.run(`UPDATE catalog_products SET vat_rate = 21 WHERE vat_rate = 19`, () => { });
+      db.run(`UPDATE catalog_products SET vat_rate = 11 WHERE vat_rate = 9`, () => { });
+      db.run(`UPDATE products SET vat_rate = 21 WHERE vat_rate = 19`, () => { });
+      db.run(`UPDATE products SET vat_rate = 11 WHERE vat_rate = 9`, () => { });
+
       // Actualizare ingredients
-      db.run(`UPDATE ingredients SET vat_rate = 21 WHERE vat_rate = 19`, () => {});
-      db.run(`UPDATE ingredients SET vat_rate = 11 WHERE vat_rate = 9`, () => {});
-      
+      db.run(`UPDATE ingredients SET vat_rate = 21 WHERE vat_rate = 19`, () => { });
+      db.run(`UPDATE ingredients SET vat_rate = 11 WHERE vat_rate = 9`, () => { });
+
       // Actualizare fiscal_config
-      db.run(`UPDATE fiscal_config SET config_value = '21' WHERE config_name = 'default_vat_rate' AND config_value = '19'`, () => {});
-      db.run(`UPDATE fiscal_config SET config_value = '11' WHERE config_name = 'default_vat_rate' AND config_value = '9'`, () => {});
-      
+      db.run(`UPDATE fiscal_config SET config_value = '21' WHERE config_name = 'default_vat_rate' AND config_value = '19'`, () => { });
+      db.run(`UPDATE fiscal_config SET config_value = '11' WHERE config_name = 'default_vat_rate' AND config_value = '9'`, () => { });
+
       // Actualizare restaurant_settings
-      db.run(`UPDATE restaurant_settings SET setting_value = '21' WHERE setting_key = 'vat_drinks' AND setting_value = '19'`, () => {});
-      db.run(`UPDATE restaurant_settings SET setting_value = '11' WHERE setting_key = 'vat_food' AND setting_value = '9'`, () => {});
-      
+      db.run(`UPDATE restaurant_settings SET setting_value = '21' WHERE setting_key = 'vat_drinks' AND setting_value = '19'`, () => { });
+      db.run(`UPDATE restaurant_settings SET setting_value = '11' WHERE setting_key = 'vat_food' AND setting_value = '9'`, () => { });
+
       console.log('✅ Migrare cote TVA finalizată');
       // ============ END MIGRARE TVA 2024 ============
-      
+
       // Seed default VAT rates for tenant 1 if table empty
       db.get(`SELECT COUNT(*) as cnt FROM vat_rates WHERE tenant_id = ?`, [1], (err, row) => {
         if (err) {
@@ -3573,11 +3656,11 @@ function initializeDb(db) {
           } catch (se) {
             console.error('⚠️ Eroare la seed vat_rates:', se.message);
           } finally {
-            try { stmt.finalize(); } catch {}
+            try { stmt.finalize(); } catch { }
           }
         }
       });
-      
+
       // Tabel pentru rapoarte Z (stocare permanentă)
       db.run(`CREATE TABLE IF NOT EXISTS z_reports (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -3591,7 +3674,7 @@ function initializeDb(db) {
           created_at TEXT NOT NULL,              -- Data generării
           UNIQUE(report_date)                    -- Un singur raport Z pe zi
       )`);
-      
+
       // Tabel pentru rapoarte X (stocare permanentă)
       db.run(`CREATE TABLE IF NOT EXISTS x_reports (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -3604,7 +3687,7 @@ function initializeDb(db) {
           total_vat REAL DEFAULT 0,              -- Total TVA
           created_at TEXT NOT NULL               -- Data generării
       )`);
-      
+
       // Tabel pentru rapoarte lunare (stocare permanentă)
       db.run(`CREATE TABLE IF NOT EXISTS monthly_reports (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -3617,7 +3700,7 @@ function initializeDb(db) {
           created_at TEXT NOT NULL,              -- Data generării
           UNIQUE(report_month)                   -- Un singur raport lunar pe lună
       )`);
-      
+
       // 5. Costul de Achiziție Mediu Ponderat (CAMP)
       db.run(`CREATE TABLE IF NOT EXISTS product_costs (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -3654,7 +3737,7 @@ function initializeDb(db) {
           is_active BOOLEAN DEFAULT 1,
           created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )`);
-      
+
       db.run(`CREATE TABLE IF NOT EXISTS customer_segments (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           name TEXT NOT NULL UNIQUE,
@@ -3663,26 +3746,26 @@ function initializeDb(db) {
           customer_tokens_json TEXT, -- JSON cu lista de client_token-uri care fac parte din segment
           last_calculated DATETIME
       )`);
-      
+
       // 7. Migrație: Adaugă coloane pentru P&L și Urmărire Fiscalizare
       db.run(`ALTER TABLE menu ADD COLUMN cost_price REAL DEFAULT 0.00`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
           console.error('Eroare la adăugarea coloanei cost_price la menu:', err);
         }
       });
-      
+
       db.run(`ALTER TABLE stock_management ADD COLUMN unit_cost REAL DEFAULT 0.00`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
           console.error('Eroare la adăugarea coloanei unit_cost la stock_management:', err);
         }
       });
-      
+
       db.run(`ALTER TABLE stock_management ADD COLUMN total_value REAL DEFAULT 0.00`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
           console.error('Eroare la adăugarea coloanei total_value la stock_management:', err);
         }
       });
-      
+
       db.run(`ALTER TABLE orders ADD COLUMN fiscal_receipt_id INTEGER`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
           console.error('Eroare la adăugarea coloanei fiscal_receipt_id:', err);
@@ -3779,7 +3862,7 @@ function initializeDb(db) {
           console.error('Eroare la adăugarea coloanei client_identifier:', err.message);
         }
       });
-      
+
       db.run('ALTER TABLE orders ADD COLUMN is_paid BOOLEAN DEFAULT 0', (err) => {
         if (err && !err.message.includes('duplicate column name')) {
           console.error('Eroare la adăugarea coloanei is_paid:', err.message);
@@ -3895,7 +3978,7 @@ function initializeDb(db) {
       });
 
       // ==================== DELIVERY & DRIVE-THRU (05 Dec 2025) ====================
-      
+
       console.log('🚚 [MIGRATION] Începe migrare Delivery & Drive-Thru schema...');
 
       // PHASE S8.2 - Migrare e-Factura: Adaugă coloane lipsă în invoices
@@ -4293,7 +4376,7 @@ function initializeDb(db) {
           console.log('✅ Coloană accepted_at adăugată în delivery_assignments');
         }
       });
-      
+
       // Modificăm assigned_by să fie TEXT (pentru 'DISPATCH', 'AUTO', 'POS', etc.) dacă e INTEGER
       // Notă: SQLite nu suportă ALTER COLUMN, deci vom folosi o abordare compatibilă
       // assigned_by poate rămâne INTEGER pentru backward compatibility, dar vom folosi un câmp text separat
@@ -4487,7 +4570,7 @@ function initializeDb(db) {
           console.log('✅ Coloană external_provider adăugată în orders');
         }
       });
-      
+
       db.run(`ALTER TABLE orders ADD COLUMN external_order_id TEXT`, (err) => {
         if (!err) {
           console.log('✅ Coloană external_order_id adăugată în orders');
@@ -4584,7 +4667,7 @@ function initializeDb(db) {
       // Migrare coloane noi pentru menu (pentru compatibilitate cu bazele existente)
       const menuColumns = [
         'info TEXT',
-        'ingredients TEXT', 
+        'ingredients TEXT',
         'prep_time INTEGER',
         'spice_level INTEGER DEFAULT 0',
         'calories REAL',
@@ -4648,7 +4731,7 @@ function initializeDb(db) {
       });
 
       // ==================== CONFORMITATE & HACCP (SIGURANȚĂ ALIMENTARĂ) ====================
-      
+
       // Tabelă pentru echipamente (frigidere, congelatoare, etc.)
       db.run(`CREATE TABLE IF NOT EXISTS compliance_equipment (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -4780,7 +4863,7 @@ function initializeDb(db) {
       });
 
       // ==================== HACCP SYSTEM (SIGURANȚĂ ALIMENTARĂ ISO 22000) ====================
-      
+
       // Tabelă pentru procese HACCP (recepție, stocare, preparare, servire)
       db.run(`CREATE TABLE IF NOT EXISTS haccp_processes (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -5007,7 +5090,7 @@ function initializeDb(db) {
               console.log('✅ Coloană location_id adăugată în inventory_sessions (migrare)');
             }
           });
-          
+
           // ETAPA 3: Adăugare coloane pentru multi-gestiune
           db.run(`ALTER TABLE inventory_sessions ADD COLUMN scope TEXT DEFAULT 'global'`, (err) => {
             if (err && !err.message.includes('duplicate column')) {
@@ -5016,7 +5099,7 @@ function initializeDb(db) {
               console.log('✅ [ETAPA 3] Coloană scope adăugată în inventory_sessions');
             }
           });
-          
+
           db.run(`ALTER TABLE inventory_sessions ADD COLUMN selected_locations TEXT`, (err) => {
             if (err && !err.message.includes('duplicate column')) {
               console.error('⚠️ Notă migrare inventory_sessions.selected_locations:', err.message);
@@ -5324,14 +5407,14 @@ function initializeDb(db) {
         if (err) return reject(err);
         if (row.count === 0) {
           console.log('📦 Meniul este gol. Se adaugă produsele din seed...');
-          
+
           // Încearcă să folosească seedProducts (produse din seeds/products_seed.js)
           const { seedProducts } = require('./seeds/loadProductsSeeds');
-          
+
           seedProducts(db)
             .then((insertedCount) => {
               console.log(`✅ ${insertedCount} produse seed-uite cu succes!`);
-              
+
               // Adaugă produsele pentru ambalaje și accesorii
               return insertPackagingItems(db);
             })
@@ -5402,7 +5485,7 @@ function seedDefaultDataSync(db) {
         ['voucher', 'voucher', 'Voucher', 'Voucher', '🎁', 1, 0, 0, 0, 1, 4],
         ['transfer', 'transfer', 'Transfer Bancar', 'Bank Transfer', '🏦', 1, 0, 0, 0, 1, 5]
       ];
-      
+
       paymentMethods.forEach(method => {
         db.run(
           `INSERT INTO payment_methods (name, code, display_name, display_name_en, icon, is_active, fee_percentage, fee_fixed, requires_change, requires_receipt, sort_order) 
@@ -5426,7 +5509,7 @@ function seedDefaultDataSync(db) {
         ['Imprimantă Bucătărie', 'kitchen', null, '192.168.1.101', 9100, 'network', 1, 1, JSON.stringify(['mancare', 'bucatarie']), 80],
         ['Imprimantă Casă', 'receipt', null, '192.168.1.102', 9100, 'network', 1, 1, JSON.stringify(['receipt']), 80]
       ];
-      
+
       printers.forEach(printer => {
         db.run(
           `INSERT INTO printers (name, type, location_id, ip_address, port, connection_type, is_active, auto_print, print_categories, paper_width) 
@@ -5448,7 +5531,7 @@ function seedDefaultDataSync(db) {
         if (!err && roleRow) {
           console.log('👥 Seeding users...');
           const passwordHash = crypto.createHash('sha256').update('admin123').digest('hex');
-          
+
           db.run(
             `INSERT INTO users (username, email, password_hash, role_id, is_active) 
              VALUES (?, ?, ?, ?, ?)`,
@@ -5526,7 +5609,7 @@ function logWaiterPinAudit({ waiterId, action, actorId = null, actorName = null,
           rotationReason,
           JSON.stringify(metadata ?? {})
         ],
-        function(err) {
+        function (err) {
           if (err) {
             reject(err);
           } else {
@@ -5576,35 +5659,35 @@ function getWaiterPinAudit(waiterId, limit = 50) {
 
 
 function insertRealMenu(db) {
-  return new Promise((resolve, reject) => {
-    const menuItems = [
-      // MIC DEJUN (IDs: 1-4)
-      { id: 1, name: 'Mic Dejun Trattoria', category: 'Mic Dejun', price: 37.00, description: 'Ouă, bacon, brânză telemea, roșii cherry, cartofi prăjiți', weight: '100/20/50/60/170G', allergens: 'ouă, lapte', name_en: 'Trattoria Breakfast', category_en: 'Breakfast', description_en: 'Eggs, bacon, telemea cheese, cherry tomatoes, french fries', allergens_en: 'eggs, milk' },
-      { id: 2, name: 'Omletă Țărănească', category: 'Mic Dejun', price: 33.00, description: 'Ouă, brânză telemea, bacon, ciuperci, ardei kapia, ceapă, mărar', weight: '230G', allergens: 'ouă, lapte', name_en: 'Peasant Omelette', category_en: 'Breakfast', description_en: 'Eggs, telemea cheese, bacon, mushrooms, kapia pepper, onion, dill', allergens_en: 'eggs, milk' },
-      { id: 3, name: 'Mic Dejun Francuzesc', category: 'Mic Dejun', price: 39.00, description: 'Ouă poșate, guacamole, somon fume, pâine prăjită', weight: '100/100/100/30G', allergens: 'ouă, pește, gluten', name_en: 'French Breakfast', category_en: 'Breakfast', description_en: 'Poached eggs, guacamole, smoked salmon, toast', allergens_en: 'eggs, fish, gluten' },
-      { id: 4, name: 'Omletă cu Șuncă și Mozzarella', category: 'Mic Dejun', price: 31.00, description: 'Omletă clasică cu șuncă și mozzarella', weight: '200G', allergens: 'ouă, lapte', name_en: 'Ham and Mozzarella Omelette', category_en: 'Breakfast', description_en: 'Classic omelette with ham and mozzarella', allergens_en: 'eggs, milk' },
-      // APERITIVE RECI (IDs: 5-12)
-      { id: 5, name: 'Bruschete cu Roșii și Busuioc', category: 'Aperitive Reci', price: 25.00, description: 'Baghetă, roșii, busuioc, usturoi, ulei de măsline', weight: '200G', is_vegetarian: true, allergens: 'gluten', name_en: 'Bruschetta with Tomatoes and Basil', category_en: 'Cold Appetizers', description_en: 'Baguette, tomatoes, basil, garlic, olive oil', allergens_en: 'gluten' },
-      { id: 6, name: 'Bruschete cu Roșii și Anchois', category: 'Aperitive Reci', price: 27.00, description: 'Baghetă, roșii, anchois, busuioc, usturoi, ulei de măsline', weight: '200G', allergens: 'gluten, pește', name_en: 'Bruschetta with Tomatoes and Anchovies', category_en: 'Cold Appetizers', description_en: 'Baguette, tomatoes, anchovies, basil, garlic, olive oil', allergens_en: 'gluten, fish' },
-      { id: 7, name: 'Bruschete cu Somon', category: 'Aperitive Reci', price: 34.00, description: 'Baghetă, cremă de brânză, roșii uscate, ceapă roșie, somon fume, icre roșii, capere', weight: '200G', allergens: 'gluten, lapte, pește', name_en: 'Salmon Bruschetta', category_en: 'Cold Appetizers', description_en: 'Baguette, cream cheese, dried tomatoes, red onion, smoked salmon, red caviar, capers', allergens_en: 'gluten, milk, fish' },
-      { id: 8, name: 'Bruschete cu Prosciutto Crudo', category: 'Aperitive Reci', price: 34.00, description: 'Baghetă, cremă de brânză, roșii uscate, ceapă roșie, prosciutto crudo, brânză dură', weight: '200G', allergens: 'gluten, lapte', name_en: 'Prosciutto Crudo Bruschetta', category_en: 'Cold Appetizers', description_en: 'Baguette, cream cheese, dried tomatoes, red onion, prosciutto crudo, hard cheese', allergens_en: 'gluten, milk' },
-      { id: 9, name: 'Bruschete cu Ton', category: 'Aperitive Reci', price: 33.00, description: 'Baghetă, ton, maioneza, măsline kalamata, capere', weight: '200G', allergens: 'gluten, pește, ouă', name_en: 'Tuna Bruschetta', category_en: 'Cold Appetizers', description_en: 'Baguette, tuna, mayonnaise, kalamata olives, capers', allergens_en: 'gluten, fish, eggs' },
-      { id: 10, name: 'Platou Italian', category: 'Aperitive Reci', price: 64.00, description: 'Prosciutto crudo, salam chorizo, mozzarella bocconcini, brânză gorgonzola, roșii uscate, roșii cherry, măsline kalamata, brânză dură', weight: '400G', allergens: 'lapte', name_en: 'Italian Platter', category_en: 'Cold Appetizers', description_en: 'Prosciutto crudo, chorizo salami, mozzarella bocconcini, gorgonzola cheese, dried tomatoes, cherry tomatoes, kalamata olives, hard cheese', allergens_en: 'milk' },
-      { id: 11, name: 'Platou Quattro Formaggi', category: 'Aperitive Reci', price: 64.00, description: 'Brânză brie, brânză gorgonzola, parmesan, mozzarella, măr, strugure, miez de nucă, grisine', weight: '550G', allergens: 'lapte, nuci, gluten', name_en: 'Quattro Formaggi Platter', category_en: 'Cold Appetizers', description_en: 'Brie cheese, gorgonzola cheese, parmesan, mozzarella, apple, grapes, walnuts, breadsticks', allergens_en: 'milk, nuts, gluten' },
-      { id: 12, name: 'Gustare Vegetariană', category: 'Aperitive Reci', price: 59.00, description: 'Baghetă, cremă de brânză picantă, zacuscă, salată de vinete, humus', weight: '400G', is_vegetarian: true, allergens: 'gluten, lapte, susan', name_en: 'Vegetarian Snack', category_en: 'Cold Appetizers', description_en: 'Baguette, spicy cream cheese, "zacuscă", eggplant salad, hummus', allergens_en: 'gluten, milk, sesame' },
-      // APERITIVE CALDE (IDs: 13-18)
-      { id: 13, name: 'Măsline Pane', category: 'Aperitive Calde', price: 27.00, description: 'Măsline panate și prăjite', weight: '200G', is_vegetarian: true, allergens: 'gluten, ouă', name_en: 'Breaded Olives', category_en: 'Hot Appetizers', description_en: 'Breaded and fried olives', allergens_en: 'gluten, eggs' },
-      { id: 14, name: 'Inele de Ceapă Pane', category: 'Aperitive Calde', price: 25.00, description: 'Inele de ceapă panate', weight: '200G', is_vegetarian: true, allergens: 'gluten, ouă', name_en: 'Breaded Onion Rings', category_en: 'Hot Appetizers', description_en: 'Breaded onion rings', allergens_en: 'gluten, eggs' },
-      { id: 15, name: 'Cașcaval Pane', category: 'Aperitive Calde', price: 32.00, description: 'Cașcaval panat și prăjit', weight: '200G', is_vegetarian: true, allergens: 'lapte, gluten, ouă', name_en: 'Breaded Cheese', category_en: 'Hot Appetizers', description_en: 'Breaded and fried cheese', allergens_en: 'milk, gluten, eggs' },
-      { id: 16, name: 'Mozzarella Sticks', category: 'Aperitive Calde', price: 40.00, description: 'Băți de mozzarella panați', weight: '200G', is_vegetarian: true, allergens: 'lapte, gluten, ouă', name_en: 'Mozzarella Sticks', category_en: 'Hot Appetizers', description_en: 'Breaded mozzarella sticks', allergens_en: 'milk, gluten, eggs' },
-      { id: 17, name: 'Ciuperci Quattro Formaggie', category: 'Aperitive Calde', price: 38.00, description: 'Ciuperci champinion, gorgonzola, parmesan, mozzarella, brie', weight: '250G', is_vegetarian: true, allergens: 'lapte', name_en: 'Quattro Formaggi Mushrooms', category_en: 'Hot Appetizers', description_en: 'Champignon mushrooms, gorgonzola, parmesan, mozzarella, brie', allergens_en: 'milk' },
-      { id: 18, name: 'Brânză Feta la Cuptor', category: 'Aperitive Calde', price: 46.00, description: 'Brânză feta, măsline kalamata, roșii cherry', weight: '250G', is_vegetarian: true, allergens: 'lapte', name_en: 'Baked Feta Cheese', category_en: 'Hot Appetizers', description_en: 'Feta cheese, kalamata olives, cherry tomatoes', allergens_en: 'milk' },
-      // CIORBE (IDs: 19-23)
-      { id: 19, name: 'Ciorbă de Văcuță', category: 'Ciorbe', price: 28.00, description: 'Pulpă de vită, ceapă albă, morcov, mazăre, țelină, ardei kapia, fasole verde, cartofi, borș, pătrunjel', weight: '300ML', allergens: 'țelină', name_en: 'Beef Sour Soup', category_en: 'Soups', description_en: 'Beef leg, white onion, carrot, peas, celery, kapia pepper, green beans, potatoes, "borș", parsley', allergens_en: 'celery' },
-      { id: 20, name: 'Ciorbă de Perișoare', category: 'Ciorbe', price: 25.00, description: 'Pulpă de porc, ceapă albă, morcov, țelină, ardei kapia, ou, borș, pătrunjel', weight: '300ML', allergens: 'țelină, ouă', name_en: 'Meatball Sour Soup', category_en: 'Soups', description_en: 'Pork leg, white onion, carrot, celery, kapia pepper, egg, "borș", parsley', allergens_en: 'celery, eggs' },
-      { id: 21, name: 'Ciorbă de Burtă', category: 'Ciorbe', price: 30.00, description: 'Burtă de vită, smântână, ou, usturoi, morcov, oțet', weight: '300ML', allergens: 'lapte, ouă', name_en: 'Tripe Soup', category_en: 'Soups', description_en: 'Beef tripe, sour cream, egg, garlic, carrot, vinegar', allergens_en: 'milk, eggs' },
-      { id: 22, name: 'Borș de Găină', category: 'Ciorbe', price: 25.00, description: 'Pui, ceapă, morcov, țelină, ardei kapia, tăiței de casă, borș, pătrunjel', weight: '300ML', allergens: 'țelină, gluten', name_en: 'Chicken "Borș"', category_en: 'Soups', description_en: 'Chicken, onion, carrot, celery, kapia pepper, homemade noodles, "borș", parsley', allergens_en: 'celery, gluten' },
-      { id: 23, name: 'Supă Cremă de Legume', category: 'Ciorbe', price: 25.00, description: 'Morcov, țelină, ardei kapia, ceapă albă, dovlecel, cartofi, cremă vegetală, crutoane', weight: '300ML', is_vegetarian: true, allergens: 'țelină, gluten', name_en: 'Creamy Vegetable Soup', category_en: 'Soups', description_en: 'Carrot, celery, kapia pepper, white onion, zucchini, potatoes, vegetable cream, croutons', allergens_en: 'celery, gluten' },
+  return new Promise((resolve, reject) => {
+    const menuItems = [
+      // MIC DEJUN (IDs: 1-4)
+      { id: 1, name: 'Mic Dejun Trattoria', category: 'Mic Dejun', price: 37.00, description: 'Ouă, bacon, brânză telemea, roșii cherry, cartofi prăjiți', weight: '100/20/50/60/170G', allergens: 'ouă, lapte', name_en: 'Trattoria Breakfast', category_en: 'Breakfast', description_en: 'Eggs, bacon, telemea cheese, cherry tomatoes, french fries', allergens_en: 'eggs, milk' },
+      { id: 2, name: 'Omletă Țărănească', category: 'Mic Dejun', price: 33.00, description: 'Ouă, brânză telemea, bacon, ciuperci, ardei kapia, ceapă, mărar', weight: '230G', allergens: 'ouă, lapte', name_en: 'Peasant Omelette', category_en: 'Breakfast', description_en: 'Eggs, telemea cheese, bacon, mushrooms, kapia pepper, onion, dill', allergens_en: 'eggs, milk' },
+      { id: 3, name: 'Mic Dejun Francuzesc', category: 'Mic Dejun', price: 39.00, description: 'Ouă poșate, guacamole, somon fume, pâine prăjită', weight: '100/100/100/30G', allergens: 'ouă, pește, gluten', name_en: 'French Breakfast', category_en: 'Breakfast', description_en: 'Poached eggs, guacamole, smoked salmon, toast', allergens_en: 'eggs, fish, gluten' },
+      { id: 4, name: 'Omletă cu Șuncă și Mozzarella', category: 'Mic Dejun', price: 31.00, description: 'Omletă clasică cu șuncă și mozzarella', weight: '200G', allergens: 'ouă, lapte', name_en: 'Ham and Mozzarella Omelette', category_en: 'Breakfast', description_en: 'Classic omelette with ham and mozzarella', allergens_en: 'eggs, milk' },
+      // APERITIVE RECI (IDs: 5-12)
+      { id: 5, name: 'Bruschete cu Roșii și Busuioc', category: 'Aperitive Reci', price: 25.00, description: 'Baghetă, roșii, busuioc, usturoi, ulei de măsline', weight: '200G', is_vegetarian: true, allergens: 'gluten', name_en: 'Bruschetta with Tomatoes and Basil', category_en: 'Cold Appetizers', description_en: 'Baguette, tomatoes, basil, garlic, olive oil', allergens_en: 'gluten' },
+      { id: 6, name: 'Bruschete cu Roșii și Anchois', category: 'Aperitive Reci', price: 27.00, description: 'Baghetă, roșii, anchois, busuioc, usturoi, ulei de măsline', weight: '200G', allergens: 'gluten, pește', name_en: 'Bruschetta with Tomatoes and Anchovies', category_en: 'Cold Appetizers', description_en: 'Baguette, tomatoes, anchovies, basil, garlic, olive oil', allergens_en: 'gluten, fish' },
+      { id: 7, name: 'Bruschete cu Somon', category: 'Aperitive Reci', price: 34.00, description: 'Baghetă, cremă de brânză, roșii uscate, ceapă roșie, somon fume, icre roșii, capere', weight: '200G', allergens: 'gluten, lapte, pește', name_en: 'Salmon Bruschetta', category_en: 'Cold Appetizers', description_en: 'Baguette, cream cheese, dried tomatoes, red onion, smoked salmon, red caviar, capers', allergens_en: 'gluten, milk, fish' },
+      { id: 8, name: 'Bruschete cu Prosciutto Crudo', category: 'Aperitive Reci', price: 34.00, description: 'Baghetă, cremă de brânză, roșii uscate, ceapă roșie, prosciutto crudo, brânză dură', weight: '200G', allergens: 'gluten, lapte', name_en: 'Prosciutto Crudo Bruschetta', category_en: 'Cold Appetizers', description_en: 'Baguette, cream cheese, dried tomatoes, red onion, prosciutto crudo, hard cheese', allergens_en: 'gluten, milk' },
+      { id: 9, name: 'Bruschete cu Ton', category: 'Aperitive Reci', price: 33.00, description: 'Baghetă, ton, maioneza, măsline kalamata, capere', weight: '200G', allergens: 'gluten, pește, ouă', name_en: 'Tuna Bruschetta', category_en: 'Cold Appetizers', description_en: 'Baguette, tuna, mayonnaise, kalamata olives, capers', allergens_en: 'gluten, fish, eggs' },
+      { id: 10, name: 'Platou Italian', category: 'Aperitive Reci', price: 64.00, description: 'Prosciutto crudo, salam chorizo, mozzarella bocconcini, brânză gorgonzola, roșii uscate, roșii cherry, măsline kalamata, brânză dură', weight: '400G', allergens: 'lapte', name_en: 'Italian Platter', category_en: 'Cold Appetizers', description_en: 'Prosciutto crudo, chorizo salami, mozzarella bocconcini, gorgonzola cheese, dried tomatoes, cherry tomatoes, kalamata olives, hard cheese', allergens_en: 'milk' },
+      { id: 11, name: 'Platou Quattro Formaggi', category: 'Aperitive Reci', price: 64.00, description: 'Brânză brie, brânză gorgonzola, parmesan, mozzarella, măr, strugure, miez de nucă, grisine', weight: '550G', allergens: 'lapte, nuci, gluten', name_en: 'Quattro Formaggi Platter', category_en: 'Cold Appetizers', description_en: 'Brie cheese, gorgonzola cheese, parmesan, mozzarella, apple, grapes, walnuts, breadsticks', allergens_en: 'milk, nuts, gluten' },
+      { id: 12, name: 'Gustare Vegetariană', category: 'Aperitive Reci', price: 59.00, description: 'Baghetă, cremă de brânză picantă, zacuscă, salată de vinete, humus', weight: '400G', is_vegetarian: true, allergens: 'gluten, lapte, susan', name_en: 'Vegetarian Snack', category_en: 'Cold Appetizers', description_en: 'Baguette, spicy cream cheese, "zacuscă", eggplant salad, hummus', allergens_en: 'gluten, milk, sesame' },
+      // APERITIVE CALDE (IDs: 13-18)
+      { id: 13, name: 'Măsline Pane', category: 'Aperitive Calde', price: 27.00, description: 'Măsline panate și prăjite', weight: '200G', is_vegetarian: true, allergens: 'gluten, ouă', name_en: 'Breaded Olives', category_en: 'Hot Appetizers', description_en: 'Breaded and fried olives', allergens_en: 'gluten, eggs' },
+      { id: 14, name: 'Inele de Ceapă Pane', category: 'Aperitive Calde', price: 25.00, description: 'Inele de ceapă panate', weight: '200G', is_vegetarian: true, allergens: 'gluten, ouă', name_en: 'Breaded Onion Rings', category_en: 'Hot Appetizers', description_en: 'Breaded onion rings', allergens_en: 'gluten, eggs' },
+      { id: 15, name: 'Cașcaval Pane', category: 'Aperitive Calde', price: 32.00, description: 'Cașcaval panat și prăjit', weight: '200G', is_vegetarian: true, allergens: 'lapte, gluten, ouă', name_en: 'Breaded Cheese', category_en: 'Hot Appetizers', description_en: 'Breaded and fried cheese', allergens_en: 'milk, gluten, eggs' },
+      { id: 16, name: 'Mozzarella Sticks', category: 'Aperitive Calde', price: 40.00, description: 'Băți de mozzarella panați', weight: '200G', is_vegetarian: true, allergens: 'lapte, gluten, ouă', name_en: 'Mozzarella Sticks', category_en: 'Hot Appetizers', description_en: 'Breaded mozzarella sticks', allergens_en: 'milk, gluten, eggs' },
+      { id: 17, name: 'Ciuperci Quattro Formaggie', category: 'Aperitive Calde', price: 38.00, description: 'Ciuperci champinion, gorgonzola, parmesan, mozzarella, brie', weight: '250G', is_vegetarian: true, allergens: 'lapte', name_en: 'Quattro Formaggi Mushrooms', category_en: 'Hot Appetizers', description_en: 'Champignon mushrooms, gorgonzola, parmesan, mozzarella, brie', allergens_en: 'milk' },
+      { id: 18, name: 'Brânză Feta la Cuptor', category: 'Aperitive Calde', price: 46.00, description: 'Brânză feta, măsline kalamata, roșii cherry', weight: '250G', is_vegetarian: true, allergens: 'lapte', name_en: 'Baked Feta Cheese', category_en: 'Hot Appetizers', description_en: 'Feta cheese, kalamata olives, cherry tomatoes', allergens_en: 'milk' },
+      // CIORBE (IDs: 19-23)
+      { id: 19, name: 'Ciorbă de Văcuță', category: 'Ciorbe', price: 28.00, description: 'Pulpă de vită, ceapă albă, morcov, mazăre, țelină, ardei kapia, fasole verde, cartofi, borș, pătrunjel', weight: '300ML', allergens: 'țelină', name_en: 'Beef Sour Soup', category_en: 'Soups', description_en: 'Beef leg, white onion, carrot, peas, celery, kapia pepper, green beans, potatoes, "borș", parsley', allergens_en: 'celery' },
+      { id: 20, name: 'Ciorbă de Perișoare', category: 'Ciorbe', price: 25.00, description: 'Pulpă de porc, ceapă albă, morcov, țelină, ardei kapia, ou, borș, pătrunjel', weight: '300ML', allergens: 'țelină, ouă', name_en: 'Meatball Sour Soup', category_en: 'Soups', description_en: 'Pork leg, white onion, carrot, celery, kapia pepper, egg, "borș", parsley', allergens_en: 'celery, eggs' },
+      { id: 21, name: 'Ciorbă de Burtă', category: 'Ciorbe', price: 30.00, description: 'Burtă de vită, smântână, ou, usturoi, morcov, oțet', weight: '300ML', allergens: 'lapte, ouă', name_en: 'Tripe Soup', category_en: 'Soups', description_en: 'Beef tripe, sour cream, egg, garlic, carrot, vinegar', allergens_en: 'milk, eggs' },
+      { id: 22, name: 'Borș de Găină', category: 'Ciorbe', price: 25.00, description: 'Pui, ceapă, morcov, țelină, ardei kapia, tăiței de casă, borș, pătrunjel', weight: '300ML', allergens: 'țelină, gluten', name_en: 'Chicken "Borș"', category_en: 'Soups', description_en: 'Chicken, onion, carrot, celery, kapia pepper, homemade noodles, "borș", parsley', allergens_en: 'celery, gluten' },
+      { id: 23, name: 'Supă Cremă de Legume', category: 'Ciorbe', price: 25.00, description: 'Morcov, țelină, ardei kapia, ceapă albă, dovlecel, cartofi, cremă vegetală, crutoane', weight: '300ML', is_vegetarian: true, allergens: 'țelină, gluten', name_en: 'Creamy Vegetable Soup', category_en: 'Soups', description_en: 'Carrot, celery, kapia pepper, white onion, zucchini, potatoes, vegetable cream, croutons', allergens_en: 'celery, gluten' },
       // PASTE FRESCA (IDs: 24-32)
       { id: 24, name: 'Spaghete Carbonara', category: 'Paste Fresca', price: 41.00, description: 'Paste fresh, pancetta, cremă vegetală, ou, brânză dură', weight: '300G', allergens: 'gluten, ouă, lapte', name_en: 'Spaghetti Carbonara', category_en: 'Fresh Pasta', description_en: 'Fresh pasta, pancetta, vegetable cream, egg, hard cheese', allergens_en: 'gluten, eggs, milk' },
       { id: 25, name: 'Spaghete Bolognese', category: 'Paste Fresca', price: 42.00, description: 'Paste fresh, carne de vită, sos de roșii, brânză dură, vin roșu', weight: '350G', allergens: 'gluten, lapte', name_en: 'Spaghetti Bolognese', category_en: 'Fresh Pasta', description_en: 'Fresh pasta, beef, tomato sauce, hard cheese, red wine', allergens_en: 'gluten, milk' },
@@ -5877,185 +5960,185 @@ function insertRealMenu(db) {
       { id: 279, name: 'Bulgarini Lugana 010', category: 'Băuturi și Coctailuri', price: 220.00, description: 'Vin alb sec import - 13.5% alc', weight: '750ML', name_en: 'Bulgarini Lugana 010', category_en: 'Drinks & Cocktails', description_en: 'Imported dry white wine - 13.5% alc' },
       { id: 280, name: 'Asti Martini Dolce', category: 'Băuturi și Coctailuri', price: 121.00, description: 'Spumant dulce italian', weight: '750ML', name_en: 'Asti Martini Dolce', category_en: 'Drinks & Cocktails', description_en: 'Sweet Italian sparkling wine' },
       { id: 281, name: 'Prosecco', category: 'Băuturi și Coctailuri', price: 23.00, description: 'Spumant italian', weight: '150ML', name_en: 'Prosecco', category_en: 'Drinks & Cocktails', description_en: 'Italian sparkling wine' }
-    ];
+    ];
 
-    const stmt = db.prepare(`INSERT INTO menu (name, category, price, description, weight, is_vegetarian, is_spicy, is_takeout_only, allergens, name_en, category_en, description_en, allergens_en) 
+    const stmt = db.prepare(`INSERT INTO menu (name, category, price, description, weight, is_vegetarian, is_spicy, is_takeout_only, allergens, name_en, category_en, description_en, allergens_en) 
                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
-  
-    menuItems.forEach(item => {
-        stmt.run(
-            item.name, 
-            item.category, 
-            item.price, 
-            item.description, 
-            item.weight || '', 
-            item.is_vegetarian || 0, 
-            item.is_spicy || 0,
-            item.is_takeout_only || 0,
-            item.allergens || null,
-            item.name_en,
-            item.category_en,
-            item.description_en,
-            item.allergens_en || null
-        );
-    });
-  
-    stmt.finalize((err) => {
-        if (!err) {
-            console.log('Meniul real al restaurantului a fost adăugat în baza de date.');
-            
-            const customizations = [
-              // Omlete (IDs 2, 4)
-              { menu_item_id: 2, option_name: 'Fără bacon', option_type: 'exclude', extra_price: 0, option_name_en: 'No bacon' },
-              { menu_item_id: 2, option_name: 'Fără ciuperci', option_type: 'exclude', extra_price: 0, option_name_en: 'No mushrooms' },
-              { menu_item_id: 2, option_name: 'Fără ceapă', option_type: 'exclude', extra_price: 0, option_name_en: 'No onion' },
-              { menu_item_id: 2, option_name: 'Extra mozzarella', option_type: 'topping', extra_price: 7, option_name_en: 'Extra mozzarella' },
-              { menu_item_id: 4, option_name: 'Fără șuncă', option_type: 'exclude', extra_price: 0, option_name_en: 'No ham' },
-              { menu_item_id: 4, option_name: 'Extra bacon', option_type: 'topping', extra_price: 8, option_name_en: 'Extra bacon' },
 
-              // Ciorbe (IDs 19-23)
-              ...[19, 20, 22].flatMap(id => [
-                { menu_item_id: id, option_name: 'Smântână', option_type: 'topping', extra_price: 5, option_name_en: 'Sour Cream' },
-                { menu_item_id: id, option_name: 'Ardei iute', option_type: 'topping', extra_price: 3, option_name_en: 'Hot Pepper' },
-              ]),
-              { menu_item_id: 21, option_name: 'Extra smântână', option_type: 'topping', extra_price: 5, option_name_en: 'Extra Sour Cream' },
-              { menu_item_id: 21, option_name: 'Ardei iute', option_type: 'topping', extra_price: 3, option_name_en: 'Hot Pepper' },
-              { menu_item_id: 21, option_name: 'Extra oțet', option_type: 'topping', extra_price: 0, option_name_en: 'Extra Vinegar' },
-              { menu_item_id: 21, option_name: 'Extra usturoi', option_type: 'topping', extra_price: 0, option_name_en: 'Extra Garlic' },
-              { menu_item_id: 23, option_name: 'Fără crutoane', option_type: 'exclude', extra_price: 0, option_name_en: 'No Croutons' },
+    menuItems.forEach(item => {
+      stmt.run(
+        item.name,
+        item.category,
+        item.price,
+        item.description,
+        item.weight || '',
+        item.is_vegetarian || 0,
+        item.is_spicy || 0,
+        item.is_takeout_only || 0,
+        item.allergens || null,
+        item.name_en,
+        item.category_en,
+        item.description_en,
+        item.allergens_en || null
+      );
+    });
 
-              // Paste (IDs 24-35)
-              ...Array.from({ length: 12 }, (_, i) => i + 24).flatMap(id => [
-                { menu_item_id: id, option_name: 'Extra Brânză Dură', option_type: 'topping', extra_price: 7, option_name_en: 'Extra Hard Cheese' }
-              ]),
-              ...[26, 31, 32].flatMap(id => [
-                { menu_item_id: id, option_name: 'Extra picant', option_type: 'topping', extra_price: 3, option_name_en: 'Extra Spicy' }
-              ]),
+    stmt.finalize((err) => {
+      if (!err) {
+        console.log('Meniul real al restaurantului a fost adăugat în baza de date.');
 
-              // Fel Principal - Schimbare garnituri (DOAR pentru produse care au efectiv cartofi/piure în descriere)
-              // NOTĂ: Aceste customizations sunt valide DOAR dacă produsul are cartofi/piure în descriere
-              // { menu_item_id: 45, option_name: 'Înlocuiește piure cu cartofi prăjiți', option_type: 'garnish_swap', extra_price: 0, option_name_en: 'Replace mashed potatoes with french fries' }, // Piept de pui - VERIFICAT: nu are piure în descriere, ȘTERS
-              // { menu_item_id: 46, option_name: 'Înlocuiește cartofii prăjiți cu piure', option_type: 'garnish_swap', extra_price: 2, option_name_en: 'Replace french fries with mashed potatoes' }, // Pulpe - VERIFICAT: nu are cartofi prăjiți în descriere, ȘTERS
-              { menu_item_id: 50, option_name: 'Înlocuiește cartofii zdrobiți cu cartofi prăjiți', option_type: 'garnish_swap', extra_price: 0, option_name_en: 'Replace smashed potatoes with french fries' }, // Polo Parmegiano - ARE cartofi zdrobiți în descriere, VALID
-              { menu_item_id: 69, option_name: 'Înlocuiește piure cu trufe cu cartofi prăjiți', option_type: 'garnish_swap', extra_price: 0, option_name_en: 'Replace truffle mashed potatoes with french fries' }, // Pulpa de rata - ARE piure cu trufe în descriere, VALID
-              
-              // Fel Principal - Grad de gătire pentru vită (IDs 64, 65, 66, 70)
-              ...[64, 65, 66, 70].flatMap(id => [
-                { menu_item_id: id, option_name: 'În sânge', option_type: 'cooking_level', extra_price: 0, option_name_en: 'Rare' },
-                { menu_item_id: id, option_name: 'Mediu', option_type: 'cooking_level', extra_price: 0, option_name_en: 'Medium' },
-                { menu_item_id: id, option_name: 'Bine făcut', option_type: 'cooking_level', extra_price: 0, option_name_en: 'Well-done' },
-              ]),
+        const customizations = [
+          // Omlete (IDs 2, 4)
+          { menu_item_id: 2, option_name: 'Fără bacon', option_type: 'exclude', extra_price: 0, option_name_en: 'No bacon' },
+          { menu_item_id: 2, option_name: 'Fără ciuperci', option_type: 'exclude', extra_price: 0, option_name_en: 'No mushrooms' },
+          { menu_item_id: 2, option_name: 'Fără ceapă', option_type: 'exclude', extra_price: 0, option_name_en: 'No onion' },
+          { menu_item_id: 2, option_name: 'Extra mozzarella', option_type: 'topping', extra_price: 7, option_name_en: 'Extra mozzarella' },
+          { menu_item_id: 4, option_name: 'Fără șuncă', option_type: 'exclude', extra_price: 0, option_name_en: 'No ham' },
+          { menu_item_id: 4, option_name: 'Extra bacon', option_type: 'topping', extra_price: 8, option_name_en: 'Extra bacon' },
 
-              // Burgeri (IDs 74-77)
-              ...[74, 75].flatMap(id => [ // Burger de Vită & Picant
-                { menu_item_id: id, option_name: 'Fără roșii', option_type: 'exclude', extra_price: 0, option_name_en: 'No tomatoes' },
-                { menu_item_id: id, option_name: 'Fără salată', option_type: 'exclude', extra_price: 0, option_name_en: 'No lettuce' },
-                { menu_item_id: id, option_name: 'Fără castraveți murați', option_type: 'exclude', extra_price: 0, option_name_en: 'No pickles' },
-                { menu_item_id: id, option_name: 'Fără ceddar', option_type: 'exclude', extra_price: 0, option_name_en: 'No cheddar' },
-                { menu_item_id: id, option_name: 'Fără ceapă roșie', option_type: 'exclude', extra_price: 0, option_name_en: 'No red onion' },
-                { menu_item_id: id, option_name: 'Extra bacon', option_type: 'topping', extra_price: 8, option_name_en: 'Extra bacon' },
-                { menu_item_id: id, option_name: 'Extra ceddar', option_type: 'topping', extra_price: 6, option_name_en: 'Extra cheddar' },
-              ]),
-              { menu_item_id: 75, option_name: 'Fără jalapeno', option_type: 'exclude', extra_price: 0, option_name_en: 'No jalapeno' },
-              { menu_item_id: 75, option_name: 'Extra jalapeno', option_type: 'topping', extra_price: 5, option_name_en: 'Extra jalapeno' },
-              { menu_item_id: 76, option_name: 'Fără roșii', option_type: 'exclude', extra_price: 0, option_name_en: 'No tomatoes' }, // Burger Crispy
-              { menu_item_id: 76, option_name: 'Fără salată', option_type: 'exclude', extra_price: 0, option_name_en: 'No lettuce' },
-              { menu_item_id: 76, option_name: 'Extra bacon', option_type: 'topping', extra_price: 8, option_name_en: 'Extra bacon' },
-              { menu_item_id: 77, option_name: 'Fără roșii', option_type: 'exclude', extra_price: 0, option_name_en: 'No tomatoes' }, // Halloumi Burger
-              { menu_item_id: 77, option_name: 'Fără salată', option_type: 'exclude', extra_price: 0, option_name_en: 'No lettuce' },
+          // Ciorbe (IDs 19-23)
+          ...[19, 20, 22].flatMap(id => [
+            { menu_item_id: id, option_name: 'Smântână', option_type: 'topping', extra_price: 5, option_name_en: 'Sour Cream' },
+            { menu_item_id: id, option_name: 'Ardei iute', option_type: 'topping', extra_price: 3, option_name_en: 'Hot Pepper' },
+          ]),
+          { menu_item_id: 21, option_name: 'Extra smântână', option_type: 'topping', extra_price: 5, option_name_en: 'Extra Sour Cream' },
+          { menu_item_id: 21, option_name: 'Ardei iute', option_type: 'topping', extra_price: 3, option_name_en: 'Hot Pepper' },
+          { menu_item_id: 21, option_name: 'Extra oțet', option_type: 'topping', extra_price: 0, option_name_en: 'Extra Vinegar' },
+          { menu_item_id: 21, option_name: 'Extra usturoi', option_type: 'topping', extra_price: 0, option_name_en: 'Extra Garlic' },
+          { menu_item_id: 23, option_name: 'Fără crutoane', option_type: 'exclude', extra_price: 0, option_name_en: 'No Croutons' },
 
-              // Salate (IDs 80-85)
-              { menu_item_id: 81, option_name: 'Fără anșoa', option_type: 'exclude', extra_price: 0, option_name_en: 'No anchovies' }, // Caesar
-              { menu_item_id: 81, option_name: 'Fără crutoane', option_type: 'exclude', extra_price: 0, option_name_en: 'No croutons' },
-              { menu_item_id: 81, option_name: 'Extra piept de pui', option_type: 'topping', extra_price: 10, option_name_en: 'Extra chicken breast' },
-              { menu_item_id: 84, option_name: 'Fără ceapă', option_type: 'exclude', extra_price: 0, option_name_en: 'No onion' }, // Greceasca
-              { menu_item_id: 84, option_name: 'Fără măsline', option_type: 'exclude', extra_price: 0, option_name_en: 'No olives' },
+          // Paste (IDs 24-35)
+          ...Array.from({ length: 12 }, (_, i) => i + 24).flatMap(id => [
+            { menu_item_id: id, option_name: 'Extra Brânză Dură', option_type: 'topping', extra_price: 7, option_name_en: 'Extra Hard Cheese' }
+          ]),
+          ...[26, 31, 32].flatMap(id => [
+            { menu_item_id: id, option_name: 'Extra picant', option_type: 'topping', extra_price: 3, option_name_en: 'Extra Spicy' }
+          ]),
 
-              // Pizza (IDs 86-100)
-              ...Array.from({ length: 15 }, (_, i) => i + 86).flatMap(id => [
-                { menu_item_id: id, option_name: 'Extra Mozzarella', option_type: 'topping', extra_price: 7, option_name_en: 'Extra Mozzarella' },
-              { menu_item_id: id, option_name: 'Extra Șuncă', option_type: 'topping', extra_price: 8, option_name_en: 'Extra Ham' },
-              { menu_item_id: id, option_name: 'Extra Salam', option_type: 'topping', extra_price: 8, option_name_en: 'Extra Salami' },
-              { menu_item_id: id, option_name: 'Extra Ciuperci', option_type: 'topping', extra_price: 6, option_name_en: 'Extra Mushrooms' },
-              { menu_item_id: id, option_name: 'Extra Măsline', option_type: 'topping', extra_price: 5, option_name_en: 'Extra Olives' },
-              { menu_item_id: id, option_name: 'Extra Porumb', option_type: 'topping', extra_price: 5, option_name_en: 'Extra Corn' },
-              { menu_item_id: id, option_name: 'Extra Bacon', option_type: 'topping', extra_price: 9, option_name_en: 'Extra Bacon' },
-              { menu_item_id: id, option_name: 'Extra Gorgonzola', option_type: 'topping', extra_price: 9, option_name_en: 'Extra Gorgonzola' },
-              { menu_item_id: id, option_name: 'Extra Ardei Kapia', option_type: 'topping', extra_price: 5, option_name_en: 'Extra Kapia Pepper' },
-              { menu_item_id: id, option_name: 'Extra Ceapă', option_type: 'topping', extra_price: 4, option_name_en: 'Extra Onion' },
-              { menu_item_id: id, option_name: 'Extra Ton', option_type: 'topping', extra_price: 10, option_name_en: 'Extra Tuna' },
-              { menu_item_id: id, option_name: 'Extra Prosciutto Crudo', option_type: 'topping', extra_price: 12, option_name_en: 'Extra Prosciutto Crudo' },
-              { menu_item_id: id, option_name: 'Extra Salam Picant', option_type: 'topping', extra_price: 9, option_name_en: 'Extra Spicy Salami' },
-              { menu_item_id: id, option_name: 'Extra Piept de Pui', option_type: 'topping', extra_price: 8, option_name_en: 'Extra Chicken Breast' },
-              { menu_item_id: id, option_name: 'Fără Mozzarella', option_type: 'exclude', extra_price: 0, option_name_en: 'No Mozzarella' },
-              { menu_item_id: id, option_name: 'Fără Șuncă', option_type: 'exclude', extra_price: 0, option_name_en: 'No Ham' },
-              { menu_item_id: id, option_name: 'Fără Salam', option_type: 'exclude', extra_price: 0, option_name_en: 'No Salami' },
-              { menu_item_id: id, option_name: 'Fără Ciuperci', option_type: 'exclude', extra_price: 0, option_name_en: 'No Mushrooms' },
-              { menu_item_id: id, option_name: 'Fără Măsline', option_type: 'exclude', extra_price: 0, option_name_en: 'No Olives' },
-              { menu_item_id: id, option_name: 'Fără Porumb', option_type: 'exclude', extra_price: 0, option_name_en: 'No Corn' },
-              { menu_item_id: id, option_name: 'Fără Bacon', option_type: 'exclude', extra_price: 0, option_name_en: 'No Bacon' },
-              { menu_item_id: id, option_name: 'Fără Gorgonzola', option_type: 'exclude', extra_price: 0, option_name_en: 'No Gorgonzola' },
-              { menu_item_id: id, option_name: 'Fără Ardei', option_type: 'exclude', extra_price: 0, option_name_en: 'No Pepper' },
-              { menu_item_id: id, option_name: 'Fără Ceapă', option_type: 'exclude', extra_price: 0, option_name_en: 'No Onion' }
-              ]),
+          // Fel Principal - Schimbare garnituri (DOAR pentru produse care au efectiv cartofi/piure în descriere)
+          // NOTĂ: Aceste customizations sunt valide DOAR dacă produsul are cartofi/piure în descriere
+          // { menu_item_id: 45, option_name: 'Înlocuiește piure cu cartofi prăjiți', option_type: 'garnish_swap', extra_price: 0, option_name_en: 'Replace mashed potatoes with french fries' }, // Piept de pui - VERIFICAT: nu are piure în descriere, ȘTERS
+          // { menu_item_id: 46, option_name: 'Înlocuiește cartofii prăjiți cu piure', option_type: 'garnish_swap', extra_price: 2, option_name_en: 'Replace french fries with mashed potatoes' }, // Pulpe - VERIFICAT: nu are cartofi prăjiți în descriere, ȘTERS
+          { menu_item_id: 50, option_name: 'Înlocuiește cartofii zdrobiți cu cartofi prăjiți', option_type: 'garnish_swap', extra_price: 0, option_name_en: 'Replace smashed potatoes with french fries' }, // Polo Parmegiano - ARE cartofi zdrobiți în descriere, VALID
+          { menu_item_id: 69, option_name: 'Înlocuiește piure cu trufe cu cartofi prăjiți', option_type: 'garnish_swap', extra_price: 0, option_name_en: 'Replace truffle mashed potatoes with french fries' }, // Pulpa de rata - ARE piure cu trufe în descriere, VALID
 
-              // Deserturi - Papanasi (ID 124)
-              { menu_item_id: 124, option_name: 'Topping de Ciocolată', option_type: 'option', extra_price: 0, option_name_en: 'Chocolate Topping' },
-              { menu_item_id: 124, option_name: 'Topping de Afine', option_type: 'option', extra_price: 0, option_name_en: 'Blueberry Topping' },
-              { menu_item_id: 124, option_name: 'Topping de Vișine', option_type: 'option', extra_price: 0, option_name_en: 'Sour Cherry Topping' },
-              { menu_item_id: 124, option_name: 'Topping Fructe de Pădure', option_type: 'option', extra_price: 0, option_name_en: 'Forest Fruit Topping' },
+          // Fel Principal - Grad de gătire pentru vită (IDs 64, 65, 66, 70)
+          ...[64, 65, 66, 70].flatMap(id => [
+            { menu_item_id: id, option_name: 'În sânge', option_type: 'cooking_level', extra_price: 0, option_name_en: 'Rare' },
+            { menu_item_id: id, option_name: 'Mediu', option_type: 'cooking_level', extra_price: 0, option_name_en: 'Medium' },
+            { menu_item_id: id, option_name: 'Bine făcut', option_type: 'cooking_level', extra_price: 0, option_name_en: 'Well-done' },
+          ]),
 
-              // Cafele (IDs 126-141)
-              ...Array.from({ length: 16 }, (_, i) => i + 126).flatMap(id => [
-                { menu_item_id: id, option_name: 'Zahăr alb', option_type: 'topping', extra_price: 0, option_name_en: 'White Sugar' },
-                { menu_item_id: id, option_name: 'Zahăr brun', option_type: 'topping', extra_price: 0.5, option_name_en: 'Brown Sugar' },
-                { menu_item_id: id, option_name: 'Îndulcitor', option_type: 'topping', extra_price: 1, option_name_en: 'Sweetener' },
-              ]),
-              ...[131, 132, 133, 134, 135, 136, 137].flatMap(id => [{ menu_item_id: id, option_name: 'Lapte de Ovăz', option_type: 'topping', extra_price: 3, option_name_en: 'Oat Milk' }]), // Cafele cu lapte
-              ...[132, 142].flatMap(id => [
-                { menu_item_id: id, option_name: 'Aromă Vanilie', option_type: 'option', extra_price: 0, option_name_en: 'Vanilla Flavor' },
-              { menu_item_id: id, option_name: 'Aromă Caramel', option_type: 'option', extra_price: 0, option_name_en: 'Caramel Flavor' },
-              { menu_item_id: id, option_name: 'Aromă Ciocolată', option_type: 'option', extra_price: 0, option_name_en: 'Chocolate Flavor' }
-              ]),
+          // Burgeri (IDs 74-77)
+          ...[74, 75].flatMap(id => [ // Burger de Vită & Picant
+            { menu_item_id: id, option_name: 'Fără roșii', option_type: 'exclude', extra_price: 0, option_name_en: 'No tomatoes' },
+            { menu_item_id: id, option_name: 'Fără salată', option_type: 'exclude', extra_price: 0, option_name_en: 'No lettuce' },
+            { menu_item_id: id, option_name: 'Fără castraveți murați', option_type: 'exclude', extra_price: 0, option_name_en: 'No pickles' },
+            { menu_item_id: id, option_name: 'Fără ceddar', option_type: 'exclude', extra_price: 0, option_name_en: 'No cheddar' },
+            { menu_item_id: id, option_name: 'Fără ceapă roșie', option_type: 'exclude', extra_price: 0, option_name_en: 'No red onion' },
+            { menu_item_id: id, option_name: 'Extra bacon', option_type: 'topping', extra_price: 8, option_name_en: 'Extra bacon' },
+            { menu_item_id: id, option_name: 'Extra ceddar', option_type: 'topping', extra_price: 6, option_name_en: 'Extra cheddar' },
+          ]),
+          { menu_item_id: 75, option_name: 'Fără jalapeno', option_type: 'exclude', extra_price: 0, option_name_en: 'No jalapeno' },
+          { menu_item_id: 75, option_name: 'Extra jalapeno', option_type: 'topping', extra_price: 5, option_name_en: 'Extra jalapeno' },
+          { menu_item_id: 76, option_name: 'Fără roșii', option_type: 'exclude', extra_price: 0, option_name_en: 'No tomatoes' }, // Burger Crispy
+          { menu_item_id: 76, option_name: 'Fără salată', option_type: 'exclude', extra_price: 0, option_name_en: 'No lettuce' },
+          { menu_item_id: 76, option_name: 'Extra bacon', option_type: 'topping', extra_price: 8, option_name_en: 'Extra bacon' },
+          { menu_item_id: 77, option_name: 'Fără roșii', option_type: 'exclude', extra_price: 0, option_name_en: 'No tomatoes' }, // Halloumi Burger
+          { menu_item_id: 77, option_name: 'Fără salată', option_type: 'exclude', extra_price: 0, option_name_en: 'No lettuce' },
 
-              // Răcoritoare (IDs 149-171)
-              ...[149, 150, 151, 152, 153, 154, 157, 158, 159, 160, 161, 162, 163, 164, 165].flatMap(id => [
-                  { menu_item_id: id, option_name: 'Cu gheață', option_type: 'option', extra_price: 0, option_name_en: 'With ice' },
-                  { menu_item_id: id, option_name: 'Fără gheață', option_type: 'option', extra_price: 0, option_name_en: 'Without ice' },
-              ]),
-              
-              // Limonade (IDs 166-171)
-              ...Array.from({ length: 6 }, (_, i) => i + 166).flatMap(id => [
-                  { menu_item_id: id, option_name: 'Cu gheață', option_type: 'option', extra_price: 0, option_name_en: 'With ice' },
-                  { menu_item_id: id, option_name: 'Fără gheață', option_type: 'option', extra_price: 0, option_name_en: 'Without ice' },
-                  { menu_item_id: id, option_name: 'Cu zahăr', option_type: 'option', extra_price: 0, option_name_en: 'With sugar' },
-                  { menu_item_id: id, option_name: 'Fără zahăr', option_type: 'option', extra_price: 0, option_name_en: 'Without sugar' },
-                  { menu_item_id: id, option_name: 'Cu miere', option_type: 'option', extra_price: 4, option_name_en: 'With honey' },
-              ]),
+          // Salate (IDs 80-85)
+          { menu_item_id: 81, option_name: 'Fără anșoa', option_type: 'exclude', extra_price: 0, option_name_en: 'No anchovies' }, // Caesar
+          { menu_item_id: 81, option_name: 'Fără crutoane', option_type: 'exclude', extra_price: 0, option_name_en: 'No croutons' },
+          { menu_item_id: 81, option_name: 'Extra piept de pui', option_type: 'topping', extra_price: 10, option_name_en: 'Extra chicken breast' },
+          { menu_item_id: 84, option_name: 'Fără ceapă', option_type: 'exclude', extra_price: 0, option_name_en: 'No onion' }, // Greceasca
+          { menu_item_id: 84, option_name: 'Fără măsline', option_type: 'exclude', extra_price: 0, option_name_en: 'No olives' },
 
-              // Fresh-uri (IDs 172-174)
-              ...[172, 173, 174].flatMap(id => [
-                { menu_item_id: id, option_name: 'Cu gheață', option_type: 'option', extra_price: 0, option_name_en: 'With ice' },
-                { menu_item_id: id, option_name: 'Fără gheață', option_type: 'option', extra_price: 0, option_name_en: 'Without ice' },
-              ]),
-            ];
+          // Pizza (IDs 86-100)
+          ...Array.from({ length: 15 }, (_, i) => i + 86).flatMap(id => [
+            { menu_item_id: id, option_name: 'Extra Mozzarella', option_type: 'topping', extra_price: 7, option_name_en: 'Extra Mozzarella' },
+            { menu_item_id: id, option_name: 'Extra Șuncă', option_type: 'topping', extra_price: 8, option_name_en: 'Extra Ham' },
+            { menu_item_id: id, option_name: 'Extra Salam', option_type: 'topping', extra_price: 8, option_name_en: 'Extra Salami' },
+            { menu_item_id: id, option_name: 'Extra Ciuperci', option_type: 'topping', extra_price: 6, option_name_en: 'Extra Mushrooms' },
+            { menu_item_id: id, option_name: 'Extra Măsline', option_type: 'topping', extra_price: 5, option_name_en: 'Extra Olives' },
+            { menu_item_id: id, option_name: 'Extra Porumb', option_type: 'topping', extra_price: 5, option_name_en: 'Extra Corn' },
+            { menu_item_id: id, option_name: 'Extra Bacon', option_type: 'topping', extra_price: 9, option_name_en: 'Extra Bacon' },
+            { menu_item_id: id, option_name: 'Extra Gorgonzola', option_type: 'topping', extra_price: 9, option_name_en: 'Extra Gorgonzola' },
+            { menu_item_id: id, option_name: 'Extra Ardei Kapia', option_type: 'topping', extra_price: 5, option_name_en: 'Extra Kapia Pepper' },
+            { menu_item_id: id, option_name: 'Extra Ceapă', option_type: 'topping', extra_price: 4, option_name_en: 'Extra Onion' },
+            { menu_item_id: id, option_name: 'Extra Ton', option_type: 'topping', extra_price: 10, option_name_en: 'Extra Tuna' },
+            { menu_item_id: id, option_name: 'Extra Prosciutto Crudo', option_type: 'topping', extra_price: 12, option_name_en: 'Extra Prosciutto Crudo' },
+            { menu_item_id: id, option_name: 'Extra Salam Picant', option_type: 'topping', extra_price: 9, option_name_en: 'Extra Spicy Salami' },
+            { menu_item_id: id, option_name: 'Extra Piept de Pui', option_type: 'topping', extra_price: 8, option_name_en: 'Extra Chicken Breast' },
+            { menu_item_id: id, option_name: 'Fără Mozzarella', option_type: 'exclude', extra_price: 0, option_name_en: 'No Mozzarella' },
+            { menu_item_id: id, option_name: 'Fără Șuncă', option_type: 'exclude', extra_price: 0, option_name_en: 'No Ham' },
+            { menu_item_id: id, option_name: 'Fără Salam', option_type: 'exclude', extra_price: 0, option_name_en: 'No Salami' },
+            { menu_item_id: id, option_name: 'Fără Ciuperci', option_type: 'exclude', extra_price: 0, option_name_en: 'No Mushrooms' },
+            { menu_item_id: id, option_name: 'Fără Măsline', option_type: 'exclude', extra_price: 0, option_name_en: 'No Olives' },
+            { menu_item_id: id, option_name: 'Fără Porumb', option_type: 'exclude', extra_price: 0, option_name_en: 'No Corn' },
+            { menu_item_id: id, option_name: 'Fără Bacon', option_type: 'exclude', extra_price: 0, option_name_en: 'No Bacon' },
+            { menu_item_id: id, option_name: 'Fără Gorgonzola', option_type: 'exclude', extra_price: 0, option_name_en: 'No Gorgonzola' },
+            { menu_item_id: id, option_name: 'Fără Ardei', option_type: 'exclude', extra_price: 0, option_name_en: 'No Pepper' },
+            { menu_item_id: id, option_name: 'Fără Ceapă', option_type: 'exclude', extra_price: 0, option_name_en: 'No Onion' }
+          ]),
 
-            const customStmt = db.prepare(`INSERT INTO customization_options (menu_item_id, option_name, option_type, extra_price, option_name_en) VALUES (?, ?, ?, ?, ?)`);
-            customizations.forEach(custom => {
-              customStmt.run(custom.menu_item_id, custom.option_name, custom.option_type, custom.extra_price, custom.option_name_en);
-            });
-            customStmt.finalize((customErr) => {
-              if (!customErr) {
-                console.log('Personalizările au fost adăugate cu succes.');
-                resolve();
-              } else {
-                reject(customErr);
-              }
-            });
-        } else {
-            reject(err);
-        }
-    });
+          // Deserturi - Papanasi (ID 124)
+          { menu_item_id: 124, option_name: 'Topping de Ciocolată', option_type: 'option', extra_price: 0, option_name_en: 'Chocolate Topping' },
+          { menu_item_id: 124, option_name: 'Topping de Afine', option_type: 'option', extra_price: 0, option_name_en: 'Blueberry Topping' },
+          { menu_item_id: 124, option_name: 'Topping de Vișine', option_type: 'option', extra_price: 0, option_name_en: 'Sour Cherry Topping' },
+          { menu_item_id: 124, option_name: 'Topping Fructe de Pădure', option_type: 'option', extra_price: 0, option_name_en: 'Forest Fruit Topping' },
+
+          // Cafele (IDs 126-141)
+          ...Array.from({ length: 16 }, (_, i) => i + 126).flatMap(id => [
+            { menu_item_id: id, option_name: 'Zahăr alb', option_type: 'topping', extra_price: 0, option_name_en: 'White Sugar' },
+            { menu_item_id: id, option_name: 'Zahăr brun', option_type: 'topping', extra_price: 0.5, option_name_en: 'Brown Sugar' },
+            { menu_item_id: id, option_name: 'Îndulcitor', option_type: 'topping', extra_price: 1, option_name_en: 'Sweetener' },
+          ]),
+          ...[131, 132, 133, 134, 135, 136, 137].flatMap(id => [{ menu_item_id: id, option_name: 'Lapte de Ovăz', option_type: 'topping', extra_price: 3, option_name_en: 'Oat Milk' }]), // Cafele cu lapte
+          ...[132, 142].flatMap(id => [
+            { menu_item_id: id, option_name: 'Aromă Vanilie', option_type: 'option', extra_price: 0, option_name_en: 'Vanilla Flavor' },
+            { menu_item_id: id, option_name: 'Aromă Caramel', option_type: 'option', extra_price: 0, option_name_en: 'Caramel Flavor' },
+            { menu_item_id: id, option_name: 'Aromă Ciocolată', option_type: 'option', extra_price: 0, option_name_en: 'Chocolate Flavor' }
+          ]),
+
+          // Răcoritoare (IDs 149-171)
+          ...[149, 150, 151, 152, 153, 154, 157, 158, 159, 160, 161, 162, 163, 164, 165].flatMap(id => [
+            { menu_item_id: id, option_name: 'Cu gheață', option_type: 'option', extra_price: 0, option_name_en: 'With ice' },
+            { menu_item_id: id, option_name: 'Fără gheață', option_type: 'option', extra_price: 0, option_name_en: 'Without ice' },
+          ]),
+
+          // Limonade (IDs 166-171)
+          ...Array.from({ length: 6 }, (_, i) => i + 166).flatMap(id => [
+            { menu_item_id: id, option_name: 'Cu gheață', option_type: 'option', extra_price: 0, option_name_en: 'With ice' },
+            { menu_item_id: id, option_name: 'Fără gheață', option_type: 'option', extra_price: 0, option_name_en: 'Without ice' },
+            { menu_item_id: id, option_name: 'Cu zahăr', option_type: 'option', extra_price: 0, option_name_en: 'With sugar' },
+            { menu_item_id: id, option_name: 'Fără zahăr', option_type: 'option', extra_price: 0, option_name_en: 'Without sugar' },
+            { menu_item_id: id, option_name: 'Cu miere', option_type: 'option', extra_price: 4, option_name_en: 'With honey' },
+          ]),
+
+          // Fresh-uri (IDs 172-174)
+          ...[172, 173, 174].flatMap(id => [
+            { menu_item_id: id, option_name: 'Cu gheață', option_type: 'option', extra_price: 0, option_name_en: 'With ice' },
+            { menu_item_id: id, option_name: 'Fără gheață', option_type: 'option', extra_price: 0, option_name_en: 'Without ice' },
+          ]),
+        ];
+
+        const customStmt = db.prepare(`INSERT INTO customization_options (menu_item_id, option_name, option_type, extra_price, option_name_en) VALUES (?, ?, ?, ?, ?)`);
+        customizations.forEach(custom => {
+          customStmt.run(custom.menu_item_id, custom.option_name, custom.option_type, custom.extra_price, custom.option_name_en);
+        });
+        customStmt.finalize((customErr) => {
+          if (!customErr) {
+            console.log('Personalizările au fost adăugate cu succes.');
+            resolve();
+          } else {
+            reject(customErr);
+          }
+        });
+      } else {
+        reject(err);
+      }
+    });
   });
 }
 
@@ -6211,7 +6294,7 @@ function initializePredefinedMessages(db) {
 async function initializeDailyMenu(db) {
   return new Promise((resolve, reject) => {
     const today = new Date().toISOString().slice(0, 10);
-    
+
     // Verifică dacă există deja un meniu pentru ziua curentă
     db.get("SELECT * FROM daily_menu WHERE date = ?", [today], (err, existingMenu) => {
       if (err) {
@@ -6283,30 +6366,30 @@ async function initializeDailyMenu(db) {
 
     // 🚀 OPTIMIZARE PERFORMANȚĂ: Adăugare indexuri SQL pentru viteza crescută
     console.log('🔍 Creez indexuri pentru optimizarea performanței...');
-    
+
     // Indexuri pentru tabela orders (cea mai critică pentru performanță)
     db.run(`CREATE INDEX IF NOT EXISTS idx_orders_status ON orders (status)`, (err) => {
       if (err) console.error('Eroare la crearea indexului orders_status:', err.message);
       else console.log('✅ Index orders_status creat');
     });
-    
+
     db.run(`CREATE INDEX IF NOT EXISTS idx_orders_table_number ON orders (table_number)`, (err) => {
       if (err) console.error('Eroare la crearea indexului orders_table_number:', err.message);
       else console.log('✅ Index orders_table_number creat');
     });
-    
+
     db.run(`CREATE INDEX IF NOT EXISTS idx_orders_timestamp ON orders (timestamp)`, (err) => {
       if (err) console.error('Eroare la crearea indexului orders_timestamp:', err.message);
       else console.log('✅ Index orders_timestamp creat');
     });
-    
+
     db.run(`CREATE INDEX IF NOT EXISTS idx_orders_is_paid ON orders (is_paid)`, (err) => {
       if (err) console.error('Eroare la crearea indexului orders_is_paid:', err.message);
       else console.log('✅ Index orders_is_paid creat');
     });
 
     // ==================== INDEXURI DELIVERY & DRIVE-THRU (05 Dec 2025) ====================
-    
+
     console.log('🚚 [INDEX] Creez indexuri pentru Delivery & Drive-Thru...');
 
     // Indexuri orders - delivery & drive-thru
@@ -6341,7 +6424,7 @@ async function initializeDailyMenu(db) {
     });
 
     // ==================== INDEXURI OPTIMIZARE RAPOARTE (21 Dec 2025) ====================
-    
+
     console.log('📊 [INDEX] Creez indexuri compuse pentru optimizare rapoarte...');
 
     // Index compus pentru query-urile de rapoarte (status + timestamp)
@@ -6388,7 +6471,7 @@ async function initializeDailyMenu(db) {
       if (err) console.error('Eroare idx_delivery_proofs_order:', err.message);
       else console.log('✅ Index idx_delivery_proofs_order creat');
     });
-    
+
     db.run(`CREATE INDEX IF NOT EXISTS idx_delivery_proofs_courier ON delivery_proofs(courier_id)`, (err) => {
       if (err) console.error('Eroare idx_delivery_proofs_courier:', err.message);
       else console.log('✅ Index idx_delivery_proofs_courier creat');
@@ -6433,73 +6516,73 @@ async function initializeDailyMenu(db) {
     });
 
     console.log('✅ [INDEX] Toate indexurile Delivery & Drive-Thru create!');
-    
+
     // Indexuri pentru tabela menu (pentru căutări rapide)
     db.run(`CREATE INDEX IF NOT EXISTS idx_menu_category ON menu (category)`, (err) => {
       if (err) console.error('Eroare la crearea indexului menu_category:', err.message);
       else console.log('✅ Index menu_category creat');
     });
-    
+
     db.run(`CREATE INDEX IF NOT EXISTS idx_menu_is_vegetarian ON menu (is_vegetarian)`, (err) => {
       if (err) console.error('Eroare la crearea indexului menu_is_vegetarian:', err.message);
       else console.log('✅ Index menu_is_vegetarian creat');
     });
-    
+
     // Indexuri pentru tabela notifications (pentru notificări rapide)
     db.run(`CREATE INDEX IF NOT EXISTS idx_notifications_status ON notifications (status)`, (err) => {
       if (err) console.error('Eroare la crearea indexului notifications_status:', err.message);
       else console.log('✅ Index notifications_status creat');
     });
-    
+
     db.run(`CREATE INDEX IF NOT EXISTS idx_notifications_created_at ON notifications (created_at)`, (err) => {
       if (err) console.error('Eroare la crearea indexului notifications_created_at:', err.message);
       else console.log('✅ Index notifications_created_at creat');
     });
-    
+
     // Indexuri pentru tabela feedback (pentru rapoarte rapide)
     db.run(`CREATE INDEX IF NOT EXISTS idx_feedback_order_id ON feedback (order_id)`, (err) => {
       if (err) console.error('Eroare la crearea indexului feedback_order_id:', err.message);
       else console.log('✅ Index feedback_order_id creat');
     });
-    
+
     db.run(`CREATE INDEX IF NOT EXISTS idx_feedback_timestamp ON feedback (timestamp)`, (err) => {
       if (err) console.error('Eroare la crearea indexului feedback_timestamp:', err.message);
       else console.log('✅ Index feedback_timestamp creat');
     });
-    
+
     // Indexuri pentru tabela ingredients (pentru gestionarea stocurilor)
     db.run(`CREATE INDEX IF NOT EXISTS idx_ingredients_category ON ingredients (category)`, (err) => {
       if (err) console.error('Eroare la crearea indexului ingredients_category:', err.message);
       else console.log('✅ Index ingredients_category creat');
     });
-    
+
     db.run(`CREATE INDEX IF NOT EXISTS idx_ingredients_is_available ON ingredients (is_available)`, (err) => {
       if (err) console.error('Eroare la crearea indexului ingredients_is_available:', err.message);
       else console.log('✅ Index ingredients_is_available creat');
     });
-    
+
     // Indexuri pentru tabela recipes (pentru gestionarea rețetelor)
     db.run(`CREATE INDEX IF NOT EXISTS idx_recipes_product_id ON recipes (product_id)`, (err) => {
       if (err) console.error('Eroare la crearea indexului recipes_product_id:', err.message);
       else console.log('✅ Index recipes_product_id creat');
     });
-    
+
     db.run(`CREATE INDEX IF NOT EXISTS idx_recipes_ingredient_id ON recipes (ingredient_id)`, (err) => {
       if (err) console.error('Eroare la crearea indexului recipes_ingredient_id:', err.message);
       else console.log('✅ Index recipes_ingredient_id creat');
     });
-    
+
     // Indexuri pentru tabela product_stock (pentru gestionarea stocurilor produselor)
     db.run(`CREATE INDEX IF NOT EXISTS idx_product_stock_product_id ON product_stock (product_id)`, (err) => {
       if (err) console.error('Eroare la crearea indexului product_stock_product_id:', err.message);
       else console.log('✅ Index product_stock_product_id creat');
     });
-    
+
     db.run(`CREATE INDEX IF NOT EXISTS idx_product_stock_is_auto_managed ON product_stock (is_auto_managed)`, (err) => {
       if (err) console.error('Eroare la crearea indexului product_stock_is_auto_managed:', err.message);
       else console.log('✅ Index product_stock_is_auto_managed creat');
     });
-    
+
     console.log('🎯 Toate indexurile au fost create cu succes! Performanța bazei de date a fost optimizată.');
   });
 }
@@ -6547,60 +6630,60 @@ function decreaseIngredientStock(ingredientsToDecrease, orderId = null) {
               ? 'SELECT id, name, current_stock, min_stock, unit, location_id FROM ingredients WHERE id = ? AND location_id = ?'
               : 'SELECT id, name, current_stock, min_stock, unit, location_id FROM ingredients WHERE id = ?';
             const params = ing.location_id ? [ing.ingredient_id, ing.location_id] : [ing.ingredient_id];
-            
+
             db.get(query, params, (selectErr, ingredient) => {
-                if (selectErr) {
-                  console.error(`❌ Eroare la verificarea ingredient ${ing.ingredient_id}:`, selectErr);
-                  return rej(selectErr);
-                }
-
-                if (!ingredient) {
-                  console.warn(`⚠️ Ingredientul ID ${ing.ingredient_id} nu există în baza de date`);
-                  console.log(`✅✅ Resolving promise for missing ingredient ${ing.ingredient_id}`);
-                  return res();
-                }
-                
-                console.log(`✅✅ Found ingredient ${ing.ingredient_id}: ${ingredient.name}, Stock: ${ingredient.current_stock}`);
-
-                // Verificăm dacă avem stoc suficient
-                if (ingredient.current_stock < ing.quantity) {
-                  if (ingredient.name === 'Blat de pizza (standard)') {
-                    console.log(`🍕 Stoc insuficient pentru ${ingredient.name}, încerc să produc ${ing.quantity}g...`);
-                    producePizzaDough(ing.quantity)
-                      .then(() => {
-                        console.log(`✅ Blat de pizza produs cu succes: ${ing.quantity}g`);
-                        res();
-                      })
-                      .catch(err => {
-                        console.error('❌ Eroare la producerea blatului:', err);
-                        rej(err);
-                      });
-                    return;
-                  } else {
-                    const error = new Error(
-                      `Stoc insuficient pentru ${ingredient.name}: ` +
-                      `necesar ${ing.quantity} ${ingredient.unit}, ` +
-                      `disponibil ${ingredient.current_stock} ${ingredient.unit}`
-                    );
-                    console.error(`❌ ${error.message}`);
-                    return rej(error);
-                  }
-                }
-
-                // Scădem stocul folosind sistemul FIFO
-                // ETAPA 4: Include location_id în apelul decreaseStockFIFO
-                const locationId = ing.location_id || ingredient.location_id || null;
-                console.log(`🔵🔵 Calling decreaseStockFIFO for ${ingredient.name} (location: ${locationId})...`);
-                decreaseStockFIFO(db, ing.ingredient_id, ing.quantity, orderId, locationId)
-                  .then(() => {
-                    console.log(`✅✅✅ ${ingredient.name}: scăzut ${ing.quantity} ${ingredient.unit} (FIFO, location: ${locationId})`);
-                    res();
-                  })
-                  .catch(err => {
-                    console.error(`❌❌ Eroare la scăderea stocului FIFO pentru ${ingredient.name}:`, err);
-                    rej(err);
-                  });
+              if (selectErr) {
+                console.error(`❌ Eroare la verificarea ingredient ${ing.ingredient_id}:`, selectErr);
+                return rej(selectErr);
               }
+
+              if (!ingredient) {
+                console.warn(`⚠️ Ingredientul ID ${ing.ingredient_id} nu există în baza de date`);
+                console.log(`✅✅ Resolving promise for missing ingredient ${ing.ingredient_id}`);
+                return res();
+              }
+
+              console.log(`✅✅ Found ingredient ${ing.ingredient_id}: ${ingredient.name}, Stock: ${ingredient.current_stock}`);
+
+              // Verificăm dacă avem stoc suficient
+              if (ingredient.current_stock < ing.quantity) {
+                if (ingredient.name === 'Blat de pizza (standard)') {
+                  console.log(`🍕 Stoc insuficient pentru ${ingredient.name}, încerc să produc ${ing.quantity}g...`);
+                  producePizzaDough(ing.quantity)
+                    .then(() => {
+                      console.log(`✅ Blat de pizza produs cu succes: ${ing.quantity}g`);
+                      res();
+                    })
+                    .catch(err => {
+                      console.error('❌ Eroare la producerea blatului:', err);
+                      rej(err);
+                    });
+                  return;
+                } else {
+                  const error = new Error(
+                    `Stoc insuficient pentru ${ingredient.name}: ` +
+                    `necesar ${ing.quantity} ${ingredient.unit}, ` +
+                    `disponibil ${ingredient.current_stock} ${ingredient.unit}`
+                  );
+                  console.error(`❌ ${error.message}`);
+                  return rej(error);
+                }
+              }
+
+              // Scădem stocul folosind sistemul FIFO
+              // ETAPA 4: Include location_id în apelul decreaseStockFIFO
+              const locationId = ing.location_id || ingredient.location_id || null;
+              console.log(`🔵🔵 Calling decreaseStockFIFO for ${ingredient.name} (location: ${locationId})...`);
+              decreaseStockFIFO(db, ing.ingredient_id, ing.quantity, orderId, locationId)
+                .then(() => {
+                  console.log(`✅✅✅ ${ingredient.name}: scăzut ${ing.quantity} ${ingredient.unit} (FIFO, location: ${locationId})`);
+                  res();
+                })
+                .catch(err => {
+                  console.error(`❌❌ Eroare la scăderea stocului FIFO pentru ${ingredient.name}:`, err);
+                  rej(err);
+                });
+            }
             );
           }));
         });
@@ -6658,8 +6741,8 @@ function increaseIngredientStock(ingredientsToIncrease) {
         ingredientsToIncrease.forEach(ing => {
           increasePromises.push(new Promise((res, rej) => {
             // Verificăm ingredientul
-            db.get('SELECT id, name, current_stock, unit FROM ingredients WHERE id = ?', 
-              [ing.ingredient_id], 
+            db.get('SELECT id, name, current_stock, unit FROM ingredients WHERE id = ?',
+              [ing.ingredient_id],
               (selectErr, ingredient) => {
                 if (selectErr) {
                   console.error(`❌ Eroare la verificarea ingredient ${ing.ingredient_id}:`, selectErr);
@@ -6678,8 +6761,8 @@ function increaseIngredientStock(ingredientsToIncrease) {
                       last_updated = CURRENT_TIMESTAMP
                   WHERE id = ?
                 `;
-                
-                db.run(sql, [ing.quantity, ing.ingredient_id], function(updateErr) {
+
+                db.run(sql, [ing.quantity, ing.ingredient_id], function (updateErr) {
                   if (updateErr) {
                     console.error(`❌ Eroare la creșterea stocului pentru ingredient ${ing.ingredient_id}:`, updateErr);
                     return rej(updateErr);
@@ -6733,14 +6816,14 @@ function producePizzaDough(quantityNeeded) {
   return dbPromise.then(db => {
     return new Promise((resolve, reject) => {
       console.log(`🍕 Produc blat de pizza: ${quantityNeeded}g`);
-      
+
       // Rețeta pentru 250g blat de pizza:
       // - Făină: 150g
       // - Apă: 90g  
       // - Drojdie proaspătă: 3g
       // - Sare: 3g
       // - Ulei de măsline: 5g
-      
+
       const doughRecipe = [
         { name: 'Făină', needed: (quantityNeeded * 150) / 250 }, // 150g pentru 250g blat
         { name: 'Apă', needed: (quantityNeeded * 90) / 250 },    // 90g pentru 250g blat
@@ -6748,32 +6831,32 @@ function producePizzaDough(quantityNeeded) {
         { name: 'Sare', needed: (quantityNeeded * 3) / 250 },    // 3g pentru 250g blat
         { name: 'Ulei de măsline', needed: (quantityNeeded * 5) / 250 } // 5g pentru 250g blat
       ];
-      
+
       // Începem tranzacția
       db.run('BEGIN TRANSACTION', (err) => {
         if (err) {
           console.error('❌ Eroare la începerea tranzacției pentru producția de blat:', err);
           return reject(err);
         }
-        
+
         let productionPromises = [];
-        
+
         // Verificăm și scădem ingredientele necesare
         doughRecipe.forEach(ingredient => {
           productionPromises.push(new Promise((res, rej) => {
-            db.get('SELECT id, name, current_stock, unit FROM ingredients WHERE name = ?', 
-              [ingredient.name], 
+            db.get('SELECT id, name, current_stock, unit FROM ingredients WHERE name = ?',
+              [ingredient.name],
               (selectErr, ing) => {
                 if (selectErr) {
                   console.error(`❌ Eroare la verificarea ingredient ${ingredient.name}:`, selectErr);
                   return rej(selectErr);
                 }
-                
+
                 if (!ing) {
                   console.error(`❌ Ingredientul ${ingredient.name} nu există în baza de date`);
                   return rej(new Error(`Ingredientul ${ingredient.name} nu există`));
                 }
-                
+
                 // Verificăm dacă avem stoc suficient
                 if (ing.current_stock < ingredient.needed) {
                   const error = new Error(
@@ -6784,7 +6867,7 @@ function producePizzaDough(quantityNeeded) {
                   console.error(`❌ ${error.message}`);
                   return rej(error);
                 }
-                
+
                 // Scădem din stoc
                 const newStock = ing.current_stock - ingredient.needed;
                 db.run('UPDATE ingredients SET current_stock = ?, last_updated = CURRENT_TIMESTAMP WHERE id = ?',
@@ -6794,7 +6877,7 @@ function producePizzaDough(quantityNeeded) {
                       console.error(`❌ Eroare la actualizarea stocului pentru ${ingredient.name}:`, updateErr);
                       return rej(updateErr);
                     }
-                    
+
                     console.log(`✅ ${ingredient.name}: ${ing.current_stock} → ${newStock.toFixed(2)} ${ing.unit} (scăzut ${ingredient.needed.toFixed(2)} ${ing.unit})`);
                     res();
                   }
@@ -6803,24 +6886,24 @@ function producePizzaDough(quantityNeeded) {
             );
           }));
         });
-        
+
         // Așteptăm ca toate ingredientele să fie procesate
         Promise.all(productionPromises)
           .then(() => {
             // Adăugăm blatul produs în stoc
-            db.get('SELECT id, current_stock FROM ingredients WHERE name = ?', 
-              ['Blat de pizza (standard)'], 
+            db.get('SELECT id, current_stock FROM ingredients WHERE name = ?',
+              ['Blat de pizza (standard)'],
               (selectErr, dough) => {
                 if (selectErr) {
                   console.error('❌ Eroare la verificarea stocului de blat:', selectErr);
                   return reject(selectErr);
                 }
-                
+
                 if (!dough) {
                   console.error('❌ Ingredientul "Blat de pizza (standard)" nu există');
                   return reject(new Error('Blat de pizza (standard) nu există'));
                 }
-                
+
                 const newDoughStock = dough.current_stock + quantityNeeded;
                 db.run('UPDATE ingredients SET current_stock = ?, last_updated = CURRENT_TIMESTAMP WHERE id = ?',
                   [newDoughStock, dough.id],
@@ -6829,9 +6912,9 @@ function producePizzaDough(quantityNeeded) {
                       console.error('❌ Eroare la actualizarea stocului de blat:', updateErr);
                       return reject(updateErr);
                     }
-                    
+
                     console.log(`✅ Blat de pizza (standard): ${dough.current_stock} → ${newDoughStock} g (produs ${quantityNeeded} g)`);
-                    
+
                     // COMMIT tranzacția
                     db.run('COMMIT', (commitErr) => {
                       if (commitErr) {
@@ -6865,50 +6948,50 @@ async function getActiveHappyHourSettings() {
     const now = new Date();
     const currentTime = now.toTimeString().slice(0, 5); // HH:MM format
     const currentDay = now.getDay(); // 0 = Sunday, 1 = Monday, etc.
-    
+
     // Obține toate Happy Hour-urile active
     const query = `SELECT * FROM happy_hour_settings WHERE is_active = 1`;
-    
+
     db.all(query, [], (err, rows) => {
       if (err) {
         reject(err);
       } else {
         const activeSettings = [];
-        
+
         for (const setting of rows || []) {
           // Verifică intervalul orar
           if (currentTime >= setting.start_time && currentTime <= setting.end_time) {
             // Verifică zilele
             let daysArray = setting.days_of_week;
-            
+
             // Parsează days_of_week
             if (typeof daysArray === 'string' && daysArray.startsWith('[')) {
-              try { 
-                daysArray = JSON.parse(daysArray); 
-              } catch(e) { 
-                daysArray = [daysArray]; 
+              try {
+                daysArray = JSON.parse(daysArray);
+              } catch (e) {
+                daysArray = [daysArray];
               }
             } else if (typeof daysArray === 'string') {
               daysArray = [daysArray.trim()];
             }
-            
+
             // Verifică dacă ziua curentă este în lista de zile
             const dayMappings = {
-              '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 0, 
+              '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 0,
               'luni': 1, 'marti': 2, 'miercuri': 3, 'joi': 4, 'vineri': 5, 'sambata': 6, 'duminica': 0
             };
-            
+
             const isRelevantDay = daysArray.includes('all') || daysArray.some(day => {
               const mappedDay = dayMappings[String(day).toLowerCase().trim()];
               return mappedDay === currentDay;
             });
-            
+
             if (isRelevantDay) {
               activeSettings.push(setting);
             }
           }
         }
-        
+
         resolve(activeSettings);
       }
     });
@@ -6919,11 +7002,11 @@ async function applyHappyHourDiscount(orderItems, happyHourSettings) {
   const db = await dbPromise;
   const discountedItems = [];
   let totalDiscount = 0;
-  
+
   for (const item of orderItems) {
     let finalPrice = item.finalPrice;
     let itemDiscount = 0;
-    
+
     for (const setting of happyHourSettings) {
       // Verifică dacă produsul se aplică la Happy Hour
       if (isProductApplicable(item, setting)) {
@@ -6932,13 +7015,13 @@ async function applyHappyHourDiscount(orderItems, happyHourSettings) {
         } else if (setting.discount_fixed > 0) {
           itemDiscount = Math.min(setting.discount_fixed, item.finalPrice);
         }
-        
+
         finalPrice = Math.max(0, item.finalPrice - itemDiscount);
         totalDiscount += itemDiscount;
         break; // Aplică doar primul Happy Hour găsit
       }
     }
-    
+
     discountedItems.push({
       ...item,
       originalPrice: item.finalPrice,
@@ -6946,7 +7029,7 @@ async function applyHappyHourDiscount(orderItems, happyHourSettings) {
       discount: itemDiscount
     });
   }
-  
+
   return { discountedItems, totalDiscount };
 }
 
@@ -6958,7 +7041,7 @@ function isProductApplicable(item, setting) {
       return true;
     }
   }
-  
+
   // Verifică produse specifice
   if (setting.applicable_products) {
     const products = JSON.parse(setting.applicable_products);
@@ -6966,7 +7049,7 @@ function isProductApplicable(item, setting) {
       return true;
     }
   }
-  
+
   return false;
 }
 
@@ -6976,7 +7059,7 @@ async function recordHappyHourUsage(orderId, happyHourId, originalTotal, discoun
     db.run(
       'INSERT INTO happy_hour_usage (order_id, happy_hour_id, original_total, discount_amount, final_total) VALUES (?, ?, ?, ?, ?)',
       [orderId, happyHourId, originalTotal, discountAmount, finalTotal],
-      function(err) {
+      function (err) {
         if (err) {
           reject(err);
         } else {
@@ -6994,7 +7077,7 @@ async function initializeVipLevels() {
     // Verifică dacă nivelurile VIP există deja
     db.get('SELECT COUNT(*) as count FROM vip_levels', (err, row) => {
       if (err) return reject(err);
-      
+
       if (row.count === 0) {
         // Inserează nivelurile VIP predefinite
         const vipLevels = [
@@ -7004,20 +7087,20 @@ async function initializeVipLevels() {
           { name: 'Platinum', min_points: 3000, min_spent: 3000, min_visits: 30, benefits: 'Reducere 15% + prioritate la rezervări', color: '#E5E4E2' },
           { name: 'Diamond', min_points: 5000, min_spent: 5000, min_visits: 50, benefits: 'Reducere 20% + servicii VIP exclusive', color: '#B9F2FF' }
         ];
-        
+
         const insertPromises = vipLevels.map(level => {
           return new Promise((resolveInsert, rejectInsert) => {
             db.run(
               'INSERT INTO vip_levels (level_name, min_points, min_spent, min_visits, benefits, color) VALUES (?, ?, ?, ?, ?, ?)',
               [level.name, level.min_points, level.min_spent, level.min_visits, level.benefits, level.color],
-              function(err) {
+              function (err) {
                 if (err) rejectInsert(err);
                 else resolveInsert(this.lastID);
               }
             );
           });
         });
-        
+
         Promise.all(insertPromises)
           .then(() => {
             console.log('✅ Nivelurile VIP au fost inițializate cu succes');
@@ -7038,16 +7121,16 @@ async function calculateVipLevel(clientToken) {
     // Obține datele clientului
     db.get('SELECT * FROM loyalty_points WHERE client_token = ?', [clientToken], (err, client) => {
       if (err) return reject(err);
-      
+
       if (!client) {
         // Creează clientul dacă nu există
-        db.run('INSERT INTO loyalty_points (client_token) VALUES (?)', [clientToken], function(err) {
+        db.run('INSERT INTO loyalty_points (client_token) VALUES (?)', [clientToken], function (err) {
           if (err) return reject(err);
           resolve('Bronze');
         });
         return;
       }
-      
+
       // Găsește nivelul VIP corespunzător
       db.get(`
         SELECT level_name FROM vip_levels 
@@ -7056,12 +7139,12 @@ async function calculateVipLevel(clientToken) {
         LIMIT 1
       `, [client.total_points, client.total_spent, client.visit_count], (err, level) => {
         if (err) return reject(err);
-        
+
         const newLevel = level ? level.level_name : 'Bronze';
-        
+
         // Actualizează nivelul VIP dacă s-a schimbat
         if (client.vip_level !== newLevel) {
-          db.run('UPDATE loyalty_points SET vip_level = ?, updated_at = CURRENT_TIMESTAMP WHERE client_token = ?', 
+          db.run('UPDATE loyalty_points SET vip_level = ?, updated_at = CURRENT_TIMESTAMP WHERE client_token = ?',
             [newLevel, clientToken], (err) => {
               if (err) return reject(err);
               console.log(`🎖️ Client ${clientToken} promovat la nivelul ${newLevel}`);
@@ -7080,10 +7163,10 @@ async function addLoyaltyPoints(clientToken, orderId, orderAmount, pointsMultipl
   return new Promise((resolve, reject) => {
     // Calculează punctele (1 punct per RON, cu multiplicator)
     const pointsEarned = Math.floor(orderAmount * pointsMultiplier);
-    
+
     db.run('BEGIN TRANSACTION', (err) => {
       if (err) return reject(err);
-      
+
       // Actualizează sau creează înregistrarea clientului
       db.run(`
         INSERT INTO loyalty_points (client_token, total_points, total_spent, visit_count, last_visit)
@@ -7094,12 +7177,12 @@ async function addLoyaltyPoints(clientToken, orderId, orderAmount, pointsMultipl
           visit_count = visit_count + 1,
           last_visit = CURRENT_TIMESTAMP,
           updated_at = CURRENT_TIMESTAMP
-      `, [clientToken, pointsEarned, orderAmount, pointsEarned, orderAmount], function(err) {
+      `, [clientToken, pointsEarned, orderAmount, pointsEarned, orderAmount], function (err) {
         if (err) {
           db.run('ROLLBACK', () => reject(err));
           return;
         }
-        
+
         // Înregistrează în istoricul punctelor
         db.run(`
           INSERT INTO points_history (client_token, order_id, points_earned, action)
@@ -7109,7 +7192,7 @@ async function addLoyaltyPoints(clientToken, orderId, orderAmount, pointsMultipl
             db.run('ROLLBACK', () => reject(err));
             return;
           }
-          
+
           // Calculează și actualizează nivelul VIP
           calculateVipLevel(clientToken).then((vipLevel) => {
             db.run('COMMIT', (err) => {
@@ -7132,12 +7215,12 @@ async function getAvailableRewards(clientToken) {
     // Obține nivelul VIP și punctele clientului
     db.get('SELECT vip_level, total_points FROM loyalty_points WHERE client_token = ?', [clientToken], (err, client) => {
       if (err) return reject(err);
-      
+
       if (!client) {
         resolve([]);
         return;
       }
-      
+
       // Găsește recompensele disponibile
       db.all(`
         SELECT r.*, vl.level_name as vip_level_name, vl.color as vip_color
@@ -7160,25 +7243,25 @@ async function useReward(clientToken, rewardId, orderId) {
   return new Promise((resolve, reject) => {
     db.run('BEGIN TRANSACTION', (err) => {
       if (err) return reject(err);
-      
+
       // Obține detaliile recompensei și clientului
       db.get('SELECT * FROM rewards WHERE id = ? AND is_active = 1', [rewardId], (err, reward) => {
         if (err || !reward) {
           db.run('ROLLBACK', () => reject(new Error('Recompensa nu este disponibilă')));
           return;
         }
-        
+
         db.get('SELECT * FROM loyalty_points WHERE client_token = ?', [clientToken], (err, client) => {
           if (err || !client) {
             db.run('ROLLBACK', () => reject(new Error('Clientul nu este găsit')));
             return;
           }
-          
+
           if (client.total_points < reward.points_required) {
             db.run('ROLLBACK', () => reject(new Error('Puncte insuficiente')));
             return;
           }
-          
+
           // Calculează discount-ul
           let discountAmount = 0;
           if (reward.discount_percentage > 0) {
@@ -7187,7 +7270,7 @@ async function useReward(clientToken, rewardId, orderId) {
           } else if (reward.discount_fixed > 0) {
             discountAmount = reward.discount_fixed;
           }
-          
+
           // Actualizează punctele clientului
           db.run(`
             UPDATE loyalty_points 
@@ -7198,7 +7281,7 @@ async function useReward(clientToken, rewardId, orderId) {
               db.run('ROLLBACK', () => reject(err));
               return;
             }
-            
+
             // Înregistrează utilizarea recompensei
             db.run(`
               INSERT INTO reward_usage (client_token, reward_id, order_id, points_used, discount_applied)
@@ -7208,7 +7291,7 @@ async function useReward(clientToken, rewardId, orderId) {
                 db.run('ROLLBACK', () => reject(err));
                 return;
               }
-              
+
               // Înregistrează în istoricul punctelor
               db.run(`
                 INSERT INTO points_history (client_token, order_id, points_used, action)
@@ -7218,7 +7301,7 @@ async function useReward(clientToken, rewardId, orderId) {
                   db.run('ROLLBACK', () => reject(err));
                   return;
                 }
-                
+
                 db.run('COMMIT', (err) => {
                   if (err) return reject(err);
                   console.log(`🎁 Client ${clientToken} a folosit recompensa "${reward.name}" (${reward.points_required} puncte)`);
@@ -7241,7 +7324,7 @@ async function initializeRolesAndPermissions() {
     // Verifică dacă rolurile există deja
     db.get('SELECT COUNT(*) as count FROM user_roles', (err, row) => {
       if (err) return reject(err);
-      
+
       if (row.count === 0) {
         // Inserează rolurile predefinite
         const roles = [
@@ -7256,20 +7339,20 @@ async function initializeRolesAndPermissions() {
           { name: 'Courier', description: 'Curier - App mobil livrare', is_system: 0 },
           { name: 'Drive-Thru Operator', description: 'Operator drive-thru', is_system: 0 }
         ];
-        
+
         const insertRolePromises = roles.map(role => {
           return new Promise((resolveRole, rejectRole) => {
             db.run(
               'INSERT INTO user_roles (role_name, role_description, is_system_role) VALUES (?, ?, ?)',
               [role.name, role.description, role.is_system],
-              function(err) {
+              function (err) {
                 if (err) rejectRole(err);
                 else resolveRole(this.lastID);
               }
             );
           });
         });
-        
+
         Promise.all(insertRolePromises)
           .then((roleIds) => {
             // Inserează permisiunile predefinite
@@ -7280,42 +7363,42 @@ async function initializeRolesAndPermissions() {
               { name: 'orders.update', description: 'Modificare comenzi', module: 'orders', action: 'update' },
               { name: 'orders.delete', description: 'Ștergere comenzi', module: 'orders', action: 'delete' },
               { name: 'orders.complete', description: 'Finalizare comenzi', module: 'orders', action: 'complete' },
-              
+
               // Modulul Menu
               { name: 'menu.view', description: 'Vizualizare meniu', module: 'menu', action: 'view' },
               { name: 'menu.create', description: 'Adăugare produse', module: 'menu', action: 'create' },
               { name: 'menu.update', description: 'Modificare produse', module: 'menu', action: 'update' },
               { name: 'menu.delete', description: 'Ștergere produse', module: 'menu', action: 'delete' },
-              
+
               // Modulul Inventory
               { name: 'inventory.view', description: 'Vizualizare stocuri', module: 'inventory', action: 'view' },
               { name: 'inventory.update', description: 'Actualizare stocuri', module: 'inventory', action: 'update' },
               { name: 'inventory.nir', description: 'Gestionare NIR', module: 'inventory', action: 'nir' },
-              
+
               // Modulul Reports
               { name: 'reports.view', description: 'Vizualizare rapoarte', module: 'reports', action: 'view' },
               { name: 'reports.export', description: 'Export rapoarte', module: 'reports', action: 'export' },
               { name: 'reports.financial', description: 'Rapoarte financiare', module: 'reports', action: 'financial' },
-              
+
               // Modulul Users
               { name: 'users.view', description: 'Vizualizare utilizatori', module: 'users', action: 'view' },
               { name: 'users.create', description: 'Creare utilizatori', module: 'users', action: 'create' },
               { name: 'users.update', description: 'Modificare utilizatori', module: 'users', action: 'update' },
               { name: 'users.delete', description: 'Ștergere utilizatori', module: 'users', action: 'delete' },
               { name: 'users.roles', description: 'Gestionare roluri', module: 'users', action: 'roles' },
-              
+
               // Modulul Settings
               { name: 'settings.view', description: 'Vizualizare setări', module: 'settings', action: 'view' },
               { name: 'settings.update', description: 'Modificare setări', module: 'settings', action: 'update' },
-              
+
               // Modulul Loyalty
               { name: 'loyalty.view', description: 'Vizualizare fidelizare', module: 'loyalty', action: 'view' },
               { name: 'loyalty.manage', description: 'Gestionare fidelizare', module: 'loyalty', action: 'manage' },
-              
+
               // Modulul Marketing
               { name: 'marketing.view', description: 'Vizualizare marketing', module: 'marketing', action: 'view' },
               { name: 'marketing.manage', description: 'Gestionare marketing', module: 'marketing', action: 'manage' },
-              
+
               // === MODULUL DELIVERY & DRIVE-THRU (05 Dec 2025) ===
               { name: 'delivery.view', description: 'Vizualizare comenzi delivery', module: 'delivery', action: 'view' },
               { name: 'delivery.create', description: 'Creare comenzi delivery (telefonic)', module: 'delivery', action: 'create' },
@@ -7332,67 +7415,67 @@ async function initializeRolesAndPermissions() {
               { name: 'drive_thru.complete', description: 'Finalizare comenzi drive-thru', module: 'drive_thru', action: 'complete' },
               { name: 'reports.delivery', description: 'Rapoarte delivery & drive-thru', module: 'reports', action: 'delivery' }
             ];
-            
+
             const insertPermissionPromises = permissions.map(permission => {
               return new Promise((resolvePerm, rejectPerm) => {
                 db.run(
                   'INSERT INTO permissions (permission_name, permission_description, module, action) VALUES (?, ?, ?, ?)',
                   [permission.name, permission.description, permission.module, permission.action],
-                  function(err) {
+                  function (err) {
                     if (err) rejectPerm(err);
                     else resolvePerm(this.lastID);
                   }
                 );
               });
             });
-            
+
             Promise.all(insertPermissionPromises)
               .then((permissionIds) => {
                 // Asociază permisiunile cu rolurile
                 const rolePermissionMappings = [
                   // Super Admin - toate permisiunile
                   ...permissionIds.map(permId => ({ roleId: roleIds[0], permissionId: permId })),
-                  
+
                   // Manager - majoritatea permisiunilor (fără users.delete și settings.update)
                   ...permissionIds.filter((_, index) => ![13, 19].includes(index)).map(permId => ({ roleId: roleIds[1], permissionId: permId })),
-                  
+
                   // Chef - orders, menu, inventory
-                  ...permissionIds.filter((_, index) => [0,1,2,3,4,5,6,7,8,9,10,11].includes(index)).map(permId => ({ roleId: roleIds[2], permissionId: permId })),
-                  
+                  ...permissionIds.filter((_, index) => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].includes(index)).map(permId => ({ roleId: roleIds[2], permissionId: permId })),
+
                   // Waiter - orders, menu.view
-                  ...permissionIds.filter((_, index) => [0,1,2,3,4,5].includes(index)).map(permId => ({ roleId: roleIds[3], permissionId: permId })),
-                  
+                  ...permissionIds.filter((_, index) => [0, 1, 2, 3, 4, 5].includes(index)).map(permId => ({ roleId: roleIds[3], permissionId: permId })),
+
                   // Cashier - orders.view, orders.complete, reports.view
-                  ...permissionIds.filter((_, index) => [0,4,12].includes(index)).map(permId => ({ roleId: roleIds[4], permissionId: permId })),
-                  
+                  ...permissionIds.filter((_, index) => [0, 4, 12].includes(index)).map(permId => ({ roleId: roleIds[4], permissionId: permId })),
+
                   // Viewer - doar vizualizare
-                  ...permissionIds.filter((_, index) => [0,5,9,12,16,20,22].includes(index)).map(permId => ({ roleId: roleIds[5], permissionId: permId })),
-                  
+                  ...permissionIds.filter((_, index) => [0, 5, 9, 12, 16, 20, 22].includes(index)).map(permId => ({ roleId: roleIds[5], permissionId: permId })),
+
                   // === ROLURI DELIVERY & DRIVE-THRU (05 Dec 2025) ===
                   // Dispatcher (roleIds[6]) - delivery.*, couriers.*, reports.delivery
                   // Permisiuni: 24-30, 35 (delivery.view, delivery.dispatch, delivery.reassign, couriers.view, couriers.track, reports.delivery)
                   ...permissionIds.filter((_, index) => [24, 28, 29, 31, 33, 38].includes(index)).map(permId => ({ roleId: roleIds[6], permissionId: permId })),
-                  
+
                   // Courier (roleIds[7]) - doar delivery.view (pentru comenzile sale)
                   ...permissionIds.filter((_, index) => [24].includes(index)).map(permId => ({ roleId: roleIds[7], permissionId: permId })),
-                  
+
                   // Drive-Thru Operator (roleIds[8]) - drive_thru.*
                   ...permissionIds.filter((_, index) => [34, 35, 36].includes(index)).map(permId => ({ roleId: roleIds[8], permissionId: permId }))
                 ];
-                
+
                 const insertRolePermPromises = rolePermissionMappings.map(mapping => {
                   return new Promise((resolveRP, rejectRP) => {
                     db.run(
                       'INSERT INTO role_permissions (role_id, permission_id) VALUES (?, ?)',
                       [mapping.roleId, mapping.permissionId],
-                      function(err) {
+                      function (err) {
                         if (err) rejectRP(err);
                         else resolveRP(this.lastID);
                       }
                     );
                   });
                 });
-                
+
                 Promise.all(insertRolePermPromises)
                   .then(() => {
                     console.log('✅ Rolurile și permisiunile au fost inițializate cu succes');
@@ -7449,12 +7532,12 @@ async function createUser(username, email, password, roleId) {
   // ✅ SECURITATE: Hash parolă cu bcrypt înainte de salvare
   const bcrypt = require('bcrypt');
   const password_hash = await bcrypt.hash(password, 10);
-  
+
   return new Promise((resolve, reject) => {
     db.run(
       'INSERT INTO users (username, email, password_hash, role_id) VALUES (?, ?, ?, ?)',
       [username, email, password_hash, roleId],
-      function(err) {
+      function (err) {
         if (err) return reject(err);
         resolve(this.lastID);
       }
@@ -7483,7 +7566,7 @@ async function createSession(userId, sessionToken, expiresAt) {
     db.run(
       'INSERT INTO user_sessions (user_id, session_token, expires_at) VALUES (?, ?, ?)',
       [userId, sessionToken, expiresAt],
-      function(err) {
+      function (err) {
         if (err) return reject(err);
         resolve(this.lastID);
       }
@@ -7513,7 +7596,7 @@ async function logAuditEvent(userId, action, resourceType, resourceId, oldValues
     db.run(`
       INSERT INTO audit_log (user_id, action, resource_type, resource_id, old_values, new_values, ip_address, user_agent)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    `, [userId, action, resourceType, resourceId, oldValues, newValues, ipAddress, userAgent], function(err) {
+    `, [userId, action, resourceType, resourceId, oldValues, newValues, ipAddress, userAgent], function (err) {
       if (err) return reject(err);
       resolve(this.lastID);
     });
@@ -7528,7 +7611,7 @@ async function setMfaSecret(userId, secret) {
     db.run(
       'UPDATE users SET mfa_secret = ? WHERE id = ?',
       [secret, userId],
-      function(err) {
+      function (err) {
         if (err) return reject(err);
         resolve(this.changes);
       }
@@ -7542,7 +7625,7 @@ async function enableMfa(userId) {
     db.run(
       'UPDATE users SET mfa_enabled = 1 WHERE id = ?',
       [userId],
-      function(err) {
+      function (err) {
         if (err) return reject(err);
         resolve(this.changes);
       }
@@ -7556,7 +7639,7 @@ async function disableMfa(userId) {
     db.run(
       'UPDATE users SET mfa_enabled = 0, mfa_secret = NULL WHERE id = ?',
       [userId],
-      function(err) {
+      function (err) {
         if (err) return reject(err);
         resolve(this.changes);
       }
@@ -7584,7 +7667,7 @@ async function updateSessionActivity(sessionToken) {
     db.run(
       'UPDATE user_sessions SET last_activity = CURRENT_TIMESTAMP WHERE session_token = ?',
       [sessionToken],
-      function(err) {
+      function (err) {
         if (err) return reject(err);
         resolve(this.changes);
       }
@@ -7600,7 +7683,7 @@ async function initializeReservationSystem() {
     // Verifică dacă mesele există deja
     db.get('SELECT COUNT(*) as count FROM tables', (err, row) => {
       if (err) return reject(err);
-      
+
       if (row.count === 0) {
         // Inserează mesele predefinite
         const tables = [
@@ -7615,20 +7698,20 @@ async function initializeReservationSystem() {
           { number: '9', capacity: 6, location: 'Terasă' },
           { number: '10', capacity: 10, location: 'Sala privată' }
         ];
-        
+
         const insertTablePromises = tables.map(table => {
           return new Promise((resolveTable, rejectTable) => {
             db.run(
               'INSERT INTO tables (table_number, capacity, location) VALUES (?, ?, ?)',
               [table.number, table.capacity, table.location],
-              function(err) {
+              function (err) {
                 if (err) rejectTable(err);
                 else resolveTable(this.lastID);
               }
             );
           });
         });
-        
+
         Promise.all(insertTablePromises)
           .then(() => {
             // Inserează setările predefinite pentru rezervări
@@ -7642,20 +7725,20 @@ async function initializeReservationSystem() {
               { name: 'auto_confirm_hours', value: '48', description: 'Ore după care rezervarea se confirmă automat' },
               { name: 'cancellation_hours_before', value: '2', description: 'Ore înainte de rezervare pentru anulare gratuită' }
             ];
-            
+
             const insertSettingPromises = settings.map(setting => {
               return new Promise((resolveSetting, rejectSetting) => {
                 db.run(
                   'INSERT INTO reservation_settings (setting_name, setting_value, description) VALUES (?, ?, ?)',
                   [setting.name, setting.value, setting.description],
-                  function(err) {
+                  function (err) {
                     if (err) rejectSetting(err);
                     else resolveSetting(this.lastID);
                   }
                 );
               });
             });
-            
+
             Promise.all(insertSettingPromises)
               .then(() => {
                 console.log('✅ Sistemul de rezervări a fost inițializat cu succes');
@@ -7688,10 +7771,10 @@ async function createReservation(reservationData) {
       locationId,
       tenantId
     } = reservationData;
-    
+
     // Generează cod de confirmare
     const confirmationCode = require('crypto').randomBytes(4).toString('hex').toUpperCase();
-    
+
     db.run(`
       INSERT INTO reservations (
         table_id, customer_name, customer_phone, customer_email,
@@ -7702,11 +7785,11 @@ async function createReservation(reservationData) {
       tableId, customerName, customerPhone, customerEmail,
       reservationDate, reservationTime, durationMinutes, partySize,
       specialRequests, confirmationCode, locationId || null, tenantId || null
-    ], function(err) {
+    ], function (err) {
       if (err) return reject(err);
-      
+
       const reservationId = this.lastID;
-      
+
       // Actualizează disponibilitatea mesei
       updateTableAvailability(tableId, reservationDate, reservationTime, false, reservationId)
         .then(() => resolve({ id: reservationId, confirmationCode }))
@@ -7740,7 +7823,7 @@ async function updateTableAvailability(tableId, date, time, isAvailable, reserva
       INSERT OR REPLACE INTO table_availability 
       (table_id, date, time_slot, is_available, reservation_id)
       VALUES (?, ?, ?, ?, ?)
-    `, [tableId, date, time, isAvailable, reservationId], function(err) {
+    `, [tableId, date, time, isAvailable, reservationId], function (err) {
       if (err) return reject(err);
       resolve(this.lastID);
     });
@@ -7767,7 +7850,7 @@ function calculateRequiredTables(partySize) {
  */
 async function findNearbyAvailableTables(partySize, date, time, requiredTables) {
   const db = await dbPromise;
-  
+
   return new Promise((resolve, reject) => {
     // Obține toate mesele disponibile pentru data și ora specificată
     db.all(`
@@ -7780,15 +7863,15 @@ async function findNearbyAvailableTables(partySize, date, time, requiredTables) 
       ORDER BY t.location, t.table_number ASC
     `, [date, time], (err, allTables) => {
       if (err) return reject(err);
-      
+
       // Filtrează doar mesele disponibile
       const availableTables = allTables.filter(t => t.is_available === 1);
-      
+
       if (availableTables.length < requiredTables) {
         // Nu sunt suficiente mese disponibile
         return resolve([]);
       }
-      
+
       // Strategie 1: Caută mese în aceeași zonă (location)
       const tablesByLocation = {};
       availableTables.forEach(table => {
@@ -7798,7 +7881,7 @@ async function findNearbyAvailableTables(partySize, date, time, requiredTables) 
         }
         tablesByLocation[location].push(table);
       });
-      
+
       // Caută o zonă cu suficiente mese
       for (const location in tablesByLocation) {
         if (tablesByLocation[location].length >= requiredTables) {
@@ -7806,7 +7889,7 @@ async function findNearbyAvailableTables(partySize, date, time, requiredTables) 
           return resolve(tablesByLocation[location].slice(0, requiredTables));
         }
       }
-      
+
       // Strategie 2: Dacă nu găsim în aceeași zonă, caută mese consecutive
       // Sortăm mesele după număr și căutăm secvențe consecutive
       const sortedTables = availableTables.sort((a, b) => {
@@ -7814,7 +7897,7 @@ async function findNearbyAvailableTables(partySize, date, time, requiredTables) 
         const numB = parseInt(b.table_number) || 0;
         return numA - numB;
       });
-      
+
       // Caută o secvență de mese consecutive
       for (let i = 0; i <= sortedTables.length - requiredTables; i++) {
         const sequence = sortedTables.slice(i, i + requiredTables);
@@ -7825,12 +7908,12 @@ async function findNearbyAvailableTables(partySize, date, time, requiredTables) 
           // Considerăm consecutive dacă diferența este <= 2 (permite mese apropiate)
           return currNum - prevNum <= 2;
         });
-        
+
         if (isConsecutive) {
           return resolve(sequence);
         }
       }
-      
+
       // Strategie 3: Dacă nu găsim mese consecutive, returnăm primele N mese disponibile
       return resolve(sortedTables.slice(0, requiredTables));
     });
@@ -7848,18 +7931,18 @@ async function findNearbyAvailableTables(partySize, date, time, requiredTables) 
 async function autoAllocateTablesForReservation(reservationId, partySize, date, time) {
   const requiredTables = calculateRequiredTables(partySize);
   const allocatedTables = await findNearbyAvailableTables(partySize, date, time, requiredTables);
-  
+
   if (allocatedTables.length === 0) {
     throw new Error(`Nu sunt suficiente mese disponibile pentru ${partySize} persoane.`);
   }
-  
+
   // Actualizează disponibilitatea pentru fiecare masă alocată
   const tableIds = [];
   for (const table of allocatedTables) {
     await updateTableAvailability(table.id, date, time, false, reservationId);
     tableIds.push(table.id);
   }
-  
+
   // Dacă sunt mai multe mese, actualizează rezervarea cu prima masă (pentru compatibilitate)
   // și salvăm celelalte mese într-o tabelă de legătură
   if (tableIds.length > 0) {
@@ -7875,7 +7958,7 @@ async function autoAllocateTablesForReservation(reservationId, partySize, date, 
         resolve();
       });
     });
-    
+
     // Salvează celelalte mese într-o tabelă de legătură (dacă există mai mult de o masă)
     if (tableIds.length > 1) {
       // Creează tabela de legătură dacă nu există
@@ -7895,7 +7978,7 @@ async function autoAllocateTablesForReservation(reservationId, partySize, date, 
           resolve();
         });
       });
-      
+
       // Inserează toate mesele (inclusiv prima, pentru consistență)
       for (const tableId of tableIds) {
         await new Promise((resolve, reject) => {
@@ -7910,7 +7993,7 @@ async function autoAllocateTablesForReservation(reservationId, partySize, date, 
       }
     }
   }
-  
+
   return tableIds;
 }
 
@@ -7937,7 +8020,7 @@ async function updateReservationStatus(reservationId, status) {
       UPDATE reservations 
       SET status = ?, updated_at = CURRENT_TIMESTAMP
       WHERE id = ?
-    `, [status, reservationId], function(err) {
+    `, [status, reservationId], function (err) {
       if (err) return reject(err);
       resolve(this.changes);
     });
@@ -7949,7 +8032,7 @@ async function getReservationSettings() {
   return new Promise((resolve, reject) => {
     db.all('SELECT * FROM reservation_settings ORDER BY setting_name', (err, rows) => {
       if (err) return reject(err);
-      
+
       const settings = {};
       rows.forEach(row => {
         settings[row.setting_name] = {
@@ -7971,13 +8054,13 @@ async function updateReservationSettings(settings) {
           UPDATE reservation_settings 
           SET setting_value = ?, updated_at = CURRENT_TIMESTAMP
           WHERE setting_name = ?
-        `, [value, name], function(err) {
+        `, [value, name], function (err) {
           if (err) rejectUpdate(err);
           else resolveUpdate(this.changes);
         });
       });
     });
-    
+
     Promise.all(updatePromises)
       .then(() => resolve())
       .catch(reject);
@@ -7993,7 +8076,7 @@ async function addReservationEvent(reservationId, eventType, payload = {}, creat
         VALUES (?, ?, ?, ?)
       `,
       [reservationId, eventType, JSON.stringify(payload ?? {}), createdBy],
-      function(err) {
+      function (err) {
         if (err) {
           reject(err);
         } else {
@@ -8033,7 +8116,7 @@ async function initializeFiscalSystem() {
     // Verifică dacă configurația fiscală există deja
     db.get('SELECT COUNT(*) as count FROM fiscal_config', (err, row) => {
       if (err) return reject(err);
-      
+
       if (row.count === 0) {
         // Inserează configurația fiscală predefinită
         const fiscalConfig = [
@@ -8054,20 +8137,20 @@ async function initializeFiscalSystem() {
           { name: 'receipt_series', value: 'B', description: 'Seria bonurilor fiscale' },
           { name: 'auto_send_to_anaf', value: 'false', description: 'Trimitere automată la ANAF' }
         ];
-        
+
         const insertConfigPromises = fiscalConfig.map(config => {
           return new Promise((resolveConfig, rejectConfig) => {
             db.run(
               'INSERT INTO fiscal_config (config_name, config_value, description, is_encrypted) VALUES (?, ?, ?, ?)',
               [config.name, config.value, config.description, config.is_encrypted || 0],
-              function(err) {
+              function (err) {
                 if (err) rejectConfig(err);
                 else resolveConfig(this.lastID);
               }
             );
           });
         });
-        
+
         Promise.all(insertConfigPromises)
           .then(() => {
             // Inserează ratele TVA predefinite
@@ -8077,20 +8160,20 @@ async function initializeFiscalSystem() {
               { name: 'TVA Redus Special', percentage: 5, code: 'RS' },
               { name: 'Fără TVA', percentage: 0, code: 'N' }
             ];
-            
+
             const insertVatPromises = vatRates.map(rate => {
               return new Promise((resolveVat, rejectVat) => {
                 db.run(
                   'INSERT INTO vat_rates (rate_name, rate_percentage, rate_code) VALUES (?, ?, ?)',
                   [rate.name, rate.percentage, rate.code],
-                  function(err) {
+                  function (err) {
                     if (err) rejectVat(err);
                     else resolveVat(this.lastID);
                   }
                 );
               });
             });
-            
+
             Promise.all(insertVatPromises)
               .then(() => {
                 console.log('✅ Sistemul fiscal a fost inițializat cu succes');
@@ -8112,7 +8195,7 @@ async function getFiscalConfig() {
   return new Promise((resolve, reject) => {
     db.all('SELECT * FROM fiscal_config ORDER BY config_name', (err, rows) => {
       if (err) return reject(err);
-      
+
       const config = {};
       rows.forEach(row => {
         config[row.config_name] = {
@@ -8135,13 +8218,13 @@ async function updateFiscalConfig(configUpdates) {
           UPDATE fiscal_config 
           SET config_value = ?, updated_at = CURRENT_TIMESTAMP
           WHERE config_name = ?
-        `, [value, name], function(err) {
+        `, [value, name], function (err) {
           if (err) rejectUpdate(err);
           else resolveUpdate(this.changes);
         });
       });
     });
-    
+
     Promise.all(updatePromises)
       .then(() => resolve())
       .catch(reject);
@@ -8167,7 +8250,7 @@ async function createFiscalDocument(documentData) {
       xmlContent,
       pdfPath
     } = documentData;
-    
+
     db.run(`
       INSERT INTO fiscal_documents (
         document_type, document_number, order_id, customer_name, customer_cui, customer_address,
@@ -8178,7 +8261,7 @@ async function createFiscalDocument(documentData) {
       documentType, documentNumber, orderId, customerName, customerCui, customerAddress,
       totalAmount, vatAmount, netAmount, currency, issueDate, dueDate,
       xmlContent, pdfPath
-    ], function(err) {
+    ], function (err) {
       if (err) return reject(err);
       resolve(this.lastID);
     });
@@ -8192,7 +8275,7 @@ async function updateFiscalDocumentStatus(documentId, status, anafResponse = nul
       UPDATE fiscal_documents 
       SET status = ?, anaf_response = ?, updated_at = CURRENT_TIMESTAMP
       WHERE id = ?
-    `, [status, anafResponse, documentId], function(err) {
+    `, [status, anafResponse, documentId], function (err) {
       if (err) return reject(err);
       resolve(this.changes);
     });
@@ -8207,7 +8290,7 @@ async function logAnafTransmission(documentId, transmissionType, requestXml, res
         document_id, transmission_type, request_xml, response_xml, 
         status_code, status_message
       ) VALUES (?, ?, ?, ?, ?, ?)
-    `, [documentId, transmissionType, requestXml, responseXml, statusCode, statusMessage], function(err) {
+    `, [documentId, transmissionType, requestXml, responseXml, statusCode, statusMessage], function (err) {
       if (err) return reject(err);
       resolve(this.lastID);
     });
@@ -8224,14 +8307,14 @@ async function getFiscalDocuments(startDate, endDate, documentType = null) {
       WHERE fd.issue_date BETWEEN ? AND ?
     `;
     let params = [startDate, endDate];
-    
+
     if (documentType) {
       query += ' AND fd.document_type = ?';
       params.push(documentType);
     }
-    
+
     query += ' ORDER BY fd.issue_date DESC, fd.created_at DESC';
-    
+
     db.all(query, params, (err, rows) => {
       if (err) return reject(err);
       resolve(rows || []);
@@ -8252,7 +8335,7 @@ async function getVatRates() {
 async function createCustomer(customerData) {
   const db = await dbPromise;
   const { encrypt } = require('./encryption');
-  
+
   return new Promise((resolve, reject) => {
     const {
       customerName,
@@ -8266,11 +8349,11 @@ async function createCustomer(customerData) {
       customerEmail,
       customerType = 'individual'
     } = customerData;
-    
+
     // ✅ ENCRYPTION: Encrypt PII (phone, email)
     const encryptedPhone = customerPhone ? encrypt(customerPhone) : null;
     const encryptedEmail = customerEmail ? encrypt(customerEmail) : null;
-    
+
     db.run(`
       INSERT INTO customers (
         customer_name, customer_cui, customer_registration_number, customer_address,
@@ -8281,7 +8364,7 @@ async function createCustomer(customerData) {
       customerName, customerCui, customerRegistrationNumber, customerAddress,
       customerCity, customerCounty, customerPostalCode, encryptedPhone,
       encryptedEmail, customerType
-    ], function(err) {
+    ], function (err) {
       if (err) return reject(err);
       resolve(this.lastID);
     });
@@ -8291,11 +8374,11 @@ async function createCustomer(customerData) {
 async function getCustomers() {
   const db = await dbPromise;
   const { decrypt } = require('./encryption');
-  
+
   return new Promise((resolve, reject) => {
     db.all('SELECT * FROM customers WHERE is_active = 1 ORDER BY customer_name ASC', (err, rows) => {
       if (err) return reject(err);
-      
+
       // ✅ ENCRYPTION: Decrypt PII (phone, email) pentru fiecare customer
       const decryptedRows = (rows || []).map(customer => {
         const decrypted = { ...customer };
@@ -8307,7 +8390,7 @@ async function getCustomers() {
         }
         return decrypted;
       });
-      
+
       resolve(decryptedRows);
     });
   });
@@ -8317,26 +8400,26 @@ async function getCustomers() {
 
 // Obține detaliile inventarului pentru o sesiune
 async function getInventoryDetails(sessionId) {
-    try {
-        console.log(`🔍 Debug: Început getInventoryDetails pentru sesiunea ${sessionId}`);
-        const db = await dbPromise;
-        console.log(`🔍 Debug: Baza de date obținută, executare query pentru sesiunea ${sessionId}`);
-        
-        // Test simplu pentru a vedea dacă funcționează
-        const testQuery = await new Promise((resolve, reject) => {
-            db.all(`SELECT COUNT(*) as count FROM ingredients WHERE is_available = 1`, (err, rows) => {
-                if (err) {
-                    console.error('❌ Eroare la test query:', err);
-                    reject(err);
-                } else {
-                    console.log(`🔍 Debug: Test query result:`, rows);
-                    resolve(rows);
-                }
-            });
-        });
-        
-        return new Promise((resolve, reject) => {
-            db.all(`
+  try {
+    console.log(`🔍 Debug: Început getInventoryDetails pentru sesiunea ${sessionId}`);
+    const db = await dbPromise;
+    console.log(`🔍 Debug: Baza de date obținută, executare query pentru sesiunea ${sessionId}`);
+
+    // Test simplu pentru a vedea dacă funcționează
+    const testQuery = await new Promise((resolve, reject) => {
+      db.all(`SELECT COUNT(*) as count FROM ingredients WHERE is_available = 1`, (err, rows) => {
+        if (err) {
+          console.error('❌ Eroare la test query:', err);
+          reject(err);
+        } else {
+          console.log(`🔍 Debug: Test query result:`, rows);
+          resolve(rows);
+        }
+      });
+    });
+
+    return new Promise((resolve, reject) => {
+      db.all(`
                 SELECT 
                     i.id,
                     i.name,
@@ -8348,113 +8431,113 @@ async function getInventoryDetails(sessionId) {
                 WHERE i.is_available = 1
                 ORDER BY i.name
             `, [sessionId], (err, rows) => {
-                if (err) {
-                    console.error('❌ Eroare la preluarea detaliilor inventarului:', err);
-                    reject(err);
-                } else {
-                    console.log(`✅ Preluate ${rows ? rows.length : 0} ingrediente pentru sesiunea ${sessionId}`);
-                    if (rows && rows.length > 0) {
-                        console.log(`🔍 Debug: Primul ingredient:`, rows[0]);
-                    }
-                    resolve(rows || []);
-                }
-            });
-        });
-    } catch (err) {
-        console.error('❌ Eroare la conectarea la baza de date:', err);
-        return [];
-    }
+        if (err) {
+          console.error('❌ Eroare la preluarea detaliilor inventarului:', err);
+          reject(err);
+        } else {
+          console.log(`✅ Preluate ${rows ? rows.length : 0} ingrediente pentru sesiunea ${sessionId}`);
+          if (rows && rows.length > 0) {
+            console.log(`🔍 Debug: Primul ingredient:`, rows[0]);
+          }
+          resolve(rows || []);
+        }
+      });
+    });
+  } catch (err) {
+    console.error('❌ Eroare la conectarea la baza de date:', err);
+    return [];
+  }
 }
 
 // Actualizează cantitatea numărată pentru un ingredient într-o sesiune
 async function updateInventoryCount(sessionId, itemId, physicalCount) {
-    return new Promise((resolve, reject) => {
-        dbPromise.then(db => {
-            db.run(`
+  return new Promise((resolve, reject) => {
+    dbPromise.then(db => {
+      db.run(`
                 INSERT OR REPLACE INTO inventory_counts (session_id, ingredient_id, counted_stock, updated_at)
                 VALUES (?, ?, ?, datetime('now', 'localtime'))
-            `, [sessionId, itemId, physicalCount], function(err) {
-                if (err) {
-                    console.error('❌ Eroare la actualizarea numărătorii:', err);
-                    reject(err);
-                } else {
-                    console.log(`✅ Actualizat ingredient ${itemId} cu cantitatea ${physicalCount} pentru sesiunea ${sessionId}`);
-                    resolve(this.lastID);
-                }
-            });
-        }).catch(err => {
-            console.error('❌ Eroare la conectarea la baza de date:', err);
-            reject(err);
-        });
+            `, [sessionId, itemId, physicalCount], function (err) {
+        if (err) {
+          console.error('❌ Eroare la actualizarea numărătorii:', err);
+          reject(err);
+        } else {
+          console.log(`✅ Actualizat ingredient ${itemId} cu cantitatea ${physicalCount} pentru sesiunea ${sessionId}`);
+          resolve(this.lastID);
+        }
+      });
+    }).catch(err => {
+      console.error('❌ Eroare la conectarea la baza de date:', err);
+      reject(err);
     });
+  });
 }
 
 // Creează o sesiune nouă de inventar (Zilnic sau Lunar)
 async function createInventorySession(sessionType = 'daily', startedBy = 'Admin') {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const db = await dbPromise;
-            
-            // Generează ID unic pentru sesiune
-            const timestamp = Date.now();
-            const randomStr = Math.random().toString(36).substring(2, 11);
-            const sessionId = `INV_${timestamp}_${randomStr}`;
-            
-            // Numără ingredientele active
-            db.get('SELECT COUNT(*) as total FROM ingredients WHERE is_available = 1', async (err, row) => {
-                if (err) {
-                    console.error('❌ Eroare la numărarea ingredientelor:', err);
-                    reject(err);
-                    return;
-                }
-                
-                const totalItems = row.total;
-                
-                // Creează sesiunea
-                db.run(`
+  return new Promise(async (resolve, reject) => {
+    try {
+      const db = await dbPromise;
+
+      // Generează ID unic pentru sesiune
+      const timestamp = Date.now();
+      const randomStr = Math.random().toString(36).substring(2, 11);
+      const sessionId = `INV_${timestamp}_${randomStr}`;
+
+      // Numără ingredientele active
+      db.get('SELECT COUNT(*) as total FROM ingredients WHERE is_available = 1', async (err, row) => {
+        if (err) {
+          console.error('❌ Eroare la numărarea ingredientelor:', err);
+          reject(err);
+          return;
+        }
+
+        const totalItems = row.total;
+
+        // Creează sesiunea
+        db.run(`
                     INSERT INTO inventory_sessions (
                         id, session_type, status, started_at, started_by, total_items, created_at
                     ) VALUES (?, ?, 'in_progress', datetime('now', 'localtime'), ?, ?, datetime('now', 'localtime'))
-                `, [sessionId, sessionType, startedBy, totalItems], function(err) {
-                    if (err) {
-                        console.error('❌ Eroare la crearea sesiunii de inventar:', err);
-                        reject(err);
-                    } else {
-                        console.log(`✅ Sesiune inventar creată: ${sessionId} (${sessionType}), ${totalItems} ingrediente`);
-                        resolve({ 
-                            sessionId, 
-                            sessionType, 
-                            totalItems,
-                            status: 'in_progress'
-                        });
-                    }
-                });
-            });
-        } catch (err) {
-            console.error('❌ Eroare la conectarea la baza de date:', err);
+                `, [sessionId, sessionType, startedBy, totalItems], function (err) {
+          if (err) {
+            console.error('❌ Eroare la crearea sesiunii de inventar:', err);
             reject(err);
-        }
-    });
+          } else {
+            console.log(`✅ Sesiune inventar creată: ${sessionId} (${sessionType}), ${totalItems} ingrediente`);
+            resolve({
+              sessionId,
+              sessionType,
+              totalItems,
+              status: 'in_progress'
+            });
+          }
+        });
+      });
+    } catch (err) {
+      console.error('❌ Eroare la conectarea la baza de date:', err);
+      reject(err);
+    }
+  });
 }
 
 // Finalizează sesiunea de inventar și actualizează stocurile
 async function finalizeInventorySession(sessionId) {
-    return new Promise(async (resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const db = await dbPromise;
+
+      // START TRANSACTION
+      db.run('BEGIN TRANSACTION', async (err) => {
+        if (err) {
+          console.error('❌ Eroare la începerea tranzacției:', err);
+          reject(err);
+          return;
+        }
+
         try {
-            const db = await dbPromise;
-            
-            // START TRANSACTION
-            db.run('BEGIN TRANSACTION', async (err) => {
-                if (err) {
-                    console.error('❌ Eroare la începerea tranzacției:', err);
-                    reject(err);
-                    return;
-                }
-                
-                try {
-                    // PASUL 1: Obține toate numărătorile din sesiune
-                    const counts = await new Promise((res, rej) => {
-                        db.all(`
+          // PASUL 1: Obține toate numărătorile din sesiune
+          const counts = await new Promise((res, rej) => {
+            db.all(`
                             SELECT 
                                 ic.ingredient_id,
                                 ic.counted_stock,
@@ -8466,42 +8549,42 @@ async function finalizeInventorySession(sessionId) {
                             JOIN ingredients i ON ic.ingredient_id = i.id
                             WHERE ic.session_id = ? AND ic.counted_stock IS NOT NULL
                         `, [sessionId], (err, rows) => {
-                            if (err) rej(err);
-                            else res(rows || []);
-                        });
-                    });
-                    
-                    if (counts.length === 0) {
-                        db.run('ROLLBACK');
-                        reject(new Error('Nu există ingrediente numărate în această sesiune'));
-                        return;
-                    }
-                    
-                    let totalDifferenceValue = 0;
-                    let itemsProcessed = 0;
-                    
-                    // PASUL 2: Pentru fiecare ingredient numărat
-                    for (const item of counts) {
-                        const difference = item.counted_stock - item.theoretical_stock;
-                        const differenceValue = difference * (item.cost_per_unit || 0);
-                        totalDifferenceValue += differenceValue;
-                        
-                        // Actualizează stocul real
-                        await new Promise((res, rej) => {
-                            db.run(`
+              if (err) rej(err);
+              else res(rows || []);
+            });
+          });
+
+          if (counts.length === 0) {
+            db.run('ROLLBACK');
+            reject(new Error('Nu există ingrediente numărate în această sesiune'));
+            return;
+          }
+
+          let totalDifferenceValue = 0;
+          let itemsProcessed = 0;
+
+          // PASUL 2: Pentru fiecare ingredient numărat
+          for (const item of counts) {
+            const difference = item.counted_stock - item.theoretical_stock;
+            const differenceValue = difference * (item.cost_per_unit || 0);
+            totalDifferenceValue += differenceValue;
+
+            // Actualizează stocul real
+            await new Promise((res, rej) => {
+              db.run(`
                                 UPDATE ingredients 
                                 SET current_stock = ? 
                                 WHERE id = ?
                             `, [item.counted_stock, item.ingredient_id], (err) => {
-                                if (err) rej(err);
-                                else res();
-                            });
-                        });
-                        
-                        // Creează înregistrare în stock_movements (audit trail)
-                        if (difference !== 0) {
-                            await new Promise((res, rej) => {
-                                db.run(`
+                if (err) rej(err);
+                else res();
+              });
+            });
+
+            // Creează înregistrare în stock_movements (audit trail)
+            if (difference !== 0) {
+              await new Promise((res, rej) => {
+                db.run(`
                                     INSERT INTO stock_movements (
                                         ingredient_id, 
                                         quantity_change, 
@@ -8510,22 +8593,22 @@ async function finalizeInventorySession(sessionId) {
                                         created_at
                                     ) VALUES (?, ?, 'inventory_adjustment', ?, datetime('now', 'localtime'))
                                 `, [
-                                    item.ingredient_id, 
-                                    difference,
-                                    `Inventar ${sessionId}: ${difference > 0 ? 'Plus (Câștig)' : 'Lipsă (Pierdere)'} ${Math.abs(difference).toFixed(2)} ${item.unit}`
-                                ], (err) => {
-                                    if (err) rej(err);
-                                    else res();
-                                });
-                            });
-                        }
-                        
-                        itemsProcessed++;
-                    }
-                    
-                    // PASUL 3: Actualizează sesiunea ca finalizată
-                    await new Promise((res, rej) => {
-                        db.run(`
+                  item.ingredient_id,
+                  difference,
+                  `Inventar ${sessionId}: ${difference > 0 ? 'Plus (Câștig)' : 'Lipsă (Pierdere)'} ${Math.abs(difference).toFixed(2)} ${item.unit}`
+                ], (err) => {
+                  if (err) rej(err);
+                  else res();
+                });
+              });
+            }
+
+            itemsProcessed++;
+          }
+
+          // PASUL 3: Actualizează sesiunea ca finalizată
+          await new Promise((res, rej) => {
+            db.run(`
                             UPDATE inventory_sessions 
                             SET 
                                 status = 'completed',
@@ -8534,121 +8617,121 @@ async function finalizeInventorySession(sessionId) {
                                 total_difference_value = ?
                             WHERE id = ?
                         `, [itemsProcessed, totalDifferenceValue, sessionId], (err) => {
-                            if (err) rej(err);
-                            else res();
-                        });
-                    });
-                    
-                    // COMMIT TRANSACTION
-                    db.run('COMMIT', (commitErr) => {
-                        if (commitErr) {
-                            console.error('❌ Eroare COMMIT:', commitErr);
-                            db.run('ROLLBACK');
-                            reject(commitErr);
-                        } else {
-                            console.log(`✅ Sesiune inventar finalizată: ${sessionId}, ${itemsProcessed} ingrediente, diferență totală: ${totalDifferenceValue.toFixed(2)} RON`);
-                            resolve({
-                                sessionId,
-                                itemsProcessed,
-                                totalDifferenceValue,
-                                counts: counts.map(c => ({
-                                    name: c.name,
-                                    theoretical: c.theoretical_stock,
-                                    counted: c.counted_stock,
-                                    difference: c.counted_stock - c.theoretical_stock,
-                                    unit: c.unit
-                                }))
-                            });
-                        }
-                    });
-                    
-                } catch (processingError) {
-                    console.error('❌ Eroare la procesarea inventarului:', processingError);
-                    db.run('ROLLBACK');
-                    reject(processingError);
-                }
+              if (err) rej(err);
+              else res();
             });
-            
-        } catch (err) {
-            console.error('❌ Eroare la conectarea la baza de date:', err);
-            reject(err);
+          });
+
+          // COMMIT TRANSACTION
+          db.run('COMMIT', (commitErr) => {
+            if (commitErr) {
+              console.error('❌ Eroare COMMIT:', commitErr);
+              db.run('ROLLBACK');
+              reject(commitErr);
+            } else {
+              console.log(`✅ Sesiune inventar finalizată: ${sessionId}, ${itemsProcessed} ingrediente, diferență totală: ${totalDifferenceValue.toFixed(2)} RON`);
+              resolve({
+                sessionId,
+                itemsProcessed,
+                totalDifferenceValue,
+                counts: counts.map(c => ({
+                  name: c.name,
+                  theoretical: c.theoretical_stock,
+                  counted: c.counted_stock,
+                  difference: c.counted_stock - c.theoretical_stock,
+                  unit: c.unit
+                }))
+              });
+            }
+          });
+
+        } catch (processingError) {
+          console.error('❌ Eroare la procesarea inventarului:', processingError);
+          db.run('ROLLBACK');
+          reject(processingError);
         }
-    });
+      });
+
+    } catch (err) {
+      console.error('❌ Eroare la conectarea la baza de date:', err);
+      reject(err);
+    }
+  });
 }
 
 // Obține lista sesiunilor de inventar
 async function getInventorySessions(filters = {}) {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const db = await dbPromise;
-            
-            let query = 'SELECT * FROM inventory_sessions WHERE 1=1';
-            const params = [];
-            
-            if (filters.type) {
-                query += ' AND session_type = ?';
-                params.push(filters.type);
-            }
-            
-            if (filters.status) {
-                query += ' AND status = ?';
-                params.push(filters.status);
-            }
-            
-            if (filters.dateFrom) {
-                query += ' AND started_at >= ?';
-                params.push(filters.dateFrom);
-            }
-            
-            if (filters.dateTo) {
-                query += ' AND started_at <= ?';
-                params.push(filters.dateTo);
-            }
-            
-            query += ' ORDER BY started_at DESC';
-            
-            if (filters.limit) {
-                query += ' LIMIT ?';
-                params.push(filters.limit);
-            }
-            
-            db.all(query, params, (err, rows) => {
-                if (err) {
-                    console.error('❌ Eroare la preluarea sesiunilor:', err);
-                    reject(err);
-                } else {
-                    resolve(rows || []);
-                }
-            });
-        } catch (err) {
-            console.error('❌ Eroare la conectarea la baza de date:', err);
-            reject(err);
+  return new Promise(async (resolve, reject) => {
+    try {
+      const db = await dbPromise;
+
+      let query = 'SELECT * FROM inventory_sessions WHERE 1=1';
+      const params = [];
+
+      if (filters.type) {
+        query += ' AND session_type = ?';
+        params.push(filters.type);
+      }
+
+      if (filters.status) {
+        query += ' AND status = ?';
+        params.push(filters.status);
+      }
+
+      if (filters.dateFrom) {
+        query += ' AND started_at >= ?';
+        params.push(filters.dateFrom);
+      }
+
+      if (filters.dateTo) {
+        query += ' AND started_at <= ?';
+        params.push(filters.dateTo);
+      }
+
+      query += ' ORDER BY started_at DESC';
+
+      if (filters.limit) {
+        query += ' LIMIT ?';
+        params.push(filters.limit);
+      }
+
+      db.all(query, params, (err, rows) => {
+        if (err) {
+          console.error('❌ Eroare la preluarea sesiunilor:', err);
+          reject(err);
+        } else {
+          resolve(rows || []);
         }
-    });
+      });
+    } catch (err) {
+      console.error('❌ Eroare la conectarea la baza de date:', err);
+      reject(err);
+    }
+  });
 }
 
 // Obține detaliile complete ale unei sesiuni de inventar
 async function getInventorySessionDetails(sessionId) {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const db = await dbPromise;
-            
-            // Obține sesiunea
-            const session = await new Promise((res, rej) => {
-                db.get('SELECT * FROM inventory_sessions WHERE id = ?', [sessionId], (err, row) => {
-                    if (err) rej(err);
-                    else res(row);
-                });
-            });
-            
-            if (!session) {
-                reject(new Error('Sesiunea nu a fost găsită'));
-                return;
-            }
-            
-            // Obține numărătorile
-            const items = await new Promise((res, rej) => {
-                db.all(`
+  return new Promise(async (resolve, reject) => {
+    try {
+      const db = await dbPromise;
+
+      // Obține sesiunea
+      const session = await new Promise((res, rej) => {
+        db.get('SELECT * FROM inventory_sessions WHERE id = ?', [sessionId], (err, row) => {
+          if (err) rej(err);
+          else res(row);
+        });
+      });
+
+      if (!session) {
+        reject(new Error('Sesiunea nu a fost găsită'));
+        return;
+      }
+
+      // Obține numărătorile
+      const items = await new Promise((res, rej) => {
+        db.all(`
                     SELECT 
                         i.id,
                         i.name,
@@ -8671,21 +8754,21 @@ async function getInventorySessionDetails(sessionId) {
                     WHERE i.is_available = 1
                     ORDER BY i.name
                 `, [sessionId], (err, rows) => {
-                    if (err) rej(err);
-                    else res(rows || []);
-                });
-            });
-            
-            resolve({
-                session,
-                items
-            });
-            
-        } catch (err) {
-            console.error('❌ Eroare la preluarea detaliilor sesiunii:', err);
-            reject(err);
-        }
-    });
+          if (err) rej(err);
+          else res(rows || []);
+        });
+      });
+
+      resolve({
+        session,
+        items
+      });
+
+    } catch (err) {
+      console.error('❌ Eroare la preluarea detaliilor sesiunii:', err);
+      reject(err);
+    }
+  });
 }
 
 /**
@@ -8697,12 +8780,12 @@ async function getInventorySessionDetails(sessionId) {
  */
 function calculateGrossQuantity(recipeItem, orderType, customizations = []) {
   let netQuantity = recipeItem.quantity_needed;
-  
+
   // 1. Aplică Variabilitatea (pe baza variable_consumption și customizations)
   if (recipeItem.variable_consumption && customizations.length > 0) {
     try {
       const variableRules = JSON.parse(recipeItem.variable_consumption);
-      
+
       // Caută customizări care se potrivesc cu regulile de variabilitate
       for (let customization of customizations) {
         if (variableRules[customization.name]) {
@@ -8724,7 +8807,7 @@ function calculateGrossQuantity(recipeItem, orderType, customizations = []) {
     const isRestaurant = orderType === 'dine_in';
 
     if ((recipeItem.item_type === 'packaging_delivery' && needsDeliveryPackaging) ||
-        (recipeItem.item_type === 'packaging_restaurant' && isRestaurant)) {
+      (recipeItem.item_type === 'packaging_restaurant' && isRestaurant)) {
       // Ambalajul se consumă
       console.log(`📦 Ambalaj consumat: ${recipeItem.item_type} pentru ${orderType}`);
       return netQuantity;
@@ -8734,7 +8817,7 @@ function calculateGrossQuantity(recipeItem, orderType, customizations = []) {
       return 0;
     }
   }
-  
+
   // 3. Aplică % Deșeu (Waste) pentru Ingrediente
   if (recipeItem.item_type === 'ingredient' && recipeItem.waste_percentage > 0) {
     const wasteFactor = 1.0 - (recipeItem.waste_percentage / 100);
@@ -8750,7 +8833,7 @@ function calculateGrossQuantity(recipeItem, orderType, customizations = []) {
 function decreaseStockAverage(db, ingredientId, quantityNeeded, orderId, locationId = null) {
   return new Promise((resolve, reject) => {
     console.log(`🟢🟢🟢 [AVERAGE] decreaseStockAverage started for ingredient ${ingredientId}, qty: ${quantityNeeded}, location: ${locationId || 'global'}`);
-    
+
     // Average Cost: scade din toate loturile proporțional
     const query = locationId
       ? `SELECT id, remaining_quantity, unit_cost, batch_number
@@ -8761,9 +8844,9 @@ function decreaseStockAverage(db, ingredientId, quantityNeeded, orderId, locatio
          FROM ingredient_batches
          WHERE ingredient_id = ? AND remaining_quantity > 0
          ORDER BY id ASC`;
-    
+
     const params = locationId ? [ingredientId, locationId] : [ingredientId];
-    
+
     db.all(query, params, (err, batches) => {
       if (err) {
         console.error(`❌❌ Query error for batches (AVERAGE):`, err);
@@ -8771,7 +8854,7 @@ function decreaseStockAverage(db, ingredientId, quantityNeeded, orderId, locatio
       }
 
       console.log(`🟢🟢🟢 [AVERAGE] Batches found for ingredient ${ingredientId}: ${batches ? batches.length : 0}`);
-      
+
       if (!batches || batches.length === 0) {
         // Dacă nu avem loturi, folosim sistemul vechi
         console.log(`🟢🟢🟢 [AVERAGE] No batches, using legacy system for ingredient ${ingredientId}`);
@@ -8789,7 +8872,7 @@ function decreaseStockAverage(db, ingredientId, quantityNeeded, orderId, locatio
 
       // Calculează total disponibil
       const totalAvailable = batches.reduce((sum, b) => sum + (b.remaining_quantity || 0), 0);
-      
+
       if (totalAvailable < quantityNeeded) {
         console.warn(`⚠️ [AVERAGE] Stoc insuficient pentru ingredient ${ingredientId}: necesar ${quantityNeeded}, disponibil ${totalAvailable}`);
         // Folosim sistemul vechi pentru cantitatea rămasă
@@ -8809,7 +8892,7 @@ function decreaseStockAverage(db, ingredientId, quantityNeeded, orderId, locatio
         const proportion = batch.remaining_quantity / totalAvailable;
         const quantityFromBatch = Math.min(remainingToDecrease, quantityNeeded * proportion);
         const newRemaining = Math.max(0, batch.remaining_quantity - quantityFromBatch);
-        
+
         // Actualizăm cantitatea rămasă în lot
         db.run(`
           UPDATE ingredient_batches 
@@ -8853,7 +8936,7 @@ function decreaseStockLIFO(db, ingredientId, quantityNeeded, orderId, locationId
   return new Promise((resolve, reject) => {
     console.log(`🟡🟡🟡 [LIFO] decreaseStockLIFO started for ingredient ${ingredientId}, qty: ${quantityNeeded}, location: ${locationId || 'global'}`);
     // Obținem loturile disponibile ordonate invers (LIFO - Last In First Out)
-    const query = locationId 
+    const query = locationId
       ? `SELECT id, remaining_quantity, purchase_date, expiry_date, batch_number, location_id, unit_cost
          FROM ingredient_batches 
          WHERE ingredient_id = ? AND remaining_quantity > 0 AND location_id = ?
@@ -8862,9 +8945,9 @@ function decreaseStockLIFO(db, ingredientId, quantityNeeded, orderId, locationId
          FROM ingredient_batches 
          WHERE ingredient_id = ? AND remaining_quantity > 0
          ORDER BY purchase_date DESC, expiry_date DESC, id DESC`;
-    
+
     const params = locationId ? [ingredientId, locationId] : [ingredientId];
-    
+
     db.all(query, params, (err, batches) => {
       if (err) {
         console.error(`❌❌ Query error for batches (LIFO):`, err);
@@ -8872,7 +8955,7 @@ function decreaseStockLIFO(db, ingredientId, quantityNeeded, orderId, locationId
       }
 
       console.log(`🟡🟡🟡 [LIFO] Batches found for ingredient ${ingredientId}: ${batches ? batches.length : 0}`);
-      
+
       if (!batches || batches.length === 0) {
         // Dacă nu avem loturi, folosim sistemul vechi
         console.log(`🟡🟡🟡 [LIFO] No batches, using legacy system for ingredient ${ingredientId}`);
@@ -8896,7 +8979,7 @@ function decreaseStockLIFO(db, ingredientId, quantityNeeded, orderId, locationId
         if (remainingToDecrease <= 0) break;
 
         const quantityFromBatch = Math.min(remainingToDecrease, batch.remaining_quantity);
-        
+
         // Actualizăm cantitatea rămasă în lot
         db.run(`
           UPDATE ingredient_batches 
@@ -8956,7 +9039,7 @@ function decreaseStockFIFO(db, ingredientId, quantityNeeded, orderId, locationId
     console.log(`🔵🔵🔵 [ETAPA 4] decreaseStockFIFO started for ingredient ${ingredientId}, qty: ${quantityNeeded}, location: ${locationId || 'global'}`);
     // Obținem loturile disponibile ordonate după data de achiziție (FIFO)
     // ETAPA 4: Filtrare după location_id dacă este specificat
-    const query = locationId 
+    const query = locationId
       ? `SELECT id, remaining_quantity, purchase_date, expiry_date, batch_number, location_id
          FROM ingredient_batches 
          WHERE ingredient_id = ? AND remaining_quantity > 0 AND location_id = ?
@@ -8965,9 +9048,9 @@ function decreaseStockFIFO(db, ingredientId, quantityNeeded, orderId, locationId
          FROM ingredient_batches 
          WHERE ingredient_id = ? AND remaining_quantity > 0
          ORDER BY purchase_date ASC, expiry_date ASC`;
-    
+
     const params = locationId ? [ingredientId, locationId] : [ingredientId];
-    
+
     db.all(query, params, (err, batches) => {
       if (err) {
         console.error(`❌❌ Query error for batches:`, err);
@@ -8975,7 +9058,7 @@ function decreaseStockFIFO(db, ingredientId, quantityNeeded, orderId, locationId
       }
 
       console.log(`🔵🔵🔵 Batches found for ingredient ${ingredientId}: ${batches ? batches.length : 0}`);
-      
+
       if (!batches || batches.length === 0) {
         // Dacă nu avem loturi, folosim sistemul vechi
         console.log(`🔵🔵🔵 No batches, using legacy system for ingredient ${ingredientId}`);
@@ -8999,7 +9082,7 @@ function decreaseStockFIFO(db, ingredientId, quantityNeeded, orderId, locationId
         if (remainingToDecrease <= 0) break;
 
         const quantityFromBatch = Math.min(remainingToDecrease, batch.remaining_quantity);
-        
+
         // Actualizăm cantitatea rămasă în lot
         db.run(`
           UPDATE ingredient_batches 
@@ -9065,14 +9148,14 @@ function decreaseStockLegacy(db, ingredientId, quantity, orderId, locationId = n
          SET current_stock = current_stock - ?,
              last_updated = CURRENT_TIMESTAMP
          WHERE id = ?`;
-    
+
     const params = locationId ? [quantity, ingredientId, locationId] : [quantity, ingredientId];
-    
-    db.run(query, params, function(updateErr) {
+
+    db.run(query, params, function (updateErr) {
       if (updateErr) {
         return reject(updateErr);
       }
-      
+
       // Adăugăm înregistrare în trace (cu batch_id = 0 pentru legacy mode)
       if (orderId) {
         db.run(`
@@ -9147,11 +9230,11 @@ function addIngredientBatch(ingredientId, batchData) {
         vet_document || null,
         supplier_id || null,
         document_path || null
-      ], function(err) {
+      ], function (err) {
         if (err) {
           return reject(err);
         }
-        
+
         // Actualizăm și stocul total al ingredientului
         db.run(`
           UPDATE ingredients 
@@ -9259,7 +9342,7 @@ async function addToWaste(itemType, itemId, itemName, quantity, unit, reason, or
     db.run(`
       INSERT INTO waste (item_type, item_id, item_name, quantity, unit, reason, order_id, notes, recorded_by)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `, [itemType, itemId, itemName, quantity, unit, reason, orderId, notes, recordedBy], function(err) {
+    `, [itemType, itemId, itemName, quantity, unit, reason, orderId, notes, recordedBy], function (err) {
       if (err) return reject(err);
       console.log(`♻️ WASTE: ${itemName} (${quantity} ${unit}) - Motiv: ${reason}`);
       resolve(this.lastID);
@@ -9276,7 +9359,7 @@ async function addToLosses(itemType, itemId, itemName, expectedQuantity, actualQ
     db.run(`
       INSERT INTO losses (item_type, item_id, item_name, expected_quantity, actual_quantity, difference, unit, inventory_session_id, notes, recorded_by)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `, [itemType, itemId, itemName, expectedQuantity, actualQuantity, difference, unit, inventorySessionId, notes, recordedBy], function(err) {
+    `, [itemType, itemId, itemName, expectedQuantity, actualQuantity, difference, unit, inventorySessionId, notes, recordedBy], function (err) {
       if (err) return reject(err);
       console.log(`📉 LOSSES: ${itemName} - Diferență: ${difference} ${unit} (Așteptat: ${expectedQuantity}, Găsit: ${actualQuantity})`);
       resolve(this.lastID);
@@ -9292,7 +9375,7 @@ async function getWasteRecords(startDate = null, endDate = null, itemType = null
   return new Promise((resolve, reject) => {
     let query = 'SELECT * FROM waste WHERE 1=1';
     const params = [];
-    
+
     if (startDate) {
       query += ' AND created_at >= ?';
       params.push(startDate);
@@ -9309,9 +9392,9 @@ async function getWasteRecords(startDate = null, endDate = null, itemType = null
       query += ' AND reason = ?';
       params.push(reason);
     }
-    
+
     query += ' ORDER BY created_at DESC';
-    
+
     db.all(query, params, (err, rows) => {
       if (err) return reject(err);
       resolve(rows || []);
@@ -9327,7 +9410,7 @@ async function getLossesRecords(startDate = null, endDate = null, itemType = nul
   return new Promise((resolve, reject) => {
     let query = 'SELECT * FROM losses WHERE 1=1';
     const params = [];
-    
+
     if (startDate) {
       query += ' AND created_at >= ?';
       params.push(startDate);
@@ -9340,9 +9423,9 @@ async function getLossesRecords(startDate = null, endDate = null, itemType = nul
       query += ' AND item_type = ?';
       params.push(itemType);
     }
-    
+
     query += ' ORDER BY created_at DESC';
-    
+
     db.all(query, params, (err, rows) => {
       if (err) return reject(err);
       resolve(rows || []);
@@ -10016,13 +10099,13 @@ async function deleteIngredientDocumentRecord(documentId) {
  * @returns {number}
  */
 async function getLastZReportNumber() {
-    const db = await dbPromise;
-    return new Promise((resolve, reject) => {
-        db.get('SELECT MAX(z_number) as max_z FROM daily_z_reports', [], (err, row) => {
-            if (err) return reject(err);
-            resolve(row?.max_z || 0);
-        });
+  const db = await dbPromise;
+  return new Promise((resolve, reject) => {
+    db.get('SELECT MAX(z_number) as max_z FROM daily_z_reports', [], (err, row) => {
+      if (err) return reject(err);
+      resolve(row?.max_z || 0);
     });
+  });
 }
 
 /**
@@ -10032,50 +10115,50 @@ async function getLastZReportNumber() {
  * @returns {object} ID-ul și numărul noului raport Z.
  */
 async function saveZReport(reportData, receiptIds) {
-    const db = await dbPromise;
-    return new Promise((resolve, reject) => {
-        db.run('BEGIN TRANSACTION', (err) => {
-            if (err) return reject(err);
-            
-            // 1. Obține noul număr Z
-            getLastZReportNumber().then(lastZ => {
-                const newZNumber = lastZ + 1;
-                const reportDate = new Date().toISOString().split('T')[0];
+  const db = await dbPromise;
+  return new Promise((resolve, reject) => {
+    db.run('BEGIN TRANSACTION', (err) => {
+      if (err) return reject(err);
 
-                // 2. Inserează Raportul Z
-                db.run(`INSERT INTO daily_z_reports (z_number, report_date, total_revenue, total_vat, vat_breakdown, payment_methods, total_receipts) VALUES (?, ?, ?, ?, ?, ?, ?)`, 
-                    [newZNumber, reportDate, reportData.totalRevenue, reportData.totalVat, JSON.stringify(reportData.vatBreakdown), JSON.stringify(reportData.paymentMethods), reportData.count], 
-                    function (err) {
-                        if (err) { db.run('ROLLBACK', () => reject(err)); return; }
-                        const zReportId = this.lastID;
+      // 1. Obține noul număr Z
+      getLastZReportNumber().then(lastZ => {
+        const newZNumber = lastZ + 1;
+        const reportDate = new Date().toISOString().split('T')[0];
 
-                        // 3. Marchează bonurile fiscale ca închise
-                        if (receiptIds.length > 0) {
-                            const placeholders = receiptIds.map(() => '?').join(',');
-                            db.run(`UPDATE fiscal_receipts SET z_report_id = ? WHERE id IN (${placeholders})`, 
-                                [zReportId, ...receiptIds], 
-                                (err) => {
-                                    if (err) { db.run('ROLLBACK', () => reject(err)); return; }
-                                    db.run('COMMIT', (err) => {
-                                        if (err) return reject(err);
-                                        resolve({ zReportId, zNumber: newZNumber });
-                                    });
-                                }
-                            );
-                        } else {
-                            // Cazul în care se închide ziua fără vânzări
-                            db.run('COMMIT', (err) => {
-                                if (err) return reject(err);
-                                resolve({ zReportId, zNumber: newZNumber });
-                            });
-                        }
-                    }
-                );
-            }).catch(error => {
-                db.run('ROLLBACK', () => reject(error));
-            });
-        });
+        // 2. Inserează Raportul Z
+        db.run(`INSERT INTO daily_z_reports (z_number, report_date, total_revenue, total_vat, vat_breakdown, payment_methods, total_receipts) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+          [newZNumber, reportDate, reportData.totalRevenue, reportData.totalVat, JSON.stringify(reportData.vatBreakdown), JSON.stringify(reportData.paymentMethods), reportData.count],
+          function (err) {
+            if (err) { db.run('ROLLBACK', () => reject(err)); return; }
+            const zReportId = this.lastID;
+
+            // 3. Marchează bonurile fiscale ca închise
+            if (receiptIds.length > 0) {
+              const placeholders = receiptIds.map(() => '?').join(',');
+              db.run(`UPDATE fiscal_receipts SET z_report_id = ? WHERE id IN (${placeholders})`,
+                [zReportId, ...receiptIds],
+                (err) => {
+                  if (err) { db.run('ROLLBACK', () => reject(err)); return; }
+                  db.run('COMMIT', (err) => {
+                    if (err) return reject(err);
+                    resolve({ zReportId, zNumber: newZNumber });
+                  });
+                }
+              );
+            } else {
+              // Cazul în care se închide ziua fără vânzări
+              db.run('COMMIT', (err) => {
+                if (err) return reject(err);
+                resolve({ zReportId, zNumber: newZNumber });
+              });
+            }
+          }
+        );
+      }).catch(error => {
+        db.run('ROLLBACK', () => reject(error));
+      });
     });
+  });
 }
 
 // Export database protection functions (optional - may not exist in all environments)
@@ -10116,32 +10199,32 @@ try {
 async function getRequiredPackagingForOrder(items, orderType) {
   const packaging = {};
   const db = await dbPromise;
-  
+
   // Normalizează tipul comenzii
   const normalizedType = (orderType || '').toString().toLowerCase();
   const isTakeaway = ['takeout', 'pick-up', 'pickup', 'takeaway', 'delivery', 'drive_thru', 'drive-thru', 'drivethru'].includes(normalizedType);
-  
+
   // Dacă nu e takeaway/delivery/drive-thru, nu adăugăm ambalaje
   if (!isTakeaway) {
     return packaging;
   }
-  
+
   // Calculează totalul de produse (exclude ambalajele existente)
   let totalItems = 0;
-  
+
   items.forEach(item => {
     // Skip dacă e deja un ambalaj
     if (item.isPackaging) {
       return;
     }
-    
+
     totalItems += item.quantity || 0;
-    
+
     // NOTĂ: Ambalajele per produs (din fișele tehnice cu item_type='packaging_delivery')
     //       sunt deja gestionate prin logica de scădere a stocurilor în calculateGrossQuantity()
     //       și nu trebuie adăugate manual aici, deoarece sunt deja în recipes.
   });
-  
+
   // Adaugă punga (mică sau mare) în funcție de cantitatea totală
   // Punga mică: până la 3 produse
   // Punga mare: peste 3 produse
@@ -10156,7 +10239,7 @@ async function getRequiredPackagingForOrder(items, orderType) {
       packaging['Punga Mare'] = largeBagsNeeded;
     }
   }
-  
+
   return packaging;
 }
 
@@ -10177,7 +10260,7 @@ async function getRequiredPackagingForOrder(items, orderType) {
  */
 async function tenantQuery(req, sql, params = []) {
   const db = await dbPromise;
-  
+
   // Fallback: if no tenantId, execute query without filtering (with warning)
   if (!req || !req.tenantId) {
     console.warn('⚠️ [tenantQuery] No tenantId found in request. Query executed without tenant filtering.');
@@ -10188,15 +10271,15 @@ async function tenantQuery(req, sql, params = []) {
       });
     });
   }
-  
+
   // Check if SQL already has WHERE clause
   const hasWhere = /WHERE/i.test(sql);
   const separator = hasWhere ? ' AND' : ' WHERE';
-  
+
   // Inject tenant_id filter
   const filteredSql = `${sql}${separator} tenant_id = ?`;
   const filteredParams = [...params, req.tenantId];
-  
+
   return new Promise((resolve, reject) => {
     db.all(filteredSql, filteredParams, (err, rows) => {
       if (err) reject(err);
@@ -10215,7 +10298,7 @@ async function tenantQuery(req, sql, params = []) {
  */
 async function locationQuery(req, sql, params = []) {
   const db = await dbPromise;
-  
+
   // Fallback: if no locationId, execute query without filtering (with warning)
   if (!req || !req.locationId) {
     console.warn('⚠️ [locationQuery] No locationId found in request. Query executed without location filtering.');
@@ -10226,15 +10309,15 @@ async function locationQuery(req, sql, params = []) {
       });
     });
   }
-  
+
   // Check if SQL already has WHERE clause
   const hasWhere = /WHERE/i.test(sql);
   const separator = hasWhere ? ' AND' : ' WHERE';
-  
+
   // Inject location_id filter
   const filteredSql = `${sql}${separator} location_id = ?`;
   const filteredParams = [...params, req.locationId];
-  
+
   return new Promise((resolve, reject) => {
     db.all(filteredSql, filteredParams, (err, rows) => {
       if (err) reject(err);
@@ -10253,7 +10336,7 @@ async function locationQuery(req, sql, params = []) {
  */
 async function tenantLocationQuery(req, sql, params = []) {
   const db = await dbPromise;
-  
+
   // Fallback: if missing tenantId or locationId, execute query without filtering (with warning)
   if (!req || !req.tenantId || !req.locationId) {
     console.warn('⚠️ [tenantLocationQuery] Missing tenantId or locationId. Query executed without filtering.');
@@ -10264,15 +10347,15 @@ async function tenantLocationQuery(req, sql, params = []) {
       });
     });
   }
-  
+
   // Check if SQL already has WHERE clause
   const hasWhere = /WHERE/i.test(sql);
   const separator = hasWhere ? ' AND' : ' WHERE';
-  
+
   // Inject both filters
   const filteredSql = `${sql}${separator} tenant_id = ? AND location_id = ?`;
   const filteredParams = [...params, req.tenantId, req.locationId];
-  
+
   return new Promise((resolve, reject) => {
     db.all(filteredSql, filteredParams, (err, rows) => {
       if (err) reject(err);
@@ -10312,7 +10395,7 @@ async function tenantLocationQueryOne(req, sql, params = []) {
 function createPerformanceIndexes(db) {
   return new Promise((resolve) => {
     console.log('\n🚀 Creating performance indexes...');
-    
+
     const indexes = [
       // Orders indexes
       { name: 'idx_orders_timestamp', sql: 'CREATE INDEX IF NOT EXISTS idx_orders_timestamp ON orders(timestamp)' },
@@ -10320,39 +10403,39 @@ function createPerformanceIndexes(db) {
       { name: 'idx_orders_status_timestamp', sql: 'CREATE INDEX IF NOT EXISTS idx_orders_status_timestamp ON orders(status, timestamp)' },
       { name: 'idx_orders_order_source', sql: 'CREATE INDEX IF NOT EXISTS idx_orders_order_source ON orders(order_source)' },
       { name: 'idx_orders_table_number', sql: 'CREATE INDEX IF NOT EXISTS idx_orders_table_number ON orders(table_number)' },
-      
+
       // Order items indexes
       { name: 'idx_order_items_order_id', sql: 'CREATE INDEX IF NOT EXISTS idx_order_items_order_id ON order_items(order_id)' },
       { name: 'idx_order_items_product_id', sql: 'CREATE INDEX IF NOT EXISTS idx_order_items_product_id ON order_items(product_id)' },
-      
+
       // Stock movements indexes
       { name: 'idx_stock_movements_ingredient_id', sql: 'CREATE INDEX IF NOT EXISTS idx_stock_movements_ingredient_id ON stock_movements(ingredient_id)' },
       { name: 'idx_stock_movements_created_at', sql: 'CREATE INDEX IF NOT EXISTS idx_stock_movements_created_at ON stock_movements(created_at)' },
       { name: 'idx_stock_movements_type', sql: 'CREATE INDEX IF NOT EXISTS idx_stock_movements_type ON stock_movements(movement_type)' },
-      
+
       // Ingredients indexes
       { name: 'idx_ingredients_category', sql: 'CREATE INDEX IF NOT EXISTS idx_ingredients_category ON ingredients(category)' },
       { name: 'idx_ingredients_stock_level', sql: 'CREATE INDEX IF NOT EXISTS idx_ingredients_stock_level ON ingredients(current_stock, min_stock)' },
-      
+
       // Menu indexes
       { name: 'idx_menu_category', sql: 'CREATE INDEX IF NOT EXISTS idx_menu_category ON menu(category)' },
       { name: 'idx_menu_is_active', sql: 'CREATE INDEX IF NOT EXISTS idx_menu_is_active ON menu(is_active)' },
-      
+
       // Recipes indexes
       { name: 'idx_recipes_product_id_perf', sql: 'CREATE INDEX IF NOT EXISTS idx_recipes_product_id_perf ON recipes(product_id)' },
       { name: 'idx_recipes_ingredient_id', sql: 'CREATE INDEX IF NOT EXISTS idx_recipes_ingredient_id ON recipes(ingredient_id)' },
-      
+
       // Compliance indexes
       { name: 'idx_temp_log_equipment', sql: 'CREATE INDEX IF NOT EXISTS idx_temp_log_equipment ON compliance_temperature_log(equipment_id)' },
       { name: 'idx_cleaning_status', sql: 'CREATE INDEX IF NOT EXISTS idx_cleaning_status ON compliance_cleaning_schedule(status)' },
-      
+
       // Gift cards indexes
       { name: 'idx_gift_cards_code', sql: 'CREATE INDEX IF NOT EXISTS idx_gift_cards_code ON gift_cards(code)' },
     ];
-    
+
     let completed = 0;
     let errors = 0;
-    
+
     indexes.forEach(({ name, sql }) => {
       db.run(sql, (err) => {
         if (err && !err.message.includes('already exists')) {
@@ -10360,7 +10443,7 @@ function createPerformanceIndexes(db) {
           errors++;
         }
         completed++;
-        
+
         if (completed === indexes.length) {
           console.log(`✅ Performance indexes created: ${indexes.length - errors}/${indexes.length}`);
           resolve();
@@ -10374,11 +10457,11 @@ module.exports = {
   // Database protection exports
   protectedWrite,
   checkDatabaseIntegrity,
-  createAutoBackup, 
-  dbPromise, 
-  initializeDailyMenu, 
-  decreaseIngredientStock, 
-  increaseIngredientStock, 
+  createAutoBackup,
+  dbPromise,
+  initializeDailyMenu,
+  decreaseIngredientStock,
+  increaseIngredientStock,
   producePizzaDough,
   getActiveHappyHourSettings,
   applyHappyHourDiscount,
@@ -10456,9 +10539,9 @@ module.exports = {
   addIngredientDocumentRecord,
   getIngredientDocumentsRecords,
   deleteIngredientDocumentRecord,
-  
+
   // FUNCȚII NOI PENTRU RAPOARTE FISCALE:
-  getLastZReportNumber, 
+  getLastZReportNumber,
   saveZReport,
   addToLosses,
   getWasteRecords,
@@ -10471,15 +10554,15 @@ module.exports = {
   PIN_ROTATION_POLICY_VERSION,
   logWaiterPinAudit,
   getWaiterPinAudit,
-  
+
   // ✅ SĂPTĂMÂNA 2 - ZIUA 1 & 2: Stock valuation functions
   decreaseStockFIFO,
   decreaseStockLIFO,
   decreaseStockAverage,
-  
+
   // 📦 Packaging functions (05 Dec 2025)
   getRequiredPackagingForOrder,
-  
+
   // FAZA MT.2 - Query Isolation Layer
   tenantQuery,
   locationQuery,

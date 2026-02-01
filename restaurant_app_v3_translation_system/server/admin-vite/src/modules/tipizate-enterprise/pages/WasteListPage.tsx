@@ -14,6 +14,7 @@ export default function WasteListPage() {
       type="WASTE"
       newRoute="/tipizate-enterprise/waste/new"
       detailsRouteBase="/tipizate-enterprise/w-as-te"
+      titleStyle={{ color: '#1E40AF' }} // Albastru Bleu
     />
   );
 }

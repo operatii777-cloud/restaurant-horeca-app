@@ -21,7 +21,7 @@ type OrdersAnalyticsPanelProps = {
 };
 
 export const OrdersAnalyticsPanel = ({ onFeedback }: OrdersAnalyticsPanelProps) => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [period, setPeriod] = useState<PeriodOption>('week');
   const [customRange, setCustomRange] = useState<{ start: string | null; end: string | null }>({
     start: null,
@@ -50,10 +50,10 @@ export const OrdersAnalyticsPanel = ({ onFeedback }: OrdersAnalyticsPanelProps) 
     error,
     refetch,
   } = useApiQuery<CancellationAnalytics>(analyticsEndpoint);
-  
+
   // Previne infinite loop: loghează erori doar o dată
   const lastErrorRef = useRef<string | null>(null);
-  
+
   useEffect(() => {
     if (error && error !== lastErrorRef.current) {
       lastErrorRef.current = error;
@@ -134,7 +134,7 @@ export const OrdersAnalyticsPanel = ({ onFeedback }: OrdersAnalyticsPanelProps) 
     <div className="orders-analytics-panel">
       <section className="analytics-controls">
         <div className="analytics-period">
-          <span>"perioada analiza"</span>
+          <span>Perioadă analiză</span>
           <div className="analytics-period__buttons">
             {(['day', 'week', 'month', 'year', 'custom'] as PeriodOption[]).map((option) => (
               <button
@@ -173,12 +173,12 @@ export const OrdersAnalyticsPanel = ({ onFeedback }: OrdersAnalyticsPanelProps) 
               value={customRange.end ?? ''}
               onChange={(event) => setCustomRange((prev) => ({ ...prev, end: event.target.value || null }))}
             />
-            <button type="button" className="btn btn-primary" onClick={() => refetch()}>"Aplică"</button>
+            <button type="button" className="btn btn-primary" onClick={() => refetch()}>Aplică</button>
           </div>
         ) : null}
 
         <div className="analytics-actions">
-          <button type="button" className="btn btn-ghost" onClick={() => refetch()}>"Reîmprospătează"</button>
+          <button type="button" className="btn btn-ghost" onClick={() => refetch()}>Reîmprospătează</button>
           <button
             type="button"
             className="btn btn-ghost"
@@ -223,13 +223,13 @@ export const OrdersAnalyticsPanel = ({ onFeedback }: OrdersAnalyticsPanelProps) 
               icon={<span>❌</span>}
             />
             <StatCard
-              title="valoare pierduta"
+              title="Valoare pierdută"
               helper="Din comenzile anulate"
               value={`${analytics.general_stats.cancelled_value.toFixed(2)} RON`}
               icon={<span>💸</span>}
             />
             <StatCard
-              title="timp mediu anulare"
+              title="Timp mediu anulare"
               helper="minute"
               value={`${analytics.general_stats.avg_cancel_time_minutes} min`}
               icon={<span>⏱️</span>}
@@ -239,39 +239,39 @@ export const OrdersAnalyticsPanel = ({ onFeedback }: OrdersAnalyticsPanelProps) 
           <section className="analytics-grid">
             <div className="analytics-card">
               <header>
-                <h3>"distributie orara"</h3>
-                <span>"numar de anulari pe ora"</span>
+                <h3>Distribuție orară</h3>
+                <span>Număr de anulări pe oră</span>
               </header>
               {hourlyData.length ? (
-                <MiniBarChart data={hourlyData} tooltipFormatter={(value) => [`"Value"`, 'Anulări']} />
+                <MiniBarChart data={hourlyData} tooltipFormatter={(value) => [`Valoare`, 'Anulări']} />
               ) : (
-                <p>"nu exista date"</p>
+                <p>Nu există date</p>
               )}
             </div>
 
             <div className="analytics-card">
               <header>
-                <h3>"motive anulare"</h3>
+                <h3>Motive anulare</h3>
                 <span>Top 10 motive</span>
               </header>
-              {reasonsData.length ? <MiniDonutChart data={reasonsData} /> : <p>"nu exista motive definite"</p>}
+              {reasonsData.length ? <MiniDonutChart data={reasonsData} /> : <p>Nu există motive definite</p>}
             </div>
 
             <div className="analytics-card">
               <header>
-                <h3>"Tendințe"</h3>
-                <span>"evolutia zilnica a anularilor"</span>
+                <h3>Tendințe</h3>
+                <span>Evoluția zilnică a anulărilor</span>
               </header>
               {trendsData.length ? (
-                <MiniBarChart data={trendsData} tooltipFormatter={(value) => [`"Value"`, 'Anulări']} />
+                <MiniBarChart data={trendsData} tooltipFormatter={(value) => [`Valoare`, 'Anulări']} />
               ) : (
-                <p>"nu exista date pentru tendinte"</p>
+                <p>Nu există date pentru tendințe</p>
               )}
             </div>
 
             <div className="analytics-card">
               <header>
-                <h3>"top produse anulate"</h3>
+                <h3>Top produse anulate</h3>
               </header>
               <ul className="analytics-top-list">
                 {(analytics.top_cancelled_products ?? []).map((product) => (
@@ -280,7 +280,7 @@ export const OrdersAnalyticsPanel = ({ onFeedback }: OrdersAnalyticsPanelProps) 
                     <strong>{product.cancellation_count}</strong>
                   </li>
                 ))}
-                {!analytics.top_cancelled_products?.length ? <li>"nu exista produse in lista"</li> : null}
+                {!analytics.top_cancelled_products?.length ? <li>Nu există produse în listă</li> : null}
               </ul>
             </div>
           </section>
@@ -290,16 +290,16 @@ export const OrdersAnalyticsPanel = ({ onFeedback }: OrdersAnalyticsPanelProps) 
             <section className="analytics-breakdown">
               <div className="analytics-card">
                 <header>
-                  <h3>"breakdown pe tip comanda"</h3>
-                  <span>"anulari per tip de comanda"</span>
+                  <h3>Breakdown pe tip comandă</h3>
+                  <span>Anulări per tip de comandă</span>
                 </header>
                 <div className="breakdown-grid">
                   {analytics.breakdown_by_type.map((item: any, idx: number) => (
                     <div key={idx} className="breakdown-item">
                       <div className="breakdown-icon">
-                        {item.type === 'DELIVERY' ? '🛵' : 
-                         item.type === 'DRIVE_THRU' ? '🚗' : 
-                         item.type === 'TAKEOUT' ? '📦' : '🍽️'}
+                        {item.type === 'DELIVERY' ? '🛵' :
+                          item.type === 'DRIVE_THRU' ? '🚗' :
+                            item.type === 'TAKEOUT' ? '📦' : '🍽️'}
                       </div>
                       <div className="breakdown-info">
                         <strong>{item.type || 'N/A'}</strong>
@@ -321,7 +321,7 @@ export const OrdersAnalyticsPanel = ({ onFeedback }: OrdersAnalyticsPanelProps) 
       {predictions ? (
         <section className="analytics-predictions">
           <header>
-            <h3>"predictii anulari"</h3>
+            <h3>Predicții anulări</h3>
             <span>
               Interval analizat: {new Date(predictions.analysis_period.start).toLocaleDateString('ro-RO')} –' '
               {new Date(predictions.analysis_period.end).toLocaleDateString('ro-RO')}
@@ -329,13 +329,13 @@ export const OrdersAnalyticsPanel = ({ onFeedback }: OrdersAnalyticsPanelProps) 
           </header>
           <div className="analytics-predictions__grid">
             <StatCard
-              title="rata curenta"
+              title="Rată curentă"
               helper="Ultimele 7 zile"
               value={predictions.trend_analysis.current_rate}
               icon={<span>📈</span>}
             />
             <StatCard
-              title="rata precedenta"
+              title="Rată precedentă"
               helper="Zilele 8-14"
               value={predictions.trend_analysis.previous_rate}
               icon={<span>📉</span>}
@@ -351,7 +351,7 @@ export const OrdersAnalyticsPanel = ({ onFeedback }: OrdersAnalyticsPanelProps) 
           {predictions.alerts && predictions.alerts.length > 0 ? (
             <div className="analytics-alerts">
               {predictions.alerts.map((alert, index) => (
-                <div key={`${alert.type}-"Index"`} className={classNames('analytics-alert', `is-${alert.severity}`)}>
+                <div key={`${alert.type}-Alert`} className={classNames('analytics-alert', `is-${alert.severity}`)}>
                   <strong>{alert.message}</strong>
                 </div>
               ))}
@@ -361,7 +361,7 @@ export const OrdersAnalyticsPanel = ({ onFeedback }: OrdersAnalyticsPanelProps) 
           {predictions.recommendations && predictions.recommendations.length > 0 ? (
             <ul className="analytics-recommendations">
               {predictions.recommendations.map((item, index) => (
-                <li key={`"Item"-"Index"`}>{item}</li>
+                <li key={`Item-${index}`}>{item}</li>
               ))}
             </ul>
           ) : null}
@@ -372,13 +372,17 @@ export const OrdersAnalyticsPanel = ({ onFeedback }: OrdersAnalyticsPanelProps) 
         <section className="analytics-correlation">
           <header>
             <h3>Corelație stoc – anulări</h3>
-            <span>{`Analiză generată la ${new Date(correlation.generated_at).toLocaleString('ro-RO')}`}</span>
+            <span>
+              {correlation.generated_at && new Date(correlation.generated_at).getTime() > 0
+                ? `Analiză generată la ${new Date(correlation.generated_at).toLocaleString('ro-RO')}`
+                : 'Analiză generată recent'}
+            </span>
           </header>
           <div className="analytics-correlation__table">
             <div className="analytics-correlation__header">
               <span>Produs</span>
-              <span>"Anulări"</span>
-              <span>"stoc curent"</span>
+              <span>Anulări</span>
+              <span>Stoc curent</span>
               <span>Risc</span>
             </div>
             <div className="analytics-correlation__body">
@@ -398,7 +402,7 @@ export const OrdersAnalyticsPanel = ({ onFeedback }: OrdersAnalyticsPanelProps) 
                   </div>
                 ))
               ) : (
-                <p>"nu au fost identificate produse in risc"</p>
+                <p>Nu au fost identificate produse în risc</p>
               )}
             </div>
           </div>

@@ -34,18 +34,18 @@ export default function StockMovesPage() {
           const type = params.value;
           const baseClass = "px-2 py-0.5 rounded-full text-xs font-semibold inline-flex items-center";
           if (type === "NIR") {
-            return `<span class="${baseClass} bg-green-100 text-green-800">NIR</span>`;
+            return <span className={`${baseClass} bg-green-100 text-green-800`}>NIR</span>;
           }
           if (type === "CONSUME") {
-            return `<span class="${baseClass} bg-red-100 text-red-800">CONSUME</span>`;
+            return <span className={`${baseClass} bg-red-100 text-red-800`}>CONSUME</span>;
           }
           if (type === "ADJUST") {
-            return `<span class="${baseClass} bg-sky-100 text-sky-800">ADJUST</span>`;
+            return <span className={`${baseClass} bg-sky-100 text-sky-800`}>ADJUST</span>;
           }
           if (type === "TRANSFER") {
-            return `<span class="${baseClass} bg-violet-100 text-violet-800">TRANSFER</span>`;
+            return <span className={`${baseClass} bg-violet-100 text-violet-800`}>TRANSFER</span>;
           }
-          return `<span class="${baseClass} bg-slate-100 text-slate-800">${type ?? "—"}</span>`;
+          return <span className={`${baseClass} bg-slate-100 text-slate-800`}>{type ?? "—"}</span>;
         },
       },
       { headerName: "Ingredient", field: "ingredient_name", flex: 1, minWidth: 180, pinned: "left" },
@@ -104,16 +104,16 @@ export default function StockMovesPage() {
             "";
           if (!type || !refId) return "";
           if (type === "NIR") {
-            return `<button class="btn btn-link px-1 text-primary-600" data-action="view-nir" data-id="${refId}">NIR #${docNumber || refId}</button>`;
+            return <button className="btn btn-link px-1 text-primary-600" data-action="view-nir" data-id={refId}>NIR #{docNumber || refId}</button>;
           }
           if (type === "CONSUME") {
-            return `<button class="btn btn-link px-1 text-primary-600" data-action="view-consume" data-id="${refId}">Bon consum #${docNumber || refId}</button>`;
+            return <button className="btn btn-link px-1 text-primary-600" data-action="view-consume" data-id={refId}>Bon consum #{docNumber || refId}</button>;
           }
           if (type === "ADJUST") {
-            return `<button class="btn btn-link px-1 text-primary-600" data-action="view-inventory" data-id="${refId}">Inventar #${docNumber || refId}</button>`;
+            return <button className="btn btn-link px-1 text-primary-600" data-action="view-inventory" data-id={refId}>Inventar #{docNumber || refId}</button>;
           }
           if (type === "TRANSFER") {
-            return `<button class="btn btn-link px-1 text-primary-600" data-action="view-transfer" data-id="${refId}">Transfer #${docNumber || refId}</button>`;
+            return <button className="btn btn-link px-1 text-primary-600" data-action="view-transfer" data-id={refId}>Transfer #{docNumber || refId}</button>;
           }
           return "";
         },

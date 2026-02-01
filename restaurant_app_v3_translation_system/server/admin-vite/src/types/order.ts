@@ -12,7 +12,9 @@ export type OrderStatus =
   | 'ready'
   | 'delivered'
   | 'paid'
-  | 'cancelled';
+  | 'cancelled'
+  | 'ready_for_pickup'
+  | 'served';
 
 export type OrderMode = 'dine_in' | 'takeout' | "Delivery" | 'drive_thru';
 
@@ -101,47 +103,47 @@ export interface CanonicalOrder {
   status: OrderStatus;
   type: OrderMode | null;
   source?: OrderSource | null;
-  
+
   // Table/waiter info
   table?: string | number | null;
   waiter_id?: number | null;
   courier_id?: number | null;
-  
+
   // Customer
   customer: OrderCustomer;
-  
+
   // Delivery
   delivery: OrderDelivery;
-  
+
   // Drive-thru
   drive_thru: OrderDriveThru;
-  
+
   // Notes
   notes: OrderNotes;
-  
+
   // Totals
   totals: OrderTotals;
-  
+
   // Timestamps
   timestamps: OrderTimestamps;
-  
+
   // Flags
   is_paid: boolean;
   is_cancelled: boolean;
   is_together: boolean;
-  
+
   // Payment
   payment: OrderPayment;
-  
+
   // External integrations
   external: OrderExternal;
-  
+
   // Location
   location_id: number;
-  
+
   // Items
   items: OrderItem[];
-  
+
   // PHASE S11 - e-Factura integration
   efacturaStatus?: import('./invoice').EFacturaStatus | null;
   efacturaInvoiceId?: number | null;

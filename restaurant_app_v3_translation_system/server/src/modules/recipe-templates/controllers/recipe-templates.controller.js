@@ -4,7 +4,7 @@
  * Factory pattern: accepts db as dependency
  */
 
-module.exports = (db) => {
+module.exports = ({ db }) => {
     // GET /api/recipe-templates
     async function getAllRecipeTemplates(req, res, next) {
         try {
@@ -16,7 +16,7 @@ module.exports = (db) => {
                 limit = 1000,
                 offset = 0
             } = req.query;
-            
+
             let query = `
                 SELECT 
                     id, name, name_en, category, category_en,
@@ -32,38 +32,38 @@ module.exports = (db) => {
                 FROM recipe_templates
                 WHERE is_active = 1
             `;
-            
+
             const params = [];
-            
+
             if (category) {
                 query += ` AND category = ?`;
                 params.push(category);
             }
-            
+
             if (search) {
                 query += ` AND (name LIKE ? OR name_en LIKE ? OR description LIKE ?)`;
                 const searchParam = `%${search}%`;
                 params.push(searchParam, searchParam, searchParam);
             }
-            
+
             if (is_vegetarian === 'true') {
                 query += ` AND is_vegetarian = 1`;
             }
-            
+
             if (is_popular === 'true') {
                 query += ` AND is_popular = 1`;
             }
-            
+
             query += ` ORDER BY is_popular DESC, category, name LIMIT ? OFFSET ?`;
             params.push(parseInt(limit), parseInt(offset));
-            
+
             // db should be a Database object from factory pattern
             db.all(query, params, (err, rows) => {
                 if (err) {
                     console.error('❌ Eroare la încărcarea catalogului rețete:', err.message);
                     return res.status(500).json({ success: false, error: err.message });
                 }
-                
+
                 console.log(`✅ Catalog rețete: ${rows.length} rezultate`);
                 res.json({ success: true, recipes: rows });
             });
@@ -77,18 +77,18 @@ module.exports = (db) => {
     async function getRecipeTemplateById(req, res, next) {
         try {
             const { id } = req.params;
-            
+
             const template = await new Promise((resolve, reject) => {
                 db.get(`SELECT * FROM recipe_templates WHERE id = ?`, [id], (err, row) => {
                     if (err) reject(err);
                     else resolve(row);
                 });
             });
-            
+
             if (!template) {
                 return res.status(404).json({ success: false, error: 'Rețeta nu a fost găsită în catalog' });
             }
-            
+
             const ingredients = await new Promise((resolve, reject) => {
                 db.all(`
                     SELECT 
@@ -109,10 +109,10 @@ module.exports = (db) => {
                     else resolve(rows || []);
                 });
             });
-            
+
             console.log(`✅ Detalii rețetă template #${id}: ${template.name} cu ${ingredients.length} ingrediente`);
-            res.json({ 
-                success: true, 
+            res.json({
+                success: true,
                 template,
                 ingredients
             });
@@ -131,39 +131,39 @@ module.exports = (db) => {
                 image_url = null,
                 description_custom = null
             } = req.body;
-            
+
             if (!price || price <= 0) {
-                return res.status(400).json({ 
-                    success: false, 
-                    error: 'Prețul este obligatoriu și trebuie să fie > 0' 
+                return res.status(400).json({
+                    success: false,
+                    error: 'Prețul este obligatoriu și trebuie să fie > 0'
                 });
             }
-            
+
             const template = await new Promise((resolve, reject) => {
                 db.get('SELECT * FROM recipe_templates WHERE id = ?', [id], (err, row) => {
                     if (err) reject(err);
                     else resolve(row);
                 });
             });
-            
+
             if (!template) {
                 return res.status(404).json({ success: false, error: 'Rețeta nu a fost găsită în catalog' });
             }
-            
+
             const existing = await new Promise((resolve, reject) => {
                 db.get('SELECT id, name FROM menu WHERE name = ? AND category = ?', [template.name, template.category], (err, row) => {
                     if (err) reject(err);
                     else resolve(row);
                 });
             });
-            
+
             if (existing) {
-                return res.status(400).json({ 
-                    success: false, 
+                return res.status(400).json({
+                    success: false,
                     error: `Produsul "${template.name}" există deja în meniu (ID: ${existing.id})`
                 });
             }
-            
+
             const newProductId = await new Promise((resolve, reject) => {
                 db.run(`
                     INSERT INTO menu (
@@ -201,7 +201,7 @@ module.exports = (db) => {
                     template.prep_time || null,
                     image_url || template.image_url || null,
                     1
-                ], function(err) {
+                ], function (err) {
                     if (err) {
                         reject(err);
                     } else {
@@ -209,7 +209,7 @@ module.exports = (db) => {
                     }
                 });
             });
-            
+
             const templateIngredients = await new Promise((resolve, reject) => {
                 db.all(`
                     SELECT 
@@ -222,10 +222,10 @@ module.exports = (db) => {
                     else resolve(rows || []);
                 });
             });
-            
+
             let ingredientsCopied = 0;
             let ingredientsCreated = 0;
-            
+
             for (const templateIng of templateIngredients) {
                 const catalogIngredient = await new Promise((resolve, reject) => {
                     db.get('SELECT * FROM ingredient_catalog WHERE id = ?', [templateIng.catalog_ingredient_id], (err, row) => {
@@ -233,19 +233,19 @@ module.exports = (db) => {
                         else resolve(row);
                     });
                 });
-                
+
                 if (!catalogIngredient) {
                     console.warn(`⚠️  Ingredient catalog #${templateIng.catalog_ingredient_id} nu găsit - SKIP`);
                     continue;
                 }
-                
+
                 let ingredientId = await new Promise((resolve, reject) => {
                     db.get('SELECT id FROM ingredients WHERE name = ?', [catalogIngredient.name], (err, row) => {
                         if (err) reject(err);
                         else resolve(row ? row.id : null);
                     });
                 });
-                
+
                 if (!ingredientId) {
                     ingredientId = await new Promise((resolve, reject) => {
                         db.run(`
@@ -275,7 +275,7 @@ module.exports = (db) => {
                             catalogIngredient.estimated_cost_per_kg || 0,
                             1,
                             0
-                        ], function(err) {
+                        ], function (err) {
                             if (err) {
                                 reject(err);
                             } else {
@@ -285,7 +285,7 @@ module.exports = (db) => {
                         });
                     });
                 }
-                
+
                 await new Promise((resolve, reject) => {
                     db.run(`
                         INSERT INTO recipes (
@@ -312,17 +312,17 @@ module.exports = (db) => {
                     });
                 });
             }
-            
+
             console.log(`✅ Rețetă importată: ${template.name} → Produs #${newProductId} (${ingredientsCopied} ingrediente, ${ingredientsCreated} create automat)`);
-            
-            res.json({ 
-                success: true, 
+
+            res.json({
+                success: true,
                 message: `Rețeta "${template.name}" a fost adăugată în meniu!`,
                 product_id: newProductId,
                 ingredients_copied: ingredientsCopied,
                 ingredients_created: ingredientsCreated
             });
-            
+
         } catch (error) {
             console.error('❌ Eroare la import rețetă:', error);
             res.status(500).json({ success: false, error: error.message });

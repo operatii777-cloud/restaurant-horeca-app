@@ -14,7 +14,7 @@ interface StockHiddenIngredientsTabProps {
 }
 
 export const StockHiddenIngredientsTab = ({ onFeedback }: StockHiddenIngredientsTabProps) => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const { data, loading, error, refetch } = useApiQuery<Ingredient[]>('/api/ingredients?hidden_only=true');
   const ingredients = useMemo(() => (Array.isArray(data) ? data : []), [data]);
 
@@ -41,12 +41,12 @@ export const StockHiddenIngredientsTab = ({ onFeedback }: StockHiddenIngredients
       },
       {
         headerName: 'Stoc curent',
-        field: "Stoc Actual",
+        field: 'current_stock' as any,
         width: 140,
       },
       {
         headerName: 'Stoc minim',
-        field: "Stoc Minim",
+        field: 'min_stock' as any,
         width: 140,
       },
       {
@@ -54,11 +54,12 @@ export const StockHiddenIngredientsTab = ({ onFeedback }: StockHiddenIngredients
         colId: 'actions',
         width: 180,
         pinned: 'right',
-        cellRenderer: () =>
-          `<div class="stock-hidden__row-actions">
-            <button data-action="restore">â†©ï¸ Restaurează</button>
-            <button data-action="details">ðŸ” Detalii</button>
-          </div>`,
+        cellRenderer: () => (
+          <div className="stock-hidden__row-actions">
+            <button data-action="restore">↩️ Restaurează</button>
+            <button data-action="details">🔎 Detalii</button>
+          </div>
+        ),
       },
     ],
     [],
@@ -84,7 +85,7 @@ export const StockHiddenIngredientsTab = ({ onFeedback }: StockHiddenIngredients
             await refreshData();
           })
           .catch((error) => {
-            console.error('âÂÅ’ Eroare la restaurarea ingredientului:', error);
+            console.error('❌ Eroare la restaurarea ingredientului:', error);
             const message = error instanceof Error ? error.message : 'Nu s-a putut restaura ingredientul.';
             onFeedback(message, 'error');
           });

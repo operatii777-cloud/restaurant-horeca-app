@@ -22,9 +22,9 @@ const isTrue = (value: unknown) => value === true || value === 1 || value === '1
 
 type FeedbackState =
   | {
-      type: 'success' | 'error' | 'warning' | 'info';
-      message: string;
-    }
+    type: 'success' | 'error' | 'warning' | 'info';
+    message: string;
+  }
   | null;
 
 type IngredientDetailsTab = 'overview' | 'documents' | 'suppliers' | 'traceability';
@@ -49,7 +49,7 @@ const stockDistributionData = [
 ];
 
 export const IngredientsPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [quickFilter, setQuickFilter] = useState('');
   const [showHidden, setShowHidden] = useState(false);
   const [editorOpen, setEditorOpen] = useState(false);
@@ -89,19 +89,19 @@ export const IngredientsPage = () => {
         cellClass: (params) => (isTrue(params.value) ? 'cell-inactive' : 'cell-active'),
       },
       {
-        field: "Stoc Actual",
+        field: 'current_stock',
         headerName: 'Stoc curent',
         width: 140,
         valueFormatter: ({ value }) => formatNumber(Number(value)),
       },
       {
-        field: "Stoc Minim",
+        field: 'min_stock',
         headerName: 'Stoc minim',
         width: 130,
         valueFormatter: ({ value }) => formatNumber(Number(value)),
       },
       {
-        field: "Cost/Unitate",
+        field: 'cost_per_unit',
         headerName: 'Cost/unitate',
         width: 140,
         valueFormatter: ({ value }) =>
@@ -110,7 +110,7 @@ export const IngredientsPage = () => {
       { field: 'supplier', headerName: 'Furnizor', minWidth: 180 },
       {
         field: 'origin_country',
-        headerName: 'Èšară origine',
+        headerName: 'Țară origine',
         width: 150,
         valueFormatter: ({ value }) => value ?? '-',
       },
@@ -121,7 +121,7 @@ export const IngredientsPage = () => {
         pinned: 'right',
         sortable: false,
         filter: false,
-        valueGetter: () => 'Gestionează â†’',
+        valueGetter: () => 'Gestionează →',
         cellClass: 'ingredients-grid__action-cell',
       },
     ],
@@ -149,7 +149,7 @@ export const IngredientsPage = () => {
         handleEditIngredient(event.data);
       }
     },
-    'handleEditIngredient',
+    [handleEditIngredient],
   );
 
   const handleRowDoubleClicked = useCallback(
@@ -158,7 +158,7 @@ export const IngredientsPage = () => {
         handleEditIngredient(event.data);
       }
     },
-    'handleEditIngredient',
+    [handleEditIngredient],
   );
 
   const totalIngredients = filteredData.length;
@@ -176,7 +176,7 @@ export const IngredientsPage = () => {
       setDetailsTab(tab);
       setDetailsOpen(true);
     },
-    'primaryIngredient',
+    [primaryIngredient],
   );
 
   const handleOpenBulkModal = useCallback(() => {
@@ -220,7 +220,7 @@ export const IngredientsPage = () => {
       setSelectedIngredients([]);
       await refetch();
     } catch (apiError: any) {
-      console.error('âŒ Eroare la ascunderea ingredientelor:', apiError);
+      console.error('❌ Eroare la ascunderea ingredientelor:', apiError);
       setFeedback({ type: 'error', message: apiError?.response?.data?.error ?? 'Nu s-a putut finaliza acțiunea.' });
     }
   }, [selectedIngredients, selectionCount, refetch]);
@@ -236,7 +236,7 @@ export const IngredientsPage = () => {
       setSelectedIngredients([]);
       await refetch();
     } catch (apiError: any) {
-      console.error('âŒ Eroare la restaurarea ingredientelor:', apiError);
+      console.error('❌ Eroare la restaurarea ingredientelor:', apiError);
       setFeedback({ type: 'error', message: apiError?.response?.data?.error ?? 'Nu s-a putut finaliza acțiunea de restaurare.' });
     }
   }, [selectedIngredients, selectionCount, refetch]);
@@ -256,7 +256,7 @@ export const IngredientsPage = () => {
       'Stoc minim',
       'Cost/unitate',
       'Furnizor',
-      'Èšară origine',
+      'Țară origine',
       'Vizibil',
     ];
 
@@ -274,7 +274,7 @@ export const IngredientsPage = () => {
     ]);
 
     const csvContent = [headers.join(','), ...rows.map((row) => row.join(','))].join('\n');
-    const blob = new Blob('csvContent', { type: 'text/csv;charset=utf-8;' });
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
@@ -310,7 +310,7 @@ export const IngredientsPage = () => {
           <div className="ingredients-hero__labels">
             <span className="ingredients-chip ingredients-chip--primary">Trasabilitate live</span>
             <span className="ingredients-chip">HACCP ready</span>
-            <span className="ingredients-chip">"integrat cu receptii loturi"</span>
+            <span className="ingredients-chip">Integrat cu recepții loturi</span>
           </div>
           <h2>Inventar operațional "“ Ingrediente</h2>
           <p>
@@ -325,9 +325,9 @@ export const IngredientsPage = () => {
             helper="Disponibile în meniuri și rețete"
             value={`${activeIngredients}`}
             trendLabel="vs. săptămâna trecută"
-            trendValue="â–² 12%"
+            trendValue="▲ 12%"
             trendDirection="up"
-            icon={<span>[Check]</span>}
+            icon={<span>✅</span>}
           />
 
           <StatCard
@@ -337,7 +337,7 @@ export const IngredientsPage = () => {
             trendLabel="Necesită acțiune"
             trendValue="9 urgente"
             trendDirection="down"
-            icon={<span>âš ï¸</span>}
+            icon={<span>⚠️</span>}
             footer={
               <button type="button" className="ingredients-link-button">
                 Vezi lista
@@ -352,14 +352,14 @@ export const IngredientsPage = () => {
             trendLabel="Documente expirate"
             trendValue="2"
             trendDirection="flat"
-            icon={<span>ðŸ“„</span>}
+            icon={<span>📄</span>}
           />
         </div>
 
         <div className="ingredients-hero__analytics">
           <div className="ingredients-analytics-card">
             <header>
-              <span className="ingredients-analytics-title">"top consum saptamanal"</span>
+              <span className="ingredients-analytics-title">Top consum săptămânal</span>
               <span className="ingredients-analytics-helper">kg utilizați / zi</span>
             </header>
             <MiniBarChart data={topConsumptionData} />
@@ -367,7 +367,7 @@ export const IngredientsPage = () => {
 
           <div className="ingredients-analytics-card">
             <header>
-              <span className="ingredients-analytics-title">"distributie stoc pe categorii"</span>
+              <span className="ingredients-analytics-title">Distribuție stoc pe categorii</span>
               <span className="ingredients-analytics-helper">% din total stoc</span>
             </header>
             <MiniDonutChart data={stockDistributionData} />
@@ -389,7 +389,7 @@ export const IngredientsPage = () => {
           <TableFilter
             value={quickFilter}
             onChange={setQuickFilter}
-            placeholder="cauta ingredient dupa nume categorie furnizor sau "
+            placeholder="Caută ingredient după nume, categorie sau furnizor..."
             aria-label="Filtru rapid ingrediente"
           />
           <label className="ingredients-toggle">
@@ -403,25 +403,25 @@ export const IngredientsPage = () => {
         </div>
         <div className="ingredients-toolbar__actions">
           <button type="button" className="ingredients-btn ingredients-btn--ghost" onClick={() => refetch()}>
-            âŸ³ Reîmprospătează datele
+            🔄 Reîmprospătează datele
           </button>
           <button type="button" className="ingredients-btn ingredients-btn--ghost" onClick={handleOpenBulkModal} disabled={selectionCount === 0}>
-            ðŸ“¦ Ajustare în masă
+            📦 Ajustare în masă
           </button>
           <button type="button" className="ingredients-btn ingredients-btn--ghost" onClick={() => handleOpenDetails('documents')} disabled={!primaryIngredient}>
-            ðŸ“‘ Documente HACCP
+            📄 Documente HACCP
           </button>
           <button type="button" className="ingredients-btn ingredients-btn--ghost" onClick={() => handleOpenDetails('traceability')} disabled={!primaryIngredient}>
-            ðŸ§­ Trasabilitate
+            🧭 Trasabilitate
           </button>
           <button type="button" className="ingredients-btn ingredients-btn--ghost" onClick={handleHideSelected} disabled={selectionCount === 0}>
-            ðŸ‘» Marchează neinventariabil
+            👻 Marchează neinventariabil
           </button>
           <button type="button" className="ingredients-btn ingredients-btn--ghost" onClick={handleRestoreSelected} disabled={selectionCount === 0}>
-            [Check] Restaurează selecția
+            ✅ Restaurează selecția
           </button>
           <button type="button" className="ingredients-btn ingredients-btn--primary" onClick={handleExportCsv}>
-            â¬‡ï¸ Export CSV
+            ⬇️ Export CSV
           </button>
         </div>
       </section>
@@ -440,8 +440,8 @@ export const IngredientsPage = () => {
       <section className="ingredients-grid-panel">
         <header>
           <div>
-            <h3>"lista completa de ingrediente"</h3>
-            <p>{`${totalIngredients} ingrediente gestionate Â· Mod filtrare rapidă activ`}</p>
+            <h3>Lista completă de ingrediente</h3>
+            <p>{`${totalIngredients} ingrediente • Mod filtrare rapidă activ`}</p>
           </div>
           <div className="ingredients-selection">
             {primaryIngredient
@@ -480,20 +480,20 @@ export const IngredientsPage = () => {
           <header>
             <span>Trasabilitate & documente</span>
             <button type="button" className="ingredients-link-button">
-              Vezi traseu complet â†’
+              Vezi traseu complet →
             </button>
           </header>
           <ul>
             <li>
-              <strong>"documente haccp valabile"</strong>
+              <strong>Documente HACCP valabile</strong>
               <span>184 / 192</span>
             </li>
             <li>
-              <strong>"loturi receptionate saptamana aceasta"</strong>
+              <strong>Loturi recepționate săptămâna aceasta</strong>
               <span>27 loturi</span>
             </li>
             <li>
-              <strong>"ingrediente cu temperatura critica"</strong>
+              <strong>Ingrediente cu temperatură critică</strong>
               <span>3 ingrediente</span>
             </li>
           </ul>
@@ -503,7 +503,7 @@ export const IngredientsPage = () => {
           <header>
             <span>Automatizări & alerte</span>
             <button type="button" className="ingredients-link-button">
-              Configurează notificări â†’
+              Configurează notificări →
             </button>
           </header>
           <ul>
@@ -512,7 +512,7 @@ export const IngredientsPage = () => {
               <span>Livrare în 6h</span>
             </li>
             <li>
-              <strong>"receptii in curs de validare"</strong>
+              <strong>Recepții în curs de validare</strong>
               <span>2 documente</span>
             </li>
             <li>

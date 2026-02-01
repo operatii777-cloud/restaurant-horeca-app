@@ -35,7 +35,7 @@ type SupplierRecord = {
 };
 
 export function IngredientEditorModal({ open, ingredient, onClose, onSaved }: IngredientEditorModalProps) {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const isEditing = Boolean(ingredient?.id);
 
   const { data: categoriesData } = useApiQuery<CategoryRecord[]>(
@@ -76,14 +76,14 @@ export function IngredientEditorModal({ open, ingredient, onClose, onSaved }: In
         unit_custom: undefined,
         current_stock: undefined,
         min_stock: undefined,
-        max_stock: undefined,  // [Check] SÄ‚PTÄ‚MÃ‚NA 1 - ZIUA 4
-        safety_stock: undefined,  // [Check] SÄ‚PTÄ‚MÃ‚NA 1 - ZIUA 4
-        reorder_quantity: undefined,  // [Check] SÄ‚PTÄ‚MÃ‚NA 1 - ZIUA 4
-        purchase_unit: undefined,  // [Check] SÄ‚PTÄ‚MÃ‚NA 2 - ZIUA 4
-        recipe_unit: undefined,  // [Check] SÄ‚PTÄ‚MÃ‚NA 2 - ZIUA 4
-        inventory_unit: undefined,  // [Check] SÄ‚PTÄ‚MÃ‚NA 2 - ZIUA 4
-        purchase_to_inventory_factor: undefined,  // [Check] SÄ‚PTÄ‚MÃ‚NA 2 - ZIUA 4
-        inventory_to_recipe_factor: undefined,  // [Check] SÄ‚PTÄ‚MÃ‚NA 2 - ZIUA 4
+        max_stock: undefined,
+        safety_stock: undefined,
+        reorder_quantity: undefined,
+        purchase_unit: undefined,
+        recipe_unit: undefined,
+        inventory_unit: undefined,
+        purchase_to_inventory_factor: undefined,
+        inventory_to_recipe_factor: undefined,
         cost_per_unit: undefined,
         origin_country: undefined,
         default_supplier_id: null,
@@ -102,14 +102,14 @@ export function IngredientEditorModal({ open, ingredient, onClose, onSaved }: In
       unit_custom: undefined,
       current_stock: ingredient.current_stock ?? undefined,
       min_stock: ingredient.min_stock ?? undefined,
-      max_stock: (ingredient as any).max_stock ?? undefined,  // [Check] SÄ‚PTÄ‚MÃ‚NA 1 - ZIUA 4
-      safety_stock: (ingredient as any).safety_stock ?? undefined,  // [Check] SÄ‚PTÄ‚MÃ‚NA 1 - ZIUA 4
-      reorder_quantity: (ingredient as any).reorder_quantity ?? undefined,  // [Check] SÄ‚PTÄ‚MÃ‚NA 1 - ZIUA 4
-      purchase_unit: (ingredient as any).purchase_unit ?? undefined,  // [Check] SÄ‚PTÄ‚MÃ‚NA 2 - ZIUA 4
-      recipe_unit: (ingredient as any).recipe_unit ?? undefined,  // [Check] SÄ‚PTÄ‚MÃ‚NA 2 - ZIUA 4
-      inventory_unit: (ingredient as any).inventory_unit ?? undefined,  // [Check] SÄ‚PTÄ‚MÃ‚NA 2 - ZIUA 4
-      purchase_to_inventory_factor: (ingredient as any).purchase_to_inventory_factor ?? undefined,  // [Check] SÄ‚PTÄ‚MÃ‚NA 2 - ZIUA 4
-      inventory_to_recipe_factor: (ingredient as any).inventory_to_recipe_factor ?? undefined,  // [Check] SÄ‚PTÄ‚MÃ‚NA 2 - ZIUA 4
+      max_stock: (ingredient as any).max_stock ?? undefined,
+      safety_stock: (ingredient as any).safety_stock ?? undefined,
+      reorder_quantity: (ingredient as any).reorder_quantity ?? undefined,
+      purchase_unit: (ingredient as any).purchase_unit ?? undefined,
+      recipe_unit: (ingredient as any).recipe_unit ?? undefined,
+      inventory_unit: (ingredient as any).inventory_unit ?? undefined,
+      purchase_to_inventory_factor: (ingredient as any).purchase_to_inventory_factor ?? undefined,
+      inventory_to_recipe_factor: (ingredient as any).inventory_to_recipe_factor ?? undefined,
       cost_per_unit: ingredient.cost_per_unit ?? undefined,
       origin_country: ingredient.origin_country ?? undefined,
       default_supplier_id: ingredient.default_supplier_id ?? null,
@@ -174,7 +174,6 @@ export function IngredientEditorModal({ open, ingredient, onClose, onSaved }: In
         customFieldPlaceholder: 'Introdu unitate (ex: bax)',
         helperText: 'Unitatea folosită în gestiune (inventar)',
       },
-      // [Check] SÄ‚PTÄ‚MÃ‚NA 2 - ZIUA 4: Purchase Units
       {
         name: 'purchase_unit',
         label: 'Unitate de cumpărare',
@@ -197,19 +196,19 @@ export function IngredientEditorModal({ open, ingredient, onClose, onSaved }: In
       },
       {
         name: 'purchase_to_inventory_factor',
-        label: 'Factor conversie: Cumpărare â†’ Inventar',
+        label: 'Factor conversie: Cumpărare → Inventar',
         type: 'number',
         placeholder: '1',
         step: 0.001,
-        helperText: 'Ex: 1 cutie = 10 kg â†’ factor = 10',
+        helperText: 'Ex: 1 cutie = 10 kg → factor = 10',
       },
       {
         name: 'inventory_to_recipe_factor',
-        label: 'Factor conversie: Inventar â†’ Rețetă',
+        label: 'Factor conversie: Inventar → Rețetă',
         type: 'number',
         placeholder: '1',
         step: 0.001,
-        helperText: 'Ex: 1 kg = 1000 g â†’ factor = 1000',
+        helperText: 'Ex: 1 kg = 1000 g → factor = 1000',
       },
       {
         name: "Stoc Actual",
@@ -255,7 +254,7 @@ export function IngredientEditorModal({ open, ingredient, onClose, onSaved }: In
       },
       {
         name: 'origin_country',
-        label: 'Èšară de origine',
+        label: 'Țară de origine',
         type: 'text',
         placeholder: 'Ex: Spania',
       },
@@ -272,7 +271,7 @@ export function IngredientEditorModal({ open, ingredient, onClose, onSaved }: In
         name: 'haccp_notes',
         label: 'Note HACCP / trasabilitate',
         type: 'textarea',
-        placeholder: 'Respectă lanțul rece 0-4Â°C. Consum în max. 48h după deschiderea lotului.',
+        placeholder: 'Respectă lanțul rece 0-4°C. Consum în max. 48h după deschiderea lotului.',
         colSpan: 2,
       },
       {
@@ -312,14 +311,14 @@ export function IngredientEditorModal({ open, ingredient, onClose, onSaved }: In
       unit: unitValue ?? null,
       current_stock: values.current_stock ?? 0,
       min_stock: values.min_stock ?? 0,
-      max_stock: (values as any).max_stock ?? null,  // [Check] SÄ‚PTÄ‚MÃ‚NA 1 - ZIUA 4
-      safety_stock: (values as any).safety_stock ?? null,  // [Check] SÄ‚PTÄ‚MÃ‚NA 1 - ZIUA 4
-      reorder_quantity: (values as any).reorder_quantity ?? null,  // [Check] SÄ‚PTÄ‚MÃ‚NA 1 - ZIUA 4
-      purchase_unit: (values as any).purchase_unit ?? null,  // [Check] SÄ‚PTÄ‚MÃ‚NA 2 - ZIUA 4
-      recipe_unit: (values as any).recipe_unit ?? null,  // [Check] SÄ‚PTÄ‚MÃ‚NA 2 - ZIUA 4
-      inventory_unit: (values as any).inventory_unit ?? null,  // [Check] SÄ‚PTÄ‚MÃ‚NA 2 - ZIUA 4
-      purchase_to_inventory_factor: (values as any).purchase_to_inventory_factor ?? null,  // [Check] SÄ‚PTÄ‚MÃ‚NA 2 - ZIUA 4
-      inventory_to_recipe_factor: (values as any).inventory_to_recipe_factor ?? null,  // [Check] SÄ‚PTÄ‚MÃ‚NA 2 - ZIUA 4
+      max_stock: (values as any).max_stock ?? null,
+      safety_stock: (values as any).safety_stock ?? null,
+      reorder_quantity: (values as any).reorder_quantity ?? null,
+      purchase_unit: (values as any).purchase_unit ?? null,
+      recipe_unit: (values as any).recipe_unit ?? null,
+      inventory_unit: (values as any).inventory_unit ?? null,
+      purchase_to_inventory_factor: (values as any).purchase_to_inventory_factor ?? null,
+      inventory_to_recipe_factor: (values as any).inventory_to_recipe_factor ?? null,
       cost_per_unit: values.cost_per_unit ?? 0,
       origin_country: values.origin_country ?? null,
       default_supplier_id: defaultSupplierId,
@@ -343,7 +342,7 @@ export function IngredientEditorModal({ open, ingredient, onClose, onSaved }: In
     <Modal
       isOpen={open}
       onClose={onClose}
-      title={isEditing ? `Editează ingredientul "ž${ingredient?.name}"` : 'Adaugă ingredient'}
+      title={isEditing ? `Editează ingredientul "${ingredient?.name}"` : 'Adaugă ingredient'}
       description="Completează informațiile pentru trasabilitate și gestiune stocuri. Câmpurile obligatorii sunt marcate cu *."
       size="xl"
     >
@@ -365,13 +364,9 @@ export function IngredientEditorModal({ open, ingredient, onClose, onSaved }: In
               resetForm(defaultValues);
               onClose();
             }}
-          >"Anulează"</button>
+          >Anulează</button>
         }
       />
     </Modal>
   );
 }
-
-
-
-

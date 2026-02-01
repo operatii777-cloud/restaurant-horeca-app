@@ -18,7 +18,7 @@ interface Recall {
 }
 
 export const RecallsPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [recalls, setRecalls] = useState<Recall[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -49,15 +49,15 @@ export const RecallsPage = () => {
 
   return (
     <div className="recalls-page page">
-      <PageHeader 
-        title="Recall Management"
-        subtitle="Gestionare retrageri produse (siguranță alimentară)"
+      <PageHeader
+        title="Management Retrageri (Recalls)"
+        description="Gestionare retrageri produse (siguranță alimentară)"
       />
 
       <Card>
         <Card.Body>
           <div className="d-flex justify-content-between mb-3">
-            <h5>Lista Recalls</h5>
+            <h5>Lista retrageri (Recalls)</h5>
             <Button variant="danger">
               <i className="fas fa-exclamation-triangle me-2"></i>
               Creare Recall NOU
@@ -67,7 +67,7 @@ export const RecallsPage = () => {
           <Table striped bordered hover>
             <thead>
               <tr>
-                <th>"Număr"</th>
+                <th>Număr</th>
                 <th>Dată</th>
                 <th>Tip</th>
                 <th>Severitate</th>

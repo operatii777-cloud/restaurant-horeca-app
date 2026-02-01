@@ -20,7 +20,7 @@ interface FinishedProductModalProps {
 }
 
 export const FinishedProductModal = ({ open, productId = null, onClose, onSaved }: FinishedProductModalProps) => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const isEdit = productId !== null;
   const [catalogProducts, setCatalogProducts] = useState<CatalogProductLight[]>([]);
   const [selectedProductId, setSelectedProductId] = useState<number | null>(productId);
@@ -68,7 +68,7 @@ export const FinishedProductModal = ({ open, productId = null, onClose, onSaved 
           setCatalogProducts(payload);
         }
       } catch (error) {
-        console.error('âŒ Eroare la încărcarea catalogului de produse:', error);
+        console.error('❌ Eroare la încărcarea catalogului de produse:', error);
         if (isMounted) {
           setFeedback({ type: 'error', message: 'Nu s-a putut încărca lista produselor din meniu.' });
         }
@@ -91,7 +91,7 @@ export const FinishedProductModal = ({ open, productId = null, onClose, onSaved 
           setSelectedProductId(stockItem.product_id);
         }
       } catch (error) {
-        console.error('âŒ Eroare la obținerea produsului finit:', error);
+        console.error('❌ Eroare la obținerea produsului finit:', error);
         if (isMounted) {
           setFeedback({ type: 'error', message: 'Nu s-au putut încărca detaliile produsului.' });
         }
@@ -112,7 +112,7 @@ export const FinishedProductModal = ({ open, productId = null, onClose, onSaved 
 
   const selectedProduct = useMemo(() => catalogProducts.find((item) => item.id === selectedProductId) || null, [catalogProducts, selectedProductId]);
 
-  const handleChange = useCallback((field: "Stoc Actual" | "Stoc Minim" | "Stoc Maxim" | "Auto-gestionat", value: number | boolean) => {
+  const handleChange = useCallback((field: keyof typeof formValues, value: number | boolean) => {
     setFormValues((prev) => ({ ...prev, [field]: value }));
   }, []);
 
@@ -159,7 +159,7 @@ export const FinishedProductModal = ({ open, productId = null, onClose, onSaved 
         await onSaved();
         handleClose();
       } catch (error) {
-        console.error('âŒ Eroare la salvarea stocului produs finit:', error);
+        console.error('❌ Eroare la salvarea stocului produs finit:', error);
         const message = error instanceof Error ? error.message : 'Nu s-a putut salva stocul produsului.';
         setFeedback({ type: 'error', message });
       } finally {
@@ -183,15 +183,15 @@ export const FinishedProductModal = ({ open, productId = null, onClose, onSaved 
             {selectedProduct ? (
               <p>
                 Produs: <strong>{selectedProduct.name}</strong>
-                {selectedProduct.category ? ` Â· ${selectedProduct.category}` : ''}
-                {selectedProduct.price ? ` Â· ${selectedProduct.price} RON` : ''}
+                {selectedProduct.category ? ` · ${selectedProduct.category}` : ''}
+                {selectedProduct.price ? ` · ${selectedProduct.price} RON` : ''}
               </p>
             ) : (
-              <p>"selecteaza produsul din meniu pentru a configura s"</p>
+              <p>Selectează produsul din meniu pentru a configura stocul.</p>
             )}
           </div>
-          <button type="button" className="finished-product-modal__close" onClick={handleClose} aria-label="ÃŽnchide">
-            Ã—
+          <button type="button" className="finished-product-modal__close" onClick={handleClose} aria-label="Închide">
+            ×
           </button>
         </header>
 
@@ -218,7 +218,7 @@ export const FinishedProductModal = ({ open, productId = null, onClose, onSaved 
             {catalogProducts.map((product) => (
               <option key={product.id} value={product.id}>
                 {product.name}
-                {product.category ? ` Â· ${product.category}` : ''}
+                {product.category ? ` · ${product.category}` : ''}
               </option>
             ))}
           </select>
@@ -231,7 +231,7 @@ export const FinishedProductModal = ({ open, productId = null, onClose, onSaved 
                 min={0}
                 step="1"
                 value={formValues.current_stock}
-                onChange={(event) => handleChange("Stoc Actual", Number(event.target.value))}
+                onChange={(event) => handleChange('current_stock', Number(event.target.value))}
                 required
               />
             </label>
@@ -243,7 +243,7 @@ export const FinishedProductModal = ({ open, productId = null, onClose, onSaved 
                 min={0}
                 step="1"
                 value={formValues.min_stock}
-                onChange={(event) => handleChange("Stoc Minim", Number(event.target.value))}
+                onChange={(event) => handleChange('min_stock', Number(event.target.value))}
                 required
               />
             </label>
@@ -255,7 +255,7 @@ export const FinishedProductModal = ({ open, productId = null, onClose, onSaved 
                 min={0}
                 step="1"
                 value={formValues.max_stock}
-                onChange={(event) => handleChange("Stoc Maxim", Number(event.target.value))}
+                onChange={(event) => handleChange('max_stock', Number(event.target.value))}
                 required
               />
             </label>
@@ -265,15 +265,17 @@ export const FinishedProductModal = ({ open, productId = null, onClose, onSaved 
             <input
               type="checkbox"
               checked={formValues.is_auto_managed}
-              onChange={(event) => handleChange("Auto-gestionat", event.target.checked)}
-            />"stocul este gestionat automat pe baza vanzarilor"</label>
+              onChange={(event) => handleChange('is_auto_managed', event.target.checked)}
+            />
+            Stocul este gestionat automat pe baza vânzărilor.
+          </label>
 
-          {loading && <p className="finished-product-modal__loading">"se incarca detaliile produsului"</p>}
+          {loading && <p className="finished-product-modal__loading">Se încarcă detaliile produsului...</p>}
 
           <footer className="finished-product-modal__footer">
-            <button type="button" className="btn btn-ghost" onClick={handleClose} disabled={saving}>"Anulează"</button>
+            <button type="button" className="btn btn-ghost" onClick={handleClose} disabled={saving}>Anulează</button>
             <button type="submit" className="btn btn-primary" disabled={saving}>
-              {saving ? 'Se salvează"¦' : isEdit ? 'Salvează modificările' : 'Adaugă stoc' }
+              {saving ? 'Se salvează...' : isEdit ? 'Salvează modificările' : 'Adaugă stoc'}
             </button>
           </footer>
         </form>

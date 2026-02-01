@@ -76,6 +76,24 @@ router.get('/tracking/:deliveryId', async (req, res, next) => {
 });
 
 /**
+ * POST /api/friendsride/orders (or /api/delivery/orders via alias)
+ * Endpoint standard pentru primirea comenzilor din FriendsRide Delivery App
+ */
+router.post('/orders', async (req, res, next) => {
+  try {
+    // Note: FriendsRide App expects { restaurantOrderId: "..." } in response
+    const result = await friendsrideIntegrationService.handleDeliveryAppOrder(req.body);
+    res.json(result);
+  } catch (error) {
+    console.error('❌ Error in delivery order webhook:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message || 'Error processing delivery order',
+    });
+  }
+});
+
+/**
  * GET /api/friendsride/orders
  * Polling endpoint - preia comenzile noi de la Friends Ride
  */

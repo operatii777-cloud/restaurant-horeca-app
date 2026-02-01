@@ -7,7 +7,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import './AnafSyncPage.css';
 
 interface AnafSyncStatus {
-  status: 'synced' | "Pending:" | 'error' | 'unknown';
+  status: 'synced' | 'pending' | 'error' | 'unknown';
   sent_reports: number;
   pending_reports: number;
   last_sync: string | null;
@@ -16,7 +16,7 @@ interface AnafSyncStatus {
 }
 
 export const AnafSyncPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [syncing, setSyncing] = useState(false);
   const [retransmitting, setRetransmitting] = useState(false);
@@ -43,7 +43,7 @@ export const AnafSyncPage = () => {
         });
       }
     } catch (error) {
-      console.error('âŒ Eroare la verificarea stării ANAF:', error);
+      console.error('❌ Eroare la verificarea stării ANAF:', error);
       // Fallback status
       setStatus({
         status: 'unknown',
@@ -82,7 +82,7 @@ export const AnafSyncPage = () => {
         });
       }
     } catch (error: any) {
-      console.error('âŒ Eroare la retransmiterea raportului:', error);
+      console.error('❌ Eroare la retransmiterea raportului:', error);
       setFeedback({
         type: 'error',
         message: error.response?.data?.error || 'Eroare la retransmiterea raportului.',
@@ -116,7 +116,7 @@ export const AnafSyncPage = () => {
         });
       }
     } catch (error: any) {
-      console.error('âŒ Eroare la sincronizarea rapoartelor:', error);
+      console.error('❌ Eroare la sincronizarea rapoartelor:', error);
       setFeedback({
         type: 'error',
         message: error.response?.data?.error || 'Eroare la sincronizarea rapoartelor.',
@@ -130,7 +130,7 @@ export const AnafSyncPage = () => {
     if (!status) {
       return (
         <Alert variant="info">
-          <i className="fas fa-info-circle me-2"></i>"se incarca starea transmiterii"</Alert>
+          <i className="fas fa-info-circle me-2"></i>Se încarcă starea transmiterii...</Alert>
       );
     }
 
@@ -142,7 +142,7 @@ export const AnafSyncPage = () => {
       variant = 'success';
       icon = 'fas fa-check-circle';
       text = 'Toate rapoartele sunt transmise';
-    } else if (status.status === "Pending:") {
+    } else if (status.status === 'pending') {
       variant = 'warning';
       icon = 'fas fa-clock';
       text = 'Există rapoarte în așteptare';
@@ -154,7 +154,7 @@ export const AnafSyncPage = () => {
 
     return (
       <Alert variant={variant}>
-        <i className={`"Icon" me-2`}></i>
+        <i className={`${icon} me-2`}></i>
         <strong>Stare Transmitere:</strong> {text}
         {status.message && (
           <>
@@ -189,7 +189,7 @@ export const AnafSyncPage = () => {
               <div className="mb-3">
                 {loading ? (
                   <Alert variant="info">
-                    <i className="fas fa-spinner fa-spin me-2"></i>"se incarca starea transmiterii"</Alert>
+                    <i className="fas fa-spinner fa-spin me-2"></i>Se încarcă starea transmiterii...</Alert>
                 ) : (
                   getStatusAlert()
                 )}
@@ -201,7 +201,7 @@ export const AnafSyncPage = () => {
                         <strong>Rapoarte Transmise:</strong> {status.sent_reports}
                       </div>
                       <div className="col-6">
-                        <strong>"rapoarte in asteptare"</strong> {status.pending_reports}
+                        <strong>Rapoarte în așteptare:</strong> {status.pending_reports}
                       </div>
                     </div>
                     <div className="row mt-2">
@@ -209,7 +209,7 @@ export const AnafSyncPage = () => {
                         <strong>Ultima Sincronizare:</strong> {status.last_sync || 'Niciodată'}
                       </div>
                       <div className="col-6">
-                        <strong>"urmatoarea sincronizare"</strong> {status.next_sync || 'Nu este programată'}
+                        <strong>Următoarea sincronizare:</strong> {status.next_sync || 'Nu este programată'}
                       </div>
                     </div>
                   </>
@@ -222,7 +222,7 @@ export const AnafSyncPage = () => {
             </div>
 
             <div className="col-md-6">
-              <h6>"actiuni disponibile"</h6>
+              <h6>Acțiuni disponibile</h6>
               <div className="d-grid gap-2">
                 <Button variant="danger" onClick={retransmitMonthlyReport} disabled={retransmitting}>
                   <i className={`fas ${retransmitting ? 'fa-spinner fa-spin' : 'fa-redo'} me-1`}></i>

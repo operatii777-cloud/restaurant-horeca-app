@@ -31,15 +31,15 @@ interface ReservationListResponse {
   meta?: ReservationListMeta;
 }
 
-const DEFAULT_LIMIT = 100;
+const DEFAULT_LIMIT = 5000;
 
 function normaliseFilters(filters: ReservationFilters): ReservationFilters {
   const cleaned: ReservationFilters = { ...filters };
-  
+
   if (cleaned.search) {
     cleaned.search = cleaned.search.trim();
   }
-  
+
   // Elimină statuses dacă este undefined, null sau array gol
   if (!cleaned.statuses || (Array.isArray(cleaned.statuses) && cleaned.statuses.length === 0)) {
     delete cleaned.statuses;
@@ -49,11 +49,11 @@ function normaliseFilters(filters: ReservationFilters): ReservationFilters {
       delete cleaned.statuses;
     }
   }
-  
+
   if (!cleaned.tableId) {
     delete cleaned.tableId;
   }
-  
+
   // Elimină datele goale
   if (!cleaned.startDate) {
     delete cleaned.startDate;
@@ -61,7 +61,7 @@ function normaliseFilters(filters: ReservationFilters): ReservationFilters {
   if (!cleaned.endDate) {
     delete cleaned.endDate;
   }
-  
+
   return cleaned;
 }
 
@@ -81,7 +81,7 @@ export function useReservations(options: UseReservationsOptions = {}): UseReserv
       ...options.initialFilters,
     };
   });
-  
+
   const [pagination, setPaginationState] = useState<PaginationState>({
     limit: options.initialLimit ?? DEFAULT_LIMIT,
     offset: 0,
@@ -100,20 +100,21 @@ export function useReservations(options: UseReservationsOptions = {}): UseReserv
       // ✅ FOLOSIM ACELAȘI ENDPOINT CA ADMIN.HTML LEGACY
       let url = '/api/reservations';
       const params = new URLSearchParams();
-      
+
       // Adaugă filtre doar dacă sunt explicit setate (identic cu admin.html)
       if (filters.startDate) {
         params.append('date', filters.startDate);
       }
-      
+
       // Adaugă status doar dacă este explicit setat
       if (filters.statuses && Array.isArray(filters.statuses) && filters.statuses.length > 0) {
         params.append('status', filters.statuses.join(','));
       }
-      
+
       if (filters.search) params.append('search', filters.search);
       if (filters.tableId) params.append('tableId', String(filters.tableId));
-      
+      if (filters.customerPhone) params.append('customerPhone', filters.customerPhone);
+
       // ✅ CRITICAL FIX: Trimite parametrii necesari pentru a obține TOATE rezervările
       // 1. includeCancelled=true → Include cancelled și no_show
       // 2. includeAllLocations=true → Ignoră filtrul pe locație (header x-location-id)
@@ -123,17 +124,17 @@ export function useReservations(options: UseReservationsOptions = {}): UseReserv
       params.append('includeAllLocations', 'true');
       params.append('limit', String(pagination.limit));
       params.append('offset', String(pagination.offset));
-      
+
       console.log('useReservations Parametri pentru TOATE rezervările:', {
         includeCancelled: shouldIncludeCancelled,
         includeAllLocations: true,
         limit: pagination.limit,
         offset: pagination.offset,
       });
-      
-      const fullUrl = params.toString() ? `"Url"?${params.toString()}` : url;
+
+      const fullUrl = params.toString() ? `${url}?${params.toString()}` : url;
       console.log('useReservations Fetching (legacy endpoint):', fullUrl);
-      
+
       const response = await httpClient.get<Reservation[]>(fullUrl);
       const payload = response.data;
 
@@ -141,20 +142,20 @@ export function useReservations(options: UseReservationsOptions = {}): UseReserv
       const reservations: Reservation[] = Array.isArray(payload) ? payload : [];
 
       console.log('useReservations Loaded reservations (legacy):', reservations.length);
-      
+
       // Afișează distribuția statusurilor
       const statusCounts = reservations.reduce((acc, r) => {
         acc[r.status] = (acc[r.status] || 0) + 1;
         return acc;
       }, {} as Record<string, number>);
       console.log('📊 Status distribution:', statusCounts);
-      
+
       // 🔍 DEBUG: Afișează TOATE rezervările pentru a vedea ce lipsește
       console.log('DEBUG Toate rezervările primite:');
       reservations.forEach((r, idx) => {
         console.log(`  ${idx + 1}. ID: ${r.id}, Nume: ${r.customer_name}, Status: ${r.status}, Data: ${r.reservation_date}`);
       });
-      
+
       // 🔍 Verifică dacă există rezervări cancelled sau no_show
       const cancelledOrNoShow = reservations.filter(r => r.status === 'cancelled' || r.status === 'no_show');
       console.log(`🔍 Rezervări cancelled/no_show: ${cancelledOrNoShow.length}`);
@@ -163,9 +164,9 @@ export function useReservations(options: UseReservationsOptions = {}): UseReserv
           console.log(`  - ID: ${r.id}, Nume: ${r.customer_name}, Status: ${r.status}`);
         });
       }
-      
+
       setReservations(reservations);
-      
+
       // Legacy endpoint nu returnează meta, deci setăm null
       setMeta(null);
     } catch (err) {
@@ -201,6 +202,7 @@ export function useReservations(options: UseReservationsOptions = {}): UseReserv
         ...partial,
       }));
     },
+    [setFilters],
   );
 
   const setPagination = useCallback(

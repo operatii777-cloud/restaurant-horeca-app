@@ -23,12 +23,12 @@ process.on('unhandledRejection', (reason, promise) => {
     serverLogger.warn('UNHANDLED REJECTION - IGNORED', { message: reason.message });
     return; // Nu opri serverul pentru aceste erori
   }
-  
-  serverLogger.error('UNHANDLED REJECTION', { 
-    message: reason.message, 
-    stack: reason.stack 
+
+  serverLogger.error('UNHANDLED REJECTION', {
+    message: reason.message,
+    stack: reason.stack
   });
-  
+
   // NU oprim serverul pentru unhandledRejection - doar logăm
   serverLogger.warn('Serverul continuă să ruleze după unhandled rejection');
 });
@@ -36,34 +36,34 @@ process.on('unhandledRejection', (reason, promise) => {
 process.on('uncaughtException', (error) => {
   // Ignoră erorile de tip "no such table: order_items" - tabela va fi creată la următoarea inițializare
   if (error.message && error.message.includes('no such table: order_items')) {
-    serverLogger.warn('UNCAUGHT EXCEPTION - IGNORED', { 
+    serverLogger.warn('UNCAUGHT EXCEPTION - IGNORED', {
       message: error.message,
       note: 'Tabela order_items va fi creată la următoarea inițializare'
     });
     return; // Nu opri serverul pentru această eroare
   }
-  
-  serverLogger.error('UNCAUGHT EXCEPTION', { 
-    message: error.message, 
+
+  serverLogger.error('UNCAUGHT EXCEPTION', {
+    message: error.message,
     stack: error.stack,
     code: error.code
   });
-  
+
   // Critical errors - exit DOAR pentru erori de sistem, NU pentru erori de aplicație
   if (error.code === 'EADDRINUSE' || error.code === 'EACCES') {
     serverLogger.error('Critical system error - server must restart', { code: error.code });
     process.exit(1);
   }
-  
+
   // Pentru alte erori, logăm dar NU oprim serverul
   serverLogger.warn('Serverul continuă să ruleze după eroare neprinsă');
 });
 
 process.on('warning', (warning) => {
   if (warning.name !== 'DeprecationWarning') {
-    serverLogger.warn('PROCESS WARNING', { 
-      name: warning.name, 
-      message: warning.message 
+    serverLogger.warn('PROCESS WARNING', {
+      name: warning.name,
+      message: warning.message
     });
   }
 });
@@ -79,7 +79,7 @@ validateEnv();
 // TIMEZONE CONFIGURATION
 // ========================================
 process.env.TZ = 'Europe/Bucharest';
-serverLogger.info('Timezone configured', { 
+serverLogger.info('Timezone configured', {
   timezone: process.env.TZ,
   serverTime: new Date().toLocaleString('ro-RO', { timeZone: 'Europe/Bucharest' })
 });
@@ -258,7 +258,7 @@ app.get('/admin-vite/favicon.ico', (req, res) => {
   // Try admin-vite/public first, then fallback to server/public
   const faviconPath1 = path.join(__dirname, 'admin-vite', 'public', 'favicon.ico');
   const faviconPath2 = path.join(__dirname, 'public', 'favicon.ico');
-  
+
   if (fs.existsSync(faviconPath1)) {
     res.setHeader('Content-Type', 'image/x-icon');
     res.sendFile(path.resolve(faviconPath1));
@@ -448,32 +448,32 @@ if (process.env.NODE_ENV === 'production') {
 if (process.env.NODE_ENV !== 'production') {
   app.use('/admin-vite', (req, res, next) => {
     // Skip favicon - already handled above (check both path and originalUrl)
-    if (req.path === '/favicon.ico' || req.path.endsWith('/favicon.ico') || 
-        req.originalUrl === '/admin-vite/favicon.ico' || req.originalUrl.endsWith('/favicon.ico')) {
+    if (req.path === '/favicon.ico' || req.path.endsWith('/favicon.ico') ||
+      req.originalUrl === '/admin-vite/favicon.ico' || req.originalUrl.endsWith('/favicon.ico')) {
       return next(); // Let the favicon route handler above process it
     }
     // Skip manifest.json - already handled above
     if (req.path === '/manifest.json' || req.path.endsWith('/manifest.json') ||
-        req.originalUrl === '/admin-vite/manifest.json' || req.originalUrl.endsWith('/manifest.json')) {
+      req.originalUrl === '/admin-vite/manifest.json' || req.originalUrl.endsWith('/manifest.json')) {
       return next(); // Let the manifest route handler above process it
     }
     // Skip service worker - already handled above
     if (req.path === '/sw.js' || req.path.endsWith('/sw.js') ||
-        req.originalUrl === '/admin-vite/sw.js' || req.originalUrl.endsWith('/sw.js')) {
+      req.originalUrl === '/admin-vite/sw.js' || req.originalUrl.endsWith('/sw.js')) {
       return next(); // Let the service worker route handler above process it
     }
     // Skip API routes - they should go to main server
     if (req.path && req.path.startsWith('/api/')) {
       return next();
     }
-    
+
     // Proxy to Vite dev server (port 5173)
     const vitePort = 5173;
     const targetUrl = `http://localhost:${vitePort}${req.originalUrl}`;
-    
+
     try {
       const parsedUrl = url.parse(targetUrl);
-      
+
       const options = {
         hostname: parsedUrl.hostname,
         port: parsedUrl.port,
@@ -484,7 +484,7 @@ if (process.env.NODE_ENV !== 'production') {
           host: `localhost:${vitePort}`,
         },
       };
-      
+
       const proxyReq = http.request(options, (proxyRes) => {
         // Copy status code
         res.statusCode = proxyRes.statusCode;
@@ -495,23 +495,23 @@ if (process.env.NODE_ENV !== 'production') {
         // Pipe response
         proxyRes.pipe(res);
       });
-      
+
       proxyReq.on('error', (err) => {
         // If Vite dev server is not running, serve from dist folder instead
         // Common errors: ECONNREFUSED, connect, socket hang up, ENOTFOUND
         const silentErrors = ['ECONNREFUSED', 'connect', 'socket hang up', 'ENOTFOUND'];
         const isSilentError = silentErrors.some(errorType => err.message.includes(errorType));
-        
+
         if (isSilentError) {
           // Vite dev server not running - serve from dist folder
           // Remove /admin-vite prefix and try to serve from dist
           const distPath = req.path.replace(/^\/admin-vite/, '') || '/index.html';
           const distFile = path.join(__dirname, 'admin-vite', 'dist', distPath);
-          
+
           if (fs.existsSync(distFile) && fs.statSync(distFile).isFile()) {
             return res.sendFile(path.resolve(distFile));
           }
-          
+
           // If file not found, try index.html (SPA fallback)
           const indexPath = path.join(__dirname, 'admin-vite', 'dist', 'index.html');
           if (fs.existsSync(indexPath)) {
@@ -523,13 +523,13 @@ if (process.env.NODE_ENV !== 'production') {
         }
         next();
       });
-      
+
       // Set timeout to prevent hanging requests
       proxyReq.setTimeout(2000, () => {
         proxyReq.destroy();
         next();
       });
-      
+
       // Send request body if exists
       if (req.body) {
         proxyReq.write(JSON.stringify(req.body));
@@ -540,7 +540,7 @@ if (process.env.NODE_ENV !== 'production') {
       next();
     }
   });
-  
+
   console.log('✅ Vite dev server proxy configured for /admin-vite/* (development mode)');
 }
 
@@ -580,12 +580,12 @@ app.use((req, res, next) => {
     if (!req.path || !req.path.endsWith('.html')) {
       return next();
     }
-    
+
     // Skip API routes
     if (req.path.startsWith('/api/')) {
       return next();
     }
-    
+
     // First, check explicit mapping
     const isLegacyHtml = legacyRoutes.some(route => {
       try {
@@ -595,7 +595,7 @@ app.use((req, res, next) => {
         return req.path === route || req.originalUrl.split('?')[0] === route;
       }
     });
-    
+
     if (isLegacyHtml) {
       // Handle explicit mapping
       const originalUrl = req.originalUrl.split('?')[0];
@@ -605,12 +605,12 @@ app.use((req, res, next) => {
       } catch (e) {
         decodedPath = req.path;
       }
-      
-      const legacyPath = legacyHtmlFiles[req.path] || 
-                         legacyHtmlFiles[decodedPath] || 
-                         legacyHtmlFiles[originalUrl] ||
-                         legacyHtmlFiles[decodeURIComponent(originalUrl) || originalUrl];
-      
+
+      const legacyPath = legacyHtmlFiles[req.path] ||
+        legacyHtmlFiles[decodedPath] ||
+        legacyHtmlFiles[originalUrl] ||
+        legacyHtmlFiles[decodeURIComponent(originalUrl) || originalUrl];
+
       if (legacyPath && fs.existsSync(legacyPath)) {
         serverLogger.debug('Serving legacy file', { path: req.path, legacyPath });
         return res.sendFile(path.resolve(legacyPath), (err) => {
@@ -621,10 +621,10 @@ app.use((req, res, next) => {
         });
       }
     }
-    
+
     // If not in explicit mapping, try to find in legacy directories
     const fileName = path.basename(req.path);
-    
+
     // Try each legacy directory
     for (const [dirName, dirPath] of Object.entries(legacyDirs)) {
       const filePath = path.join(dirPath, fileName);
@@ -638,7 +638,7 @@ app.use((req, res, next) => {
         });
       }
     }
-    
+
     // If not found in legacy directories, continue to next middleware
     next();
   } catch (error) {
@@ -691,7 +691,7 @@ loadAll(app);
 app.use((req, res, next) => {
   // Salvează metoda originală setHeader
   const originalSetHeader = res.setHeader;
-  res.setHeader = function(name, value) {
+  res.setHeader = function (name, value) {
     // Dacă header-ul Content-Type este deja setat, nu-l suprascrie
     if (name === 'Content-Type' && this.getHeader('Content-Type')) {
       return this;
@@ -747,14 +747,14 @@ app.use('/', healthRoutes);
 app.post('/api/mobile/auth/register', async (req, res, next) => {
   try {
     const { email, password, name, phone } = req.body;
-    
+
     if (!email || !password || !name) {
       return res.status(400).json({
         success: false,
         error: 'Email, parolă și nume sunt obligatorii'
       });
     }
-    
+
     // Validare email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
@@ -763,7 +763,7 @@ app.post('/api/mobile/auth/register', async (req, res, next) => {
         error: 'Email invalid'
       });
     }
-    
+
     // Validare parolă (minim 6 caractere)
     if (password.length < 6) {
       return res.status(400).json({
@@ -771,9 +771,9 @@ app.post('/api/mobile/auth/register', async (req, res, next) => {
         error: 'Parola trebuie să aibă minim 6 caractere'
       });
     }
-    
+
     const db = await dbPromise;
-    
+
     // Verifică dacă clientul există deja
     db.get('SELECT id FROM customers WHERE customer_email = ?', [email.toLowerCase()], async (err, existing) => {
       if (err) {
@@ -783,20 +783,20 @@ app.post('/api/mobile/auth/register', async (req, res, next) => {
           error: 'Eroare la verificarea clientului'
         });
       }
-      
+
       if (existing) {
         return res.status(409).json({
           success: false,
           error: 'Un cont cu acest email există deja'
         });
       }
-      
+
       // Hash parola (folosim aceeași metodă ca pentru admin users)
       const crypto = require('crypto');
       const salt = crypto.randomBytes(16).toString('hex');
       const hash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
       const passwordHash = `${salt}:${hash}`;
-      
+
       // Verifică dacă tabelul customers are câmpul password_hash
       // Dacă nu, îl adăugăm (ALTER TABLE)
       db.all("PRAGMA table_info(customers)", [], (err, cols) => {
@@ -807,9 +807,9 @@ app.post('/api/mobile/auth/register', async (req, res, next) => {
             error: 'Eroare la verificarea tabelei'
           });
         }
-        
+
         const hasPasswordHash = cols.some(col => col.name === 'password_hash');
-        
+
         // Dacă nu există câmpul, îl adăugăm
         if (!hasPasswordHash) {
           db.run('ALTER TABLE customers ADD COLUMN password_hash TEXT', (alterErr) => {
@@ -819,7 +819,7 @@ app.post('/api/mobile/auth/register', async (req, res, next) => {
             } else {
               console.log('✅ Added password_hash column to customers table');
             }
-            
+
             // Creează clientul
             _createCustomer();
           });
@@ -827,14 +827,14 @@ app.post('/api/mobile/auth/register', async (req, res, next) => {
           // Creează clientul direct
           _createCustomer();
         }
-        
+
         function _createCustomer() {
           // Inserează clientul nou
           db.run(
             `INSERT INTO customers (customer_name, customer_email, customer_phone, password_hash, is_active, created_at, updated_at)
              VALUES (?, ?, ?, ?, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)`,
             [name, email.toLowerCase(), phone || null, passwordHash],
-            function(insertErr) {
+            function (insertErr) {
               if (insertErr) {
                 console.error('❌ Error creating customer:', insertErr);
                 return res.status(500).json({
@@ -842,14 +842,14 @@ app.post('/api/mobile/auth/register', async (req, res, next) => {
                   error: 'Eroare la crearea contului'
                 });
               }
-              
+
               const customerId = this.lastID;
-              
+
               // Generează token simplu (pentru sesiune)
               const token = crypto.randomBytes(32).toString('hex');
-              
+
               console.log(`✅ Customer registered: ${email} (ID: ${customerId})`);
-              
+
               res.json({
                 success: true,
                 message: 'Cont creat cu succes',
@@ -876,16 +876,16 @@ app.post('/api/mobile/auth/register', async (req, res, next) => {
 app.post('/api/mobile/auth/login', async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    
+
     if (!email || !password) {
       return res.status(400).json({
         success: false,
         error: 'Email și parolă sunt obligatorii'
       });
     }
-    
+
     const db = await dbPromise;
-    
+
     // Verifică dacă tabelul customers are câmpul password_hash, dacă nu, îl adăugăm
     db.all("PRAGMA table_info(customers)", [], (err, cols) => {
       if (err) {
@@ -895,9 +895,9 @@ app.post('/api/mobile/auth/login', async (req, res, next) => {
           error: 'Eroare la verificarea tabelei'
         });
       }
-      
+
       const hasPasswordHash = cols.some(col => col.name === 'password_hash');
-      
+
       // Dacă nu există câmpul, îl adăugăm
       if (!hasPasswordHash) {
         db.run('ALTER TABLE customers ADD COLUMN password_hash TEXT', (alterErr) => {
@@ -910,7 +910,7 @@ app.post('/api/mobile/auth/login', async (req, res, next) => {
           } else if (!alterErr) {
             console.log('✅ Added password_hash column to customers table (from login endpoint)');
           }
-          
+
           // După ALTER TABLE, așteaptă puțin pentru a permite SQLite să finalizeze operația
           // Apoi continuă cu query-ul de login
           setTimeout(() => {
@@ -921,7 +921,7 @@ app.post('/api/mobile/auth/login', async (req, res, next) => {
         // Câmpul există, continuă direct cu login
         _performLogin();
       }
-      
+
       function _performLogin() {
         // Găsește clientul după email
         // Dacă coloana password_hash a fost tocmai adăugată, va fi NULL pentru clienții vechi
@@ -965,21 +965,21 @@ app.post('/api/mobile/auth/login', async (req, res, next) => {
                 error: 'Eroare la autentificare'
               });
             }
-            
+
             if (!customer) {
               return res.status(401).json({
                 success: false,
                 error: 'Email sau parolă incorectă'
               });
             }
-            
+
             if (!customer.is_active) {
               return res.status(403).json({
                 success: false,
                 error: 'Contul a fost dezactivat'
               });
             }
-            
+
             // Verifică parola
             if (!customer.password_hash) {
               return res.status(401).json({
@@ -987,23 +987,23 @@ app.post('/api/mobile/auth/login', async (req, res, next) => {
                 error: 'Contul nu are parolă setată. Vă rugăm să vă înregistrați din nou.'
               });
             }
-            
+
             const crypto = require('crypto');
             const [salt, hash] = customer.password_hash.split(':');
             const hashToVerify = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
-            
+
             if (hash !== hashToVerify) {
               return res.status(401).json({
                 success: false,
                 error: 'Email sau parolă incorectă'
               });
             }
-            
+
             // Generează token pentru sesiune
             const token = crypto.randomBytes(32).toString('hex');
-            
+
             console.log(`✅ Customer logged in: ${customer.customer_email} (ID: ${customer.id})`);
-            
+
             res.json({
               success: true,
               message: 'Autentificare reușită',
@@ -1039,44 +1039,42 @@ app.post('/api/kiosk/order', async (req, res, next) => {
   try {
     // Wait for database to be ready
     const db = await dbPromise;
-    
+
     // ✅ Integrare middleware unificat pentru validare
     const { validateOrder } = require('./src/middleware/order-validator.middleware');
-    
+
     // Wrapper pentru a captura răspunsul middleware-ului
     let middlewareProceeded = false;
     const middlewareNext = async () => {
       middlewareProceeded = true;
       const ordersController = require('./src/modules/orders/controllers/orders.controller');
-      // Adaugă platform='MOBILE_APP' în normalizedOrder (după normalizare)
+      // ✅ FIX: Preserve platform and order_source from request body (don't override)
+      // Kiosk sends platform='KIOSK' and order_source='KIOSK_SELF_SERVICE'
+      // Mobile app sends platform='MOBILE_APP' and order_source='DELIVERY' or other
       if (req.normalizedOrder) {
-        req.normalizedOrder.platform = 'MOBILE_APP';
-        // Dacă există order_source='DELIVERY', păstrează-l
-        if (req.normalizedOrder.type === 'delivery' && !req.normalizedOrder.order_source) {
-          req.normalizedOrder.order_source = 'DELIVERY';
-        }
+        // Use platform from request if provided, otherwise default to MOBILE_APP
+        req.normalizedOrder.platform = req.body.platform || req.normalizedOrder.platform || 'MOBILE_APP';
+        req.normalizedOrder.order_source = req.body.order_source || req.normalizedOrder.order_source || (req.normalizedOrder.type === 'delivery' ? 'DELIVERY' : 'POS');
         // Copiază normalizedOrder în body pentru controller
         req.body = { ...req.body, ...req.normalizedOrder };
       } else {
         // Fallback dacă middleware nu a setat normalizedOrder
-        req.body.platform = 'MOBILE_APP';
-        if (req.body.type === 'delivery' && !req.body.order_source) {
-          req.body.order_source = 'DELIVERY';
-        }
+        req.body.platform = req.body.platform || 'MOBILE_APP';
+        req.body.order_source = req.body.order_source || (req.body.type === 'delivery' ? 'DELIVERY' : 'POS');
       }
       await ordersController.createOrder(req, res, next);
     };
-    
+
     // Apelăm middleware-ul
     await validateOrder(req, res, middlewareNext);
-    
+
     // Dacă middleware-ul nu a apelat next() (a returnat eroare), nu continuăm
     // Verifică dacă răspunsul a fost deja trimis
     if (!middlewareProceeded && res.headersSent) {
       // Middleware-ul a trimis deja răspunsul de eroare
       return;
     }
-    
+
     // Dacă middleware-ul nu a apelat next() dar răspunsul nu a fost trimis, continuă
     // (pentru cazuri în care middleware-ul nu returnează explicit)
     if (!middlewareProceeded && !res.headersSent) {
@@ -1105,7 +1103,7 @@ console.log('✅ Kiosk order route mounted: POST /api/kiosk/order (before dbProm
 // This endpoint must be available immediately for mobile app initialization
 app.get('/api/config', async (req, res) => {
   console.log(`[API Config] Request from ${req.ip} to ${req.originalUrl}`);
-  
+
   try {
     // Try to get branding config (may not be available until db is ready)
     let brandingData = {
@@ -1114,7 +1112,7 @@ app.get('/api/config', async (req, res) => {
       logo_url: null,
       colors: { primary: '#3B82F6', secondary: '#10B981' }
     };
-    
+
     try {
       const brandingController = require('./src/modules/branding/branding.controller');
       if (brandingController && brandingController.getBranding) {
@@ -1125,13 +1123,13 @@ app.get('/api/config', async (req, res) => {
             brandingResponse = data;
           }
         };
-        await brandingController.getBranding(brandingReq, brandingRes, () => {});
+        await brandingController.getBranding(brandingReq, brandingRes, () => { });
         brandingData = brandingResponse?.branding || brandingResponse || brandingData;
       }
     } catch (e) {
       console.warn('⚠️  Failed to load branding config (will use defaults):', e.message);
     }
-    
+
     // Try to get restaurant config (may not be available until db is ready)
     let restaurantData = {};
     try {
@@ -1144,13 +1142,13 @@ app.get('/api/config', async (req, res) => {
             restaurantResponse = data;
           }
         };
-        await restaurantController.getRestaurantSettings(restaurantReq, restaurantRes, () => {});
+        await restaurantController.getRestaurantSettings(restaurantReq, restaurantRes, () => { });
         restaurantData = restaurantResponse?.restaurant || restaurantResponse || {};
       }
     } catch (e) {
       console.warn('⚠️  Failed to load restaurant config (will use defaults):', e.message);
     }
-    
+
     // Merge branding și restaurant data, cu prioritizare pentru restaurantData
     const mergedRestaurantData = {
       ...restaurantData,
@@ -1166,7 +1164,7 @@ app.get('/api/config', async (req, res) => {
       privacy_policy_url: restaurantData.privacy_policy_url || null,
       terms_url: restaurantData.terms_url || restaurantData.terms_and_conditions_url || null,
     };
-    
+
     res.json({
       success: true,
       data: {
@@ -1248,13 +1246,13 @@ app.post('/api/delivery/orders', async (req, res, next) => {
   console.log('🔍 [Friends Ride] Request received at /api/delivery/orders');
   console.log('🔍 [Friends Ride] Headers:', JSON.stringify(req.headers, null, 2));
   console.log('🔍 [Friends Ride] Body keys:', Object.keys(req.body || {}));
-  
+
   try {
     // ✅ Integrare middleware unificat pentru validare (doar pentru structură de bază)
     // Notă: Friends Ride are logica proprie pentru transformare Firebase → Standard
     // Middleware-ul va valida structura de bază, dar transformarea rămâne în logica Friends Ride
     const { validateOrder } = require('./src/middleware/order-validator.middleware');
-    
+
     // Verifică structura de bază (items, etc.)
     if (!req.body.items || !Array.isArray(req.body.items) || req.body.items.length === 0) {
       return res.status(400).json({
@@ -1269,7 +1267,7 @@ app.post('/api/delivery/orders', async (req, res, next) => {
     const crypto = require('crypto');
     const apiKey = req.headers['x-api-key'] || req.headers['X-API-Key'];
     const apiKeyHash = req.headers['x-api-key-hash'] || req.headers['X-API-Key-Hash'];
-    
+
     // Verificare API Key - Opțiune 1: Verificare simplă cu environment variable
     if (process.env.FRIENDSRIDE_API_KEY) {
       if (!apiKey) {
@@ -1279,7 +1277,7 @@ app.post('/api/delivery/orders', async (req, res, next) => {
           error: 'Unauthorized - Missing API key header (x-api-key required)'
         });
       }
-      
+
       // Verifică dacă este hash sau plain key
       if (apiKeyHash) {
         // Verificare cu hash: hash-ul API key-ului trebuie să corespundă
@@ -1328,24 +1326,24 @@ app.post('/api/delivery/orders', async (req, res, next) => {
         console.log('⚠️ [Friends Ride] API key provided but FRIENDSRIDE_API_KEY env var not set - allowing request');
       }
     }
-    
+
     const { dbPromise } = require('./database');
     const { ORDER_SOURCE } = require('./orders/unifiedOrderService');
     const { PLATFORMS, PICKUP_TYPES } = require('./constants/delivery');
-    
+
     // Detectăm dacă este format Firebase (Friends Ride) sau format RestorApp
-    const isFirebaseFormat = req.body.customerId !== undefined || 
-                             req.body.deliveryAddress?.address !== undefined ||
-                             req.body.restaurantId !== undefined ||
-                             (req.body.items && req.body.items[0] && req.body.items[0].productName !== undefined);
-    
+    const isFirebaseFormat = req.body.customerId !== undefined ||
+      req.body.deliveryAddress?.address !== undefined ||
+      req.body.restaurantId !== undefined ||
+      (req.body.items && req.body.items[0] && req.body.items[0].productName !== undefined);
+
     console.log('🔍 [Friends Ride] Format detection - isFirebaseFormat:', isFirebaseFormat);
-    
-    const isRestorAppFormat = req.body.customer_phone !== undefined || 
-                              req.body.customer_name !== undefined ||
-                              req.body.platform === 'MOBILE_APP' ||
-                              req.body.platform === 'PUBLIC_QR';
-    
+
+    const isRestorAppFormat = req.body.customer_phone !== undefined ||
+      req.body.customer_name !== undefined ||
+      req.body.platform === 'MOBILE_APP' ||
+      req.body.platform === 'PUBLIC_QR';
+
     // Dacă este format RestorApp, redirecționăm către endpoint-ul corect
     if (isRestorAppFormat && !isFirebaseFormat) {
       console.warn('⚠️ RestorApp order detected at /api/delivery/orders - should use /api/orders/delivery');
@@ -1355,7 +1353,7 @@ app.post('/api/delivery/orders', async (req, res, next) => {
         suggested_endpoint: '/api/orders/delivery'
       });
     }
-    
+
     // Verificăm că este format Firebase (Friends Ride)
     if (!isFirebaseFormat) {
       console.warn('⚠️ [Friends Ride] Format necunoscut. Body:', JSON.stringify(req.body, null, 2));
@@ -1366,15 +1364,15 @@ app.post('/api/delivery/orders', async (req, res, next) => {
         received_keys: Object.keys(req.body || {})
       });
     }
-    
+
     console.log('📥 [Friends Ride] Order received (Firebase format):', JSON.stringify(req.body, null, 2));
-    
+
     // Așteaptă baza de date să fie gata
     const db = await dbPromise;
-    
+
     // Friends Ride trimite structură Firebase
     const firebaseOrder = req.body;
-    
+
     // Extrage datele din structura Firebase
     const customerId = firebaseOrder.customerId || null;
     const deliveryAddressObj = firebaseOrder.deliveryAddress || {};
@@ -1389,10 +1387,10 @@ app.post('/api/delivery/orders', async (req, res, next) => {
     const notes = metadata.notes || null;
     const status = firebaseOrder.status || 'pending';
     const restaurantId = firebaseOrder.restaurantId || firebaseOrder.restaurantAddress?.restaurantId || null;
-    
+
     // Extrage order ID din Firebase (poate fi în URL sau în body)
     const firebaseOrderId = req.query.orderId || firebaseOrder.id || null;
-    
+
     // Convertim Firebase timestamp la SQLite datetime
     let createdAt = new Date().toISOString();
     if (firebaseOrder.createdAt) {
@@ -1403,27 +1401,27 @@ app.post('/api/delivery/orders', async (req, res, next) => {
         createdAt = firebaseOrder.createdAt;
       }
     }
-    
+
     // Validare
     if (!items || items.length === 0) {
       console.warn('⚠️ [Friends Ride] Validation failed: Items sunt obligatorii');
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
         error: 'Items sunt obligatorii',
         received_body: req.body
       });
     }
-    
+
     if (!deliveryAddress) {
       console.warn('⚠️ [Friends Ride] Validation failed: Adresa de livrare este obligatorie');
       console.warn('⚠️ [Friends Ride] deliveryAddressObj:', JSON.stringify(deliveryAddressObj, null, 2));
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
         error: 'Adresa de livrare este obligatorie',
         received_deliveryAddress: firebaseOrder.deliveryAddress
       });
     }
-    
+
     // Dacă nu avem customerPhone din baza de date, încercăm să îl extragem din metadata sau folosim un placeholder
     if (!customerPhone) {
       // Încearcă să extragă telefonul din metadata sau din alte câmpuri
@@ -1433,7 +1431,7 @@ app.post('/api/delivery/orders', async (req, res, next) => {
         customerPhone = '0000000000'; // Placeholder pentru comenzi fără telefon
       }
     }
-    
+
     // Încearcă să găsească telefonul clientului din customerId (dacă există în customers table)
     let customerPhone = null;
     let customerName = 'Client';
@@ -1457,7 +1455,7 @@ app.post('/api/delivery/orders', async (req, res, next) => {
         console.warn('⚠️ Could not fetch customer info:', err.message);
       }
     }
-    
+
     // Transformă items din structura Firebase în structura Restaurant App
     const enrichedItems = await Promise.all(items.map(async (item) => {
       try {
@@ -1468,7 +1466,7 @@ app.post('/api/delivery/orders', async (req, res, next) => {
         const unitPrice = item.unitPrice || item.price || 0;
         const totalPrice = item.totalPrice || (unitPrice * quantity);
         const modifications = item.modifications || [];
-        
+
         // Încarcă categoria produsului din meniu
         let category = null;
         let categoryName = null;
@@ -1480,7 +1478,7 @@ app.post('/api/delivery/orders', async (req, res, next) => {
                 else resolve(row);
               });
             });
-            
+
             if (product) {
               category = product.category;
               categoryName = product.category;
@@ -1489,7 +1487,7 @@ app.post('/api/delivery/orders', async (req, res, next) => {
             console.warn(`⚠️ Could not load product info for productId ${productId}:`, err.message);
           }
         }
-        
+
         // Construiește item-ul pentru Restaurant App
         return {
           productId: productId,
@@ -1526,16 +1524,16 @@ app.post('/api/delivery/orders', async (req, res, next) => {
         };
       }
     }));
-    
+
     // Folosește deliveryFee din Firebase sau calculează default
     const finalDeliveryFee = deliveryFee || 0;
     const finalPickupType = PICKUP_TYPES.PLATFORM_COURIER;
-    
+
     // Creează comanda
     const orderId = await new Promise((resolve, reject) => {
       // Convertim createdAt la format SQLite (YYYY-MM-DD HH:MM:SS)
       const sqliteTimestamp = createdAt.replace('T', ' ').replace('Z', '').substring(0, 19);
-      
+
       db.run(`
         INSERT INTO orders (
           type, order_source, platform, pickup_type,
@@ -1550,7 +1548,7 @@ app.post('/api/delivery/orders', async (req, res, next) => {
         JSON.stringify(enrichedItems), total, paymentMethod, finalDeliveryFee,
         status, notes, sqliteTimestamp, paymentMethod === 'card' || paymentMethod === 'online' ? 1 : 0,
         firebaseOrderId, restaurantId
-      ], function(err) {
+      ], function (err) {
         if (err) {
           console.error('❌ Error creating order in database:', err);
           reject(err);
@@ -1559,7 +1557,7 @@ app.post('/api/delivery/orders', async (req, res, next) => {
         }
       });
     });
-    
+
     // ✅ CRITICAL: Process order through unified pipeline (automatic stock consumption)
     // This ensures Friends Ride orders consume stock automatically, just like all other platforms
     try {
@@ -1581,7 +1579,7 @@ app.post('/api/delivery/orders', async (req, res, next) => {
       console.warn(`⚠️ [Friends Ride] Failed to initialize pipeline for order ${orderId}:`, pipelineError.message);
       // Don't fail order creation if pipeline initialization fails
     }
-    
+
     // Obține comanda completă pentru evenimente
     const createdOrder = await new Promise((resolve, reject) => {
       db.get('SELECT * FROM orders WHERE id = ?', [orderId], (err, row) => {
@@ -1589,7 +1587,7 @@ app.post('/api/delivery/orders', async (req, res, next) => {
         else resolve(row);
       });
     });
-    
+
     // ✅ FIX URGENT: Emite evenimente complete prin orderEventBus (uniformitate cu alte platforme)
     try {
       const { orderEventBus } = require('./src/modules/orders/order.events');
@@ -1614,7 +1612,7 @@ app.post('/api/delivery/orders', async (req, res, next) => {
     } catch (eventError) {
       console.warn(`⚠️ [Friends Ride] Event emission failed for order ${orderId}:`, eventError.message);
     }
-    
+
     // Emit Socket.io events (păstrăm pentru backward compatibility)
     if (global.io) {
       global.io.emit('delivery:new-order', {
@@ -1625,11 +1623,11 @@ app.post('/api/delivery/orders', async (req, res, next) => {
         total: total,
         timestamp: new Date()
       });
-      
+
       // Emit la KDS cu items complete (inclusiv categorii pentru filtrul bar/bucătărie)
-      global.io.emit('order:new', { 
-        orderId, 
-        type: 'delivery', 
+      global.io.emit('order:new', {
+        orderId,
+        type: 'delivery',
         items: enrichedItems,
         customer_name: customerName,
         customer_phone: customerPhone,
@@ -1637,7 +1635,7 @@ app.post('/api/delivery/orders', async (req, res, next) => {
         total: total,
         timestamp: createdAt
       });
-      
+
       // Emit order:created pentru sincronizare completă
       global.io.emit('order:created', {
         order: {
@@ -1656,7 +1654,7 @@ app.post('/api/delivery/orders', async (req, res, next) => {
           timestamp: createdAt
         }
       });
-      
+
       // Emit către room-urile corespunzătoare (KDS/Bar)
       global.io.to('kitchen').emit('order:created', {
         order: {
@@ -1669,7 +1667,7 @@ app.post('/api/delivery/orders', async (req, res, next) => {
           })
         }
       });
-      
+
       global.io.to('bar').emit('order:created', {
         order: {
           id: orderId,
@@ -1682,32 +1680,32 @@ app.post('/api/delivery/orders', async (req, res, next) => {
         }
       });
     }
-    
+
     console.log(`✅ Friends Ride delivery order created: ID ${orderId} (Firebase order: ${firebaseOrderId || 'N/A'}, Customer: ${customerId || 'N/A'})`);
-    
-    res.json({ 
-      success: true, 
+
+    res.json({
+      success: true,
       order_id: orderId,
       friendsride_order_id: firebaseOrderId,
       restaurant_id: restaurantId,
       customer_id: customerId,
       delivery_fee: finalDeliveryFee,
       total: total,
-      message: 'Comandă delivery creată cu succes' 
+      message: 'Comandă delivery creată cu succes'
     });
   } catch (err) {
     console.error('❌ [Friends Ride] Error creating delivery order:', err);
     console.error('❌ [Friends Ride] Error stack:', err.stack);
     console.error('❌ [Friends Ride] Request body was:', JSON.stringify(req.body, null, 2));
     console.error('❌ [Friends Ride] Request headers:', JSON.stringify(req.headers, null, 2));
-    
+
     // Return a more detailed error response
     res.status(500).json({
       success: false,
       error: err.message || 'Eroare la crearea comenzii',
       details: process.env.NODE_ENV === 'development' ? err.stack : undefined
     });
-    
+
     // Still call next for error logging
     next(err);
   }
@@ -1744,14 +1742,14 @@ const initSocketIO = () => {
         credentials: true
       }
     });
-    
+
     // Make io globally available (for legacy compatibility)
     global.io = io;
-    
+
     // Initialize AlertsService with Socket.IO
     const AlertsService = require('./src/modules/alerts/alerts.service');
     AlertsService.setSocketIO(io);
-    
+
     // 🔴 FIX 4 - Initialize order timeout checker (auto-cancel expired orders)
     try {
       const orderTimeoutService = require('./src/services/order-timeout.service');
@@ -1759,9 +1757,9 @@ const initSocketIO = () => {
     } catch (error) {
       console.warn('⚠️ Failed to initialize order timeout service:', error.message);
     }
-    
+
     console.log('✅ Socket.IO initialized');
-    
+
     // PHASE S9.6 - Order Engine V2 Socket Bridge
     const { ENABLE_SOCKET_BRIDGE } = require('./src/config/orderEngine.config');
     if (ENABLE_SOCKET_BRIDGE) {
@@ -1771,11 +1769,11 @@ const initSocketIO = () => {
     } else {
       serverLogger.info('Order Engine V2 Socket Bridge disabled', { reason: 'ENABLE_SOCKET_BRIDGE=false' });
     }
-    
+
     // Legacy socket handlers (if any) can be added here
     io.on('connection', (socket) => {
       console.log(`[Socket.IO] Client connected: ${socket.id}`);
-      
+
       // Handler pentru înregistrare și alăturare la room-uri
       socket.on('register', (data) => {
         if (data.role === 'waiter') {
@@ -1789,17 +1787,17 @@ const initSocketIO = () => {
           console.log(`[Socket.IO] Bar joined 'bar' room`);
         }
       });
-      
+
       // Handler pentru join direct la room
       socket.on('join', (room) => {
         socket.join(room);
         console.log(`[Socket.IO] Client ${socket.id} joined room: ${room}`);
       });
-      
+
       // Handler pentru apelare ospătar (de la comanda.html)
       socket.on('callWaiter', (data) => {
         console.log(`[Socket.IO] callWaiter event received:`, data);
-        
+
         // Emite evenimentul către toți clienții (livrare1.html va primi)
         io.emit('waiterCalled', {
           tableNumber: data.tableNumber,
@@ -1808,16 +1806,16 @@ const initSocketIO = () => {
           paymentMethod: data.paymentMethod || null,
           timestamp: new Date().toISOString()
         });
-        
+
         console.log(`[Socket.IO] waiterCalled event broadcasted to all clients`);
       });
-      
+
       socket.on('disconnect', () => {
         console.log(`[Socket.IO] Client disconnected: ${socket.id}`);
       });
     });
   }
-  
+
   return io;
 };
 
@@ -1840,20 +1838,20 @@ dbPromise.then(async (db) => {
   // Some routes need to be defined before modules to override module routes
   // ========================================
   const adminController = require('./src/modules/admin/controllers/admin.controller');
-  
+
   // Orders routes - MUST be before orders module is loaded
   // orders module is mounted at /api/orders but doesn't have GET /api/orders
   // So we define it here to handle GET /api/orders requests
   app.get('/api/orders', adminController.getOrders);
   app.get('/api/orders-delivery', adminController.getOrdersDelivery);
-  
+
   // PUT /api/orders/:id/mark-paid - Marchează comandă ca achitată (doar dacă nu este deja achitată)
   app.put('/api/orders/:id/mark-paid', async (req, res, next) => {
     try {
       const { id } = req.params;
       const { dbPromise } = require('./database');
       const db = await dbPromise;
-      
+
       // Verifică dacă comanda există
       const order = await new Promise((resolve, reject) => {
         db.get('SELECT * FROM orders WHERE id = ?', [id], (err, row) => {
@@ -1861,26 +1859,26 @@ dbPromise.then(async (db) => {
           else resolve(row);
         });
       });
-      
+
       if (!order) {
         return res.status(404).json({ success: false, error: 'Comandă negăsită' });
       }
-      
+
       // Verifică dacă comanda este deja achitată
       if (order.is_paid == 1) {
-        return res.json({ 
-          success: true, 
+        return res.json({
+          success: true,
           message: 'Comanda este deja achitată',
           alreadyPaid: true,
           order: order
         });
       }
-      
+
       // Verifică dacă comanda poate fi marcată ca achitată
       if (order.status === 'cancelled') {
         return res.status(400).json({ success: false, error: 'Comanda este anulată și nu poate fi marcată ca achitată' });
       }
-      
+
       // Actualizează is_paid = 1 (verifică ce coloane există)
       const columns = await new Promise((resolve, reject) => {
         db.all("PRAGMA table_info(orders)", [], (err, rows) => {
@@ -1888,22 +1886,22 @@ dbPromise.then(async (db) => {
           else resolve(rows.map(r => r.name));
         });
       });
-      
+
       const hasPaidTimestamp = columns.includes('paid_timestamp');
       const hasPaymentTimestamp = columns.includes('payment_timestamp');
-      
+
       const timestampField = hasPaidTimestamp ? 'paid_timestamp' : (hasPaymentTimestamp ? 'payment_timestamp' : null);
       const updateQuery = timestampField
         ? `UPDATE orders SET is_paid = 1, ${timestampField} = datetime('now') WHERE id = ?`
         : `UPDATE orders SET is_paid = 1 WHERE id = ?`;
-      
+
       await new Promise((resolve, reject) => {
         db.run(updateQuery, [id], (err) => {
           if (err) reject(err);
           else resolve();
         });
       });
-      
+
       // Emit Socket.io event
       if (global.io) {
         global.io.emit('order:paid', {
@@ -1911,7 +1909,7 @@ dbPromise.then(async (db) => {
           timestamp: new Date().toISOString()
         });
       }
-      
+
       // Obține comanda actualizată
       const updatedOrder = await new Promise((resolve, reject) => {
         db.get('SELECT * FROM orders WHERE id = ?', [id], (err, row) => {
@@ -1919,11 +1917,11 @@ dbPromise.then(async (db) => {
           else resolve(row);
         });
       });
-      
+
       console.log(`✅ Order ${id} marked as paid`);
-      
-      res.json({ 
-        success: true, 
+
+      res.json({
+        success: true,
         message: 'Comandă marcată ca achitată cu succes',
         order: updatedOrder
       });
@@ -1941,7 +1939,7 @@ dbPromise.then(async (db) => {
       const { delivered_by = 'waiter' } = req.body; // 'waiter' sau 'courier'
       const { dbPromise } = require('./database');
       const db = await dbPromise;
-      
+
       // Verifică dacă comanda există
       const order = await new Promise((resolve, reject) => {
         db.get('SELECT * FROM orders WHERE id = ?', [id], (err, row) => {
@@ -1949,16 +1947,16 @@ dbPromise.then(async (db) => {
           else resolve(row);
         });
       });
-      
+
       if (!order) {
         return res.status(404).json({ success: false, error: 'Comandă negăsită' });
       }
-      
+
       // Verifică dacă comanda poate fi marcată ca livrată
       if (order.status === 'cancelled') {
         return res.status(400).json({ success: false, error: 'Comanda este anulată și nu poate fi marcată ca livrată' });
       }
-      
+
       // Dacă comanda nu este achitată, o marchem automat ca achitată
       // (pentru comenzi cu plata la livrare/ridicare)
       let wasPaid = order.is_paid == 1;
@@ -1970,17 +1968,17 @@ dbPromise.then(async (db) => {
             else resolve(rows.map(r => r.name));
           });
         });
-        
+
         const hasPaidTimestamp = columns.includes('paid_timestamp');
         const hasPaymentTimestamp = columns.includes('payment_timestamp');
-        
+
         // Folosește coloana corectă (paid_timestamp este standardul)
         const timestampField = hasPaidTimestamp ? 'paid_timestamp' : (hasPaymentTimestamp ? 'payment_timestamp' : null);
-        
+
         const updateQuery = timestampField
           ? `UPDATE orders SET is_paid = 1, ${timestampField} = datetime('now') WHERE id = ?`
           : `UPDATE orders SET is_paid = 1 WHERE id = ?`;
-        
+
         await new Promise((resolve, reject) => {
           db.run(updateQuery, [id], (err) => {
             if (err) reject(err);
@@ -1989,7 +1987,7 @@ dbPromise.then(async (db) => {
         });
         console.log(`✅ Order ${id} auto-marked as paid (payment on delivery)`);
       }
-      
+
       // Actualizează status-ul comenzii ca livrată
       await new Promise((resolve, reject) => {
         // Verifică dacă coloana delivered_by există
@@ -1998,21 +1996,21 @@ dbPromise.then(async (db) => {
             reject(err);
             return;
           }
-          
+
           const hasDeliveredBy = cols.some(col => col.name === 'delivered_by');
-          const updateQuery = hasDeliveredBy 
+          const updateQuery = hasDeliveredBy
             ? `UPDATE orders SET status = 'delivered', delivered_timestamp = datetime('now'), actual_delivery_time = datetime('now'), delivered_by = ? WHERE id = ?`
             : `UPDATE orders SET status = 'delivered', delivered_timestamp = datetime('now'), actual_delivery_time = datetime('now') WHERE id = ?`;
-          
+
           const updateParams = hasDeliveredBy ? [delivered_by, id] : [id];
-          
+
           db.run(updateQuery, updateParams, (err) => {
             if (err) reject(err);
             else resolve();
           });
         });
       });
-      
+
       // Dacă există delivery_assignment, actualizează-l și pe acela
       const assignment = await new Promise((resolve, reject) => {
         db.get(`
@@ -2025,7 +2023,7 @@ dbPromise.then(async (db) => {
           else resolve(row);
         });
       });
-      
+
       if (assignment) {
         await new Promise((resolve, reject) => {
           db.run(`
@@ -2039,7 +2037,7 @@ dbPromise.then(async (db) => {
           });
         });
       }
-      
+
       // Emit Socket.io events
       if (global.io) {
         global.io.emit('order:delivered', {
@@ -2047,7 +2045,7 @@ dbPromise.then(async (db) => {
           deliveredBy: delivered_by,
           timestamp: new Date().toISOString()
         });
-        
+
         if (!wasPaid) {
           global.io.emit('order:paid', {
             orderId: id,
@@ -2055,7 +2053,7 @@ dbPromise.then(async (db) => {
           });
         }
       }
-      
+
       // Obține comanda actualizată
       const updatedOrder = await new Promise((resolve, reject) => {
         db.get('SELECT * FROM orders WHERE id = ?', [id], (err, row) => {
@@ -2063,11 +2061,11 @@ dbPromise.then(async (db) => {
           else resolve(row);
         });
       });
-      
+
       console.log(`✅ Order ${id} marked as delivered by ${delivered_by}${!wasPaid ? ' (also marked as paid)' : ''}`);
-      
-      res.json({ 
-        success: true, 
+
+      res.json({
+        success: true,
         message: 'Comandă marcată ca livrată cu succes' + (!wasPaid ? ' și ca achitată' : ''),
         order: updatedOrder,
         wasPaid: wasPaid
@@ -2077,7 +2075,7 @@ dbPromise.then(async (db) => {
       next(error);
     }
   });
-  
+
   // ========================================
   // ADMIN LOGIN ENDPOINT (BEFORE STUB ROUTES)
   // ========================================
@@ -2119,7 +2117,7 @@ dbPromise.then(async (db) => {
   // ========================================
   // MISSING ENDPOINTS - KIOSK & AUTH
   // ========================================
-  
+
   // Kiosk Login History Endpoint
   app.get('/api/kiosk/login-history', async (req, res) => {
     try {
@@ -2206,7 +2204,7 @@ dbPromise.then(async (db) => {
   const nomenclatorStubRoutes = require('./src/routes/nomenclator-stubs.routes');
   app.use('/api/admin', nomenclatorStubRoutes);
   console.log('✅ Nomenclator stub routes mounted at /api/admin');
-  
+
   // ========================================
   // KPI ENDPOINTS (BEFORE modules to take priority over BI generic routes)
   // ========================================
@@ -2216,7 +2214,7 @@ dbPromise.then(async (db) => {
     try {
       const { dbPromise } = require('./database');
       const db = await dbPromise;
-      
+
       // Calculate table turnover for today
       const today = new Date().toISOString().split('T')[0];
       const result = await new Promise((resolve, reject) => {
@@ -2236,37 +2234,37 @@ dbPromise.then(async (db) => {
           resolve(row || { occupied_tables: 0, total_orders: 0 });
         });
       });
-      
+
       const occupiedTables = parseInt(result.occupied_tables || 0);
       const totalOrders = parseInt(result.total_orders || 0);
       const turnover = occupiedTables > 0 ? (totalOrders / occupiedTables) : 0;
-      
-      res.json({ 
-        success: true, 
-        data: { 
-          value: turnover, 
-          turnover: turnover, 
-          period: req.query.period || 'today' 
-        } 
+
+      res.json({
+        success: true,
+        data: {
+          value: turnover,
+          turnover: turnover,
+          period: req.query.period || 'today'
+        }
       });
     } catch (error) {
       console.error('❌ [table_turnover] Error:', error);
-      res.json({ 
+      res.json({
         success: true,
-        data: { 
-          value: 0, 
-          turnover: 0, 
-          period: req.query.period || 'today' 
-        } 
+        data: {
+          value: 0,
+          turnover: 0,
+          period: req.query.period || 'today'
+        }
       });
     }
   });
-  
+
   app.get('/api/bi/kpis/table_utilization', async (req, res) => {
     try {
       const { dbPromise } = require('./database');
       const db = await dbPromise;
-      
+
       // Calculate table utilization for today
       const today = new Date().toISOString().split('T')[0];
       const result = await new Promise((resolve, reject) => {
@@ -2285,37 +2283,161 @@ dbPromise.then(async (db) => {
           resolve(row || { used_tables: 0 });
         });
       });
-      
+
       const usedTables = parseInt(result.used_tables || 0);
       const totalTables = 200; // Configurabil
       const utilization = (usedTables / totalTables) * 100;
-      
-      res.json({ 
-        success: true, 
-        data: { 
-          value: utilization, 
-          utilization: utilization, 
-          period: req.query.period || 'today' 
-        } 
+
+      res.json({
+        success: true,
+        data: {
+          value: utilization,
+          utilization: utilization,
+          period: req.query.period || 'today'
+        }
       });
     } catch (error) {
       console.error('❌ [table_utilization] Error:', error);
-      res.json({ 
+      res.json({
         success: true,
-        data: { 
-          value: 0, 
-          utilization: 0, 
-          period: req.query.period || 'today' 
-        } 
+        data: {
+          value: 0,
+          utilization: 0,
+          period: req.query.period || 'today'
+        }
       });
     }
   });
-  
+
   console.log('✅ KPI endpoints mounted BEFORE modules (table_turnover, table_utilization)');
-  
+
+  // Notifications API (Moved here to ensure it's not shadowed by modules)
+  app.get('/api/notifications', async (req, res) => {
+    try {
+      const status = req.query.status || 'unread';
+      const today = ['yes', 'true', '1'].includes(String(req.query.today || '').toLowerCase());
+      const dateFilter = req.query.date; // format YYYY-MM-DD
+      const db = await dbPromise;
+
+      // OPTIMIZARE: Select doar coloanele necesare în loc de SELECT *
+      // EXCLUDE HACCP ALERTS from waiter notifications
+      let sql = 'SELECT id, title, message, status, created_at, type, table_number, order_id, read_at, title_en, message_en FROM notifications WHERE type NOT LIKE "haccp%"';
+      const conditions = [];
+      const params = [];
+
+      if (status !== 'all') {
+        sql += ' AND status = ?';
+        params.push(status);
+      }
+
+      sql += ' ORDER BY datetime(created_at) DESC LIMIT 500';
+
+      db.all(sql, params, (err, rows) => {
+        if (err) {
+          console.error('❌ Error fetching notifications:', err);
+          return res.status(500).json({ success: false, error: err.message });
+        }
+
+        let notifications = rows || [];
+
+        // Filtrează pentru "azi" folosind JavaScript pentru controlul precis al fusului orar
+        if (today) {
+          const now = new Date();
+          const todayStart = new Date(now);
+          todayStart.setHours(0, 0, 0, 0);
+          const todayEnd = new Date(now);
+          todayEnd.setHours(23, 59, 59, 999);
+
+          notifications = notifications.filter(notif => {
+            // Fix pentru date din SQLite care pot fi șiruri simple
+            let dateStr = notif.created_at;
+            if (dateStr && !dateStr.includes('T') && !dateStr.includes('Z')) {
+              // Presupunem că e UTC din SQLite datetime('now'), adăugăm 'Z' sau îl tratăm ca UTC
+              dateStr = dateStr.replace(' ', 'T') + 'Z';
+            }
+
+            const notifDate = new Date(dateStr || notif.created_at);
+            return notifDate >= todayStart && notifDate <= todayEnd;
+          });
+        }
+
+        res.json({ success: true, notifications });
+      });
+    } catch (error) {
+      console.error('❌ Error in /api/notifications:', error);
+      res.status(500).json({ success: false, error: error.message });
+    }
+  });
+
+  // DELETE ALL NOTIFICATIONS
+  app.delete('/api/notifications/delete-all', async (req, res) => {
+    try {
+      console.log('🗑️ Deleting ALL waiter notifications...');
+      const db = await dbPromise;
+
+      // Delete only non-HACCP notifications
+      const sql = 'DELETE FROM notifications WHERE type NOT LIKE "haccp%"';
+
+      db.run(sql, [], function (err) {
+        if (err) {
+          console.error('❌ Error deleting all notifications:', err);
+          return res.status(500).json({ success: false, error: err.message });
+        }
+
+        console.log(`✅ Deleted ${this.changes} notifications.`);
+        res.json({ success: true, deleted: this.changes });
+      });
+    } catch (error) {
+      console.error('❌ Error in /api/notifications/delete-all:', error);
+      res.status(500).json({ success: false, error: error.message });
+    }
+  });
+
+  // MARK AS READ
+  app.put('/api/notifications/:id/read', async (req, res) => {
+    try {
+      const { id } = req.params;
+      console.log(`📝 [Notifications] Marking as read: ID=${id} (Type: ${typeof id})`);
+      const db = await dbPromise;
+
+      db.run('UPDATE notifications SET status = "read", read_at = CURRENT_TIMESTAMP WHERE id = ?', [id], function (err) {
+        if (err) {
+          console.error(`❌ [Notifications] Error marking read ID=${id}:`, err);
+          return res.status(500).json({ success: false, error: err.message });
+        }
+        console.log(`✅ [Notifications] Marked read: ID=${id}, Changes=${this.changes}`);
+        res.json({ success: true, changes: this.changes });
+      });
+    } catch (error) {
+      console.error(`❌ [Notifications] Exception marking read ID=${req.params.id}:`, error);
+      res.status(500).json({ success: false, error: error.message });
+    }
+  });
+
+  // DELETE SINGLE NOTIFICATION
+  app.delete('/api/notifications/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      console.log(`🗑️ [Notifications] Deleting: ID=${id} (Type: ${typeof id})`);
+      const db = await dbPromise;
+
+      db.run('DELETE FROM notifications WHERE id = ?', [id], function (err) {
+        if (err) {
+          console.error(`❌ [Notifications] Error deleting ID=${id}:`, err);
+          return res.status(500).json({ success: false, error: err.message });
+        }
+        console.log(`✅ [Notifications] Deleted: ID=${id}, Changes=${this.changes}`);
+        res.json({ success: true, changes: this.changes });
+      });
+    } catch (error) {
+      console.error(`❌ [Notifications] Exception deleting ID=${req.params.id}:`, error);
+      res.status(500).json({ success: false, error: error.message });
+    }
+  });
+
   await loadModules(app);
   console.log('✅ All enterprise modules loaded');
-  
+
   // ========================================
   // GRAPHQL SERVER
   // ========================================
@@ -2325,7 +2447,7 @@ dbPromise.then(async (db) => {
   } catch (error) {
     console.error('❌ GraphQL Server failed to start:', error.message);
   }
-  
+
   // ========================================
   // STOCK ROUTES ALIAS (Mount AFTER loadModules)
   // Frontend uses /api/stock (singular) but module is mounted at /api/stocks (plural)
@@ -2333,7 +2455,7 @@ dbPromise.then(async (db) => {
   const stocksRoutes = require('./src/modules/stocks/routes');
   app.use('/api/stock', stocksRoutes);
   console.log('✅ Stock routes alias mounted: /api/stock/* -> /api/stocks/*');
-  
+
   // ========================================
   // RESERVATIONS ROUTES (Must be AFTER loadModules but BEFORE /api/payments/:id)
   // Mount AFTER modules to ensure /api/reservations is not intercepted by /api/payments/:id
@@ -2342,45 +2464,45 @@ dbPromise.then(async (db) => {
   app.use('/api/admin/reservations', reservationsRoutes);
   app.use('/api/reservations', reservationsRoutes);
   console.log('✅ Reservations routes mounted AFTER modules: /api/admin/reservations, /api/reservations');
-  
+
   // Kiosk Users routes
   const kioskUsersRoutes = require('./routes/admin/kiosk-users.routes');
   app.use('/api/admin/kiosk/users', kioskUsersRoutes);
   console.log('✅ Kiosk Users routes mounted: /api/admin/kiosk/users');
-  
+
   // ========================================
   // API PROXY ROUTES (Fix frontend API calls)
   // Must be AFTER modules are loaded
   // ========================================
   const ingredientsRoutes = require('./routes/admin/ingredients-simple.routes');
   const recipesRoutes = require('./routes/admin/recipes-simple.routes');
-  
+
   // Direct routes for /api/ingredients (proxy to admin)
   app.use('/api/ingredients', ingredientsRoutes);
-  
+
   // Also mount at /api/admin/ingredients for consistency with frontend
   app.use('/api/admin/ingredients', ingredientsRoutes);
-  
+
   // Direct routes for /api/recipes (proxy to admin)
   app.use('/api/recipes', recipesRoutes);
-  
+
   console.log('✅ API proxy routes configured: /api/ingredients, /api/admin/ingredients, /api/recipes');
-  
+
   // PHASE S7.1 - POS Fiscal Routes (after modules loaded)
   const posFiscalRoutes = require('./src/modules/fiscal/routes.pos');
   app.use('/api/admin/pos', posFiscalRoutes);
   console.log('✅ POS Fiscal routes mounted: /api/admin/pos/fiscalize');
-  
+
   // S13 - COGS Routes
   const cogsRoutes = require('./src/modules/cogs/cogs.routes');
   app.use('/api/cogs', cogsRoutes);
   console.log('✅ COGS routes mounted: /api/cogs/*');
-  
+
   // Order Health Monitor Routes
   const orderHealthRoutes = require('./src/modules/monitoring/order-health.routes');
   app.use('/api/monitoring', orderHealthRoutes);
   console.log('✅ Order Health Monitor routes mounted: /api/monitoring/*');
-  
+
   // S15 - Financial Routes
   const financialRoutes = require('./src/modules/financial/financial.routes');
   app.use('/api/financial', financialRoutes);
@@ -2390,13 +2512,13 @@ dbPromise.then(async (db) => {
   const productionRoutes = require('./src/modules/admin/routes');
   app.use('/api/admin/production', productionRoutes);
   console.log('✅ Production routes mounted: /api/admin/production/*');
-  
+
   // Split Bill Routes
   const splitBillRoutes = require('./src/modules/split-bill/splitBill.routes');
   app.use('/api/split-bill', splitBillRoutes);
-  
+
   // Weather Forecast Routes already mounted before SPA catch-all (no need to mount again)
-  
+
   // ANAF Routes (if module not loaded automatically)
   try {
     const anafRoutes = require('./src/modules/anaf-submit/anafSubmit.routes.ts');
@@ -2410,10 +2532,10 @@ dbPromise.then(async (db) => {
         const { dbPromise } = require('./database');
         const db = await dbPromise;
         const { documentType, status, startDate, endDate, limit = 100, offset = 0 } = req.query;
-        
+
         let sql = 'SELECT * FROM anaf_submission_logs WHERE 1=1';
         const params = [];
-        
+
         if (documentType) {
           sql += ' AND document_type = ?';
           params.push(documentType);
@@ -2430,17 +2552,17 @@ dbPromise.then(async (db) => {
           sql += ' AND created_at <= ?';
           params.push(endDate);
         }
-        
+
         sql += ' ORDER BY created_at DESC LIMIT ? OFFSET ?';
         params.push(parseInt(limit), parseInt(offset));
-        
+
         const submissions = await new Promise((resolve, reject) => {
           db.all(sql, params, (err, rows) => {
             if (err) reject(err);
             else resolve(rows || []);
           });
         });
-        
+
         res.json({ success: true, data: submissions });
       } catch (error) {
         console.error('❌ Error in /api/anaf/submissions:', error);
@@ -2449,14 +2571,14 @@ dbPromise.then(async (db) => {
     });
     console.log('✅ ANAF submissions fallback route created: /api/anaf/submissions');
   }
-  
+
   // PHASE PRODUCTION-READY: Dashboard metrics endpoint (fallback pentru /api/dashboard/metrics)
   app.get('/api/dashboard/metrics', async (req, res) => {
     try {
       // Use admin controller if available
       const adminController = require('./src/modules/admin/controllers/admin.controller');
       if (adminController && adminController.getDashboardMetrics) {
-        await adminController.getDashboardMetrics(req, res, () => {});
+        await adminController.getDashboardMetrics(req, res, () => { });
       } else {
         // Fallback: return basic system metrics
         res.json({
@@ -2494,12 +2616,12 @@ dbPromise.then(async (db) => {
     }
   });
   console.log('✅ Dashboard metrics fallback route created: /api/dashboard/metrics');
-  
+
   console.log('✅ Split Bill routes mounted: /api/split-bill/*');
-  
+
   // Additional admin routes (missing endpoints)
   // adminController already declared at line 220
-  
+
   // Settings routes
   // Notifications routes
   const notificationsRoutes = require('./routes/admin/notifications.routes');
@@ -2510,17 +2632,17 @@ dbPromise.then(async (db) => {
   const settingsRoutes = require('./routes/admin/settings.routes');
   app.use('/api/settings', settingsRoutes);
   console.log('✅ Settings routes mounted: /api/settings (localization, ui/themes, ui)');
-  
+
   // Locations routes - Mount module routes instead of controller
   // app.get('/api/settings/locations', adminController.getLocations); // Removed - use module routes
   // OPTIMIZARE: Cache pentru setări (se schimbă rar)
   const { longCacheMiddleware } = require('./src/middleware/cache.middleware');
   app.get('/api/settings/restaurant', longCacheMiddleware(), adminController.getRestaurantSettings);
-  
+
   // Direct /api/locations endpoint (for admin-advanced.html compatibility)
   const locationsRoutes = require('./src/modules/locations/locations.routes');
   app.use('/api/locations', locationsRoutes);
-  
+
   // Additional orders endpoint
   app.get('/api/admin/orders/all', async (req, res) => {
     try {
@@ -2545,7 +2667,7 @@ dbPromise.then(async (db) => {
           }
         });
       });
-      
+
       // Calculează items_count din JSON items în JavaScript
       const orders = ordersRaw.map(order => {
         let itemsCount = 0;
@@ -2562,14 +2684,14 @@ dbPromise.then(async (db) => {
           items_count: itemsCount
         };
       });
-      
+
       res.json({ success: true, orders });
     } catch (error) {
       console.error('❌ Error in /api/admin/orders/all:', error);
       res.status(500).json({ success: false, error: error.message });
     }
   });
-  
+
   // Inventory sessions endpoint
   app.get('/api/inventory/sessions', async (req, res) => {
     try {
@@ -2608,24 +2730,24 @@ dbPromise.then(async (db) => {
       res.status(500).json({ success: false, error: error.message });
     }
   });
-  
+
   // Marketing Module Routes
   const marketingRoutes = require('./src/modules/marketing/marketing.routes');
   app.use('/api/marketing', marketingRoutes);
-  
+
   app.get('/api/feedback/recent', async (req, res) => {
     try {
       const db = await dbPromise;
       const { limit = 100, period = 'overall', rating } = req.query;
-      
+
       // Calculează perioada
       let dateFilter = '';
       const params = [];
-      
+
       if (period !== 'overall') {
         const now = new Date();
         let startDate;
-        
+
         switch (period) {
           case 'today':
             startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -2651,20 +2773,20 @@ dbPromise.then(async (db) => {
             startDate.setFullYear(now.getFullYear() - 1);
             break;
         }
-        
+
         if (startDate) {
           dateFilter = ' AND timestamp >= ?';
           params.push(startDate.toISOString());
         }
       }
-      
+
       // Filtru rating
       let ratingFilter = '';
       if (rating) {
         ratingFilter = ' AND rating = ?';
         params.push(parseInt(rating));
       }
-      
+
       // Obține feedback-urile
       const feedbacks = await new Promise((resolve, reject) => {
         db.all(`
@@ -2685,7 +2807,7 @@ dbPromise.then(async (db) => {
           else resolve(rows || []);
         });
       });
-      
+
       // Calculează statistici (doar pentru dateFilter, fără ratingFilter)
       const statsParams = rating ? params.slice(0, -1) : params; // Elimină ultimul parametru (rating) dacă există
       const stats = await new Promise((resolve, reject) => {
@@ -2705,7 +2827,7 @@ dbPromise.then(async (db) => {
           else resolve(row || { total: 0, averageRating: 0, rating_1: 0, rating_2: 0, rating_3: 0, rating_4: 0, rating_5: 0 });
         });
       });
-      
+
       // Formatează distribuția rating-urilor
       const ratingDistribution = {
         1: stats.rating_1 || 0,
@@ -2714,7 +2836,7 @@ dbPromise.then(async (db) => {
         4: stats.rating_4 || 0,
         5: stats.rating_5 || 0
       };
-      
+
       res.json({
         success: true,
         recentFeedback: feedbacks,
@@ -2727,27 +2849,198 @@ dbPromise.then(async (db) => {
       res.status(500).json({ success: false, error: error.message });
     }
   });
-  
-  
+
+
   // Executive Dashboard routes
   const executiveDashboardController = require('./src/modules/executive-dashboard/executive-dashboard.controller');
   app.get('/api/executive-dashboard/metrics', executiveDashboardController.getExecutiveMetrics);
   app.get('/api/executive-dashboard/stock-value', executiveDashboardController.getStockValue);
   console.log('✅ Executive Dashboard routes mounted: /api/executive-dashboard/*');
-  
-  app.get('/api/admin/inventory/filters', (req, res) => {
-    res.json({ success: true, filters: { locations: [], categories: [], statuses: [] } });
+
+  // GET /api/admin/inventory/filters - Populează filtrele și statisticile din Admin > Inventar (Legacy)
+  app.get('/api/admin/inventory/filters', async (req, res) => {
+    try {
+      const db = await dbPromise;
+
+      // 1. Statistici Inventar
+      // total_ingredients: Numărul total de ingrediente
+      // out_of_stock: Stoc <= 0
+      // low_stock: 0 < Stoc <= Min Stock
+      // ok_stock: Stoc > Min Stock
+      const stats = await db.get(`
+        SELECT 
+          count(*) as total_ingredients,
+          sum(case when current_stock <= 0 then 1 else 0 end) as out_of_stock,
+          sum(case when current_stock > 0 AND current_stock <= min_stock then 1 else 0 end) as low_stock,
+          sum(case when current_stock > min_stock then 1 else 0 end) as ok_stock
+        FROM ingredients
+      `);
+
+      // 2. Categorii distincte (pentru dropdown filtrare)
+      const categoriesRows = await db.all(`
+        SELECT DISTINCT category_en as category 
+        FROM ingredients 
+        WHERE category_en IS NOT NULL AND category_en != '' 
+        ORDER BY category_en
+      `);
+      const categories = categoriesRows.map(r => r.category);
+
+      // 3. Furnizori (pentru dropdown filtrare)
+      const suppliersRows = await db.all(`
+        SELECT DISTINCT company_name as supplier 
+        FROM suppliers 
+        WHERE company_name IS NOT NULL AND company_name != '' 
+        ORDER BY company_name
+      `);
+      const suppliers = suppliersRows.map(r => r.supplier);
+
+      res.json({
+        success: true,
+        data: {
+          categories,
+          suppliers,
+          stats: {
+            total_ingredients: stats.total_ingredients || 0,
+            out_of_stock: stats.out_of_stock || 0,
+            low_stock: stats.low_stock || 0,
+            ok_stock: stats.ok_stock || 0
+          }
+        }
+      });
+    } catch (error) {
+      console.error('Eroare la /api/admin/inventory/filters:', error);
+      res.status(500).json({ success: false, error: 'Eroare server la încărcarea filtrelor.' });
+    }
   });
-  
+
+  // =========================================================================================================
+  //  INVENTORY MANAGEMENT API (Legacy Implementation - Refactored to use Helpers)
+  // =========================================================================================================
+
+  const inventoryHelpers = require('./helpers/inventory-helpers');
+
+  // POST /api/inventory/start - Inițiază o nouă sesiune de inventar
+  app.post('/api/inventory/start', async (req, res) => {
+    const { session_type, started_by, location_ids } = req.body;
+    const result = await inventoryHelpers.createInventorySession(session_type, started_by || 'Admin', location_ids);
+
+    if (result.success) {
+      res.json({
+        success: true,
+        sessionId: result.sessionId,
+        sessionType: session_type,
+        ingredientsCount: result.totalItems
+      });
+    } else {
+      res.status(500).json({ success: false, error: result.error });
+    }
+  });
+
+  // GET /api/inventory/sessions - Listează sesiunile de inventar
+  app.get('/api/inventory/sessions', async (req, res) => {
+    const filters = {
+      type: req.query.type,
+      status: req.query.status,
+      limit: req.query.limit
+    };
+    const result = await inventoryHelpers.getInventorySessions(filters);
+
+    if (result.success) {
+      res.json({ success: true, sessions: result.sessions });
+    } else {
+      res.status(500).json({ success: false, error: result.error });
+    }
+  });
+
+  // GET /api/inventory/session/:id - Detalii header sesiune
+  app.get('/api/inventory/session/:id', async (req, res) => {
+    const { id } = req.params;
+    const result = await inventoryHelpers.getInventoryDetails(id);
+
+    if (result.success) {
+      res.json({ success: true, session: result.session, items: result.items });
+    } else {
+      res.status(result.error === 'Sesiunea nu există' ? 404 : 500).json({ success: false, error: result.error });
+    }
+  });
+
+  // GET /api/inventory/details/:id - Lista ingrediente pentru numărare
+  app.get('/api/inventory/details/:id', async (req, res) => {
+    const { id } = req.params;
+    const result = await inventoryHelpers.getInventoryDetails(id);
+
+    if (result.success) {
+      res.json({ success: true, items: result.items });
+    } else {
+      res.status(result.error === 'Sesiunea nu există' ? 404 : 500).json({ success: false, error: result.error });
+    }
+  });
+
+  // POST /api/inventory/update-count/:id - Actualizează numărătoarea pentru un item
+  app.post('/api/inventory/update-count/:id', async (req, res) => {
+    const { id } = req.params;
+    const { itemId, physicalCount } = req.body;
+
+    try {
+      const db = await dbPromise;
+      const item = await db.get('SELECT location_id FROM ingredients WHERE id = ?', [itemId]);
+      const locationId = item ? item.location_id : 1;
+
+      const result = await inventoryHelpers.updateInventoryCount(id, itemId, locationId, physicalCount);
+      if (result.success) {
+        res.json({ success: true });
+      } else {
+        res.status(500).json({ success: false, error: result.error });
+      }
+    } catch (e) {
+      console.error('Error finding location for item:', e);
+      res.status(500).json({ success: false, error: 'Database error' });
+    }
+  });
+
+  // POST /api/inventory/finalize/:id - Finalizează inventarul și actualizează stocurile
+  app.post('/api/inventory/finalize/:id', async (req, res) => {
+    const { id } = req.params;
+    const result = await inventoryHelpers.finalizeInventorySession(id);
+
+    if (result.success) {
+      const detailsResult = await inventoryHelpers.getInventoryDetails(id);
+      const details = detailsResult.items.map(i => ({
+        ...i,
+        difference: (i.counted_stock || 0) - (i.theoretical_stock || 0)
+      }));
+
+      res.json({
+        success: true,
+        itemsProcessed: details.length,
+        totalDifferenceValue: result.adjustments.total,
+        details: details
+      });
+    } else {
+      res.status(500).json({ success: false, error: result.error });
+    }
+  });
+
+  // DELETE /api/inventory/session/:id - Șterge o sesiune
+  app.delete('/api/inventory/session/:id', async (req, res) => {
+    const { id } = req.params;
+    const result = await inventoryHelpers.deleteInventorySession(id);
+    if (result.success) {
+      res.json({ success: true });
+    } else {
+      res.status(500).json({ success: false, error: result.error });
+    }
+  });
+
   // GET /api/analytics/stock-cancellation-correlation
   // Analizează corelația între stocuri scăzute și anulări de comenzi
   app.get('/api/analytics/stock-cancellation-correlation', async (req, res) => {
     try {
       const db = await dbPromise;
-      
+
       // Obține toate produsele din meniu
       // Notă: menu nu are coloane min_stock/current_stock direct, folosim ingredientele din rețete
-      const products = await new Promise((resolve, reject) => {
+      let products = await new Promise((resolve, reject) => {
         db.all(`
           SELECT 
             m.id,
@@ -2765,12 +3058,12 @@ dbPromise.then(async (db) => {
           else resolve(rows || []);
         });
       });
-      
+
       // Obține toate comenzile anulate din ultimele 30 de zile
       const thirtyDaysAgo = new Date();
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
       const startDate = thirtyDaysAgo.toISOString();
-      
+
       const cancelledOrders = await new Promise((resolve, reject) => {
         db.all(`
           SELECT 
@@ -2788,10 +3081,10 @@ dbPromise.then(async (db) => {
           else resolve(rows || []);
         });
       });
-      
+
       // Analizează fiecare produs
       const riskProducts = [];
-      
+
       for (const product of products) {
         // Calculează stocul efectiv din ingredientele din rețetă
         // Obține ingredientele din rețetă pentru acest produs
@@ -2811,12 +3104,12 @@ dbPromise.then(async (db) => {
             else resolve(rows || []);
           });
         });
-        
+
         // Calculează stocul minim și actual din ingrediente
         let totalMinStock = 0;
         let totalCurrentStock = 0;
         let hasLowStock = false;
-        
+
         for (const ing of recipeIngredients) {
           const ingMin = parseFloat(ing.min_stock) || 0;
           const ingCurrent = parseFloat(ing.current_stock) || 0;
@@ -2826,36 +3119,36 @@ dbPromise.then(async (db) => {
             hasLowStock = true;
           }
         }
-        
+
         const currentStock = totalCurrentStock;
         const minStock = totalMinStock;
         const stockRatio = minStock > 0 ? (currentStock / minStock) * 100 : 100;
-        
+
         // Numără anulări pentru acest produs
         let totalCancellations = 0;
         let stockRelatedCancellations = 0;
         let cancelledValue = 0;
-        
+
         for (const order of cancelledOrders) {
           try {
             const items = typeof order.items === 'string' ? JSON.parse(order.items) : order.items;
             if (!Array.isArray(items)) continue;
-            
+
             // Verifică dacă comanda conține acest produs
             const hasProduct = items.some(item => {
               const itemId = item.product_id || item.menu_item_id || item.id;
               return itemId === product.id;
             });
-            
+
             if (hasProduct) {
               totalCancellations++;
               cancelledValue += parseFloat(order.total) || 0;
-              
+
               // Verifică dacă anularea este legată de stoc
               const reason = (order.cancelled_reason || '').toLowerCase();
-              if (reason.includes('stoc') || reason.includes('stock') || 
-                  reason.includes('indisponibil') || reason.includes('unavailable') ||
-                  reason.includes('epuizat') || reason.includes('out of stock')) {
+              if (reason.includes('stoc') || reason.includes('stock') ||
+                reason.includes('indisponibil') || reason.includes('unavailable') ||
+                reason.includes('epuizat') || reason.includes('out of stock')) {
                 stockRelatedCancellations++;
               }
             }
@@ -2864,7 +3157,7 @@ dbPromise.then(async (db) => {
             continue;
           }
         }
-        
+
         // Calculează nivelul de risc
         let riskLevel = 'low';
         if (stockRatio < 50 || stockRelatedCancellations > 5) {
@@ -2872,7 +3165,7 @@ dbPromise.then(async (db) => {
         } else if (stockRatio < 80 || stockRelatedCancellations > 2) {
           riskLevel = 'medium';
         }
-        
+
         // Adaugă produsele cu risc, cu anulări, sau cu stoc scăzut
         if (riskLevel !== 'low' || totalCancellations > 0 || hasLowStock || stockRatio < 100) {
           riskProducts.push({
@@ -2889,7 +3182,7 @@ dbPromise.then(async (db) => {
           });
         }
       }
-      
+
       // Sortează după risc și valoare pierdută
       riskProducts.sort((a, b) => {
         const riskOrder = { high: 3, medium: 2, low: 1 };
@@ -2898,10 +3191,10 @@ dbPromise.then(async (db) => {
         }
         return b.cancelled_value - a.cancelled_value;
       });
-      
+
       // Top 10 produse cu risc
       const top10Products = riskProducts.slice(0, 10);
-      
+
       // Calculează sumar
       const highRiskCount = riskProducts.filter(p => p.risk_level === 'high').length;
       const mediumRiskCount = riskProducts.filter(p => p.risk_level === 'medium').length;
@@ -2909,10 +3202,10 @@ dbPromise.then(async (db) => {
       const totalCancelledValue = riskProducts.reduce((sum, p) => sum + p.cancelled_value, 0);
       const totalStockRelatedCancellations = riskProducts.reduce((sum, p) => sum + p.stock_related_cancellations, 0);
       const totalCancellations = riskProducts.reduce((sum, p) => sum + p.total_cancellations, 0);
-      const avgStockRelatedRate = totalCancellations > 0 
+      const avgStockRelatedRate = totalCancellations > 0
         ? ((totalStockRelatedCancellations / totalCancellations) * 100).toFixed(1) + '%'
         : '0%';
-      
+
       res.json({
         success: true,
         products: top10Products,
@@ -2942,17 +3235,17 @@ dbPromise.then(async (db) => {
       });
     }
   });
-  
+
   // GET /api/analytics/cancellation-stats - Statistici anulări comenzi
   app.get('/api/analytics/cancellation-stats', async (req, res) => {
     try {
       const { period = 'week', startDate, endDate } = req.query;
       const db = await dbPromise;
-      
+
       // Calculează intervalul de date
       const now = new Date();
       let startDateObj, endDateObj;
-      
+
       switch (period) {
         case 'day':
           startDateObj = new Date(now);
@@ -2994,34 +3287,34 @@ dbPromise.then(async (db) => {
         default:
           return res.status(400).json({ success: false, error: 'Perioadă invalidă' });
       }
-      
+
       const startDateStr = startDateObj.toISOString();
       const endDateStr = endDateObj.toISOString();
-      
+
       // Total comenzi în perioada selectată
       const totalOrders = await new Promise((resolve, reject) => {
-        db.get(`SELECT COUNT(*) as count FROM orders WHERE timestamp >= ? AND timestamp <= ?`, 
+        db.get(`SELECT COUNT(*) as count FROM orders WHERE timestamp >= ? AND timestamp <= ?`,
           [startDateStr, endDateStr], (err, row) => {
             if (err) reject(err);
             else resolve(row?.count || 0);
           });
       });
-      
+
       // Comenzi anulate în perioada selectată
       const cancelledOrders = await new Promise((resolve, reject) => {
         // OPTIMIZARE: Select doar coloanele necesare pentru analiză
         // Note: order_number nu există în schema orders - folosim id
-        db.all(`SELECT id, total, timestamp, cancelled_timestamp, cancelled_reason, payment_method, type FROM orders WHERE cancelled_timestamp >= ? AND cancelled_timestamp <= ? ORDER BY cancelled_timestamp`, 
+        db.all(`SELECT id, total, timestamp, cancelled_timestamp, cancelled_reason, payment_method, type FROM orders WHERE cancelled_timestamp >= ? AND cancelled_timestamp <= ? ORDER BY cancelled_timestamp`,
           [startDateStr, endDateStr], (err, rows) => {
             if (err) reject(err);
             else resolve(rows || []);
           });
       });
-      
+
       const cancelledCount = cancelledOrders.length;
       const cancelledValue = cancelledOrders.reduce((sum, o) => sum + (parseFloat(o.total) || 0), 0);
       const cancellationRate = totalOrders > 0 ? (cancelledCount / totalOrders) * 100 : 0;
-      
+
       // Timp mediu de anulare (minute între timestamp și cancelled_timestamp)
       let avgCancelTimeMinutes = 0;
       if (cancelledOrders.length > 0) {
@@ -3037,7 +3330,7 @@ dbPromise.then(async (db) => {
           avgCancelTimeMinutes = cancelTimes.reduce((sum, t) => sum + t, 0) / cancelTimes.length;
         }
       }
-      
+
       // Distribuție orară (0-23)
       const hourlyDist = Array.from({ length: 24 }, (_, h) => ({ hour: h, count: 0 }));
       cancelledOrders.forEach(order => {
@@ -3046,7 +3339,7 @@ dbPromise.then(async (db) => {
           hourlyDist[hour].count++;
         }
       });
-      
+
       // Motive anulare
       const reasonsMap = {};
       cancelledOrders.forEach(order => {
@@ -3057,7 +3350,7 @@ dbPromise.then(async (db) => {
         .map(([reason, count]) => ({ reason, count }))
         .sort((a, b) => b.count - a.count)
         .slice(0, 10);
-      
+
       // Tendințe (distribuție zilnică)
       const trendsMap = {};
       cancelledOrders.forEach(order => {
@@ -3069,7 +3362,7 @@ dbPromise.then(async (db) => {
       const trends = Object.entries(trendsMap)
         .map(([date, count]) => ({ date, count }))
         .sort((a, b) => a.date.localeCompare(b.date));
-      
+
       // Top produse anulate
       const orderIds = cancelledOrders.map(o => o.id);
       let topCancelledProducts = [];
@@ -3081,7 +3374,7 @@ dbPromise.then(async (db) => {
                   WHERE order_id IN (${placeholders}) 
                   GROUP BY name 
                   ORDER BY cancellation_count DESC 
-                  LIMIT 10`, 
+                  LIMIT 10`,
             orderIds, (err, rows) => {
               if (err) reject(err);
               else resolve(rows || []);
@@ -3092,7 +3385,7 @@ dbPromise.then(async (db) => {
           cancellation_count: p.cancellation_count || 0
         }));
       }
-      
+
       // Breakdown pe tip comandă (DELIVERY, DRIVE_THRU, TAKEOUT, here)
       const breakdownByTypeMap = {};
       cancelledOrders.forEach(order => {
@@ -3101,14 +3394,14 @@ dbPromise.then(async (db) => {
         else if (order.type === 'drive_thru' || order.type === 'DRIVE_THRU' || order.type === 'drivethru') type = 'DRIVE_THRU';
         else if (order.type === 'takeout' || order.type === 'TAKEOUT' || order.type === 'takeaway') type = 'TAKEOUT';
         else if (order.type === 'here' || order.type === 'HERE') type = 'HERE';
-        
+
         if (!breakdownByTypeMap[type]) {
           breakdownByTypeMap[type] = { type, count: 0, value: 0 };
         }
         breakdownByTypeMap[type].count++;
         breakdownByTypeMap[type].value += parseFloat(order.total) || 0;
       });
-      
+
       const totalCancelledValue = Object.values(breakdownByTypeMap).reduce((sum, item) => sum + item.value, 0);
       const breakdownByType = Object.values(breakdownByTypeMap).map(item => ({
         type: item.type,
@@ -3116,7 +3409,7 @@ dbPromise.then(async (db) => {
         value: item.value,
         percentage: totalCancelledValue > 0 ? (item.value / totalCancelledValue) * 100 : 0
       }));
-      
+
       const result = {
         success: true,
         data: {
@@ -3136,7 +3429,7 @@ dbPromise.then(async (db) => {
           timestamp: new Date().toISOString()
         }
       };
-      
+
       res.json(result);
     } catch (error) {
       console.error('❌ Eroare la calcularea statisticilor anulări:', error);
@@ -3144,12 +3437,12 @@ dbPromise.then(async (db) => {
       res.status(500).json({ success: false, error: error.message, stack: process.env.NODE_ENV === 'development' ? error.stack : undefined });
     }
   });
-  
+
   app.get('/api/inventory/nirs', async (req, res) => {
     try {
       const { dbPromise } = require('./database');
       const db = await dbPromise;
-      
+
       // Obține toate NIR-urile din avize_insotire
       const nirs = await new Promise((resolve, reject) => {
         db.all(`
@@ -3180,7 +3473,7 @@ dbPromise.then(async (db) => {
           }
         });
       });
-      
+
       // Calculează valoarea pentru fiecare NIR din stock_moves
       const nirsWithValue = await Promise.all(nirs.map(async (nir) => {
         const value = await new Promise((resolve, reject) => {
@@ -3201,7 +3494,7 @@ dbPromise.then(async (db) => {
             }
           });
         });
-        
+
         // Format pentru frontend (admin-advanced.html)
         return {
           id: nir.id,
@@ -3220,29 +3513,29 @@ dbPromise.then(async (db) => {
           status: nir.status || 'draft'
         };
       }));
-      
-      res.json({ 
-        success: true, 
+
+      res.json({
+        success: true,
         nirs: nirsWithValue,
         count: nirsWithValue.length
       });
     } catch (error) {
       console.error('❌ Error fetching NIRs:', error);
-      res.status(500).json({ 
-        success: false, 
+      res.status(500).json({
+        success: false,
         error: error.message,
         nirs: []
       });
     }
   });
-  
+
   // GET /api/inventory/nir/:id - Obține detaliile complete ale unui NIR cu articolele
   app.get('/api/inventory/nir/:id', async (req, res) => {
     try {
       const { id } = req.params;
       const { dbPromise } = require('./database');
       const db = await dbPromise;
-      
+
       // Obține NIR-ul
       const nir = await new Promise((resolve, reject) => {
         db.get(`
@@ -3271,14 +3564,14 @@ dbPromise.then(async (db) => {
           }
         });
       });
-      
+
       if (!nir) {
-        return res.status(404).json({ 
-          success: false, 
-          error: 'NIR-ul nu a fost găsit' 
+        return res.status(404).json({
+          success: false,
+          error: 'NIR-ul nu a fost găsit'
         });
       }
-      
+
       // Obține articolele NIR din stock_moves
       const items = await new Promise((resolve, reject) => {
         db.all(`
@@ -3314,7 +3607,7 @@ dbPromise.then(async (db) => {
           }
         });
       });
-      
+
       // Calculează totaluri
       const totalValue = items.reduce((sum, item) => sum + (parseFloat(item.value) || 0), 0);
       const totalValueWithVAT = items.reduce((sum, item) => {
@@ -3322,7 +3615,7 @@ dbPromise.then(async (db) => {
         const vatPercent = parseFloat(item.tva_percent) || 21;
         return sum + (value * (1 + vatPercent / 100));
       }, 0);
-      
+
       // Formatează articolele pentru frontend
       const formattedItems = items.map(item => ({
         id: item.id,
@@ -3342,7 +3635,7 @@ dbPromise.then(async (db) => {
         cost_per_unit: parseFloat(item.cost_per_unit) || 0,
         current_stock: parseFloat(item.current_stock) || 0
       }));
-      
+
       res.json({
         success: true,
         nir: {
@@ -3364,17 +3657,17 @@ dbPromise.then(async (db) => {
       });
     } catch (error) {
       console.error('❌ Error fetching NIR details:', error);
-      res.status(500).json({ 
-        success: false, 
+      res.status(500).json({
+        success: false,
         error: error.message
       });
     }
   });
-  
+
   // Inventory base endpoint (for audit compatibility)
   app.get('/api/inventory', (req, res) => {
-    res.json({ 
-      success: true, 
+    res.json({
+      success: true,
       message: 'Inventory API',
       endpoints: {
         sessions: '/api/inventory/sessions',
@@ -3382,12 +3675,12 @@ dbPromise.then(async (db) => {
       }
     });
   });
-  
+
   // Restaurant config endpoint (for admin-advanced.html)
   const restaurantController = require('./src/modules/settings/controllers/restaurant.controller');
   app.get('/api/restaurant/config', restaurantController.getRestaurantSettings);
   app.post('/api/restaurant/config', restaurantController.saveRestaurantSettings);
-  
+
   // Areas & Tables routes (direct endpoints, not under /api/settings)
   const areasController = require('./src/modules/settings/controllers/areas.controller');
   const tablesController = require('./src/modules/settings/controllers/tables.controller');
@@ -3399,30 +3692,30 @@ dbPromise.then(async (db) => {
   app.post('/api/tables', tablesController.createTable);
   app.put('/api/tables/:id', tablesController.updateTable);
   app.put('/api/tables/:id/position', tablesController.updateTablePosition);
-  
+
   // Fiscal routes
   const fiscalRoutes = require('./src/modules/fiscal/fiscal.routes');
   app.use('/api/fiscal', fiscalRoutes);
-  
+
   // E-Factura routes (from routes.js, not fiscal.routes.js)
   const eFacturaRoutes = require('./src/modules/fiscal/routes');
   app.use('/api/fiscal', eFacturaRoutes);
-  
+
   // ========================================
   // LEGAL TIPIZATE ROUTES - Conform OMFP 2634/2015
   // ========================================
   try {
     const { runLegalTipizateMigrations } = require('./src/modules/tipizate/migrations/run-legal-migrations');
     await runLegalTipizateMigrations(db);
-    
+
     // ANAF Compliant Tipizate Migration (conform OMFP 2634/2015)
     const { runAnafCompliantTipizateMigration } = require('./src/modules/tipizate/migrations/anaf-compliant-tipizate-migration');
     await runAnafCompliantTipizateMigration(db);
-    
+
     const legalTipizateRoutes = require('./src/modules/tipizate/routes/legal-tipizate.routes');
     app.use('/api/tipizate-legal', legalTipizateRoutes);
     console.log('✅ Legal Tipizate routes mounted at /api/tipizate-legal');
-    
+
     // ANAF Compliant Tipizate Routes
     const anafTipizateRoutes = require('./src/modules/tipizate/routes/anaf-tipizate.routes');
     app.use('/api/tipizate-anaf', anafTipizateRoutes);
@@ -3430,7 +3723,7 @@ dbPromise.then(async (db) => {
   } catch (err) {
     console.warn('⚠️ Legal Tipizate module not loaded:', err.message);
   }
-  
+
   // Alias /api/e-factura -> /api/fiscal/e-factura (for admin-vite React)
   app.use('/api/e-factura', (req, res, next) => {
     // Rewrite URL to point to fiscal routes
@@ -3439,13 +3732,13 @@ dbPromise.then(async (db) => {
     // Forward to fiscal routes
     eFacturaRoutes(req, res, next);
   });
-  
+
   // Additional fiscal endpoints (for admin-advanced.html)
   app.get('/api/fiscal/documents', async (req, res) => {
     try {
       const { dbPromise } = require('./database');
       const db = await dbPromise;
-      
+
       // Get fiscal receipts
       // NOTE: fiscal_receipts table uses 'issue_date' not 'created_at', but we alias it as 'created_at' for frontend compatibility
       // NOTE: fiscal_receipts table doesn't have 'is_cancelled' column, so we default to 'active' status
@@ -3479,7 +3772,7 @@ dbPromise.then(async (db) => {
           }
         });
       });
-      
+
       // Get e-Factura invoices
       const invoices = await new Promise((resolve, reject) => {
         db.all(`
@@ -3517,7 +3810,7 @@ dbPromise.then(async (db) => {
           }
         });
       });
-      
+
       // Combine and format documents
       const allDocuments = [
         ...receipts.map(r => ({
@@ -3535,7 +3828,7 @@ dbPromise.then(async (db) => {
           hasXml: !!inv.xml_content
         }))
       ].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 50);
-      
+
       res.json({ success: true, documents: allDocuments });
     } catch (error) {
       // Return empty array instead of 500 error for missing table/column
@@ -3547,7 +3840,7 @@ dbPromise.then(async (db) => {
       res.status(500).json({ success: false, error: error.message });
     }
   });
-  
+
   app.get('/api/fiscal/register', async (req, res) => {
     try {
       const { dbPromise } = require('./database');
@@ -3588,7 +3881,7 @@ dbPromise.then(async (db) => {
       res.status(500).json({ success: false, error: error.message });
     }
   });
-  
+
   app.get('/api/fiscal/paid-orders', async (req, res) => {
     try {
       const { dbPromise } = require('./database');
@@ -3613,21 +3906,21 @@ dbPromise.then(async (db) => {
           }
         });
       });
-      
+
       // Grupează comenzile pe date pentru compatibilitate cu frontend-ul
       const ordersByDateObj = {};
       orders.forEach(order => {
         // Adaugă items_preview pentru fiecare comandă (dacă există items)
         const items = order.items ? (typeof order.items === 'string' ? JSON.parse(order.items) : order.items) : [];
         order.items_preview = items.slice(0, 3).map(item => item.name || item.product_name || 'Produs').join(', ') + (items.length > 3 ? '...' : '');
-        
+
         const date = order.created_at ? new Date(order.created_at).toISOString().split('T')[0] : 'unknown';
         if (!ordersByDateObj[date]) {
           ordersByDateObj[date] = [];
         }
         ordersByDateObj[date].push(order);
       });
-      
+
       // Convertește obiectul în array pentru frontend (format așteptat)
       const ordersByDateArray = Object.keys(ordersByDateObj).sort((a, b) => {
         // Sortare descrescătoare după dată (cel mai recent primul)
@@ -3638,7 +3931,7 @@ dbPromise.then(async (db) => {
         today.setHours(0, 0, 0, 0);
         const yesterday = new Date(today);
         yesterday.setDate(yesterday.getDate() - 1);
-        
+
         let displayDate;
         if (date === today.toISOString().split('T')[0]) {
           displayDate = 'Astăzi';
@@ -3648,55 +3941,55 @@ dbPromise.then(async (db) => {
           displayDate = dateObj.toLocaleDateString('ro-RO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
           displayDate = displayDate.charAt(0).toUpperCase() + displayDate.slice(1);
         }
-        
+
         return {
           date: date,
           display_date: displayDate,
           orders: ordersByDateObj[date]
         };
       });
-      
-      res.json({ 
-        success: true, 
+
+      res.json({
+        success: true,
         orders: orders,
         orders_by_date: ordersByDateArray  // Array format pentru frontend
       });
     } catch (error) {
       console.error('Error in /api/fiscal/paid-orders:', error);
       // Return empty structure instead of 500 error (array format pentru frontend)
-      res.json({ 
-        success: true, 
+      res.json({
+        success: true,
         orders: [],
         orders_by_date: []  // Array gol în loc de obiect
       });
     }
   });
-  
+
   // Stats routes (BI Dashboards)
   const statsRoutes = require('./src/modules/stats/stats.routes');
   app.use('/api/stats', statsRoutes);
-  
+
   // Platform Stats routes (Statistici per platformă)
   const platformStatsRoutes = require('./src/modules/platform-stats/platform-stats.routes');
   app.use('/api/platform-stats', platformStatsRoutes);
   console.log('✅ Platform Stats routes mounted: /api/platform-stats');
-  
+
   // Visits routes
   const visitsController = require('./src/modules/orders/controllers/visits.controller');
   app.post('/api/visits/close', visitsController.closeVisit);
-  
+
   // Rewards endpoint - verifică recompensele eligibile pentru coș
   app.post('/api/rewards/check', async (req, res) => {
     try {
       const { cartItems } = req.body;
-      
+
       if (!cartItems || !Array.isArray(cartItems)) {
-        return res.json({ 
-          success: true, 
-          eligibleRewards: [] 
+        return res.json({
+          success: true,
+          eligibleRewards: []
         });
       }
-      
+
       // Calculează totalul coșului
       const cartTotal = cartItems.reduce((sum, item) => {
         if (item.isFree) return sum;
@@ -3704,11 +3997,11 @@ dbPromise.then(async (db) => {
         const customPrice = (item.customizations || []).reduce((cSum, c) => cSum + (c.extra_price || 0), 0);
         return sum + (basePrice + customPrice) * (item.quantity || 1);
       }, 0);
-      
+
       // TODO: Implementare logică reală de recompense (ex: din baza de date)
       // Pentru moment, returnează array gol
       const eligibleRewards = [];
-      
+
       res.json({
         success: true,
         eligibleRewards: eligibleRewards
@@ -3721,42 +4014,42 @@ dbPromise.then(async (db) => {
       });
     }
   });
-  
+
   console.log('✅ Areas, Tables, Fiscal, Stats, Platform Stats, and Visits routes mounted');
-  
+
   // Audit & Compliance routes
   app.get('/api/admin/audit-log', adminController.getAuditLog);
   app.get('/api/compliance/temperature-log', adminController.getTemperatureLog);
   app.get('/api/compliance/cleaning-schedule', adminController.getCleaningSchedule);
-  
+
   // Compliance routes are mounted via modules.registry.js (no need to mount here)
   // Removed duplicate mounting - compliance routes loaded from src/modules/compliance/compliance.routes.js
-  
+
   // Mount audit routes
   const auditRoutes = require('./routes/audit.routes');
   app.use('/api/audit', auditRoutes);
   console.log('✅ Audit routes mounted: /api/audit/* (includes logs, login-history, security, user-activity, alerts)');
-  
+
   // Generic alerts endpoint - aggregates all alert types (stock, order, system)
   app.get('/api/alerts', async (req, res) => {
     try {
       const AlertsService = require('./src/modules/alerts/alerts.service');
       const StockAlertsService = require('./src/modules/stocks/services/stock-alerts.service');
-      
+
       // Get all alert types
       const [stockAlerts, criticalStock, warningStock] = await Promise.all([
         StockAlertsService.getLowStockAlerts(),
         StockAlertsService.getCriticalAlerts(),
         StockAlertsService.getWarningAlerts()
       ]);
-      
+
       // Aggregate all alerts
       const allAlerts = [
         ...stockAlerts.map(a => ({ ...a, type: 'stock', severity: 'low' })),
         ...criticalStock.map(a => ({ ...a, type: 'stock', severity: 'critical' })),
         ...warningStock.map(a => ({ ...a, type: 'stock', severity: 'warning' }))
       ];
-      
+
       res.json({
         success: true,
         data: allAlerts,
@@ -3775,25 +4068,25 @@ dbPromise.then(async (db) => {
     }
   });
   console.log('✅ Generic alerts endpoint mounted: /api/alerts');
-  
+
   // Mount inventory routes
   const inventoryRoutes = require('./routes/admin/inventory.routes');
   app.use('/api/admin/inventory', inventoryRoutes);
   console.log('✅ Inventory routes mounted: /api/admin/inventory/* (includes filtered endpoint)');
-  
+
   // Mount reports routes under /api/admin/reports for frontend compatibility
   const reportsRoutes = require('./src/modules/reports/reports.routes');
   app.use('/api/admin/reports', reportsRoutes);
   // Also mount under /api/reports for compatibility with stock-prediction endpoint
   app.use('/api/reports', reportsRoutes);
   console.log('✅ Reports routes mounted: /api/admin/reports/* and /api/reports/* (includes sales-detailed, profitability, customer-behavior, time-trends, stock-prediction)');
-  
+
   // Alias /api/reports/sales -> /api/reports/sales-detailed for benchmark compatibility
   app.get('/api/reports/sales', async (req, res, next) => {
     const reportsController = require('./src/modules/reports/reports.controller');
     reportsController.getSalesDetailedReport(req, res, next);
   });
-  
+
   // Financial reports endpoint (generic)
   app.get('/api/financial/reports', async (req, res) => {
     try {
@@ -3816,20 +4109,20 @@ dbPromise.then(async (db) => {
     }
   });
   console.log('✅ Financial reports endpoint mounted: /api/financial/reports');
-  
+
   // Catalog routes (if not already in catalog module)
   // OPTIMIZARE: Cache pentru categorii (se schimbă rar)
   app.get('/api/catalog/categories/tree', longCacheMiddleware(), adminController.getCategoriesTree);
   app.get('/api/catalog/products', adminController.getCatalogProducts);
   // Alias pentru compatibilitate cu frontend
   app.get('/api/catalog-produse/products', adminController.getCatalogProducts);
-  
+
   // Catalog controller routes
   const { createCatalogController } = require('./src/modules/catalog/controllers/catalog.controller');
   const catalogController = createCatalogController();
   app.get('/api/catalog/products/:id/chef-summary', catalogController.getChefSummary);
   app.get('/api/catalog/products/export', catalogController.exportProducts);
-  
+
   console.log('✅ Catalog routes mounted: /api/catalog/products, /api/catalog-produse/products, /api/catalog-produse/products/:id, /api/catalog/products/:id/chef-summary, /api/catalog/products/export');
   app.get('/api/catalog-produse/products/:id', async (req, res, next) => {
     // Pentru GET /api/catalog-produse/products/:id, folosim getCatalogProducts și filtrăm
@@ -3858,63 +4151,63 @@ dbPromise.then(async (db) => {
       res.status(500).json({ success: false, error: error.message });
     }
   });
-  
+
   // Recipes routes
   app.get('/api/recipes/all', adminController.getAllRecipes);
   app.get('/api/recipes/product/:id', adminController.getRecipeByProductId);
   app.get('/api/recipes/preparations', adminController.getRecipePreparations);
-  
+
   // Product Display Settings
   app.get('/api/admin/product-display-setting', adminController.getProductDisplaySetting);
   app.put('/api/admin/product-display-setting', adminController.updateProductDisplaySetting);
   console.log('✅ Product Display Settings routes mounted: /api/admin/product-display-setting');
-  
+
   // Integrations Management
   app.get('/api/integrations', adminController.getIntegrations);
   app.post('/api/integrations', adminController.createIntegration);
   app.put('/api/integrations/:id', adminController.updateIntegration);
   app.delete('/api/integrations/:id', adminController.deleteIntegration);
   console.log('✅ Integrations routes mounted: /api/integrations');
-  
+
   // Cash Register (Fiscal)
   app.get('/api/admin/fiscal/cash-register', adminController.getCashRegister);
   console.log('✅ Cash Register route mounted: /api/admin/fiscal/cash-register');
-  
+
   // Exports routes (PDF, Excel, etc.)
   const exportsRoutes = require('./src/modules/exports/exports.routes');
   app.use('/api/exports', exportsRoutes);
   console.log('✅ Exports routes mounted: /api/exports/* (includes /menu/pdf)');
-  
+
   // Mobile App Statistics routes
   const mobileStatsRoutes = require('./src/modules/mobile/mobile-stats.routes');
   app.use('/api/mobile', mobileStatsRoutes);
   console.log('✅ Mobile App Statistics routes mounted: /api/mobile/*');
-  
+
   // Mobile App Loyalty routes
   const mobileLoyaltyRoutes = require('./src/modules/mobile/mobile-loyalty.routes');
   app.use('/api/loyalty', mobileLoyaltyRoutes);
   console.log('✅ Mobile App Loyalty routes mounted: /api/loyalty/*');
-  
+
   // Mobile App Features routes (Nutrition, Deals, Rating, Referral)
   const mobileFeaturesRoutes = require('./src/modules/mobile/mobile-features.routes');
   app.use('/api/mobile', mobileFeaturesRoutes);
   console.log('✅ Mobile App Features routes mounted: /api/mobile/* (nutrition, deals, rating, referral)');
-  
+
   // External Delivery routes (Webhook-uri și sincronizare cu platformele externe)
   const externalDeliveryRoutes = require('./src/modules/external-delivery/externalDelivery.routes');
   app.use('/api/external-delivery', externalDeliveryRoutes);
   console.log('✅ External Delivery routes mounted: /api/external-delivery');
-  
+
   // NOTE: Friends Ride Delivery Orders Endpoint is mounted BEFORE dbPromise.then() 
   // (see line ~1027) to ensure it's available immediately, before SPA catch-all
-  
+
   console.log('✅ Recipes routes mounted: /api/recipes/all, /api/recipes/product/:id, /api/recipes/preparations');
-  
+
   // Note: /recipes route is mounted BEFORE SPA catch-all (see above)
-  
+
   // Orders routes are now defined BEFORE loadModules() to take precedence
   // See above for app.get('/api/orders', ...) definition
-  
+
   // Tables routes
   app.get('/api/admin/tables/status', adminController.getTablesStatus);
   app.get('/api/kiosk/tables/positions', adminController.getKioskTablesPositions);
@@ -3924,30 +4217,30 @@ dbPromise.then(async (db) => {
     try {
       const { dbPromise } = require('./database');
       const db = await dbPromise;
-      
+
       // Extrage email-ul din token (dacă există middleware de autentificare)
       // Pentru moment, folosim customer_email din query sau din token
       const customerEmail = req.query.customer_email || req.user?.email || req.body.customer_email;
-      
+
       let query = 'SELECT * FROM orders WHERE 1=1';
       const params = [];
-      
+
       // Filtrare după email client (dacă aplicația mobilă trimite email-ul)
       if (customerEmail) {
         query += ' AND (customer_email = ? OR customer_name LIKE ?)';
         params.push(customerEmail, `%${customerEmail}%`);
       }
-      
+
       // Ordonează după dată (cele mai recente primul)
       query += ' ORDER BY timestamp DESC LIMIT 50';
-      
+
       const orders = await new Promise((resolve, reject) => {
         db.all(query, params, (err, rows) => {
           if (err) reject(err);
           else resolve(rows || []);
         });
       });
-      
+
       // Adaugă items pentru fiecare comandă
       const ordersWithItems = await Promise.all(orders.map(async (order) => {
         let items = [];
@@ -3957,7 +4250,7 @@ dbPromise.then(async (db) => {
               resolve(!!row);
             });
           });
-          
+
           if (orderItemsExists) {
             items = await new Promise((resolve, reject) => {
               db.all('SELECT * FROM order_items WHERE order_id = ?', [order.id], (err, rows) => {
@@ -3976,13 +4269,13 @@ dbPromise.then(async (db) => {
           console.warn('⚠️ Error fetching items for order', order.id, error.message);
           items = [];
         }
-        
+
         return {
           ...order,
           items: items
         };
       }));
-      
+
       res.json({
         success: true,
         orders: ordersWithItems
@@ -3992,9 +4285,9 @@ dbPromise.then(async (db) => {
       next(error);
     }
   });
-  
+
   app.get('/api/kiosk/orders/:id', adminController.getKioskOrder);
-  
+
   // POST /api/kiosk/order/:id/cancel - Anulare comandă din aplicația mobilă
   app.post('/api/kiosk/order/:id/cancel', async (req, res, next) => {
     try {
@@ -4005,7 +4298,7 @@ dbPromise.then(async (db) => {
       next(error);
     }
   });
-  
+
   // POST /api/orders/:id/ready - Marchează o comandă ca "ready" (gata)
   // Pentru Bar/KDS - după marcare, comenzile takeaway sunt trimise către livrare1.html (waiter room)
   app.post('/api/orders/:id/ready', async (req, res, next) => {
@@ -4017,28 +4310,28 @@ dbPromise.then(async (db) => {
       next(error);
     }
   });
-  
+
   // POST /api/kiosk/order - Creare comandă din aplicația mobilă
   // NOTE: This route is now defined BEFORE dbPromise.then() (line ~895) to ensure it's available immediately
   // Duplicate removed - route is defined at line ~895 (before dbPromise.then())
-  
+
   // 🔴 FIX 2 - POST /api/kiosk/cart/validate - Validare stoc înainte de plată
   app.post('/api/kiosk/cart/validate', async (req, res, next) => {
     try {
       const { items = [] } = req.body;
-      
+
       if (!Array.isArray(items) || items.length === 0) {
         return res.status(400).json({
           success: false,
           error: 'Items array is required and cannot be empty'
         });
       }
-      
+
       const { dbPromise } = require('./database');
       const db = await dbPromise;
-      
+
       const invalidItems = [];
-      
+
       // Verifică fiecare produs din coș
       for (const item of items) {
         if (!item.product_id) {
@@ -4048,7 +4341,7 @@ dbPromise.then(async (db) => {
           });
           continue;
         }
-        
+
         // Verifică dacă produsul există și este disponibil
         const product = await new Promise((resolve, reject) => {
           db.get(`
@@ -4060,7 +4353,7 @@ dbPromise.then(async (db) => {
             else resolve(row);
           });
         });
-        
+
         if (!product) {
           // Produsul nu există
           invalidItems.push({
@@ -4076,7 +4369,7 @@ dbPromise.then(async (db) => {
           });
         }
       }
-      
+
       // Returnează rezultatul validării
       res.json({
         success: true,
@@ -4089,7 +4382,7 @@ dbPromise.then(async (db) => {
     }
   });
   console.log('✅ Kiosk cart validation route mounted: POST /api/kiosk/cart/validate');
-  
+
   // GET /api/kiosk/menu - Meniu complet pentru aplicația mobilă (include produse, daily offers, happy hour, daily menu)
   app.get('/api/kiosk/menu', async (req, res) => {
     try {
@@ -4097,17 +4390,17 @@ dbPromise.then(async (db) => {
       console.log(`📱 GET /api/kiosk/menu - Request received (lang: ${lang})`);
       const { dbPromise } = require('./database');
       const db = await dbPromise;
-      
+
       // Helper pentru parsare sigură JSON
       // Gestionează atât JSON arrays (ex: ["Lapte", "Gluten"]) cât și string-uri simple (ex: "Lapte" sau "Gluten, Lapte")
       const safeJsonParse = (str, defaultValue = []) => {
         if (!str) return defaultValue;
         if (typeof str !== 'string') return Array.isArray(str) ? str : defaultValue;
-        
+
         // Elimină spații de la început și sfârșit
         const trimmed = str.trim();
         if (!trimmed) return defaultValue;
-        
+
         // Dacă începe cu [ sau {, încearcă să parseze ca JSON
         if (trimmed.startsWith('[') || trimmed.startsWith('{')) {
           try {
@@ -4117,16 +4410,16 @@ dbPromise.then(async (db) => {
             // Dacă JSON parsing eșuează, continuă cu logica pentru string simplu
           }
         }
-        
+
         // Dacă nu este JSON valid, tratează ca string simplu
         // Split pe virgulă și elimină spațiile
         const items = trimmed.split(',').map(item => item.trim()).filter(item => item.length > 0);
         return items.length > 0 ? items : defaultValue;
       };
-      
+
       // 1. Obține toate produsele active cu categoriile lor
       console.log('📱 Loading products from database...');
-      
+
       // Verifică dacă coloana additives există în tabelul menu
       const hasAdditivesColumn = await new Promise((resolve) => {
         db.all("PRAGMA table_info(menu)", [], (err, columns) => {
@@ -4139,12 +4432,12 @@ dbPromise.then(async (db) => {
           }
         });
       });
-      
+
       const additivesSelect = hasAdditivesColumn ? 'm.additives,' : 'NULL as additives,';
-      
+
       // Folosește tabelul menu (nu products) - menu este tabelul principal pentru produse
       // ✅ FIX: Include și produsele din catalog_products care sunt folosite în Daily Menu
-      const products = await new Promise((resolve, reject) => {
+      let products = await new Promise((resolve, reject) => {
         // Mai întâi obține produsele din menu
         db.all(`
           SELECT 
@@ -4171,7 +4464,7 @@ dbPromise.then(async (db) => {
             reject(err);
             return;
           }
-          
+
           // Apoi obține produsele din catalog_products care sunt folosite în Daily Menu
           const today = new Date().toISOString().split('T')[0];
           const catalogProducts = await new Promise((resolveCatalog, rejectCatalog) => {
@@ -4208,10 +4501,10 @@ dbPromise.then(async (db) => {
               }
             });
           });
-          
+
           // Combină produsele din menu cu cele din catalog_products
           const allProducts = [...(menuRows || []), ...(catalogProducts || [])];
-          
+
           // Elimină duplicate-urile (după ID) - păstrează doar primul
           const uniqueProducts = [];
           const seenIds = new Set();
@@ -4221,16 +4514,16 @@ dbPromise.then(async (db) => {
               uniqueProducts.push(product);
             }
           }
-          
+
           // Sortează după categorie și nume
           uniqueProducts.sort((a, b) => {
             const categoryCompare = (a.category || '').localeCompare(b.category || '');
             if (categoryCompare !== 0) return categoryCompare;
             return (a.name || '').localeCompare(b.name || '');
           });
-          
+
           console.log(`✅ Loaded ${uniqueProducts.length} total products (${menuRows?.length || 0} from menu, ${catalogProducts?.length || 0} from catalog_products)`);
-          
+
           // Asigură-te că image_url este null dacă nu există
           const productsWithNullImage = uniqueProducts.map(p => ({
             ...p,
@@ -4239,11 +4532,11 @@ dbPromise.then(async (db) => {
           resolve(productsWithNullImage);
         });
       });
-      
+
       // Obține customizations pentru toate produsele (conform logicii din comanda.html)
       const productIds = products.map(p => p.id);
       let customizationsMap = new Map(); // Map<menu_item_id, customizations[]>
-      
+
       if (productIds.length > 0) {
         try {
           const placeholders = productIds.map(() => '?').join(',');
@@ -4268,7 +4561,7 @@ dbPromise.then(async (db) => {
               }
             });
           });
-          
+
           // Grupează customizations-urile pe menu_item_id
           for (const custom of customizations) {
             const menuItemId = custom.menu_item_id;
@@ -4287,7 +4580,7 @@ dbPromise.then(async (db) => {
           console.warn('⚠️ Error loading customizations (non-critical):', e.message);
         }
       }
-      
+
       // ✅ HELPER FUNCTION: Actualizare automată Daily Menu
       // Identifică și sincronizează Daily Menu cu produsele corecte (ciorba de vacuta + snitel vienez)
       async function ensureDailyMenuExists(db, today) {
@@ -4295,7 +4588,7 @@ dbPromise.then(async (db) => {
           // Use direct IDs instead of searching by name (more reliable)
           const SOUP_ID = 179; // Ciorbă de Văcuță
           const MAIN_COURSE_ID = 254; // Șnițel Vienez
-          
+
           // Funcție pentru găsire produs după ID
           const findProductById = (productId) => {
             return new Promise((resolve) => {
@@ -4322,26 +4615,26 @@ dbPromise.then(async (db) => {
               });
             });
           };
-          
+
           // Găsește produsele
           const soup = await findProductById(SOUP_ID);
           const mainCourse = await findProductById(MAIN_COURSE_ID);
-          
-          console.log('🔍 Daily Menu auto-update: Searching products...', { 
+
+          console.log('🔍 Daily Menu auto-update: Searching products...', {
             soupFound: soup ? `${soup.name} (ID: ${soup.id})` : 'null',
             mainCourseFound: mainCourse ? `${mainCourse.name} (ID: ${mainCourse.id})` : 'null'
           });
-          
+
           if (!soup || !mainCourse) {
-            console.warn('⚠️ Daily Menu auto-update: Products not found', { 
-              soup: soup?.name || 'null', 
+            console.warn('⚠️ Daily Menu auto-update: Products not found', {
+              soup: soup?.name || 'null',
               mainCourse: mainCourse?.name || 'null',
               soupId: soup?.id || 'null',
               mainCourseId: mainCourse?.id || 'null'
             });
             return; // Nu actualizăm dacă nu găsim produsele
           }
-          
+
           // Verifică dacă există Daily Menu pentru astăzi
           console.log('🔍 Checking for existing daily_menu with date:', today);
           const existingMenu = await new Promise((resolve) => {
@@ -4360,14 +4653,14 @@ dbPromise.then(async (db) => {
               resolve(err ? null : (row || null));
             });
           });
-          
+
           if (existingMenu) {
             // Verifică dacă trebuie actualizat
             if (existingMenu.soup_id === soup.id && existingMenu.main_course_id === mainCourse.id) {
               console.log('✅ Daily Menu is up to date');
               return; // Deja actualizat
             }
-            
+
             // Actualizează (await pentru a aștepta finalizarea)
             await new Promise((resolve, reject) => {
               db.run(`
@@ -4391,7 +4684,7 @@ dbPromise.then(async (db) => {
               db.run(`
                 INSERT INTO daily_menu (date, soup_id, main_course_id, discount, is_active, created_at)
                 VALUES (?, ?, ?, 0, 1, datetime('now'))
-              `, [today, soup.id, mainCourse.id], function(err) {
+              `, [today, soup.id, mainCourse.id], function (err) {
                 if (err) {
                   console.warn('⚠️ Error creating daily_menu:', err.message);
                   reject(err);
@@ -4406,7 +4699,7 @@ dbPromise.then(async (db) => {
           console.warn('⚠️ Error in ensureDailyMenuExists:', error.message);
         }
       }
-      
+
       // Category translation map (Romanian -> English)
       const categoryTranslations = {
         'Aperitive Calde': 'Hot Appetizers',
@@ -4432,25 +4725,25 @@ dbPromise.then(async (db) => {
         'Oferta Zilei': 'Special Offer',
         'Meniul Zilei': 'Daily Menu'
       };
-      
+
       // Grupează produsele pe categorii (folosind category TEXT din menu, nu category_id)
       const categoriesMap = new Map();
       for (const product of products) {
         const categoryNameRO = product.category || product.category_name || 'Fără categorie';
         const categoryKey = categoryNameRO; // Folosim numele românesc ca key pentru consistență
-        
+
         // Translate category if English
-        const categoryName = (lang === 'en' && categoryTranslations[categoryNameRO]) 
-          ? categoryTranslations[categoryNameRO] 
+        const categoryName = (lang === 'en' && categoryTranslations[categoryNameRO])
+          ? categoryTranslations[categoryNameRO]
           : categoryNameRO;
-        
+
         // Parse allergens și additives o singură dată
         const allergens = safeJsonParse(product.allergens, []);
         const additives = safeJsonParse(product.additives, []);
-        
+
         // Obține customizations pentru acest produs
         const customizations = customizationsMap.get(product.id) || [];
-        
+
         if (!categoriesMap.has(categoryKey)) {
           categoriesMap.set(categoryKey, {
             id: categoryKey, // Folosim numele categoriei românesc ca ID pentru consistență
@@ -4460,12 +4753,12 @@ dbPromise.then(async (db) => {
             products: []
           });
         }
-        
+
         // Aplică traducerea în funcție de limba selectată (similar cu comanda.html)
         // Dacă limba este engleză și există traducere, folosește traducerea
         const finalName = (lang === 'en' && product.name_en) ? product.name_en : product.name;
         const finalDescription = (lang === 'en' && product.description_en) ? product.description_en : (product.description || null);
-        
+
         categoriesMap.get(categoryKey).products.push({
           id: product.id,
           name: finalName, // Nume tradus în funcție de limba selectată
@@ -4481,7 +4774,7 @@ dbPromise.then(async (db) => {
           customizations: customizations, // 🔴 Adăugăm customizations-urile din API
         });
       }
-      
+
       // Convertește Map-ul în array și sortează după display_order, apoi după nume
       const categories = Array.from(categoriesMap.values())
         .sort((a, b) => {
@@ -4490,7 +4783,7 @@ dbPromise.then(async (db) => {
           }
           return a.name.localeCompare(b.name);
         });
-      
+
       // 2. Obține Daily Offer (oferta zilei) - query direct cu popolare conditions și benefit_products
       let dailyOffer = null;
       try {
@@ -4512,7 +4805,7 @@ dbPromise.then(async (db) => {
             }
           });
         });
-        
+
         if (offer) {
           // Obține conditions cu produsele asociate
           const conditions = await new Promise((resolve, reject) => {
@@ -4534,7 +4827,7 @@ dbPromise.then(async (db) => {
               }
             });
           });
-          
+
           // Populează conditions cu produsele din categoriile respective
           const conditionsWithProducts = await Promise.all(
             conditions.map(async (condition) => {
@@ -4574,7 +4867,7 @@ dbPromise.then(async (db) => {
                   });
                 }
               }
-              
+
               // ✅ FIX: Structură corectă pentru Flutter (quantity în loc de required_quantity)
               // ✅ FIX: Default value 1 dacă required_quantity este null/undefined
               return {
@@ -4584,7 +4877,7 @@ dbPromise.then(async (db) => {
               };
             })
           );
-          
+
           // Obține benefit products
           const benefitProductIds = await new Promise((resolve, reject) => {
             db.all(`
@@ -4604,9 +4897,9 @@ dbPromise.then(async (db) => {
               }
             });
           });
-          
+
           const benefitProductIdsList = benefitProductIds.map(bp => bp.product_id);
-          
+
           // Obține benefit products efective
           let benefitProducts = [];
           if (offer.benefit_type === 'category' && offer.benefit_category) {
@@ -4680,7 +4973,7 @@ dbPromise.then(async (db) => {
               });
             }
           }
-          
+
           // Construiește benefit_quantity din offer
           const benefitQuantityValue = offer.benefit_quantity;
           let benefitQuantity = 0;
@@ -4694,7 +4987,7 @@ dbPromise.then(async (db) => {
               }
             }
           }
-          
+
           dailyOffer = {
             id: offer.id,
             title: offer.title || offer.name,
@@ -4723,7 +5016,7 @@ dbPromise.then(async (db) => {
       } catch (e) {
         console.warn('⚠️ Error loading daily offer (non-critical):', e.message);
       }
-      
+
       // 3. Obține Happy Hour activ - query direct
       let happyHour = null;
       try {
@@ -4745,7 +5038,7 @@ dbPromise.then(async (db) => {
             }
           });
         });
-        
+
         if (hhSettings && hhSettings.length > 0) {
           const hh = hhSettings[0];
           happyHour = {
@@ -4765,7 +5058,7 @@ dbPromise.then(async (db) => {
       } catch (e) {
         console.warn('⚠️ Error loading happy hour (non-critical):', e.message);
       }
-      
+
       // 4. Obține Daily Menu (meniul zilei) - query direct cu actualizare automată
       let dailyMenu = null;
       try {
@@ -4773,10 +5066,10 @@ dbPromise.then(async (db) => {
         // Query direct pentru daily menu de azi
         const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
         console.log('🔍 Searching for daily menu with date:', today);
-        
+
         // ✅ ACTUALIZARE AUTOMATĂ: Verifică și actualizează Daily Menu dacă lipsește sau are produse invalide
         await ensureDailyMenuExists(db, today);
-        
+
         const menu = await new Promise((resolve, reject) => {
           db.get(`
             SELECT * FROM daily_menu
@@ -4798,10 +5091,10 @@ dbPromise.then(async (db) => {
             }
           });
         });
-        
+
         if (menu) {
           console.log('🔍 Daily menu row from DB:', { id: menu.id, soup_id: menu.soup_id, main_course_id: menu.main_course_id, discount: menu.discount });
-          
+
           // Parsează JSON fields dacă există
           // Caută în tabelul menu (tabelul principal pentru produse), apoi în catalog_products dacă nu găsește
           const soup = menu.soup_id ? await new Promise((resolve) => {
@@ -4826,7 +5119,7 @@ dbPromise.then(async (db) => {
               }
             });
           }) : null;
-          
+
           const mainCourse = menu.main_course_id ? await new Promise((resolve) => {
             // Încearcă mai întâi în tabelul menu
             db.get(`SELECT id, name, description, price, image_url FROM menu WHERE id = ?`, [menu.main_course_id], (err, row) => {
@@ -4849,18 +5142,18 @@ dbPromise.then(async (db) => {
               }
             });
           }) : null;
-          
+
           console.log('🔍 Daily menu products check:', { soup: soup ? soup.name : 'null', mainCourse: mainCourse ? mainCourse.name : 'null' });
-          
+
           if (soup || mainCourse) {
             const items = [];
             if (soup) items.push({ type: 'soup', ...soup });
             if (mainCourse) items.push({ type: 'main_course', ...mainCourse });
-            
+
             const totalPrice = items.reduce((sum, item) => sum + (item.price || 0), 0);
             const discount = menu.discount || 0;
             const finalPrice = Math.max(0, totalPrice - discount);
-            
+
             dailyMenu = {
               type: soup && mainCourse ? 'full_menu' : 'partial',
               items: items,
@@ -4880,7 +5173,7 @@ dbPromise.then(async (db) => {
       } catch (e) {
         console.warn('⚠️ Error loading daily menu (non-critical):', e.message);
       }
-      
+
       // Returnează formatul complet pentru aplicația mobilă
       console.log(`📱 Returning menu data: ${products.length} products, ${categories.length} categories`);
       const response = {
@@ -4890,12 +5183,12 @@ dbPromise.then(async (db) => {
           const allergens = safeJsonParse(p.allergens, []);
           const additives = safeJsonParse(p.additives, []);
           const customizations = customizationsMap.get(p.id) || []; // 🔴 Adăugăm customizations-urile
-          
+
           // Aplică traducerea în funcție de limba selectată (similar cu comanda.html)
           // Dacă limba este engleză și există traducere, folosește traducerea
           const finalName = (lang === 'en' && p.name_en) ? p.name_en : p.name;
           const finalDescription = (lang === 'en' && p.description_en) ? p.description_en : (p.description || null);
-          
+
           return {
             id: p.id,
             name: finalName, // Nume tradus în funcție de limba selectată
@@ -4946,23 +5239,23 @@ dbPromise.then(async (db) => {
     }
   });
   console.log('✅ Kiosk menu route mounted: GET /api/kiosk/menu (includes products, daily offers, happy hour, daily menu)');
-  
+
   // ✅ GET /api/daily-menu/auto-update - Endpoint pentru actualizare manuală Daily Menu
   app.get('/api/daily-menu/auto-update', async (req, res) => {
     try {
       const db = await dbPromise;
       const today = new Date().toISOString().split('T')[0];
-      
+
       // Produsele căutate
       const TARGET_SOUP_NAMES = ['ciorba de vacuta', 'ciorba vacuta', 'ciorbă de vită', 'ciorbă vită', 'ciorba de vita'];
       const TARGET_MAIN_COURSE_NAMES = ['snitel vienez', 'șnițel vienez', 'schnitzel vienez', 'schnitzel', 'snitel'];
-      
+
       // Funcție pentru căutare produs
       const findProductByName = (productNames) => {
         return new Promise((resolve) => {
           const conditions = productNames.map(() => 'name LIKE ?').join(' OR ');
           const params = productNames.map(name => `%${name}%`);
-          
+
           // Caută în catalog_products
           db.get(`
             SELECT id, name, price, description, image_url
@@ -4988,11 +5281,11 @@ dbPromise.then(async (db) => {
           });
         });
       };
-      
+
       // Găsește produsele
       const soup = await findProductByName(TARGET_SOUP_NAMES);
       const mainCourse = await findProductByName(TARGET_MAIN_COURSE_NAMES);
-      
+
       if (!soup || !mainCourse) {
         return res.json({
           success: false,
@@ -5003,7 +5296,7 @@ dbPromise.then(async (db) => {
           }
         });
       }
-      
+
       // Verifică dacă există Daily Menu pentru astăzi
       const existingMenu = await new Promise((resolve) => {
         db.get(`
@@ -5016,7 +5309,7 @@ dbPromise.then(async (db) => {
           resolve(err ? null : (row || null));
         });
       });
-      
+
       if (existingMenu) {
         // Verifică dacă trebuie actualizat
         if (existingMenu.soup_id === soup.id && existingMenu.main_course_id === mainCourse.id) {
@@ -5030,7 +5323,7 @@ dbPromise.then(async (db) => {
             }
           });
         }
-        
+
         // Actualizează
         db.run(`
           UPDATE daily_menu
@@ -5046,7 +5339,7 @@ dbPromise.then(async (db) => {
               details: err.message
             });
           }
-          
+
           res.json({
             success: true,
             message: 'Daily Menu updated successfully',
@@ -5062,7 +5355,7 @@ dbPromise.then(async (db) => {
         db.run(`
           INSERT INTO daily_menu (date, soup_id, main_course_id, discount, is_active, created_at, updated_at)
           VALUES (?, ?, ?, 0, 1, datetime('now'), datetime('now'))
-        `, [today, soup.id, mainCourse.id], function(err) {
+        `, [today, soup.id, mainCourse.id], function (err) {
           if (err) {
             return res.status(500).json({
               success: false,
@@ -5070,7 +5363,7 @@ dbPromise.then(async (db) => {
               details: err.message
             });
           }
-          
+
           res.json({
             success: true,
             message: 'Daily Menu created successfully',
@@ -5091,7 +5384,7 @@ dbPromise.then(async (db) => {
     }
   });
   console.log('✅ Daily Menu auto-update route mounted: GET /api/daily-menu/auto-update');
-  
+
   // GET /api/menu/all - Endpoint pentru comanda.html (web app) - sincronizat cu /api/kiosk/menu
   // Returnează aceleași produse ca și /api/kiosk/menu, dar în format compatibil cu comanda.html
   app.get('/api/menu/all', async (req, res) => {
@@ -5100,17 +5393,17 @@ dbPromise.then(async (db) => {
       console.log(`🌐 GET /api/menu/all - Request received (lang: ${lang})`);
       const { dbPromise } = require('./database');
       const db = await dbPromise;
-      
+
       // Helper pentru parsare sigură JSON
       // Gestionează atât JSON arrays (ex: ["Lapte", "Gluten"]) cât și string-uri simple (ex: "Lapte" sau "Gluten, Lapte")
       const safeJsonParse = (str, defaultValue = []) => {
         if (!str) return defaultValue;
         if (typeof str !== 'string') return Array.isArray(str) ? str : defaultValue;
-        
+
         // Elimină spații de la început și sfârșit
         const trimmed = str.trim();
         if (!trimmed) return defaultValue;
-        
+
         // Dacă începe cu [ sau {, încearcă să parseze ca JSON
         if (trimmed.startsWith('[') || trimmed.startsWith('{')) {
           try {
@@ -5120,13 +5413,13 @@ dbPromise.then(async (db) => {
             // Dacă JSON parsing eșuează, continuă cu logica pentru string simplu
           }
         }
-        
+
         // Dacă nu este JSON valid, tratează ca string simplu
         // Split pe virgulă și elimină spațiile
         const items = trimmed.split(',').map(item => item.trim()).filter(item => item.length > 0);
         return items.length > 0 ? items : defaultValue;
       };
-      
+
       // Verifică dacă coloana additives există în tabelul menu
       const hasAdditivesColumn = await new Promise((resolve) => {
         db.all("PRAGMA table_info(menu)", [], (err, columns) => {
@@ -5139,11 +5432,11 @@ dbPromise.then(async (db) => {
           }
         });
       });
-      
+
       const additivesSelect = hasAdditivesColumn ? 'm.additives,' : 'NULL as additives,';
-      
+
       // Folosește tabelul menu (nu products) - menu este tabelul principal pentru produse
-      const products = await new Promise((resolve, reject) => {
+      let products = await new Promise((resolve, reject) => {
         db.all(`
           SELECT 
             m.id,
@@ -5169,7 +5462,7 @@ dbPromise.then(async (db) => {
             reject(err);
           } else {
             console.log(`✅ Loaded ${rows?.length || 0} products from menu table for web app`);
-            
+
             // Category translation map (Romanian -> English)
             const categoryTranslations = {
               'Aperitive Calde': 'Hot Appetizers',
@@ -5195,19 +5488,19 @@ dbPromise.then(async (db) => {
               'Oferta Zilei': 'Special Offer',
               'Meniul Zilei': 'Daily Menu'
             };
-            
+
             // Aplică traducerea în funcție de limba selectată (similar cu comanda.html și /api/kiosk/menu)
             const productsWithTranslation = (rows || []).map(p => {
               // Dacă limba este engleză și există traducere, folosește traducerea
               const finalName = (lang === 'en' && p.name_en) ? p.name_en : p.name;
               const finalDescription = (lang === 'en' && p.description_en) ? p.description_en : (p.description || null);
-              
+
               // Translate category if English
               const categoryRO = p.category || p.category_name || 'Fără categorie';
-              const finalCategory = (lang === 'en' && categoryTranslations[categoryRO]) 
-                ? categoryTranslations[categoryRO] 
+              const finalCategory = (lang === 'en' && categoryTranslations[categoryRO])
+                ? categoryTranslations[categoryRO]
                 : categoryRO;
-              
+
               return {
                 ...p,
                 name: finalName, // Nume tradus în funcție de limba selectată
@@ -5223,17 +5516,17 @@ dbPromise.then(async (db) => {
           }
         });
       });
-      
+
       // Extrage categorii unice din produse (similar cu comanda.html)
       const categories_ordered = [...new Set(products.map(p => p.category || p.category_name || ''))]
         .filter(cat => cat && cat.trim() !== '')
         .sort();
-      
+
       // Load Daily Offer, Happy Hour, Daily Menu (same as /api/kiosk/menu)
       let dailyOffer = null;
       let happyHour = null;
       let dailyMenu = null;
-      
+
       try {
         // Daily Offer
         const offer = await new Promise((resolve) => {
@@ -5255,7 +5548,7 @@ dbPromise.then(async (db) => {
       } catch (e) {
         console.warn('⚠️ Error loading daily offer (non-critical):', e.message);
       }
-      
+
       try {
         // Happy Hour
         const hhSettings = await new Promise((resolve) => {
@@ -5266,31 +5559,31 @@ dbPromise.then(async (db) => {
         });
         if (hhSettings && hhSettings.length > 0) {
           const hh = hhSettings[0];
-          
+
           // Verifică dacă Happy Hour este activ ACUM (verificare timp real)
           const now = new Date();
           const currentDay = now.getDay(); // 0 (Duminică) - 6 (Sâmbătă)
           const currentHour = now.getHours() * 60 + now.getMinutes();
-          
+
           // Parsează zilele
           let daysArray = hh.days_of_week;
           if (typeof daysArray === 'string' && daysArray.startsWith('[')) {
-            try { daysArray = JSON.parse(daysArray); } catch(e) { daysArray = [daysArray]; }
+            try { daysArray = JSON.parse(daysArray); } catch (e) { daysArray = [daysArray]; }
           } else if (typeof daysArray === 'string') {
             daysArray = [daysArray.trim()];
           }
-          
+
           const dayMappings = {
             '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 0,
             'luni': 1, 'marti': 2, 'miercuri': 3, 'joi': 4, 'vineri': 5, 'sambata': 6, 'duminica': 0
           };
-          
-          const isRelevantDay = daysArray.includes('all') || 
+
+          const isRelevantDay = daysArray.includes('all') ||
             daysArray.some(day => {
               const mappedDay = dayMappings[String(day).toLowerCase().trim()];
               return mappedDay === currentDay;
             });
-          
+
           let isActiveNow = false;
           if (isRelevantDay) {
             const [startH, startM] = hh.start_time.split(':').map(Number);
@@ -5299,7 +5592,7 @@ dbPromise.then(async (db) => {
             const endMinutes = endH * 60 + endM;
             isActiveNow = currentHour >= startMinutes && currentHour <= endMinutes;
           }
-          
+
           happyHour = {
             id: hh.id,
             name: hh.name,
@@ -5319,7 +5612,7 @@ dbPromise.then(async (db) => {
       } catch (e) {
         console.warn('⚠️ Error loading happy hour (non-critical):', e.message);
       }
-      
+
       try {
         // Daily Menu - încarcă produsele complete pentru categoria "Meniul Zilei"
         const today = new Date().toISOString().split('T')[0];
@@ -5436,18 +5729,18 @@ dbPromise.then(async (db) => {
       } catch (e) {
         console.warn('⚠️ Error loading daily menu (non-critical):', e.message);
       }
-      
+
       // ============================================================================
       // APLICARE AUTOMATĂ HAPPY HOUR LA PRODUSE (ca în comanda.html)
       // ============================================================================
       if (happyHour && happyHour.is_active_now && happyHour._fullData) {
         try {
           const hh = happyHour._fullData;
-          
+
           // Parsează categoriile și produsele aplicabile
           let applicableCategories = [];
           let applicableProducts = [];
-          
+
           if (hh.applicable_categories) {
             try {
               applicableCategories = JSON.parse(hh.applicable_categories);
@@ -5455,7 +5748,7 @@ dbPromise.then(async (db) => {
               applicableCategories = hh.applicable_categories.split(',').map(c => c.trim());
             }
           }
-          
+
           if (hh.applicable_products) {
             try {
               applicableProducts = JSON.parse(hh.applicable_products);
@@ -5463,18 +5756,18 @@ dbPromise.then(async (db) => {
               applicableProducts = hh.applicable_products.split(',').map(p => parseInt(p.trim())).filter(Boolean);
             }
           }
-          
+
           // Aplică reducerea la produse (ca în comanda.html)
           products = products.map(product => {
             // Verifică dacă produsul este eligibil pentru Happy Hour
-            const isEligible = 
+            const isEligible =
               applicableProducts.includes(product.id) ||
               (applicableCategories.length > 0 && applicableCategories.includes(product.category));
-            
+
             if (!isEligible) {
               return product; // Returnează produsul nemodificat
             }
-            
+
             // Calculează reducerea
             let discount = 0;
             if (hh.discount_percentage > 0) {
@@ -5482,9 +5775,9 @@ dbPromise.then(async (db) => {
             } else if (hh.discount_fixed > 0) {
               discount = hh.discount_fixed;
             }
-            
+
             const discountedPrice = Math.max(0, product.price - discount);
-            
+
             // Returnează produsul cu prețul redus și info despre discount
             return {
               ...product,
@@ -5495,14 +5788,14 @@ dbPromise.then(async (db) => {
               happy_hour_percentage: hh.discount_percentage || 0
             };
           });
-          
+
           console.log(`✅ Applied Happy Hour discounts to ${products.filter(p => p.has_happy_hour).length} products`);
         } catch (error) {
           console.error('❌ Error applying Happy Hour discounts:', error);
         }
       }
       // ============================================================================
-      
+
       // Returnează în format compatibil cu comanda.html
       // comanda.html așteaptă: { data: [...], products: [...], menu: [...], categories_ordered: [...], daily_offer, happy_hour, daily_menu }
       res.json({
@@ -5529,7 +5822,7 @@ dbPromise.then(async (db) => {
     }
   });
   console.log('✅ Menu all route mounted: GET /api/menu/all (synchronized with /api/kiosk/menu)');
-  
+
   // Mobile App Reservations endpoint (POST /api/mobile/reservations)
   app.post('/api/mobile/reservations', async (req, res, next) => {
     try {
@@ -5544,37 +5837,37 @@ dbPromise.then(async (db) => {
         party_size,
         special_requests,
       } = req.body;
-      
+
       if (!customer_name || !customer_phone || !customer_email || !reservation_date || !reservation_time || !party_size) {
         return res.status(400).json({
           success: false,
           error: 'Câmpurile obligatorii: customer_name, customer_phone, customer_email, reservation_date, reservation_time, party_size',
         });
       }
-      
+
       // Folosește createReservation din database.js
       const { createReservation, getAvailableTables } = require('./database');
-      
+
       // Obține mesele disponibile
       const availableTables = await getAvailableTables(reservation_date, reservation_time, party_size);
-      
+
       if (!availableTables || availableTables.length === 0) {
         return res.status(409).json({
           success: false,
           error: 'Nu există mese disponibile pentru intervalul și numărul de persoane ales.',
         });
       }
-      
+
       // Auto-selectează prima masă disponibilă
       const selectedTable = availableTables.find((table) => table.is_available && table.capacity >= party_size);
-      
+
       if (!selectedTable) {
         return res.status(409).json({
           success: false,
           error: 'Nu există mese disponibile pentru intervalul și numărul de persoane ales.',
         });
       }
-      
+
       const result = await createReservation({
         tableId: selectedTable.id,
         customerName: customer_name,
@@ -5588,7 +5881,7 @@ dbPromise.then(async (db) => {
         locationId: req.locationId || null,
         tenantId: req.tenantId || null,
       });
-      
+
       res.status(201).json({
         success: true,
         reservation: result,
@@ -5599,33 +5892,33 @@ dbPromise.then(async (db) => {
       next(error);
     }
   });
-  
+
   // Mobile App Reservations list (GET /api/mobile/reservations) - filtrează după customer_email
   app.get('/api/mobile/reservations', async (req, res, next) => {
     try {
       const { dbPromise } = require('./database');
       const db = await dbPromise;
-      
+
       // Extrage email-ul din token sau query
       const customerEmail = req.query.customer_email || req.user?.email || req.body.customer_email;
-      
+
       if (!customerEmail) {
-        return res.status(400).json({ 
-          success: false, 
-          error: 'customer_email este obligatoriu' 
+        return res.status(400).json({
+          success: false,
+          error: 'customer_email este obligatoriu'
         });
       }
-      
+
       let query = 'SELECT * FROM reservations WHERE customer_email = ? ORDER BY reservation_date DESC, reservation_time DESC LIMIT 50';
       const params = [customerEmail];
-      
+
       const reservations = await new Promise((resolve, reject) => {
         db.all(query, params, (err, rows) => {
           if (err) reject(err);
           else resolve(rows || []);
         });
       });
-      
+
       res.json({
         success: true,
         reservations: reservations
@@ -5635,14 +5928,14 @@ dbPromise.then(async (db) => {
       next(error);
     }
   });
-  
+
   // Mobile App Cancel Reservation (POST /api/mobile/reservations/:id/cancel)
   app.post('/api/mobile/reservations/:id/cancel', async (req, res, next) => {
     try {
       const { dbPromise } = require('./database');
       const db = await dbPromise;
       const reservationId = req.params.id;
-      
+
       // Verifică dacă rezervarea există și aparține utilizatorului
       const reservation = await new Promise((resolve, reject) => {
         db.get('SELECT * FROM reservations WHERE id = ?', [reservationId], (err, row) => {
@@ -5650,35 +5943,35 @@ dbPromise.then(async (db) => {
           else resolve(row);
         });
       });
-      
+
       if (!reservation) {
         return res.status(404).json({ success: false, error: 'Rezervarea nu a fost găsită' });
       }
-      
+
       // Actualizează statusul la 'cancelled'
       await new Promise((resolve, reject) => {
         db.run(
           'UPDATE reservations SET status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
           ['cancelled', reservationId],
-          function(err) {
+          function (err) {
             if (err) reject(err);
             else resolve(this);
           }
         );
       });
-      
+
       res.json({ success: true, message: 'Rezervarea a fost anulată' });
     } catch (error) {
       console.error('❌ Error in POST /api/mobile/reservations/:id/cancel:', error);
       next(error);
     }
   });
-  
+
   // Mobile App Call Waiter endpoint (POST /api/mobile/call-waiter)
   app.post('/api/mobile/call-waiter', async (req, res, next) => {
     try {
       const { table_number, customer_email, customer_name, note, access_mode } = req.body;
-      
+
       // Emite eveniment Socket.IO pentru apelare ospătar
       if (global.io) {
         global.io.emit('waiterCalled', {
@@ -5692,7 +5985,7 @@ dbPromise.then(async (db) => {
         });
         console.log('✅ [Mobile App] Waiter called:', { table_number, customer_email, note });
       }
-      
+
       res.json({
         success: true,
         message: 'Ospătarul a fost anunțat'
@@ -5702,42 +5995,42 @@ dbPromise.then(async (db) => {
       next(error);
     }
   });
-  
+
   console.log('✅ Mobile App routes mounted: /api/mobile/reservations, /api/mobile/call-waiter');
-  
+
   // NOTE: Customer Authentication routes are mounted BEFORE dbPromise.then()
   // See above (before dbPromise) for /api/customers/register and /api/customers/login
-  
+
   // Users routes
   app.get('/api/users', adminController.getUsers);
   app.get('/api/admin/users', adminController.getUsers);
   app.post('/api/admin/users', adminController.createUser);
   app.put('/api/admin/users/:id', adminController.updateUser);
   app.delete('/api/admin/users/:id', adminController.deleteUser);
-  
+
   // Roles routes
   app.get('/api/admin/roles', adminController.getRoles);
-  
+
   // Pins routes
   app.get('/api/admin/pins', adminController.getPins); // PIN-uri interfețe
   app.post('/api/admin/update-pin', adminController.updatePin); // Actualizează PIN interfață
   app.post('/api/admin/delete-pin', adminController.deletePin); // Șterge PIN interfață
   app.get('/api/admin/user-pins', adminController.getUserPins); // PIN-uri utilizatori
-  
+
   // Backup routes
   app.get('/api/admin/backups', adminController.getBackups);
   app.get('/api/admin/archive-stats', adminController.getArchiveStats);
-  
+
   // Scheduling routes
   app.get('/api/scheduling/live-stats', adminController.getSchedulingLiveStats);
   app.get('/api/scheduling/time-entries', adminController.getTimeEntries);
-  
+
   // Events routes
   app.get('/api/events', adminController.getEvents);
-  
+
   // NOTE: Reservations routes are now mounted BEFORE loadModules() to avoid conflict with /api/payments/:id
   // See above (before loadModules) for reservations routes mounting
-  
+
   // Language API
   app.get('/api/lang', async (req, res) => {
     try {
@@ -5765,26 +6058,26 @@ dbPromise.then(async (db) => {
     try {
       const { waiterId } = req.params;
       const waiterIdNum = parseInt(waiterId);
-      
+
       if (isNaN(waiterIdNum) || waiterIdNum < 1 || waiterIdNum > 10) {
         return res.status(400).json({ success: false, error: 'Invalid waiter ID (must be 1-10)' });
       }
-      
+
       // Calculează intervalul de mese pentru acest ospătar
       const TABLES_PER_WAITER = 20;
       const minTable = (waiterIdNum - 1) * TABLES_PER_WAITER + 1;
       const maxTable = waiterIdNum * TABLES_PER_WAITER;
-      
+
       // Generează array-ul de mese pentru acest interval
       const tables = [];
       for (let i = minTable; i <= maxTable; i++) {
         tables.push(i);
       }
-      
+
       console.log(`[Waiter ${waiterIdNum}] Tables range: ${minTable}-${maxTable}`);
-      
-      res.json({ 
-        success: true, 
+
+      res.json({
+        success: true,
         tables: tables,
         waiterId: waiterIdNum,
         startTable: minTable,
@@ -5805,30 +6098,30 @@ dbPromise.then(async (db) => {
       const today = ['yes', 'true', '1'].includes(String(req.query.today || '').toLowerCase());
       const dateFilter = req.query.date; // format YYYY-MM-DD
       const db = await dbPromise;
-      
+
       // OPTIMIZARE: Select doar coloanele necesare în loc de SELECT *
       let sql = 'SELECT id, title, message, status, created_at, type, table_number, order_id, read_at, title_en, message_en FROM notifications';
       const conditions = [];
       const params = [];
-      
+
       if (status !== 'all') {
         conditions.push('status = ?');
         params.push(status);
       }
-      
+
       if (conditions.length > 0) {
         sql += ' WHERE ' + conditions.join(' AND ');
       }
       sql += ' ORDER BY datetime(created_at) DESC LIMIT 500';
-      
+
       db.all(sql, params, (err, rows) => {
         if (err) {
           console.error('❌ Error fetching notifications:', err);
           return res.status(500).json({ success: false, error: err.message });
         }
-        
+
         let notifications = rows || [];
-        
+
         // Filtrează pentru "azi" folosind JavaScript pentru controlul precis al fusului orar
         if (today) {
           const now = new Date();
@@ -5836,24 +6129,42 @@ dbPromise.then(async (db) => {
           todayStart.setHours(0, 0, 0, 0);
           const todayEnd = new Date(now);
           todayEnd.setHours(23, 59, 59, 999);
-          
+
+          // DEBUG LOGS
+          console.log(`🔍 [Notifications] Filtering for today: ${todayStart.toISOString()} - ${todayEnd.toISOString()}`);
+          console.log(`🔍 [Notifications] Total fetched: ${notifications.length}`);
+
           notifications = notifications.filter(notif => {
-            const notifDate = new Date(notif.created_at);
-            return notifDate >= todayStart && notifDate <= todayEnd;
+            // Fix pentru date din SQLite care pot fi șiruri simple
+            let dateStr = notif.created_at;
+            if (dateStr && !dateStr.includes('T') && !dateStr.includes('Z')) {
+              // Presupunem că e UTC din SQLite datetime('now'), adăugăm 'Z' sau îl tratăm ca UTC
+              dateStr = dateStr.replace(' ', 'T') + 'Z';
+            }
+
+            const notifDate = new Date(dateStr || notif.created_at);
+            const keep = notifDate >= todayStart && notifDate <= todayEnd;
+
+            // Log first 3 rejected to debug
+            if (!keep && notifications.indexOf(notif) < 3) {
+              console.log(`❌ [Notifications] Excluded: ${notif.title} (${notif.created_at}) -> Parsed: ${notifDate.toISOString()}`);
+            }
+            return keep;
           });
+          console.log(`🔍 [Notifications] Kept after filter: ${notifications.length}`);
         } else if (dateFilter) {
           const filterDate = new Date(dateFilter);
           const dayStart = new Date(filterDate);
           dayStart.setHours(0, 0, 0, 0);
           const dayEnd = new Date(filterDate);
           dayEnd.setHours(23, 59, 59, 999);
-          
+
           notifications = notifications.filter(notif => {
             const notifDate = new Date(notif.created_at);
             return notifDate >= dayStart && notifDate <= dayEnd;
           });
         }
-        
+
         res.json({ success: true, notifications });
       });
     } catch (error) {
@@ -5889,14 +6200,14 @@ dbPromise.then(async (db) => {
   // NOTE: /api/kiosk/menu este deja definit mai sus (linia ~2754) cu funcționalități extinse
   // Root menu endpoint - /api/menu -> /api/menu/all (for benchmark compatibility)
   app.get('/api/menu', adminController.getMenuAll);
-  
+
   // QR Ordering endpoints (proxy pentru KioskSelfServicePage)
   // OPTIMIZARE: Cache pentru categorii (se schimbă rar)
   app.get('/api/categories', longCacheMiddleware(), async (req, res) => {
     try {
       const { dbPromise } = require('./database');
       const db = await dbPromise;
-      
+
       // Încearcă să obțină categoriile din catalog_categories
       let categories = [];
       try {
@@ -5906,7 +6217,7 @@ dbPromise.then(async (db) => {
             else resolve(!!row);
           });
         });
-        
+
         if (catalogExists) {
           categories = await new Promise((resolve, reject) => {
             // Verifică dacă coloana icon există
@@ -5943,7 +6254,7 @@ dbPromise.then(async (db) => {
               else resolve(rows || []);
             });
           });
-          
+
           categories = menuItems.map((item, index) => ({
             id: index + 1,
             name: item.category,
@@ -5957,20 +6268,20 @@ dbPromise.then(async (db) => {
         console.warn('⚠️ Error fetching categories:', error.message);
         categories = [];
       }
-      
+
       res.json(categories);
     } catch (error) {
       console.error('❌ Error in /api/categories:', error);
       res.json([]);
     }
   });
-  
+
   app.get('/api/products', async (req, res) => {
     try {
       const { active } = req.query;
       const { dbPromise } = require('./database');
       const db = await dbPromise;
-      
+
       let products = [];
       try {
         const catalogExists = await new Promise((resolve, reject) => {
@@ -5979,7 +6290,7 @@ dbPromise.then(async (db) => {
             else resolve(!!row);
           });
         });
-        
+
         if (catalogExists) {
           const whereClause = active === 'true' ? 'WHERE p.is_active = 1' : '';
           products = await new Promise((resolve, reject) => {
@@ -6045,32 +6356,26 @@ dbPromise.then(async (db) => {
         console.warn('⚠️ Error fetching products:', error.message);
         products = [];
       }
-      
+
       res.json(products);
     } catch (error) {
       console.error('❌ Error in /api/products:', error);
       res.json([]);
     }
   });
-  
+
   // Menu PDF routes
   const menuPdfRoutes = require('./routes/menuPdfRoutes');
   app.use('/api/menu/pdf', menuPdfRoutes);
   console.log('✅ Menu PDF routes mounted');
   console.log('✅ QR Ordering endpoints mounted: /api/categories, /api/products');
-  
-  // Orders display routes (KDS/Bar filtering)
-  app.get('/api/orders-display/kitchen', adminController.getOrdersDisplayKitchen);
-  app.get('/api/orders-display/bar', adminController.getOrdersDisplayBar);
-  
-  // Orders display variants (using orders module controller)
-  const ordersDisplayController = require('./src/modules/orders/controllers/orders-display.controller');
-  app.get('/api/orders-display/bar/recent-completed', ordersDisplayController.getBarRecentCompleted);
-  app.get('/api/orders-display/bar/all-daily', ordersDisplayController.getBarAllDaily);
-  app.get('/api/orders-display/bar/pending', ordersDisplayController.getBarPending);
-  app.get('/api/orders-display/bar/unfinished', ordersDisplayController.getBarUnfinished);
-  app.get('/api/orders-display/kitchen/unfinished', ordersDisplayController.getKitchenUnfinished);
-  
+
+
+  // Orders display routes (KDS/Bar filtering) and client monitor
+  // Mount the orders module router to expose /api/orders-display/client-monitor and related endpoints
+  const ordersRoutes = require('./src/modules/orders/routes');
+  app.use('/api', ordersRoutes);
+
   // Daily history endpoints
   app.get('/api/daily-history/bar', async (req, res) => {
     try {
@@ -6082,7 +6387,7 @@ dbPromise.then(async (db) => {
         db.all(`
           SELECT * FROM orders 
           WHERE DATE(timestamp) = DATE('now')
-            AND status IN ('completed', 'delivered', 'paid', 'ready')
+            AND (status IN ('completed', 'delivered', 'paid', 'ready') OR is_paid = 1)
             AND status != 'cancelled'
           ORDER BY timestamp DESC
         `, [], (err, rows) => {
@@ -6090,20 +6395,20 @@ dbPromise.then(async (db) => {
           else resolve(rows || []);
         });
       });
-      
+
       // Filtrează după categorie (doar bar items) folosind filterOrdersByCategory
       const { filterOrdersByCategory } = require('./src/modules/orders/controllers/orders-display.controller');
       const filteredOrders = await filterOrdersByCategory(orders, true); // true = include bar
-      
+
       // Calculează statistici
       const totalOrders = filteredOrders.length;
       const totalItems = filteredOrders.reduce((sum, order) => {
         const items = Array.isArray(order.items) ? order.items : (typeof order.items === 'string' ? JSON.parse(order.items || '[]') : []);
         return sum + items.length;
       }, 0);
-      
-      res.json({ 
-        success: true, 
+
+      res.json({
+        success: true,
         orders: filteredOrders,
         total_orders: totalOrders,
         total_items: totalItems
@@ -6113,7 +6418,7 @@ dbPromise.then(async (db) => {
       res.json({ success: true, orders: [], total_orders: 0, total_items: 0 });
     }
   });
-  
+
   app.get('/api/daily-history/kitchen', async (req, res) => {
     try {
       const { dbPromise } = require('./database');
@@ -6124,7 +6429,7 @@ dbPromise.then(async (db) => {
         db.all(`
           SELECT * FROM orders 
           WHERE DATE(timestamp) = DATE('now')
-            AND status IN ('completed', 'delivered', 'paid', 'ready')
+            AND (status IN ('completed', 'delivered', 'paid', 'ready') OR is_paid = 1)
             AND status != 'cancelled'
           ORDER BY timestamp DESC
         `, [], (err, rows) => {
@@ -6132,20 +6437,20 @@ dbPromise.then(async (db) => {
           else resolve(rows || []);
         });
       });
-      
+
       // Filtrează după categorie (doar kitchen items) folosind filterOrdersByCategory
       const { filterOrdersByCategory } = require('./src/modules/orders/controllers/orders-display.controller');
       const filteredOrders = await filterOrdersByCategory(orders, false); // false = exclude bar (kitchen only)
-      
+
       // Calculează statistici
       const totalOrders = filteredOrders.length;
       const totalItems = filteredOrders.reduce((sum, order) => {
         const items = Array.isArray(order.items) ? order.items : (typeof order.items === 'string' ? JSON.parse(order.items || '[]') : []);
         return sum + items.length;
       }, 0);
-      
-      res.json({ 
-        success: true, 
+
+      res.json({
+        success: true,
         orders: filteredOrders,
         total_orders: totalOrders,
         total_items: totalItems
@@ -6155,14 +6460,14 @@ dbPromise.then(async (db) => {
       res.json({ success: true, orders: [], total_orders: 0, total_items: 0 });
     }
   });
-  
+
   // Orders cancelled endpoint
   app.get('/api/orders-cancelled', async (req, res) => {
     try {
       const { dbPromise } = require('./database');
       const db = await dbPromise;
       const { lang = 'ro' } = req.query;
-      
+
       // Obține doar comenzile anulate din ziua curentă
       // Folosesc strftime pentru filtrare precisă pe ziua curentă
       const orders = await new Promise((resolve, reject) => {
@@ -6178,7 +6483,7 @@ dbPromise.then(async (db) => {
           else resolve(rows || []);
         });
       });
-      
+
       const today = new Date().toLocaleDateString('ro-RO');
       console.log(`✅ Returnat ${orders.length} comenzi anulate din ziua curentă (${today})`);
       res.json({ success: true, orders });
@@ -6187,18 +6492,18 @@ dbPromise.then(async (db) => {
       res.json({ success: true, orders: [] });
     }
   });
-  
+
   // ========================================
   // FISCAL RECEIPT ENDPOINTS (pentru livrare1.html)
   // ========================================
-  
+
   // GET /api/fiscal/receipt/:id/details - Obține detaliile bonului nefiscal pentru o comandă
   app.get('/api/fiscal/receipt/:id/details', async (req, res) => {
     try {
       const { id } = req.params;
       const { dbPromise } = require('./database');
       const db = await dbPromise;
-      
+
       // Verifică dacă există tabela fiscal_receipts
       const tableExists = await new Promise((resolve, reject) => {
         db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='fiscal_receipts'", (err, row) => {
@@ -6206,11 +6511,11 @@ dbPromise.then(async (db) => {
           else resolve(!!row);
         });
       });
-      
+
       if (!tableExists) {
         return res.status(404).json({ error: 'Bonul fiscal nu a fost găsit pentru această comandă' });
       }
-      
+
       // Obține detaliile bonului nefiscal din tabela fiscal_receipts
       const receipt = await new Promise((resolve, reject) => {
         db.get('SELECT * FROM fiscal_receipts WHERE order_id = ?', [id], (err, row) => {
@@ -6218,11 +6523,11 @@ dbPromise.then(async (db) => {
           else resolve(row);
         });
       });
-      
+
       if (!receipt) {
         return res.status(404).json({ error: 'Bonul fiscal nu a fost găsit pentru această comandă' });
       }
-      
+
       res.json({
         receipt_number: receipt.receipt_number,
         order_id: receipt.order_id,
@@ -6236,7 +6541,7 @@ dbPromise.then(async (db) => {
       res.status(500).json({ error: 'Eroare la obținerea detaliilor bonului nefiscal' });
     }
   });
-  
+
   // POST /api/orders/:id/fiscal-receipt - Generează bon nefiscal pentru o comandă
   app.post('/api/orders/:id/fiscal-receipt', async (req, res) => {
     try {
@@ -6244,7 +6549,7 @@ dbPromise.then(async (db) => {
       const { payment_method = 'cash' } = req.body || {};
       const { dbPromise } = require('./database');
       const db = await dbPromise;
-      
+
       // Verifică dacă comanda există
       const order = await new Promise((resolve, reject) => {
         db.get('SELECT * FROM orders WHERE id = ?', [id], (err, row) => {
@@ -6252,14 +6557,14 @@ dbPromise.then(async (db) => {
           else resolve(row);
         });
       });
-      
+
       if (!order) {
         return res.status(404).json({
           success: false,
           error: 'Comanda nu a fost găsită.'
         });
       }
-      
+
       // Verifică dacă comanda are deja bon nefiscal
       const tableExists = await new Promise((resolve, reject) => {
         db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='fiscal_receipts'", (err, row) => {
@@ -6267,7 +6572,7 @@ dbPromise.then(async (db) => {
           else resolve(!!row);
         });
       });
-      
+
       if (tableExists) {
         const existingReceipt = await new Promise((resolve, reject) => {
           db.get('SELECT * FROM fiscal_receipts WHERE order_id = ?', [id], (err, row) => {
@@ -6275,7 +6580,7 @@ dbPromise.then(async (db) => {
             else resolve(row);
           });
         });
-        
+
         if (existingReceipt) {
           return res.json({
             success: true,
@@ -6286,7 +6591,7 @@ dbPromise.then(async (db) => {
           });
         }
       }
-      
+
       // Generează bonul nefiscal folosind endpoint-ul existent de receipt (PDF)
       // Pentru moment, returnăm un link către receipt PDF
       // În viitor, poate fi implementată generarea efectivă a bonului fiscal
@@ -6305,7 +6610,7 @@ dbPromise.then(async (db) => {
       });
     }
   });
-  
+
   // GET /api/orders/:id/receipt - Generează PDF receipt pentru o comandă
   app.get('/api/orders/:id/receipt', async (req, res) => {
     try {
@@ -6313,7 +6618,7 @@ dbPromise.then(async (db) => {
       const lang = req.query.lang || 'ro';
       const { dbPromise } = require('./database');
       const db = await dbPromise;
-      
+
       // Verifică dacă comanda există
       const order = await new Promise((resolve, reject) => {
         db.get('SELECT * FROM orders WHERE id = ?', [id], (err, row) => {
@@ -6321,14 +6626,14 @@ dbPromise.then(async (db) => {
           else resolve(row);
         });
       });
-      
+
       if (!order) {
         return res.status(404).json({
           success: false,
           error: 'Comanda nu a fost găsită.'
         });
       }
-      
+
       // Obține items pentru comandă
       const orderItems = await new Promise((resolve, reject) => {
         db.all('SELECT * FROM order_items WHERE order_id = ?', [id], (err, rows) => {
@@ -6336,7 +6641,7 @@ dbPromise.then(async (db) => {
           else resolve(rows || []);
         });
       });
-      
+
       // Returnează eroare clară că PDF-ul nu este încă implementat
       // Flutter app așteaptă un PDF, nu JSON
       res.status(501).json({
@@ -6357,18 +6662,18 @@ dbPromise.then(async (db) => {
       });
     }
   });
-  
+
   // Verify PIN endpoint
   app.post('/api/verify-pin', async (req, res) => {
     try {
       const { pin } = req.body;
       const { dbPromise } = require('./database');
       const db = await dbPromise;
-      
+
       if (!pin || pin.length !== 4) {
         return res.json({ success: false, valid: false, error: 'PIN-ul trebuie să aibă 4 cifre' });
       }
-      
+
       // Verifică în tabelul users după coloana pin
       let user = await new Promise((resolve, reject) => {
         db.get('SELECT * FROM users WHERE pin = ?', [pin], (err, row) => {
@@ -6376,7 +6681,7 @@ dbPromise.then(async (db) => {
           else resolve(row);
         });
       });
-      
+
       // Dacă nu găsește în users, verifică în waiters
       if (!user) {
         user = await new Promise((resolve, reject) => {
@@ -6386,12 +6691,12 @@ dbPromise.then(async (db) => {
           });
         });
       }
-      
+
       // Fallback: PIN-ul default 5555 pentru admin (acceptat direct)
       if (!user && pin === '5555') {
         user = { id: 1, username: 'admin', role: 'admin', pin: pin };
       }
-      
+
       if (user) {
         res.json({ success: true, valid: true, user: { id: user.id, username: user.username || user.name, role: user.role || 'staff' } });
       } else {
@@ -6402,14 +6707,14 @@ dbPromise.then(async (db) => {
       res.json({ success: false, valid: false, error: error.message });
     }
   });
-  
+
   // Rewards check endpoint
   app.get('/api/rewards/check', async (req, res) => {
     try {
       const { customerToken } = req.query;
       const { dbPromise } = require('./database');
       const db = await dbPromise;
-      
+
       // Check if rewards table exists
       const rewardsTableExists = await new Promise((resolve, reject) => {
         db.get(
@@ -6420,11 +6725,11 @@ dbPromise.then(async (db) => {
           }
         );
       });
-      
+
       if (!rewardsTableExists) {
         return res.json({ success: true, rewards: [], hasRewards: false });
       }
-      
+
       // Check if customer has rewards
       const rewards = await new Promise((resolve, reject) => {
         db.all(`
@@ -6436,7 +6741,7 @@ dbPromise.then(async (db) => {
           else resolve(rows || []);
         });
       });
-      
+
       // Get customer points if loyalty_rewards table exists
       let customerPoints = 0;
       try {
@@ -6449,7 +6754,7 @@ dbPromise.then(async (db) => {
             }
           );
         });
-        
+
         if (loyaltyTableExists && customerToken) {
           const loyaltyData = await new Promise((resolve, reject) => {
             db.get(
@@ -6468,10 +6773,10 @@ dbPromise.then(async (db) => {
       } catch (e) {
         // Ignore errors for loyalty points
       }
-      
-      res.json({ 
-        success: true, 
-        rewards: rewards || [], 
+
+      res.json({
+        success: true,
+        rewards: rewards || [],
         hasRewards: (rewards || []).length > 0,
         customerPoints: customerPoints
       });
@@ -6480,26 +6785,26 @@ dbPromise.then(async (db) => {
       res.json({ success: true, rewards: [], hasRewards: false });
     }
   });
-  
+
   // Couriers routes - mount module routes (includes GET /api/couriers, POST /api/couriers/login, etc.)
   const couriersRoutes = require('./src/modules/couriers/routes');
   app.use('/api/couriers', couriersRoutes);
-  
+
   // Additional couriers routes (dispatch, tracking) - keep for backward compatibility
   app.get('/api/couriers/dispatch/available', adminController.getCouriersAvailable);
   app.get('/api/couriers/dispatch/pending', adminController.getCouriersPending);
   app.get('/api/couriers/tracking/live', adminController.getCouriersTracking);
-  
+
   console.log('✅ Couriers routes mounted: /api/couriers/* (includes GET /, POST /login, GET /me, POST /dispatch/assign, etc.)');
-  
+
   // Messages routes
   app.get('/api/messages/admin/:userId', adminController.getMessages);
-  
+
   // GET /api/messages/:role/:id - Get messages for a specific role and ID (kitchen, waiter, etc.)
   app.get('/api/messages/:role/:id', async (req, res) => {
     const { role, id } = req.params;
     const limit = parseInt(req.query.limit) || 50;
-    
+
     try {
       const db = await dbPromise;
       const query = `
@@ -6509,7 +6814,7 @@ dbPromise.then(async (db) => {
         ORDER BY timestamp DESC
         LIMIT ?
       `;
-      
+
       db.all(query, [role, id, role, id, limit], (err, rows) => {
         if (err) {
           console.error('❌ Error fetching messages:', err);
@@ -6522,25 +6827,25 @@ dbPromise.then(async (db) => {
       res.status(500).json({ success: false, error: error.message });
     }
   });
-  
+
   // POST /api/session/start - Start client session (for comanda.html)
   app.post('/api/session/start', async (req, res) => {
     try {
       const { tableNumber, clientToken } = req.body;
-      
+
       if (!tableNumber) {
         return res.status(400).json({
           success: false,
           error: 'Table number is required'
         });
       }
-      
+
       // Generate client identifier
       const clientIdentifier = `table_${tableNumber}_${Date.now()}`;
-      
+
       // Store session info (optional - can be stored in database if needed)
       // For now, just return the identifier
-      
+
       res.json({
         success: true,
         clientIdentifier: clientIdentifier,
@@ -6555,16 +6860,16 @@ dbPromise.then(async (db) => {
       });
     }
   });
-  
+
   console.log('✅ Client session endpoint mounted');
-  
+
   // GET /api/server-info - Get server network information for auto-discovery
   app.get('/api/server-info', async (req, res) => {
     try {
       const os = require('os');
       const interfaces = os.networkInterfaces();
       const networkIPs = [];
-      
+
       // Detectează toate IP-urile IPv4 disponibile (exclude localhost și APIPA)
       for (const name of Object.keys(interfaces)) {
         for (const iface of interfaces[name]) {
@@ -6578,7 +6883,7 @@ dbPromise.then(async (db) => {
             else if (iface.address.startsWith('192.168.0.')) priority = 50;
             else if (iface.address.startsWith('10.0.')) priority = 30;
             else priority = 10;
-            
+
             networkIPs.push({
               name: name,
               address: iface.address,
@@ -6588,14 +6893,14 @@ dbPromise.then(async (db) => {
           }
         }
       }
-      
+
       // Sortează după prioritate (cel mai probabil pentru hotspot primele)
       networkIPs.sort((a, b) => b.priority - a.priority);
-      
+
       // IP-ul recomandat (primul din listă, sau localhost ca fallback)
       const recommendedIP = networkIPs.length > 0 ? networkIPs[0].address : 'localhost';
       const port = process.env.PORT || 3001;
-      
+
       res.json({
         success: true,
         server: {
@@ -6623,14 +6928,14 @@ dbPromise.then(async (db) => {
       });
     }
   });
-  
+
   // GET /api/config - This endpoint is now defined BEFORE dbPromise.then() for immediate availability
   // (See above, around line 597, for the implementation)
-  
+
   console.log('✅ Additional admin routes mounted');
-  
+
   console.log('✅ All modules and routes loaded');
-  
+
   // ========================================
   // 404 HANDLER (Mount AFTER all modules are loaded)
   // Must be mounted after dbPromise.then() to ensure all routes (including modules) are processed first
@@ -6638,25 +6943,25 @@ dbPromise.then(async (db) => {
   const { load404Handler } = require('./src/loaders');
   load404Handler(app);
   console.log('✅ 404 handler loaded (after all modules)');
-  
+
   // Load error handlers AFTER 404 handler (must be absolutely last)
   loadErrorHandlers(app);
-  
+
   console.log('✅ Error handlers loaded (after 404 handler)');
-  
+
   // ========================================
   // START SERVER (ONLY AFTER ALL ROUTES ARE LOADED)
   // ========================================
   const PORT = process.env.PORT || 3001;
-  
+
   httpServer.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 Enterprise server running on port ${PORT}`);
     console.log(`📡 Health check: http://localhost:${PORT}/health`);
     console.log(`🌐 API health: http://localhost:${PORT}/api/health`);
-    
+
     // Initialize Socket.IO ONLY HERE (after server starts)
     initSocketIO();
-    
+
     // Initialize periodic alert checks (every 5 minutes)
     const AlertsService = require('./src/modules/alerts/alerts.service');
     setInterval(async () => {
@@ -6666,15 +6971,15 @@ dbPromise.then(async (db) => {
         console.error('❌ [ALERTS] Error in periodic check:', error);
       }
     }, 5 * 60 * 1000); // Every 5 minutes
-    
+
     console.log('✅ Periodic alert checks initialized (every 5 minutes)');
-    
+
     // Initialize database indexes for performance
     const DatabaseOptimizationService = require('./src/modules/database/db-optimization.service');
     DatabaseOptimizationService.createIndexes().catch(err => {
       console.error('❌ [DB OPTIMIZATION] Error creating indexes:', err);
     });
-    
+
     // Initialize cache cleanup (every 10 minutes)
     const StatsCache = require('./src/modules/cache/stats-cache.service');
     setInterval(() => {
@@ -6683,9 +6988,9 @@ dbPromise.then(async (db) => {
         console.log(`🧹 [CACHE] Cleaned ${cleaned} expired cache entries`);
       }
     }, 10 * 60 * 1000); // Every 10 minutes
-    
+
     console.log('✅ Cache cleanup initialized (every 10 minutes)');
-    
+
     // Initialize monitoring alerts check (every 5 minutes)
     const MonitoringService = require('./src/modules/monitoring/monitoring.service');
     setInterval(async () => {
@@ -6700,9 +7005,9 @@ dbPromise.then(async (db) => {
         console.error('❌ [MONITORING] Error in periodic check:', error);
       }
     }, 5 * 60 * 1000); // Every 5 minutes
-    
+
     console.log('✅ Monitoring alerts check initialized (every 5 minutes)');
-    
+
     // Initialize automated reports (check every hour)
     const AutomatedReportsService = require('./src/modules/reports/automated-reports.service');
     setInterval(async () => {
@@ -6712,9 +7017,9 @@ dbPromise.then(async (db) => {
         console.error('❌ [AUTOMATED REPORTS] Error in scheduled reports:', error);
       }
     }, 60 * 60 * 1000); // Every hour
-    
+
     console.log('✅ Automated reports scheduler initialized (check every hour)');
-    
+
     // Initialize automated backups (check every hour)
     const AutomatedBackupService = require('./src/modules/backup/automated-backup.service');
     setInterval(async () => {
@@ -6724,14 +7029,14 @@ dbPromise.then(async (db) => {
         console.error('❌ [AUTOMATED BACKUP] Error in scheduled backups:', error);
       }
     }, 60 * 60 * 1000); // Every hour
-    
+
     console.log('✅ Automated backup scheduler initialized (check every hour)');
   });
-  
+
 }).catch((err) => {
   console.error('❌ CRITICAL: Database connection failed:', err.message);
   console.error('📚 Stack Trace:', err.stack);
-  
+
   // CRITICAL: Don't continue without DB - exit application
   console.error('🔴 Server cannot start without database. Exiting...');
   process.exit(1);
@@ -6834,7 +7139,7 @@ app.use('/screenshots', (req, res, next) => {
     if (req.path.startsWith('/admin-vite/') && req.path.endsWith('.png')) {
       const requestedFile = path.basename(req.path);
       const mappedFile = screenshotMapping[requestedFile];
-      
+
       if (mappedFile) {
         const screenshotPath = path.join(__dirname, 'screenshots', 'admin-vite', mappedFile);
         if (fs.existsSync(screenshotPath)) {
@@ -6843,7 +7148,7 @@ app.use('/screenshots', (req, res, next) => {
           return res.sendFile(path.resolve(screenshotPath));
         }
       }
-      
+
       // Try direct file name (in case it exists with exact name)
       const directPath = path.join(__dirname, 'screenshots', req.path);
       if (fs.existsSync(directPath)) {
@@ -6851,11 +7156,11 @@ app.use('/screenshots', (req, res, next) => {
         res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
         return res.sendFile(path.resolve(directPath));
       }
-      
+
       // If not found, return 404 (don't continue to next middleware)
       return res.status(404).json({ error: 'Screenshot not found', requested: requestedFile });
     }
-    
+
     // For other screenshot paths, use static file serving
     next();
   } catch (error) {
@@ -6882,7 +7187,7 @@ app.use('/admin-vite', (req, res, next) => {
     if (req.path && req.path.match(/\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot|map|json)$/i)) {
       // Remove /admin-vite prefix and try to find file in dist
       let assetPath = req.path.replace(/^\/admin-vite/, '');
-      
+
       // If path starts with /assets/, serve from dist/assets/
       if (assetPath.startsWith('/assets/')) {
         const filePath = path.join(adminViteDist, assetPath);
@@ -6911,7 +7216,7 @@ app.use('/admin-vite', (req, res, next) => {
           return res.sendFile(path.resolve(filePath));
         }
       }
-      
+
       // Try to serve from dist root (for manifest.json, sw.js, etc.)
       const rootFilePath = path.join(adminViteDist, assetPath);
       if (fs.existsSync(rootFilePath)) {
@@ -6935,11 +7240,11 @@ app.use('/admin-vite', (req, res, next) => {
         }
         return res.sendFile(path.resolve(rootFilePath));
       }
-      
+
       // If file not found, continue to next middleware (might be handled by Vite dev server or SPA)
       return next();
     }
-    
+
     // Not a static asset, continue to next middleware
     next();
   } catch (error) {
@@ -6961,27 +7266,27 @@ app.use((req, res, next) => {
       // This prevents SPA from catching API routes
       return next();
     }
-    
+
     // Always let static assets pass through
     if (req.path && req.path.match(/\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|map)$/i)) {
       return next();
     }
-    
+
     // Always let manual files pass through (handled by specific routes above)
     if (req.path && (req.path.includes('MANUAL-INSTRUCTIUNI-COMPLETE.md') || req.path.startsWith('/server/'))) {
       return next();
     }
-    
+
     // Always let health checks pass through
     if (req.path === '/health' || req.path === '/api/health') {
       return next();
     }
-    
+
     // Skip if req.path is not defined
     if (!req.path) {
       return next();
     }
-    
+
     // Serve index.html for specific HTML pages and SPA routes (but not legacy ones)
     // Root path '/' should also be served as SPA (React Router will handle it)
     // Exclude legacy HTML files from SPA routing (they're handled by legacy middleware)
@@ -6993,31 +7298,31 @@ app.use((req, res, next) => {
         return req.path === route || req.originalUrl.split('?')[0] === route;
       }
     });
-    
+
     if (isLegacyHtml) {
       return next(); // Let legacy HTML middleware handle it (already processed above)
     }
-    
-    const isSpaRoute = !req.path.includes('.') && 
-                       !req.path.startsWith('/api') && 
-                       !req.path.startsWith('/health');
-    
+
+    const isSpaRoute = !req.path.includes('.') &&
+      !req.path.startsWith('/api') &&
+      !req.path.startsWith('/health');
+
     // Check if this is a SPA route (React Router route)
     // Include root path '/' for SPA
     // IMPORTANT: Exclude assets and files with dots from SPA routing so they can be served by express.static
     const isAsset = req.path.includes('.') || req.path.startsWith('/admin-vite/assets');
     const shouldServeSpa = !isAsset && (
-                          spaHtmlPages.includes(req.path) || 
-                          req.path.startsWith('/admin-vite') || 
-                          req.path === '/' ||
-                          isSpaRoute);
-    
+      spaHtmlPages.includes(req.path) ||
+      req.path.startsWith('/admin-vite') ||
+      req.path === '/' ||
+      isSpaRoute);
+
     if (shouldServeSpa) {
       // Serve dist/index.html if it exists (regardless of NODE_ENV)
       // If dist doesn't exist, fall back to Vite dev server proxy
       if (fs.existsSync(adminViteIndex)) {
         console.log(`✅ Serving SPA index.html for: ${req.path}`);
-        
+
         // CRITICAL: Set no-cache headers for index.html to prevent browser caching
         // This ensures fresh HTML is served on every refresh
         res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
@@ -7025,7 +7330,7 @@ app.use((req, res, next) => {
         res.setHeader('Expires', '0');
         res.setHeader('Surrogate-Control', 'no-store');
         res.setHeader('Last-Modified', new Date().toUTCString());
-        
+
         return res.sendFile(path.resolve(adminViteIndex), (err) => {
           if (err) {
             console.error(`❌ Error serving SPA index.html: ${err.message}`);
@@ -7038,7 +7343,7 @@ app.use((req, res, next) => {
         return next();
       }
     }
-    
+
     next();
   } catch (error) {
     console.error(`❌ SPA middleware error: ${error.message}`);
@@ -7054,6 +7359,4 @@ console.log('✅ SPA catch-all middleware configured');
 
 // NOTE: httpServer.listen() is now called INSIDE dbPromise.then()
 // to ensure all routes are loaded before server starts
-
 module.exports = { app, httpServer };
-

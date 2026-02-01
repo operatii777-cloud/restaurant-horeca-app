@@ -13,6 +13,7 @@ import { Card, Button, Table, Alert, Badge, Modal, Form, Row, Col } from 'react-
 import { httpClient } from '@/shared/api/httpClient';
 // Removed: Bootstrap CSS import - already loaded globally
 // Removed: FontAwesome CSS import - already loaded globally
+import { HelpButton } from '@/shared/components/HelpButton';
 import './AccountingPermissionsPage.css';
 
 interface Permission {
@@ -41,7 +42,7 @@ interface User {
 }
 
 export const AccountingPermissionsPage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [permissions, setPermissions] = useState<Permission[]>([]);
   const [userPermissions, setUserPermissions] = useState<UserPermission[]>([]);
   const [users, setUsers] = useState<User[]>([]);
@@ -77,7 +78,7 @@ export const AccountingPermissionsPage: React.FC = () => {
     try {
       const response = await httpClient.get('/api/accounting/settings/permissions');
       console.log('AccountingPermissionsPage Permissions response:', response.data);
-      
+
       let permissionsList: Permission[] = [];
       if (response.data && response.data.success && Array.isArray(response.data.data)) {
         permissionsList = response.data.data;
@@ -86,11 +87,11 @@ export const AccountingPermissionsPage: React.FC = () => {
       } else if (response.data && response.data.data && Array.isArray(response.data.data)) {
         permissionsList = response.data.data;
       }
-      
+
       if (!Array.isArray(permissionsList)) {
         permissionsList = [];
       }
-      
+
       setPermissions(permissionsList);
     } catch (err: any) {
       console.error('AccountingPermissionsPage Error loading permissions:', err);
@@ -102,7 +103,7 @@ export const AccountingPermissionsPage: React.FC = () => {
     try {
       const response = await httpClient.get('/api/accounting/settings/user-permissions');
       console.log('AccountingPermissionsPage User permissions response:', response.data);
-      
+
       let userPermsList: UserPermission[] = [];
       if (response.data && response.data.success && Array.isArray(response.data.data)) {
         userPermsList = response.data.data;
@@ -111,11 +112,11 @@ export const AccountingPermissionsPage: React.FC = () => {
       } else if (response.data && response.data.data && Array.isArray(response.data.data)) {
         userPermsList = response.data.data;
       }
-      
+
       if (!Array.isArray(userPermsList)) {
         userPermsList = [];
       }
-      
+
       setUserPermissions(userPermsList);
     } catch (err: any) {
       console.error('AccountingPermissionsPage Error loading user permissions:', err);
@@ -127,7 +128,7 @@ export const AccountingPermissionsPage: React.FC = () => {
     try {
       const response = await httpClient.get('/api/accounting/settings/users');
       console.log('AccountingPermissionsPage Users response:', response.data);
-      
+
       let usersList: User[] = [];
       if (response.data && response.data.success && Array.isArray(response.data.data)) {
         usersList = response.data.data;
@@ -136,11 +137,11 @@ export const AccountingPermissionsPage: React.FC = () => {
       } else if (response.data && response.data.data && Array.isArray(response.data.data)) {
         usersList = response.data.data;
       }
-      
+
       if (!Array.isArray(usersList)) {
         usersList = [];
       }
-      
+
       setUsers(usersList);
     } catch (err: any) {
       console.error('AccountingPermissionsPage Error loading users:', err);
@@ -181,7 +182,7 @@ export const AccountingPermissionsPage: React.FC = () => {
         user_id: selectedUser.id,
         permission_id: selectedPermission.id
       });
-      
+
       if (response.data.success) {
         setShowAssignModal(false);
         setSelectedUser(null);
@@ -215,8 +216,8 @@ export const AccountingPermissionsPage: React.FC = () => {
     <div className="accounting-permissions-page">
       <div className="page-header d-flex justify-content-between align-items-center">
         <div>
-          <h1>ðŸ” Permisiuni Contabilitate</h1>
-          <p>"gestionare permisiuni si acces utilizatori pentru "</p>
+          <h1>🔍 Permisiuni Contabilitate</h1>
+          <p>Gestionare permisiuni și acces utilizatori pentru modulele financiare</p>
         </div>
         <Button variant="outline-info" onClick={() => setShowHelpModal(true)}>
           <i className="fas fa-question-circle me-2"></i>
@@ -234,9 +235,9 @@ export const AccountingPermissionsPage: React.FC = () => {
         <Col md={6}>
           <Card className="mb-4">
             <Card.Header className="d-flex justify-content-between align-items-center">
-              <h5 className="mb-0">"permisiuni disponibile"</h5>
+              <h5 className="mb-0">Permisiuni disponibile</h5>
               <Button variant="outline-primary" size="sm" onClick={loadPermissions}>
-                <i className="fas fa-sync me-2"></i>"Reîncarcă"</Button>
+                <i className="fas fa-sync me-2"></i>Reîncarcă</Button>
             </Card.Header>
             <Card.Body>
               {loading ? (
@@ -275,7 +276,7 @@ export const AccountingPermissionsPage: React.FC = () => {
                       } else {
                         return (
                           <tr>
-                            <td colSpan={3} className="text-center text-muted py-4">"nu exista permisiuni definite permisiunile vor apa"</td>
+                            <td colSpan={3} className="text-center text-muted py-4">Nu există permisiuni definite. Permisiunile vor apărea aici.</td>
                           </tr>
                         );
                       }
@@ -290,9 +291,9 @@ export const AccountingPermissionsPage: React.FC = () => {
         <Col md={6}>
           <Card className="mb-4">
             <Card.Header className="d-flex justify-content-between align-items-center">
-              <h5 className="mb-0">"permisiuni utilizatori"</h5>
+              <h5 className="mb-0">Permisiuni utilizatori</h5>
               <Button variant="outline-primary" size="sm" onClick={loadUserPermissions}>
-                <i className="fas fa-sync me-2"></i>"Reîncarcă"</Button>
+                <i className="fas fa-sync me-2"></i>Reîncarcă</Button>
             </Card.Header>
             <Card.Body>
               {loading ? (
@@ -304,8 +305,8 @@ export const AccountingPermissionsPage: React.FC = () => {
                   <thead>
                     <tr>
                       <th>Utilizator</th>
-                      <th>"Permisiune"</th>
-                      <th>"Acțiuni"</th>
+                      <th>Permisiune</th>
+                      <th>Acțiuni</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -313,7 +314,7 @@ export const AccountingPermissionsPage: React.FC = () => {
                       const safeUserPerms = Array.isArray(userPermissions) ? userPermissions : [];
                       if (safeUserPerms.length > 0) {
                         return safeUserPerms.map((up, index) => (
-                          <tr key={`${up.user_id}-${up.permission_id}-"Index"`}>
+                          <tr key={`${up.user_id}-${up.permission_id}-${index}`}>
                             <td>{up.username}</td>
                             <td>{up.permission_name}</td>
                             <td>
@@ -330,7 +331,7 @@ export const AccountingPermissionsPage: React.FC = () => {
                       } else {
                         return (
                           <tr>
-                            <td colSpan={3} className="text-center text-muted py-4">"nu exista permisiuni asignate asigneaza permisiuni"</td>
+                            <td colSpan={3} className="text-center text-muted py-4">Nu există permisiuni asignate. Asignează permisiuni.</td>
                           </tr>
                         );
                       }
@@ -347,7 +348,7 @@ export const AccountingPermissionsPage: React.FC = () => {
         <Card.Header className="d-flex justify-content-between align-items-center">
           <h5 className="mb-0">Utilizatori</h5>
           <Button variant="outline-primary" size="sm" onClick={loadUsers}>
-            <i className="fas fa-sync me-2"></i>"Reîncarcă"</Button>
+            <i className="fas fa-sync me-2"></i>Reîncarcă</Button>
         </Card.Header>
         <Card.Body>
           {loading ? (
@@ -361,8 +362,8 @@ export const AccountingPermissionsPage: React.FC = () => {
                   <th>Utilizator</th>
                   <th>Email</th>
                   <th>Rol</th>
-                  <th>"Permisiuni"</th>
-                  <th>"Acțiuni"</th>
+                  <th>Permisiuni</th>
+                  <th>Acțiuni</th>
                 </tr>
               </thead>
               <tbody>
@@ -395,7 +396,7 @@ export const AccountingPermissionsPage: React.FC = () => {
                               size="sm"
                               onClick={() => handleAssignPermission(user)}
                             >
-                              <i className="fas fa-plus me-1"></i>"Asignează"</Button>
+                              <i className="fas fa-plus me-1"></i>Asignează</Button>
                           </td>
                         </tr>
                       );
@@ -403,7 +404,7 @@ export const AccountingPermissionsPage: React.FC = () => {
                   } else {
                     return (
                       <tr>
-                        <td colSpan={5} className="text-center text-muted py-4">"nu exista utilizatori utilizatorii vor aparea aici"</td>
+                        <td colSpan={5} className="text-center text-muted py-4">Nu există utilizatori. Utilizatorii vor apărea aici.</td>
                       </tr>
                     );
                   }
@@ -422,7 +423,7 @@ export const AccountingPermissionsPage: React.FC = () => {
       }}>
         <Modal.Header closeButton>
           <Modal.Title>
-            <i className="fas fa-user-plus me-2"></i>"asigneaza permisiune"</Modal.Title>
+            <i className="fas fa-user-plus me-2"></i>Asignează permisiune</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {selectedUser && (
@@ -441,7 +442,7 @@ export const AccountingPermissionsPage: React.FC = () => {
                     setSelectedPermission(perm || null);
                   }}
                 >
-                  <option value="">"selecteaza permisiune"</option>
+                  <option value="">Selectează permisiune</option>
                   {permissions
                     .filter(p => p.is_active)
                     .map((permission) => (
@@ -459,9 +460,9 @@ export const AccountingPermissionsPage: React.FC = () => {
             setShowAssignModal(false);
             setSelectedUser(null);
             setSelectedPermission(null);
-          }}>"Anulează"</Button>
+          }}>Anulează</Button>
           <Button variant="primary" onClick={handleSubmitAssign} disabled={!selectedPermission}>
-            <i className="fas fa-check me-2"></i>"Asignează"</Button>
+            <i className="fas fa-check me-2"></i>Asignează</Button>
         </Modal.Footer>
       </Modal>
 
@@ -469,31 +470,31 @@ export const AccountingPermissionsPage: React.FC = () => {
       <Modal show={showHelpModal} onHide={() => setShowHelpModal(false)} size="lg" className="help-modal">
         <Modal.Header closeButton>
           <Modal.Title>
-            <i className="fas fa-question-circle me-2"></i>"ajutor permisiuni contabilitate"</Modal.Title>
+            <i className="fas fa-question-circle me-2"></i>Ajutor permisiuni contabilitate</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="help-content">
-            <h5>ðŸ“‹ Cum funcționează permisiunile?</h5>
+            <h5>📋 Cum funcționează permisiunile?</h5>
             <p>
               Permisiunile contabilitate controlează accesul utilizatorilor la funcțiile modulului contabilitate.
               Fiecare utilizator poate avea una sau mai multe permisiuni asignate.
             </p>
 
-            <h5 className="mt-4">ðŸ‘¤ Cum creez utilizatori?</h5>
-            <p>"pentru a crea utilizatori noi urmeaza acesti pasi"</p>
+            <h5 className="mt-4">👤 Cum creez utilizatori?</h5>
+            <p>Pentru a crea utilizatori noi, urmează acești pași:</p>
             <ol>
               <li>
-                <strong>"acceseaza pagina de utilizatori"</strong>
+                <strong>Accesează pagina de utilizatori</strong>
                 <ul>
-                  <li>"mergi la"<strong>Setări â†’ Utilizatori & Permisiuni</strong></li>
-                  <li>"sau acceseaza direct"<code>/admin-vite/settings/users</code></li>
+                  <li>Mergi la <strong>Setări → Utilizatori & Permisiuni</strong></li>
+                  <li>Sau accesează direct <code>/admin-vite/settings/users</code></li>
                 </ul>
               </li>
               <li>
-                <strong>Click pe butonul "âž• Adaugă Utilizator"</strong>
+                <strong>Click pe butonul ➕ Adaugă Utilizator</strong>
               </li>
               <li>
-                <strong>"completeaza formularul"</strong>
+                <strong>Completează formularul</strong>
                 <ul>
                   <li><strong>Username</strong> (obligatoriu) - numele de utilizator</li>
                   <li><strong>Email</strong> (opțional) - adresa de email</li>
@@ -506,43 +507,43 @@ export const AccountingPermissionsPage: React.FC = () => {
               </li>
             </ol>
 
-            <h5 className="mt-4">ðŸ”— Flux complet: Creare â†’ Asignare Permisiuni</h5>
+            <h5 className="mt-4">🔗 Flux complet: Creare → Asignare Permisiuni</h5>
             <div className="alert alert-info">
               <ol className="mb-0">
-                <li><strong>Creezi utilizatorul</strong> â†’ Setări â†’ Utilizatori & Permisiuni</li>
+                <li><strong>Creezi utilizatorul</strong> → Setări → Utilizatori & Permisiuni</li>
                 <li><strong>Utilizatorul apare</strong> în lista de utilizatori</li>
-                <li><strong>"mergi la"</strong> Contabilitate â†’ Setări â†’ Permisiuni Contabilitate</li>
+                <li><strong>Mergi la</strong> Contabilitate → Setări → Permisiuni Contabilitate</li>
                 <li><strong>Click pe "Asignează"</strong> lângă utilizatorul dorit</li>
-                <li><strong>"selectezi permisiunea"</strong> din dropdown</li>
+                <li><strong>Selectezi permisiunea</strong> din dropdown</li>
                 <li><strong>Click "Asignează"</strong> pentru a finaliza</li>
               </ol>
             </div>
 
-            <h5 className="mt-4">ðŸ“ Tipuri de permisiuni disponibile</h5>
+            <h5 className="mt-4">📌 Tipuri de permisiuni disponibile</h5>
             <ul>
               <li><strong>Vizualizare Rapoarte</strong> - Poate vizualiza rapoarte contabile</li>
               <li><strong>Export Date</strong> - Poate exporta date contabile</li>
-              <li><strong>"gestionare setari"</strong> - Poate modifica setările contabilitate</li>
-              <li><strong>"vizualizare audit"</strong> - Poate vizualiza log-uri audit</li>
+              <li><strong>Gestionare setări</strong> - Poate modifica setările contabilitate</li>
+              <li><strong>Vizualizare audit</strong> - Poate vizualiza log-uri audit</li>
             </ul>
 
-            <h5 className="mt-4">ðŸ”§ Endpoint-uri API disponibile</h5>
+            <h5 className="mt-4">🛠️ Endpoint-uri API disponibile</h5>
             <ul>
               <li><code>GET /api/admin/users</code> - Lista utilizatori</li>
               <li><code>POST /api/admin/users</code> - Creare utilizator</li>
               <li><code>PUT /api/admin/users/:id</code> - Actualizare utilizator</li>
-              <li><code>DELETE /api/admin/users/:id</code> - È˜tergere utilizator</li>
+              <li><code>DELETE /api/admin/users/:id</code> - Ștergere utilizator</li>
               <li><code>GET /api/admin/roles</code> - Lista roluri disponibile</li>
             </ul>
 
             <div className="alert alert-warning mt-4">
-              <strong>ðŸ’¡ Notă:</strong> Utilizatorii creați în pagina "Utilizatori & Permisiuni" vor apărea automat 
+              <strong>💡 Notă:</strong> Utilizatorii creați în pagina "Utilizatori & Permisiuni" vor apărea automat
               în această pagină pentru asignarea permisiunilor specifice contabilității.
             </div>
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowHelpModal(false)}>"ÃŽnchide"</Button>
+          <Button variant="secondary" onClick={() => setShowHelpModal(false)}>Închide</Button>
           <Button variant="primary" onClick={() => {
             setShowHelpModal(false);
             window.location.href = '/admin-vite/settings/users';

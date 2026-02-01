@@ -29,14 +29,14 @@ interface Product {
 }
 
 export const DailyOfferPage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [currentOffer, setCurrentOffer] = useState<DailyOffer | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
-  
+
   // Form state
   const [formData, setFormData] = useState<DailyOffer>({
     title: '',
@@ -78,10 +78,10 @@ export const DailyOfferPage: React.FC = () => {
         const data = await response.json();
         const menuItems = data.data || [];
         setProducts(menuItems);
-        
+
         // Extract unique categories
         const uniqueCategories = [...new Set(menuItems.map((p: Product) => p.category))].sort();
-        setCategories(uniqueCategories);
+        setCategories(uniqueCategories as string[]);
       }
     } catch (error) {
       console.error('Error loading products:', error);
@@ -91,14 +91,14 @@ export const DailyOfferPage: React.FC = () => {
   const handleOpenModal = () => {
     if (currentOffer) {
       // Normalizăm produsele de beneficiu pentru a fi doar ID-uri în formular
-      const benefitProductIds = (currentOffer.benefit_products || []).map(p => 
+      const benefitProductIds = (currentOffer.benefit_products || []).map(p =>
         (p && typeof p === 'object') ? p.id : p
       );
 
       setFormData({
         ...currentOffer,
-        conditions: currentOffer.conditions && currentOffer.conditions.length > 0 
-          ? currentOffer.conditions 
+        conditions: currentOffer.conditions && currentOffer.conditions.length > 0
+          ? currentOffer.conditions
           : [{ category: '', quantity: 2 }],
         benefit_products: benefitProductIds
       });
@@ -143,8 +143,8 @@ export const DailyOfferPage: React.FC = () => {
 
   const handleConditionChange = (index: number, field: 'category' | 'quantity', value: string | number) => {
     const newConditions = [...formData.conditions];
-      newConditions[index] = {
-        ...newConditions[index],
+    newConditions[index] = {
+      ...newConditions[index],
       [field]: value
     };
     setFormData({
@@ -167,7 +167,7 @@ export const DailyOfferPage: React.FC = () => {
     while (newProducts.length < 5) {
       newProducts.push(0);
     }
-      newProducts[index] = productId ? parseInt(productId, 10) : 0;
+    newProducts[index] = productId ? parseInt(productId, 10) : 0;
     setFormData({
       ...formData,
       benefit_products: newProducts.filter(id => id > 0)
@@ -176,7 +176,7 @@ export const DailyOfferPage: React.FC = () => {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.title || !formData.description) {
       alert('Titlul și descrierea sunt obligatorii!');
       return;
@@ -193,7 +193,7 @@ export const DailyOfferPage: React.FC = () => {
         ...formData,
         id: currentOffer?.id,
         conditions: formData.conditions.filter(c => c.category && c.quantity > 0),
-        benefit_products: formData.benefit_type === 'specific' 
+        benefit_products: formData.benefit_type === 'specific'
           ? formData.benefit_products?.filter(id => id > 0) || []
           : []
       };
@@ -232,12 +232,12 @@ export const DailyOfferPage: React.FC = () => {
   return (
     <div className="daily-offer-page">
       <div className="page-header">
-        <h1>â­ Oferta Zilei</h1>
+        <h1>⭐ Oferta Zilei</h1>
         <div className="action-buttons">
           <button className="btn btn-primary" onClick={handleOpenModal}>
-            <span>âž•</span>"configureaza oferta zilei"</button>
+            <span>➕</span>Configurează oferta zilei</button>
           <button className="btn btn-warning" onClick={loadOffer}>
-            <span>ðŸ”„</span>"Reîncarcă"</button>
+            <span>🔄</span>Reîncarcă</button>
         </div>
       </div>
 
@@ -250,16 +250,16 @@ export const DailyOfferPage: React.FC = () => {
               <span>{currentOffer?.is_active ? 'Activă' : 'Inactivă'}</span>
             </div>
           </div>
-          
+
           <div className="daily-offer-content">
             {currentOffer && currentOffer.is_active ? (
               <div className="offer-details">
                 <div className="offer-title">{currentOffer.title}</div>
                 <div className="offer-description">{currentOffer.description}</div>
-                
+
                 {currentOffer.conditions && currentOffer.conditions.length > 0 && (
                   <div className="offer-conditions">
-                    <h4>"conditii pentru oferta"</h4>
+                    <h4>Condiții pentru ofertă</h4>
                     {currentOffer.conditions.map((condition, index) => (
                       <div key={index} className="condition-item">
                         <span className="condition-category">{condition.category}</span>
@@ -268,12 +268,12 @@ export const DailyOfferPage: React.FC = () => {
                     ))}
                   </div>
                 )}
-                
+
                 <div className="offer-benefits">
                   <h4>Beneficiile Ofertei</h4>
                   {currentOffer.benefit_type === 'category' ? (
                     <div className="benefit-item">
-                      <span className="benefit-icon">ðŸŽ</span>
+                      <span className="benefit-icon">🎁</span>
                       <span>
                         {currentOffer.benefit_quantity}x {currentOffer.benefit_category} gratuit
                         {currentOffer.benefit_quantity && currentOffer.benefit_quantity > 1 ? 'e' : ''}
@@ -281,7 +281,7 @@ export const DailyOfferPage: React.FC = () => {
                     </div>
                   ) : (
                     <div className="benefit-item">
-                      <span className="benefit-icon">ðŸŽ</span>
+                      <span className="benefit-icon">🎁</span>
                       <span>Produse gratuite disponibile:</span>
                       <div className="free-products-list">
                         {currentOffer.benefit_products && currentOffer.benefit_products.length > 0 ? (
@@ -302,7 +302,7 @@ export const DailyOfferPage: React.FC = () => {
                             );
                           })
                         ) : (
-                          <span className="no-products">"nu sunt produse configurate"</span>
+                          <span className="no-products">Nu sunt produse configurate</span>
                         )}
                       </div>
                     </div>
@@ -311,9 +311,9 @@ export const DailyOfferPage: React.FC = () => {
               </div>
             ) : (
               <div className="no-offer">
-                <div className="no-offer-icon">ðŸ“‹</div>
-                <h3>"nu exista oferta activa"</h3>
-                <p>"configureaza o oferta zilnica pentru a atrage clie"</p>
+                <div className="no-offer-icon">📋</div>
+                <h3>Nu există ofertă activă</h3>
+                <p>Configurează o ofertă zilnică pentru a atrage clienții.</p>
               </div>
             )}
           </div>
@@ -325,10 +325,10 @@ export const DailyOfferPage: React.FC = () => {
         <div className="modal-overlay" onClick={handleCloseModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2>"configureaza oferta zilei"</h2>
+              <h2>Configurează oferta zilei</h2>
               <span className="close" onClick={handleCloseModal}>&times;</span>
             </div>
-            
+
             <form onSubmit={handleSave}>
               <div className="form-group">
                 <label>Titlu (RO): *</label>
@@ -376,12 +376,12 @@ export const DailyOfferPage: React.FC = () => {
                     type="checkbox"
                     checked={formData.is_active}
                     onChange={(e) => setFormData({ ...formData, is_active: e.target.checked })}
-                  />"oferta activa"</label>
+                  />Ofertă activă</label>
               </div>
 
               {/* Condiții */}
               <div className="offer-conditions-section">
-                <h4>"conditii pentru oferta"</h4>
+                <h4>Condiții pentru ofertă</h4>
                 {formData.conditions.map((condition, index) => (
                   <div key={index} className="condition-item">
                     <select
@@ -391,7 +391,7 @@ export const DailyOfferPage: React.FC = () => {
                       required
                       title="Selectează categoria"
                     >
-                      <option value="">"selecteaza categoria"</option>
+                      <option value="">Selectează categoria</option>
                       {categories.map(cat => (
                         <option key={cat} value={cat}>{cat}</option>
                       ))}
@@ -410,7 +410,7 @@ export const DailyOfferPage: React.FC = () => {
                       type="button"
                       className="btn btn-danger btn-sm"
                       onClick={() => handleRemoveCondition(index)}
-                    >"È˜terge"</button>
+                    >Șterge</button>
                   </div>
                 ))}
                 <button
@@ -418,7 +418,7 @@ export const DailyOfferPage: React.FC = () => {
                   className="btn btn-success btn-sm"
                   onClick={handleAddCondition}
                 >
-                  âž• Adaugă Condiție
+                  ➕ Adaugă Condiție
                 </button>
               </div>
 
@@ -434,7 +434,7 @@ export const DailyOfferPage: React.FC = () => {
                     title="Tip beneficiu"
                   >
                     <option value="category">Categorie</option>
-                    <option value="specific">"produse specifice"</option>
+                    <option value="specific">Produse specifice</option>
                   </select>
                 </div>
 
@@ -448,7 +448,7 @@ export const DailyOfferPage: React.FC = () => {
                         required
                         title="Categorie beneficiu"
                       >
-                        <option value="">"selecteaza categoria"</option>
+                        <option value="">Selectează categoria</option>
                         {categories.map(cat => (
                           <option key={cat} value={cat}>{cat}</option>
                         ))}
@@ -493,9 +493,9 @@ export const DailyOfferPage: React.FC = () => {
               </div>
 
               <div className="form-actions">
-                <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>"Anulează"</button>
+                <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>Anulează</button>
                 <button type="submit" className="btn btn-primary" disabled={saving}>
-                  {saving ? 'Se salvează...' : 'ðŸ’¾ Salvează Oferta'}
+                  {saving ? 'Se salvează...' : '💾 Salvează Oferta'}
                 </button>
               </div>
             </form>
@@ -505,8 +505,3 @@ export const DailyOfferPage: React.FC = () => {
     </div>
   );
 };
-
-
-
-
-

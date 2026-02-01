@@ -31,14 +31,14 @@ interface DeliveryOrder {
 }
 
 const PLATFORM_ICONS: Record<string, string> = {
-  glovo: 'ðŸšš',
-  wolt: 'ðŸ“±',
-  bolt_food: 'ðŸ´',
-  friendsride: 'ðŸš—',
-  tazz: 'âš¡',
-  phone: 'ðŸ“ž',
-  online: 'ðŸŒ',
-  pos: 'ðŸ’°'
+  glovo: '🚚',
+  wolt: '📱',
+  bolt_food: '🥡',
+  friendsride: '🚗',
+  tazz: '⚡',
+  phone: '📞',
+  online: '🌐',
+  pos: '💰'
 };
 
 const ORDER_TYPE_LABELS: Record<string, string> = {
@@ -59,10 +59,10 @@ const STATUS_COLORS: Record<string, string> = {
 };
 
 export const DeliveryOrdersPage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [orders, setOrders] = useState<DeliveryOrder[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'all' | "Delivery" | 'drivethru' | 'takeaway'>('all');
+  const [activeTab, setActiveTab] = useState<'all' | "delivery" | 'drivethru' | 'takeaway'>('all');
   const [filterStatus, setFilterStatus] = useState('all');
   const [filterPlatform, setFilterPlatform] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -84,11 +84,11 @@ export const DeliveryOrdersPage: React.FC = () => {
       const params = new URLSearchParams();
       if (dateRange.start) params.append('startDate', dateRange.start);
       if (dateRange.end) params.append('endDate', dateRange.end);
-      
+
       const response = await httpClient.get<{ data: DeliveryOrder[] }>(
         `/api/orders-delivery?${params.toString()}`
       );
-      
+
       if (response.data && response.data.data) {
         setOrders(response.data.data);
       }
@@ -139,12 +139,12 @@ export const DeliveryOrdersPage: React.FC = () => {
 
   const stats = useMemo(() => {
     const total = orders.length;
-    const pending = orders.filter(o => o.status === "Pending:" || o.status === 'preparing').length;
-    const inTransit = orders.filter(o => o.status === "ÃŽn Transit" || o.delivery_status === "ÃŽn Transit").length;
+    const pending = orders.filter(o => o.status === "Pending" || o.status === 'preparing').length;
+    const inTransit = orders.filter(o => o.status === "in_transit" || o.delivery_status === "in_transit").length;
     const delivered = orders.filter(o => o.status === 'delivered' || o.status === 'completed').length;
     const totalValue = orders.reduce((sum, o) => sum + (o.total || 0), 0);
     const pendingValue = orders
-      .filter(o => o.status === "Pending:" || o.status === 'preparing')
+      .filter(o => o.status === "Pending" || o.status === 'preparing')
       .reduce((sum, o) => sum + (o.total || 0), 0);
 
     return { total, pending, inTransit, delivered, totalValue, pendingValue };
@@ -230,10 +230,10 @@ export const DeliveryOrdersPage: React.FC = () => {
   return (
     <div className="delivery-orders-page">
       <div className="page-header">
-        <h1><i className="fas fa-truck me-2"></i>"comenzi delivery"</h1>
+        <h1><i className="fas fa-truck me-2"></i>Comenzi Delivery</h1>
         <div className="header-actions">
           <Button variant="success" onClick={handleCreateOrder} className="me-2">
-            <i className="fas fa-plus me-1"></i>"comanda noua"</Button>
+            <i className="fas fa-plus me-1"></i>Comandă Nouă</Button>
           <Button variant="primary" onClick={fetchOrders} disabled={loading}>
             <i className="fas fa-sync-alt me-1"></i>Reîmprospătează</Button>
         </div>
@@ -246,24 +246,24 @@ export const DeliveryOrdersPage: React.FC = () => {
             title="Total Comenzi"
             value={stats.total.toString()}
             helper={`Valoare: ${stats.totalValue.toFixed(2)} RON`}
-            icon={<span>ðŸ“¦</span>}
+            icon={<span>📦</span>}
           />
         </Col>
         <Col md={3}>
           <StatCard
-            title="ÃŽn Așteptare"
+            title="În Așteptare"
             value={stats.pending.toString()}
             helper={`Valoare: ${stats.pendingValue.toFixed(2)} RON`}
-            icon={<span>âÂÂ³</span>}
+            icon={<span>⏳</span>}
             trendDirection={stats.pending > 0 ? 'up' : 'flat'}
           />
         </Col>
         <Col md={3}>
           <StatCard
-            title="ÃŽn Tranzit"
+            title="În Tranzit"
             value={stats.inTransit.toString()}
             helper="Comenzi în livrare"
-            icon={<span>ðŸšš</span>}
+            icon={<span>🚚</span>}
           />
         </Col>
         <Col md={3}>
@@ -271,7 +271,7 @@ export const DeliveryOrdersPage: React.FC = () => {
             title="Livrate"
             value={stats.delivered.toString()}
             helper="Comenzi finalizate"
-            icon={<span>[Check]</span>}
+            icon={<span>✅</span>}
           />
         </Col>
       </Row>
@@ -288,19 +288,19 @@ export const DeliveryOrdersPage: React.FC = () => {
                 className="mb-0"
               >
                 <Tab eventKey="all" title="Toate" />
-                <Tab eventKey="delivery" title='ðŸšš delivery' />
-                <Tab eventKey="drivethru" title="ðŸš— Drive-Thru" />
-                <Tab eventKey="takeaway" title="ðŸ“¦ Takeaway" />
+                <Tab eventKey="delivery" title='🚚 Delivery' />
+                <Tab eventKey="drivethru" title="🚗 Drive-Thru" />
+                <Tab eventKey="takeaway" title="📦 Takeaway" />
               </Tabs>
             </Col>
             <Col md={2}>
               <Form.Label>Status</Form.Label>
               <Form.Select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
                 <option value="all">Toate</option>
-                <option value="pending">în așteptare</option>
-                <option value="preparing">în preparare</option>
+                <option value="pending">În Așteptare</option>
+                <option value="preparing">În Preparare</option>
                 <option value="ready">Gata</option>
-                <option value="ÃŽn Tranzit">"in tranzit"</option>
+                <option value="in_transit">În Tranzit</option>
                 <option value="delivered">Livrat</option>
                 <option value="completed">Finalizat</option>
                 <option value="cancelled">Anulat</option>
@@ -312,7 +312,7 @@ export const DeliveryOrdersPage: React.FC = () => {
                 <option value="all">Toate</option>
                 {platforms.map(p => (
                   <option key={p} value={p}>
-                    {PLATFORM_icons[p] || 'ðŸ“±'} {p}
+                    {PLATFORM_ICONS[p] || '📱'} {p}
                   </option>
                 ))}
               </Form.Select>
@@ -350,7 +350,7 @@ export const DeliveryOrdersPage: React.FC = () => {
                 <InputGroup.Text><i className="fas fa-search"></i></InputGroup.Text>
                 <Form.Control
                   type="text"
-                  placeholder="cauta dupa nume telefon adresa numar comanda"
+                  placeholder="Caută după nume, telefon, adresă, număr comandă"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -379,7 +379,7 @@ export const DeliveryOrdersPage: React.FC = () => {
         <Card>
           <Card.Body className="text-center py-5">
             <i className="fas fa-inbox fa-3x text-muted mb-3"></i>
-            <p className="text-muted">"nu exista comenzi care sa corespunda filtrelor sel"</p>
+            <p className="text-muted">Nu există comenzi care să corespundă filtrelor selectate</p>
           </Card.Body>
         </Card>
       ) : (
@@ -400,7 +400,7 @@ export const DeliveryOrdersPage: React.FC = () => {
                     </Badge>
                     {order.platform && (
                       <Badge bg="light" text="dark">
-                        {PLATFORM_ICONS[order.platform] || 'ðŸ“±'} {order.platform}
+                        {PLATFORM_ICONS[order.platform] || '📱'} {order.platform}
                       </Badge>
                     )}
                   </div>
@@ -460,7 +460,7 @@ export const DeliveryOrdersPage: React.FC = () => {
                   )}
                   <div className="info-row">
                     <i className="fas fa-credit-card me-2"></i>
-                    <span>Plată: {order.payment_method} {order.is_paid && '[Check]'}</span>
+                    <span>Plată: {order.payment_method} {order.is_paid && '✅'}</span>
                   </div>
                   <div className="info-row">
                     <i className="fas fa-clock me-2"></i>
@@ -509,16 +509,16 @@ export const DeliveryOrdersPage: React.FC = () => {
                 </Col>
               </Row>
 
-              <h6 className="mt-4">"informatii client"</h6>
-              <p><strong>"Nume:"</strong> {selectedOrder.customer_name || 'N/A'}</p>
+              <h6 className="mt-4">Informații Client</h6>
+              <p><strong>Nume:</strong> {selectedOrder.customer_name || 'N/A'}</p>
               <p>
-                <strong>Telefon:</strong> {selectedOrder.customer_phone}' '
+                <strong>Telefon:</strong> {selectedOrder.customer_phone}
                 <Button variant="link" size="sm" onClick={() => callCustomer(selectedOrder.customer_phone)}>
-                  <i className="fas fa-phone"></i>"Sună"</Button>
+                  <i className="fas fa-phone"></i> Sună</Button>
               </p>
               {selectedOrder.delivery_address && (
                 <p>
-                  <strong>"Adresă:"</strong> {selectedOrder.delivery_address}' '
+                  <strong>Adresă:</strong> {selectedOrder.delivery_address}' '
                   <Button variant="link" size="sm" onClick={() => openMaps(selectedOrder.delivery_address!)}>
                     <i className="fas fa-map"></i> Maps
                   </Button>
@@ -531,9 +531,9 @@ export const DeliveryOrdersPage: React.FC = () => {
               {selectedOrder.car_plate && (
                 <>
                   <h6 className="mt-4">Drive-Thru</h6>
-                  <p><strong>"numar masina"</strong> {selectedOrder.car_plate}</p>
+                  <p><strong>Număr Mașină:</strong> {selectedOrder.car_plate}</p>
                   {selectedOrder.lane_number && (
-                    <p><strong>"Lane:"</strong> {selectedOrder.lane_number}</p>
+                    <p><strong>Lane:</strong> {selectedOrder.lane_number}</p>
                   )}
                 </>
               )}
@@ -541,12 +541,12 @@ export const DeliveryOrdersPage: React.FC = () => {
               {selectedOrder.courier_name && (
                 <>
                   <h6 className="mt-4">Curier</h6>
-                  <p><strong>"Nume:"</strong> {selectedOrder.courier_name}</p>
+                  <p><strong>Nume:</strong> {selectedOrder.courier_name}</p>
                   {selectedOrder.courier_phone && (
                     <p>
                       <strong>Telefon:</strong> {selectedOrder.courier_phone}' '
                       <Button variant="link" size="sm" onClick={() => callCustomer(selectedOrder.courier_phone!)}>
-                        <i className="fas fa-phone"></i>"Sună"</Button>
+                        <i className="fas fa-phone"></i> Sună</Button>
                     </p>
                   )}
                 </>
@@ -558,7 +558,7 @@ export const DeliveryOrdersPage: React.FC = () => {
                   <tr>
                     <th>Produs</th>
                     <th>Cantitate</th>
-                    <th>"Preț"</th>
+                    <th>Preț</th>
                     <th>Total</th>
                   </tr>
                 </thead>
@@ -581,11 +581,11 @@ export const DeliveryOrdersPage: React.FC = () => {
               </Table>
 
               <h6 className="mt-4">Plată</h6>
-              <p><strong>"Metodă:"</strong> {selectedOrder.payment_method}</p>
-              <p><strong>Status:</strong> {selectedOrder.is_paid ? '[Check] Plătit' : 'âŒ Neplătit'}</p>
+              <p><strong>Metodă:</strong> {selectedOrder.payment_method}</p>
+              <p><strong>Status:</strong> {selectedOrder.is_paid ? '✅ Plătit' : '❌ Neplătit'}</p>
               {selectedOrder.fiscal_receipt_printed && (
                 <p>
-                  <strong>Bon fiscal:</strong> {selectedOrder.fiscal_receipt_number || 'Printat'} [Check]
+                  <strong>Bon fiscal:</strong> {selectedOrder.fiscal_receipt_number || 'Printat'} ✅
                 </p>
               )}
             </>
@@ -596,23 +596,23 @@ export const DeliveryOrdersPage: React.FC = () => {
             <>
               {!selectedOrder.is_paid && (
                 <Button variant="success" onClick={() => handleMarkPaid(selectedOrder.id)}>
-                  <i className="fas fa-check me-1"></i>"marcheaza platit"</Button>
+                  <i className="fas fa-check me-1"></i> Marchează Plătit</Button>
               )}
               {selectedOrder.status !== 'delivered' && selectedOrder.status !== 'completed' && (
                 <Button variant="primary" onClick={() => handleMarkDelivered(selectedOrder.id)}>
-                  <i className="fas fa-truck me-1"></i>"marcheaza livrat"</Button>
+                  <i className="fas fa-truck me-1"></i> Marchează Livrat</Button>
               )}
               {!selectedOrder.fiscal_receipt_printed && (
                 <Button variant="info" onClick={() => printReceipt(selectedOrder.id)}>
-                  <i className="fas fa-print me-1"></i>"printeaza bon"</Button>
+                  <i className="fas fa-print me-1"></i> Printează Bon</Button>
               )}
               {selectedOrder.status !== 'cancelled' && (
                 <Button variant="danger" onClick={() => setShowCancelModal(true)}>
-                  <i className="fas fa-times me-1"></i>"Anulează"</Button>
+                  <i className="fas fa-times me-1"></i> Anulează</Button>
               )}
             </>
           )}
-          <Button variant="secondary" onClick={() => setShowDetailsModal(false)}>"ÃŽnchide"</Button>
+          <Button variant="secondary" onClick={() => setShowDetailsModal(false)}>Închide</Button>
         </Modal.Footer>
       </Modal>
 
@@ -623,19 +623,19 @@ export const DeliveryOrdersPage: React.FC = () => {
         </Modal.Header>
         <Modal.Body>
           <Form.Group>
-            <Form.Label>"motiv anulare"</Form.Label>
+            <Form.Label>Motiv Anulare</Form.Label>
             <Form.Control
               as="textarea"
               rows={3}
               value={cancelReason}
               onChange={(e) => setCancelReason(e.target.value)}
-              placeholder="introduceti motivul anularii"
+              placeholder="Introduceți motivul anulării"
             />
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowCancelModal(false)}>"Renunță"</Button>
-          <Button variant="danger" onClick={handleCancel} disabled={!cancelReason}>"anuleaza comanda"</Button>
+          <Button variant="secondary" onClick={() => setShowCancelModal(false)}>Renunță</Button>
+          <Button variant="danger" onClick={handleCancel} disabled={!cancelReason}>Anulează Comanda</Button>
         </Modal.Footer>
       </Modal>
     </div>

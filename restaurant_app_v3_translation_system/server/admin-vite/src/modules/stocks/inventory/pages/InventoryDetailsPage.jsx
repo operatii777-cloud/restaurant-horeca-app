@@ -14,8 +14,8 @@ import { exportInventoryPdf } from "../utils/InventoryPdfDocument";
 export default function InventoryDetailsPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const inventoryId = Number(id);
-  const { inventory, loading, error, refetch } = useInventory(Number.isFinite(inventoryId) ? inventoryId : null);
+  const inventoryId = id;
+  const { inventory, loading, error, refetch } = useInventory(inventoryId);
   const { loadFromPayload, reset, validation, header, lines, totals } = useInventoryStore();
   const [exporting, setExporting] = useState(false);
 
@@ -107,7 +107,7 @@ export default function InventoryDetailsPage() {
         mode="details"
         onAfterSave={refetch}
         onAfterDelete={() => {
-          navigate("/stocks/inventory");
+          navigate("/stocks/inventory/multi");
         }}
         onExportPdf={handleExportPdf}
         isExporting={exporting}

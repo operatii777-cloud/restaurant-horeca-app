@@ -42,7 +42,7 @@ type ActiveOrdersPanelProps = {
 const VIEW_MODE_STORAGE_KEY = 'admin_v4_orders_view_mode';
 
 function aggregateVisitItems(visit: OrderVisit) {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const map = new Map<string, { name: string; quantity: number; total: number }>();
 
   visit.allItems.forEach((item) => {
@@ -107,7 +107,7 @@ export const ActiveOrdersPanel = ({
   onSelectOrder,
   onMarkVisitPaid,
 }: ActiveOrdersPanelProps) => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [activeRange, setActiveRange] = useState<QuickRange | null>(null);
   const [exporting, setExporting] = useState(false);
   const [processingVisit, setProcessingVisit] = useState<string | null>(null);
@@ -142,14 +142,14 @@ export const ActiveOrdersPanel = ({
       },
       {
         headerName: 'Masă',
-        field: "Table Number",
+        field: 'table_number',
         width: 120,
-        valueFormatter: ({ value, data }: ValueFormatterParams<Order, Order["Table Number"]>) => {
+        valueFormatter: ({ value, data }: ValueFormatterParams<Order, Order['table_number']>) => {
           if (!data) return '';
           if (value === null || value === undefined) {
-            return data.type === 'takeout' ? 'La pachet' : 'ââ‚¬"';
+            return data.type === 'takeout' ? 'La pachet' : '—';
           }
-          return `Masa "Value"`;
+          return `Masa ${value}`;
         },
       },
       {
@@ -164,14 +164,14 @@ export const ActiveOrdersPanel = ({
         field: 'type',
         width: 130,
         valueFormatter: ({ value }: ValueFormatterParams<Order, Order['type']>) =>
-          formatOrderType((value as Order['type']) ?? "Dine-In"),
+          formatOrderType(value ?? 'here'),
       },
       {
         headerName: 'Creată la',
         field: 'timestamp',
         width: 190,
         valueFormatter: ({ value }: ValueFormatterParams<Order, Order['timestamp']>) =>
-          value ? formatTimestamp(String(value)) : 'ââ‚¬"',
+          value ? formatTimestamp(String(value)) : '—',
       },
       {
         headerName: 'Status',
@@ -209,7 +209,7 @@ export const ActiveOrdersPanel = ({
         valueFormatter: ({ data }: ValueFormatterParams<Order, Order['items']>) => {
           if (!data) return '';
           const items = parseOrderItems(data.items);
-          if (!items.length) return 'ââ‚¬"';
+          if (!items.length) return '—';
           return items
             .slice(0, 3)
             .map((item) => `${item.quantity}x ${item.name ?? 'Produs'}`)
@@ -226,8 +226,8 @@ export const ActiveOrdersPanel = ({
           const isPaid = Number(data.is_paid) === 1;
           return `
             <div class="orders-grid__row-actions">
-              <button type="button" data-action="details" title=""vezi detalii"">ðŸ‘ï¸</button>
-              ${!isPaid ? `<button type="button" data-action="mark-paid" title=""marcheaza ca achitata"">ðŸ’°</button>` : ''}
+              <button type="button" data-action="details" title="Vezi detalii">👁️</button>
+              ${!isPaid ? `<button type="button" data-action="mark-paid" title="Marchează ca achitată">💰</button>` : ''}
             </div>
           `;
         },
@@ -293,7 +293,7 @@ export const ActiveOrdersPanel = ({
         setProcessingVisit(null);
       }
     },
-    'onMarkVisitPaid',
+    [onMarkVisitPaid],
   );
 
   return (
@@ -365,11 +365,11 @@ export const ActiveOrdersPanel = ({
         </div>
 
         <div className="orders-filters__actions">
-          <button type="button" className="btn btn-primary" onClick={() => onApplyFilters()}>"aplicare filtre"</button>
-          <button type="button" className="btn btn-ghost" onClick={onResetFilters}>"Resetează"</button>
-          <button type="button" className="btn btn-ghost" onClick={() => onRefresh()}>"Reîmprospătează"</button>
+          <button type="button" className="btn btn-primary" onClick={() => onApplyFilters()}>Aplicare Filtre</button>
+          <button type="button" className="btn btn-ghost" onClick={onResetFilters}>Resetează</button>
+          <button type="button" className="btn btn-ghost" onClick={() => onRefresh()}>Reîmprospătează</button>
           <button type="button" className="btn btn-ghost" onClick={handleExport} disabled={exporting}>
-            {exporting ? 'Se exportăââ‚¬Â¦' : 'Export CSV'}
+            {exporting ? 'Se exportă...' : 'Export CSV'}
           </button>
           <div className="orders-filters__view-toggle" role="group" aria-label="mod afisare">
             <button
@@ -395,13 +395,13 @@ export const ActiveOrdersPanel = ({
           title="Comenzi totale"
           helper="Rezultate pentru filtrul curent"
           value={`${summary.totalOrders}`}
-          icon={<span>ðŸ“¦</span>}
+          icon={<span>📦</span>}
         />
         <StatCard
           title="valoare totala"
           helper="Suma comenzilor"
           value={formatCurrency(summary.totalAmount)}
-          icon={<span>ðŸ’°</span>}
+          icon={<span>💰</span>}
         />
         <StatCard
           title="Neachitate"
@@ -409,13 +409,13 @@ export const ActiveOrdersPanel = ({
           value={formatCurrency(summary.unpaidValue)}
           trendDirection={summary.unpaidOrders > 0 ? 'up' : 'flat'}
           trendLabel={summary.unpaidOrders > 0 ? 'Necesită acțiune' : 'OK'}
-          icon={<span>âš ï¸</span>}
+          icon={<span>⚠️</span>}
         />
         <StatCard
           title="Achitate"
           helper={`${summary.paidOrders} comenzi`}
           value={formatCurrency(summary.paidValue)}
-          icon={<span>[Check]</span>}
+          icon={<span>✅</span>}
         />
       </div>
 
@@ -452,19 +452,19 @@ export const ActiveOrdersPanel = ({
                     <header className="order-visit-card__header">
                       <div>
                         <h3>
-                          {visit.tableNumber !== null ? `Masa ${visit.tableNumber}` : 'La pachet'} Ã‚Â·' '
+                          {visit.tableNumber !== null ? `Masa ${visit.tableNumber}` : 'La pachet'} ·{' '}
                           {visit.clientIdentifier ?? 'Anonim'}
                         </h3>
                         <p>{formatOrderType(firstOrder?.type ?? 'here')}</p>
                       </div>
                       <span className={classNames('order-status-badge', visit.isPaid ? 'order-status-badge--paid' : 'order-status-badge--pending')}>
-                        {visit.isPaid ? 'ACHITATÄ‚' : 'NEACHITATÄ‚'}
+                        {visit.isPaid ? 'ACHITAT' : 'NEACHITAT'}
                       </span>
                     </header>
 
                     <div className="order-visit-card__times">
-                      <span>Prima comandă: {visit.firstTimestamp ? formatTimestamp(visit.firstTimestamp) : '"”'}</span>
-                      <span>Ultima comandă: {visit.lastTimestamp ? formatTimestamp(visit.lastTimestamp) : '"”'}</span>
+                      <span>Prima comandă: {visit.firstTimestamp ? formatTimestamp(visit.firstTimestamp) : '—'}</span>
+                      <span>Ultima comandă: {visit.lastTimestamp ? formatTimestamp(visit.lastTimestamp) : '—'}</span>
                     </div>
 
                     <div className="order-visit-card__items">
@@ -483,15 +483,15 @@ export const ActiveOrdersPanel = ({
 
                     {(visit.notes.food || visit.notes.drink || visit.notes.general) && (
                       <div className="order-visit-card__notes">
-                        {visit.notes.food ? <p>ðŸ½ï¸ {visit.notes.food}</p> : null}
-                        {visit.notes.drink ? <p>ðŸ¥¤ {visit.notes.drink}</p> : null}
-                        {visit.notes.general ? <p>ðŸ“ {visit.notes.general}</p> : null}
+                        {visit.notes.food ? <p>🍽️ {visit.notes.food}</p> : null}
+                        {visit.notes.drink ? <p>🥤 {visit.notes.drink}</p> : null}
+                        {visit.notes.general ? <p>📝 {visit.notes.general}</p> : null}
                       </div>
                     )}
 
                     <footer className="order-visit-card__footer">
                       <div className="order-visit-card__total">
-                        <span>"total vizita"</span>
+                        <span>Total Vizită</span>
                         <strong>{formatCurrency(visit.totalAmount)}</strong>
                       </div>
                       <div className="order-visit-card__actions">
@@ -501,7 +501,7 @@ export const ActiveOrdersPanel = ({
                           onClick={() => onSelectOrder(firstOrder)}
                           disabled={!firstOrder}
                         >
-                          ðŸ‘ï¸ Detalii
+                          👁️ Detalii
                         </button>
                         {!visit.isPaid ? (
                           <button
@@ -510,7 +510,7 @@ export const ActiveOrdersPanel = ({
                             onClick={() => handleMarkVisit(visit)}
                             disabled={processingVisit === visit.key}
                           >
-                            {processingVisit === visit.key ? 'Se procesează"¦' : 'ðŸ’° Marchează achitată'}
+                            {processingVisit === visit.key ? 'Se procesează...' : '💰 Marchează achitată'}
                           </button>
                         ) : null}
                       </div>

@@ -23,7 +23,7 @@ const formatQty = (value?: number) =>
 const palette = ['#2563eb', '#38bdf8', '#f97316', '#22c55e', '#6366f1', '#ec4899'];
 
 export const LotsPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [quickFilter, setQuickFilter] = useState('');
   const [selectedIngredientId, setSelectedIngredientId] = useState<number | null>(null);
   const [lotModalOpen, setLotModalOpen] = useState(false);
@@ -46,13 +46,13 @@ export const LotsPage = () => {
       { field: 'name', headerName: 'Ingredient', minWidth: 200, pinned: 'left' },
       { field: 'category', headerName: 'Categorie', minWidth: 160 },
       {
-        field: "Stoc Actual",
+        field: 'current_stock',
         headerName: 'Stoc',
         width: 120,
         valueFormatter: ({ value }) => formatQty(Number(value)),
       },
       {
-        field: "Stoc Minim",
+        field: 'min_stock',
         headerName: 'Minim',
         width: 110,
         valueFormatter: ({ value }) => formatQty(Number(value)),
@@ -116,7 +116,7 @@ export const LotsPage = () => {
         const min = Number(item.min_stock ?? 0);
         return current <= min;
       }).length,
-    'ingredientsData',
+    [ingredientsData],
   );
 
   const activeLots = batches.length;
@@ -127,7 +127,7 @@ export const LotsPage = () => {
         const diff = new Date(lot.expiry_date).getTime() - Date.now();
         return diff > 0 && diff <= 1000 * 60 * 60 * 24 * 5;
       }).length,
-    'batches',
+    [batches],
   );
 
   const receivingTrend = useMemo(() => {
@@ -198,7 +198,7 @@ export const LotsPage = () => {
       const lotId = selected[0]?.id ?? null;
       setSelectedBatchId(lotId);
     },
-    'setSelectedBatchId',
+    [setSelectedBatchId],
   );
 
   const handleLotGridReady = useCallback(
@@ -231,10 +231,10 @@ export const LotsPage = () => {
         <div className="lots-hero__info">
           <div className="lots-hero__labels">
             <span className="lots-chip lots-chip--primary">FIFO & trasabilitate ANSVSA</span>
-            <span className="lots-chip">"integrat cu receptii digitale"</span>
-            <span className="lots-chip">"documente haccp atasate"</span>
+            <span className="lots-chip">Integrat cu recepții digitale</span>
+            <span className="lots-chip">Documente HACCP atașate</span>
           </div>
-          <h2>Loturi și recepții "“ control complet pe lanțul rece</h2>
+          <h2>Loturi și recepții - control complet pe lanțul rece</h2>
           <p>
             Monitorizează recepțiile, temperaturile și documentele asociate fiecărui ingredient. Afișăm loturile active,
             serviciile de stoc FIFO și te ajutăm să identifici rapid expirările din următoarele zile.
@@ -243,36 +243,36 @@ export const LotsPage = () => {
 
         <div className="lots-hero__stats">
           <StatCard
-            title="ingrediente urmarite"
-            helper="ÃŽnregistrate în gestiune"
+            title="Ingrediente urmărite"
+            helper="Înregistrate în gestiune"
             value={`${totalIngredients}`}
             trendLabel="Sub minim"
             trendValue={`${belowMinStock}`}
             trendDirection={belowMinStock > 0 ? 'down' : 'up'}
-            icon={<span>ðŸ“¦</span>}
+            icon={<span>📦</span>}
           />
 
           <StatCard
             title="Loturi active"
             helper={selectedIngredient ? `Ingredient curent: ${selectedIngredient.name}` : 'Selectează un ingredient'}
             value={`${activeLots}`}
-            trendLabel="Expiră â‰¤5 zile"
+            trendLabel="Expiră ≤ 5 zile"
             trendValue={`${expiringSoon}`}
             trendDirection={expiringSoon > 0 ? 'down' : 'up'}
-            icon={<span>â±ï¸</span>}
+            icon={<span>⌛</span>}
           />
 
           <StatCard
-            title="documente atasate"
+            title="Documente atașate"
             helper="NIR + certificări furnizor"
             value={`${Math.max(activeLots - 1, 0)} documente`}
             trendLabel="Necesită validare"
             trendValue={expiringSoon > 0 ? `${expiringSoon}` : '0'}
             trendDirection={expiringSoon > 0 ? 'flat' : 'up'}
-            icon={<span>ðŸ“‘</span>}
+            icon={<span>📄</span>}
             footer={
               <button type="button" className="lots-link-button">
-                Deschide manager documente â†’
+                Deschide manager documente →
               </button>
             }
           />
@@ -303,7 +303,7 @@ export const LotsPage = () => {
               {supplierDistribution.length === 0 ? (
                 <li>
                   <span style={{ backgroundColor: '#94a3b8' }} aria-hidden="true" />
-                  <span>"fara date disponibile"</span>
+                  <span>Fără date disponibile</span>
                   <strong>100%</strong>
                 </li>
               ) : (
@@ -328,21 +328,21 @@ export const LotsPage = () => {
           <TableFilter
             value={quickFilter}
             onChange={setQuickFilter}
-            placeholder="cauta ingredient dupa nume categorie furnizor sau "
+            placeholder="Caută ingredient după nume, categorie sau furnizor..."
             aria-label="Filtru rapid loturi"
           />
           <label className="lots-toggle">
-            <input type="checkbox" />"afiseaza doar ingrediente sub minim"</label>
+            <input type="checkbox" />Afișează doar ingrediente sub minim</label>
         </div>
         <div className="lots-toolbar__actions">
           <button type="button" className="lots-btn lots-btn--ghost" onClick={() => refetchIngredients()}>
-            âŸ³ Reîmprospătează ingrediente
+            🔄 Reîmprospătează ingrediente
           </button>
           <button type="button" className="lots-btn lots-btn--ghost" onClick={() => refreshLots()}>
-            âŸ³ Reîmprospătează loturi
+            🔄 Reîmprospătează loturi
           </button>
           <button type="button" className="lots-btn lots-btn--primary" onClick={handleAddLot} disabled={!selectedIngredientId}>
-            âž• Creează recepție
+            ➕ Creează recepție
           </button>
         </div>
       </section>
@@ -351,10 +351,10 @@ export const LotsPage = () => {
         <section className="lots-grid__panel">
           <header>
             <div>
-              <h3>"ingrediente urmarite"</h3>
-              <p>{`${totalIngredients} ingrediente Â· ${belowMinStock} sub minimul de siguranță`}</p>
+              <h3>Ingrediente urmărite</h3>
+              <p>{`${totalIngredients} ingrediente • ${belowMinStock} sub minimul de siguranță`}</p>
             </div>
-            <button type="button" className="lots-btn lots-btn--outline">"export lista ingrediente"</button>
+            <button type="button" className="lots-btn lots-btn--outline">Export listă ingrediente</button>
           </header>
 
           {ingredientsError ? <InlineAlert type="error" message={ingredientsError} /> : null}
@@ -390,7 +390,7 @@ export const LotsPage = () => {
               <button type="button" className="lots-btn lots-btn--outline">
                 Export loturi CSV
               </button>
-              <button type="button" className="lots-btn lots-btn--outline">"ataseaza document"</button>
+              <button type="button" className="lots-btn lots-btn--outline">Atașează document</button>
             </div>
           </header>
 
@@ -419,22 +419,22 @@ export const LotsPage = () => {
       <section className="lots-secondary">
         <article className="lots-secondary__card">
           <header>
-            <span>"checklist receptie"</span>
+            <span>Checklist recepție</span>
             <button type="button" className="lots-link-button">
-              Deschide șablon HACCP â†’
+              Deschide șablon HACCP →
             </button>
           </header>
           <ul>
             <li>
-              <strong>"temperatura corecta"</strong>
+              <strong>Temperatură corectă</strong>
               <span>3 loturi în verificare</span>
             </li>
             <li>
-              <strong>"documente veterinare"</strong>
+              <strong>Documente veterinare</strong>
               <span>2 documente expiră în 7 zile</span>
             </li>
             <li>
-              <strong>"trasabilitate completa"</strong>
+              <strong>Trasabilitate completă</strong>
               <span>Loturi mapate 100%</span>
             </li>
           </ul>
@@ -442,9 +442,9 @@ export const LotsPage = () => {
 
         <article className="lots-secondary__card">
           <header>
-            <span>"automatizari receptii"</span>
+            <span>Automatizări recepții</span>
             <button type="button" className="lots-link-button">
-              Configurează alerte â†’
+              Configurează alerte →
             </button>
           </header>
           <ul>
@@ -454,10 +454,10 @@ export const LotsPage = () => {
             </li>
             <li>
               <strong>Integrare furnizor</strong>
-              <span>"upload facturi pdf automat"</span>
+              <span>Upload facturi PDF automat</span>
             </li>
             <li>
-              <strong>"sync cu contabilitate"</strong>
+              <strong>Sync cu contabilitate</strong>
               <span>Export zilnic 02:00</span>
             </li>
           </ul>

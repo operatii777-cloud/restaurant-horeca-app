@@ -68,7 +68,7 @@ async function autoSegment(req, res, next) {
 
     // Șterge segmentele existente
     await new Promise((resolve, reject) => {
-      db.run('DELETE FROM marketing_segments WHERE 1=1', [], function(err) {
+      db.run('DELETE FROM marketing_segments WHERE 1=1', [], function (err) {
         if (err) reject(err);
         else resolve({ lastID: this.lastID, changes: this.changes });
       });
@@ -88,7 +88,7 @@ async function autoSegment(req, res, next) {
           `INSERT INTO marketing_segments (name, description, criteria, last_calculated) 
            VALUES (?, ?, ?, datetime('now'))`,
           [segment.name, segment.description, JSON.stringify(segment.criteria)],
-          function(err) {
+          function (err) {
             if (err) reject(err);
             else resolve({ lastID: this.lastID, changes: this.changes });
           }
@@ -133,7 +133,7 @@ async function autoSegment(req, res, next) {
             `INSERT OR REPLACE INTO marketing_segment_customers (segment_id, customer_token, order_count, last_order_date, first_order_date)
              VALUES (?, ?, ?, ?, ?)`,
             [segmentId, customer.customer_token, customer.order_count, customer.last_order_date, customer.first_order_date],
-            function(err) {
+            function (err) {
               if (err) reject(err);
               else resolve({ lastID: this.lastID, changes: this.changes });
             }
@@ -143,8 +143,11 @@ async function autoSegment(req, res, next) {
     }
 
     // Actualizează numărul de clienți pentru fiecare segment
+    // Si pregătește listele pentru Auto-Pilot
+    const segmentCustomersMap = {};
+
     for (const [name, id] of Object.entries(segmentIds)) {
-      const count = await new Promise((resolve, reject) => {
+      const countData = await new Promise((resolve, reject) => {
         db.get(
           `SELECT COUNT(*) as count FROM marketing_segment_customers WHERE segment_id = ?`,
           [id],
@@ -154,11 +157,24 @@ async function autoSegment(req, res, next) {
           }
         );
       });
+
+      // Fetch customers for Auto-Pilot triggers
+      if (['VIP Customers', 'New Customers'].includes(name)) {
+        const segmentCustomers = await new Promise((resolve, reject) => {
+          db.all(
+            `SELECT * FROM marketing_segment_customers WHERE segment_id = ? LIMIT 50`, // Safety limit
+            [id],
+            (err, rows) => err ? reject(err) : resolve(rows || [])
+          );
+        });
+        segmentCustomersMap[name] = segmentCustomers;
+      }
+
       await new Promise((resolve, reject) => {
         db.run(
           `UPDATE marketing_segments SET customer_count = ? WHERE id = ?`,
-          [count.count, id],
-          function(err) {
+          [countData.count, id],
+          function (err) {
             if (err) reject(err);
             else resolve({ lastID: this.lastID, changes: this.changes });
           }
@@ -166,9 +182,42 @@ async function autoSegment(req, res, next) {
       });
     }
 
+    // --- AUTO-PILOT INTEGRATION ---
+    try {
+      // Ensure communications table exists
+      await db.run(`
+            CREATE TABLE IF NOT EXISTS marketing_communications (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                customer_token TEXT,
+                channel TEXT,
+                campaign_name TEXT,
+                status TEXT,
+                sent_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                metadata TEXT
+            )
+        `);
+
+      // Trigger Execution Service
+      const marketingExecutionService = require('./marketing-execution.service');
+
+      // Trigger for VIPs
+      if (segmentCustomersMap['VIP Customers']?.length > 0) {
+        await marketingExecutionService.triggerAutoPilot('VIP Customers', segmentCustomersMap['VIP Customers']);
+      }
+
+      // Trigger for New Customers
+      if (segmentCustomersMap['New Customers']?.length > 0) {
+        await marketingExecutionService.triggerAutoPilot('New Customers', segmentCustomersMap['New Customers']);
+      }
+
+    } catch (autoPilotError) {
+      console.error('⚠️ Auto-Pilot Failed (Segmentation was successful):', autoPilotError);
+    }
+    // ------------------------------
+
     res.json({
       success: true,
-      message: `Segmentare completată: ${totalCustomers} clienți segmentați`,
+      message: `Segmentare completată: ${totalCustomers} clienți segmentați. Auto-Pilot activat (Simulare).`,
       total_customers: totalCustomers,
       segments: {
         vip_count: vipCount,
@@ -190,7 +239,7 @@ async function autoSegment(req, res, next) {
 async function getSegments(req, res, next) {
   try {
     const db = await dbPromise;
-    
+
     // Verifică dacă tabela există
     const tableExists = await new Promise((resolve, reject) => {
       db.get(
@@ -297,7 +346,7 @@ async function getSegmentCustomers(req, res, next) {
 async function getCampaigns(req, res, next) {
   try {
     const db = await dbPromise;
-    
+
     // Verifică dacă tabela există
     const tableExists = await new Promise((resolve, reject) => {
       db.get(
@@ -378,7 +427,7 @@ async function createCampaign(req, res, next) {
         `INSERT INTO marketing_campaigns (name, type, start_date, end_date, status, statistics, created_at)
          VALUES (?, ?, ?, ?, ?, ?, datetime('now'))`,
         [name, type, start_date, end_date, status, JSON.stringify({})],
-        function(err) {
+        function (err) {
           if (err) reject(err);
           else resolve({ lastID: this.lastID, changes: this.changes });
         }

@@ -82,7 +82,7 @@ interface TimeTrendItem {
 }
 
 export const SalesReportsPage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<string>('detailed');
   const [loading, setLoading] = useState(false);
   const [startDate, setStartDate] = useState(() => {
@@ -139,7 +139,7 @@ export const SalesReportsPage: React.FC = () => {
   const loadSalesDetailed = async () => {
     const params: any = { startDate, endDate };
     if (category) params.category = category;
-    
+
     const response = await httpClient.get('/api/admin/reports/sales-detailed', { params });
     if (response.data) {
       setSalesDetailed(Array.isArray(response.data) ? response.data : response.data.data || []);
@@ -328,8 +328,8 @@ export const SalesReportsPage: React.FC = () => {
   return (
     <div className="sales-reports-page">
       <div className="page-header">
-        <h1>ðŸ“Š Rapoarte Vânzări</h1>
-        <p>"rapoarte detaliate despre vanzari profitabilitate "</p>
+        <h1>📊 Rapoarte Vânzări</h1>
+        <p>Rapoarte detaliate despre vânzări și profitabilitate</p>
       </div>
 
       {error && (
@@ -362,7 +362,7 @@ export const SalesReportsPage: React.FC = () => {
               <Col md={3}>
                 <Form.Label>Categorie</Form.Label>
                 <Form.Select value={category} onChange={(e) => setCategory(e.target.value)}>
-                  <option value="">"toate categoriile"</option>
+                  <option value="">Toate categoriile</option>
                   <option value="aperitive">Aperitive</option>
                   <option value="ciorbe">Ciorbe</option>
                   <option value="salate">Salate</option>
@@ -399,10 +399,10 @@ export const SalesReportsPage: React.FC = () => {
 
       {/* Tabs */}
       <Tabs activeKey={activeTab} onSelect={(k) => k && setActiveTab(k)} className="mb-4">
-        <Tab eventKey="detailed" title='ðŸ“‹ vanzari detaliate'>
+        <Tab eventKey="detailed" title='📋 Vânzări detaliate'>
           <Card>
             <Card.Header className="d-flex justify-content-between align-items-center">
-              <h5 className="mb-0">"raport vanzari detaliate"</h5>
+              <h5 className="mb-0">Raport vânzări detaliate</h5>
               <Badge bg="info">{salesDetailed.length} înregistrări</Badge>
             </Card.Header>
             <Card.Body>
@@ -434,8 +434,8 @@ export const SalesReportsPage: React.FC = () => {
                       <tr key={`${item.order_id}-index`}>
                         <td>{item.order_id}</td>
                         <td>{formatDate(item.timestamp)}</td>
-                        <td>{item.table_number || '"”'}</td>
-                        <td>{item.client_identifier || '"”'}</td>
+                        <td>{item.table_number || '-'}</td>
+                        <td>{item.client_identifier || '-'}</td>
                         <td>{item.product_name}</td>
                         <td>{item.category}</td>
                         <td>{item.quantity}</td>
@@ -450,7 +450,7 @@ export const SalesReportsPage: React.FC = () => {
           </Card>
         </Tab>
 
-        <Tab eventKey="profitability" title="ðŸ’° Profitabilitate">
+        <Tab eventKey="profitability" title="💰 Profitabilitate">
           <Card>
             <Card.Header className="d-flex justify-content-between align-items-center">
               <h5 className="mb-0">Raport Profitabilitate Produse</h5>
@@ -521,10 +521,10 @@ export const SalesReportsPage: React.FC = () => {
           </Card>
         </Tab>
 
-        <Tab eventKey="customer-behavior" title='ðŸ‘¥ comportament clienti'>
+        <Tab eventKey="customer-behavior" title='👥 Comportament clienți'>
           <Card>
             <Card.Header className="d-flex justify-content-between align-items-center">
-              <h5 className="mb-0">"raport comportament clienti"</h5>
+              <h5 className="mb-0">Raport comportament clienți</h5>
               {customerBehaviorSummary && (
                 <Badge bg="info">
                   {customerBehaviorSummary.totalCustomers} clienți analizați
@@ -563,9 +563,9 @@ export const SalesReportsPage: React.FC = () => {
                       <Col md={4}>
                         <Card className="text-center">
                           <Card.Body>
-                            <h6>"top spender"</h6>
+                            <h6>Top cheltuitor</h6>
                             <h6 className="text-muted">
-                              {customerBehaviorSummary.topSpender?.client_identifier || '"”'}
+                              {customerBehaviorSummary.topSpender?.client_identifier || '-'}
                             </h6>
                             <p className="mb-0">
                               {formatCurrency(customerBehaviorSummary.topSpender?.total_spent || 0)}
@@ -584,8 +584,8 @@ export const SalesReportsPage: React.FC = () => {
                         <th>Valoare Medie Comandă</th>
                         <th>Zile Vizitate</th>
                         <th>Diversitate Categorii</th>
-                        <th>"prima comanda"</th>
-                        <th>"ultima comanda"</th>
+                        <th>Prima comandă</th>
+                        <th>Ultima comandă</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -609,7 +609,7 @@ export const SalesReportsPage: React.FC = () => {
           </Card>
         </Tab>
 
-        <Tab eventKey="time-trends" title="ðŸ“ˆ Trend-uri Temporale">
+        <Tab eventKey="time-trends" title="📈 Trend-uri Temporale">
           <Card>
             <Card.Header className="d-flex justify-content-between align-items-center">
               <h5 className="mb-0">Raport Trend-uri Temporale</h5>

@@ -21,7 +21,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import './FoodCostDashboardPage.css';
 
 export const FoodCostDashboardPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [period, setPeriod] = useState<'today' | 'week' | 'month'>('month');
 
   // Calculează datele pentru perioada selectată
@@ -52,7 +52,7 @@ export const FoodCostDashboardPage = () => {
       dateFrom: dateRange.dateFrom,
       dateTo: dateRange.dateTo,
     }),
-    'dateRange'
+    [dateRange]
   );
 
   const { data: dailyData, chartData, kpiBlocks, loading: dailyLoading, refetch: refetchDaily } =
@@ -112,38 +112,38 @@ export const FoodCostDashboardPage = () => {
     <div className="food-cost-dashboard-page">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <PageHeader
-          title="ðŸ’¹ Food Cost Dashboard"
+          title="📊 Food Cost Dashboard"
           description="Analiză costuri alimentare în timp real cu S13 COGS Engine"
         />
         <HelpButton
           title="Ajutor - Food Cost Dashboard"
           content={
             <div>
-              <h5>ðŸ’¹ Ce este Food Cost Dashboard?</h5>
+              <h5>📊 Ce este Food Cost Dashboard?</h5>
               <p>
-                Food Cost Dashboard oferă o analiză completă a costurilor alimentare în timp real, 
+                Food Cost Dashboard oferă o analiză completă a costurilor alimentare în timp real,
                 folosind S13 COGS Engine pentru calcularea precisă a costurilor.
               </p>
-              <h5 className="mt-4">ðŸ“Š KPIs disponibile</h5>
+              <h5 className="mt-4">📈 KPIs disponibile</h5>
               <ul>
                 <li><strong>Food Cost %</strong> - Procentul costurilor alimentare față de vânzări</li>
                 <li><strong>Profit Margin</strong> - Marja de profit</li>
                 <li><strong>Contribution Margin</strong> - Marja de contribuție</li>
                 <li><strong>Target vs Actual</strong> - Comparație între țintă și realitate</li>
               </ul>
-              <h5 className="mt-4">ðŸ“ˆ Grafice disponibile</h5>
+              <h5 className="mt-4">📉 Grafice disponibile</h5>
               <ul>
                 <li><strong>Trend Food Cost (30 Zile)</strong> - Evoluția food cost-ului pe ultimele 30 de zile</li>
                 <li><strong>Distribuție pe Categorii</strong> - Analiză profitabilitate pe categorii de produse</li>
               </ul>
-              <h5 className="mt-4">ðŸ“… Perioade disponibile</h5>
+              <h5 className="mt-4">📅 Perioade disponibile</h5>
               <ul>
-                <li><strong>"Astăzi"</strong> - Analiză pentru ziua curentă</li>
+                <li><strong>Astăzi</strong> - Analiză pentru ziua curentă</li>
                 <li><strong>Ultimele 7 Zile</strong> - Analiză pentru ultima săptămână</li>
-                <li><strong>"luna curenta"</strong> - Analiză pentru luna curentă</li>
+                <li><strong>Luna Curentă</strong> - Analiză pentru luna curentă</li>
               </ul>
               <div className="alert alert-info mt-4">
-                <strong>ðŸ’¡ Sfat:</strong> Food Cost-ul ideal pentru restaurante este între 25-35%. 
+                <strong>💡 Sfat:</strong> Food Cost-ul ideal pentru restaurante este între 25-35%.
                 Monitorizează regulat pentru a identifica oportunități de optimizare.
               </div>
             </div>
@@ -158,20 +158,19 @@ export const FoodCostDashboardPage = () => {
             <Button
               variant={period === 'today' ? 'primary' : 'outline-primary'}
               onClick={() => setPeriod('today')}
-            >"Astăzi"</Button>
+            >Astăzi</Button>
             <Button
               variant={period === 'week' ? 'primary' : 'outline-primary'}
               onClick={() => setPeriod('week')}
             >
               Ultimele 7 Zile
             </Button>
-            <Button
-              variant={period === 'month' ? 'primary' : 'outline-primary'}
-              onClick={() => setPeriod('month')}
-            >"luna curenta"</Button>
+            <Button variant={period === 'month' ? 'primary' : 'outline-primary'} onClick={() => setPeriod('month')}>
+              Luna Curentă
+            </Button>
           </div>
           <Button variant="outline-secondary" onClick={handleRefresh} disabled={loading}>
-            <i className={`fas ${loading ? 'fa-spinner fa-spin' : 'fa-sync-alt'} me-1`}></i>"Reîncarcă"</Button>
+            <i className={`fas ${loading ? 'fa-spinner fa-spin' : 'fa-sync-alt'} me-1`}></i>Reîncarcă</Button>
         </Card.Header>
       </Card>
 
@@ -188,7 +187,7 @@ export const FoodCostDashboardPage = () => {
               >
                 {periodKpi.foodCost.toFixed(1)}%
               </h3>
-              <small className="text-muted">"medie perioada"</small>
+              <small className="text-muted">Medie perioadă</small>
             </Card.Body>
           </Card>
         </Col>
@@ -224,7 +223,7 @@ export const FoodCostDashboardPage = () => {
             <Card.Body>
               <h6 className="text-muted mb-2">Ticket Mediu</h6>
               <h3>{periodKpi.avgTicket.toFixed(2)} RON</h3>
-              <small className="text-muted">"per zi"</small>
+              <small className="text-muted">Per zi</small>
             </Card.Body>
           </Card>
         </Col>
@@ -260,7 +259,7 @@ export const FoodCostDashboardPage = () => {
           <ProfitabilityAlertCard alerts={alerts} loading={loading} maxAlerts={10} />
         </Col>
       </Row>
-    </div>
+    </div >
   );
 };
 

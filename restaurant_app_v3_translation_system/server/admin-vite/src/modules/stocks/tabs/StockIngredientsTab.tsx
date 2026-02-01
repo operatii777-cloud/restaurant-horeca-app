@@ -49,11 +49,11 @@ interface StockCurrentCellProps {
 }
 
 const StockCurrentCell: React.FC<StockCurrentCellProps> = ({ params, onAdjust }) => {
-  if (!params.data) return <span>ââ‚¬"</span>;
-  
+  if (!params.data) return <span>-</span>;
+
   const stockValue = formatNumber(Number(params.data.current_stock ?? 0));
   const unit = params.data.unit || '';
-  
+
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'space-between' }}>
       <span style={{ flex: 1 }}>{stockValue} {unit}</span>
@@ -76,14 +76,14 @@ const StockCurrentCell: React.FC<StockCurrentCellProps> = ({ params, onAdjust })
           flexShrink: 0,
         }}
       >
-        âÅ“ÂÃ¯Â¸Â
+        📝
       </button>
     </div>
   );
 };
 
 export const StockIngredientsTab = ({ onSummary, onFeedback }: StockIngredientsTabProps) => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const { data, loading, error, refetch } = useApiQuery<Ingredient[]>('/api/ingredients');
   const ingredients = useMemo<IngredientStockItem[]>(() => {
     // useApiQuery extrage deja data din { success: true, data: [...] }
@@ -98,8 +98,8 @@ export const StockIngredientsTab = ({ onSummary, onFeedback }: StockIngredientsT
       // Fallback: dacă data este { ingredients: [...] }
       result = (data as any).ingredients;
     }
-    console.log('StockIngredientsTab Ingredients data:', { 
-      rawData: data, 
+    console.log('StockIngredientsTab Ingredients data:', {
+      rawData: data,
       isArray: Array.isArray(data),
       resultLength: result.length,
       firstItem: result[0]
@@ -111,7 +111,7 @@ export const StockIngredientsTab = ({ onSummary, onFeedback }: StockIngredientsT
     ingredients.map((ingredient) => {
       const current = Number(ingredient.current_stock ?? 0);
       const minimum = Number(ingredient.min_stock ?? 0);
-      let stockStatus: IngredientStockItem["Status Stoc"] = ingredient.stock_status;
+      let stockStatus: IngredientStockItem["stock_status"] = ingredient.stock_status;
 
       if (!stockStatus) {
         if (minimum <= 0 && current > 0) {
@@ -132,7 +132,7 @@ export const StockIngredientsTab = ({ onSummary, onFeedback }: StockIngredientsT
         stock_status: stockStatus,
       };
     }),
-    'ingredients',
+    [ingredients],
   );
 
   const [quickFilter, setQuickFilter] = useState('');
@@ -186,7 +186,7 @@ export const StockIngredientsTab = ({ onSummary, onFeedback }: StockIngredientsT
       },
       {
         headerName: 'Stoc curent',
-        field: "Stoc Actual",
+        field: 'current_stock' as any,
         width: 200,
         cellRenderer: (params: ICellRendererParams<IngredientStockItem>) => {
           return React.createElement(StockCurrentCell, {
@@ -200,13 +200,13 @@ export const StockIngredientsTab = ({ onSummary, onFeedback }: StockIngredientsT
       },
       {
         headerName: 'Stoc minim',
-        field: "Stoc Minim",
+        field: 'min_stock' as any,
         width: 140,
         valueFormatter: ({ value }) => formatNumber(Number(value)),
       },
       {
         headerName: 'Cost/unitate',
-        field: "Cost/Unitate",
+        field: 'cost_per_unit' as any,
         width: 150,
         valueFormatter: ({ value }) => (value === null || value === undefined ? '-' : `${Number(value).toFixed(2)} RON`),
       },
@@ -245,13 +245,17 @@ export const StockIngredientsTab = ({ onSummary, onFeedback }: StockIngredientsT
       },
       {
         headerName: 'Status stoc',
-        field: "Status Stoc",
+        field: 'stock_status' as any,
         width: 140,
-        valueGetter: ({ data }: { data?: IngredientStockItem | null }) => data?.stock_status ?? 'ââ‚¬"',
+        valueGetter: ({ data }: { data?: IngredientStockItem | null }) => data?.stock_status ?? '-',
         cellRenderer: ({ value }: ICellRendererParams<IngredientStockItem>) => {
-          if (!value) return 'ââ‚¬"';
+          if (!value) return '-';
           const label = value === 'out' ? 'Epuizat' : value === 'low' ? 'Scăzut' : value === 'critical' ? 'Critic' : 'OK';
-          return `<span class="stock-ingredients__badge stock-ingredients__badge--${value}">${label}</span>`;
+          return (
+            <span className={`stock-ingredients__badge stock-ingredients__badge--${value}`}>
+              {label}
+            </span>
+          );
         },
       },
       {
@@ -267,7 +271,7 @@ export const StockIngredientsTab = ({ onSummary, onFeedback }: StockIngredientsT
           const actions: GridAction[] = [
             {
               label: 'Vizualizează',
-              icon: 'ðŸ‘ï¸',
+              icon: '👁️',
               onClick: () => {
                 setDetailsIngredient(params.data!);
                 setDetailsOpen(true);
@@ -275,7 +279,7 @@ export const StockIngredientsTab = ({ onSummary, onFeedback }: StockIngredientsT
             },
             {
               label: 'Editează',
-              icon: 'âœï¸',
+              icon: '📝',
               onClick: () => {
                 setEditingIngredient(params.data!);
                 setEditorOpen(true);
@@ -283,15 +287,15 @@ export const StockIngredientsTab = ({ onSummary, onFeedback }: StockIngredientsT
             },
             {
               label: 'Ajustează stoc',
-              icon: 'âš–ï¸',
+              icon: '⚖️',
               onClick: () => {
                 setAdjustIngredient(params.data!);
                 setAdjustOpen(true);
               },
             },
             {
-              label: 'È˜terge',
-              icon: 'ðŸ—‘ï¸',
+              label: 'Șterge',
+              icon: '🗑️',
               variant: 'danger',
               onClick: () => {
                 if (window.confirm(`Ești sigur că vrei să ștergi ingredientul "${params.data!.name}"?`)) {
@@ -362,11 +366,11 @@ export const StockIngredientsTab = ({ onSummary, onFeedback }: StockIngredientsT
 
   const filteredIngredients = useMemo(() => {
     let filtered = decoratedIngredients;
-    
+
     if (filterCategory !== 'all') {
       filtered = filtered.filter((item) => item.category === filterCategory);
     }
-    
+
     if (filterStatus !== 'all') {
       filtered = filtered.filter((item) => {
         if (filterStatus === 'active') return !isTrue(item.is_hidden);
@@ -376,7 +380,7 @@ export const StockIngredientsTab = ({ onSummary, onFeedback }: StockIngredientsT
         return true;
       });
     }
-    
+
     return filtered;
   }, [decoratedIngredients, filterCategory, filterStatus]);
 
@@ -413,8 +417,8 @@ export const StockIngredientsTab = ({ onSummary, onFeedback }: StockIngredientsT
       className="excel-button excel-button--primary"
       onClick={handleAddIngredient}
     >
-      <span>âÅ¾"¢</span>
-      <span>"adauga ingredient"</span>
+      <span>➕</span>
+      <span>Adaugă ingredient</span>
     </button>
   );
 
@@ -432,7 +436,7 @@ export const StockIngredientsTab = ({ onSummary, onFeedback }: StockIngredientsT
         onChange={(e) => setFilterCategory(e.target.value)}
         className="excel-dropdown"
       >
-        <option value="all">"toate categoriile"</option>
+        <option value="all">Toate categoriile</option>
         {categories.map((c) => (
           <option key={c} value={c}>
             {c}
@@ -444,10 +448,10 @@ export const StockIngredientsTab = ({ onSummary, onFeedback }: StockIngredientsT
         onChange={(e) => setFilterStatus(e.target.value)}
         className="excel-dropdown"
       >
-        <option value="all">"Toate"</option>
+        <option value="all">Toate</option>
         <option value="active">Doar active</option>
-        <option value="hidden">"Ascunse"</option>
-        <option value="low">"stoc scazut"</option>
+        <option value="hidden">Ascunse</option>
+        <option value="low">Stoc scăzut</option>
         <option value="out">Epuizate</option>
       </select>
       <button
@@ -515,7 +519,7 @@ export const StockIngredientsTab = ({ onSummary, onFeedback }: StockIngredientsT
               }}
             />
           ) : (
-            <div style={{ padding: '40px', textAlign: 'center', color: '#6b7280' }}>"nu exista ingrediente care sa corespunda filtrelor"</div>
+            <div style={{ padding: '40px', textAlign: 'center', color: '#6b7280' }}>Nu există ingrediente care să corespundă filtrelor</div>
           )}
         </div>
       </ExcelPageLayout>

@@ -1,11 +1,72 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+
+import { KioskPaymentsModal } from '../components/KioskPaymentsModal';
 import { Card, Button, Badge, Modal, Spinner, Alert, InputGroup, FormControl } from 'react-bootstrap';
-import { 
-  ShoppingCart, Plus, Minus, Trash2, CreditCard, 
-  ChefHat, Clock, Check, X, ArrowLeft, Search
+import {
+  ShoppingCart, Plus, Minus, Trash2, CreditCard,
+  ChefHat, Clock, Check, X, ArrowLeft, Search, Bike, Globe, Smartphone, User, Home, Truck
 } from 'lucide-react';
 import { useHappyHour } from '../hooks/useHappyHour';
 import './KioskSelfServicePage.css';
+
+// Unified platform/source badge logic (matches legacy UIs)
+const getPlatformBadge = (platform, orderSource, type) => {
+  // Normalize platform/source
+  const src = (orderSource || platform || '').toUpperCase();
+  let label = src;
+  let icon = null;
+  if (src.includes('KIOSK')) {
+    label = 'KIOSK';
+    icon = <Smartphone size={16} style={{ marginRight: 4 }} />;
+  } else if (src.includes('POS')) {
+    label = 'POS';
+    icon = <User size={16} style={{ marginRight: 4 }} />;
+  } else if (src.includes('RESTORAPP')) {
+    label = 'RESTORAPP';
+    icon = <Smartphone size={16} style={{ marginRight: 4 }} />;
+  } else if (src.includes('SUPERVISOR')) {
+    label = 'SUPERVISOR';
+    icon = <User size={16} style={{ marginRight: 4 }} />;
+  } else if (src.includes('QR')) {
+    label = 'QR';
+    icon = <Globe size={16} style={{ marginRight: 4 }} />;
+  } else if (src.includes('GLOVO')) {
+    label = 'GLOVO';
+    icon = <Bike size={16} style={{ marginRight: 4 }} />;
+  } else if (src.includes('WOLT')) {
+    label = 'WOLT';
+    icon = <Bike size={16} style={{ marginRight: 4 }} />;
+  } else if (src.includes('UBER')) {
+    label = 'UBER EATS';
+    icon = <Bike size={16} style={{ marginRight: 4 }} />;
+  } else if (src.includes('BOLT')) {
+    label = 'BOLT';
+    icon = <Bike size={16} style={{ marginRight: 4 }} />;
+  } else if (src.includes('TAZZ')) {
+    label = 'TAZZ';
+    icon = <Bike size={16} style={{ marginRight: 4 }} />;
+  } else if (src.includes('FRIENDSRIDE')) {
+    label = 'FRIENDSRIDE';
+    icon = <Truck size={16} style={{ marginRight: 4 }} />;
+  }
+  // Serving mode
+  let serving = '';
+  if (type === 'dine_in' || type === 'restaurant') serving = 'RESTAURANT';
+  else if (type === 'takeout' || type === 'takeaway') serving = 'ACASĂ';
+  else if (type === 'delivery') serving = 'LIVRARE';
+  return (
+    <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginLeft: 16 }}>
+      <Badge bg="info" style={{ fontSize: '0.85rem', fontWeight: 600, display: 'flex', alignItems: 'center', padding: '6px 10px', letterSpacing: '0.5px' }}>
+        {icon}{label}
+      </Badge>
+      {serving && (
+        <Badge bg="secondary" style={{ fontSize: '0.85rem', fontWeight: 600, padding: '6px 10px', letterSpacing: '0.5px' }}>
+          {serving}
+        </Badge>
+      )}
+    </div>
+  );
+};
 
 /**
  * KioskSelfServicePage - Self-Service Ordering Kiosk
@@ -18,6 +79,10 @@ import './KioskSelfServicePage.css';
  * - Daily Offer, Daily Menu, Happy Hour (like comanda.html)
  */
 export const KioskSelfServicePage = () => {
+  // Order type selection modal
+  const [showOrderTypeModal, setShowOrderTypeModal] = useState(true);
+  const [orderType, setOrderType] = useState(''); // 'restaurant' | 'takeaway'
+  const [showThankYou, setShowThankYou] = useState(false);
   const [allProducts, setAllProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -27,11 +92,17 @@ export const KioskSelfServicePage = () => {
   const [showCart, setShowCart] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [orderNumber, setOrderNumber] = useState(null);
+  const [paymentOrderId, setPaymentOrderId] = useState(null); // id real din backend pentru plată
   const [dailyOffer, setDailyOffer] = useState(null);
   const [dailyMenu, setDailyMenu] = useState(null);
   const [dailyMenuData, setDailyMenuData] = useState(null); // Full daily menu data (soup + mainCourse)
   const [currentDailyOfferData, setCurrentDailyOfferData] = useState(null);
   const [dailyOfferSelections, setDailyOfferSelections] = useState({ conditions: [], benefits: [] });
+
+  // Modal plată
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [pendingOrder, setPendingOrder] = useState(null); // { items, total }
+  const [paymentCompleted, setPaymentCompleted] = useState(false);
 
   // Get active happy hour with periodic refresh (every 60 seconds)
   const { activeHappyHour, calculateDiscounts, discounts } = useHappyHour();
@@ -40,13 +111,13 @@ export const KioskSelfServicePage = () => {
   const loadMenu = useCallback(async () => {
     try {
       setLoading(true);
-      
+
       // Use the same endpoint as comanda.html
       const response = await fetch('/api/menu/all');
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const data = await response.json();
       console.log('📦 Menu data received:', {
         success: data.success,
@@ -54,15 +125,15 @@ export const KioskSelfServicePage = () => {
         productsLength: data.products?.length,
         menuLength: data.menu?.length,
       });
-      
+
       // Extract products from data (same logic as comanda.html)
       const menuItems = data.data || data.products || data.menu || [];
       setAllProducts(menuItems);
-      
+
       // Extract unique categories from products (for filtering)
       const allAvailableCategories = [...new Set(menuItems.map(item => item.category || item.category_name || ''))]
         .filter(cat => cat && cat.trim() !== '');
-      
+
       // Add special categories (Oferta Zilei, Meniul Zilei)
       const specialCategories = [];
       console.log('🔍 Checking special categories:', {
@@ -72,14 +143,14 @@ export const KioskSelfServicePage = () => {
         dailyMenu: data.daily_menu,
         hasHappyHour: !!(data.happy_hour && data.happy_hour.active)
       });
-      
+
       // Always add "Oferta Zilei" if daily_offer exists (even if benefit_category is null)
       if (data.daily_offer && data.daily_offer.id) {
         specialCategories.push('Oferta Zilei');
         setDailyOffer(data.daily_offer);
         console.log('✅ Added "Oferta Zilei" to special categories');
       }
-      
+
       // Always add "Meniul Zilei" (even if no menu is set for today)
       specialCategories.push('Meniul Zilei');
       if (data.daily_menu && data.daily_menu.id) {
@@ -89,11 +160,11 @@ export const KioskSelfServicePage = () => {
         setDailyMenu(null);
         console.log('✅ Added "Meniul Zilei" to special categories (no menu for today)');
       }
-      
+
       // Note: Happy hour is now managed by useHappyHour hook with periodic refresh
-      
+
       console.log('📋 Special categories after check:', specialCategories);
-      
+
       // Ordinea fixă de categorii (EXACT ca în comanda.html) - folosim lista hardcodată, nu categories_ordered de la server (care este sortată alfabetic)
       // NOTĂ: "Oferta Zilei" și "Meniul Zilei" sunt adăugate separat mai sus, deci nu trebuie incluse aici
       const orderedCategories = [
@@ -118,35 +189,35 @@ export const KioskSelfServicePage = () => {
         'Sosuri și Pâine',
         'Vinuri',
       ];
-      
+
       // Combine special categories with ordered categories (special categories first, then ordered, then rest)
       const finalCategories = [
         ...specialCategories, // Special categories first
-        ...orderedCategories.filter(cat => 
+        ...orderedCategories.filter(cat =>
           allAvailableCategories.includes(cat) && !specialCategories.includes(cat)
         ), // Ordered categories (only if they exist)
-        ...allAvailableCategories.filter(cat => 
+        ...allAvailableCategories.filter(cat =>
           !specialCategories.includes(cat) && !orderedCategories.includes(cat)
         ) // Rest of categories
       ];
-      
+
       // Elimină duplicatele (folosind Set pentru a păstra ordinea)
       const uniqueCategories = Array.from(new Set(finalCategories));
-      
+
       // Debug: verifică dacă există duplicate înainte de Set
       if (finalCategories.length !== uniqueCategories.length) {
         console.warn(`⚠️ Found ${finalCategories.length - uniqueCategories.length} duplicate categories before deduplication`);
         console.log('Final categories (with duplicates):', finalCategories);
         console.log('Unique categories:', uniqueCategories);
       }
-      
+
       setCategories(uniqueCategories);
-      
+
       // Set first category as default
       if (uniqueCategories.length > 0) {
         setSelectedCategory(uniqueCategories[0]);
       }
-      
+
       console.log(`✅ Menu loaded: ${menuItems.length} products, ${uniqueCategories.length} unique categories (from ${finalCategories.length} total)`);
       setLoading(false);
     } catch (err) {
@@ -158,6 +229,12 @@ export const KioskSelfServicePage = () => {
   useEffect(() => {
     loadMenu();
   }, [loadMenu]);
+
+  // Show order type modal on mount
+  useEffect(() => {
+    setShowOrderTypeModal(true);
+    setOrderType('');
+  }, []);
 
   // Load daily menu when "Meniul Zilei" category is selected
   useEffect(() => {
@@ -197,10 +274,10 @@ export const KioskSelfServicePage = () => {
             let globalIndex = 0;
             data.offer.conditions?.forEach((condition, conditionIndex) => {
               for (let i = 0; i < condition.quantity; i++) {
-                conditionSelections.push({ 
+                conditionSelections.push({
                   globalIndex: globalIndex++,
-                  conditionIndex: conditionIndex, 
-                  productId: null 
+                  conditionIndex: conditionIndex,
+                  productId: null
                 });
               }
             });
@@ -224,7 +301,7 @@ export const KioskSelfServicePage = () => {
   // Use useMemo to recalculate when searchTerm or selectedCategory changes
   const categoryProducts = useMemo(() => {
     console.log('[KioskSelfService] getCategoryProducts called - searchTerm:', searchTerm, 'selectedCategory:', selectedCategory, 'allProducts:', allProducts.length);
-    
+
     // If search term exists, search in ALL products regardless of category
     if (searchTerm && searchTerm.trim()) {
       const term = searchTerm.toLowerCase().trim();
@@ -241,10 +318,10 @@ export const KioskSelfServicePage = () => {
       console.log('[KioskSelfService] Search results:', filtered.length, 'products');
       return filtered;
     }
-    
+
     // If no search term, filter by category
     let products = [];
-    
+
     if (!selectedCategory) {
       products = allProducts;
     } else if (selectedCategory === 'Meniul Zilei') {
@@ -255,15 +332,15 @@ export const KioskSelfServicePage = () => {
       return [];
     } else {
       // Regular category filtering (by category name, not category_id)
-      products = allProducts.filter(p => 
+      products = allProducts.filter(p =>
         (p.category || p.category_name) === selectedCategory
       );
     }
-    
+
     console.log('[KioskSelfService] Category products:', products.length);
     return products;
   }, [allProducts, searchTerm, selectedCategory]);
-  
+
   // Handle show daily menu (loads from /api/daily-menu)
   const handleShowDailyMenu = async () => {
     setSelectedCategory('Meniul Zilei'); // Set selected category to activate button
@@ -285,7 +362,7 @@ export const KioskSelfServicePage = () => {
     setCart(prev => {
       const existing = prev.find(item => item.id === product.id && item.isFree === isFree);
       if (existing) {
-        return prev.map(item => 
+        return prev.map(item =>
           item.id === product.id && item.isFree === isFree
             ? { ...item, quantity: item.quantity + quantity }
             : item
@@ -298,17 +375,17 @@ export const KioskSelfServicePage = () => {
   // Add daily menu to cart (adds both soup and main course as separate items, like comanda.html)
   const addDailyMenuToCart = (menuData) => {
     if (!menuData || !menuData.soup || !menuData.mainCourse) return;
-    
+
     const soup = menuData.soup;
     const mainCourse = menuData.mainCourse;
     const promotionalPrice = menuData.promotionalPrice || (soup.price + mainCourse.price - (menuData.discount || 0));
-    
+
     // Add soup
     setCart(prev => {
       const soupCartId = `daily_soup_${soup.id}`;
       const existingSoup = prev.find(item => item.cartId === soupCartId);
       if (existingSoup) {
-        return prev.map(item => 
+        return prev.map(item =>
           item.cartId === soupCartId
             ? { ...item, quantity: item.quantity + 1 }
             : item
@@ -324,13 +401,13 @@ export const KioskSelfServicePage = () => {
         category: soup.category
       }];
     });
-    
+
     // Add main course
     setCart(prev => {
       const mainCourseCartId = `daily_main_${mainCourse.id}`;
       const existingMainCourse = prev.find(item => item.cartId === mainCourseCartId);
       if (existingMainCourse) {
-        return prev.map(item => 
+        return prev.map(item =>
           item.cartId === mainCourseCartId
             ? { ...item, quantity: item.quantity + 1 }
             : item
@@ -346,7 +423,7 @@ export const KioskSelfServicePage = () => {
         category: mainCourse.category
       }];
     });
-    
+
     // Note: promotionalPrice is calculated from soup.price + mainCourse.price - discount
     // Individual items are added with their original prices, discount is applied at checkout if needed
   };
@@ -388,17 +465,17 @@ export const KioskSelfServicePage = () => {
     if (discounts && discounts.hasDiscount && discounts.items.length > 0) {
       let total = cart.reduce((sum, item, index) => {
         if (item.isFree) return sum; // Skip free items
-        
+
         // Daily menu has priority over Happy Hour
         if (item.isDailyMenu) {
           return sum + (item.price * item.quantity);
         }
-        
+
         // Apply Happy Hour discount
         const discountedItem = discounts.items[index];
         return sum + (discountedItem ? discountedItem.finalPrice * item.quantity : (item.price * item.quantity));
       }, 0);
-      
+
       // Apply daily menu discount if items are from daily menu
       if (dailyMenuData && dailyMenuData.discount) {
         const dailyMenuItems = cart.filter(item => item.isDailyMenu);
@@ -412,16 +489,16 @@ export const KioskSelfServicePage = () => {
           total -= (dailyMenuData.discount * menuPairs);
         }
       }
-      
+
       return total;
     }
-    
+
     // Normal calculation without Happy Hour
     let total = cart.reduce((sum, item) => {
       const price = item.isFree ? 0 : (item.price || 0);
       return sum + (price * item.quantity);
     }, 0);
-    
+
     // Apply daily menu discount if items are from daily menu
     if (dailyMenuData && dailyMenuData.discount) {
       const dailyMenuItems = cart.filter(item => item.isDailyMenu);
@@ -437,7 +514,7 @@ export const KioskSelfServicePage = () => {
         total -= (dailyMenuData.discount * menuPairs);
       }
     }
-    
+
     return total;
   };
 
@@ -497,7 +574,7 @@ export const KioskSelfServicePage = () => {
   const handleConditionSelectionChange = (globalIndex, productId) => {
     setDailyOfferSelections(prev => ({
       ...prev,
-      conditions: prev.conditions.map((sel) => 
+      conditions: prev.conditions.map((sel) =>
         sel.globalIndex === globalIndex ? { ...sel, productId: productId ? parseInt(productId) : null } : sel
       )
     }));
@@ -507,38 +584,138 @@ export const KioskSelfServicePage = () => {
   const handleBenefitSelectionChange = (selectionIndex, productId) => {
     setDailyOfferSelections(prev => ({
       ...prev,
-      benefits: prev.benefits.map((sel, idx) => 
+      benefits: prev.benefits.map((sel, idx) =>
         idx === selectionIndex ? { productId: productId ? parseInt(productId) : null } : sel
       )
     }));
   };
 
   // Place order
-  const placeOrder = async () => {
+
+  // Deschide modalul de plată la checkout
+  const handleCheckout = async () => {
+    if (!orderType) {
+      setShowOrderTypeModal(true);
+      return;
+    }
+    // Elimină dublurile din cart (după id și isFree)
+    const uniqueCart = [];
+    cart.forEach(item => {
+      if (!uniqueCart.some(u => u.id === item.id && !!u.isFree === !!item.isFree)) {
+        uniqueCart.push(item);
+      }
+    });
+    // Normalizează categoria pentru produsele de bar
+    const normalizeBarCategory = (cat) => {
+      if (!cat) return cat;
+      const c = cat.trim().toLowerCase();
+      if (c === 'cafea/ciocolată/ceai' || c === 'cafea/ciocolata/ceai') return 'Cafea/Ciocolată/Ceai';
+      if (c === 'răcoritoare' || c === 'racoritoare') return 'Răcoritoare';
+      // Toate băuturile de bar, inclusiv spirtoase și vinuri, merg la 'Băuturi și Coctailuri'
+      if (
+        c === 'băuturi și coctailuri' || c === 'bauturi si coctailuri' || c === 'băuturi si coctailuri' || c === 'bauturi și coctailuri' ||
+        c === 'băuturi spirtoase' || c === 'bauturi spirtoase' ||
+        c === 'vinuri' || c === 'vin' || c === 'vinuri albe' || c === 'vinuri roșii' || c === 'vinuri rosii' || c === 'vinuri roze' || c === 'vinuri spumante'
+      ) return 'Băuturi și Coctailuri';
+      return cat;
+    };
+
+    // Mapping strict pentru KIOSK
+    const orderData = {
+      type: orderType === 'restaurant' ? 'dine_in' : 'takeout',
+      items: uniqueCart.map(item => ({
+        product_id: item.id,
+        quantity: item.quantity,
+        price: item.price,
+        unit_price: item.price,
+        name: item.name,
+        category: normalizeBarCategory(item.category || item.category_name),
+        isFree: item.isFree || false,
+        isDailyMenu: item.isDailyMenu || false
+      })),
+      total: getTotal(),
+      payment_method: 'cash',
+      is_paid: false,
+      platform: 'KIOSK',
+      order_source: orderType === 'restaurant' ? 'KIOSK_DINE_IN' : 'KIOSK_TAKEAWAY',
+      table: orderType === 'restaurant' ? 3 : undefined
+    };
+    console.log('[Kiosk] Cart trimis:', uniqueCart);
     try {
-      const res = await fetch('/api/orders', {
+      console.log('[Kiosk] Trimit payload:', orderData);
+      const res = await fetch('/api/orders/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          source: 'kiosk',
-          items: cart.map(item => ({
-            product_id: item.id,
-            quantity: item.quantity,
-            price: item.price
-          })),
-          total: getTotal()
-        })
+        body: JSON.stringify(orderData)
       });
-      
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({ error: 'Unknown error' }));
+        alert(`Eroare la crearea comenzii: ${errorData.error || 'Eroare necunoscută'}`);
+        return;
+      }
+      const created = await res.json();
+      const realOrderId = created.order_id || created.id || created.order_number;
+      setPaymentOrderId(realOrderId);
+      setPendingOrder({
+        ...orderData,
+        order_id: realOrderId
+      });
+      setShowPaymentModal(true);
+    } catch (err) {
+      alert('Eroare la crearea comenzii. Încearcă din nou!');
+    }
+  };
+
+  // Marchează comanda ca plătită după plată (fără a crea o nouă comandă)
+  const markOrderAsPaid = async () => {
+    if (!pendingOrder || !pendingOrder.order_id) return;
+    try {
+      const res = await fetch(`/api/orders/${pendingOrder.order_id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ is_paid: true, status: 'paid' })
+      });
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({ error: 'Unknown error' }));
+        alert(`Eroare la actualizarea comenzii: ${errorData.error || 'Eroare necunoscută'}`);
+        return;
+      }
       const data = await res.json();
-      setOrderNumber(data.order_number || data.id || Math.floor(Math.random() * 900) + 100);
+      setOrderNumber(data.order?.id || data.order?.order_number || Math.floor(Math.random() * 900) + 100);
       setShowConfirmation(true);
       setShowCart(false);
       setCart([]);
+      setPendingOrder(null);
+      setPaymentCompleted(false);
     } catch (err) {
-      console.error('Error placing order:', err);
+      alert('Eroare la actualizarea comenzii. Te rugăm să încerci din nou.');
     }
   };
+
+  // Efectuează update-ul comenzii după confirmarea plății
+  useEffect(() => {
+    if (paymentCompleted && showPaymentModal) {
+      setShowPaymentModal(false);
+      // Afișează mesajul de mulțumire 2 secunde, apoi marchează comanda ca plătită
+      setShowThankYou(true);
+      setTimeout(() => {
+        setShowThankYou(false);
+        markOrderAsPaid();
+      }, 2000);
+    }
+    // eslint-disable-next-line
+  }, [paymentCompleted]);
+
+  // Închide automat modalul de confirmare comandă după 1 sec și revine la ecranul principal
+  useEffect(() => {
+    if (showConfirmation) {
+      const timer = setTimeout(() => {
+        setShowConfirmation(false);
+        // Resetare stare pentru ecran principal (dacă e nevoie de alte acțiuni, adaugă aici)
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [showConfirmation]);
 
   if (loading) {
     return (
@@ -549,17 +726,96 @@ export const KioskSelfServicePage = () => {
     );
   }
 
+  // Modal selectare tip comandă (la început)
+  // Card mic, flotant, colț dreapta sus, cu butoane mici, pentru selecția tipului de comandă
+  // (exact ca în codul dat de utilizator)
+  if (showOrderTypeModal) {
+    return (
+      <div style={{
+        position: 'fixed',
+        top: '20px',
+        right: '20px',
+        zIndex: 10000,
+        background: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(10px)',
+        borderRadius: '12px',
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+        padding: '12px 16px',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '12px',
+        border: '2px solid rgba(251, 191, 36, 0.3)'
+      }}>
+        <span style={{ fontSize: '0.9rem', fontWeight: 600, color: '#333' }}>Tip comandă:</span>
+        <Button
+          variant={orderType === 'restaurant' ? 'warning' : 'outline-secondary'}
+          size="sm"
+          style={{
+            fontSize: '0.85rem',
+            fontWeight: 600,
+            borderRadius: '8px',
+            padding: '6px 12px',
+            transition: 'all 0.2s',
+            background: orderType === 'restaurant' ? '#fbbf24' : 'transparent',
+            color: orderType === 'restaurant' ? '#000' : '#666',
+            borderColor: orderType === 'restaurant' ? '#fbbf24' : '#ccc',
+          }}
+          onClick={() => {
+            setOrderType('restaurant');
+            setShowOrderTypeModal(false);
+          }}
+        >
+          🍽️ Restaurant
+        </Button>
+        <Button
+          variant={orderType === 'takeaway' ? 'success' : 'outline-secondary'}
+          size="sm"
+          style={{
+            fontSize: '0.85rem',
+            fontWeight: 600,
+            borderRadius: '8px',
+            padding: '6px 12px',
+            transition: 'all 0.2s',
+            background: orderType === 'takeaway' ? '#22c55e' : 'transparent',
+            color: orderType === 'takeaway' ? '#fff' : '#666',
+            borderColor: orderType === 'takeaway' ? '#22c55e' : '#ccc',
+          }}
+          onClick={() => {
+            setOrderType('takeaway');
+            setShowOrderTypeModal(false);
+          }}
+        >
+          🏠 Acasă
+        </Button>
+      </div>
+    );
+  }
+
+  // Modal mulțumire după plată
+  if (showThankYou) {
+    return (
+      <Modal show centered backdrop="static" keyboard={false}>
+        <Modal.Body className="text-center py-5">
+          <h2 style={{ marginBottom: '2rem', color: '#22c55e' }}>Vă mulțumim pentru comandă.<br />Poftă bună!</h2>
+        </Modal.Body>
+      </Modal>
+    );
+  }
+
   // categoryProducts is now calculated in useMemo above
 
   return (
     <div className="self-service-page">
       {/* Header */}
-      <div className="self-service-header">
-        <div className="self-service-logo">
+
+      <div className="self-service-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div className="self-service-logo" style={{ display: 'flex', alignItems: 'center' }}>
           <ChefHat size={32} />
-          <span>Comandă Self-Service</span>
+          <span style={{ marginLeft: 8 }}>Comandă Self-Service</span>
+          {/* Unified platform/source badge */}
+          {getPlatformBadge('KIOSK', null, orderType)}
         </div>
-        
+
         {/* Search Bar */}
         <div className="self-service-search">
           <InputGroup className="self-service-search-input-group">
@@ -584,9 +840,9 @@ export const KioskSelfServicePage = () => {
             )}
           </InputGroup>
         </div>
-        
-        <Button 
-          variant="warning" 
+
+        <Button
+          variant="warning"
           className="self-service-cart-btn"
           onClick={() => setShowCart(true)}
         >
@@ -606,7 +862,7 @@ export const KioskSelfServicePage = () => {
         const formatDays = (daysArray) => {
           if (!daysArray) return '';
           const fullDays = {
-            '1': 'Luni', '2': 'Marți', '3': 'Miercuri', '4': 'Joi', 
+            '1': 'Luni', '2': 'Marți', '3': 'Miercuri', '4': 'Joi',
             '5': 'Vineri', '6': 'Sâmbătă', '7': 'Duminică', '0': 'Duminică',
             'all': 'Toate Zilele'
           };
@@ -621,7 +877,7 @@ export const KioskSelfServicePage = () => {
         const discountPercent = hh.discount_percentage || 0;
         const discountFixed = hh.discount_fixed || 0;
         const name = hh.name || 'Happy Hour';
-        
+
         // Determine discount text
         let discountText = '';
         if (discountPercent > 0) {
@@ -631,7 +887,7 @@ export const KioskSelfServicePage = () => {
         } else {
           discountText = 'O Reducere Specială';
         }
-        
+
         return (
           <Alert variant="warning" className="self-service-happy-hour" style={{
             background: '#fffbe9',
@@ -684,15 +940,15 @@ export const KioskSelfServicePage = () => {
               </button>
             );
           }
-          
+
           // Regular categories - count products and skip if empty
-          const catProducts = allProducts.filter(p => 
+          const catProducts = allProducts.filter(p =>
             (p.category || p.category_name) === catName
           );
-          
+
           // Skip categories with no products
           if (catProducts.length === 0) return null;
-          
+
           return (
             <button
               key={`${catName}-"Index"`}
@@ -721,12 +977,12 @@ export const KioskSelfServicePage = () => {
                     🍲 Meniul Zilei
                   </h1>
                 </div>
-                
+
                 <div style={{ marginBottom: '1.5rem' }}>
                   {/* Soup */}
-                  <div style={{ 
-                    display: 'flex', 
-                    justifyContent: 'space-between', 
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
                     alignItems: 'center',
                     marginBottom: '1rem',
                     padding: '1rem',
@@ -736,15 +992,18 @@ export const KioskSelfServicePage = () => {
                   }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: 1 }}>
                       {dailyMenuData.soup.image_url ? (
-                        <img 
-                          src={dailyMenuData.soup.image_url} 
+                        <img
+                          src={dailyMenuData.soup.image_url}
                           alt={dailyMenuData.soup.name}
                           style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '8px' }}
+                          onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = '/QrOMS.jpg'; }}
                         />
                       ) : (
-                        <div style={{ width: '60px', height: '60px', background: '#ff6b35', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem' }}>
-                          🍲
-                        </div>
+                        <img
+                          src="/QrOMS.jpg"
+                          alt="No image"
+                          style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '8px' }}
+                        />
                       )}
                       <div style={{ flex: 1 }}>
                         <h3 style={{ color: '#f1f5f9', margin: 0, marginBottom: '0.5rem', fontSize: '1.3rem', fontWeight: 'bold' }}>
@@ -766,14 +1025,14 @@ export const KioskSelfServicePage = () => {
                       {dailyMenuData.soup.price?.toFixed(2)} RON
                     </span>
                   </div>
-                  
+
                   {/* Plus symbol */}
                   <div style={{ textAlign: 'center', fontSize: '1.5rem', color: '#ff6b35', margin: '1rem 0', fontWeight: 'bold' }}>+</div>
-                  
+
                   {/* Main Course */}
-                  <div style={{ 
-                    display: 'flex', 
-                    justifyContent: 'space-between', 
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
                     alignItems: 'center',
                     padding: '1rem',
                     background: 'rgba(255, 255, 255, 0.1)',
@@ -782,15 +1041,18 @@ export const KioskSelfServicePage = () => {
                   }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: 1 }}>
                       {dailyMenuData.mainCourse.image_url ? (
-                        <img 
-                          src={dailyMenuData.mainCourse.image_url} 
+                        <img
+                          src={dailyMenuData.mainCourse.image_url}
                           alt={dailyMenuData.mainCourse.name}
                           style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '8px' }}
+                          onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = '/QrOMS.jpg'; }}
                         />
                       ) : (
-                        <div style={{ width: '60px', height: '60px', background: '#ff6b35', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem' }}>
-                          🍽️
-                        </div>
+                        <img
+                          src="/QrOMS.jpg"
+                          alt="No image"
+                          style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '8px' }}
+                        />
                       )}
                       <div style={{ flex: 1 }}>
                         <h3 style={{ color: '#f1f5f9', margin: 0, marginBottom: '0.5rem', fontSize: '1.3rem', fontWeight: 'bold' }}>
@@ -813,9 +1075,9 @@ export const KioskSelfServicePage = () => {
                     </span>
                   </div>
                 </div>
-                
+
                 <hr style={{ margin: '1.5rem 0', border: '1px dashed rgba(255, 255, 255, 0.3)' }} />
-                
+
                 <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
                   <div style={{ marginBottom: '0.75rem' }}>
                     <span style={{ fontSize: '0.65rem', color: '#94a3b8', textDecoration: 'line-through' }}>
@@ -827,7 +1089,7 @@ export const KioskSelfServicePage = () => {
                     </span>
                   </div>
                 </div>
-                
+
                 <Button
                   variant="danger"
                   onClick={() => addDailyMenuToCart({
@@ -836,10 +1098,10 @@ export const KioskSelfServicePage = () => {
                     discount: dailyMenuData.discount || 0,
                     promotionalPrice: (dailyMenuData.soup.price + dailyMenuData.mainCourse.price) - (dailyMenuData.discount || 0)
                   })}
-                  style={{ 
-                    width: '100%', 
-                    padding: '0.75rem', 
-                    fontSize: '0.75rem', 
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    fontSize: '0.75rem',
                     fontWeight: 'bold',
                     borderRadius: '8px',
                     background: '#ff6b35',
@@ -895,10 +1157,10 @@ export const KioskSelfServicePage = () => {
                             value={selection.productId || ''}
                             onChange={(e) => handleConditionSelectionChange(selection.globalIndex, e.target.value)}
                             required
-                            style={{ 
-                              width: '100%', 
-                              padding: '12px', 
-                              borderRadius: '8px', 
+                            style={{
+                              width: '100%',
+                              padding: '12px',
+                              borderRadius: '8px',
                               border: '2px solid rgba(255, 255, 255, 0.3)',
                               background: 'rgba(255, 255, 255, 0.1)',
                               color: '#f1f5f9',
@@ -932,10 +1194,10 @@ export const KioskSelfServicePage = () => {
                       value={selection.productId || ''}
                       onChange={(e) => handleBenefitSelectionChange(index, e.target.value)}
                       required
-                      style={{ 
-                        width: '100%', 
-                        padding: '12px', 
-                        borderRadius: '8px', 
+                      style={{
+                        width: '100%',
+                        padding: '12px',
+                        borderRadius: '8px',
                         border: '2px solid rgba(34, 197, 94, 0.5)',
                         background: 'rgba(255, 255, 255, 0.1)',
                         color: '#f1f5f9',
@@ -955,10 +1217,10 @@ export const KioskSelfServicePage = () => {
                 <Button
                   variant="success"
                   onClick={handleAddOfferToCart}
-                  style={{ 
-                    width: '100%', 
-                    padding: '1rem', 
-                    fontSize: '1.3rem', 
+                  style={{
+                    width: '100%',
+                    padding: '1rem',
+                    fontSize: '1.3rem',
                     marginTop: '2rem',
                     fontWeight: 'bold',
                     borderRadius: '12px'
@@ -984,45 +1246,18 @@ export const KioskSelfServicePage = () => {
                 className="self-service-product"
                 onClick={() => addToCart(product)}
               >
-                {product.image_url && product.image_url.trim() ? (
-                  <div
-                    className="self-service-product__image"
+                <div className="self-service-product__image">
+                  <img
+                    src={product.image_url && product.image_url.trim() ? product.image_url : '/QrOMS.jpg'}
+                    alt={product.name}
                     style={{
-                      backgroundImage: `url(${product.image_url})`,
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover'
                     }}
+                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = '/QrOMS.jpg'; }}
                   />
-                ) : (
-                  <div className="self-service-product__image self-service-product__image-placeholder">
-                    <img 
-                      src="/QrOMS.jpg" 
-                      alt="QrOms Logo" 
-                      style={{ 
-                        width: '100%', 
-                        height: '100%', 
-                        objectFit: 'contain',
-                        padding: '8px'
-                      }} 
-                      onError={(e) => {
-                        // Fallback to ChefHat icon if logo fails to load
-                        e.target.style.display = 'none';
-                        const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                        icon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-                        icon.setAttribute('width', '32');
-                        icon.setAttribute('height', '32');
-                        icon.setAttribute('viewBox', '0 0 24 24');
-                        icon.setAttribute('fill', 'none');
-                        icon.setAttribute('stroke', '#94a3b8');
-                        icon.setAttribute('stroke-width', '2');
-                        icon.setAttribute('stroke-linecap', 'round');
-                        icon.setAttribute('stroke-linejoin', 'round');
-                        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                        path.setAttribute('d', 'M6 13h12M6 6h12M6 20h12');
-                        icon.appendChild(path);
-                        e.target.parentElement.appendChild(icon);
-                      }}
-                    />
-                  </div>
-                )}
+                </div>
                 <div className="self-service-product__info">
                   <div className="self-service-product__name">{product.name}</div>
                   <div className="self-service-product__price">
@@ -1031,7 +1266,7 @@ export const KioskSelfServicePage = () => {
                 </div>
               </button>
             ))}
-            
+
             {categoryProducts.length === 0 && selectedCategory !== 'Meniul Zilei' && selectedCategory !== 'Oferta Zilei' && (
               <div className="self-service-empty">
                 <p>Nu există produse în această categorie</p>
@@ -1042,9 +1277,9 @@ export const KioskSelfServicePage = () => {
       </div>
 
       {/* Cart Drawer */}
-      <Modal 
-        show={showCart} 
-        onHide={() => setShowCart(false)} 
+      <Modal
+        show={showCart}
+        onHide={() => setShowCart(false)}
         fullscreen="md-down"
         className="self-service-cart-modal"
       >
@@ -1070,8 +1305,8 @@ export const KioskSelfServicePage = () => {
                     <p>{item.price?.toFixed(2)} RON</p>
                   </div>
                   <div className="self-service-cart-item__controls">
-                    <Button 
-                      variant="outline-secondary" 
+                    <Button
+                      variant="outline-secondary"
                       size="sm"
                       onClick={(e) => {
                         e.stopPropagation();
@@ -1081,8 +1316,8 @@ export const KioskSelfServicePage = () => {
                       <Minus size={16} />
                     </Button>
                     <span className="self-service-cart-item__qty">{item.quantity}</span>
-                    <Button 
-                      variant="outline-secondary" 
+                    <Button
+                      variant="outline-secondary"
                       size="sm"
                       onClick={(e) => {
                         e.stopPropagation();
@@ -1091,8 +1326,8 @@ export const KioskSelfServicePage = () => {
                     >
                       <Plus size={16} />
                     </Button>
-                    <Button 
-                      variant="outline-danger" 
+                    <Button
+                      variant="outline-danger"
                       size="sm"
                       onClick={(e) => {
                         e.stopPropagation();
@@ -1116,20 +1351,32 @@ export const KioskSelfServicePage = () => {
               <span>Total:</span>
               <strong>{getTotal().toFixed(2)} RON</strong>
             </div>
-            <Button variant="success" size="lg" onClick={placeOrder}>
+            <Button variant="success" size="lg" onClick={handleCheckout}>
               <CreditCard size={20} className="me-2" />
-              Plasează Comanda
+              Plătește și Plasează Comanda
             </Button>
+            {/* Modalul de plată */}
+            <KioskPaymentsModal
+              show={showPaymentModal}
+              onHide={() => setShowPaymentModal(false)}
+              orderId={paymentOrderId}
+              total={pendingOrder ? pendingOrder.total : 0}
+              session={{ role: 'kiosk' }}
+              splitBillData={null}
+              onPaymentComplete={() => setPaymentCompleted(true)}
+            />
           </Modal.Footer>
         )}
       </Modal>
 
       {/* Order Confirmation */}
-      <Modal 
-        show={showConfirmation} 
+      <Modal
+        show={showConfirmation}
         onHide={() => setShowConfirmation(false)}
         centered
         className="self-service-confirmation-modal"
+        backdrop="static"
+        keyboard={false}
       >
         <Modal.Body className="text-center py-5">
           <div className="self-service-confirmation">
@@ -1146,14 +1393,7 @@ export const KioskSelfServicePage = () => {
               <Clock size={20} />
               <span>Timp estimat: 10-15 minute</span>
             </div>
-            <Button 
-              variant="warning" 
-              size="lg" 
-              onClick={() => setShowConfirmation(false)}
-              className="mt-4"
-            >
-              Comandă Nouă
-            </Button>
+            {/* Butonul de comandă nouă eliminat pentru UX automat */}
           </div>
         </Modal.Body>
       </Modal>

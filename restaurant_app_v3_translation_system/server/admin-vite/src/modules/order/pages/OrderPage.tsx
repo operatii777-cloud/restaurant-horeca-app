@@ -7,7 +7,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { useOrderStore, type MenuItem, type CartItem } from '../orderStore';
+import { useOrderStore, type MenuItem, type CartItem, type Customization } from '../orderStore';
 import { getMenuItems, getCategories, createOrder, getTables } from '../api/orderApi';
 import { useOrderEvents } from '@/core/hooks/useOrderEvents';
 import './OrderPage.css';
@@ -16,7 +16,7 @@ import './OrderPage.css';
  * Order Page Component
  */
 export function OrderPage() {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const {
     menuItems,
     categories,
@@ -43,21 +43,21 @@ export function OrderPage() {
     getCartItemCount,
     getFilteredMenuItems,
   } = useOrderStore();
-  
+
   const [tables, setTables] = useState<Array<{ id: number; number: string; status?: string }>>([]);
   const [lang, setLang] = useState<'ro' | 'en'>('ro');
   const [selectedProduct, setSelectedProduct] = useState<MenuItem | null>(null);
   const [selectedCustomizations, setSelectedCustomizations] = useState<Record<number, Customization[]>>({});
-  
+
   // Sync with order events (optional, for real-time updates)
   useOrderEvents();
-  
+
   // Load menu and categories on mount
   useEffect(() => {
     loadMenu();
     loadTables();
   }, [lang]);
-  
+
   const loadMenu = async () => {
     try {
       setLoading(true);
@@ -74,7 +74,7 @@ export function OrderPage() {
       setLoading(false);
     }
   };
-  
+
   const loadTables = async () => {
     try {
       const tablesData = await getTables();
@@ -83,7 +83,7 @@ export function OrderPage() {
       console.error('OrderPage Error loading tables:', error);
     }
   };
-  
+
   const handleAddToCart = (product: MenuItem) => {
     const customizations = selectedCustomizations[product.id] || [];
     addToCart(product, 1, customizations);
@@ -98,12 +98,12 @@ export function OrderPage() {
       navigator.vibrate(50);
     }
   };
-  
+
   const handleCustomizationToggle = (productId: number, customization: Customization) => {
     setSelectedCustomizations(prev => {
       const current = prev[productId] || [];
       const exists = current.find(c => c.id === customization.id);
-      
+
       if (exists) {
         // Remove if already selected
         return {
@@ -116,7 +116,7 @@ export function OrderPage() {
         if (customization.is_exclusive) {
           return {
             ...prev,
-            [productId]: 'customization',
+            [productId]: [customization],
           };
         }
         return {
@@ -126,35 +126,35 @@ export function OrderPage() {
       }
     });
   };
-  
+
   const handleCreateOrder = async () => {
     if (cart.length === 0) {
       alert('Coșul este gol');
       return;
     }
-    
+
     if (!orderType) {
       alert('Selectează tipul comenzii');
       return;
     }
-    
-    if (orderType === "Dine-In" && !selectedTable) {
+
+    if (orderType === 'dine_in' && !selectedTable) {
       alert('Selectează o masă');
       return;
     }
-    
+
     try {
       setLoading(true);
-      
+
       const orderItems = cart.map(item => ({
         product_id: item.product.id,
         quantity: item.quantity,
         customizations: item.customizations.map(c => ({ id: c.id })),
         isFree: item.isFree || false,
       }));
-      
+
       const total = getCartTotal();
-      
+
       const result = await createOrder({
         items: orderItems,
         table: selectedTable,
@@ -162,7 +162,7 @@ export function OrderPage() {
         notes,
         total,
       });
-      
+
       if (result.success) {
         alert(`Comandă creată cu succes! ID: ${result.orderId}`);
         clearCart();
@@ -178,9 +178,9 @@ export function OrderPage() {
       setLoading(false);
     }
   };
-  
+
   const filteredItems = getFilteredMenuItems();
-  
+
   return (
     <div className="order-page">
       {/* Top Bar */}
@@ -188,20 +188,20 @@ export function OrderPage() {
         <div className="order-restaurant-name">"Restaurant"</div>
         <div className="order-header-actions">
           <button className="order-cart-btn" onClick={toggleCart}>
-            ðŸ›’ Coș ({getCartItemCount()})
+            🛒 Coș ({getCartItemCount()})
           </button>
           <button className="order-lang-btn" onClick={() => setLang(lang === 'ro' ? 'en' : 'ro')}>
             {lang === 'ro' ? 'EN' : 'RO'}
           </button>
         </div>
       </header>
-      
+
       {/* Categories */}
       <div className="order-categories">
         <button
           className={`order-category-btn ${selectedCategory === null ? 'active' : ''}`}
           onClick={() => setSelectedCategory(null)}
-        >"Toate"</button>
+        >Toate</button>
         {categories.map((cat) => (
           <button
             key={cat.id}
@@ -212,7 +212,7 @@ export function OrderPage() {
           </button>
         ))}
       </div>
-      
+
       {/* Menu Items */}
       <div className="order-menu-container">
         {isLoading ? (
@@ -236,7 +236,7 @@ export function OrderPage() {
                   <div className="order-product-price">
                     {item.price.toFixed(2)} RON
                   </div>
-                  
+
                   {item.customizations && item.customizations.length > 0 && (
                     <div className="order-customizations">
                       {item.customizations.map((custom) => {
@@ -257,7 +257,7 @@ export function OrderPage() {
                       })}
                     </div>
                   )}
-                  
+
                   <button
                     className="order-add-btn"
                     onClick={() => handleAddToCart(item)}
@@ -271,7 +271,7 @@ export function OrderPage() {
           </div>
         )}
       </div>
-      
+
       {/* Cart Modal */}
       {isCartOpen && (
         <div className="order-cart-modal" onClick={(e) => {
@@ -279,13 +279,13 @@ export function OrderPage() {
         }}>
           <div className="order-cart-content" onClick={(e) => e.stopPropagation()}>
             <div className="order-cart-header">
-              <h2>"cos de cumparaturi"</h2>
-              <button className="order-cart-close" onClick={toggleCart}>Ã—</button>
+              <h2>Coș de Cumpărături</h2>
+              <button className="order-cart-close" onClick={toggleCart}>×</button>
             </div>
-            
+
             <div className="order-cart-items">
               {cart.length === 0 ? (
-                <div className="order-cart-empty">"cosul este gol"</div>
+                <div className="order-cart-empty">Coșul este gol</div>
               ) : (
                 cart.map((item) => (
                   <div key={item.cartId} className="order-cart-item">
@@ -302,35 +302,35 @@ export function OrderPage() {
                       <button onClick={() => updateCartQuantity(item.cartId, -1)}>-</button>
                       <span>{item.quantity}</span>
                       <button onClick={() => updateCartQuantity(item.cartId, 1)}>+</button>
-                      <button onClick={() => removeFromCart(item.cartId)} className="order-cart-remove">ðŸ—‘ï¸</button>
+                      <button onClick={() => removeFromCart(item.cartId)} className="order-cart-remove">🗑️</button>
                     </div>
                   </div>
                 ))
               )}
             </div>
-            
+
             {cart.length > 0 && (
               <>
                 <div className="order-cart-total">
                   <strong>Total: {getCartTotal().toFixed(2)} RON</strong>
                 </div>
-                
+
                 <div className="order-cart-form">
                   <div className="order-form-group">
-                    <label>"tip comanda"</label>
+                    <label>Tip Comandă</label>
                     <select value={orderType || ''} onChange={(e) => setOrderType(e.target.value as any)}>
-                      <option value="">"Selectează..."</option>
-                      <option value="Dine-In">"la masa"</option>
+                      <option value="">Selectează...</option>
+                      <option value="Dine-In">La Masă</option>
                       <option value="takeout">Takeaway</option>
                       <option value="delivery">Livrare</option>
                     </select>
                   </div>
-                  
-                  {orderType === "Dine-In" && (
+
+                  {orderType === 'dine_in' && (
                     <div className="order-form-group">
-                      <label>"Masă:"</label>
+                      <label>Masă:</label>
                       <select value={selectedTable || ''} onChange={(e) => setTable(e.target.value)}>
-                        <option value="">"selecteaza masa"</option>
+                        <option value="">Selectează Masa</option>
                         {tables.map((table) => (
                           <option key={table.id} value={table.number}>
                             Masa {table.number}
@@ -339,7 +339,7 @@ export function OrderPage() {
                       </select>
                     </div>
                   )}
-                  
+
                   <div className="order-form-group">
                     <label>Note:</label>
                     <textarea
@@ -349,7 +349,7 @@ export function OrderPage() {
                       rows={3}
                     />
                   </div>
-                  
+
                   <button
                     className="order-submit-btn"
                     onClick={handleCreateOrder}

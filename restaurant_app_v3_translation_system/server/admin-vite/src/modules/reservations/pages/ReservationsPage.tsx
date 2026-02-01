@@ -55,7 +55,7 @@ function buildColumnDefs(
     },
     {
       headerName: 'Client',
-      field: "Customer Name",
+      field: 'customer_name',
       flex: 1,
       minWidth: 150,
       valueFormatter: (params: ValueFormatterParams<Reservation>) => params.value || '—',
@@ -88,7 +88,7 @@ function buildColumnDefs(
     },
     {
       headerName: 'Masă',
-      field: "Table Number",
+      field: 'table_number',
       width: 100,
       valueFormatter: (params: ValueFormatterParams<Reservation>) =>
         params.data?.table_number ? `Masa ${params.data.table_number}` : 'Nesetat',
@@ -295,31 +295,30 @@ Email: contact@trattoria.ro`);
         <StatCard
           icon="📅"
           title="Rezervări Astăzi"
-          value={metrics ? String(metrics.today.total) : '"”'}
+          value={metrics ? String(metrics.today.total) : '—'}
           helper="Total programate pentru azi"
           footer={
             <span>
-              Confirmate: <strong>{metrics ? metrics.today.confirmed : '"”'}</strong> "¢ Anulate:' '
-              <strong>{metrics ? metrics.today.cancelled : '"”'}</strong>
+              Confirmate: <strong>{metrics ? metrics.today.confirmed : '—'}</strong> • Anulate: <strong>{metrics ? metrics.today.cancelled : '—'}</strong>
             </span>
           }
         />
         <StatCard
-          icon="[Check]"
+          icon="✅"
           title="Confirmați"
-          value={metrics ? String(metrics.stats.confirmed_reservations) : '"”'}
+          value={metrics ? String(metrics.stats.confirmed_reservations) : '—'}
           helper="Interval selectat"
         />
         <StatCard
           icon="🚫"
           title="Anulați"
-          value={metrics ? String(metrics.stats.cancelled_reservations) : '"”'}
+          value={metrics ? String(metrics.stats.cancelled_reservations) : '—'}
           helper="Include no-show"
         />
         <StatCard
           icon="📊"
           title="Grad Ocupare"
-          value={metrics ? `${metrics.occupancy.percentage}%` : '"”'}
+          value={metrics ? `${metrics.occupancy.percentage}%` : '—'}
           helper={
             metrics
               ? `${metrics.occupancy.reservationsToday}/${metrics.occupancy.totalTables} mese astăzi`
@@ -360,13 +359,13 @@ Email: contact@trattoria.ro`);
 
       <section className="reservations-page__actions">
         <button type="button" onClick={() => void 0} disabled={!selectedReservation}>
-          âœï¸ Editează
+          ✏️ Editează
         </button>
         <button type="button" onClick={() => void 0} disabled={!selectedReservation}>
-          [Check] Confirmă
+          ✅ Confirmă
         </button>
         <button type="button" onClick={() => void 0} disabled={!selectedReservation}>
-          âŒ Anulează
+          ❌ Anulează
         </button>
         <button type="button" onClick={() => void 0} disabled={!selectedReservation}>
           🏁 Marchează finalizat
@@ -438,6 +437,7 @@ Email: contact@trattoria.ro`);
     </div>
   );
 }
+
 
 
 

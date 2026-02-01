@@ -123,9 +123,9 @@ async function getApiInfo(req, res, next) {
                     count: 9
                 },
                 reservations: {
-                  base: '/api/admin/reservations',
-                  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-                  count: 12
+                    base: '/api/admin/reservations',
+                    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+                    count: 12
                 }
             },
             total_endpoints: 136,
@@ -160,7 +160,7 @@ async function getMenu(req, res, next) {
     try {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         // Get all products with categories (with error handling)
         let products = [];
         try {
@@ -184,7 +184,7 @@ async function getMenu(req, res, next) {
             console.warn('⚠️ Error fetching products:', error.message);
             products = [];
         }
-        
+
         // Get all categories (with error handling)
         let categories = [];
         try {
@@ -206,7 +206,7 @@ async function getMenu(req, res, next) {
             console.warn('⚠️ Error fetching categories:', error.message);
             categories = [];
         }
-        
+
         res.json({
             success: true,
             products: products || [],
@@ -222,9 +222,9 @@ async function getDashboardKPI(req, res, next) {
     try {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         console.log('[getDashboardKPI] Starting KPI calculation...');
-        
+
         // Debug: verifică data curentă în SQLite
         const currentDate = await new Promise((resolve, reject) => {
             db.get(`SELECT strftime('%Y-%m-%d', 'now') as today, strftime('%Y-%m-%d', datetime('now')) as today_dt`, [], (err, row) => {
@@ -233,7 +233,7 @@ async function getDashboardKPI(req, res, next) {
             });
         });
         console.log('[getDashboardKPI] SQLite current date:', currentDate);
-        
+
         // Debug: verifică câte comenzi există în total
         const totalOrders = await new Promise((resolve, reject) => {
             db.get(`SELECT COUNT(*) as count FROM orders WHERE status != 'cancelled'`, [], (err, row) => {
@@ -242,7 +242,7 @@ async function getDashboardKPI(req, res, next) {
             });
         });
         console.log('[getDashboardKPI] Total orders (not cancelled):', totalOrders.count);
-        
+
         // Get today's revenue - folosim strftime pentru SQLite
         const todayRevenue = await new Promise((resolve, reject) => {
             db.get(`
@@ -260,7 +260,7 @@ async function getDashboardKPI(req, res, next) {
                 }
             });
         });
-        
+
         // Get today's orders count
         const todayOrders = await new Promise((resolve, reject) => {
             db.get(`
@@ -278,7 +278,7 @@ async function getDashboardKPI(req, res, next) {
                 }
             });
         });
-        
+
         // Get yesterday's revenue for comparison
         const yesterdayRevenue = await new Promise((resolve, reject) => {
             db.get(`
@@ -291,7 +291,7 @@ async function getDashboardKPI(req, res, next) {
                 else resolve(row || { revenue: 0 });
             });
         });
-        
+
         // Get yesterday's orders count for comparison
         const yesterdayOrders = await new Promise((resolve, reject) => {
             db.get(`
@@ -304,15 +304,15 @@ async function getDashboardKPI(req, res, next) {
                 else resolve(row || { count: 0 });
             });
         });
-        
+
         const revenueChange = yesterdayRevenue.revenue > 0
             ? `${((todayRevenue.revenue - yesterdayRevenue.revenue) / yesterdayRevenue.revenue * 100).toFixed(1)}%`
             : '0%';
-        
+
         const ordersChange = yesterdayOrders.count > 0
             ? `${todayOrders.count - yesterdayOrders.count > 0 ? '+' : ''}${todayOrders.count - yesterdayOrders.count}`
             : '0';
-        
+
         // Calculate COGS (Cost of Goods Sold) for today
         // Folosim items JSON din orders (nu order_items care poate fi gol)
         let cogsToday = 0;
@@ -330,7 +330,7 @@ async function getDashboardKPI(req, res, next) {
                     else resolve(rows || []);
                 });
             });
-            
+
             // Calculează COGS din items JSON
             for (const order of ordersWithItems) {
                 try {
@@ -348,7 +348,7 @@ async function getDashboardKPI(req, res, next) {
             console.warn('⚠️ Error calculating COGS:', error.message);
             cogsToday = 0;
         }
-        
+
         // Get inventory alerts (ingredients below min_stock)
         let inventoryAlerts = 0;
         try {
@@ -369,7 +369,7 @@ async function getDashboardKPI(req, res, next) {
             console.warn('⚠️ Error fetching inventory alerts:', error.message);
             inventoryAlerts = 0;
         }
-        
+
         // Get top products (last 7 days) - folosim items din orders (JSON)
         let topProducts = [];
         try {
@@ -386,7 +386,7 @@ async function getDashboardKPI(req, res, next) {
                     else resolve(rows || []);
                 });
             });
-            
+
             // Agregăm produsele din items JSON
             const productCounts = {};
             ordersWithItems.forEach(order => {
@@ -408,10 +408,10 @@ async function getDashboardKPI(req, res, next) {
                     // Ignoră erorile de parsing
                 }
             });
-            
+
             // Calculează total revenue pentru procente
             const totalRevenue = Object.values(productCounts).reduce((sum, p) => sum + p.revenue, 0);
-            
+
             topProducts = Object.values(productCounts)
                 .sort((a, b) => b.revenue - a.revenue) // Sortare după revenue, nu quantity
                 .slice(0, 5)
@@ -426,7 +426,7 @@ async function getDashboardKPI(req, res, next) {
             console.warn('⚠️ Error fetching top products:', error.message);
             topProducts = [];
         }
-        
+
         // Get revenue margin data (last 7 days)
         const revenueMarginData = await new Promise((resolve, reject) => {
             db.all(`
@@ -444,10 +444,10 @@ async function getDashboardKPI(req, res, next) {
                 else resolve(rows || []);
             });
         });
-        
+
         const todayProfit = todayRevenue.revenue - cogsToday;
         const profitMargin = todayRevenue.revenue > 0 ? parseFloat(((todayProfit / todayRevenue.revenue) * 100).toFixed(1)) : 0;
-        
+
         res.json({
             success: true,
             todayRevenue: todayRevenue.revenue || 0,
@@ -513,7 +513,7 @@ async function getDashboardMetrics(req, res, next) {
     try {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         // Helper functions pentru Promise
         function dbGet(query, params = []) {
             return new Promise((resolve, reject) => {
@@ -523,7 +523,7 @@ async function getDashboardMetrics(req, res, next) {
                 });
             });
         }
-        
+
         function dbAll(query, params = []) {
             return new Promise((resolve, reject) => {
                 db.all(query, params, (err, rows) => {
@@ -532,7 +532,7 @@ async function getDashboardMetrics(req, res, next) {
                 });
             });
         }
-        
+
         // Today revenue
         const todayData = await dbGet(`
             SELECT 
@@ -542,7 +542,7 @@ async function getDashboardMetrics(req, res, next) {
             WHERE DATE(timestamp) = DATE('now')
             AND status IN ('paid', 'completed', 'delivered')
         `);
-        
+
         // Yesterday revenue (pentru calculare schimbare)
         const yesterdayData = await dbGet(`
             SELECT 
@@ -552,10 +552,10 @@ async function getDashboardMetrics(req, res, next) {
             WHERE DATE(timestamp) = DATE('now', '-1 day')
             AND status IN ('paid', 'completed', 'delivered')
         `);
-        
+
         const todayRevenue = parseFloat(todayData.revenue || 0);
         const yesterdayRevenue = parseFloat(yesterdayData.revenue || 0);
-        
+
         // Calculează procent schimbare
         let revenueChange = 0;
         if (yesterdayRevenue > 0) {
@@ -563,7 +563,7 @@ async function getDashboardMetrics(req, res, next) {
         } else if (todayRevenue > 0) {
             revenueChange = 100; // 100% creștere dacă ieri era 0
         }
-        
+
         // COGS pentru astăzi (simplificat - folosește costul estimat din rețete)
         // TODO: Implementare completă COGS bazată pe ingrediente consumate
         const cogsToday = await dbGet(`
@@ -572,7 +572,7 @@ async function getDashboardMetrics(req, res, next) {
             WHERE DATE(timestamp) = DATE('now')
             AND status IN ('paid', 'completed', 'delivered')
         `).catch(() => ({ cogs: todayRevenue * 0.35 })); // 35% food cost estimat
-        
+
         // Alerte stoc (număr ingrediente sub minim)
         const inventoryAlerts = await dbGet(`
             SELECT COUNT(*) as count
@@ -581,7 +581,7 @@ async function getDashboardMetrics(req, res, next) {
             AND min_stock IS NOT NULL
             AND current_stock < min_stock
         `).catch(() => ({ count: 0 }));
-        
+
         // Customer retention (simplificat - clienți cu mai mult de 1 comandă în ultimele 30 zile)
         const customerRetentionData = await dbGet(`
             SELECT 
@@ -598,11 +598,11 @@ async function getDashboardMetrics(req, res, next) {
                 GROUP BY client_identifier
             )
         `).catch(() => ({ returning_customers: 0, repeat_customers: 0 }));
-        
+
         const totalCustomers = parseInt(customerRetentionData.returning_customers || 0);
         const repeatCustomers = parseInt(customerRetentionData.repeat_customers || 0);
         const customerRetention = totalCustomers > 0 ? (repeatCustomers / totalCustomers) * 100 : 0;
-        
+
         // Table turnover (rotație mese) - comenzi unice per masă ocupată astăzi
         const tableTurnoverData = await dbGet(`
             SELECT 
@@ -613,11 +613,11 @@ async function getDashboardMetrics(req, res, next) {
             AND status IN ('paid', 'completed', 'delivered')
             AND table_number IS NOT NULL
         `).catch(() => ({ occupied_tables: 0, total_orders: 0 }));
-        
+
         const occupiedTables = parseInt(tableTurnoverData.occupied_tables || 0);
         const totalOrders = parseInt(tableTurnoverData.total_orders || 0);
         const tableTurnover = occupiedTables > 0 ? (totalOrders / occupiedTables) : 0;
-        
+
         // Table utilization (mese folosite din 200)
         const tableUtilization = await dbGet(`
             SELECT COUNT(DISTINCT table_number) as used_tables
@@ -627,11 +627,11 @@ async function getDashboardMetrics(req, res, next) {
             AND table_number IS NOT NULL
             AND table_number BETWEEN 1 AND 200
         `).catch(() => ({ used_tables: 0 }));
-        
+
         const usedTables = parseInt(tableUtilization.used_tables || 0);
         const totalTables = 200; // Configurabil
         const utilizationPercent = (usedTables / totalTables) * 100;
-        
+
         // Returnează date în formatul așteptat de frontend
         res.json({
             success: true,
@@ -683,11 +683,11 @@ async function getRevenueChart(req, res, next) {
         const { period = '7d' } = req.query; // 7d, 30d, 90d, 1y
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         // Validate period against whitelist for security
         const periodMap = { '7d': 7, '30d': 30, '90d': 90, '1y': 365 };
         const daysBack = periodMap[period] || 7;
-        
+
         // Use parameterized query with date calculation
         const chartData = await db.all(`
             SELECT 
@@ -700,7 +700,7 @@ async function getRevenueChart(req, res, next) {
             GROUP BY DATE(timestamp)
             ORDER BY date ASC
         `, [`-${daysBack}`]) || [];
-        
+
         res.json({
             success: true,
             period,
@@ -724,7 +724,7 @@ async function getInventoryAlerts(req, res, next) {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
         const { location_id } = req.query;
-        
+
         // Helper function
         function dbGet(query, params = []) {
             return new Promise((resolve, reject) => {
@@ -734,7 +734,7 @@ async function getInventoryAlerts(req, res, next) {
                 });
             });
         }
-        
+
         function dbAll(query, params = []) {
             return new Promise((resolve, reject) => {
                 db.all(query, params, (err, rows) => {
@@ -743,7 +743,7 @@ async function getInventoryAlerts(req, res, next) {
                 });
             });
         }
-        
+
         // Query pentru alerte (ingrediente sub minim)
         let alertsQuery = `
             SELECT 
@@ -768,27 +768,27 @@ async function getInventoryAlerts(req, res, next) {
             AND i.current_stock < i.min_stock
             AND (i.is_hidden = 0 OR i.is_hidden IS NULL)
         `;
-        
+
         const params = [];
         if (location_id) {
             alertsQuery += ' AND i.location_id = ?';
             params.push(location_id);
         }
-        
+
         alertsQuery += ' ORDER BY i.current_stock ASC LIMIT 100';
-        
+
         const alerts = await dbAll(alertsQuery, params).catch(() => []);
-        
+
         // Grupează alertele pe gestiuni
         const byLocation = {};
         let totalCritical = 0;
         let totalWarning = 0;
-        
+
         alerts.forEach(alert => {
             const locationId = alert.location_id || 'none';
             const locationName = alert.location_name || 'Fără gestiune';
             const locationType = alert.location_type || 'operational';
-            
+
             if (!byLocation[locationId]) {
                 byLocation[locationId] = {
                     location_id: locationId === 'none' ? null : locationId,
@@ -798,7 +798,7 @@ async function getInventoryAlerts(req, res, next) {
                     alerts: []
                 };
             }
-            
+
             const isCritical = alert.status === 'CRITIC';
             if (isCritical) {
                 totalCritical++;
@@ -818,13 +818,13 @@ async function getInventoryAlerts(req, res, next) {
                 status: alert.status
             });
         });
-        
+
         const totalStats = {
             total: alerts.length,
             critical: totalCritical,
             warning: totalWarning
         };
-        
+
         res.json({
             success: true,
             totalStats: totalStats,
@@ -851,7 +851,7 @@ async function getPins(req, res, next) {
     try {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         // Lista interfețelor hardcodate (compatibil cu legacy admin.html)
         const allInterfaces = [
             { id: 'admin', name: 'Admin Panel', description: 'Panoul de administrare' },
@@ -878,7 +878,7 @@ async function getPins(req, res, next) {
             { id: 'kds', name: 'Bucătărie (KDS)', description: 'Interfața bucătăriei' },
             { id: 'bar', name: 'Bar', description: 'Interfața barului' }
         ];
-        
+
         // Verifică dacă există tabela interface_pins
         let interfacePinsFromDb = [];
         try {
@@ -891,7 +891,7 @@ async function getPins(req, res, next) {
                     else resolve(!!row);
                 });
             });
-            
+
             if (tableExists) {
                 interfacePinsFromDb = await dbAll(db, `
                     SELECT interface, pin_hash, pin_salt, pin_policy_version, 
@@ -902,10 +902,10 @@ async function getPins(req, res, next) {
         } catch (error) {
             console.warn('⚠️ Error fetching interface pins from DB:', error.message);
         }
-        
+
         // Creează map pentru PIN-uri din DB
         const pinMap = new Map(interfacePinsFromDb.map(p => [p.interface, p]));
-        
+
         // Construiește lista de PIN-uri pentru interfețe
         const pins = allInterfaces.map(iface => {
             const dbPin = pinMap.get(iface.id);
@@ -924,7 +924,7 @@ async function getPins(req, res, next) {
                 legacy: false // PIN-urile din DB sunt hash-uite
             };
         });
-        
+
         res.json({
             success: true,
             pins: pins
@@ -941,9 +941,9 @@ async function updatePin(req, res, next) {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
         const crypto = require('crypto');
-        
+
         const { interface, pin } = req.body;
-        
+
         // Validare
         if (!interface) {
             return res.status(400).json({
@@ -951,14 +951,14 @@ async function updatePin(req, res, next) {
                 error: 'Interfața este obligatorie'
             });
         }
-        
+
         if (!pin || pin.length !== 4 || !/^\d{4}$/.test(pin)) {
             return res.status(400).json({
                 success: false,
                 error: 'PIN-ul trebuie să conțină exact 4 cifre'
             });
         }
-        
+
         // Creează tabela interface_pins dacă nu există
         await dbRun(db, `
             CREATE TABLE IF NOT EXISTS interface_pins (
@@ -973,11 +973,11 @@ async function updatePin(req, res, next) {
                 updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
             )
         `);
-        
+
         // Generează salt și hash pentru PIN
         const salt = crypto.randomBytes(16).toString('hex');
         const hash = crypto.pbkdf2Sync(pin, salt, 10000, 64, 'sha512').toString('hex');
-        
+
         // Inserează sau actualizează PIN-ul
         await dbRun(db, `
             INSERT INTO interface_pins (
@@ -993,7 +993,7 @@ async function updatePin(req, res, next) {
                 algorithm = EXCLUDED.algorithm,
                 updated_at = CURRENT_TIMESTAMP
         `, [interface, hash, salt, 1, 'pbkdf2']);
-        
+
         res.json({
             success: true,
             message: `PIN-ul pentru ${interface} a fost actualizat cu succes`,
@@ -1010,9 +1010,9 @@ async function deletePin(req, res, next) {
     try {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         const { interface } = req.body;
-        
+
         // Validare
         if (!interface) {
             return res.status(400).json({
@@ -1020,7 +1020,7 @@ async function deletePin(req, res, next) {
                 error: 'Interfața este obligatorie'
             });
         }
-        
+
         // Verifică dacă tabela există
         const tableExists = await new Promise((resolve) => {
             db.get(`
@@ -1030,26 +1030,26 @@ async function deletePin(req, res, next) {
                 resolve(!!row);
             });
         });
-        
+
         if (!tableExists) {
             return res.json({
                 success: true,
                 message: `PIN-ul pentru ${interface} nu există`
             });
         }
-        
+
         // Șterge PIN-ul
         const result = await dbRun(db, `
             DELETE FROM interface_pins WHERE interface = ?
         `, [interface]);
-        
+
         if (result.changes === 0) {
             return res.json({
                 success: true,
                 message: `PIN-ul pentru ${interface} nu există`
             });
         }
-        
+
         res.json({
             success: true,
             message: `PIN-ul pentru ${interface} a fost șters cu succes`
@@ -1065,7 +1065,7 @@ async function getUserPins(req, res, next) {
     try {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         // Obține PIN-urile utilizatorilor din users
         let userPins = [];
         try {
@@ -1075,7 +1075,7 @@ async function getUserPins(req, res, next) {
                 WHERE pin IS NOT NULL AND pin != ''
                 ORDER BY username
             `);
-            
+
             userPins = usersWithPins.map(u => ({
                 id: `user_${u.id}`,
                 user_id: u.id,
@@ -1089,7 +1089,7 @@ async function getUserPins(req, res, next) {
         } catch (error) {
             console.warn('⚠️ Error fetching user pins:', error.message);
         }
-        
+
         // Obține PIN-urile din waiters
         let waiterPins = [];
         try {
@@ -1099,7 +1099,7 @@ async function getUserPins(req, res, next) {
                 WHERE pin IS NOT NULL AND pin != ''
                 ORDER BY name
             `);
-            
+
             waiterPins = waitersWithPins.map(w => ({
                 id: `waiter_${w.id}`,
                 user_id: w.id,
@@ -1112,7 +1112,7 @@ async function getUserPins(req, res, next) {
         } catch (error) {
             console.warn('⚠️ Error fetching waiter pins:', error.message);
         }
-        
+
         // Adaugă PIN-ul default pentru admin (5555) dacă nu există deja
         const hasAdminPin = userPins.some(p => p.username === 'admin' && p.pin === '5555');
         if (!hasAdminPin) {
@@ -1127,7 +1127,7 @@ async function getUserPins(req, res, next) {
                 is_default: true,
             });
         }
-        
+
         // Obține PIN-urile din user_pins (legacy)
         let legacyPins = [];
         try {
@@ -1139,7 +1139,7 @@ async function getUserPins(req, res, next) {
                     resolve(!!row);
                 });
             });
-            
+
             if (tableExists) {
                 const legacyRows = await dbAll(db, `
                     SELECT up.id, up.user_id, up.pin, up.role, up.created_at, up.last_used,
@@ -1148,7 +1148,7 @@ async function getUserPins(req, res, next) {
                     LEFT JOIN users u ON up.user_id = u.id
                     ORDER BY up.created_at DESC
                 `);
-                
+
                 legacyPins = (legacyRows || []).map(up => ({
                     id: `legacy_${up.id}`,
                     user_id: up.user_id,
@@ -1164,10 +1164,10 @@ async function getUserPins(req, res, next) {
         } catch (error) {
             console.warn('⚠️ Error fetching legacy pins:', error.message);
         }
-        
+
         // Combină toate PIN-urile
         const allPins = [...userPins, ...waiterPins, ...legacyPins];
-        
+
         res.json({
             success: true,
             pins: allPins
@@ -1197,7 +1197,7 @@ async function getBackups(req, res, next) {
         const fs = require('fs');
         const path = require('path');
         const backupsDir = path.join(__dirname, '../../../backups');
-        
+
         let backups = [];
         if (fs.existsSync(backupsDir)) {
             const files = fs.readdirSync(backupsDir);
@@ -1209,7 +1209,7 @@ async function getBackups(req, res, next) {
                     created: fs.statSync(path.join(backupsDir, f)).birthtime
                 }));
         }
-        
+
         res.json({
             success: true,
             backups: backups
@@ -1260,7 +1260,7 @@ async function getLocations(req, res, next) {
     try {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         // Try locations table first, fallback to management_locations
         let locations = null;
         try {
@@ -1272,7 +1272,7 @@ async function getLocations(req, res, next) {
         } catch (error) {
             locations = null;
         }
-        
+
         if (!locations) {
             try {
                 locations = await db.all(`
@@ -1285,7 +1285,7 @@ async function getLocations(req, res, next) {
                 locations = [];
             }
         }
-        
+
         res.json({
             success: true,
             locations: locations || []
@@ -1302,7 +1302,7 @@ async function getCategoriesTree(req, res, next) {
     try {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         let categories = [];
         try {
             categories = await db.all(`
@@ -1314,10 +1314,10 @@ async function getCategoriesTree(req, res, next) {
             console.warn('⚠️ Error fetching categories:', error.message);
             categories = [];
         }
-        
+
         // Build tree structure
         const tree = buildCategoryTree(categories || []);
-        
+
         res.json({
             success: true,
             categories: tree
@@ -1340,7 +1340,7 @@ function buildCategoryTree(categories, parentId = null) {
 async function getCatalogProducts(req, res, next) {
     try {
         const { dbPromise } = require('../../../../database');
-        
+
         // Verifică dacă DB este gata cu timeout
         let db;
         try {
@@ -1357,9 +1357,9 @@ async function getCatalogProducts(req, res, next) {
                 products: []
             });
         }
-        
+
         const { is_active = 1 } = req.query;
-        
+
         let products = [];
         try {
             products = await new Promise((resolve, reject) => {
@@ -1384,7 +1384,7 @@ async function getCatalogProducts(req, res, next) {
             console.warn('⚠️ [getCatalogProducts] Error fetching products:', error.message);
             products = [];
         }
-        
+
         res.json({
             success: true,
             products: products || []
@@ -1403,7 +1403,7 @@ async function getCatalogProducts(req, res, next) {
 async function getAllRecipes(req, res, next) {
     try {
         const { dbPromise } = require('../../../../database');
-        
+
         // Verifică dacă DB este gata cu timeout
         let db;
         try {
@@ -1420,7 +1420,7 @@ async function getAllRecipes(req, res, next) {
                 products: []
             });
         }
-        
+
         // Returnează produsele din meniu cu informații despre rețete
         let products = [];
         try {
@@ -1455,7 +1455,7 @@ async function getAllRecipes(req, res, next) {
             console.warn('⚠️ [getAllRecipes] Error fetching recipes summary:', error.message);
             products = [];
         }
-        
+
         res.json({
             success: true,
             products: products || []
@@ -1475,7 +1475,7 @@ async function getRecipeByProductId(req, res, next) {
     try {
         const { dbPromise } = require('../../../../database');
         const { id } = req.params;
-        
+
         let db;
         try {
             db = await Promise.race([
@@ -1491,7 +1491,7 @@ async function getRecipeByProductId(req, res, next) {
                 recipes: []
             });
         }
-        
+
         let recipes = [];
         try {
             recipes = await new Promise((resolve, reject) => {
@@ -1523,7 +1523,7 @@ async function getRecipeByProductId(req, res, next) {
             console.warn('⚠️ [getRecipeByProductId] Error fetching recipe:', error.message);
             recipes = [];
         }
-        
+
         res.json({
             success: true,
             recipes: recipes || []
@@ -1542,7 +1542,7 @@ async function getRecipeByProductId(req, res, next) {
 async function getRecipePreparations(req, res, next) {
     try {
         const { dbPromise } = require('../../../../database');
-        
+
         let db;
         try {
             db = await Promise.race([
@@ -1558,7 +1558,7 @@ async function getRecipePreparations(req, res, next) {
                 preparations: []
             });
         }
-        
+
         let preparations = [];
         try {
             preparations = await new Promise((resolve, reject) => {
@@ -1589,7 +1589,7 @@ async function getRecipePreparations(req, res, next) {
             console.warn('⚠️ [getRecipePreparations] Error fetching preparations:', error.message);
             preparations = [];
         }
-        
+
         res.json({
             success: true,
             preparations: preparations || []
@@ -1608,7 +1608,7 @@ async function getRecipePreparations(req, res, next) {
 async function getOrders(req, res, next) {
     try {
         const { dbPromise } = require('../../../../database');
-        
+
         // Verifică dacă DB este gata cu timeout
         let db;
         try {
@@ -1624,25 +1624,25 @@ async function getOrders(req, res, next) {
                 message: 'Server is initializing, please try again in a moment'
             });
         }
-        
-        const { 
-            status, 
-            limit = 50, 
-            offset = 0, 
+
+        const {
+            status,
+            limit = 50,
+            offset = 0,
             page,
             startDate,
             endDate,
             includePagination = 'false' // For backwards compatibility
         } = req.query;
-        
+
         const parsedLimit = Math.min(Math.max(1, parseInt(limit) || 50), 500);
         const parsedPage = parseInt(page) || 1;
         const parsedOffset = parseInt(offset) || (parsedPage - 1) * parsedLimit;
-        
+
         // Build WHERE clause
         let whereClause = 'WHERE 1=1';
         const params = [];
-        
+
         if (status) {
             whereClause += ' AND status = ?';
             params.push(status);
@@ -1659,7 +1659,7 @@ async function getOrders(req, res, next) {
             whereClause += ' AND strftime(\'%Y-%m-%d\', timestamp) <= strftime(\'%Y-%m-%d\', ?)';
             params.push(endDate);
         }
-        
+
         // Get total count for pagination (only if requested)
         let totalCount = 0;
         if (includePagination === 'true') {
@@ -1670,11 +1670,11 @@ async function getOrders(req, res, next) {
                 });
             });
         }
-        
+
         // Get orders with pagination
         const query = `SELECT * FROM orders ${whereClause} ORDER BY timestamp DESC LIMIT ? OFFSET ?`;
         const queryParams = [...params, parsedLimit, parsedOffset];
-        
+
         const orders = await new Promise((resolve, reject) => {
             db.all(query, queryParams, (err, rows) => {
                 if (err) {
@@ -1686,7 +1686,7 @@ async function getOrders(req, res, next) {
                 }
             });
         });
-        
+
         // Return with pagination if requested, otherwise maintain backwards compatibility
         if (includePagination === 'true') {
             const totalPages = Math.ceil(totalCount / parsedLimit);
@@ -1722,17 +1722,27 @@ async function getOrdersDelivery(req, res, next) {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
         const { status = 'all', startDate, endDate, limit = '1000' } = req.query;
-        
+
+        // Bar categories constant (same as in order.events.js)
+        const BAR_CATEGORIES = [
+            'Cafea/Ciocolată/Ceai', 'Cafea/Ciocolata/Ceai',
+            'Răcoritoare', 'Racoritoare',
+            'Băuturi și Coctailuri', 'Bauturi si Coctailuri',
+            'Băuturi Spirtoase', 'Bauturi Spirtoase',
+            'Coctailuri Non-Alcoolice',
+            'Vinuri'
+        ];
+
         // Query pentru TOATE comenzile (nu doar delivery) pentru istoric vânzări
         let query = "SELECT * FROM orders WHERE 1=1";
         const params = [];
-        
+
         // Filtru după status
         if (status && status !== 'all') {
             query += ' AND status = ?';
             params.push(status);
         }
-        
+
         // Filtru după dată - dacă nu sunt specificate, folosește ziua curentă automat
         if (startDate) {
             query += ' AND DATE(timestamp) >= ?';
@@ -1747,10 +1757,10 @@ async function getOrdersDelivery(req, res, next) {
         } else if (!startDate) {
             // Dacă nu e specificat startDate, endDate default este ziua curentă (deja filtrat mai sus)
         }
-        
+
         query += ' ORDER BY timestamp DESC LIMIT ?';
         params.push(parseInt(limit, 10) || 1000);
-        
+
         const rows = await new Promise((resolve, reject) => {
             db.all(query, params, (err, rows) => {
                 if (err) {
@@ -1761,20 +1771,27 @@ async function getOrdersDelivery(req, res, next) {
                 }
             });
         });
-        
+
+        // Check if order_items table exists
+        const orderItemsTableExists = await new Promise((resolve) => {
+            db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='order_items'", (err, row) => {
+                resolve(!!row);
+            });
+        });
+
         // Parse items JSON dacă există și populează name-urile
         const orders = await Promise.all(rows.map(async (order) => {
             try {
                 let items = order.items ? (typeof order.items === 'string' ? JSON.parse(order.items) : order.items) : [];
                 if (!Array.isArray(items)) items = [];
-                
+
                 // 🔴 FIX: Populează name pentru items-urile care nu îl au
                 const enrichedItems = await Promise.all(items.map(async (item) => {
                     if (!item) return item;
-                    
+
                     let productName = item.name || item.product_name || '';
                     const productId = item.product_id || item.id || item.productId;
-                    
+
                     // Dacă name lipsește dar avem product_id, obține-l din baza de date
                     if ((!productName || productName.trim() === '') && productId) {
                         try {
@@ -1784,7 +1801,7 @@ async function getOrdersDelivery(req, res, next) {
                                     else resolve(row);
                                 });
                             });
-                            
+
                             if (product && product.name) {
                                 productName = product.name;
                             }
@@ -1792,19 +1809,19 @@ async function getOrdersDelivery(req, res, next) {
                             // Ignoră eroarea și continuă
                         }
                     }
-                    
+
                     // Dacă tot nu avem name, folosește un fallback
                     if (!productName || productName.trim() === '') {
                         productName = `Produs ${productId || 'N/A'}`;
                     }
-                    
+
                     return {
                         ...item,
                         name: productName,
                         product_id: productId || item.product_id || item.id || item.productId
                     };
                 }));
-                
+
                 return {
                     ...order,
                     items: enrichedItems,
@@ -1816,12 +1833,126 @@ async function getOrdersDelivery(req, res, next) {
                 };
             }
         }));
-        
+
+        // 🔴 FIX ORDER #2963: Filter orders to only include those where all bar/kitchen items are ready
+        // This ensures orders don't appear in livrare1.html until they've been processed by bar/kitchen
+        const filteredOrders = await Promise.all(orders.map(async (order) => {
+            try {
+                // Check if order has items from bar or kitchen
+                let hasBarKitchenItems = false;
+                let allBarKitchenItemsReady = true;
+
+                if (orderItemsTableExists) {
+                    // Use order_items table if available (more accurate)
+                    const orderItems = await new Promise((resolve) => {
+                        db.all('SELECT * FROM order_items WHERE order_id = ?', [order.id], (err, rows) => {
+                            if (err) {
+                                console.warn(`⚠️ Error fetching order_items for order ${order.id}:`, err.message);
+                                resolve([]);
+                            } else {
+                                resolve(rows || []);
+                            }
+                        });
+                    });
+
+                    // Check each item's category and status
+                    for (const item of orderItems) {
+                        const productId = item.product_id;
+                        if (!productId) continue;
+
+                        // Get product category from menu
+                        const product = await new Promise((resolve) => {
+                            db.get('SELECT category FROM menu WHERE id = ?', [productId], (err, row) => {
+                                if (err) resolve(null);
+                                else resolve(row);
+                            });
+                        });
+
+                        if (product && product.category) {
+                            // This item belongs to bar or kitchen
+                            hasBarKitchenItems = true;
+
+                            // Check if item is ready (status should be 'ready', 'completed', or 'delivered')
+                            const itemStatus = item.status || 'pending';
+                            if (itemStatus !== 'ready' && itemStatus !== 'completed' && itemStatus !== 'delivered') {
+                                allBarKitchenItemsReady = false;
+                                console.log(`🔍 Order #${order.id} - Item #${item.id} (${item.name}) status: ${itemStatus} - NOT READY`);
+                            }
+                        }
+                    }
+                } else {
+                    // Fallback: Use items from JSON if order_items table doesn't exist
+                    const items = order.items || [];
+
+                    for (const item of items) {
+                        const productId = item.product_id || item.id || item.productId;
+                        if (!productId) continue;
+
+                        // Get product category from menu
+                        const product = await new Promise((resolve) => {
+                            db.get('SELECT category FROM menu WHERE id = ?', [productId], (err, row) => {
+                                if (err) resolve(null);
+                                else resolve(row);
+                            });
+                        });
+
+                        if (product && product.category) {
+                            // This item belongs to bar or kitchen
+                            hasBarKitchenItems = true;
+
+                            // Check item status from JSON
+                            const itemStatus = item.status || 'pending';
+                            if (itemStatus !== 'ready' && itemStatus !== 'completed' && itemStatus !== 'delivered') {
+                                allBarKitchenItemsReady = false;
+                                console.log(`🔍 Order #${order.id} - Item "${item.name}" status: ${itemStatus} - NOT READY`);
+                            }
+                        }
+                    }
+                }
+
+                // Decision logic:
+                // 0. If order is already delivered/completed → include it (for history display)
+                // 1. If order has no bar/kitchen items → include it (e.g., drive-thru, simple orders)
+                // 2. If order has bar/kitchen items AND all are ready → include it
+                // 3. If order has bar/kitchen items BUT not all are ready → exclude it
+
+                // ✅ FIX: Always include orders that are already delivered/completed
+                const orderStatus = order.status?.toLowerCase();
+                if (orderStatus === 'delivered' || orderStatus === 'completed') {
+                    return order;
+                }
+
+                if (!hasBarKitchenItems) {
+                    // No bar/kitchen items - include immediately
+                    return order;
+                }
+
+                if (allBarKitchenItemsReady) {
+                    // All items are ready - include order
+                    console.log(`✅ Order #${order.id} - All bar/kitchen items ready - INCLUDING in delivery list`);
+                    return order;
+                }
+
+                // Items not ready - exclude from delivery list
+                console.log(`⏳ Order #${order.id} - Bar/kitchen items NOT ready - EXCLUDING from delivery list`);
+                return null;
+            } catch (filterError) {
+                console.error(`❌ Error filtering order ${order.id}:`, filterError.message);
+                // On error, include the order to avoid losing it
+                return order;
+            }
+        }));
+
+        // Remove null entries (orders that were excluded)
+        const readyOrders = filteredOrders.filter(order => order !== null);
+
+        console.log(`📊 Orders delivery: ${orders.length} total orders → ${readyOrders.length} ready orders (filtered ${orders.length - readyOrders.length})`);
+
         // Returnează în formatul așteptat de componentă
         res.json({
             success: true,
-            data: orders || [],
-            orders: orders || [] // Compatibilitate backward
+            data: readyOrders || [],
+            orders: readyOrders || [] // Compatibilitate backward
         });
     } catch (error) {
         console.error('❌ Error in getOrdersDelivery:', error);
@@ -1836,10 +1967,10 @@ async function getOrdersDelivery(req, res, next) {
 // GET /api/admin/tables/status
 async function getTablesStatus(req, res, next) {
     console.log('🔵 [HIT] /api/admin/tables/status - Handler invoked');
-    
+
     try {
         const { dbPromise } = require('../../../../database');
-        
+
         // Verifică dacă DB este gata cu timeout
         let db;
         try {
@@ -1854,13 +1985,13 @@ async function getTablesStatus(req, res, next) {
                 tables: []
             });
         }
-        
+
         // Test DB connection first
         console.log('🔵 [DB TEST] Testing DB connection with db.get...');
         db.get('SELECT 1 as test', [], (err, row) => {
             console.log('🔵 [DB TEST] db.get callback:', err ? err.message : 'OK', row);
         });
-        
+
         // Check if tables table exists
         console.log('🔵 [DB] Checking if tables table exists...');
         let tableExists = null;
@@ -1883,7 +2014,7 @@ async function getTablesStatus(req, res, next) {
             console.log('🔵 [DB] Promise error:', error.message);
             tableExists = null;
         }
-        
+
         if (!tableExists) {
             console.log('🔵 [RESPONSE] Returning empty array (table does not exist)');
             return res.json({
@@ -1891,7 +2022,7 @@ async function getTablesStatus(req, res, next) {
                 tables: []
             });
         }
-        
+
         // Use helper function dbAll() to avoid EventEmitter issues
         console.log('🔵 [DB] BEFORE db.all - calling dbAll helper...');
         let tables = [];
@@ -1917,16 +2048,16 @@ async function getTablesStatus(req, res, next) {
                 GROUP BY t.id
                 ORDER BY t.table_number
             `, []);
-            
+
             console.log('🔵 [DB] AFTER db.all - result type:', typeof result, 'isArray:', Array.isArray(result), 'length:', result?.length);
-            
+
             // CRITICAL: Double-check result is an array
             if (Array.isArray(result)) {
                 // Procesează rezultatele pentru a determina statusul mesei
                 tables = result.map(table => {
                     const hasActiveOrder = (table.active_orders || 0) > 0;
                     const hasReservation = (table.confirmed_reservations_today || 0) > 0 || (table.reservation_tables_count || 0) > 0;
-                    
+
                     // Determină statusul mesei
                     let status = 'free';
                     if (hasActiveOrder) {
@@ -1934,7 +2065,7 @@ async function getTablesStatus(req, res, next) {
                     } else if (hasReservation) {
                         status = 'reserved';
                     }
-                    
+
                     return {
                         ...table,
                         status: status,
@@ -1949,21 +2080,21 @@ async function getTablesStatus(req, res, next) {
             console.error('❌ Error fetching tables:', error.message);
             tables = [];
         }
-        
+
         // CRITICAL: Final check before sending
         if (!Array.isArray(tables)) {
             console.error('❌ CRITICAL: tables is NOT an array before res.json!');
             tables = [];
         }
-        
+
         console.log('🔵 [RESPONSE] Sending response with', tables.length, 'tables');
-        
+
         // Build response - ensure clean object
         const response = {
             success: true,
             tables: tables
         };
-        
+
         return res.json(response);
     } catch (error) {
         console.error('❌ Error in getTablesStatus:', error);
@@ -1980,7 +2111,7 @@ async function getTablesStatus(req, res, next) {
 async function getKioskTablesPositions(req, res, next) {
     try {
         const { dbPromise } = require('../../../../database');
-        
+
         // Așteaptă DB să fie gata (cu timeout)
         let db;
         try {
@@ -1995,7 +2126,7 @@ async function getKioskTablesPositions(req, res, next) {
                 positions: []
             });
         }
-        
+
         // Check if table_positions table exists
         let tableExists = null;
         try {
@@ -2011,14 +2142,14 @@ async function getKioskTablesPositions(req, res, next) {
         } catch (error) {
             tableExists = null;
         }
-        
+
         if (!tableExists) {
             return res.json({
                 success: true,
                 positions: []
             });
         }
-        
+
         let positions = [];
         try {
             positions = await new Promise((resolve) => {
@@ -2039,7 +2170,7 @@ async function getKioskTablesPositions(req, res, next) {
             console.warn('⚠️ Error fetching table positions:', error.message);
             positions = [];
         }
-        
+
         return res.json({
             success: true,
             positions: positions || []
@@ -2060,18 +2191,18 @@ async function getKioskOrder(req, res, next) {
         const { id } = req.params;
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         const order = await new Promise((resolve, reject) => {
             db.get('SELECT * FROM orders WHERE id = ?', [id], (err, row) => {
                 if (err) reject(err);
                 else resolve(row);
             });
         });
-        
+
         if (!order) {
             return res.status(404).json({ error: 'Comandă negăsită' });
         }
-        
+
         // Get order items if table exists
         let items = [];
         try {
@@ -2079,7 +2210,7 @@ async function getKioskOrder(req, res, next) {
                 SELECT name FROM sqlite_master 
                 WHERE type='table' AND name='order_items'
             `);
-            
+
             if (orderItemsExists) {
                 items = await new Promise((resolve, reject) => {
                     db.all('SELECT * FROM order_items WHERE order_id = ?', [id], (err, rows) => {
@@ -2105,7 +2236,7 @@ async function getKioskOrder(req, res, next) {
                 }
             }
         }
-        
+
         res.json({
             success: true,
             order: {
@@ -2125,14 +2256,14 @@ async function getUsers(req, res, next) {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
         const { role } = req.query;
-        
+
         // Verifică dacă tabela roles există
         const rolesTableExists = await new Promise((resolve) => {
             db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='roles'", (err, row) => {
                 resolve(!!row);
             });
         });
-        
+
         let query = `
             SELECT 
                 u.id, 
@@ -2143,31 +2274,31 @@ async function getUsers(req, res, next) {
                 u.last_login,
                 u.created_at
         `;
-        
+
         if (rolesTableExists) {
             query += `, r.role_name, r.role_description`;
         } else {
             query += `, u.role as role_name, NULL as role_description`;
         }
-        
+
         query += `
             FROM users u
         `;
-        
+
         if (rolesTableExists) {
             query += `LEFT JOIN roles r ON u.role = r.role_name`;
         }
-        
+
         query += ` WHERE 1=1`;
-        
+
         const params = [];
-        
+
         if (role) {
             const roles = role.split(',');
             query += ` AND u.role IN (${roles.map(() => '?').join(',')})`;
             params.push(...roles);
         }
-        
+
         let users = [];
         try {
             users = await new Promise((resolve, reject) => {
@@ -2180,7 +2311,7 @@ async function getUsers(req, res, next) {
             console.warn('⚠️ Error fetching users:', error.message);
             users = [];
         }
-        
+
         // Formatează pentru frontend
         const formattedUsers = users.map(user => ({
             id: user.id,
@@ -2192,7 +2323,7 @@ async function getUsers(req, res, next) {
             last_login: user.last_login,
             created_at: user.created_at,
         }));
-        
+
         res.json(formattedUsers);
     } catch (error) {
         console.error('❌ Error in getUsers:', error);
@@ -2206,11 +2337,11 @@ async function createUser(req, res, next) {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
         const { username, email, password, roleId } = req.body;
-        
+
         if (!username || !password || !roleId) {
             return res.status(400).json({ error: 'Username, password și roleId sunt obligatorii' });
         }
-        
+
         // Obține numele rolului din ID
         const role = await new Promise((resolve, reject) => {
             db.get('SELECT role_name FROM roles WHERE id = ?', [roleId], (err, row) => {
@@ -2218,26 +2349,26 @@ async function createUser(req, res, next) {
                 else resolve(row ? row.role_name : null);
             });
         });
-        
+
         if (!role) {
             return res.status(400).json({ error: 'Rolul nu există' });
         }
-        
+
         // Hash password (simplificat - ar trebui folosit bcrypt în producție)
         const crypto = require('crypto');
         const passwordHash = crypto.createHash('sha256').update(password).digest('hex');
-        
+
         const result = await new Promise((resolve, reject) => {
             db.run(
                 'INSERT INTO users (username, email, password, role, is_active, created_at) VALUES (?, ?, ?, ?, 1, CURRENT_TIMESTAMP)',
                 [username, email || null, passwordHash, role],
-                function(err) {
+                function (err) {
                     if (err) reject(err);
                     else resolve({ id: this.lastID });
                 }
             );
         });
-        
+
         // Obține utilizatorul creat
         const user = await new Promise((resolve, reject) => {
             db.get(
@@ -2252,7 +2383,7 @@ async function createUser(req, res, next) {
                 }
             );
         });
-        
+
         res.status(201).json({
             id: user.id,
             username: user.username,
@@ -2279,7 +2410,7 @@ async function updateUser(req, res, next) {
         const { username, email, password, roleId } = req.body;
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         // Verifică dacă utilizatorul există
         const existing = await new Promise((resolve, reject) => {
             db.get('SELECT * FROM users WHERE id = ?', [id], (err, row) => {
@@ -2287,11 +2418,11 @@ async function updateUser(req, res, next) {
                 else resolve(row);
             });
         });
-        
+
         if (!existing) {
             return res.status(404).json({ error: 'Utilizatorul nu există' });
         }
-        
+
         // Obține numele rolului dacă roleId este furnizat
         let role = existing.role;
         if (roleId) {
@@ -2301,20 +2432,20 @@ async function updateUser(req, res, next) {
                     else resolve(row);
                 });
             });
-            
+
             if (!roleRow) {
                 return res.status(400).json({ error: 'Rolul nu există' });
             }
             role = roleRow.role_name;
         }
-        
+
         // Hash password dacă este furnizat
         let passwordHash = existing.password;
         if (password) {
             const crypto = require('crypto');
             passwordHash = crypto.createHash('sha256').update(password).digest('hex');
         }
-        
+
         await new Promise((resolve, reject) => {
             db.run(
                 'UPDATE users SET username = COALESCE(?, username), email = ?, password = ?, role = ? WHERE id = ?',
@@ -2325,7 +2456,7 @@ async function updateUser(req, res, next) {
                 }
             );
         });
-        
+
         // Obține utilizatorul actualizat
         const user = await new Promise((resolve, reject) => {
             db.get(
@@ -2340,7 +2471,7 @@ async function updateUser(req, res, next) {
                 }
             );
         });
-        
+
         res.json({
             id: user.id,
             username: user.username,
@@ -2363,7 +2494,7 @@ async function deleteUser(req, res, next) {
         const { id } = req.params;
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         // Verifică dacă utilizatorul există
         const existing = await new Promise((resolve, reject) => {
             db.get('SELECT * FROM users WHERE id = ?', [id], (err, row) => {
@@ -2371,11 +2502,11 @@ async function deleteUser(req, res, next) {
                 else resolve(row);
             });
         });
-        
+
         if (!existing) {
             return res.status(404).json({ error: 'Utilizatorul nu există' });
         }
-        
+
         // Șterge utilizatorul
         await new Promise((resolve, reject) => {
             db.run('DELETE FROM users WHERE id = ?', [id], (err) => {
@@ -2383,7 +2514,7 @@ async function deleteUser(req, res, next) {
                 else resolve();
             });
         });
-        
+
         res.json({ success: true, message: 'Utilizatorul a fost șters' });
     } catch (error) {
         console.error('❌ Error in deleteUser:', error);
@@ -2396,7 +2527,7 @@ async function getRoles(req, res, next) {
     try {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         // Verifică dacă tabela roles există
         const tableExists = await new Promise((resolve) => {
             db.get(
@@ -2406,7 +2537,7 @@ async function getRoles(req, res, next) {
                 }
             );
         });
-        
+
         if (!tableExists) {
             // Returnează roluri default dacă tabela nu există
             return res.json([
@@ -2416,7 +2547,7 @@ async function getRoles(req, res, next) {
                 { id: 4, role_name: 'chef', role_description: 'Bucătar', user_count: 0 },
             ]);
         }
-        
+
         const roles = await new Promise((resolve, reject) => {
             db.all(
                 `SELECT 
@@ -2435,7 +2566,7 @@ async function getRoles(req, res, next) {
                 }
             );
         });
-        
+
         res.json(roles);
     } catch (error) {
         console.error('❌ Error in getRoles:', error);
@@ -2478,7 +2609,7 @@ async function getEvents(req, res, next) {
     try {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         let events = [];
         try {
             events = await db.all(`
@@ -2491,7 +2622,7 @@ async function getEvents(req, res, next) {
             console.warn('⚠️ Error fetching events:', error.message);
             events = [];
         }
-        
+
         res.json({
             success: true,
             events: events || []
@@ -2507,7 +2638,7 @@ async function getMenuAll(req, res, next) {
         const { lang = 'ro' } = req.query;
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         let products = [];
         try {
             // Verifică dacă catalog_products există ȘI are produse
@@ -2515,9 +2646,9 @@ async function getMenuAll(req, res, next) {
                 SELECT name FROM sqlite_master 
                 WHERE type='table' AND name='catalog_products'
             `);
-            
+
             console.log(`[getMenuAll] catalog_products exists: ${!!catalogExists}`);
-            
+
             if (catalogExists) {
                 // Try catalog_products first (new schema)
                 products = await new Promise((resolve, reject) => {
@@ -2536,9 +2667,9 @@ async function getMenuAll(req, res, next) {
                         }
                     });
                 });
-                
+
                 console.log(`[getMenuAll] catalog_products count: ${products.length}`);
-                
+
                 // Dacă catalog_products este gol, face fallback la menu
                 if (!products || products.length === 0) {
                     console.log('⚠️ catalog_products este gol, folosim menu table');
@@ -2606,18 +2737,18 @@ async function getMenuAll(req, res, next) {
                 products = [];
             }
         }
-        
+
         // Asigură-te că products este un array
         if (!Array.isArray(products)) {
             console.warn('⚠️ getMenuAll: products is not an array, converting...');
             products = [];
         }
-        
+
         // Încarcă customizations pentru fiecare produs
         if (products.length > 0) {
             console.log(`[getMenuAll] Loading customizations for ${products.length} products...`);
             const productIds = products.map(p => p.id || p.product_id).filter(id => id != null);
-            
+
             if (productIds.length > 0) {
                 try {
                     // Verifică dacă tabela customization_options există
@@ -2630,7 +2761,7 @@ async function getMenuAll(req, res, next) {
                             else resolve(row);
                         });
                     });
-                    
+
                     if (tableExists) {
                         // Strategie 1: Încearcă să găsească customizations folosind ID-ul direct (pentru menu)
                         const allCustomizationsById = await new Promise((resolve, reject) => {
@@ -2655,7 +2786,7 @@ async function getMenuAll(req, res, next) {
                                 }
                             });
                         });
-                        
+
                         // Strategie 2: Dacă catalog_products există, caută customizations prin mapare nume
                         let allCustomizationsByName = [];
                         try {
@@ -2665,7 +2796,7 @@ async function getMenuAll(req, res, next) {
                                     else resolve(row);
                                 });
                             });
-                            
+
                             if (catalogExists && products.length > 0) {
                                 // Creează mapare nume -> menu.id pentru customizations
                                 const productNames = products.map(p => p.name).filter(Boolean);
@@ -2680,7 +2811,7 @@ async function getMenuAll(req, res, next) {
                                             else resolve(rows || []);
                                         });
                                     });
-                                    
+
                                     if (menuProducts.length > 0) {
                                         const menuIds = menuProducts.map(m => m.id);
                                         const menuPlaceholders = menuIds.map(() => '?').join(',');
@@ -2705,13 +2836,13 @@ async function getMenuAll(req, res, next) {
                                                 }
                                             });
                                         });
-                                        
+
                                         // Creează mapare nume -> menu.id
                                         const nameToMenuId = {};
                                         menuProducts.forEach(m => {
                                             nameToMenuId[m.name] = m.id;
                                         });
-                                        
+
                                         // Creează mapare catalog_products.id -> menu.id (prin nume)
                                         const catalogToMenuId = {};
                                         products.forEach(p => {
@@ -2719,7 +2850,7 @@ async function getMenuAll(req, res, next) {
                                                 catalogToMenuId[p.id || p.product_id] = nameToMenuId[p.name];
                                             }
                                         });
-                                        
+
                                         // Grupează customizations pe produs (folosind mapare)
                                         const customizationsByProduct = {};
                                         [...allCustomizationsById, ...allCustomizationsByName].forEach(custom => {
@@ -2735,18 +2866,18 @@ async function getMenuAll(req, res, next) {
                                                 extra_price: custom.extra_price || 0
                                             });
                                         });
-                                        
+
                                         // Adaugă customizations la fiecare produs (folosind mapare catalog -> menu)
                                         products = products.map(product => {
                                             const productId = product.id || product.product_id;
                                             // Încearcă direct ID
                                             let customizations = customizationsByProduct[productId] || [];
-                                            
+
                                             // Dacă nu găsește, încearcă prin mapare nume
                                             if (customizations.length === 0 && catalogToMenuId[productId]) {
                                                 customizations = customizationsByProduct[catalogToMenuId[productId]] || [];
                                             }
-                                            
+
                                             return {
                                                 ...product,
                                                 customizations: customizations
@@ -2758,7 +2889,7 @@ async function getMenuAll(req, res, next) {
                         } catch (nameError) {
                             console.warn('⚠️ Error in name-based customization mapping:', nameError.message);
                         }
-                        
+
                         // Dacă nu s-a făcut mapare prin nume, folosește doar maparea directă
                         if (!products[0] || !products[0].customizations) {
                             // Grupează customizations pe produs (doar pentru menu)
@@ -2776,7 +2907,7 @@ async function getMenuAll(req, res, next) {
                                     extra_price: custom.extra_price || 0
                                 });
                             });
-                            
+
                             // Adaugă customizations la fiecare produs
                             products = products.map(product => {
                                 const productId = product.id || product.product_id;
@@ -2787,7 +2918,7 @@ async function getMenuAll(req, res, next) {
                                 };
                             });
                         }
-                        
+
                         const productsWithCustoms = products.filter(p => p.customizations && p.customizations.length > 0).length;
                         console.log(`[getMenuAll] ${productsWithCustoms} products have customizations`);
                     } else {
@@ -2799,10 +2930,10 @@ async function getMenuAll(req, res, next) {
                 }
             }
         }
-        
+
         // Extrage categorii unice din produse pentru frontend
         const categories_ordered = [...new Set(products.map(p => p.category || p.category_name).filter(Boolean))];
-        
+
         // Return format compatible with frontend expectations
         res.json({
             success: true,
@@ -2831,7 +2962,7 @@ async function getReservations(req, res, next) {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
         const { limit = 120, offset = 0, startDate, endDate, status } = req.query;
-        
+
         // Verifică dacă tabela reservations există
         let tableExists = null;
         try {
@@ -2847,12 +2978,12 @@ async function getReservations(req, res, next) {
         } catch (error) {
             tableExists = null;
         }
-        
+
         let reservations = [];
         if (tableExists) {
             let query = 'SELECT * FROM reservations WHERE 1=1';
             const params = [];
-            
+
             if (startDate) {
                 query += ' AND reservation_date >= ?';
                 params.push(startDate);
@@ -2868,11 +2999,11 @@ async function getReservations(req, res, next) {
                     params.push(...statuses);
                 }
             }
-            
+
             // Folosește numele corecte ale coloanelor: reservation_date și reservation_time
             query += ' ORDER BY reservation_date DESC, reservation_time DESC LIMIT ? OFFSET ?';
             params.push(parseInt(limit), parseInt(offset));
-            
+
             try {
                 reservations = await new Promise((resolve, reject) => {
                     db.all(query, params, (err, rows) => {
@@ -2885,12 +3016,12 @@ async function getReservations(req, res, next) {
                 reservations = [];
             }
         }
-        
+
         // Asigură-te că reservations este un array
         if (!Array.isArray(reservations)) {
             reservations = [];
         }
-        
+
         res.json({
             success: true,
             reservations: reservations
@@ -2930,7 +3061,7 @@ async function getAuditLog(req, res, next) {
         const { limit = 500 } = req.query;
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         let logs = [];
         try {
             // Verifică dacă tabela există
@@ -2938,7 +3069,7 @@ async function getAuditLog(req, res, next) {
                 SELECT name FROM sqlite_master 
                 WHERE type='table' AND name='audit_log' OR name='kiosk_actions_log'
             `);
-            
+
             if (tableExists) {
                 const tableName = tableExists.name;
                 logs = await db.all(`
@@ -2951,7 +3082,7 @@ async function getAuditLog(req, res, next) {
             console.warn('⚠️ Error fetching audit log:', error.message);
             logs = [];
         }
-        
+
         res.json({
             success: true,
             logs: Array.isArray(logs) ? logs : []
@@ -2971,7 +3102,7 @@ async function getTemperatureLog(req, res, next) {
         const { limit = 24 } = req.query;
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         let logs = [];
         try {
             // Verifică dacă tabela există
@@ -2979,7 +3110,7 @@ async function getTemperatureLog(req, res, next) {
                 SELECT name FROM sqlite_master 
                 WHERE type='table' AND name='compliance_temperature_log'
             `);
-            
+
             if (tableExists) {
                 logs = await db.all(`
                     SELECT * FROM compliance_temperature_log
@@ -2991,7 +3122,7 @@ async function getTemperatureLog(req, res, next) {
             console.warn('⚠️ Error fetching temperature log:', error.message);
             logs = [];
         }
-        
+
         res.json({
             success: true,
             logs: Array.isArray(logs) ? logs : []
@@ -3011,7 +3142,7 @@ async function getCleaningSchedule(req, res, next) {
         const { overdue = false } = req.query;
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         let schedules = [];
         try {
             // Verifică dacă tabela există
@@ -3019,21 +3150,21 @@ async function getCleaningSchedule(req, res, next) {
                 SELECT name FROM sqlite_master 
                 WHERE type='table' AND name='compliance_cleaning_schedule'
             `);
-            
+
             if (tableExists) {
                 let query = 'SELECT * FROM compliance_cleaning_schedule';
                 if (overdue === 'true') {
                     query += ' WHERE due_date < date("now") AND status != "completed"';
                 }
                 query += ' ORDER BY due_date ASC';
-                
+
                 schedules = await db.all(query) || [];
             }
         } catch (error) {
             console.warn('⚠️ Error fetching cleaning schedule:', error.message);
             schedules = [];
         }
-        
+
         res.json({
             success: true,
             schedules: Array.isArray(schedules) ? schedules : []
@@ -3052,7 +3183,7 @@ async function getRestaurantSettings(req, res, next) {
     try {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         let settings = null;
         try {
             settings = await db.get(`
@@ -3063,7 +3194,7 @@ async function getRestaurantSettings(req, res, next) {
             console.warn('⚠️ Error fetching restaurant settings:', error.message);
             settings = null;
         }
-        
+
         res.json({
             success: true,
             settings: settings || {}
@@ -3078,21 +3209,21 @@ async function getCouriers(req, res, next) {
     try {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         // Verifică dacă tabela couriers există
         const tableExists = await new Promise((resolve) => {
             db.get(`SELECT name FROM sqlite_master WHERE type='table' AND name='couriers'`, (err, row) => {
                 resolve(!!row);
             });
         });
-        
+
         if (!tableExists) {
             return res.json({
                 success: true,
                 couriers: []
             });
         }
-        
+
         const couriers = await new Promise((resolve, reject) => {
             db.all(`
                 SELECT 
@@ -3106,7 +3237,7 @@ async function getCouriers(req, res, next) {
                 else resolve(rows || []);
             });
         });
-        
+
         res.json({
             success: true,
             couriers: couriers || []
@@ -3125,21 +3256,21 @@ async function getCouriersAvailable(req, res, next) {
     try {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         // Verifică dacă tabela couriers există
         const tableExists = await new Promise((resolve) => {
             db.get(`SELECT name FROM sqlite_master WHERE type='table' AND name='couriers'`, (err, row) => {
                 resolve(!!row);
             });
         });
-        
+
         if (!tableExists) {
             return res.json({
                 success: true,
                 couriers: []
             });
         }
-        
+
         // Curieri disponibili (online sau offline, dar activi) cu locații
         const couriers = await new Promise((resolve, reject) => {
             db.all(`
@@ -3167,7 +3298,7 @@ async function getCouriersAvailable(req, res, next) {
                 else resolve(rows || []);
             });
         });
-        
+
         res.json({
             success: true,
             couriers: couriers || []
@@ -3186,21 +3317,21 @@ async function getCouriersPending(req, res, next) {
     try {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         // Verifică dacă tabela orders există
         const ordersTableExists = await new Promise((resolve) => {
             db.get(`SELECT name FROM sqlite_master WHERE type='table' AND name='orders'`, (err, row) => {
                 resolve(!!row);
             });
         });
-        
+
         if (!ordersTableExists) {
             return res.json({
                 success: true,
                 orders: []
             });
         }
-        
+
         // Comenzi delivery pregătite pentru atribuire (fără curier atribuit)
         const orders = await new Promise((resolve, reject) => {
             db.all(`
@@ -3223,7 +3354,7 @@ async function getCouriersPending(req, res, next) {
                 else resolve(rows || []);
             });
         });
-        
+
         res.json({
             success: true,
             orders: orders || []
@@ -3242,21 +3373,21 @@ async function getCouriersTracking(req, res, next) {
     try {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         // Verifică dacă tabela couriers există
         const tableExists = await new Promise((resolve) => {
             db.get(`SELECT name FROM sqlite_master WHERE type='table' AND name='couriers'`, (err, row) => {
                 resolve(!!row);
             });
         });
-        
+
         if (!tableExists) {
             return res.json({
                 success: true,
                 couriers: []
             });
         }
-        
+
         // Curieri live cu poziții și comenzi active
         const couriers = await new Promise((resolve, reject) => {
             db.all(`
@@ -3282,7 +3413,7 @@ async function getCouriersTracking(req, res, next) {
                 else resolve(rows || []);
             });
         });
-        
+
         res.json({
             success: true,
             couriers: couriers || []
@@ -3317,7 +3448,7 @@ async function getOrdersDisplayKitchen(req, res, next) {
     // NU folosim next(error) - returnăm întotdeauna răspuns sigur
     try {
         const { dbPromise } = require('../../../../database');
-        
+
         // Așteaptă DB să fie gata (cu timeout)
         let db;
         try {
@@ -3332,10 +3463,17 @@ async function getOrdersDisplayKitchen(req, res, next) {
                 orders: []
             });
         }
-        
+
         // Categorii de bar care trebuie excluse din bucătărie
-        const BAR_CATEGORIES = ['Cafea/Ciocolată/Ceai', 'Răcoritoare', 'Băuturi și Coctailuri'];
-        
+        const BAR_CATEGORIES = [
+            'Cafea/Ciocolată/Ceai', 'Cafea/Ciocolata/Ceai',
+            'Răcoritoare', 'Racoritoare',
+            'Băuturi și Coctailuri', 'Bauturi si Coctailuri',
+            'Vinuri', 'Bere',
+            'Băuturi Spirtoase', 'Bauturi Spirtoase',
+            'Coctailuri Non-Alcoolice', 'Cocktailuri Non-Alcoolice'
+        ];
+
         let orders = [];
         try {
             // Verifică dacă tabela orders există
@@ -3352,13 +3490,14 @@ async function getOrdersDisplayKitchen(req, res, next) {
                     resolve(false);
                 }
             });
-            
+
             if (ordersTableExists) {
                 orders = await new Promise((resolve) => {
                     try {
                         db.all(`
                             SELECT * FROM orders 
-                            WHERE status IN ('pending', 'preparing', 'confirmed')
+                            WHERE status IN ('pending', 'preparing', 'confirmed', 'paid', 'Pending:')
+                              AND DATE(timestamp, 'localtime') = DATE('now', 'localtime')
                             ORDER BY timestamp ASC
                         `, [], (err, rows) => {
                             if (err) {
@@ -3378,7 +3517,7 @@ async function getOrdersDisplayKitchen(req, res, next) {
             console.warn('⚠️ Error in kitchen orders fetch:', error.message);
             orders = [];
         }
-        
+
         // Filtrează comenzile - exclude cele care au doar produse de bar
         const filteredOrders = [];
         try {
@@ -3386,7 +3525,7 @@ async function getOrdersDisplayKitchen(req, res, next) {
                 for (const order of orders) {
                     try {
                         if (!order) continue;
-                        
+
                         let items = [];
                         if (order.items) {
                             if (typeof order.items === 'string') {
@@ -3399,15 +3538,15 @@ async function getOrdersDisplayKitchen(req, res, next) {
                                 items = order.items;
                             }
                         }
-                        
+
                         // 🔴 FIX: Populează name și category pentru items-urile care nu le au
                         const enrichedItems = await Promise.all((items || []).map(async (item) => {
                             if (!item) return item;
-                            
+
                             let productName = item.name || item.product_name || '';
                             let productCategory = item.category || item.category_name || '';
                             const productId = item.product_id || item.id || item.productId;
-                            
+
                             // Dacă name sau category lipsește dar avem product_id, obține-le din baza de date
                             if (productId && ((!productName || productName.trim() === '') || (!productCategory || productCategory.trim() === ''))) {
                                 try {
@@ -3417,7 +3556,7 @@ async function getOrdersDisplayKitchen(req, res, next) {
                                             else resolve(row);
                                         });
                                     });
-                                    
+
                                     if (product) {
                                         if (!productName || productName.trim() === '') {
                                             productName = product.name || '';
@@ -3430,18 +3569,18 @@ async function getOrdersDisplayKitchen(req, res, next) {
                                     // Ignoră eroarea și continuă
                                 }
                             }
-                            
+
                             // Dacă tot nu avem name, folosește un fallback
                             if (!productName || productName.trim() === '') {
                                 productName = `Produs ${productId || 'N/A'}`;
                             }
-                            
+
                             // Setează itemId (pentru bar interface să poată marca items ca gata)
                             const itemId = item.itemId || item.item_id || item.id || item.line_id || null;
-                            
+
                             // Setează status implicit 'pending' dacă nu există (pentru ca bar-ul să poată marca items ca gata)
                             const itemStatus = item.status || item.item_status || 'pending';
-                            
+
                             return {
                                 ...item,
                                 name: productName,
@@ -3452,15 +3591,15 @@ async function getOrdersDisplayKitchen(req, res, next) {
                                 status: itemStatus // Setează status implicit 'pending' pentru procesare în bar
                             };
                         }));
-                        
+
                         // Filtrează item-urile - exclude categoriile de bar
                         const kitchenItems = enrichedItems.filter(item => {
                             if (!item) return false;
                             const category = item.category || item.category_name || '';
                             // Exclude comenzile care au doar produse de bar
-                            return !BAR_CATEGORIES.includes(category);
+                            return !BAR_CATEGORIES.some(bc => category.toLowerCase().includes(bc.toLowerCase()));
                         });
-                        
+
                         // Returnează comanda doar dacă are item-uri de bucătărie
                         if (kitchenItems.length > 0) {
                             filteredOrders.push({
@@ -3477,7 +3616,7 @@ async function getOrdersDisplayKitchen(req, res, next) {
         } catch (filterError) {
             console.warn('⚠️ Error filtering kitchen orders:', filterError.message);
         }
-        
+
         return res.json({
             success: true,
             orders: filteredOrders || []
@@ -3497,7 +3636,7 @@ async function getOrdersDisplayBar(req, res, next) {
     // NU folosim next(error) - returnăm întotdeauna răspuns sigur
     try {
         const { dbPromise } = require('../../../../database');
-        
+
         // Așteaptă DB să fie gata (cu timeout)
         let db;
         try {
@@ -3512,10 +3651,17 @@ async function getOrdersDisplayBar(req, res, next) {
                 orders: []
             });
         }
-        
+
         // Categorii de bar
-        const BAR_CATEGORIES = ['Cafea/Ciocolată/Ceai', 'Răcoritoare', 'Băuturi și Coctailuri'];
-        
+        const BAR_CATEGORIES = [
+            'Cafea/Ciocolată/Ceai', 'Cafea/Ciocolata/Ceai',
+            'Răcoritoare', 'Racoritoare',
+            'Băuturi și Coctailuri', 'Bauturi si Coctailuri',
+            'Vinuri', 'Bere',
+            'Băuturi Spirtoase', 'Bauturi Spirtoase',
+            'Coctailuri Non-Alcoolice', 'Cocktailuri Non-Alcoolice'
+        ];
+
         let orders = [];
         try {
             // Verifică dacă tabela orders există
@@ -3532,14 +3678,14 @@ async function getOrdersDisplayBar(req, res, next) {
                     resolve(false);
                 }
             });
-            
+
             if (ordersTableExists) {
                 orders = await new Promise((resolve) => {
                     try {
                         db.all(`
                             SELECT * FROM orders 
-                            WHERE status IN ('pending', 'preparing', 'confirmed')
-                              AND DATE(timestamp) = DATE('now')
+                            WHERE status IN ('pending', 'preparing', 'confirmed', 'paid', 'Pending:')
+                              AND DATE(timestamp, 'localtime') = DATE('now', 'localtime')
                             ORDER BY timestamp ASC
                         `, [], (err, rows) => {
                             if (err) {
@@ -3559,7 +3705,7 @@ async function getOrdersDisplayBar(req, res, next) {
             console.warn('⚠️ Error in bar orders fetch:', error.message);
             orders = [];
         }
-        
+
         // Filtrează comenzile - include doar cele cu produse de bar
         const filteredOrders = [];
         try {
@@ -3567,7 +3713,7 @@ async function getOrdersDisplayBar(req, res, next) {
                 for (const order of orders) {
                     try {
                         if (!order) continue;
-                        
+
                         let items = [];
                         if (order.items) {
                             if (typeof order.items === 'string') {
@@ -3580,15 +3726,15 @@ async function getOrdersDisplayBar(req, res, next) {
                                 items = order.items;
                             }
                         }
-                        
+
                         // 🔴 FIX: Populează name și category pentru items-urile care nu le au
                         const enrichedItems = await Promise.all((items || []).map(async (item) => {
                             if (!item) return item;
-                            
+
                             let productName = item.name || item.product_name || '';
                             let productCategory = item.category || item.category_name || '';
                             const productId = item.product_id || item.id || item.productId;
-                            
+
                             // Dacă name sau category lipsește dar avem product_id, obține-le din baza de date
                             if (productId && ((!productName || productName.trim() === '') || (!productCategory || productCategory.trim() === ''))) {
                                 try {
@@ -3598,7 +3744,7 @@ async function getOrdersDisplayBar(req, res, next) {
                                             else resolve(row);
                                         });
                                     });
-                                    
+
                                     if (product) {
                                         if (!productName || productName.trim() === '') {
                                             productName = product.name || '';
@@ -3611,18 +3757,18 @@ async function getOrdersDisplayBar(req, res, next) {
                                     // Ignoră eroarea și continuă
                                 }
                             }
-                            
+
                             // Dacă tot nu avem name, folosește un fallback
                             if (!productName || productName.trim() === '') {
                                 productName = `Produs ${productId || 'N/A'}`;
                             }
-                            
+
                             // Setează itemId (pentru bar interface să poată marca items ca gata)
                             const itemId = item.itemId || item.item_id || item.id || item.line_id || null;
-                            
+
                             // Setează status implicit 'pending' dacă nu există (pentru ca bar-ul să poată marca items ca gata)
                             const itemStatus = item.status || item.item_status || 'pending';
-                            
+
                             return {
                                 ...item,
                                 name: productName,
@@ -3633,21 +3779,22 @@ async function getOrdersDisplayBar(req, res, next) {
                                 status: itemStatus // Setează status implicit 'pending' pentru procesare în bar
                             };
                         }));
-                        
+
                         // Filtrează item-urile - include doar categoriile de bar
                         const barItems = enrichedItems.filter(item => {
                             if (!item) return false;
                             const category = item.category || item.category_name || '';
-                            return BAR_CATEGORIES.includes(category);
+                            // Verifică dacă este bar category (broad matching uniformizat cu frontend)
+                            return BAR_CATEGORIES.some(bc => category.toLowerCase().includes(bc.toLowerCase()));
                         });
-                        
+
                         // ✅ FIX: Exclude comenzile care au toate items-urile de bar completed
                         // Doar comenzile cu cel puțin un item de bar în status 'pending' sau 'preparing' trebuie să apară
                         const pendingBarItems = barItems.filter(item => {
                             const status = item.status || item.item_status || 'pending';
                             return status === 'pending' || status === 'preparing' || status === 'confirmed';
                         });
-                        
+
                         // Returnează comanda doar dacă are item-uri de bar ȘI cel puțin unul este în așteptare
                         if (barItems.length > 0 && pendingBarItems.length > 0) {
                             filteredOrders.push({
@@ -3664,7 +3811,7 @@ async function getOrdersDisplayBar(req, res, next) {
         } catch (filterError) {
             console.warn('⚠️ Error filtering bar orders:', filterError.message);
         }
-        
+
         return res.json({
             success: true,
             orders: filteredOrders || []
@@ -3688,7 +3835,7 @@ async function getProductDisplaySetting(req, res, next) {
     try {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         // Creează tabela dacă nu există
         await new Promise((resolve, reject) => {
             db.run(`
@@ -3704,7 +3851,7 @@ async function getProductDisplaySetting(req, res, next) {
                 else resolve();
             });
         });
-        
+
         // Obține setările
         const setting = await new Promise((resolve, reject) => {
             db.get(`
@@ -3716,7 +3863,7 @@ async function getProductDisplaySetting(req, res, next) {
                 else resolve(row);
             });
         });
-        
+
         // Dacă nu există setări, returnează default-uri
         if (!setting) {
             return res.json({
@@ -3724,7 +3871,7 @@ async function getProductDisplaySetting(req, res, next) {
                 description: undefined
             });
         }
-        
+
         res.json({
             autoManageDisplay: setting.auto_manage_display === 1,
             description: setting.description || undefined
@@ -3741,7 +3888,7 @@ async function updateProductDisplaySetting(req, res, next) {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
         const { autoManageDisplay } = req.body;
-        
+
         // Creează tabela dacă nu există
         await new Promise((resolve, reject) => {
             db.run(`
@@ -3757,7 +3904,7 @@ async function updateProductDisplaySetting(req, res, next) {
                 else resolve();
             });
         });
-        
+
         // Verifică dacă există deja setări
         const existing = await new Promise((resolve, reject) => {
             db.get(`
@@ -3769,11 +3916,11 @@ async function updateProductDisplaySetting(req, res, next) {
                 else resolve(row);
             });
         });
-        
-        const description = autoManageDisplay 
+
+        const description = autoManageDisplay
             ? 'Produsele fără stoc vor fi ascunse automat din meniul clientului'
             : 'Toate produsele vor fi afișate în meniul clientului, indiferent de stoc';
-        
+
         if (existing) {
             // Actualizează setările existente
             await new Promise((resolve, reject) => {
@@ -3800,7 +3947,7 @@ async function updateProductDisplaySetting(req, res, next) {
                 });
             });
         }
-        
+
         res.json({
             success: true,
             message: 'Setarea a fost actualizată cu succes'
@@ -3820,7 +3967,7 @@ async function getIntegrations(req, res, next) {
     try {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         // Creează tabela dacă nu există
         await new Promise((resolve, reject) => {
             db.run(`
@@ -3844,7 +3991,7 @@ async function getIntegrations(req, res, next) {
                 else resolve();
             });
         });
-        
+
         // Obține toate integrările
         const integrations = await new Promise((resolve, reject) => {
             db.all(`
@@ -3869,13 +4016,13 @@ async function getIntegrations(req, res, next) {
                 else resolve(rows || []);
             });
         });
-        
+
         // Transformă is_active din INTEGER în boolean
         const formattedIntegrations = integrations.map(integration => ({
             ...integration,
             is_active: integration.is_active === 1
         }));
-        
+
         res.json(formattedIntegrations);
     } catch (error) {
         console.error('❌ Error in getIntegrations:', error);
@@ -3889,15 +4036,15 @@ async function createIntegration(req, res, next) {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
         const { name, type, provider, api_key, api_secret, is_active, sync_status } = req.body;
-        
+
         // Validare
         if (!name || !type || !provider) {
-            return res.status(400).json({ 
+            return res.status(400).json({
                 success: false,
-                error: 'Name, type și provider sunt obligatorii' 
+                error: 'Name, type și provider sunt obligatorii'
             });
         }
-        
+
         // Creează tabela dacă nu există
         await new Promise((resolve, reject) => {
             db.run(`
@@ -3921,7 +4068,7 @@ async function createIntegration(req, res, next) {
                 else resolve();
             });
         });
-        
+
         // Inserează integrarea
         const result = await new Promise((resolve, reject) => {
             db.run(`
@@ -3935,12 +4082,12 @@ async function createIntegration(req, res, next) {
                 api_secret || null,
                 is_active ? 1 : 0,
                 sync_status || 'pending'
-            ], function(err) {
+            ], function (err) {
                 if (err) reject(err);
                 else resolve({ id: this.lastID });
             });
         });
-        
+
         res.json({
             success: true,
             id: result.id
@@ -3958,15 +4105,15 @@ async function updateIntegration(req, res, next) {
         const db = await dbPromise;
         const { id } = req.params;
         const { name, type, provider, api_key, api_secret, is_active, sync_status, error_message } = req.body;
-        
+
         // Validare
         if (!name || !type || !provider) {
-            return res.status(400).json({ 
+            return res.status(400).json({
                 success: false,
-                error: 'Name, type și provider sunt obligatorii' 
+                error: 'Name, type și provider sunt obligatorii'
             });
         }
-        
+
         // Actualizează integrarea
         await new Promise((resolve, reject) => {
             db.run(`
@@ -3996,7 +4143,7 @@ async function updateIntegration(req, res, next) {
                 else resolve();
             });
         });
-        
+
         res.json({
             success: true
         });
@@ -4012,7 +4159,7 @@ async function deleteIntegration(req, res, next) {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
         const { id } = req.params;
-        
+
         // Șterge integrarea
         await new Promise((resolve, reject) => {
             db.run(`
@@ -4023,7 +4170,7 @@ async function deleteIntegration(req, res, next) {
                 else resolve();
             });
         });
-        
+
         res.json({
             success: true
         });
@@ -4038,7 +4185,7 @@ async function getCashRegister(req, res, next) {
     try {
         const { dbPromise } = require('../../../../database');
         const db = await dbPromise;
-        
+
         // Creează tabelul dacă nu există
         await new Promise((resolve, reject) => {
             db.run(`
@@ -4056,7 +4203,7 @@ async function getCashRegister(req, res, next) {
                 else resolve();
             });
         });
-        
+
         // Obține toate tranzacțiile
         const transactions = await new Promise((resolve, reject) => {
             db.all(`
@@ -4068,7 +4215,7 @@ async function getCashRegister(req, res, next) {
                 else resolve(rows || []);
             });
         });
-        
+
         // Calculează totaluri
         let totalIn = 0;
         let totalOut = 0;
@@ -4079,7 +4226,7 @@ async function getCashRegister(req, res, next) {
                 totalOut += Math.abs(t.amount || 0);
             }
         });
-        
+
         res.json({
             success: true,
             total_in: totalIn,

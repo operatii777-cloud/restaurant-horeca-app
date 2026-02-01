@@ -51,10 +51,10 @@ function getTenantLicense(tenantId = null) {
 function isModuleLicensed(module, tenantLicense = 'enterprise') {
   // If module has no plan specified, it's available to all
   if (!module.plan) return true;
-  
+
   // Get allowed plans for this license
   const allowedPlans = LICENSE_PLANS[tenantLicense] || LICENSE_PLANS.basic;
-  
+
   return allowedPlans.includes(module.plan);
 }
 
@@ -65,7 +65,7 @@ function isModuleLicensed(module, tenantLicense = 'enterprise') {
 function createLicenseMiddleware(module) {
   return (req, res, next) => {
     const tenantLicense = req.tenantLicense || getTenantLicense(req.tenantId);
-    
+
     if (!isModuleLicensed(module, tenantLicense)) {
       return res.status(403).json({
         success: false,
@@ -77,7 +77,7 @@ function createLicenseMiddleware(module) {
         message: `This feature requires a ${module.plan} plan. Please upgrade to access.`
       });
     }
-    
+
     next();
   };
 }
@@ -595,6 +595,35 @@ const modulesRegistry = [
     factory: false,
     enabled: true,
     note: 'Friendsride delivery integration (order sync, status updates, tracking)'
+  },
+  {
+    // ALIAS: Map /api/delivery to the same friendsride module
+    // This allows FriendsRide App to POST to /api/delivery/orders
+    name: 'friendsride',
+    route: '/api/delivery',
+    factory: false,
+    enabled: true,
+    note: 'Alias for Friendsride integration to support external delivery app payload'
+  },
+  // ========================================
+  // CALL CENTER (Simulated)
+  // ========================================
+  {
+    name: 'call-center',
+    route: '/api/call-center',
+    factory: false,
+    enabled: true,
+    note: 'Simulated Call Center & Caller ID Service'
+  },
+  // ========================================
+  // ANALYTICS MODULE
+  // ========================================
+  {
+    name: 'analytics',
+    route: '/api/analytics',
+    factory: false,
+    enabled: true,
+    note: 'Cancellation predictions and business intelligence stats'
   }
 ];
 
@@ -626,9 +655,9 @@ function getSimpleModules() {
  */
 function mountAllModules(app, deps = {}) {
   const enabled = getEnabledModules();
-  
+
   console.log(`\n📦 Mounting ${enabled.length} enterprise modules from registry...`);
-  
+
   enabled.forEach(module => {
     try {
       // PHASE S8.8: Special handling for fiscal-engine and other modules with different file names
@@ -765,14 +794,14 @@ function mountAllModules(app, deps = {}) {
         modulePath = path.join(__dirname, module.name, 'routes');
       }
       let moduleRoutes;
-      
+
       try {
         moduleRoutes = require(modulePath);
       } catch (requireErr) {
         console.error(`   ⚠️  Could not require ${modulePath}: ${requireErr.message}`);
         return;
       }
-      
+
       if (module.factory) {
         // Factory pattern - pass dependencies
         const factoryDeps = {};
@@ -783,11 +812,11 @@ function mountAllModules(app, deps = {}) {
             }
           });
         }
-        
-        const routes = typeof moduleRoutes === 'function' 
+
+        const routes = typeof moduleRoutes === 'function'
           ? moduleRoutes(factoryDeps)
           : moduleRoutes;
-        
+
         app.use(module.route, routes);
         console.log(`   ✅ ${module.name} → ${module.route} (factory)`);
       } else {
@@ -803,7 +832,7 @@ function mountAllModules(app, deps = {}) {
             hasStack: moduleRoutes && moduleRoutes.stack ? true : false,
             keys: moduleRoutes ? Object.keys(moduleRoutes) : []
           });
-          
+
           let tipizateRouter;
           // Express Router objects are functions, but we should check for router properties first
           if (moduleRoutes && moduleRoutes.tipizateRouter) {
@@ -823,9 +852,9 @@ function mountAllModules(app, deps = {}) {
             console.log(`   ⚠️  Using moduleRoutes directly (fallback)`);
             tipizateRouter = moduleRoutes;
           }
-          
+
           if (tipizateRouter && typeof tipizateRouter === 'function' && tipizateRouter.stack) {
-          app.use(module.route, tipizateRouter);
+            app.use(module.route, tipizateRouter);
             console.log(`   ✅ ${module.name} → ${module.route} (tipizate router with ${tipizateRouter.stack.length} routes)`);
           } else {
             console.error(`   ❌ tipizateRouter is not a valid Express Router:`, {
@@ -846,7 +875,7 @@ function mountAllModules(app, deps = {}) {
       console.error(`   ❌ Failed to mount ${module.name}: ${err.message}`);
     }
   });
-  
+
   console.log(`✅ All modules mounted from registry\n`);
 }
 

@@ -21,13 +21,13 @@ import './RecipesPage.css';
 
 type FeedbackState =
   | {
-      type: 'success' | 'error' | 'warning' | 'info';
-      message: string;
-    }
+    type: 'success' | 'error' | 'warning' | 'info';
+    message: string;
+  }
   | null;
 
 export function RecipesPage() {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const { products, stats, loading, error, refetch } = useRecipesSummary();
   const [quickFilter, setQuickFilter] = useState('');
   const [categoryFilter, setCategoryFilter] = useState<string>('');
@@ -148,7 +148,7 @@ export function RecipesPage() {
     setFeedback(null);
     setPriceHistoryModalOpen(true);
   }, [selectedMenuProduct]);
-  
+
   // ✅ SĂPTĂMÂNA 1 - ZIUA 3: Handler pentru scaling modal
   const handleOpenScaling = useCallback(() => {
     if (!selectedProduct) {
@@ -202,36 +202,36 @@ export function RecipesPage() {
       <header className="recipes-header">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', width: '100%' }}>
           <div>
-            <h1>Rețete & Fişe Tehnice</h1>
-            <p>"gestioneaza ingredientele ambalajele si calculele "</p>
+            <h1>Rețete & Fișe Tehnice</h1>
+            <p>Gestionează ingredientele, ambalajele și calculele</p>
           </div>
           <HelpButton
             title='ajutor retete & fise tehnice'
             content={
               <div>
                 <h5>📋 Cum să creezi o rețetă?</h5>
-                <p>"retetele definesc ingredientele cantitatile si pro"</p>
+                <p>Rețetele definesc ingredientele, cantitățile și procesul de preparare.</p>
                 <h5 className="mt-4">📝 Pași pentru crearea unei rețete:</h5>
                 <ol>
-                  <li><strong>"selecteaza un produs"</strong> - Click pe un produs din tabel pentru a-l selecta</li>
-                  <li><strong>"editeaza reteta"</strong> - Click pe butonul "🧾 Editează rețeta"</li>
-                  <li><strong>"adauga ingrediente"</strong> - În modalul de editare, adaugă ingredientele necesare:
+                  <li><strong>Selectează un produs</strong> - Click pe un produs din tabel pentru a-l selecta</li>
+                  <li><strong>Editează rețeta</strong> - Click pe butonul "🧾 Editează rețeta"</li>
+                  <li><strong>Adaugă ingrediente</strong> - În modalul de editare, adaugă ingredientele necesare:
                     <ul>
-                      <li>"selecteaza ingredientul din lista"</li>
-                      <li>"introdu cantitatea necesara"</li>
+                      <li>Selectează ingredientul din listă</li>
+                      <li>Introdu cantitatea necesară</li>
                       <li>Selectează unitatea de măsură (g, kg, ml, l, buc)</li>
-                      <li>"specifica daca ingredientul este optional"</li>
+                      <li>Specifică dacă ingredientul este opțional</li>
                     </ul>
                   </li>
-                  <li><strong>"configureaza procesul"</strong> - Adaugă instrucțiuni de preparare (opțional)</li>
-                  <li><strong>"salveaza reteta"</strong> - Click pe "Salvează" pentru a salva modificările</li>
+                  <li><strong>Configurează procesul</strong> - Adaugă instrucțiuni de preparare (opțional)</li>
+                  <li><strong>Salvează rețeta</strong> - Click pe "Salvează" pentru a salva modificările</li>
                 </ol>
                 <h5 className="mt-4">➕ Cum să creezi un produs nou cu rețetă?</h5>
                 <ol>
-                  <li>"click pe butonul"<strong>"➕ Produs Nou + Rețetă"</strong></li>
+                  <li>Click pe butonul <strong>➕ Produs Nou + Rețetă</strong></li>
                   <li>Completează informațiile produsului (nume, categorie, preț)</li>
-                  <li>"adauga ingredientele in reteta"</li>
-                  <li>"salveaza produsul si reteta"</li>
+                  <li>Adaugă ingredientele în rețetă</li>
+                  <li>Salvează produsul și rețeta</li>
                 </ol>
                 <h5 className="mt-4">📊 Funcționalități disponibile:</h5>
                 <ul>
@@ -244,13 +244,13 @@ export function RecipesPage() {
                 </ul>
                 <h5 className="mt-4">💡 Sfaturi importante:</h5>
                 <ul>
-                  <li>"asigura te ca toate ingredientele sunt definite in"</li>
+                  <li>Asigură-te că toate ingredientele sunt definite în stoc</li>
                   <li>Folosește unitățile de măsură corecte (g pentru solide, ml pentru lichide)</li>
-                  <li>"verifica ca cantitatile sunt realiste pentru porti"</li>
-                  <li>"dupa crearea retetei poti genera automat fisa tehn"</li>
+                  <li>Verifică dacă cantitățile sunt realiste pentru porții</li>
+                  <li>După crearea rețetei poți genera automat fișa tehnică</li>
                 </ul>
                 <div className="alert alert-info mt-4">
-                  <strong>💡 Sfat:</strong> Rețetele complete permit calcularea automată a costurilor, 
+                  <strong>💡 Sfat:</strong> Rețetele complete permit calcularea automată a costurilor,
                   generarea fișelor tehnice și gestionarea eficientă a stocurilor.
                 </div>
               </div>
@@ -297,7 +297,7 @@ export function RecipesPage() {
           trendDirection="up"
         />
         <StatCard
-          title="retete definite"
+          title="Rețete definite"
           helper="produse cu rețetă completă"
           value={`${withRecipe}`}
           icon={<span>🥣</span>}
@@ -306,7 +306,7 @@ export function RecipesPage() {
           trendDirection={withoutRecipe > 0 ? 'down' : 'up'}
         />
         <StatCard
-          title="acoperire retete"
+          title="Acoperire rețete"
           helper="mai multe rețete = costuri controlate"
           value={totalProducts > 0 ? `${Math.round((withRecipe / totalProducts) * 100)}%` : '0%'}
           icon={<span>📊</span>}
@@ -330,7 +330,7 @@ export function RecipesPage() {
             value={categoryFilter}
             onChange={(event) => setCategoryFilter(event.target.value)}
           >
-            <option value="">"toate categoriile"</option>
+            <option value="">Toate categoriile</option>
             {categories.map((category) => (
               <option key={category} value={category}>
                 {category}
@@ -374,7 +374,7 @@ export function RecipesPage() {
       </section>
 
       <RecipeEditorModal open={editorOpen} product={selectedProduct} onClose={handleEditorClose} onSaved={handleEditorSaved} />
-      
+
       {/* ✅ SĂPTĂMÂNA 1 - ZIUA 3: Scaling Modal */}
       <RecipeScalingModal
         open={scalingModalOpen}

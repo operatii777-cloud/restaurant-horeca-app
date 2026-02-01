@@ -208,6 +208,7 @@
     opacity: 0;
     transform: translateY(-4px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -307,6 +308,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -425,7 +427,7 @@
   .kiosk-sidebar--collapsed {
     transform: translateX(-100%);
   }
-  
+
   .kiosk-sidebar--collapsed.kiosk-sidebar--hovered {
     transform: translateX(0);
     width: var(--sidebar-width);

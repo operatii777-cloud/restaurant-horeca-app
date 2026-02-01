@@ -4,7 +4,7 @@
  * Factory pattern: accepts db as dependency
  */
 
-module.exports = (db) => {
+module.exports = ({ db }) => {
     const safeJSONParse = (value) => {
         if (!value) return [];
         if (Array.isArray(value)) return value;
@@ -23,7 +23,7 @@ module.exports = (db) => {
     async function getAllIngredients(req, res, next) {
         try {
             console.log('📦 [CATALOG] Request pentru ingredient catalog:', req.query);
-            
+
             // Verifică dacă tabela există
             const tableExists = await new Promise((resolve, reject) => {
                 db.get(
@@ -39,12 +39,12 @@ module.exports = (db) => {
                     }
                 );
             });
-            
+
             if (!tableExists) {
                 console.log('⚠️  [ingredient-catalog] Tabela ingredient_catalog nu există - returnez array gol');
                 return res.status(200).json({ success: true, ingredients: [], total: 0 });
             }
-            
+
             const {
                 category,
                 search,
@@ -54,7 +54,7 @@ module.exports = (db) => {
                 limit = 1000,
                 offset = 0
             } = req.query;
-            
+
             let query = `
                 SELECT 
                     id, name, name_en, name_scientific,
@@ -72,42 +72,42 @@ module.exports = (db) => {
                 FROM ingredient_catalog
                 WHERE is_active = 1
             `;
-            
+
             const params = [];
-            
+
             if (category) {
                 query += ` AND category = ?`;
                 params.push(category);
             }
-            
+
             if (search) {
                 query += ` AND (name LIKE ? OR name_en LIKE ? OR description LIKE ?)`;
                 const searchParam = `%${search}%`;
                 params.push(searchParam, searchParam, searchParam);
             }
-            
+
             if (is_common === 'true') {
                 query += ` AND is_common = 1`;
             }
-            
+
             if (allergen_free === 'true') {
                 query += ` AND allergen_free_certified = 1`;
             }
-            
+
             if (organic === 'true') {
                 query += ` AND organic_certified = 1`;
             }
-            
+
             query += ` ORDER BY category, name LIMIT ? OFFSET ?`;
             params.push(parseInt(limit), parseInt(offset));
-            
+
             db.all(query, params, (err, rows) => {
                 if (err) {
                     console.error('❌ Eroare la încărcarea catalogului:', err.message);
                     // Returnează array gol în loc de 500
                     return res.status(200).json({ success: true, ingredients: [], total: 0 });
                 }
-                
+
                 try {
                     const ingredients = rows.map(row => ({
                         ...row,
@@ -117,7 +117,7 @@ module.exports = (db) => {
                         preservatives: safeJSONParse(row.preservatives),
                         season_months: safeJSONParse(row.season_months)
                     }));
-                    
+
                     console.log(`✅ Catalog ingrediente: ${ingredients.length} rezultate`);
                     res.json({ success: true, ingredients, total: ingredients.length });
                 } catch (parseError) {
@@ -147,18 +147,18 @@ module.exports = (db) => {
                     }
                 );
             });
-            
+
             if (!tableExists) {
                 return res.status(200).json({ success: true, allergens: [] });
             }
-            
+
             db.all('SELECT * FROM allergens_catalog ORDER BY display_order', [], (err, rows) => {
                 if (err) {
                     console.error('❌ Eroare la încărcarea alergenilor:', err.message);
                     // Returnează array gol în loc de 500
                     return res.status(200).json({ success: true, allergens: [] });
                 }
-                
+
                 console.log(`✅ Alergeni catalog: ${rows.length} rezultate`);
                 res.json({ success: true, allergens: rows || [] });
             });
@@ -183,18 +183,18 @@ module.exports = (db) => {
                     }
                 );
             });
-            
+
             if (!tableExists) {
                 return res.status(200).json({ success: true, additives: [] });
             }
-            
+
             db.all('SELECT * FROM additives_catalog ORDER BY e_code', [], (err, rows) => {
                 if (err) {
                     console.error('❌ Eroare la încărcarea aditivilor:', err.message);
                     // Returnează array gol în loc de 500
                     return res.status(200).json({ success: true, additives: [] });
                 }
-                
+
                 console.log(`✅ Aditivi catalog: ${rows.length} rezultate`);
                 res.json({ success: true, additives: rows || [] });
             });
@@ -209,7 +209,7 @@ module.exports = (db) => {
     async function getIngredientById(req, res, next) {
         try {
             const { id } = req.params;
-            
+
             const query = `
                 SELECT 
                     id, name, name_en, name_scientific,
@@ -233,17 +233,17 @@ module.exports = (db) => {
                 FROM ingredient_catalog
                 WHERE id = ?
             `;
-            
+
             db.get(query, [id], (err, row) => {
                 if (err) {
                     console.error('❌ Eroare la încărcarea detaliilor:', err.message);
                     return res.status(500).json({ success: false, error: err.message });
                 }
-                
+
                 if (!row) {
                     return res.status(404).json({ success: false, error: 'Ingredient nu a fost găsit în catalog' });
                 }
-                
+
                 try {
                     const ingredient = {
                         ...row,
@@ -254,7 +254,7 @@ module.exports = (db) => {
                         warning_labels: safeJSONParse(row.warning_labels),
                         season_months: safeJSONParse(row.season_months)
                     };
-                    
+
                     console.log(`✅ Detalii ingredient catalog #${id}: ${ingredient.name}`);
                     res.json({ success: true, ingredient });
                 } catch (parseError) {
@@ -278,30 +278,30 @@ module.exports = (db) => {
                 cost_per_unit,
                 supplier = ''
             } = req.body;
-            
+
             db.get('SELECT * FROM ingredient_catalog WHERE id = ?', [id], (err, catalogIngredient) => {
                 if (err) {
                     console.error('❌ Eroare la citire catalog:', err.message);
                     return res.status(500).json({ success: false, error: err.message });
                 }
-                
+
                 if (!catalogIngredient) {
                     return res.status(404).json({ success: false, error: 'Ingredient nu a fost găsit în catalog' });
                 }
-                
+
                 db.get('SELECT id FROM ingredients WHERE name = ?', [catalogIngredient.name], (err, existing) => {
                     if (err) {
                         console.error('❌ Eroare la verificare duplicat:', err.message);
                         return res.status(500).json({ success: false, error: err.message });
                     }
-                    
+
                     if (existing) {
-                        return res.status(400).json({ 
-                            success: false, 
-                            error: `Ingredientul "${catalogIngredient.name}" există deja în stoc (ID: ${existing.id})` 
+                        return res.status(400).json({
+                            success: false,
+                            error: `Ingredientul "${catalogIngredient.name}" există deja în stoc (ID: ${existing.id})`
                         });
                     }
-                    
+
                     const insertQuery = `
                         INSERT INTO ingredients (
                             name, name_en, category, category_en, unit,
@@ -313,7 +313,7 @@ module.exports = (db) => {
                             created_at
                         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
                     `;
-                    
+
                     const params = [
                         catalogIngredient.name,
                         catalogIngredient.name_en || '',
@@ -339,18 +339,18 @@ module.exports = (db) => {
                         1,
                         0
                     ];
-                    
-                    db.run(insertQuery, params, function(err) {
+
+                    db.run(insertQuery, params, function (err) {
                         if (err) {
                             console.error('❌ Eroare la import ingredient:', err.message);
                             return res.status(500).json({ success: false, error: err.message });
                         }
-                        
+
                         const newIngredientId = this.lastID;
                         console.log(`✅ Ingredient importat din catalog: ${catalogIngredient.name} (ID: ${newIngredientId})`);
-                        
-                        res.json({ 
-                            success: true, 
+
+                        res.json({
+                            success: true,
                             message: `Ingredientul "${catalogIngredient.name}" a fost importat cu succes!`,
                             ingredient_id: newIngredientId
                         });

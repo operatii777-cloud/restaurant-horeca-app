@@ -305,16 +305,16 @@ class AdminViteErrorScanner {
       // Verifică dacă există ErrorBoundary sau alte erori vizibile
       const pageStatus = await this.page.evaluate(() => {
         const hasErrorBoundary = document.body.textContent.includes('ErrorBoundary') ||
-                                document.body.textContent.includes('Something went wrong') ||
-                                document.body.textContent.includes('Error:');
+          document.body.textContent.includes('Something went wrong') ||
+          document.body.textContent.includes('Error:');
 
         const hasLoadingError = document.body.textContent.includes('Failed to load') ||
-                               document.body.textContent.includes('Network Error') ||
-                               document.body.textContent.includes('Connection failed');
+          document.body.textContent.includes('Network Error') ||
+          document.body.textContent.includes('Connection failed');
 
         const hasAuthError = document.body.textContent.includes('Unauthorized') ||
-                            document.body.textContent.includes('403') ||
-                            document.body.textContent.includes('Forbidden');
+          document.body.textContent.includes('403') ||
+          document.body.textContent.includes('Forbidden');
 
         return {
           hasErrorBoundary,
@@ -327,6 +327,7 @@ class AdminViteErrorScanner {
 
       if (pageStatus.hasErrorBoundary || pageStatus.hasLoadingError) {
         console.log(`⚠️  ${route} - Detectat eroare în UI`);
+        console.log(`   Text găsit: "${pageStatus.bodyText.replace(/\n/g, ' ')}"`);
 
         // Face screenshot la eroare
         const screenshotPath = `./error-screenshots/${route.replace(/\//g, '_')}.png`;

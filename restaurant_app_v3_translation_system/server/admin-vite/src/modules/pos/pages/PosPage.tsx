@@ -26,7 +26,7 @@ import './PosPage.css';
  * POS Main Page Component
  */
 export function PosPage() {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const { currentMode, selectedTableId, currentOrderId, setTable, resetDraft } = usePosStore();
   const { createOrder, loading, error } = usePosOrder();
   const {
@@ -43,15 +43,15 @@ export function PosPage() {
     consumingStock,
     fiscalize,
   } = usePos();
-  
+
   const [showPayment, setShowPayment] = useState(false);
   const [fiscalError, setFiscalError] = useState<string | null>(null);
   const [showFiscalError, setShowFiscalError] = useState(false);
   const [fiscalErrorType, setFiscalErrorType] = useState<'printer' | 'anaf' | "Nomenclator" | 'generic'>('generic');
-  
+
   // FAZA 1.6 - Get fiscal status for current order
   const { data: fiscalStatus } = useFiscalStatus(currentOrderId || 0);
-  
+
   // FAZA 3.B - Offline mode detection
   const { isOffline, syncStatus } = useOfflineMode();
 
@@ -80,7 +80,7 @@ export function PosPage() {
         }
         return;
       }
-      
+
       // Create order first, then open payment
       createOrder().then((order) => {
         if (order) {
@@ -127,17 +127,17 @@ export function PosPage() {
       // Success - fiscal data is stored in posStore
     } catch (error: any) {
       console.error('PosPage Fiscalization error:', error);
-      
+
       // Determine error type
       const errorMessage = error.error || error.message || 'Eroare la fiscalizare';
       const errorCode = error.code || '';
-      
+
       if (errorCode.includes('PRINTER') || errorMessage.toLowerCase().includes('printer')) {
         setFiscalErrorType('printer');
         setFiscalError('Imprimanta fiscală este offline sau nu răspunde. Verifică conexiunea și încearcă din nou.');
       } else if (errorCode.includes('ANAF') || errorMessage.toLowerCase().includes('anaf')) {
         setFiscalErrorType('anaf');
-        setFiscalError('Serviciul ANAF este indisponibil momentan. ÃŽncearcă din nou în câteva momente.');
+        setFiscalError('Serviciul ANAF este indisponibil momentan. Încearcă din nou în câteva momente.');
       } else if (errorCode.includes('NOMENCLATOR') || errorMessage.toLowerCase().includes("Nomenclator") || errorMessage.toLowerCase().includes('plu')) {
         setFiscalErrorType("Nomenclator");
         setFiscalError('Lipsesc coduri fiscale pentru unele produse. Verifică nomenclatorul produselor.');
@@ -145,28 +145,28 @@ export function PosPage() {
         setFiscalErrorType('generic');
         setFiscalError(errorMessage);
       }
-      
+
       setShowFiscalError(true);
     }
   };
 
   const handleCloseOrder = async () => {
     if (!currentOrderId) return;
-    
+
     if (!isFiscalized) {
       if (!confirm('Comanda nu este fiscalizată. Ești sigur că vrei să închizi comanda?')) {
         return;
       }
     }
-    
+
     // Free table
     if (selectedTableId) {
       setTable(null);
     }
-    
+
     // Reset draft
     resetDraft();
-    
+
     // Optionally mark order as completed in backend
     // await posApi.completeOrder(currentOrderId);
   };
@@ -232,10 +232,10 @@ export function PosPage() {
       <Modal show={showFiscalError} onHide={() => setShowFiscalError(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title>
-            {fiscalErrorType === 'printer' && 'âš ï¸ Imprimantă Offline'}
-            {fiscalErrorType === 'anaf' && 'âš ï¸ ANAF Indisponibil'}
-            {fiscalErrorType === "Nomenclator" && 'âš ï¸ Coduri Fiscale Lipsă'}
-            {fiscalErrorType === 'generic' && 'âš ï¸ Eroare Fiscalizare'}
+            {fiscalErrorType === 'printer' && '⚠️ Imprimantă Offline'}
+            {fiscalErrorType === 'anaf' && '⚠️ ANAF Indisponibil'}
+            {fiscalErrorType === "Nomenclator" && '⚠️ Coduri Fiscale Lipsă'}
+            {fiscalErrorType === 'generic' && '⚠️ Eroare Fiscalizare'}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -244,17 +244,17 @@ export function PosPage() {
           </Alert>
           {fiscalErrorType === 'printer' && (
             <div className="mt-3">
-              <p className="text-muted small">"Verifică:"</p>
+              <p className="text-muted small">Verifică:</p>
               <ul className="text-muted small">
-                <li>"conexiunea la imprimanta"</li>
+                <li>Conexiunea la imprimantă</li>
                 <li>Statusul imprimantei (hârtie, erori)</li>
-                <li>"configurarea fiscala in setari"</li>
+                <li>Configurarea fiscală în setări</li>
               </ul>
             </div>
           )}
           {fiscalErrorType === 'anaf' && (
             <div className="mt-3">
-              <p className="text-muted small">"serviciul anaf poate fi temporar indisponibil ince"</p>
+              <p className="text-muted small">Serviciul ANAF poate fi temporar indisponibil. Încearcă din nou.</p>
             </div>
           )}
           {fiscalErrorType === "Nomenclator" && (
@@ -266,12 +266,12 @@ export function PosPage() {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowFiscalError(false)}>"ÃŽnchide"</Button>
+          <Button variant="secondary" onClick={() => setShowFiscalError(false)}>Închide</Button>
           {fiscalErrorType !== 'generic' && (
             <Button variant="primary" onClick={() => {
               setShowFiscalError(false);
               handleFiscalize();
-            }}>"incearca din nou"</Button>
+            }} >Încearcă din nou</Button>
           )}
         </Modal.Footer>
       </Modal>

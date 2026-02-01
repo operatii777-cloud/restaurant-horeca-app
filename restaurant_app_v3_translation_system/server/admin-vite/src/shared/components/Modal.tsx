@@ -39,7 +39,7 @@ export function Modal({
   draggable = false,
   positionStorageKey,
 }: ModalProps) {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const overlayRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -51,7 +51,7 @@ export function Modal({
   // [Check] Restaurează poziția din localStorage când modalul se deschide
   useEffect(() => {
     if (!isOpen || !draggable || !positionStorageKey) return;
-    
+
     const saved = localStorage.getItem(positionStorageKey);
     if (saved) {
       try {
@@ -66,7 +66,7 @@ export function Modal({
   // [Check] Salvează poziția în localStorage când se schimbă
   useEffect(() => {
     if (!draggable || !positionStorageKey || !position) return;
-    
+
     localStorage.setItem(positionStorageKey, JSON.stringify(position));
   }, [position, draggable, positionStorageKey]);
 
@@ -75,19 +75,19 @@ export function Modal({
     if (!isDragging || !draggable) return;
 
     const handleMouseMove = (e: MouseEvent) => {
-//   const { t } = useTranslation();
+      //   const { t } = useTranslation();
       if (!contentRef.current || !dragOffset) return;
-      
+
       const newX = e.clientX - dragOffset.x;
       const newY = e.clientY - dragOffset.y;
-      
+
       // Limitează la viewport
       const maxX = window.innerWidth - contentRef.current.offsetWidth;
       const maxY = window.innerHeight - contentRef.current.offsetHeight;
-      
+
       const clampedX = Math.max(0, Math.min(newX, maxX));
       const clampedY = Math.max(0, Math.min(newY, maxY));
-      
+
       setPosition({ x: clampedX, y: clampedY });
     };
 
@@ -137,10 +137,10 @@ export function Modal({
     if (!draggable || !contentRef.current) return;
     // Nu trage dacă e pe un element interactiv
     if ((e.target as HTMLElement).closest('button, input, select, textarea, a')) return;
-    
+
     e.preventDefault(); // Previne comportamentul default
     e.stopPropagation(); // Previne propagarea către overlay
-    
+
     setIsDragging(true);
     const rect = contentRef.current.getBoundingClientRect();
     setDragOffset({
@@ -157,16 +157,16 @@ export function Modal({
 
   const contentStyle = draggable && position
     ? {
-        position: 'absolute' as const,
-        left: `${position.x}px`,
-        top: `${position.y}px`,
-        margin: 0,
-      }
+      position: 'absolute' as const,
+      left: `${position.x}px`,
+      top: `${position.y}px`,
+      margin: 0,
+    }
     : {};
 
   return (
     <div className={modalClassName} role="dialog" aria-modal="true" aria-labelledby={titleId} onClick={handleOverlayClick} ref={overlayRef}>
-      <div 
+      <div
         ref={contentRef}
         className={`modal__content ${sizeClassMap[size]}`}
         style={contentStyle}
@@ -175,7 +175,7 @@ export function Modal({
           e.stopPropagation();
         }}
       >
-        <header 
+        <header
           ref={headerRef}
           className={`modal__header ${draggable ? 'modal__header--draggable' : ''}`}
           onMouseDown={draggable ? handleHeaderMouseDown : undefined}
@@ -194,7 +194,7 @@ export function Modal({
           </div>
           {dismissible ? (
             <button type="button" className="modal__close" aria-label="Închide" onClick={onClose}>
-              âœ•
+              ✕
             </button>
           ) : null}
         </header>

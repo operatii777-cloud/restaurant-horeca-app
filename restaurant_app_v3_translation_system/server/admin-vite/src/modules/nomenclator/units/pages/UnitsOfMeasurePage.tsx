@@ -11,7 +11,7 @@ interface UnitOfMeasure {
   id?: number;
   name: string;
   symbol: string;
-  category: "Masă:" | 'volum' | 'lungime' | "Bucăți" | 'altul';
+  category: 'masă' | 'volum' | 'lungime' | 'bucăți' | 'altul';
   base_unit?: number | null;
   conversion_factor: number;
   is_active: number;
@@ -21,15 +21,15 @@ interface UnitOfMeasure {
 }
 
 const CATEGORIES = [
-  { value: "Masă:", label: 'Masă', icon: '⚖️' },
+  { value: 'masă', label: 'Masă', icon: '⚖️' },
   { value: 'volum', label: 'Volum', icon: '💧' },
   { value: 'lungime', label: 'Lungime', icon: '📏' },
-  { value: "Bucăți", label: 'Bucăți', icon: '🔢' },
+  { value: 'bucăți', label: 'Bucăți', icon: '🔢' },
   { value: 'altul', label: 'Altul', icon: '📦' },
 ];
 
 export const UnitsOfMeasurePage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [units, setUnits] = useState<UnitOfMeasure[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -42,7 +42,7 @@ export const UnitsOfMeasurePage: React.FC = () => {
   const [formData, setFormData] = useState<Partial<UnitOfMeasure>>({
     name: '',
     symbol: '',
-    category: "Masă:",
+    category: 'masă',
     base_unit: null,
     conversion_factor: 1.0,
     is_active: 1,
@@ -56,7 +56,7 @@ export const UnitsOfMeasurePage: React.FC = () => {
       const response = await httpClient.get('/api/units-of-measure');
       const data = response.data?.data || response.data || [];
       setUnits(data);
-      
+
       // Pentru dropdown-ul de unitate de bază, folosim doar unitățile active
       const activeUnits = data.filter((u: UnitOfMeasure) => u.is_active === 1);
       setBaseUnits(activeUnits);
@@ -81,7 +81,7 @@ export const UnitsOfMeasurePage: React.FC = () => {
       setFormData({
         name: '',
         symbol: '',
-        category: "Masă:",
+        category: 'masă',
         base_unit: null,
         conversion_factor: 1.0,
         is_active: 1,
@@ -127,7 +127,7 @@ export const UnitsOfMeasurePage: React.FC = () => {
     if (!window.confirm('Ești sigur că vrei să ștergi această unitate de măsură?')) return;
 
     try {
-      await httpClient.delete(`/api/units-of-measure/"Id"`);
+      await httpClient.delete(`/api/units-of-measure/${id}`);
       setFeedback({ type: 'success', message: 'Unitate ștearsă cu succes!' });
       void fetchData();
     } catch (err: any) {
@@ -159,7 +159,7 @@ export const UnitsOfMeasurePage: React.FC = () => {
   return (
     <div className="units-of-measure-page">
       <PageHeader
-        title='📏 unitati de masura'
+        title='📏 Unități de măsură'
         description="Gestionare unități de măsură și conversii între ele"
       />
 
@@ -177,7 +177,7 @@ export const UnitsOfMeasurePage: React.FC = () => {
       <Card className="shadow-sm mb-4">
         <Card.Header className="bg-primary text-white d-flex justify-content-between align-items-center">
           <h5 className="mb-0">
-            <i className="fas fa-ruler me-2"></i>"lista unitati de masura"</h5>
+            <i className="fas fa-ruler me-2"></i>Lista unități de măsură</h5>
           <div className="d-flex gap-2">
             <Form.Select
               value={filterCategory}
@@ -185,7 +185,7 @@ export const UnitsOfMeasurePage: React.FC = () => {
               style={{ width: '200px' }}
               size="sm"
             >
-              <option value="">"toate categoriile"</option>
+              <option value="">Toate categoriile</option>
               {CATEGORIES.map(cat => (
                 <option key={cat.value} value={cat.value}>
                   {cat.icon} {cat.label}
@@ -193,7 +193,7 @@ export const UnitsOfMeasurePage: React.FC = () => {
               ))}
             </Form.Select>
             <Button variant="light" size="sm" onClick={() => handleOpenModal()}>
-              <i className="fas fa-plus me-1"></i>"adauga unitate"</Button>
+              <i className="fas fa-plus me-1"></i>Adaugă unitate</Button>
           </div>
         </Card.Header>
         <Card.Body>
@@ -210,7 +210,7 @@ export const UnitsOfMeasurePage: React.FC = () => {
             </Alert>
           ) : filteredUnits.length === 0 ? (
             <Alert variant="info">
-              <i className="fas fa-info-circle me-2"></i>"nu exista unitati de masura adauga prima unitate"</Alert>
+              <i className="fas fa-info-circle me-2"></i>Nu există unități de măsură. Adaugă prima unitate.</Alert>
           ) : (
             <div className="table-responsive">
               <Table striped bordered hover>
@@ -219,11 +219,11 @@ export const UnitsOfMeasurePage: React.FC = () => {
                     <th>Nume</th>
                     <th>Simbol</th>
                     <th>Categorie</th>
-                    <th>"unitate de baza"</th>
+                    <th>Unitate de bază</th>
                     <th>Factor Conversie</th>
                     <th>Ordine</th>
                     <th>Status</th>
-                    <th>"Acțiuni"</th>
+                    <th>Acțiuni</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -238,7 +238,7 @@ export const UnitsOfMeasurePage: React.FC = () => {
                       const baseUnit = unit.base_unit
                         ? units.find(u => u.id === unit.base_unit)
                         : null;
-                      
+
                       return (
                         <tr key={unit.id}>
                           <td><strong>{unit.name}</strong></td>
@@ -337,7 +337,7 @@ export const UnitsOfMeasurePage: React.FC = () => {
                     required
                     maxLength={10}
                   />
-                  <Form.Text className="text-muted">"simbolul trebuie sa fie unic"</Form.Text>
+                  <Form.Text className="text-muted">Simbolul trebuie să fie unic</Form.Text>
                 </Form.Group>
               </Col>
             </Row>
@@ -349,7 +349,7 @@ export const UnitsOfMeasurePage: React.FC = () => {
                     Categorie <span className="text-danger">*</span>
                   </Form.Label>
                   <Form.Select
-                    value={formData.category || "Masă:"}
+                    value={formData.category || 'masă'}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value as any })}
                     required
                   >
@@ -363,7 +363,7 @@ export const UnitsOfMeasurePage: React.FC = () => {
               </Col>
               <Col md={6}>
                 <Form.Group className="mb-3">
-                  <Form.Label>"unitate de baza"</Form.Label>
+                  <Form.Label>Unitate de bază</Form.Label>
                   <Form.Select
                     value={formData.base_unit || ''}
                     onChange={(e) => setFormData({
@@ -371,7 +371,7 @@ export const UnitsOfMeasurePage: React.FC = () => {
                       base_unit: e.target.value ? parseInt(e.target.value) : null
                     })}
                   >
-                    <option value="">"fara unitate de baza"</option>
+                    <option value="">Fără unitate de bază</option>
                     {baseUnits
                       .filter(u => !editingUnit || u.id !== editingUnit.id)
                       .map(u => (
@@ -380,7 +380,7 @@ export const UnitsOfMeasurePage: React.FC = () => {
                         </option>
                       ))}
                   </Form.Select>
-                  <Form.Text className="text-muted">"unitatea fata de care se face conversia"</Form.Text>
+                  <Form.Text className="text-muted">Unitatea față de care se face conversia</Form.Text>
                 </Form.Group>
               </Col>
             </Row>
@@ -423,7 +423,7 @@ export const UnitsOfMeasurePage: React.FC = () => {
             <Form.Group className="mb-3">
               <Form.Check
                 type="switch"
-                label="unitate activa"
+                label="Unitate activă"
                 checked={formData.is_active === 1}
                 onChange={(e) => setFormData({
                   ...formData,
@@ -433,7 +433,7 @@ export const UnitsOfMeasurePage: React.FC = () => {
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseModal}>"Anulează"</Button>
+            <Button variant="secondary" onClick={handleCloseModal}>Anulează</Button>
             <Button variant="primary" type="submit">
               {editingUnit ? 'Salvează Modificările' : 'Creează Unitate'}
             </Button>

@@ -7,10 +7,10 @@
 function createEnterpriseTables(db) {
   return new Promise((resolve, reject) => {
     console.log('\n🏗️ Creating Enterprise Tables...\n');
-    
+
     const tables = [];
     let completed = 0;
-    
+
     // Counter pentru progres
     const checkComplete = () => {
       completed++;
@@ -19,7 +19,7 @@ function createEnterpriseTables(db) {
         resolve();
       }
     };
-    
+
     // ========== INGREDIENT CATALOG GLOBAL ==========
     tables.push(() => {
       db.run(`CREATE TABLE IF NOT EXISTS ingredient_catalog_global (
@@ -80,7 +80,7 @@ function createEnterpriseTables(db) {
         checkComplete();
       });
     });
-    
+
     // ========== TECHNICAL SHEETS ==========
     tables.push(() => {
       db.run(`CREATE TABLE IF NOT EXISTS technical_sheets (
@@ -176,7 +176,7 @@ function createEnterpriseTables(db) {
         checkComplete();
       });
     });
-    
+
     // ========== PRODUCT PORTIONS ==========
     tables.push(() => {
       db.run(`CREATE TABLE IF NOT EXISTS product_portions (
@@ -206,7 +206,7 @@ function createEnterpriseTables(db) {
         checkComplete();
       });
     });
-    
+
     // ========== ALLERGEN CROSS CONTAMINATION ==========
     tables.push(() => {
       db.run(`CREATE TABLE IF NOT EXISTS allergen_cross_contamination (
@@ -234,7 +234,7 @@ function createEnterpriseTables(db) {
         checkComplete();
       });
     });
-    
+
     // ========== PRODUCT RECALLS ==========
     tables.push(() => {
       db.run(`CREATE TABLE IF NOT EXISTS product_recalls (
@@ -278,7 +278,7 @@ function createEnterpriseTables(db) {
         checkComplete();
       });
     });
-    
+
     // ========== EXPIRY ALERTS ==========
     tables.push(() => {
       db.run(`CREATE TABLE IF NOT EXISTS expiry_alerts (
@@ -315,7 +315,7 @@ function createEnterpriseTables(db) {
         checkComplete();
       });
     });
-    
+
     // ========== STOCK VARIANCE ==========
     tables.push(() => {
       db.run(`CREATE TABLE IF NOT EXISTS stock_variance (
@@ -349,7 +349,7 @@ function createEnterpriseTables(db) {
         checkComplete();
       });
     });
-    
+
     // ========== RECIPE VERSIONS ==========
     tables.push(() => {
       db.run(`CREATE TABLE IF NOT EXISTS recipe_versions (
@@ -372,7 +372,7 @@ function createEnterpriseTables(db) {
         checkComplete();
       });
     });
-    
+
     // ========== TECHNICAL SHEET HISTORY ==========
     tables.push(() => {
       db.run(`CREATE TABLE IF NOT EXISTS technical_sheet_history (
@@ -393,7 +393,7 @@ function createEnterpriseTables(db) {
         checkComplete();
       });
     });
-    
+
     // ========== LAUNDRY MANAGEMENT (Gestiune Textile) ==========
     tables.push(() => {
       db.run(`CREATE TABLE IF NOT EXISTS laundry_items (
@@ -422,7 +422,7 @@ function createEnterpriseTables(db) {
         checkComplete();
       });
     });
-    
+
     tables.push(() => {
       db.run(`CREATE TABLE IF NOT EXISTS laundry_wash_history (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -440,7 +440,7 @@ function createEnterpriseTables(db) {
         checkComplete();
       });
     });
-    
+
     // Create indexes for laundry
     tables.push(() => {
       db.run(`CREATE INDEX IF NOT EXISTS idx_laundry_code ON laundry_items (code)`, (err) => {
@@ -449,7 +449,7 @@ function createEnterpriseTables(db) {
         checkComplete();
       });
     });
-    
+
     tables.push(() => {
       // Verifică dacă tabela și coloana există înainte de a crea indexul
       db.get(`SELECT name FROM sqlite_master WHERE type='table' AND name='laundry_items'`, (err, row) => {
@@ -482,7 +482,7 @@ function createEnterpriseTables(db) {
         });
       });
     });
-    
+
     tables.push(() => {
       db.run(`CREATE INDEX IF NOT EXISTS idx_wash_history_item ON laundry_wash_history (item_id)`, (err) => {
         if (err) console.error('❌ idx_wash_history_item:', err.message);
@@ -490,7 +490,7 @@ function createEnterpriseTables(db) {
         checkComplete();
       });
     });
-    
+
     // Rulează toate
     tables.forEach(fn => fn());
   });
@@ -637,14 +637,14 @@ function createEnterpriseTables(db) {
       else console.log('✅ tipizate_documents table created');
       checkComplete();
     });
-    
+
     // Create indexes
-    db.run(`CREATE INDEX IF NOT EXISTS idx_tipizate_type ON tipizate_documents(type)`, () => {});
-    db.run(`CREATE INDEX IF NOT EXISTS idx_tipizate_status ON tipizate_documents(status)`, () => {});
-    db.run(`CREATE INDEX IF NOT EXISTS idx_tipizate_date ON tipizate_documents(date)`, () => {});
-    db.run(`CREATE INDEX IF NOT EXISTS idx_tipizate_location ON tipizate_documents(location_id)`, () => {});
-    db.run(`CREATE INDEX IF NOT EXISTS idx_tipizate_warehouse ON tipizate_documents(warehouse_id)`, () => {});
-    db.run(`CREATE INDEX IF NOT EXISTS idx_tipizate_number ON tipizate_documents(number)`, () => {    });
+    db.run(`CREATE INDEX IF NOT EXISTS idx_tipizate_type ON tipizate_documents(type)`, () => { });
+    db.run(`CREATE INDEX IF NOT EXISTS idx_tipizate_status ON tipizate_documents(status)`, () => { });
+    db.run(`CREATE INDEX IF NOT EXISTS idx_tipizate_date ON tipizate_documents(date)`, () => { });
+    db.run(`CREATE INDEX IF NOT EXISTS idx_tipizate_location ON tipizate_documents(location_id)`, () => { });
+    db.run(`CREATE INDEX IF NOT EXISTS idx_tipizate_warehouse ON tipizate_documents(warehouse_id)`, () => { });
+    db.run(`CREATE INDEX IF NOT EXISTS idx_tipizate_number ON tipizate_documents(number)`, () => { });
   });
 
   // ========== TIPIZATE DOCUMENTS (NIR, Bon Consum, etc.) ==========
@@ -687,14 +687,55 @@ function createEnterpriseTables(db) {
       else console.log('✅ tipizate_documents table created');
       checkComplete();
     });
-    
+
     // Create indexes
-    db.run(`CREATE INDEX IF NOT EXISTS idx_tipizate_type ON tipizate_documents(type)`, () => {});
-    db.run(`CREATE INDEX IF NOT EXISTS idx_tipizate_status ON tipizate_documents(status)`, () => {});
-    db.run(`CREATE INDEX IF NOT EXISTS idx_tipizate_date ON tipizate_documents(date)`, () => {});
-    db.run(`CREATE INDEX IF NOT EXISTS idx_tipizate_location ON tipizate_documents(location_id)`, () => {});
-    db.run(`CREATE INDEX IF NOT EXISTS idx_tipizate_warehouse ON tipizate_documents(warehouse_id)`, () => {});
-    db.run(`CREATE INDEX IF NOT EXISTS idx_tipizate_number ON tipizate_documents(number)`, () => {});
+    db.run(`CREATE INDEX IF NOT EXISTS idx_tipizate_type ON tipizate_documents(type)`, () => { });
+    db.run(`CREATE INDEX IF NOT EXISTS idx_tipizate_status ON tipizate_documents(status)`, () => { });
+    db.run(`CREATE INDEX IF NOT EXISTS idx_tipizate_date ON tipizate_documents(date)`, () => { });
+    db.run(`CREATE INDEX IF NOT EXISTS idx_tipizate_location ON tipizate_documents(location_id)`, () => { });
+    db.run(`CREATE INDEX IF NOT EXISTS idx_tipizate_warehouse ON tipizate_documents(warehouse_id)`, () => { });
+    db.run(`CREATE INDEX IF NOT EXISTS idx_tipizate_number ON tipizate_documents(number)`, () => { });
+    // ========== MIGRATIONS FOR MISSING COLUMNS ==========
+    // 1. inventory_sessions -> counted_by
+    tables.push(() => {
+      db.run(`ALTER TABLE inventory_sessions ADD COLUMN counted_by TEXT`, (err) => {
+        if (err && !err.message.includes('duplicate column')) {
+          console.error('⚠️ Migrare inventory_sessions.counted_by:', err.message);
+        }
+        checkComplete();
+      });
+    });
+
+    // 2. marketing_campaigns -> type
+    tables.push(() => {
+      db.run(`ALTER TABLE marketing_campaigns ADD COLUMN type TEXT`, (err) => {
+        if (err && !err.message.includes('duplicate column')) {
+          console.error('⚠️ Migrare marketing_campaigns.type:', err.message);
+        }
+        checkComplete();
+      });
+    });
+
+    // 3. fiscal_documents -> created_at
+    tables.push(() => {
+      db.run(`ALTER TABLE fiscal_documents ADD COLUMN created_at DATETIME DEFAULT CURRENT_TIMESTAMP`, (err) => {
+        if (err && !err.message.includes('duplicate column')) {
+          console.error('⚠️ Migrare fiscal_documents.created_at:', err.message);
+        }
+        checkComplete();
+      });
+    });
+
+    // 4. happy_hour_rules -> day_of_week
+    tables.push(() => {
+      db.run(`ALTER TABLE happy_hour_rules ADD COLUMN day_of_week INTEGER`, (err) => {
+        if (err && !err.message.includes('duplicate column')) {
+          console.error('⚠️ Migrare happy_hour_rules.day_of_week:', err.message);
+        }
+        checkComplete();
+      });
+    });
+
   });
 
   // Execute all table creation

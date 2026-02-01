@@ -21,12 +21,12 @@ interface Course {
   totalModules: number;
   completedModules: number;
   progress: number;
-  status: 'not_started' | "ÃŽn progres" | 'completed' | 'locked';
+  status: 'not_started' | "în progres" | 'completed' | 'locked';
   isLocked: boolean;
 }
 
 export const KioskTrainingPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const navigate = useNavigate();
   const [courses, setCourses] = useState<Course[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -71,24 +71,23 @@ export const KioskTrainingPage = () => {
         {courses.map((course) => (
           <div
             key={course.id}
-            className={`border rounded-lg p-4 ${
-              course.status === 'completed'
+            className={`border rounded-lg p-4 ${course.status === 'completed'
                 ? 'border-green-200 bg-green-50'
                 : course.status === 'locked'
-                ? 'border-gray-200 bg-gray-50 opacity-60'
-                : 'border-blue-200 bg-white'
-            }`}
+                  ? 'border-gray-200 bg-gray-50 opacity-60'
+                  : 'border-blue-200 bg-white'
+              }`}
           >
             <div className="flex items-start justify-between mb-2">
               <div className="text-4xl">{course.icon}</div>
               {course.status === 'completed' && (
                 <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">
-                  âœ“ Completed
+                  ✓ Completed
                 </span>
               )}
               {course.status === 'locked' && (
                 <span className="px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded">
-                  ðŸ”’ Locked
+                  🔒 Locked
                 </span>
               )}
               {course.mandatory && (
@@ -118,28 +117,27 @@ export const KioskTrainingPage = () => {
             </div>
 
             <div className="flex items-center justify-between text-sm text-gray-600 mb-3">
-              <span>â±ï¸ {course.duration} min</span>
-              <span>ðŸ“š {course.category}</span>
+              <span>⏱️ {course.duration} min</span>
+              <span>📚 {course.category}</span>
             </div>
 
             <button
               onClick={() => handleStartCourse(course.id)}
               disabled={course.status === 'locked'}
-              className={`w-full px-4 py-2 rounded ${
-                course.status === 'locked'
+              className={`w-full px-4 py-2 rounded ${course.status === 'locked'
                   ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   : course.status === 'completed'
-                  ? 'bg-green-600 text-white hover:bg-green-700'
-                  : 'bg-blue-600 text-white hover:bg-blue-700'
-              }`}
+                    ? 'bg-green-600 text-white hover:bg-green-700'
+                    : 'bg-blue-600 text-white hover:bg-blue-700'
+                }`}
             >
               {course.status === 'completed'
                 ? 'Review Course'
-                : course.status === "ÃŽn progres"
-                ? 'Continue'
-                : course.status === 'locked'
-                ? 'Locked'
-                : 'Start Course'}
+                : course.status === "în progres"
+                  ? 'Continue'
+                  : course.status === 'locked'
+                    ? 'Locked'
+                    : 'Start Course'}
             </button>
           </div>
         ))}

@@ -90,7 +90,7 @@ export const DashboardRecentOrders = () => {
       'pending': { label: 'În așteptare', class: 'status--pending' },
       'preparing': { label: 'În pregătire', class: 'status--preparing' },
       'ready': { label: 'Gata', class: 'status--ready' },
-      'delivered': { label: 'În livrare', class: 'status--delivered' },
+      'delivered': { label: 'Livrată', class: 'status--delivered' },
       'completed': { label: 'Finalizat', class: 'status--completed' },
       'cancelled': { label: 'Anulat', class: 'status--cancelled' },
     };

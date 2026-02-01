@@ -19,7 +19,13 @@ const EventEmitter = require('events');
 /**
  * BAR Categories constant (pentru filtrare KDS/Bar)
  */
-const BAR_CATEGORIES = ['Cafea/Ciocolată/Ceai', 'Răcoritoare', 'Băuturi și Coctailuri'];
+const BAR_CATEGORIES = [
+  'Cafea/Ciocolată/Ceai',
+  'Răcoritoare',
+  'Băuturi și Coctailuri',
+  'Vinuri',
+  'Băuturi Spirtoase'
+];
 
 class OrderEventBus extends EventEmitter {
   constructor() {

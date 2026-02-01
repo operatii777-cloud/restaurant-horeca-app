@@ -9,12 +9,12 @@ import { CleaningTaskModal } from './CleaningTaskModal';
 import './CleaningScheduleTab.css';
 
 export const CleaningScheduleTab = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [showFormModal, setShowFormModal] = useState(false);
   const [showTaskModal, setShowTaskModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState<any>(null);
   const [filterStatus, setFilterStatus] = useState<string>('all');
-  
+
   // Construim URL-ul cu query params
   const scheduleUrl = useMemo(() => {
     const params = new URLSearchParams();
@@ -23,7 +23,7 @@ export const CleaningScheduleTab = () => {
     const queryString = params.toString();
     return queryString ? `/api/compliance/cleaning-schedule?${queryString}` : '/api/compliance/cleaning-schedule';
   }, [filterStatus]);
-  
+
   const { data: schedules, loading, refetch } = useApiQuery(scheduleUrl);
 
   const columnDefs = [
@@ -31,31 +31,37 @@ export const CleaningScheduleTab = () => {
     { field: 'frequency', headerName: 'Frecvență', width: 120 },
     { field: 'shift_type', headerName: 'Tură', width: 120 },
     { field: 'assigned_to_name', headerName: 'Atribuit', width: 150 },
-    { field: 'due_date', headerName: 'Termen', width: 180, valueFormatter: (params: any) => {
-      if (!params.value) return '-';
-      return new Date(params.value).toLocaleString('ro-RO');
-    }},
-    { field: 'status', headerName: 'Status', width: 120, cellRenderer: (params: any) => {
-      const status = params.value;
-      const colors = {
-        pending: 'secondary',
-        in_progress: 'info',
-        completed: 'success',
-        overdue: 'danger',
-      };
-      const labels = {
-        pending: 'ÃŽn Așteptare',
-        in_progress: 'ÃŽn Progres',
-        completed: 'Completat',
-        overdue: 'Depășit',
-      };
-      return React.createElement('span', {
-        className: `badge bg-${colors[status as keyof typeof colors] || 'secondary'}`
-      }, labels[status as keyof typeof labels] || status);
-    }},
-    { field: 'checked_items', headerName: 'Progres', width: 120, valueGetter: (params: any) => {
-      return `${params.data.checked_items || 0}/${params.data.total_items || 0}`;
-    }},
+    {
+      field: 'due_date', headerName: 'Termen', width: 180, valueFormatter: (params: any) => {
+        if (!params.value) return '-';
+        return new Date(params.value).toLocaleString('ro-RO');
+      }
+    },
+    {
+      field: 'status', headerName: 'Status', width: 120, cellRenderer: (params: any) => {
+        const status = params.value;
+        const colors = {
+          pending: 'secondary',
+          in_progress: 'info',
+          completed: 'success',
+          overdue: 'danger',
+        };
+        const labels = {
+          pending: 'În Așteptare',
+          in_progress: 'În Progres',
+          completed: 'Completat',
+          overdue: 'Depășit',
+        };
+        return React.createElement('span', {
+          className: `badge bg-${colors[status as keyof typeof colors] || 'secondary'}`
+        }, labels[status as keyof typeof labels] || status);
+      }
+    },
+    {
+      field: 'checked_items', headerName: 'Progres', width: 120, valueGetter: (params: any) => {
+        return `${params.data.checked_items || 0}/${params.data.total_items || 0}`;
+      }
+    },
     {
       field: 'actions',
       headerName: 'Acțiuni',
@@ -72,7 +78,7 @@ export const CleaningScheduleTab = () => {
 
   React.useEffect(() => {
     (window as any).handleViewTask = (taskId: number) => {
-      const task = schedules?.data?.find((t: any) => t.id === taskId);
+      const task = (schedules as any)?.data?.find((t: any) => t.id === taskId);
       if (task) {
         setSelectedTask(task);
         setShowTaskModal(true);
@@ -104,26 +110,26 @@ export const CleaningScheduleTab = () => {
             className="form-control form-select"
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
-            title="filtreaza dupa status"
-            aria-label="filtreaza dupa status"
+            title="Filtrează după status"
+            aria-label="Filtrează după status"
           >
-            <option value="all">"toate statusurile"</option>
-            <option value="pending">ÃŽn Așteptare</option>
-            <option value="ÃŽn progres">"in progres"</option>
+            <option value="all">Toate statusurile</option>
+            <option value="pending">În Așteptare</option>
+            <option value="În progres">În progres</option>
             <option value="completed">Completat</option>
-            <option value="overdue">"Depășit"</option>
+            <option value="overdue">Depășit</option>
           </select>
         </div>
-        
+
         <button className="btn btn-primary" onClick={handleAddTask}>
-          <i className="fas fa-plus me-2"></i>"adauga task curatenie"</button>
+          <i className="fas fa-plus me-2"></i>Adaugă task curățenie</button>
       </div>
 
       <div className="ag-grid-container">
         <div className="ag-theme-alpine-dark">
           <AgGridReact
             theme="legacy"
-            rowData={schedules?.data || []}
+            rowData={(schedules as any)?.data || []}
             columnDefs={columnDefs}
             pagination={true}
             paginationPageSize={20}

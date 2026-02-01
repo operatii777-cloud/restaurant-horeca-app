@@ -21,7 +21,7 @@
   gap: 0.5rem;
 }
 
-.analytics-period > span {
+.analytics-period>span {
   font-size: 0.85rem;
   color: #374151 !important;
   font-weight: 600;
@@ -96,7 +96,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  color: #1e293b !important; /* Text întunecat pentru contrast */
+  color: #1e293b !important;
+  /* Text întunecat pentru contrast */
 }
 
 .analytics-card header {
@@ -108,16 +109,19 @@
 .analytics-card header h3 {
   margin: 0;
   font-size: 1rem;
-  color: #1e293b !important; /* Text întunecat pentru contrast */
+  color: #1e293b !important;
+  /* Text întunecat pentru contrast */
 }
 
 .analytics-card header span {
   font-size: 0.8rem;
-  color: #374151 !important; /* Gri închis pentru text secundar */
+  color: #374151 !important;
+  /* Gri închis pentru text secundar */
 }
 
 .analytics-card p {
-  color: #1e293b !important; /* Text întunecat pentru contrast */
+  color: #1e293b !important;
+  /* Text întunecat pentru contrast */
 }
 
 .analytics-top-list {
@@ -133,18 +137,21 @@
   display: flex;
   justify-content: space-between;
   font-size: 0.9rem;
-  color: #1e293b !important; /* Text întunecat pentru contrast */
+  color: #1e293b !important;
+  /* Text întunecat pentru contrast */
 }
 
 .analytics-top-list li strong {
-  color: #1e293b !important; /* Text întunecat pentru valori importante */
+  color: #1e293b !important;
+  /* Text întunecat pentru valori importante */
 }
 
 .analytics-predictions {
-  border: 1px solid var(--border-color, rgba(148, 163, 184, 0.12));
+  border: 1px solid var(--border-color, #e2e8f0);
   border-radius: 16px;
   padding: 1.25rem;
-  background: rgba(15, 23, 42, 0.8);
+  background: #ffffff;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -153,12 +160,14 @@
 .analytics-predictions header h3 {
   margin: 0;
   font-size: 1.1rem;
-  color: #fde047 !important; /* Galben pentru text */
+  color: #1e293b !important;
+  /* Dark slate for title */
 }
 
 .analytics-predictions header span {
   font-size: 0.85rem;
-  color: #f1f5f9 !important; /* Alb pentru text secundar */
+  color: #64748b !important;
+  /* Muted slate for subtitle */
 }
 
 .analytics-predictions__grid {
@@ -180,18 +189,21 @@
 }
 
 .analytics-alert.is-info {
-  background: rgba(59, 130, 246, 0.15);
-  color: #3b82f6;
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #dbeafe;
 }
 
 .analytics-alert.is-warning {
-  background: rgba(253, 186, 116, 0.15);
-  color: #f97316;
+  background: #fff7ed;
+  color: #c2410c;
+  border: 1px solid #ffedd5;
 }
 
 .analytics-alert.is-critical {
-  background: rgba(248, 113, 113, 0.15);
-  color: #ef4444;
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fee2e2;
 }
 
 .analytics-recommendations {
@@ -201,28 +213,34 @@
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
-  color: #f1f5f9 !important; /* Alb pentru text */
+  color: #334155 !important;
+  /* Slate-700 for text */
+  background: #ffffff;
+  /* Added for readability */
 }
 
 .analytics-correlation {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  border: 1px solid var(--border-color, rgba(148, 163, 184, 0.12));
+  border: 1px solid var(--border-color, #e2e8f0);
   border-radius: 16px;
   padding: 1.25rem;
-  background: rgba(15, 23, 42, 0.8);
+  background: #ffffff;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
 }
 
 .analytics-correlation header h3 {
   margin: 0;
   font-size: 1.1rem;
-  color: #fde047 !important; /* Galben pentru text */
+  color: #1e293b !important;
+  /* Dark slate for title */
 }
 
 .analytics-correlation header span {
   font-size: 0.85rem;
-  color: #f1f5f9 !important; /* Alb pentru text secundar */
+  color: #64748b !important;
+  /* Muted slate for subtitle */
 }
 
 .analytics-correlation__table {
@@ -241,30 +259,38 @@
 
 .analytics-correlation__header {
   font-weight: 600;
-  color: #fde047 !important; /* Galben pentru text */
+  color: #64748b !important;
+  /* Muted slate for header */
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 0.5rem;
 }
 
 .analytics-correlation__row {
   padding: 0.75rem;
-  border-radius: 12px;
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(148, 163, 184, 0.12);
-  color: #f1f5f9 !important; /* Alb pentru text */
+  border-radius: 8px;
+  background: #f8fafc;
+  /* Very light slate background for rows */
+  border: 1px solid #e2e8f0;
+  color: #334155 !important;
+  /* Slate-700 for text */
 }
 
 .analytics-correlation__row strong {
-  color: #fde047 !important; /* Galben pentru text important */
+  color: #0f172a !important;
+  /* Slate-900 for strong text */
 }
 
 .analytics-correlation__row small {
   display: block;
-  color: #f1f5f9 !important; /* Alb pentru text secundar */
+  color: #64748b !important;
+  /* Slate-500 for secondary text */
   font-size: 0.75rem;
   margin-top: 0.15rem;
 }
 
 .analytics-correlation__row p {
-  color: #f1f5f9 !important; /* Alb pentru text */
+  color: #334155 !important;
+  /* Slate-700 for text */
 }
 
 .risk-badge {
@@ -346,7 +372,7 @@
     grid-template-columns: 1.8fr 1fr 1fr;
   }
 
-  .analytics-correlation__row > span:last-child {
+  .analytics-correlation__row>span:last-child {
     justify-self: flex-start;
   }
 

@@ -35,7 +35,7 @@ export const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
     <div
       className={`skeleton-loader ${className}`}
       style={baseStyle}
-      aria-label=Se încarcă...
+      aria-label="Se încarcă..."
       role="status"
     />
   );
@@ -72,7 +72,7 @@ export const TableSkeleton: React.FC<{ rows?: number; columns?: number }> = ({
  * Card Skeleton
  */
 export const CardSkeleton: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   return (
     <div style={{
       padding: '24px',

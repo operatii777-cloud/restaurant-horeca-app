@@ -18,12 +18,14 @@ interface TipizateListPageProps {
   type: TipizatType;
   newRoute: string;
   detailsRouteBase: string;
+  titleStyle?: React.CSSProperties;
 }
 
 export const TipizateListPage: React.FC<TipizateListPageProps> = ({
   type,
   newRoute,
   detailsRouteBase,
+  titleStyle,
 }) => {
   const navigate = useNavigate();
   const {
@@ -233,14 +235,17 @@ export const TipizateListPage: React.FC<TipizateListPageProps> = ({
     <div className="flex flex-col gap-4" style={{ margin: 0, padding: '16px', width: '100%', maxWidth: '100%' }}>
       {/* Header */}
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+        <h1
+          className="text-2xl font-bold text-gray-900 dark:text-gray-100"
+          style={titleStyle}
+        >
           {name}
         </h1>
         <div className="flex gap-2 items-center">
           {/* Location Switcher - doar pentru Transferuri Gestiuni */}
           {type === 'TRANSFER' && (
             <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-600 dark:text-gray-400">"Locație:"</span>
+              <span className="text-sm text-gray-600 dark:text-gray-400">Locație:</span>
               <LocationSwitcher />
             </div>
           )}
@@ -248,24 +253,24 @@ export const TipizateListPage: React.FC<TipizateListPageProps> = ({
             onClick={refetch}
             className="px-4 py-2 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
           >
-            <i className="bi bi-arrow-clockwise me-1"></i>"Reîmprospătează"</button>
+            <i className="bi bi-arrow-clockwise me-1"></i>Reîmprospătează</button>
           <button
             onClick={handleNewDocument}
             className="px-4 py-2 rounded-md bg-blue-100 dark:bg-blue-900 text-black dark:text-white hover:bg-blue-200 dark:hover:bg-blue-800 font-bold shadow-sm border-2 border-blue-600 dark:border-blue-500"
-            style={{ 
-              backgroundColor: '#dbeafe !important', 
-              color: '#000000 !important', 
+            style={{
+              backgroundColor: '#dbeafe !important',
+              color: '#000000 !important',
               fontWeight: 'bold'
             }}
           >
-            <i className="bi bi-plus-circle me-1"></i>"Document Nou"</button>
+            <i className="bi bi-plus-circle me-1"></i>Document nou</button>
         </div>
       </div>
 
       {/* Filters - Type-specific */}
       <div className={`grid grid-cols-1 md:grid-cols-${getFilterColumnsCount(type)} gap-4 p-4 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700`}>
         <div className="flex flex-col gap-1">
-          <label className="text-sm font-medium text-gray-700 dark:text-gray-300">"De la dată"</label>
+          <label className="text-sm font-medium text-gray-700 dark:text-gray-300">De la dată</label>
           <input
             type="date"
             className="h-10 px-3 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
@@ -275,7 +280,7 @@ export const TipizateListPage: React.FC<TipizateListPageProps> = ({
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label className="text-sm font-medium text-gray-700 dark:text-gray-300">"Până la dată"</label>
+          <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Până la dată</label>
           <input
             type="date"
             className="h-10 px-3 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
@@ -294,7 +299,7 @@ export const TipizateListPage: React.FC<TipizateListPageProps> = ({
             onChange={(e) => handleFilterChange('status', e.target.value)}
             title="Status document"
           >
-            <option value="">"Toate"</option>
+            <option value="">Toate</option>
             <option value="DRAFT">Draft</option>
             <option value="VALIDATED">Validat</option>
             <option value="SIGNED">Semnat</option>
@@ -342,8 +347,8 @@ export const TipizateListPage: React.FC<TipizateListPageProps> = ({
               onChange={(e) => handleFilterChange('paymentMethod', e.target.value)}
               title="Metodă de plată"
             >
-              <option value="">"Toate"</option>
-              <option value="cash">"Numerar"</option>
+              <option value="">Toate</option>
+              <option value="cash">Numerar</option>
               <option value="card">Card</option>
               <option value="transfer">Transfer</option>
               <option value="check">Cec</option>
@@ -361,20 +366,20 @@ export const TipizateListPage: React.FC<TipizateListPageProps> = ({
               onChange={(e) => handleFilterChange('consumptionReason', e.target.value)}
               title="Motiv consum"
             >
-              <option value="">"Toate"</option>
-              <option value="kitchen_use">"uz bucatarie"</option>
+              <option value="">Toate</option>
+              <option value="kitchen_use">Uz bucătărie</option>
               <option value="spoilage">Stricare</option>
-              <option value="sample">"Mostră"</option>
-              <option value="staff_meal">"masa angajat"</option>
-              <option value="promotion">"Promoție"</option>
-              <option value="waste">"Deșeu"</option>
+              <option value="sample">Mostră</option>
+              <option value="staff_meal">Masă angajat</option>
+              <option value="promotion">Promoție</option>
+              <option value="waste">Deșeu</option>
               <option value="other">Altul</option>
             </select>
           </div>
         )}
         {type === 'TRANSFER' && (
           <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">"locatie destinatie"</label>
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Locație destinație</label>
             <input
               type="text"
               className="h-10 px-3 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"

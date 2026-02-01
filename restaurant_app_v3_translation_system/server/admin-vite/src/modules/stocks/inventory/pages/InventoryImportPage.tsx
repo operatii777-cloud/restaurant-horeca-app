@@ -21,7 +21,7 @@ interface ImportRecord {
 }
 
 export const InventoryImportPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const [fileType, setFileType] = useState<'pdf' | 'xml' | 'manual'>('pdf');
   const [file, setFile] = useState<File | null>(null);
@@ -33,7 +33,7 @@ export const InventoryImportPage = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
-  
+
   const [history, setHistory] = useState<ImportRecord[]>([]);
   const [historyLoading, setHistoryLoading] = useState(false);
   const [stats, setStats] = useState({
@@ -53,7 +53,7 @@ export const InventoryImportPage = () => {
       const response = await httpClient.get('/api/admin/inventory/import-history');
       if (response.data?.success) {
         setHistory(response.data.data || []);
-        
+
         // Calculate stats
         const records = response.data.data || [];
         setStats({
@@ -75,7 +75,7 @@ export const InventoryImportPage = () => {
     if (selectedFile) {
       setFile(selectedFile);
       setError(null);
-      
+
       // Auto-detect file type
       const ext = selectedFile.name.split('.').pop()?.toLowerCase();
       if (ext === 'pdf') {
@@ -224,7 +224,7 @@ export const InventoryImportPage = () => {
           onClick={() => setShowModal(true)}
           className="d-flex align-items-center"
         >
-          <Upload size={20} className="me-2" />"importa factura"</Button>
+          <Upload size={20} className="me-2" />Importă factură</Button>
       </div>
 
       {/* Stats Cards */}
@@ -283,13 +283,13 @@ export const InventoryImportPage = () => {
           {historyLoading ? (
             <div className="text-center p-5">
               <Spinner animation="border" />
-              <p className="mt-3 text-muted">"se incarca istoric"</p>
+              <p className="mt-3 text-muted">Se încarcă istoric...</p>
             </div>
           ) : history.length === 0 ? (
             <div className="text-center p-5">
               <AlertCircle size={48} className="text-muted mb-3" />
-              <p className="text-muted">"nu exista importuri in istoric"</p>
-              <Button variant="primary" onClick={() => setShowModal(true)}>"importa prima factura"</Button>
+              <p className="text-muted">Nu există importuri în istoric</p>
+              <Button variant="primary" onClick={() => setShowModal(true)}>Importă prima factură</Button>
             </div>
           ) : (
             <div className="table-responsive">
@@ -297,7 +297,7 @@ export const InventoryImportPage = () => {
                 <thead>
                   <tr>
                     <th style={{ width: '40px' }}></th>
-                    <th>"nr factura"</th>
+                    <th>Nr. factură</th>
                     <th>Furnizor</th>
                     <th>Data</th>
                     <th className="text-end">Valoare</th>
@@ -305,8 +305,8 @@ export const InventoryImportPage = () => {
                     <th>Status</th>
                     <th>NIR ID</th>
                     <th>Articole</th>
-                    <th>"importat la"</th>
-                    <th className="text-end">"Acțiuni"</th>
+                    <th>Importat la</th>
+                    <th className="text-end">Acțiuni</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -371,16 +371,16 @@ export const InventoryImportPage = () => {
       </Card>
 
       {/* Import Modal */}
-      <Modal 
-        show={showModal} 
-        onHide={handleCloseModal} 
-        size="xl" 
+      <Modal
+        show={showModal}
+        onHide={handleCloseModal}
+        size="xl"
         backdrop="static"
         dialogClassName="inventory-import-modal-custom"
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            <Upload size={24} className="me-2" style={{ verticalAlign: 'middle' }} />"importa factura"</Modal.Title>
+            <Upload size={24} className="me-2" style={{ verticalAlign: 'middle' }} />Importă factură</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {error && <Alert variant="danger">{error}</Alert>}
@@ -388,8 +388,8 @@ export const InventoryImportPage = () => {
 
           {loading && (
             <div className="mb-3">
-              <ProgressBar 
-                now={uploadProgress} 
+              <ProgressBar
+                now={uploadProgress}
                 label={`${uploadProgress}%`}
                 animated
                 striped
@@ -450,7 +450,7 @@ export const InventoryImportPage = () => {
                   type="file"
                   accept={fileType === 'pdf' ? '.pdf' : '.xml'}
                   onChange={handleFileChange}
-                  required={fileType !== 'manual'}
+                  required={true}
                 />
                 {file && (
                   <Form.Text className="text-success">
@@ -521,31 +521,31 @@ export const InventoryImportPage = () => {
             {/* Info Box */}
             <Alert variant="info" className="mb-0">
               <AlertCircle size={18} className="me-2" style={{ verticalAlign: 'middle' }} />
-              <strong>"ce se intampla dupa import"</strong>
+              <strong>Ce se întâmplă după import</strong>
               <ul className="mb-0 mt-2">
                 <li>Se creează automat un document NIR (Notă de Intrare Recepție)</li>
                 <li>Se generează mișcări de stoc (RECEIVE) pentru toate articolele</li>
-                <li>"fisierul original este salvat si poate fi descarca"</li>
+                <li>Fișierul original este salvat și poate fi descărcat</li>
               </ul>
             </Alert>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal} disabled={loading}>"Anulează"</Button>
-          <Button 
-            variant="primary" 
-            onClick={handleSubmit as any} 
+          <Button variant="secondary" onClick={handleCloseModal} disabled={loading}>Anulează</Button>
+          <Button
+            variant="primary"
+            onClick={handleSubmit as any}
             disabled={loading || success}
           >
             {loading ? (
               <>
-                <Spinner animation="border" size="sm" className="me-2" />"se importa"</>
+                <Spinner animation="border" size="sm" className="me-2" />Se importă...</>
             ) : success ? (
               <>
-                <CheckCircle size={18} className="me-2" style={{ verticalAlign: 'middle' }} />"importat cu succes"</>
+                <CheckCircle size={18} className="me-2" style={{ verticalAlign: 'middle' }} />Importat cu succes</>
             ) : (
               <>
-                <Upload size={18} className="me-2" style={{ verticalAlign: 'middle' }} />"importa factura"</>
+                <Upload size={18} className="me-2" style={{ verticalAlign: 'middle' }} />Importă factură</>
             )}
           </Button>
         </Modal.Footer>

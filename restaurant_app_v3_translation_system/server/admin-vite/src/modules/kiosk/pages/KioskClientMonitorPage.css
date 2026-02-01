@@ -397,3 +397,136 @@
   background: rgba(255, 255, 255, 0.2);
 }
 
+/* ============================================
+   COMPACT NUMBER BADGE LAYOUT
+   For scalability with 60+ orders
+   ============================================ */
+
+/* Order count in header */
+.client-monitor__count {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #64748b;
+  background: rgba(100, 116, 139, 0.2);
+  padding: 0.25rem 1rem;
+  border-radius: 9999px;
+  min-width: 3rem;
+  text-align: center;
+  margin-left: auto;
+}
+
+.client-monitor__count--ready {
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.2);
+}
+
+/* Compact orders container */
+.client-monitor__orders--compact {
+  display: block;
+  padding: 0.5rem;
+}
+
+/* Number list container */
+.client-monitor__number-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-content: flex-start;
+  justify-content: flex-start;
+}
+
+.client-monitor__number-list--ready {
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+/* Individual number badges */
+.client-monitor__number-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-weight: 700;
+  border-radius: 0.5rem;
+  cursor: default;
+  transition: all 0.2s ease;
+}
+
+.client-monitor__number-badge--progress {
+  font-size: 1.25rem;
+  padding: 0.4rem 0.75rem;
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid #475569;
+  color: #94a3b8;
+}
+
+.client-monitor__number-badge--progress:hover {
+  background: rgba(51, 65, 85, 0.9);
+  color: #e2e8f0;
+  transform: scale(1.05);
+}
+
+.client-monitor__number-badge--ready {
+  font-size: 2rem;
+  padding: 0.6rem 1.25rem;
+  background: linear-gradient(145deg, rgba(6, 78, 59, 0.8), rgba(4, 47, 46, 0.9));
+  border: 2px solid rgba(16, 185, 129, 0.6);
+  color: #34d399;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+}
+
+.client-monitor__number-badge--ready:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.4);
+}
+
+.client-monitor__number-badge--flash {
+  animation: badge-flash 0.5s ease-in-out infinite;
+  background: linear-gradient(145deg, #10b981, #059669) !important;
+  border-color: #fff !important;
+  color: #fff !important;
+  transform: scale(1.1);
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.8);
+}
+
+@keyframes badge-flash {
+  0%, 100% { opacity: 1; box-shadow: 0 0 30px rgba(16, 185, 129, 0.8); }
+  50% { opacity: 0.85; box-shadow: 0 0 50px rgba(16, 185, 129, 1); }
+}
+
+/* Responsive adjustments for compact layout */
+@media (max-width: 1200px) {
+  .client-monitor__number-badge--progress {
+    font-size: 1.1rem;
+    padding: 0.35rem 0.6rem;
+  }
+  
+  .client-monitor__number-badge--ready {
+    font-size: 1.75rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  .client-monitor__count {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .client-monitor__number-badge--progress {
+    font-size: 1rem;
+    padding: 0.3rem 0.5rem;
+  }
+  
+  .client-monitor__number-badge--ready {
+    font-size: 1.5rem;
+    padding: 0.4rem 0.8rem;
+  }
+  
+  .client-monitor__number-list {
+    gap: 0.35rem;
+  }
+  
+  .client-monitor__number-list--ready {
+    gap: 0.5rem;
+  }
+}

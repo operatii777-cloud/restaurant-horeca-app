@@ -20,7 +20,7 @@ import './KdsPage.css';
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
-  return `"M":${s.toString().padStart(2, '0')}`;
+  return `${m}:${s.toString().padStart(2, '0')}`;
 }
 
 /**
@@ -36,7 +36,7 @@ function getTimeClass(elapsed: number): string {
  * KDS Page Component
  */
 export function KdsPage() {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   // Access store methods using selector (same pattern as BarPage)
   // CRITICAL: Add defensive checks to prevent "Cannot read properties of undefined"
   const getKitchenOrders = useKdsStore((state) => state?.getKitchenOrders);
@@ -44,20 +44,20 @@ export function KdsPage() {
   const getPendingCount = useKdsStore((state) => state?.getPendingCount);
   const getPreparingCount = useKdsStore((state) => state?.getPreparingCount);
   const getReadyCount = useKdsStore((state) => state?.getReadyCount);
-  
+
   // Sync with order events
   useKdsEvents();
-  
+
   // Get orders with defensive check
   const orders = getKitchenOrders?.() || [];
-  
+
   // Sort by creation time (oldest first)
   const sortedOrders = [...orders].sort((a, b) => {
     const tA = a.timestamps?.created_at ? new Date(a.timestamps.created_at).getTime() : 0;
     const tB = b.timestamps?.created_at ? new Date(b.timestamps.created_at).getTime() : 0;
     return tA - tB;
   });
-  
+
   // Handle "Ready" button
   const handleReady = async (orderId: number | string) => {
     try {
@@ -68,7 +68,7 @@ export function KdsPage() {
       alert('Eroare la marcarea comenzii ca gata');
     }
   };
-  
+
   // Update timer every second
   const [now, setNow] = useState(Date.now());
   useEffect(() => {
@@ -77,14 +77,14 @@ export function KdsPage() {
     }, 1000);
     return () => clearInterval(interval);
   }, []);
-  
+
   return (
     <div className="kds-page">
       <header className="kds-header">
-        <h1 className="kds-title">Bucătărie "“ Comenzi Active</h1>
+        <h1 className="kds-title">Bucătărie – Comenzi Active</h1>
         <div className="kds-stats">
           <span className="kds-stat-item">
-            <span className="kds-stat-label">"Pending:"</span>
+            <span className="kds-stat-label">Pending:</span>
             <span className="kds-stat-value">{getPendingCount?.() || 0}</span>
           </span>
           <span className="kds-stat-item">
@@ -101,17 +101,17 @@ export function KdsPage() {
           </span>
         </div>
       </header>
-      
+
       <div className="kds-orders-grid">
         {sortedOrders.map((order) => {
           const elapsed = getElapsedSeconds?.(order) || 0;
           const timeClass = getTimeClass(elapsed);
-          
+
           // Filter kitchen items only
           const kitchenItems = order.items.filter((item) => item.station === 'kitchen');
-          
+
           if (kitchenItems.length === 0) return null;
-          
+
           return (
             <div key={order.id} className={`kds-order-card ${timeClass}`}>
               <div className="kds-order-header">
@@ -120,24 +120,24 @@ export function KdsPage() {
                   <div className="kds-order-table">Masa {order.table}</div>
                 )}
                 {order.type === "Delivery" && (
-                  <div className="kds-badge kds-badge-delivery">"Delivery"</div>
+                  <div className="kds-badge kds-badge-delivery">Delivery</div>
                 )}
                 {order.type === 'takeout' && (
                   <div className="kds-badge kds-badge-takeout">Takeout</div>
                 )}
-                {order.type === "Drive-Thru" && (
+                {order.type === "drive_thru" && (
                   <div className="kds-badge kds-badge-drivethru">Drive-Thru</div>
                 )}
               </div>
-              
+
               <div className="kds-order-items">
                 {kitchenItems.map((item) => (
                   <div key={item.id || `${item.product_id}-${item.name}`} className="kds-item-row">
                     <div className="kds-item-main">
-                      <span className="kds-item-qty">{item.qty}Ã—</span>
+                      <span className="kds-item-qty">{item.qty}×</span>
                       <span className="kds-item-name">{item.name}</span>
                     </div>
-                    
+
                     {item.options && item.options.length > 0 && (
                       <div className="kds-item-options">
                         {item.options.map((opt, idx) => (
@@ -147,7 +147,7 @@ export function KdsPage() {
                         ))}
                       </div>
                     )}
-                    
+
                     {item.notes && (
                       <div className="kds-item-notes">
                         <strong>Note:</strong> {item.notes}
@@ -156,18 +156,18 @@ export function KdsPage() {
                   </div>
                 ))}
               </div>
-              
+
               {order.notes?.kitchen && (
                 <div className="kds-order-notes">
-                  <strong>"note bucatarie"</strong> {order.notes.kitchen}
+                  <strong>Note bucătărie:</strong> {order.notes.kitchen}
                 </div>
               )}
-              
+
               <div className="kds-order-footer">
                 <div className={`kds-timer ${timeClass}`}>
                   {formatTime(elapsed)}
                 </div>
-                
+
                 {order.status !== 'ready' && (
                   <button
                     className="kds-ready-btn"
@@ -176,19 +176,19 @@ export function KdsPage() {
                     Gata
                   </button>
                 )}
-                
+
                 {order.status === 'ready' && (
-                  <div className="kds-status-ready">âœ“ Gata</div>
+                  <div className="kds-status-ready">✓ Gata</div>
                 )}
               </div>
             </div>
           );
         })}
       </div>
-      
+
       {sortedOrders.length === 0 && (
         <div className="kds-empty">
-          <p>"nu exista comenzi active pentru bucatarie"</p>
+          <p>Nu există comenzi active pentru bucătărie</p>
         </div>
       )}
     </div>

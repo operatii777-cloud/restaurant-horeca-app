@@ -8,6 +8,7 @@ const { CANCELLATION_REASONS } = require('../../../constants/delivery');
 const PDFDocument = require('pdfkit');
 const { computeEtaWithFallback } = require('../../delivery/delivery.eta');
 const orderQueueService = require('../order-queue.service');
+const orderProcessingPipeline = require('../services/order-processing-pipeline.service');
 
 function checkAdminAuth(req, res, next) {
   req.user = { id: 1, username: 'admin', role_name: 'Super Admin' };
@@ -17,52 +18,52 @@ function checkAdminAuth(req, res, next) {
 async function checkCancellationEligibility(order) {
   const status = order.status;
   const isPlatformOrder = order.platform && order.platform !== 'phone' && order.platform !== 'pos';
-  
+
   if (status === 'pending') {
-    return { 
-      allowed: true, 
-      requiresApproval: false, 
+    return {
+      allowed: true,
+      requiresApproval: false,
       refundPercent: 100,
-      reason: null 
+      reason: null
     };
   }
-  
+
   if (status === 'preparing') {
-    return { 
-      allowed: true, 
-      requiresApproval: true, 
+    return {
+      allowed: true,
+      requiresApproval: true,
       refundPercent: 100,
-      reason: 'Comanda este în preparare. Necesită aprobare admin.' 
+      reason: 'Comanda este în preparare. Necesită aprobare admin.'
     };
   }
-  
+
   if (status === 'completed' || status === 'ready') {
-    return { 
-      allowed: true, 
-      requiresApproval: true, 
+    return {
+      allowed: true,
+      requiresApproval: true,
       refundPercent: 75,
-      reason: 'Comanda este gata. Necesită aprobare admin.' 
+      reason: 'Comanda este gata. Necesită aprobare admin.'
     };
   }
-  
+
   if (status === 'assigned' || status === 'picked_up') {
-    return { 
-      allowed: true, 
-      requiresApproval: true, 
+    return {
+      allowed: true,
+      requiresApproval: true,
       refundPercent: 50,
-      reason: 'Comanda a fost alocată/preluată de curier. Necesită aprobare admin + motiv detaliat.' 
+      reason: 'Comanda a fost alocată/preluată de curier. Necesită aprobare admin + motiv detaliat.'
     };
   }
-  
+
   if (status === 'in_transit' || status === 'delivered') {
-    return { 
-      allowed: false, 
-      requiresApproval: false, 
+    return {
+      allowed: false,
+      requiresApproval: false,
       refundPercent: 0,
-      reason: 'Comanda este în livrare sau a fost deja livrată. Nu poate fi anulată.' 
+      reason: 'Comanda este în livrare sau a fost deja livrată. Nu poate fi anulată.'
     };
   }
-  
+
   return { allowed: false, reason: 'Status necunoscut' };
 }
 
@@ -77,34 +78,34 @@ async function cancelDelivery(req, res, next) {
   try {
     const { id } = req.params;
     const { reason_code, reason_details, refund_method, cancelled_by } = req.body;
-    
+
     if (!reason_code) {
       return res.status(400).json({ error: 'Motivul anulării este obligatoriu' });
     }
-    
+
     const db = await dbPromise;
-    
+
     const order = await new Promise((resolve, reject) => {
       db.get('SELECT * FROM orders WHERE id = ?', [id], (err, row) => {
         if (err) reject(err);
         else resolve(row);
       });
     });
-    
+
     if (!order) {
       return res.status(404).json({ error: 'Comandă negăsită' });
     }
-    
+
     const canCancel = await checkCancellationEligibility(order);
     if (!canCancel.allowed) {
-      return res.status(403).json({ 
+      return res.status(403).json({
         error: canCancel.reason,
         requires_approval: canCancel.requiresApproval
       });
     }
-    
+
     const refundAmount = calculateRefund(order, canCancel.refundPercent);
-    
+
     await new Promise((resolve, reject) => {
       db.run(`
         INSERT INTO delivery_cancellations 
@@ -121,7 +122,7 @@ async function cancelDelivery(req, res, next) {
         else resolve();
       });
     });
-    
+
     if (!canCancel.requiresApproval) {
       await new Promise((resolve, reject) => {
         db.run(`
@@ -135,14 +136,14 @@ async function cancelDelivery(req, res, next) {
           else resolve();
         });
       });
-      
+
       if (order.courier_id && global.io) {
         global.io.to(`courier_${order.courier_id}`).emit('delivery:cancelled', {
           orderId: id, reason: reason_details
         });
       }
     }
-    
+
     if (global.io) {
       global.io.emit('delivery:cancelled', {
         orderId: id,
@@ -151,16 +152,16 @@ async function cancelDelivery(req, res, next) {
         refundAmount
       });
     }
-    
+
     // Emit alert for order cancellation
     const AlertsService = require('../../alerts/alerts.service');
     AlertsService.alertOrderCancelled(order, reason_code, order.platform);
-    
-    res.json({ 
+
+    res.json({
       success: true,
       refundAmount,
       requiresApproval: canCancel.requiresApproval,
-      message: canCancel.requiresApproval 
+      message: canCancel.requiresApproval
         ? 'Cerere anulare trimisă spre aprobare'
         : 'Comandă anulată cu succes'
     });
@@ -174,7 +175,7 @@ async function getCancellations(req, res, next) {
   try {
     const { limit = 100, offset = 0 } = req.query;
     const db = await dbPromise;
-    
+
     const cancellations = await new Promise((resolve, reject) => {
       db.all(`
         SELECT 
@@ -189,7 +190,7 @@ async function getCancellations(req, res, next) {
         else resolve(rows);
       });
     });
-    
+
     res.json({ success: true, cancellations: cancellations || [] });
   } catch (error) {
     next(error);
@@ -201,18 +202,18 @@ async function approveCancellation(req, res, next) {
   try {
     const { id } = req.params;
     const db = await dbPromise;
-    
+
     const cancellation = await new Promise((resolve, reject) => {
       db.get('SELECT * FROM delivery_cancellations WHERE id = ?', [id], (err, row) => {
         if (err) reject(err);
         else resolve(row);
       });
     });
-    
+
     if (!cancellation) {
       return res.status(404).json({ error: 'Cerere anulare negăsită' });
     }
-    
+
     await new Promise((resolve, reject) => {
       db.run(`
         UPDATE orders 
@@ -225,7 +226,7 @@ async function approveCancellation(req, res, next) {
         else resolve();
       });
     });
-    
+
     await new Promise((resolve, reject) => {
       db.run(`
         UPDATE delivery_cancellations 
@@ -236,7 +237,7 @@ async function approveCancellation(req, res, next) {
         else resolve();
       });
     });
-    
+
     res.json({ success: true, message: 'Anulare aprobată' });
   } catch (error) {
     next(error);
@@ -249,18 +250,18 @@ async function getReceipt(req, res, next) {
     const { id } = req.params;
     const lang = (req.query.lang || 'ro').toLowerCase();
     const db = await dbPromise;
-    
+
     const order = await new Promise((resolve, reject) => {
       db.get('SELECT * FROM orders WHERE id = ?', [id], (err, row) => {
         if (err) reject(err);
         else resolve(row);
       });
     });
-    
+
     if (!order) {
       return res.status(404).json({ error: 'Comanda nu a fost găsită.' });
     }
-    
+
     // 🔴 FIX 5 - Obține setările restaurantului pentru TVA (direct din DB, fără tenant middleware)
     let vatFood = 11;
     let vatDrinks = 21;
@@ -275,7 +276,7 @@ async function getReceipt(req, res, next) {
           }
         );
       });
-      
+
       if (tableExists) {
         // Verifică dacă are structura key-value sau structura simplă
         const hasSettingKey = await new Promise((resolve, reject) => {
@@ -287,7 +288,7 @@ async function getReceipt(req, res, next) {
             }
           );
         });
-        
+
         if (hasSettingKey) {
           // Structura key-value - citește direct
           const settings = await new Promise((resolve, reject) => {
@@ -300,12 +301,12 @@ async function getReceipt(req, res, next) {
               }
             );
           });
-          
+
           const restaurantData = {};
           settings.forEach(setting => {
             restaurantData[setting.setting_key] = setting.setting_value;
           });
-          
+
           if (restaurantData.vat_food) {
             vatFood = parseFloat(restaurantData.vat_food) || 11;
           }
@@ -320,7 +321,7 @@ async function getReceipt(req, res, next) {
               else resolve(row || null);
             });
           });
-          
+
           if (singleRow) {
             if (singleRow.vat_food) {
               vatFood = parseFloat(singleRow.vat_food) || 11;
@@ -334,7 +335,7 @@ async function getReceipt(req, res, next) {
     } catch (error) {
       console.warn('⚠️ [Receipt] Error loading restaurant settings, using defaults:', error.message);
     }
-    
+
     // Helper function to sanitize Romanian text
     function sanitizeRomanianText(text) {
       if (!text) return '';
@@ -345,7 +346,7 @@ async function getReceipt(req, res, next) {
         .replace(/ș/g, 's').replace(/Ș/g, 'S')
         .replace(/ț/g, 't').replace(/Ț/g, 'T');
     }
-    
+
     // Parse items
     let items = [];
     try {
@@ -354,71 +355,71 @@ async function getReceipt(req, res, next) {
     } catch (e) {
       items = [];
     }
-    
+
     // PDF Document
-    const doc = new PDFDocument({ 
-      size: [226, 841.89], 
-      margins: { top: 10, bottom: 10, left: 10, right: 10 } 
+    const doc = new PDFDocument({
+      size: [226, 841.89],
+      margins: { top: 10, bottom: 10, left: 10, right: 10 }
     });
-    
+
     res.setHeader('Content-Type', 'application/pdf');
-    const filename = order.type === 'delivery' 
+    const filename = order.type === 'delivery'
       ? `Comanda-${id}-Livrare.pdf`
       : `Comanda-${id}-Masa-${order.table_number || 'Acasa'}.pdf`;
     res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
-    
+
     doc.pipe(res);
-    
+
     // Header
     doc.fontSize(16).text('Restaurant App', { align: 'center' });
     const receiptTitle = lang === 'en' ? 'Order Receipt' : 'Dovada Comandă';
     doc.fontSize(10).text(sanitizeRomanianText(receiptTitle), { align: 'center' });
     doc.moveDown();
-    
+
     // Order info
     const orderTypeText = order.type === 'delivery'
       ? (lang === 'en' ? 'Delivery Order' : 'Comandă pentru Livrare')
       : order.type === 'here'
         ? (lang === 'en' ? (order.isTogether ? 'Order together' : 'Order separately') : (order.isTogether ? 'Comandă împreună' : 'Comandă separat'))
         : (lang === 'en' ? 'Takeout order' : 'Comandă pentru acasă');
-    
+
     doc.fontSize(9);
-    const labels = lang === 'en' 
-      ? { 
-          orderNo: 'Order No:', 
-          table: order.type === 'delivery' ? 'Delivery' : 'Table:', 
-          home: 'Home', 
-          type: 'Type:', 
-          date: 'Date:', 
-          total: 'TOTAL:', 
-          thanks: 'Thank you!',
-          payment: 'Payment:',
-          paymentMethod: 'Payment Method:',
-          paid: 'Paid',
-          paidAt: 'Paid at:',
-          toPay: 'To pay on delivery',
-          cash: 'Cash',
-          card: 'Card',
-          online: 'Online'
-        }
-      : { 
-          orderNo: 'Comanda Nr:', 
-          table: order.type === 'delivery' ? 'Livrare' : 'Masa:', 
-          home: 'Acasă', 
-          type: 'Tip:', 
-          date: 'Data:', 
-          total: 'TOTAL:', 
-          thanks: 'Vă mulțumim!',
-          payment: 'Plată:',
-          paymentMethod: 'Metodă de plată:',
-          paid: 'Achitată',
-          paidAt: 'Achitată la:',
-          toPay: 'Se achită la livrare',
-          cash: 'Numerar',
-          card: 'Card',
-          online: 'Online'
-        };
-    
+    const labels = lang === 'en'
+      ? {
+        orderNo: 'Order No:',
+        table: order.type === 'delivery' ? 'Delivery' : 'Table:',
+        home: 'Home',
+        type: 'Type:',
+        date: 'Date:',
+        total: 'TOTAL:',
+        thanks: 'Thank you!',
+        payment: 'Payment:',
+        paymentMethod: 'Payment Method:',
+        paid: 'Paid',
+        paidAt: 'Paid at:',
+        toPay: 'To pay on delivery',
+        cash: 'Cash',
+        card: 'Card',
+        online: 'Online'
+      }
+      : {
+        orderNo: 'Comanda Nr:',
+        table: order.type === 'delivery' ? 'Livrare' : 'Masa:',
+        home: 'Acasă',
+        type: 'Tip:',
+        date: 'Data:',
+        total: 'TOTAL:',
+        thanks: 'Vă mulțumim!',
+        payment: 'Plată:',
+        paymentMethod: 'Metodă de plată:',
+        paid: 'Achitată',
+        paidAt: 'Achitată la:',
+        toPay: 'Se achită la livrare',
+        cash: 'Numerar',
+        card: 'Card',
+        online: 'Online'
+      };
+
     doc.text(sanitizeRomanianText(`${labels.orderNo} ${id}`));
     if (order.type === 'delivery') {
       if (order.customer_name) {
@@ -431,7 +432,7 @@ async function getReceipt(req, res, next) {
       doc.text(sanitizeRomanianText(`${labels.table} ${order.table_number || labels.home}`));
     }
     doc.text(sanitizeRomanianText(`${labels.type} ${orderTypeText}`));
-    
+
     // Format date
     const formatToLocalTime = (date) => {
       if (!date) return 'N/A';
@@ -443,32 +444,32 @@ async function getReceipt(req, res, next) {
         minute: '2-digit'
       });
     };
-    
+
     doc.text(`${labels.date} ${formatToLocalTime(new Date(order.timestamp))}`);
     doc.moveDown();
-    
+
     doc.text('------------------------');
     doc.moveDown(0.5);
-    
+
     // Items
     let total = 0;
-    
+
     const itemPromises = items.map(item => {
       return new Promise((resolve, reject) => {
         if (item.name && item.name !== 'Produs' && item.name.trim() !== '') {
           resolve({ ...item, basePrice: 0 });
           return;
         }
-        
+
         // 🔴 FIX 5 - Include category pentru calculul TVA-ului
-        const sel = lang === 'en' 
-          ? 'SELECT name_en, name, price, category FROM menu WHERE id = ?' 
+        const sel = lang === 'en'
+          ? 'SELECT name_en, name, price, category FROM menu WHERE id = ?'
           : 'SELECT name, price, category FROM menu WHERE id = ?';
         db.get(sel, [item.productId || item.product_id], (itemErr, product) => {
           if (itemErr) return reject(itemErr);
           resolve({
             ...item,
-            name: (lang === 'en') 
+            name: (lang === 'en')
               ? ((product && product.name_en && String(product.name_en).trim()) ? product.name_en : (product && product.name ? product.name : 'Product deleted'))
               : (product && product.name ? product.name : 'Produs șters'),
             basePrice: product ? product.price : 0,
@@ -477,38 +478,38 @@ async function getReceipt(req, res, next) {
         });
       });
     });
-    
+
     Promise.all(itemPromises).then(enrichedItems => {
       enrichedItems.forEach(item => {
         const itemTotal = item.finalPrice * item.quantity;
         const isFree = item.isFree || false;
         const displayTotal = isFree ? 0 : itemTotal;
         total += displayTotal;
-        
+
         const startY = doc.y;
         const priceStr = isFree ? '0.00 RON' : `${displayTotal.toFixed(2)} RON`;
         const priceWidth = doc.widthOfString(priceStr, { size: 9 });
         const gap = 8;
         const contentWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;
         const nameBlockWidth = Math.max(40, contentWidth - priceWidth - gap);
-        
-        const nameText = isFree 
+
+        const nameText = isFree
           ? `${item.quantity} x ${item.name} [GRATUIT]`
           : `${item.quantity} x ${item.name}`;
-        
+
         // Calculate how many lines the name will take
         const nameHeight = doc.heightOfString(nameText, {
           width: nameBlockWidth
         });
         const numLines = Math.ceil(nameHeight / doc.currentLineHeight());
-        
+
         // Render the item name
         doc.text(sanitizeRomanianText(nameText), {
           width: nameBlockWidth,
           continued: false
         });
         const afterNameY = doc.y;
-        
+
         // Position price on the FIRST line (top-aligned with name)
         const priceX = doc.page.width - doc.page.margins.right - priceWidth;
         if (isFree) {
@@ -519,11 +520,11 @@ async function getReceipt(req, res, next) {
         } else {
           doc.text(priceStr, priceX, startY);
         }
-        
+
         // Move cursor down to the maximum Y position (after name OR after price)
         doc.y = Math.max(afterNameY, startY + doc.currentLineHeight());
         doc.x = doc.page.margins.left;
-        
+
         if (item.customizations && item.customizations.length > 0) {
           item.customizations.forEach(custom => {
             doc.fontSize(8).text(sanitizeRomanianText(`  - ${custom.name}`), {
@@ -534,11 +535,11 @@ async function getReceipt(req, res, next) {
         }
         doc.moveDown(0.3);
       });
-      
+
       doc.moveDown();
       doc.x = doc.page.margins.left;
       doc.text('------------------------');
-      
+
       // 🔴 FIX 5 - Calculează și afișează breakdown-ul TVA-ului
       const vatCalculator = require('../../../utils/vat-calculator');
       // Normalizează item-urile pentru calculul TVA-ului (adaugă price/final_price dacă există finalPrice)
@@ -548,7 +549,7 @@ async function getReceipt(req, res, next) {
         final_price: item.final_price || item.finalPrice || item.price || 0
       }));
       const vatBreakdown = vatCalculator.calculateVatBreakdown(normalizedItems, vatFood, vatDrinks);
-      
+
       // 🔴 FIX 5 - Total consistency check (guard) - verifică că total-ul calculat este consistent
       const calculatedTotal = vatBreakdown.subtotal + vatBreakdown.vatAmount;
       const difference = Math.abs(vatBreakdown.total - calculatedTotal);
@@ -557,42 +558,42 @@ async function getReceipt(req, res, next) {
         // Ajustează total-ul pentru a fi consistent (nu blochează flow-ul)
         vatBreakdown.total = Math.round(calculatedTotal * 100) / 100;
       }
-      
+
       // Afișează subtotal (fără TVA)
       const subtotalLabel = lang === 'en' ? 'Subtotal (excl. VAT):' : 'Subtotal (fără TVA):';
       doc.fontSize(9).text(sanitizeRomanianText(subtotalLabel), { align: 'right' });
       doc.text(sanitizeRomanianText(`${vatBreakdown.subtotal.toFixed(2)} RON`), { align: 'right' });
-      
+
       // Afișează TVA pe rate
       if (vatBreakdown.vatBreakdown && vatBreakdown.vatBreakdown.length > 0) {
         vatBreakdown.vatBreakdown.forEach(vat => {
-          const vatLabel = lang === 'en' 
+          const vatLabel = lang === 'en'
             ? `VAT ${vat.rate}%:`
             : `TVA ${vat.rate}%:`;
           doc.fontSize(9).text(sanitizeRomanianText(vatLabel), { align: 'right' });
           doc.text(sanitizeRomanianText(`${vat.amount.toFixed(2)} RON`), { align: 'right' });
         });
       }
-      
+
       // Afișează total (cu TVA inclus)
       const totalLabel = lang === 'en' ? 'TOTAL (VAT incl.):' : 'TOTAL (TVA inclus):';
       doc.fontSize(12).font('Helvetica-Bold').text(sanitizeRomanianText(totalLabel), { align: 'right' });
       doc.text(sanitizeRomanianText(`${vatBreakdown.total.toFixed(2)} RON`), { align: 'right' });
       doc.font('Helvetica');
-      
+
       // 🚚 PAYMENT INFORMATION SECTION
       doc.moveDown();
       doc.x = doc.page.margins.left;
       doc.text('------------------------');
       doc.moveDown(0.5);
-      
+
       doc.fontSize(9).text(sanitizeRomanianText(labels.paymentMethod), { continued: false });
-      
+
       // Determine payment method and status
       const paymentMethod = order.payment_method || 'cash';
       const isPaid = order.is_paid === 1 || order.is_paid === true;
       const paidTimestamp = order.paid_timestamp;
-      
+
       let paymentStatusText = '';
       if (order.type === 'delivery') {
         // For delivery orders
@@ -609,39 +610,39 @@ async function getReceipt(req, res, next) {
           paymentStatusText = lang === 'en' ? 'Not paid' : 'Neachitată';
         }
       }
-      
-    // Payment method label
-    let paymentMethodLabel = '';
-    if (paymentMethod === 'cash') {
-      paymentMethodLabel = labels.cash;
-    } else if (paymentMethod === 'card') {
-      paymentMethodLabel = labels.card;
-    } else if (paymentMethod === 'online') {
-      paymentMethodLabel = labels.online;
-    } else {
-      paymentMethodLabel = paymentMethod;
-    }
-    
-    doc.fontSize(9).text(sanitizeRomanianText(`${paymentMethodLabel} (${paymentStatusText})`), { indent: 10 });
-    
-    // FAZA 1.4 - Add pickup code for delivery orders
-    if (order.type === 'delivery' && order.delivery_pickup_code) {
-      doc.moveDown(0.5);
-      doc.fontSize(10).font('Helvetica-Bold').text(
-        sanitizeRomanianText(`${lang === 'en' ? 'Pickup Code' : 'Cod Ridicare'}: ${order.delivery_pickup_code}`),
-        { align: 'center' }
-      );
-    }
-    
-    // FAZA 1.4 - Add fiscal code if available
-    if (order.fiscal_code) {
-      doc.moveDown(0.5);
-      doc.fontSize(9).text(
-        sanitizeRomanianText(`${lang === 'en' ? 'Fiscal Code' : 'Cod Fiscal'}: ${order.fiscal_code}`),
-        { align: 'center' }
-      );
-    }
-      
+
+      // Payment method label
+      let paymentMethodLabel = '';
+      if (paymentMethod === 'cash') {
+        paymentMethodLabel = labels.cash;
+      } else if (paymentMethod === 'card') {
+        paymentMethodLabel = labels.card;
+      } else if (paymentMethod === 'online') {
+        paymentMethodLabel = labels.online;
+      } else {
+        paymentMethodLabel = paymentMethod;
+      }
+
+      doc.fontSize(9).text(sanitizeRomanianText(`${paymentMethodLabel} (${paymentStatusText})`), { indent: 10 });
+
+      // FAZA 1.4 - Add pickup code for delivery orders
+      if (order.type === 'delivery' && order.delivery_pickup_code) {
+        doc.moveDown(0.5);
+        doc.fontSize(10).font('Helvetica-Bold').text(
+          sanitizeRomanianText(`${lang === 'en' ? 'Pickup Code' : 'Cod Ridicare'}: ${order.delivery_pickup_code}`),
+          { align: 'center' }
+        );
+      }
+
+      // FAZA 1.4 - Add fiscal code if available
+      if (order.fiscal_code) {
+        doc.moveDown(0.5);
+        doc.fontSize(9).text(
+          sanitizeRomanianText(`${lang === 'en' ? 'Fiscal Code' : 'Cod Fiscal'}: ${order.fiscal_code}`),
+          { align: 'center' }
+        );
+      }
+
       // FAZA 1.4 - Add pickup code for delivery orders
       if (order.type === 'delivery' && order.pickup_code) {
         doc.moveDown(0.5);
@@ -649,47 +650,47 @@ async function getReceipt(req, res, next) {
         doc.text(sanitizeRomanianText(`Cod Pickup: ${order.pickup_code}`), { align: 'center' });
         doc.font('Helvetica');
       }
-      
+
       // FAZA 1.4 - Add fiscal code if fiscalized
       if (order.fiscal_code) {
         doc.moveDown(0.3);
         doc.fontSize(8);
         doc.text(sanitizeRomanianText(`Cod Fiscal: ${order.fiscal_code}`), { align: 'center' });
       }
-      
+
       // Notes section
       if (order.food_notes || order.drink_notes || order.general_notes) {
         doc.moveDown();
         doc.x = doc.page.margins.left;
         doc.text('------------------------');
         doc.moveDown(0.5);
-        
-        const notesLabels = lang === 'en' 
+
+        const notesLabels = lang === 'en'
           ? { food: 'Food notes:', drinks: 'Drink notes:', general: 'General notes:' }
           : { food: 'Mentiuni mâncare:', drinks: 'Mentiuni băuturi:', general: 'Mentiuni generale:' };
-        
+
         if (order.food_notes) {
           doc.fontSize(8).text(sanitizeRomanianText(`${notesLabels.food}`), { continued: false });
           doc.fontSize(8).text(sanitizeRomanianText(order.food_notes), { indent: 10 });
           doc.moveDown(0.3);
         }
-        
+
         if (order.drink_notes) {
           doc.fontSize(8).text(sanitizeRomanianText(`${notesLabels.drinks}`), { continued: false });
           doc.fontSize(8).text(sanitizeRomanianText(order.drink_notes), { indent: 10 });
           doc.moveDown(0.3);
         }
-        
+
         if (order.general_notes) {
           doc.fontSize(8).text(sanitizeRomanianText(`${notesLabels.general}`), { continued: false });
           doc.fontSize(8).text(sanitizeRomanianText(order.general_notes), { indent: 10 });
           doc.moveDown(0.3);
         }
       }
-      
+
       doc.moveDown();
       doc.fontSize(9).text(sanitizeRomanianText(labels.thanks), { align: 'center' });
-      
+
       doc.end();
     }).catch(error => {
       console.error('Eroare la generarea PDF:', error);
@@ -707,7 +708,7 @@ async function getOrderTracking(req, res, next) {
     const { lang = 'ro' } = req.query;
     const db = await dbPromise;
     const { computeEtaWithFallback } = require('../../delivery/delivery.eta');
-    
+
     // Load order
     const order = await new Promise((resolve, reject) => {
       db.get('SELECT * FROM orders WHERE id = ?', [id], (err, row) => {
@@ -715,31 +716,31 @@ async function getOrderTracking(req, res, next) {
         else resolve(row);
       });
     });
-    
+
     if (!order) {
       return res.status(404).json({ success: false, message: 'Order not found' });
     }
-    
+
     // Only support delivery orders for now
     if (order.type !== 'delivery') {
-      return res.status(400).json({ 
-        success: false, 
-        message: 'Tracking is only available for delivery orders' 
+      return res.status(400).json({
+        success: false,
+        message: 'Tracking is only available for delivery orders'
       });
     }
-    
+
     // Get restaurant coordinates from config
     const restaurantLat = parseFloat(process.env.RESTAURANT_LAT) || 44.4268; // Default Bucharest
     const restaurantLng = parseFloat(process.env.RESTAURANT_LNG) || 26.1025;
-    
+
     // Get customer coordinates (TODO: implement geocoding if not stored)
     // For now, check if order has customer_lat/customer_lng fields
     let customerLat = order.customer_lat || null;
     let customerLng = order.customer_lng || null;
-    
+
     // TODO: If customer coordinates are null, implement geocoding here
     // For now, we'll use null and frontend can handle it
-    
+
     // Load assignment
     const assignment = await new Promise((resolve, reject) => {
       db.get(`
@@ -753,18 +754,18 @@ async function getOrderTracking(req, res, next) {
         else resolve(row);
       });
     });
-    
+
     // Load courier last location
     let courierLastLocation = null;
     if (assignment && assignment.courier_id) {
       const courier = await new Promise((resolve, reject) => {
-        db.get('SELECT current_lat, current_lng, last_location_update FROM couriers WHERE id = ?', 
+        db.get('SELECT current_lat, current_lng, last_location_update FROM couriers WHERE id = ?',
           [assignment.courier_id], (err, row) => {
-          if (err) reject(err);
-          else resolve(row);
-        });
+            if (err) reject(err);
+            else resolve(row);
+          });
       });
-      
+
       if (courier && courier.current_lat && courier.current_lng) {
         courierLastLocation = {
           lat: courier.current_lat,
@@ -773,7 +774,7 @@ async function getOrderTracking(req, res, next) {
         };
       }
     }
-    
+
     // Build status timeline
     const statusTimeline = {
       createdAt: order.timestamp,
@@ -784,12 +785,12 @@ async function getOrderTracking(req, res, next) {
       pickedUpAt: assignment?.picked_up_at || null,
       deliveredAt: assignment?.delivered_at || order.delivered_timestamp || null
     };
-    
+
     // Calculate ETA and route using OSRM
     let etaMinutes = null;
     let distanceKm = null;
     let routeGeometry = null;
-    
+
     if (courierLastLocation && customerLat && customerLng) {
       // Courier is in transit - calculate route from courier to customer
       const routeResult = await computeEtaWithFallback(
@@ -798,7 +799,7 @@ async function getOrderTracking(req, res, next) {
         customerLat,
         customerLng
       );
-      
+
       if (routeResult) {
         etaMinutes = Math.round(routeResult.duration_seconds / 60);
         distanceKm = (routeResult.distance_meters / 1000).toFixed(2);
@@ -814,7 +815,7 @@ async function getOrderTracking(req, res, next) {
         customerLat,
         customerLng
       );
-      
+
       if (routeResult) {
         etaMinutes = Math.round(routeResult.duration_seconds / 60);
         distanceKm = (routeResult.distance_meters / 1000).toFixed(2);
@@ -832,7 +833,7 @@ async function getOrderTracking(req, res, next) {
         etaMinutes = 10;
       }
     }
-    
+
     // Build map data
     const mapData = {
       restaurant: {
@@ -850,7 +851,7 @@ async function getOrderTracking(req, res, next) {
         geometry: routeGeometry
       } : null
     };
-    
+
     const tracking = {
       orderId: order.id,
       status: order.status,
@@ -878,7 +879,7 @@ async function getOrderTracking(req, res, next) {
       distanceKm: distanceKm ? parseFloat(distanceKm) : null,
       map: mapData
     };
-    
+
     res.json({ success: true, data: tracking });
   } catch (error) {
     next(error);
@@ -889,7 +890,7 @@ async function getOrderTracking(req, res, next) {
 async function applyDailyOfferBenefits(items, db) {
   try {
     console.log('🎁 [DAILY_OFFER] Checking if order qualifies for daily offer benefits...');
-    
+
     // Get active daily offer from database (if tables exist)
     let activeOffer = null;
     try {
@@ -912,14 +913,14 @@ async function applyDailyOfferBenefits(items, db) {
     } catch (e) {
       console.warn('⚠️ [DAILY_OFFER] Error checking daily offers table:', e.message);
     }
-    
+
     if (!activeOffer) {
       console.log('ℹ️ [DAILY_OFFER] No active offer in database, skipping auto-application');
       return items; // Return items unchanged
     }
-    
+
     console.log(`✅ [DAILY_OFFER] Found active offer: ${activeOffer.title || activeOffer.id}`);
-    
+
     // Get offer conditions
     const conditions = await new Promise((resolve, reject) => {
       db.all(`
@@ -933,35 +934,35 @@ async function applyDailyOfferBenefits(items, db) {
         }
       });
     });
-    
+
     console.log(`📋 [DAILY_OFFER] Offer has ${conditions.length} condition(s)`);
-    
+
     // Validate each condition
     let offersQualifies = true;
     for (const condition of conditions) {
-      const itemsForCategory = items.filter(item => 
+      const itemsForCategory = items.filter(item =>
         item.category === condition.category || item.category_name === condition.category
       );
-      
+
       const requiredQty = condition.required_quantity || condition.quantity || 1;
       const actualQty = itemsForCategory.reduce((sum, item) => sum + (item.quantity || 1), 0);
-      
+
       console.log(`📊 [DAILY_OFFER] Category "${condition.category}": need ${requiredQty}, have ${actualQty}`);
-      
+
       if (actualQty < requiredQty) {
         offersQualifies = false;
         console.log(`❌ [DAILY_OFFER] Condition NOT met: insufficient ${condition.category}`);
         break;
       }
     }
-    
+
     if (!offersQualifies) {
       console.log('❌ [DAILY_OFFER] Order does NOT qualify for offer');
       return items; // Return items unchanged
     }
-    
+
     console.log('✅ [DAILY_OFFER] Order qualifies! Getting benefit products...');
-    
+
     // Get benefit products
     let benefitProductIds = [];
     try {
@@ -982,9 +983,9 @@ async function applyDailyOfferBenefits(items, db) {
     } catch (e) {
       console.warn('⚠️ [DAILY_OFFER] Error getting benefit products:', e.message);
     }
-    
+
     console.log(`🎁 [DAILY_OFFER] Benefit product IDs: ${benefitProductIds.join(', ') || 'none'}`);
-    
+
     // Get actual benefit products from menu or catalog_products
     let benefitProducts = [];
     if (benefitProductIds.length > 0) {
@@ -1003,7 +1004,7 @@ async function applyDailyOfferBenefits(items, db) {
           }
         });
       });
-      
+
       // If not found in menu, try catalog_products as fallback
       if (benefitProducts.length === 0) {
         benefitProducts = await new Promise((resolve, reject) => {
@@ -1039,7 +1040,7 @@ async function applyDailyOfferBenefits(items, db) {
           }
         });
       });
-      
+
       // Fallback to catalog_products
       if (benefitProducts.length === 0) {
         benefitProducts = await new Promise((resolve, reject) => {
@@ -1059,16 +1060,16 @@ async function applyDailyOfferBenefits(items, db) {
         });
       }
     }
-    
+
     console.log(`✅ [DAILY_OFFER] Found ${benefitProducts.length} benefit products: ${benefitProducts.map(p => `${p.name} (${p.price} RON)`).join(', ')}`);
-    
+
     // Add benefit products to items with isFree=true and proper product_id
     const benefitQuantity = activeOffer.benefit_quantity || 1;
     const itemsToAdd = [];
-    
+
     for (let i = 0; i < benefitQuantity && i < benefitProducts.length; i++) {
       const benefitProduct = benefitProducts[i];
-      
+
       itemsToAdd.push({
         product_id: benefitProduct.id,
         id: benefitProduct.id,
@@ -1080,18 +1081,18 @@ async function applyDailyOfferBenefits(items, db) {
         isFree: true, // ✅ CRITICAL: Mark as free
         is_benefit_product: true, // Mark so we know it's from benefit
         status: 'pending',
-        station: benefitProduct.category && 
-          ['Cafea/Ciocolată/Ceai', 'Răcoritoare', 'Băuturi și Coctailuri'].includes(benefitProduct.category) 
-          ? 'bar' 
+        station: benefitProduct.category &&
+          ['Cafea/Ciocolată/Ceai', 'Răcoritoare', 'Băuturi și Coctailuri'].includes(benefitProduct.category)
+          ? 'bar'
           : 'kitchen',
         itemId: `benefit_${benefitProduct.id}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
       });
     }
-    
+
     console.log(`🎁 [DAILY_OFFER] Adding ${itemsToAdd.length} benefit items with isFree=true`);
-    
+
     return [...items, ...itemsToAdd];
-    
+
   } catch (error) {
     console.error('❌ [DAILY_OFFER] Error applying daily offer benefits:', error.message);
     // Return items unchanged if error
@@ -1104,11 +1105,12 @@ async function createOrder(req, res, next) {
   try {
     // ✅ Folosește normalizedOrder din middleware dacă există, altfel folosește body
     const orderData = req.normalizedOrder || req.body;
-    
+
     // Extrage datele din normalizedOrder sau body
     let type = orderData.type || req.body.type || 'dine_in';
-    // FIX COMPAT: Mapare tipuri legacy ("here" -> "dine_in")
+    // FIX COMPAT: Mapare tipuri legacy ("here" -> "dine_in", "takeout" -> "takeaway")
     if (type === 'here') type = 'dine_in';
+    if (type === 'takeout') type = 'takeaway';
 
     // FIX COMPAT: Normalizează items pentru a asigura folosirea product_id (underscore)
     const items = (orderData.items || req.body.items || []).map(item => {
@@ -1145,7 +1147,7 @@ async function createOrder(req, res, next) {
     // ✅ FIX: Import validateStockAvailability în afara blocului if pentru a fi disponibilă mai jos
     const { validateStockAvailability } = require('../../../utils/validators');
     const { AppError } = require('../../../utils/error-handler');
-    
+
     if (!req.normalizedOrder) {
       const { validateOrder } = require('../../../utils/validators');
 
@@ -1206,7 +1208,7 @@ async function createOrder(req, res, next) {
       console.error('❌ Database not ready for createOrder:', dbError.message);
       return res.status(503).json({ error: 'Database not ready' });
     }
-    
+
     // FIX: Verifică și adaugă coloanele food_notes și drink_notes dacă nu există
     try {
       const columns = await new Promise((resolve, reject) => {
@@ -1215,10 +1217,10 @@ async function createOrder(req, res, next) {
           else resolve(rows || []);
         });
       });
-      
+
       const hasFoodNotes = columns.some(col => col.name === 'food_notes');
       const hasDrinkNotes = columns.some(col => col.name === 'drink_notes');
-      
+
       if (!hasFoodNotes) {
         await new Promise((resolve, reject) => {
           db.run('ALTER TABLE orders ADD COLUMN food_notes TEXT', (err) => {
@@ -1228,7 +1230,7 @@ async function createOrder(req, res, next) {
         });
         console.log('✅ Added food_notes column to orders table');
       }
-      
+
       if (!hasDrinkNotes) {
         await new Promise((resolve, reject) => {
           db.run('ALTER TABLE orders ADD COLUMN drink_notes TEXT', (err) => {
@@ -1269,7 +1271,7 @@ async function createOrder(req, res, next) {
         if (existingOrder) {
           // Comandă existentă - returnează comanda existentă (IDEMPOTENT)
           console.log(`🔄 [IDEMPOTENCY] Returning existing order ${existingOrder.id} for idempotency_key ${idempotencyKey}`);
-          
+
           // Parse items dacă este string
           if (existingOrder.items && typeof existingOrder.items === 'string') {
             try {
@@ -1299,7 +1301,7 @@ async function createOrder(req, res, next) {
     // Works for ALL platforms (MOBILE_APP, GLOVO, WOLT, FRIENDSRIDE, POS, KIOSK, etc.)
     const allowStockOverride = req.body.allow_stock_override === true || req.body.allow_stock_override === 'true';
     const isAdmin = req.user?.role_name === 'Super Admin' || req.user?.role_name === 'Admin';
-    
+
     try {
       const stockValidation = await validateStockAvailability(items, db);
       if (!stockValidation.valid) {
@@ -1320,7 +1322,7 @@ async function createOrder(req, res, next) {
         } else {
           // Block order if no override or not admin
           console.warn(`❌ [STOCK VALIDATION] Order blocked due to insufficient stock`);
-          
+
           // Emit alert about blocked order
           if (global.io) {
             global.io.emit('alert:order-blocked-stock', {
@@ -1333,7 +1335,7 @@ async function createOrder(req, res, next) {
               timestamp: new Date().toISOString()
             });
           }
-          
+
           return res.status(422).json({
             success: false,
             error: {
@@ -1349,7 +1351,7 @@ async function createOrder(req, res, next) {
     } catch (stockError) {
       // If validation fails due to error, block order (strict mode)
       console.error('❌ [STOCK VALIDATION] Error during stock validation:', stockError.message);
-      
+
       // Emit alert about validation error
       if (global.io) {
         global.io.emit('alert:stock-validation-error', {
@@ -1361,7 +1363,7 @@ async function createOrder(req, res, next) {
           timestamp: new Date().toISOString()
         });
       }
-      
+
       return res.status(500).json({
         success: false,
         error: {
@@ -1391,22 +1393,22 @@ async function createOrder(req, res, next) {
     let splitBillData = null;
     if (req.body.split_bill) {
       try {
-        splitBillData = typeof req.body.split_bill === 'string' 
-          ? JSON.parse(req.body.split_bill) 
+        splitBillData = typeof req.body.split_bill === 'string'
+          ? JSON.parse(req.body.split_bill)
           : req.body.split_bill;
       } catch (e) {
         console.warn('⚠️ Error parsing split_bill in createOrder:', e.message);
       }
     }
     const clientIdentifier = orderData.clientIdentifier || req.body.clientIdentifier || orderData.client_identifier || req.body.client_identifier || req.body.customer_email || customer?.email || customer?.phone || null;
-    
+
     // Detect if this is a table order from mobile app (QR scan) vs online order from mobile app
     // Key distinction:
     // - QR table order: type='dine_in', table_number is set, platform='MOBILE_APP'
     // - Online order: type='delivery' or 'pickup', no table_number, platform='MOBILE_APP'
     const isMobileTableOrder = platform === 'MOBILE_APP' && type === 'dine_in' && table != null;
     const isMobileOnlineOrder = platform === 'MOBILE_APP' && (type === 'delivery' || type === 'pickup') && table == null;
-    
+
     // Verifică dacă comanda trebuie pusă în coadă (pentru comenzi care nu pot fi procesate instant)
     const orderDataForQueue = {
       type,
@@ -1423,9 +1425,9 @@ async function createOrder(req, res, next) {
       notes: notes?.general || notes,
       split_bill: splitBillData,
     };
-    
+
     const shouldQueue = orderQueueService.shouldQueueOrder(orderDataForQueue);
-    
+
     if (shouldQueue) {
       // Adaugă comanda în coadă
       try {
@@ -1436,7 +1438,7 @@ async function createOrder(req, res, next) {
             headers: req.headers,
           },
         });
-        
+
         return res.status(202).json({
           success: true,
           message: 'Comanda a fost adăugată în coadă pentru procesare',
@@ -1449,7 +1451,7 @@ async function createOrder(req, res, next) {
         // Continuă cu procesarea normală dacă queue-ul eșuează
       }
     }
-    
+
     // 🔴 FIX: Populează name și category pentru toate items-urile înainte de salvare și Socket.io
     // Această funcție helper populează name-ul și categoria din baza de date dacă lipsesc
     // CRITICAL: Category este necesar pentru filtrarea corectă între kitchen și bar
@@ -1458,7 +1460,7 @@ async function createOrder(req, res, next) {
         let productName = item.name || item.product_name || '';
         let productCategory = item.category || item.category_name || '';
         const productId = item.product_id || item.id || item.productId;
-        
+
         // Dacă name sau category lipsește dar avem product_id, obține-le din baza de date
         // ✅ FIX: Caută în ambele tabele (menu și catalog_products) pentru sincronizare corectă
         if (productId && ((!productName || productName.trim() === '') || (!productCategory || productCategory.trim() === ''))) {
@@ -1470,7 +1472,7 @@ async function createOrder(req, res, next) {
                 else resolve(row);
               });
             });
-            
+
             // Dacă nu găsește în menu, caută în catalog_products
             if (!product) {
               product = await new Promise((resolve, reject) => {
@@ -1485,7 +1487,7 @@ async function createOrder(req, res, next) {
                 });
               });
             }
-            
+
             if (product) {
               if ((!productName || productName.trim() === '') && product.name) {
                 productName = product.name;
@@ -1502,31 +1504,38 @@ async function createOrder(req, res, next) {
             console.warn(`⚠️ [ENRICH_ITEMS] Error fetching product info for product_id ${productId}:`, productErr.message);
           }
         }
-        
+
         // Dacă tot nu avem name, folosește un fallback
         if (!productName || productName.trim() === '') {
           productName = `Produs ${productId || 'N/A'}`;
           console.warn(`⚠️ [ENRICH_ITEMS] Missing name for item, using fallback: "${productName}"`);
         }
-        
+
         // Setează station pe baza categoriei (pentru filtrarea Bar/Kitchen)
-        // BAR_CATEGORIES: ['Cafea/Ciocolată/Ceai', 'Răcoritoare', 'Băuturi și Coctailuri']
-        const BAR_CATEGORIES = ['Cafea/Ciocolată/Ceai', 'Răcoritoare', 'Băuturi și Coctailuri'];
+        // BAR_CATEGORIES (standardized list)
+                const BAR_CATEGORIES = [
+            'Cafea/Ciocolată/Ceai', 'Cafea/Ciocolata/Ceai',
+            'Răcoritoare', 'Racoritoare',
+            'Băuturi și Coctailuri', 'Bauturi si Coctailuri',
+            'Băuturi Spirtoase', 'Bauturi Spirtoase',
+            'Coctailuri Non-Alcoolice',
+            'Vinuri'
+        ];
         let station = item.station; // Păstrează station dacă există deja
         if (!station && productCategory) {
           station = BAR_CATEGORIES.includes(productCategory) ? 'bar' : 'kitchen';
         } else if (!station) {
           station = 'kitchen'; // Default la kitchen dacă nu avem categorie
         }
-        
+
         // Setează status implicit 'pending' dacă nu există (pentru ca bar-ul să poată marca items ca gata)
         const itemStatus = item.status || item.item_status || 'pending';
-        
+
         // ✅ FIX: Setează itemId pentru ca bar-ul să poată marca items ca gata
         // itemId este necesar pentru identificarea unică a fiecărui item în comandă
-        const itemId = item.itemId || item.item_id || item.id || item.line_id || 
-                       `${productId || 'item'}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-        
+        const itemId = item.itemId || item.item_id || item.id || item.line_id ||
+          `${productId || 'item'}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
         return {
           ...item,
           name: productName,
@@ -1557,16 +1566,16 @@ async function createOrder(req, res, next) {
           let insertCols = 'type, order_source, platform, table_number, items, total, payment_method, status, timestamp, is_paid, customer_name, customer_phone, delivery_address, car_plate, lane_number, split_bill, client_identifier, idempotency_key';
           let insertVals = '?, ?, ?, ?, ?, ?, ?, ?, datetime(\'now\'), ?, ?, ?, ?, ?, ?, ?, ?, ?';
           let insertParams = [type, order_source, platform, table || null, JSON.stringify(itemsWithBenefits), calculatedTotal, payment_method || null, 'pending', req.body.is_paid !== undefined ? (req.body.is_paid ? 1 : 0) : (payment_method && (payment_method === 'card' || payment_method === 'online') ? 1 : 0), customer?.name || null, customer?.phone || null, delivery?.address || null, drive_thru?.car_plate || null, drive_thru?.lane_number || null, splitBillData ? JSON.stringify(splitBillData) : null, clientIdentifier, idempotencyKey || null];
-          
+
           // Adaugă mențiunile (coloanele au fost deja create mai sus dacă nu existau)
           insertCols += ', food_notes, drink_notes, general_notes';
           insertVals += ', ?, ?, ?';
           insertParams.splice(insertParams.length - 2, 0, food_notes || null, drink_notes || null, general_notes || null);
-          
+
           db.run(`
             INSERT INTO orders (${insertCols})
             VALUES (${insertVals})
-          `, insertParams, function(err) {
+          `, insertParams, function (err) {
             // 🔴 FIX 1: Protecție race condition
             if (err && err.code === 'SQLITE_CONSTRAINT' && err.message.includes('idempotency_key') && idempotencyKey) {
               db.get('SELECT * FROM orders WHERE idempotency_key = ?', [idempotencyKey], (selectErr, existingOrder) => {
@@ -1575,7 +1584,7 @@ async function createOrder(req, res, next) {
                   let insertCols = 'type, order_source, table_number, items, total, payment_method, status, timestamp, is_paid, customer_name, customer_phone, delivery_address, car_plate, lane_number, split_bill, client_identifier';
                   let insertVals = '?, ?, ?, ?, ?, ?, ?, datetime(\'now\'), ?, ?, ?, ?, ?, ?, ?, ?';
                   let insertParams = [type, order_source, table || null, JSON.stringify(itemsWithBenefits), calculatedTotal, payment_method || null, 'pending', req.body.is_paid !== undefined ? (req.body.is_paid ? 1 : 0) : (payment_method && (payment_method === 'card' || payment_method === 'online') ? 1 : 0), customer?.name || null, customer?.phone || null, delivery?.address || null, drive_thru?.car_plate || null, drive_thru?.lane_number || null, splitBillData ? JSON.stringify(splitBillData) : null, clientIdentifier];
-                  
+
                   // Adaugă mențiunile
                   try {
                     const colNames = (columns || []).map(c => c.name);
@@ -1603,11 +1612,11 @@ async function createOrder(req, res, next) {
                     insertVals += ', ?';
                     insertParams.splice(insertParams.length - 1, 0, general_notes || null);
                   }
-                  
+
                   db.run(`
                     INSERT INTO orders (${insertCols})
                     VALUES (${insertVals})
-                  `, insertParams, function(err2) {
+                  `, insertParams, function (err2) {
                     if (err2) reject(err2);
                     else resolve(this.lastID);
                   });
@@ -1643,7 +1652,7 @@ async function createOrder(req, res, next) {
                 drive_thru?.lane_number || null,
                 splitBillData ? JSON.stringify(splitBillData) : null,
                 clientIdentifier
-              ], function(err2) {
+              ], function (err2) {
                 if (err2) reject(err2);
                 else resolve(this.lastID);
               });
@@ -1658,13 +1667,13 @@ async function createOrder(req, res, next) {
           const hasIdempotencyKey = Array.isArray(columns) && columns.some(col => col.name === 'idempotency_key');
           const hasFoodNotes = Array.isArray(columns) && columns.some(col => col.name === 'food_notes');
           const hasDrinkNotes = Array.isArray(columns) && columns.some(col => col.name === 'drink_notes');
-          
+
           if (hasPlatform && hasClientIdentifier && hasIdempotencyKey) {
             // Construiește query-ul dinamic în funcție de coloanele disponibile
             let insertCols = 'type, order_source, platform, table_number, items, total, payment_method, status, timestamp, is_paid, customer_name, customer_phone, delivery_address, car_plate, lane_number, split_bill, client_identifier, idempotency_key';
             let insertVals = '?, ?, ?, ?, ?, ?, ?, ?, datetime(\'now\'), ?, ?, ?, ?, ?, ?, ?, ?, ?';
             let insertParams = [type, order_source, platform, table || null, JSON.stringify(itemsWithBenefits), calculatedTotal, payment_method || null, 'pending', payment_method ? 1 : 0, customer?.name || null, customer?.phone || null, delivery?.address || null, drive_thru?.car_plate || null, drive_thru?.lane_number || null, splitBillData ? JSON.stringify(splitBillData) : null, clientIdentifier, idempotencyKey || null];
-            
+
             // Adaugă coloanele pentru mențiuni dacă există
             if (hasFoodNotes) {
               insertCols += ', food_notes';
@@ -1685,11 +1694,11 @@ async function createOrder(req, res, next) {
               insertVals += ', ?';
               insertParams.splice(insertParams.length - 2, 0, general_notes || null);
             }
-            
+
             db.run(`
               INSERT INTO orders (${insertCols})
               VALUES (${insertVals})
-            `, insertParams, function(err) {
+            `, insertParams, function (err) {
               // 🔴 FIX 1: Protecție race condition - dacă idempotency_key există deja, returnează comanda existentă
               if (err && err.code === 'SQLITE_CONSTRAINT' && err.message.includes('idempotency_key')) {
                 // Race condition: alt request a creat deja comanda cu același idempotency_key
@@ -1711,7 +1720,7 @@ async function createOrder(req, res, next) {
             let insertCols = 'type, order_source, platform, table_number, items, total, payment_method, status, timestamp, is_paid, customer_name, customer_phone, delivery_address, car_plate, lane_number, split_bill';
             let insertVals = '?, ?, ?, ?, ?, ?, ?, ?, datetime(\'now\'), ?, ?, ?, ?, ?, ?, ?';
             let insertParams = [type, order_source, platform, table || null, JSON.stringify(itemsWithBenefits), calculatedTotal, payment_method || null, 'pending', payment_method ? 1 : 0, customer?.name || null, customer?.phone || null, delivery?.address || null, drive_thru?.car_plate || null, drive_thru?.lane_number || null, splitBillData ? JSON.stringify(splitBillData) : null];
-            
+
             // Adaugă coloanele pentru mențiuni dacă există
             if (hasFoodNotes) {
               insertCols += ', food_notes';
@@ -1732,11 +1741,11 @@ async function createOrder(req, res, next) {
               insertVals += ', ?';
               insertParams.splice(insertParams.length - 1, 0, general_notes || null);
             }
-            
+
             db.run(`
               INSERT INTO orders (${insertCols})
               VALUES (${insertVals})
-            `, insertParams, function(err) {
+            `, insertParams, function (err) {
               if (err) reject(err);
               else resolve(this.lastID);
             });
@@ -1745,7 +1754,7 @@ async function createOrder(req, res, next) {
             let insertCols = 'type, order_source, table_number, items, total, payment_method, status, timestamp, is_paid, customer_name, customer_phone, delivery_address, car_plate, lane_number, split_bill';
             let insertVals = '?, ?, ?, ?, ?, ?, ?, datetime(\'now\'), ?, ?, ?, ?, ?, ?, ?';
             let insertParams = [type, order_source, table || null, JSON.stringify(itemsWithBenefits), calculatedTotal, payment_method || null, 'pending', payment_method ? 1 : 0, customer?.name || null, customer?.phone || null, delivery?.address || null, drive_thru?.car_plate || null, drive_thru?.lane_number || null, splitBillData ? JSON.stringify(splitBillData) : null];
-            
+
             // Adaugă coloanele pentru mențiuni dacă există
             if (hasFoodNotes) {
               insertCols += ', food_notes';
@@ -1766,11 +1775,11 @@ async function createOrder(req, res, next) {
               insertVals += ', ?';
               insertParams.splice(insertParams.length - 1, 0, general_notes || null);
             }
-            
+
             db.run(`
               INSERT INTO orders (${insertCols})
               VALUES (${insertVals})
-            `, insertParams, function(err) {
+            `, insertParams, function (err) {
               if (err) reject(err);
               else resolve(this.lastID);
             });
@@ -1792,8 +1801,8 @@ async function createOrder(req, res, next) {
             db.run(`
               INSERT INTO order_items (
                 order_id, product_id, name, quantity, price, total,
-                notes, customizations, station, category_id
-              ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                notes, customizations, station, category_id, status
+              ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             `, [
               orderId,
               item.product_id || item.id || null,
@@ -1804,7 +1813,8 @@ async function createOrder(req, res, next) {
               item.notes || null,
               item.customizations ? JSON.stringify(item.customizations) : null,
               item.station || null,
-              item.category_id || null
+              item.category_id || null,
+              item.status || 'pending'
             ], (err) => {
               if (err) reject(err);
               else resolve();
@@ -1835,12 +1845,32 @@ async function createOrder(req, res, next) {
       status: 'pending',
       timestamp: new Date().toISOString()
     };
-    
+
     // Folosește metoda centralizată pentru emitere evenimente
     orderEventBus.emitOrderCreated(orderForEvents, global.io);
-    
+
     // Emit Socket.io events (păstrăm pentru backward compatibility)
     if (global.io) {
+      // 🔴 CRITICAL: Emit 'newOrder' event for kitchen/bar displays and livrare pages
+      // This is the PRIMARY event that kitchen/bar displays listen for
+      global.io.emit('newOrder', {
+        orderId,
+        type,
+        items: itemsWithBenefits, // Use itemsWithBenefits to include all enriched data
+        table,
+        total: calculatedTotal,
+        platform: platform || 'POS',
+        order_source: order_source || 'POS',
+        customer_name: customer?.name,
+        customer_phone: customer?.phone,
+        delivery_address: delivery?.address,
+        payment_method: payment_method,
+        is_paid: is_paid || 0,
+        status: 'pending',
+        timestamp: new Date().toISOString()
+      });
+      console.log(`📡 [Socket.IO] newOrder event emitted for order #${orderId} (${itemsWithBenefits.length} items)`);
+
       // Event general pentru KDS - folosește enrichedItems cu name populat
       global.io.emit('order:new', {
         orderId,
@@ -1853,14 +1883,14 @@ async function createOrder(req, res, next) {
         customer_phone: customer?.phone,
         delivery_address: delivery?.address,
       });
-      
+
       // Event specific pentru comenzile din aplicația mobilă
       if (platform === 'MOBILE_APP') {
         if (isMobileTableOrder) {
           // Comandă de la masă prin aplicația mobilă (scanare QR)
           // Tratează ca o comandă normală la masă, dar cu platform='MOBILE_APP'
           console.log(`📱 [Mobile Table Order] Comandă #${orderId} de la masa ${table} prin aplicația mobilă (QR scan)`);
-          
+
           // Emite event pentru KDS și ospătari (ca o comandă normală la masă)
           global.io.emit('order:table', {
             orderId,
@@ -1912,7 +1942,7 @@ async function createOrder(req, res, next) {
               status: 'pending',
               notes: notes?.general || notes || null,
             });
-            
+
             // Event pentru sistemul de delivery
             global.io.emit('delivery:new-order', {
               orderId,
@@ -1933,7 +1963,7 @@ async function createOrder(req, res, next) {
     setImmediate(async () => {
       try {
         const emailService = require('../../../services/email.service');
-        
+
         // Obține comanda completă pentru email
         const fullOrder = await new Promise((resolve, reject) => {
           db.get('SELECT * FROM orders WHERE id = ?', [orderId], (err, row) => {
@@ -1941,7 +1971,7 @@ async function createOrder(req, res, next) {
             else resolve(row);
           });
         });
-        
+
         if (fullOrder) {
           // Parse items dacă este string
           if (fullOrder.items && typeof fullOrder.items === 'string') {
@@ -1951,7 +1981,7 @@ async function createOrder(req, res, next) {
               fullOrder.items = [];
             }
           }
-          
+
           // Trimite email (fail-safe: nu blochează dacă eșuează)
           await emailService.sendOrderNotificationEmail(fullOrder);
         }
@@ -2002,7 +2032,7 @@ async function createOrder(req, res, next) {
 async function getOrderByTable(req, res, next) {
   try {
     const { tableId } = req.params;
-    
+
     // Așteaptă DB să fie gata (cu timeout)
     let db;
     try {
@@ -2017,7 +2047,7 @@ async function getOrderByTable(req, res, next) {
         order: null
       });
     }
-    
+
     let orders = [];
     try {
       orders = await new Promise((resolve, reject) => {
@@ -2035,10 +2065,10 @@ async function getOrderByTable(req, res, next) {
       console.warn('⚠️ Error fetching order by table:', error.message);
       orders = [];
     }
-    
+
     // Returnează primul order sau null pentru compatibilitate cu frontend
     const order = orders.length > 0 ? orders[0] : null;
-    
+
     // Parse items dacă este string
     if (order && order.items && typeof order.items === 'string') {
       try {
@@ -2047,7 +2077,7 @@ async function getOrderByTable(req, res, next) {
         order.items = [];
       }
     }
-    
+
     res.json(order || null);
   } catch (error) {
     console.error('❌ Error in getOrderByTable:', error.message);
@@ -2062,22 +2092,22 @@ async function cancelOrder(req, res, next) {
     const { id } = req.params;
     const { reason } = req.body;
     const db = await dbPromise;
-    
+
     const order = await new Promise((resolve, reject) => {
       db.get('SELECT * FROM orders WHERE id = ?', [id], (err, row) => {
         if (err) reject(err);
         else resolve(row);
       });
     });
-    
+
     if (!order) {
       return res.status(404).json({ error: 'Comandă negăsită' });
     }
-    
+
     if (order.status === 'cancelled') {
       return res.status(400).json({ error: 'Comanda este deja anulată' });
     }
-    
+
     await new Promise((resolve, reject) => {
       db.run(`
         UPDATE orders 
@@ -2090,15 +2120,15 @@ async function cancelOrder(req, res, next) {
         else resolve();
       });
     });
-    
+
     if (global.io) {
       global.io.emit('order:cancelled', { orderId: id, reason });
     }
-    
+
     // Emit alert for order cancellation
     const AlertsService = require('../../alerts/alerts.service');
     AlertsService.alertOrderCancelled(order, reason || 'Anulată de utilizator', order.platform);
-    
+
     res.json({ success: true, message: 'Comandă anulată cu succes' });
   } catch (error) {
     next(error);
@@ -2110,7 +2140,7 @@ async function acceptOrder(req, res, next) {
   try {
     const { id } = req.params;
     const db = await dbPromise;
-    
+
     // Obține comanda
     const order = await new Promise((resolve, reject) => {
       db.get('SELECT * FROM orders WHERE id = ?', [id], (err, row) => {
@@ -2118,25 +2148,25 @@ async function acceptOrder(req, res, next) {
         else resolve(row);
       });
     });
-    
+
     if (!order) {
-      return res.status(404).json({ 
+      return res.status(404).json({
         success: false,
-        error: 'Comandă negăsită' 
+        error: 'Comandă negăsită'
       });
     }
-    
+
     // Verifică dacă comanda poate fi acceptată
     if (order.status === 'cancelled' || order.status === 'completed') {
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
-        error: `Comanda nu poate fi acceptată (status: ${order.status})` 
+        error: `Comanda nu poate fi acceptată (status: ${order.status})`
       });
     }
-    
+
     // Actualizează status-ul la 'pending' (dacă era 'awaiting_acceptance') sau păstrează 'pending'
     const newStatus = order.status === 'awaiting_acceptance' ? 'pending' : order.status;
-    
+
     await new Promise((resolve, reject) => {
       db.run(`
         UPDATE orders 
@@ -2147,20 +2177,20 @@ async function acceptOrder(req, res, next) {
         else resolve();
       });
     });
-    
+
     // Emit Socket.io event pentru client
     if (global.io) {
-      global.io.emit('order:accepted', { 
+      global.io.emit('order:accepted', {
         orderId: id,
         status: newStatus,
         timestamp: new Date().toISOString()
       });
     }
-    
+
     console.log(`✅ Order #${id} accepted (status: ${newStatus})`);
-    
-    res.json({ 
-      success: true, 
+
+    res.json({
+      success: true,
       message: 'Comandă acceptată',
       order_id: id,
       status: newStatus
@@ -2177,7 +2207,7 @@ async function rejectOrder(req, res, next) {
     const { id } = req.params;
     const { reason } = req.body;
     const db = await dbPromise;
-    
+
     // Obține comanda
     const order = await new Promise((resolve, reject) => {
       db.get('SELECT * FROM orders WHERE id = ?', [id], (err, row) => {
@@ -2185,22 +2215,22 @@ async function rejectOrder(req, res, next) {
         else resolve(row);
       });
     });
-    
+
     if (!order) {
-      return res.status(404).json({ 
+      return res.status(404).json({
         success: false,
-        error: 'Comandă negăsită' 
+        error: 'Comandă negăsită'
       });
     }
-    
+
     // Verifică dacă comanda poate fi refuzată
     if (order.status === 'cancelled' || order.status === 'completed') {
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
-        error: `Comanda nu poate fi refuzată (status: ${order.status})` 
+        error: `Comanda nu poate fi refuzată (status: ${order.status})`
       });
     }
-    
+
     // Actualizează status-ul la 'cancelled'
     await new Promise((resolve, reject) => {
       db.run(`
@@ -2214,21 +2244,21 @@ async function rejectOrder(req, res, next) {
         else resolve();
       });
     });
-    
+
     // Emit Socket.io event pentru client
     if (global.io) {
-      global.io.emit('order:rejected', { 
+      global.io.emit('order:rejected', {
         orderId: id,
         status: 'cancelled',
         reason: reason || 'Refuzată de restaurant',
         timestamp: new Date().toISOString()
       });
     }
-    
+
     console.log(`❌ Order #${id} rejected (reason: ${reason || 'N/A'})`);
-    
-    res.json({ 
-      success: true, 
+
+    res.json({
+      success: true,
       message: 'Comandă refuzată',
       order_id: id,
       status: 'cancelled'
@@ -2245,18 +2275,18 @@ async function completeOrderItems(req, res, next) {
     const { id } = req.params;
     const { itemIds } = req.body; // Array of item IDs to complete
     const db = await dbPromise;
-    
+
     const order = await new Promise((resolve, reject) => {
       db.get('SELECT * FROM orders WHERE id = ?', [id], (err, row) => {
         if (err) reject(err);
         else resolve(row);
       });
     });
-    
+
     if (!order) {
       return res.status(404).json({ error: 'Comandă negăsită' });
     }
-    
+
     let items = [];
     if (order.items) {
       if (typeof order.items === 'string') {
@@ -2269,31 +2299,31 @@ async function completeOrderItems(req, res, next) {
         items = order.items;
       }
     }
-    
+
     // If no items, return success (nothing to complete)
     if (!items || items.length === 0) {
       return res.json({ success: true, message: 'Nu există item-uri de finalizat' });
     }
-    
+
     // ✅ FIX: Mark specified items as completed (setează status: 'completed' pentru items)
     if (itemIds && Array.isArray(itemIds) && itemIds.length > 0) {
       items = items.map(item => {
         // Verifică dacă itemId se potrivește (poate fi itemId, id, item_id, etc.)
-        const matchesItemId = itemIds.some(id => 
-          id === item.itemId || 
-          id === item.item_id || 
-          id === item.id || 
+        const matchesItemId = itemIds.some(id =>
+          id === item.itemId ||
+          id === item.item_id ||
+          id === item.id ||
           id === item.line_id ||
           String(id) === String(item.itemId) ||
           String(id) === String(item.item_id) ||
           String(id) === String(item.id) ||
           String(id) === String(item.line_id)
         );
-        
+
         if (matchesItemId) {
-          return { 
-            ...item, 
-            completed: true, 
+          return {
+            ...item,
+            completed: true,
             completed_at: new Date().toISOString(),
             status: 'completed', // ✅ Setează status: 'completed' pentru item
             item_status: 'completed' // ✅ Setează și item_status pentru compatibilitate
@@ -2311,7 +2341,7 @@ async function completeOrderItems(req, res, next) {
         item_status: 'completed' // ✅ Setează și item_status pentru compatibilitate
       }));
     }
-    
+
     await new Promise((resolve, reject) => {
       db.run(`
         UPDATE orders 
@@ -2323,32 +2353,151 @@ async function completeOrderItems(req, res, next) {
         else resolve();
       });
     });
-    
+
+    // ✅ FIX: Sync status to order_items table as well
+    // Delivery interface (admin.controller.js) checks order_items status
+    if (itemIds && Array.isArray(itemIds) && itemIds.length > 0) {
+      try {
+        // ✅ FIX: Extract product_id from composite itemId strings
+        // Format: "{product_id}_{timestamp}_{random}" e.g. "144_1769625558716_16ysve4iq"
+        const productIds = itemIds.map(itemId => {
+          if (typeof itemId === 'string' && itemId.includes('_')) {
+            // Extract first part (product_id) from composite string
+            const parts = itemId.split('_');
+            const extracted = parseInt(parts[0], 10);
+            if (!isNaN(extracted)) {
+              console.log(`  → Extracted product_id ${extracted} from itemId "${itemId}"`);
+              return extracted;
+            }
+          }
+          // Fallback: try to use as-is if it's already a number
+          const parsed = parseInt(itemId, 10);
+          return isNaN(parsed) ? null : parsed;
+        }).filter(id => id !== null);
+
+        console.log(`📦 Updating order_items for order ${id}: extracted product_ids = [${productIds.join(', ')}]`);
+
+        if (productIds.length > 0) {
+          const placeholders = productIds.map(() => '?').join(',');
+          await new Promise((resolve) => {
+            // Update by extracted product_id values
+            db.run(`
+              UPDATE order_items 
+              SET status = 'completed'
+              WHERE order_id = ? 
+                AND product_id IN (${placeholders})
+            `, [id, ...productIds], function (err) {
+              if (err) {
+                console.warn('⚠️ Error updating order_items status:', err.message);
+              } else {
+                console.log(`✅ Updated ${this.changes} order_items rows for order ${id}`);
+              }
+              resolve();
+            });
+          });
+        }
+      } catch (tableErr) {
+        console.warn('⚠️ Could not update order_items (table might trigger error):', tableErr.message);
+      }
+    }
+
     // ✅ EMIT order:item_ready event so livrare1.html receives notifications
     if (global.io) {
       const updatedOrder = {
         ...order,
         items: items  // Include the updated items array
       };
-      global.io.emit('order:item_ready', { 
+
+      const stationName = req.body.station_name || req.body.station || 'Bucătărie';
+      const stationType = req.body.station_type || 'kitchen';
+
+      global.io.emit('order:item_ready', {
         order: updatedOrder,
         itemIds: itemIds,
-        station: req.body.station || 'Bucătărie',
-        station_name: req.body.station_name || 'Bucătărie',
-        station_type: req.body.station_type || 'kitchen'
+        station: stationName,
+        station_name: stationName,
+        station_type: stationType
       });
-      
+
       // Also emit for legacy compatibility
       global.io.emit('order:items-completed', { orderId: id, itemIds });
+
+      // ✅ FIX: PERSIST notification to database so it appears in notification bar
+      // This works for ALL order sources: POS, Kiosk, RestorApp, Glovo, Wolt, FriendsRide, etc.
+      try {
+        const orderSource = order.order_source || order.platform || 'POS';
+        const orderType = order.type || 'dine_in';
+        const isTakeaway = orderType.toLowerCase().includes('takeaway') || orderType.toLowerCase() === 'pickup';
+
+        const notificationTitle = stationType === 'bar'
+          ? `🍹 Comandă gata la Bar`
+          : `🍽️ Comandă gata la Bucătărie`;
+        const notificationTitleEn = stationType === 'bar'
+          ? `🍹 Order ready at Bar`
+          : `🍽️ Order ready at Kitchen`;
+
+        const sourceLabel = orderSource !== 'POS' ? ` (${orderSource})` : '';
+        const notificationMessage = `Comanda #${id}${isTakeaway ? ' (Takeaway)' : ''}${sourceLabel} este gata la ${stationName}.`;
+        const notificationMessageEn = `Order #${id}${isTakeaway ? ' (Takeaway)' : ''}${sourceLabel} is ready at ${stationName}.`;
+
+        await new Promise((resolve) => {
+          db.run(`
+            INSERT INTO notifications (type, title, title_en, message, message_en, order_id, table_number, status, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, 'unread', datetime('now'))
+          `, [
+            stationType === 'bar' ? 'barReady' : 'kitchenReady',
+            notificationTitle,
+            notificationTitleEn,
+            notificationMessage,
+            notificationMessageEn,
+            id,
+            order.table_number || null
+          ], (err) => {
+            if (err) {
+              console.error('⚠️ Error saving notification to database:', err.message);
+            } else {
+              console.log(`✅ Notification saved: Order #${id} ready at ${stationName}`);
+            }
+            resolve();
+          });
+        });
+      } catch (notifError) {
+        console.error('⚠️ Error creating notification:', notifError.message);
+      }
     }
-    
+
+    // --- NEW LOGIC: If all items are completed, mark order as 'ready' and emit events ---
+    const allItemsCompleted = items.length > 0 && items.every(item => (item.status === 'completed' || item.item_status === 'completed' || item.completed === true));
+    if (allItemsCompleted) {
+      // Update order status to 'ready'
+      await new Promise((resolve, reject) => {
+        db.run(`
+          UPDATE orders 
+          SET status = 'ready', updated_at = datetime('now')
+          WHERE id = ?
+        `, [id], (err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
+      // Emit order:ready event
+      const { orderEventBus } = require('../order.events');
+      const orderForEvents = {
+        ...order,
+        items: items,
+        status: 'ready',
+      };
+      orderEventBus.emitOrderReady(orderForEvents, global.io);
+    }
+
     res.json({ success: true, message: 'Item-uri marcate ca finalizate' });
   } catch (error) {
     console.error('❌ Error in completeOrderItems:', error);
     // Return safe default instead of crashing
-    res.status(500).json({ 
-      success: false, 
-      error: error.message || 'Eroare la finalizarea item-urilor' 
+    res.status(500).json({
+      success: false,
+      error: error.message || 'Eroare la finalizarea item-urilor'
     });
   }
 }
@@ -2358,18 +2507,18 @@ async function completeOrder(req, res, next) {
   try {
     const { id } = req.params;
     const db = await dbPromise;
-    
+
     const order = await new Promise((resolve, reject) => {
       db.get('SELECT * FROM orders WHERE id = ?', [id], (err, row) => {
         if (err) reject(err);
         else resolve(row);
       });
     });
-    
+
     if (!order) {
       return res.status(404).json({ error: 'Comandă negăsită' });
     }
-    
+
     await new Promise((resolve, reject) => {
       db.run(`
         UPDATE orders 
@@ -2387,7 +2536,7 @@ async function completeOrder(req, res, next) {
     // Works for ALL platforms (MOBILE_APP, GLOVO, WOLT, FRIENDSRIDE, POS, KIOSK, etc.)
     try {
       const stockService = require('../../stocks/services/stockConsumption.service');
-      
+
       // Get order to determine platform
       const order = await new Promise((resolve, reject) => {
         db.get('SELECT platform FROM orders WHERE id = ?', [id], (err, row) => {
@@ -2395,7 +2544,7 @@ async function completeOrder(req, res, next) {
           else resolve(row);
         });
       });
-      
+
       // Determine source based on platform
       const platform = order?.platform || 'POS';
       const sourceMap = {
@@ -2410,29 +2559,29 @@ async function completeOrder(req, res, next) {
         'POS': 'POS'
       };
       const source = sourceMap[platform] || 'POS';
-      
+
       await stockService.consumeStockForOrder(parseInt(id), {
         reason: 'ORDER_COMPLETED',
         source: source
       });
-      
+
       console.log(`✅ Stock consumed for order ${id} from platform ${platform}`);
     } catch (stockError) {
       // Log but don't fail the request if stock consumption fails
       console.warn(`⚠️ Stock consumption failed for order ${id}:`, stockError.message);
     }
-    
+
     if (global.io) {
       global.io.emit('order:completed', { orderId: id });
     }
-    
+
     res.json({ success: true, message: 'Comandă finalizată cu succes' });
   } catch (error) {
     console.error('❌ Error in completeOrder:', error);
     // Return safe default instead of crashing
-    res.status(500).json({ 
-      success: false, 
-      error: error.message || 'Eroare la finalizarea comenzii' 
+    res.status(500).json({
+      success: false,
+      error: error.message || 'Eroare la finalizarea comenzii'
     });
   }
 }
@@ -2444,7 +2593,7 @@ async function markOrderReady(req, res, next) {
   try {
     const { id } = req.params;
     const db = await dbPromise;
-    
+
     // Obține comanda completă
     const order = await new Promise((resolve, reject) => {
       db.get('SELECT * FROM orders WHERE id = ?', [id], (err, row) => {
@@ -2452,11 +2601,11 @@ async function markOrderReady(req, res, next) {
         else resolve(row);
       });
     });
-    
+
     if (!order) {
       return res.status(404).json({ error: 'Comandă negăsită' });
     }
-    
+
     // Actualizează statusul la 'ready' (NU 'completed' - asta se face doar când este livrată)
     await new Promise((resolve, reject) => {
       db.run(`
@@ -2469,7 +2618,7 @@ async function markOrderReady(req, res, next) {
         else resolve();
       });
     });
-    
+
     // Parse items pentru a trimite evenimentul complet
     let items = [];
     if (order.items) {
@@ -2483,7 +2632,7 @@ async function markOrderReady(req, res, next) {
         items = order.items;
       }
     }
-    
+
     // Construiește obiectul order pentru evenimente
     const orderForEvents = {
       id: parseInt(id),
@@ -2498,20 +2647,20 @@ async function markOrderReady(req, res, next) {
       platform: order.platform || 'POS',
       timestamp: new Date().toISOString()
     };
-    
+
     // 🔴 FIX: Pentru comenzile cu livrare la adresă, atribuie automat un curier disponibil când comanda devine "ready"
     if ((order.type === 'delivery' || order.type === 'DELIVERY') && order.delivery_address) {
       try {
         const { getAvailableCouriers } = require('../../couriers/couriers.service');
         const availableCouriers = await getAvailableCouriers();
-        
+
         if (availableCouriers && availableCouriers.length > 0) {
           // Alege curierul cu cel mai mic load (sau primul disponibil)
           const selectedCourier = availableCouriers[0];
           const deliveryFee = 15; // RON per delivery
-          
+
           const db = await dbPromise;
-          
+
           // Verifică dacă există deja assignment
           const existing = await new Promise((resolve, reject) => {
             db.get(
@@ -2523,19 +2672,19 @@ async function markOrderReady(req, res, next) {
               }
             );
           });
-          
+
           // Dacă nu există assignment, creează unul nou
           if (!existing) {
             await new Promise((resolve, reject) => {
               db.run(`
                 INSERT INTO delivery_assignments (order_id, courier_id, status, delivery_fee, assigned_at)
                 VALUES (?, ?, 'assigned', ?, datetime('now'))
-              `, [id, selectedCourier.id, deliveryFee], function(err) {
+              `, [id, selectedCourier.id, deliveryFee], function (err) {
                 if (err) reject(err);
                 else resolve(this.lastID);
               });
             });
-            
+
             console.log(`✅ Comandă #${id} (delivery) atribuită automat curierului ${selectedCourier.name} (ID: ${selectedCourier.id})`);
           }
         }
@@ -2544,27 +2693,27 @@ async function markOrderReady(req, res, next) {
         // Nu oprește procesarea comenzii dacă atribuirea automată eșuează
       }
     }
-    
+
     // Emite evenimentul order:ready prin event bus
     const { orderEventBus } = require('../order.events');
     orderEventBus.emitOrderReady(orderForEvents, global.io);
-    
+
     // Emite și prin Socket.IO direct pentru backward compatibility
     if (global.io) {
       // Emite eveniment global pentru toți clienții
       global.io.emit('order:ready', { order: orderForEvents });
       global.io.emit('orderUpdated', { orderId: parseInt(id), status: 'ready' });
-      
+
       // Pentru comenzile takeaway/pickup/delivery, trimite către waiter room (livrare1.html)
-      const isTakeawayOrDelivery = order.type === 'takeaway' || order.type === 'pickup' || 
-                                    order.type === 'TAKEAWAY' || order.type === 'PICKUP' ||
-                                    order.type === 'delivery' || order.type === 'DELIVERY';
-      
+      const isTakeawayOrDelivery = order.type === 'takeaway' || order.type === 'pickup' ||
+        order.type === 'TAKEAWAY' || order.type === 'PICKUP' ||
+        order.type === 'delivery' || order.type === 'DELIVERY';
+
       if (isTakeawayOrDelivery) {
         // Trimite către waiter room
         global.io.to('waiter').emit('order:ready', { order: orderForEvents });
         global.io.to('waiter').emit('orderUpdated', { orderId: parseInt(id), status: 'ready' });
-        
+
         // Determinați tipul comenzii pentru mesaj
         let orderTypeLabel = 'Takeaway';
         if (order.type === 'delivery' || order.type === 'DELIVERY') {
@@ -2572,7 +2721,7 @@ async function markOrderReady(req, res, next) {
         } else if (order.type === 'pickup' || order.type === 'PICKUP') {
           orderTypeLabel = 'Pickup';
         }
-        
+
         // Trimite notificare specifică pentru ospătari (cu audio și vizual)
         global.io.to('waiter').emit('notification:new', {
           id: `notif_${id}_${Date.now()}`,
@@ -2589,18 +2738,18 @@ async function markOrderReady(req, res, next) {
           playSound: true, // Activează sunetul
           showVisual: true // Activează notificarea vizuală
         });
-        
+
         console.log(`✅ [MarkOrderReady] Comandă #${id} (${orderTypeLabel}) marcată ca ready și trimisă către waiter room (livrare1.html)`);
         console.log(`✅ [MarkOrderReady] Socket.IO events emitted: order:ready, orderUpdated, notification:new`);
       }
     }
-    
+
     res.json({ success: true, message: 'Comandă marcată ca gata' });
   } catch (error) {
     console.error('❌ Error in markOrderReady:', error);
-    res.status(500).json({ 
-      success: false, 
-      error: error.message || 'Eroare la marcarea comenzii ca gata' 
+    res.status(500).json({
+      success: false,
+      error: error.message || 'Eroare la marcarea comenzii ca gata'
     });
   }
 }
@@ -2611,18 +2760,18 @@ async function resetItemsToPending(req, res, next) {
     const { id } = req.params;
     const { itemIds } = req.body; // Array of item IDs to reset
     const db = await dbPromise;
-    
+
     const order = await new Promise((resolve, reject) => {
       db.get('SELECT * FROM orders WHERE id = ?', [id], (err, row) => {
         if (err) reject(err);
         else resolve(row);
       });
     });
-    
+
     if (!order) {
       return res.status(404).json({ error: 'Comandă negăsită' });
     }
-    
+
     let items = [];
     if (order.items) {
       if (typeof order.items === 'string') {
@@ -2635,12 +2784,12 @@ async function resetItemsToPending(req, res, next) {
         items = order.items;
       }
     }
-    
+
     // If no items, return success (nothing to reset)
     if (!items || items.length === 0) {
       return res.json({ success: true, message: 'Nu există item-uri de resetat' });
     }
-    
+
     // Reset specified items to pending
     if (itemIds && Array.isArray(itemIds) && itemIds.length > 0) {
       items = items.map(item => {
@@ -2657,7 +2806,7 @@ async function resetItemsToPending(req, res, next) {
         return rest;
       });
     }
-    
+
     await new Promise((resolve, reject) => {
       db.run(`
         UPDATE orders 
@@ -2670,18 +2819,18 @@ async function resetItemsToPending(req, res, next) {
         else resolve();
       });
     });
-    
+
     if (global.io) {
       global.io.emit('order:items-reset', { orderId: id, itemIds });
     }
-    
+
     res.json({ success: true, message: 'Item-uri resetate la pending' });
   } catch (error) {
     console.error('❌ Error in resetItemsToPending:', error);
     // Return safe default instead of crashing
-    res.status(500).json({ 
-      success: false, 
-      error: error.message || 'Eroare la resetarea item-urilor' 
+    res.status(500).json({
+      success: false,
+      error: error.message || 'Eroare la resetarea item-urilor'
     });
   }
 }
@@ -2692,18 +2841,18 @@ async function submitOrderFeedback(req, res, next) {
     const { id } = req.params;
     const { rating, comment, customerName } = req.body;
     const db = await dbPromise;
-    
+
     const order = await new Promise((resolve, reject) => {
       db.get('SELECT * FROM orders WHERE id = ?', [id], (err, row) => {
         if (err) reject(err);
         else resolve(row);
       });
     });
-    
+
     if (!order) {
       return res.status(404).json({ error: 'Comandă negăsită' });
     }
-    
+
     // Insert feedback into order_feedback table (create if not exists)
     await new Promise((resolve, reject) => {
       db.run(`
@@ -2721,7 +2870,7 @@ async function submitOrderFeedback(req, res, next) {
         else resolve();
       });
     });
-    
+
     await new Promise((resolve, reject) => {
       db.run(`
         INSERT INTO order_feedback (order_id, rating, comment, customer_name)
@@ -2731,7 +2880,7 @@ async function submitOrderFeedback(req, res, next) {
         else resolve();
       });
     });
-    
+
     res.json({ success: true, message: 'Feedback trimis cu succes' });
   } catch (error) {
     console.error('❌ Error in submitOrderFeedback:', error);

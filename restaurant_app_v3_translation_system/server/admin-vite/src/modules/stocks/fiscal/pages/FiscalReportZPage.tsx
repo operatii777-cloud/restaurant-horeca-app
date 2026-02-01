@@ -37,7 +37,7 @@ interface ReportZData {
 }
 
 export const FiscalReportZPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [reportDate, setReportDate] = useState(() => {
     return new Date().toISOString().split('T')[0];
   });
@@ -73,7 +73,7 @@ export const FiscalReportZPage = () => {
         });
         const orders = ordersResponse.data?.orders || [];
         totalOrders = orders.length;
-        openOrders = orders.filter((o: any) => 
+        openOrders = orders.filter((o: any) =>
           o.status && !['paid', 'cancelled'].includes(o.status)
         ).length;
       } catch (err) {
@@ -81,16 +81,16 @@ export const FiscalReportZPage = () => {
       }
 
       const hasExistingReport = reportResponse.data?.success && reportResponse.data?.data;
-      
+
       setStatus({
         canGenerate: !hasExistingReport && openOrders === 0,
         openOrders,
         totalOrders,
-        message: hasExistingReport 
+        message: hasExistingReport
           ? 'Raport Z deja generat pentru această zi'
           : openOrders > 0
-          ? `Există ${openOrders} comenzi deschise`
-          : 'Gata pentru generare Raport Z',
+            ? `Există ${openOrders} comenzi deschise`
+            : 'Gata pentru generare Raport Z',
       });
     } catch (err: any) {
       console.error('❌ Eroare la verificarea statusului:', err);
@@ -151,7 +151,7 @@ export const FiscalReportZPage = () => {
 
   const displayVATBreakdown = (vatBreakdown?: Array<{ rate: number; amount: number; base: number }>) => {
     if (!vatBreakdown || vatBreakdown.length === 0) {
-      return `<p class="text-muted">"nu exista defalcare tva disponibila"</p>`;
+      return `<p class="text-muted">Nu există defalcare TVA disponibilă</p>`;
     }
 
     return `
@@ -165,16 +165,16 @@ export const FiscalReportZPage = () => {
         </thead>
         <tbody>
           ${vatBreakdown
-            .map(
-              (item) => `
+        .map(
+          (item) => `
             <tr>
               <td>${item.rate}%</td>
               <td>${item.base.toFixed(2)}</td>
               <td>${item.amount.toFixed(2)}</td>
             </tr>
           `,
-            )
-            .join('')}
+        )
+        .join('')}
         </tbody>
       </table>
     `;
@@ -182,14 +182,14 @@ export const FiscalReportZPage = () => {
 
   const displayReceiptsList = (receipts: Array<{ id: number; number: string; date: string; amount: number; payment_method: string }>) => {
     if (!receipts || receipts.length === 0) {
-      return `<p class="text-muted">"nu exista bonuri pentru aceasta zi"</p>`;
+      return `<p class="text-muted">Nu există bonuri pentru această zi</p>`;
     }
 
     return `
       <table class="table table-sm table-striped">
         <thead>
           <tr>
-            <th>"numar bon"</th>
+            <th>Număr bon</th>
             <th>Data</th>
             <th>Suma</th>
             <th>Metodă Plată</th>
@@ -197,8 +197,8 @@ export const FiscalReportZPage = () => {
         </thead>
         <tbody>
           ${receipts
-            .map(
-              (receipt) => `
+        .map(
+          (receipt) => `
             <tr>
               <td>${receipt.number}</td>
               <td>${new Date(receipt.date).toLocaleDateString('ro-RO')}</td>
@@ -206,8 +206,8 @@ export const FiscalReportZPage = () => {
               <td>${receipt.payment_method}</td>
             </tr>
           `,
-            )
-            .join('')}
+        )
+        .join('')}
         </tbody>
       </table>
     `;
@@ -220,11 +220,11 @@ export const FiscalReportZPage = () => {
           <i className="fas fa-file-alt me-1"></i> Raport Z
         </Card.Header>
         <Card.Body>
-          <p className="text-muted">"raportul z se genereaza la sfarsitul zilei pentru "</p>
+          <p className="text-muted">Raportul Z se generează la sfârșitul zilei.</p>
 
           <Alert variant="warning">
             <i className="fas fa-exclamation-triangle me-2"></i>
-            <strong>"Atenție!"</strong>"raportul z inchide ziua fiscala nu poate fi anulat"</Alert>
+            <strong>Atenție!</strong> Raportul Z închide ziua fiscală și nu poate fi anulat.</Alert>
 
           {/* Status Card */}
           <Card className="mb-3" style={{ borderLeft: '4px solid #ffc107' }}>
@@ -236,7 +236,7 @@ export const FiscalReportZPage = () => {
                 {checkingStatus ? (
                   <div className="text-center">
                     <div className="spinner-border spinner-border-sm text-primary" role="status">
-                      <span className="visually-hidden">"se verifica"</span>
+                      <span className="visually-hidden">Se verifică...</span>
                     </div>
                     <span className="ms-2">Verificare comenzi...</span>
                   </div>
@@ -244,7 +244,7 @@ export const FiscalReportZPage = () => {
                   status.canGenerate ? (
                     <Alert variant="success" className="mb-0">
                       <i className="fas fa-check-circle me-2"></i>
-                      <strong>"gata pentru raport z"</strong>
+                      <strong>Gata pentru Raport Z</strong>
                       <br />
                       {status.totalOrders > 0
                         ? `Toate cele ${status.totalOrders} comenzi sunt închise (achitate sau anulate).`
@@ -253,13 +253,13 @@ export const FiscalReportZPage = () => {
                   ) : (
                     <Alert variant="danger" className="mb-0">
                       <i className="fas fa-times-circle me-2"></i>
-                      <strong>"nu poate genera raport z"</strong>
+                      <strong>Nu se poate genera Raport Z</strong>
                       <br />
                       ⚠️ Există {status.openOrders} comenzi deschise pentru {reportDate}.
-                      <br />"toate comenzile trebuie sa fie achitate sau anulat"</Alert>
+                      <br />Toate comenzile trebuie să fie achitate sau anulate.</Alert>
                   )
                 ) : (
-                  <p className="text-muted mb-0">"status necunoscut"</p>
+                  <p className="text-muted mb-0">Status necunoscut</p>
                 )}
               </div>
             </Card.Body>
@@ -268,7 +268,7 @@ export const FiscalReportZPage = () => {
           <div className="row">
             <div className="col-md-6">
               <Form.Group className="mb-3">
-                <Form.Label>"selecteaza data pentru raport"</Form.Label>
+                <Form.Label>Selectează data pentru raport</Form.Label>
                 <Form.Control
                   type="date"
                   value={reportDate}
@@ -303,14 +303,14 @@ export const FiscalReportZPage = () => {
                   </Card.Header>
                   <Card.Body>
                     <Alert variant="success">
-                      <i className="fas fa-check-circle me-2"></i>"ziua fiscala a fost inchisa cu succes"</Alert>
+                      <i className="fas fa-check-circle me-2"></i>Ziua fiscală a fost închisă cu succes!</Alert>
 
                     <div className="row mb-3">
                       <div className="col-6">
-                        <strong>"numar raport z"</strong> Z-{reportData.zNumber}
+                        <strong>Număr Raport Z:</strong> Z-{reportData.zNumber}
                       </div>
                       <div className="col-6">
-                        <strong>"ora generarii"</strong>' '
+                        <strong>Ora generării:</strong>' '
                         {new Date(reportData.timestamp).toLocaleString('ro-RO')}
                       </div>
                     </div>
@@ -319,7 +319,7 @@ export const FiscalReportZPage = () => {
 
                     <div className="row mb-3">
                       <div className="col-6">
-                        <strong>"total bonuri"</strong> {reportData.summary.totalReceipts}
+                        <strong>Total Bonuri:</strong> {reportData.summary.totalReceipts}
                       </div>
                       <div className="col-6">
                         <strong>Total Valoare:</strong> {reportData.summary.totalAmount.toFixed(2)} RON
@@ -346,7 +346,7 @@ export const FiscalReportZPage = () => {
 
                     <hr />
 
-                    <h6 className="mt-3">"defalcare tva pe cote"</h6>
+                    <h6 className="mt-3">Defalcare TVA pe cote</h6>
                     <div
                       dangerouslySetInnerHTML={{
                         __html: DOMPurify.sanitize(displayVATBreakdown(reportData.summary.vatBreakdown)),
@@ -357,8 +357,8 @@ export const FiscalReportZPage = () => {
 
                     <Alert variant="info">
                       <i className="fas fa-info-circle me-2"></i>
-                      <strong>"raportul a fost salvat permanent"</strong>
-                      <br />"poti vizualiza rapoartele z generate in sectiunea"<strong>"Arhivă"</strong> din tab-ul fiscal.
+                      <strong>Raportul a fost salvat permanent</strong>
+                      <br />Poți vizualiza rapoartele Z generate în secțiunea <strong>Arhivă</strong> din tab-ul fiscal.
                     </Alert>
 
                     <hr />
@@ -381,7 +381,3 @@ export const FiscalReportZPage = () => {
     </div>
   );
 };
-
-
-
-

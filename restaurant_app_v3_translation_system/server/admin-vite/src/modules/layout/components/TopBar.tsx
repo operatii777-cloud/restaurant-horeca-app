@@ -7,7 +7,7 @@ import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
 import './TopBar.css';
 
 export const TopBar = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [username, setUsername] = useState('');
@@ -33,13 +33,13 @@ export const TopBar = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError('');
-    
+
     try {
       const response = await httpClient.post('/api/admin/login', {
         username,
         password,
       });
-      
+
       if (response.data?.success) {
         setIsLoggedIn(true);
         setShowLoginModal(false);
@@ -71,7 +71,7 @@ export const TopBar = () => {
         <div className="topbar__spacer" />
         <div className="topbar__right">
           {/* Theme Switcher */}
-          <div style={{ 
+          <div style={{
             marginRight: '12px',
             display: 'flex',
             alignItems: 'center',
@@ -80,7 +80,7 @@ export const TopBar = () => {
           }}>
             <ThemeSwitcher size="md" />
           </div>
-          
+
           {isLoggedIn ? (
             <button
               type="button"
@@ -110,7 +110,7 @@ export const TopBar = () => {
               🔐 Login
             </button>
           )}
-          
+
           {/* Logo */}
           <div className="topbar__logo">
             <span className="topbar__logo-icon">🍽️</span>
@@ -129,10 +129,10 @@ export const TopBar = () => {
               className="qroms-badge-link"
               aria-label="Powered by QrOMS"
             >
-              <img 
-                src="/admin-vite/QrOMS.jpg" 
-                alt="QrOMS" 
-                className="qroms-badge-img" 
+              <img
+                src="/admin-vite/QrOMS.jpg"
+                alt="QrOMS"
+                className="qroms-badge-img"
                 onError={(e) => {
                   // Dacă QrOMS.jpg nu există, încearcă Trattoria.jpg
                   const target = e.target as HTMLImageElement;
@@ -161,7 +161,7 @@ export const TopBar = () => {
                 className="topbar__login-modal-close"
                 onClick={() => setShowLoginModal(false)}
               >
-                Ã—
+                ✕
               </button>
             </div>
             <form onSubmit={handleLogin} className="topbar__login-form">
@@ -180,7 +180,7 @@ export const TopBar = () => {
                 />
               </div>
               <div className="topbar__login-field">
-                <label htmlFor="topbar-password">"Parolă:"</label>
+                <label htmlFor="topbar-password">Parolă:</label>
                 <input
                   id="topbar-password"
                   type="password"
@@ -197,7 +197,7 @@ export const TopBar = () => {
                   type="button"
                   className="topbar__login-cancel"
                   onClick={() => setShowLoginModal(false)}
-                >"Anulează"</button>
+                >Anulează</button>
               </div>
             </form>
           </div>

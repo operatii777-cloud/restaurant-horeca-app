@@ -1,5 +1,6 @@
 ﻿// import { useTranslation } from '@/i18n/I18nContext';
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AgGridReact } from 'ag-grid-react';
 // AG Grid CSS imported globally with theme="legacy"
 import './MultiInventoryPage.css';
@@ -17,7 +18,7 @@ interface InventorySession {
 }
 
 export const MultiInventoryPage: React.FC = () => {
-//   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [sessions, setSessions] = useState<InventorySession[]>([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
@@ -40,10 +41,10 @@ export const MultiInventoryPage: React.FC = () => {
       const params = new URLSearchParams();
       if (filters.type) params.append('type', filters.type);
       if (filters.status) params.append('status', filters.status);
-      
+
       const response = await fetch(`/api/inventory/sessions?${params.toString()}`);
       if (!response.ok) throw new Error('Failed to load sessions');
-      
+
       const data = await response.json();
       setSessions(data.sessions || []);
     } catch (error) {
@@ -84,10 +85,17 @@ export const MultiInventoryPage: React.FC = () => {
       });
 
       if (!response.ok) throw new Error('Failed to start session');
-      
+
+      const data = await response.json();
       setShowNewModal(false);
       setNewSession({ session_type: 'daily', scope: 'global', location_ids: [], started_by: '' });
-      loadSessions();
+
+      // Redirect to the new session details
+      if (data.sessionId) {
+        navigate(`/stocks/inventory/${data.sessionId}`);
+      } else {
+        loadSessions();
+      }
     } catch (error) {
       console.error('Error starting session:', error);
       alert('Eroare la crearea sesiunii de inventar');
@@ -95,32 +103,36 @@ export const MultiInventoryPage: React.FC = () => {
   };
 
   const columnDefs = [
-    { field: 'id', headerName: 'ID Sesiune', width: 100 },
-    { field: 'session_type', headerName: 'Tip', width: 100, valueFormatter: (params: any) => params.value === 'daily' ? 'Zilnic' : 'Lunar' },
-    { field: "Scope:", headerName: 'Scope', width: 120, valueFormatter: (params: any) => params.value === 'global' ? 'Toate Gestiunile' : 'Specifice' },
-    { field: 'started_at', headerName: 'Dată ÃŽnceput', width: 180, valueFormatter: (params: any) => new Date(params.value).toLocaleString('ro-RO') },
-    { field: 'status', headerName: 'Status', width: 120, cellRenderer: (params: any) => {
-      const status = params.value;
-      const colors: Record<string, string> = {
-        "ÃŽn progres": 'warning',
-        'completed': 'success',
-        'archived': 'secondary'
-      };
-      return `<span class="badge bg-${colors[status] || 'secondary'}">${status}</span>`;
-    }},
-    { field: 'item_count', headerName: 'Items', width: 100 },
-    { field: 'difference_count', headerName: 'Diferență', width: 120 },
+    { field: 'id' as any, headerName: 'ID Sesiune', width: 100 },
+    { field: 'session_type' as any, headerName: 'Tip', width: 100, valueFormatter: (params: any) => params.value === 'daily' ? 'Zilnic' : 'Lunar' },
+    { field: 'scope' as any, headerName: 'Scope', width: 120, valueFormatter: (params: any) => params.value === 'global' ? 'Toate Gestiunile' : 'Specifice' },
+    { field: 'started_at' as any, headerName: 'Dată Început', width: 180, valueFormatter: (params: any) => new Date(params.value).toLocaleString('ro-RO') },
     {
-      headerName: 'Acțiuni',
+      field: 'status', headerName: 'Status', width: 120, cellRenderer: (params: any) => {
+        const status = params.value;
+        const colors: Record<string, string> = {
+          'în progres': 'warning',
+          'completed': 'success',
+          'archived': 'secondary'
+        };
+        return <span className={`badge bg-${colors[status] || 'secondary'}`}>{status}</span>;
+      }
+    },
+    { field: 'item_count' as any, headerName: 'Items', width: 100 },
+    { field: 'difference_count' as any, headerName: 'Diferență', width: 120 },
+    {
+      headerName: 'Acțiuni' as any,
       width: 200,
       cellRenderer: (params: any) => {
         const session = params.data;
-        return `
-          <div>
-            <button class="btn btn-sm btn-primary" onclick="window.viewSession(${session.id})">"Vizualizează"</button>
-            ${session.status === "ÃŽn progres" ? `<button class="btn btn-sm btn-success" onclick="window.finalizeSession(${session.id})">"Finalizează"</button>` : ''}
+        return (
+          <div className="d-flex gap-2">
+            <button className="btn btn-sm btn-primary" onClick={() => navigate(`/stocks/inventory/${session.id}`)}>Vizualizează</button>
+            {session.status === 'în progres' && (
+              <button className="btn btn-sm btn-success" onClick={() => navigate(`/stocks/inventory/${session.id}`)}>Finalizează</button>
+            )}
           </div>
-        `;
+        );
       }
     }
   ];
@@ -130,31 +142,31 @@ export const MultiInventoryPage: React.FC = () => {
       <div className="page-header">
         <h1><i className="fas fa-warehouse me-2"></i>Inventar Multi-Gestiune</h1>
         <button className="btn btn-primary" onClick={() => setShowNewModal(true)}>
-          <i className="fas fa-plus me-1"></i>"sesiune noua"</button>
+          <i className="fas fa-plus me-1"></i>Sesiune Nouă</button>
       </div>
 
       <div className="filters-section">
         <div className="row mb-3">
           <div className="col-md-3">
             <label className="form-label">Tip:</label>
-            <select className="form-select" value={filters.type} onChange={(e) => setFilters({...filters, type: e.target.value})} title="Tip inventar">
-              <option value="">"Toate"</option>
+            <select className="form-select" value={filters.type} onChange={(e) => setFilters({ ...filters, type: e.target.value })} title="Tip inventar">
+              <option value="">Toate</option>
               <option value="daily">Zilnic</option>
               <option value="monthly">Lunar</option>
             </select>
           </div>
           <div className="col-md-3">
             <label className="form-label">Status:</label>
-            <select className="form-select" value={filters.status} onChange={(e) => setFilters({...filters, status: e.target.value})} title="Status inventar">
-              <option value="">"Toate"</option>
-              <option value="ÃŽn progres">"in progres"</option>
+            <select className="form-select" value={filters.status} onChange={(e) => setFilters({ ...filters, status: e.target.value })} title="Status inventar">
+              <option value="">Toate</option>
+              <option value="în progres">În progres</option>
               <option value="completed">Completate</option>
             </select>
           </div>
           <div className="col-md-3">
             <label className="form-label">Gestiune:</label>
-            <select className="form-select" value={filters.location} onChange={(e) => setFilters({...filters, location: e.target.value})} title="Selectează gestiunea">
-              <option value="">"Toate"</option>
+            <select className="form-select" value={filters.location} onChange={(e) => setFilters({ ...filters, location: e.target.value })} title="Selectează gestiunea">
+              <option value="">Toate</option>
               {locations.map(loc => (
                 <option key={loc.id} value={loc.id.toString()}>{loc.name}</option>
               ))}
@@ -183,38 +195,38 @@ export const MultiInventoryPage: React.FC = () => {
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header bg-success text-white">
-                <h5 className="modal-title"><i className="fas fa-warehouse me-2"></i>"sesiune inventar noua"</h5>
-                <button type="button" className="btn-close btn-close-white" onClick={() => setShowNewModal(false)} title="ÃŽnchide"></button>
+                <h5 className="modal-title"><i className="fas fa-warehouse me-2"></i>Sesiune Inventar Nouă</h5>
+                <button type="button" className="btn-close btn-close-white" onClick={() => setShowNewModal(false)} title="Închide"></button>
               </div>
               <div className="modal-body">
                 <div className="mb-3">
                   <label className="form-label">Tip Inventar:</label>
-                  <select className="form-select" value={newSession.session_type} onChange={(e) => setNewSession({...newSession, session_type: e.target.value})} title="Tip Inventar">
+                  <select className="form-select" value={newSession.session_type} onChange={(e) => setNewSession({ ...newSession, session_type: e.target.value })} title="Tip Inventar">
                     <option value="daily">Inventar Zilnic</option>
                     <option value="monthly">Inventar Lunar</option>
                   </select>
                 </div>
                 <div className="mb-3">
-                  <label className="form-label">"Scope:"</label>
+                  <label className="form-label">Scope:</label>
                   <div className="form-check">
-                    <input className="form-check-input" type="radio" name="scope" id="scopeGlobal" value="global" checked={newSession.scope === 'global'} onChange={(e) => setNewSession({...newSession, scope: e.target.value, location_ids: []})} />
-                    <label className="form-check-label" htmlFor="scopeGlobal">"toate gestiunile"</label>
+                    <input className="form-check-input" type="radio" name="scope" id="scopeGlobal" value="global" checked={newSession.scope === 'global'} onChange={(e) => setNewSession({ ...newSession, scope: e.target.value, location_ids: [] })} />
+                    <label className="form-check-label" htmlFor="scopeGlobal">Toate Gestiunile</label>
                   </div>
                   <div className="form-check">
-                    <input className="form-check-input" type="radio" name="scope" id="scopeSpecific" value="specific" checked={newSession.scope === 'specific'} onChange={(e) => setNewSession({...newSession, scope: e.target.value})} />
-                    <label className="form-check-label" htmlFor="scopeSpecific">"gestiuni specifice"</label>
+                    <input className="form-check-input" type="radio" name="scope" id="scopeSpecific" value="specific" checked={newSession.scope === 'specific'} onChange={(e) => setNewSession({ ...newSession, scope: e.target.value })} />
+                    <label className="form-check-label" htmlFor="scopeSpecific">Gestiuni Specifice</label>
                   </div>
                 </div>
                 {newSession.scope === 'specific' && (
                   <div className="mb-3">
-                    <label className="form-label">"selecteaza gestiuni"</label>
+                    <label className="form-label">Selectează Gestiuni</label>
                     {locations.map(loc => (
                       <div key={loc.id} className="form-check">
                         <input className="form-check-input" type="checkbox" checked={newSession.location_ids.includes(loc.id)} onChange={(e) => {
                           if (e.target.checked) {
-                            setNewSession({...newSession, location_ids: [...newSession.location_ids, loc.id]});
+                            setNewSession({ ...newSession, location_ids: [...newSession.location_ids, loc.id] });
                           } else {
-                            setNewSession({...newSession, location_ids: newSession.location_ids.filter(id => id !== loc.id)});
+                            setNewSession({ ...newSession, location_ids: newSession.location_ids.filter(id => id !== loc.id) });
                           }
                         }} title={loc.name} />
                         <label className="form-check-label">{loc.name}</label>
@@ -224,11 +236,11 @@ export const MultiInventoryPage: React.FC = () => {
                 )}
                 <div className="mb-3">
                   <label className="form-label">Responsabil:</label>
-                  <input type="text" className="form-control" value={newSession.started_by} onChange={(e) => setNewSession({...newSession, started_by: e.target.value})} placeholder="ex maria ionescu" required />
+                  <input type="text" className="form-control" value={newSession.started_by} onChange={(e) => setNewSession({ ...newSession, started_by: e.target.value })} placeholder="ex: Maria Ionescu" required />
                 </div>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={() => setShowNewModal(false)}>"Anulează"</button>
+                <button type="button" className="btn btn-secondary" onClick={() => setShowNewModal(false)}>Anulează</button>
                 <button type="button" className="btn btn-success" onClick={handleStartSession}>Pornire Sesiune</button>
               </div>
             </div>

@@ -25,7 +25,7 @@ interface Table {
 }
 
 export function PosTableSelector() {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const { selectedTableId, setTable, currentOrderId, loadOrderFromServer, resetDraft } = usePosStore();
   const { loadOrder, createOrder } = usePosOrder();
   const [tables, setTables] = useState<Table[]>([]);
@@ -44,13 +44,13 @@ export function PosTableSelector() {
     try {
       const response = await httpClient.get('/api/hostess/tables');
       const tablesData = response.data?.data || [];
-      
+
       // Map tables and check for open orders
       const mappedTables: Table[] = await Promise.all(
         tablesData.map(async (table: any) => {
           let status: 'FREE' | 'OCCUPIED' | 'HAS_OPEN_ORDER' = table.status === 'OCCUPIED' ? 'OCCUPIED' : 'FREE';
           let orderId: number | undefined;
-          
+
           // Check if table has open order
           if (table.session_id) {
             try {
@@ -59,8 +59,8 @@ export function PosTableSelector() {
                 params: { table_id: table.id },
               });
               const orders = ordersResponse.data?.data || ordersResponse.data || [];
-              const openOrder = orders.find((o: any) => 
-                o.status === "Pending:" || o.status === "ÃŽn progres" || o.status === 'open'
+              const openOrder = orders.find((o: any) =>
+                o.status === "Pending:" || o.status === "în progres" || o.status === 'open'
               );
               if (openOrder) {
                 status = 'HAS_OPEN_ORDER';
@@ -70,7 +70,7 @@ export function PosTableSelector() {
               // Ignore errors when checking for orders
             }
           }
-          
+
           return {
             id: table.id,
             table_number: table.table_number || table.number || table.id,
@@ -82,7 +82,7 @@ export function PosTableSelector() {
           };
         })
       );
-      
+
       setTables(mappedTables);
       setError(null);
     } catch (err: any) {
@@ -95,9 +95,9 @@ export function PosTableSelector() {
 
   const handleTableClick = async (table: Table) => {
     if (processingTable === table.id) return;
-    
+
     setProcessingTable(table.id);
-    
+
     try {
       // If table has open order, load it
       if (table.status === 'HAS_OPEN_ORDER' && table.order_id) {
@@ -113,10 +113,10 @@ export function PosTableSelector() {
             notes: item.notes,
             options: item.options,
           }));
-          
+
           // Update store
           usePosStore.setState({
-            currentOrderId: order.id,
+            currentOrderId: Number(order.id),
             selectedTableId: table.id,
             draftItems,
           });
@@ -138,9 +138,9 @@ export function PosTableSelector() {
     return (
       <div className="pos-table-selector-loading">
         <div className="spinner-border spinner-border-sm text-primary" role="status">
-          <span className="visually-hidden">"se incarca mesele"</span>
+          <span className="visually-hidden">Se încarcă mesele...</span>
         </div>
-        <p className="text-muted mt-2">"se incarca mesele"</p>
+        <p className="text-muted mt-2">Se încarcă mesele...</p>
       </div>
     );
   }
@@ -153,7 +153,7 @@ export function PosTableSelector() {
           {error}
         </div>
         <button className="btn btn-outline-primary btn-sm" onClick={loadTables}>
-          <i className="fas fa-redo me-1"></i>"Reîncearcă"</button>
+          <i className="fas fa-redo me-1"></i>Reîncearcă</button>
       </div>
     );
   }
@@ -191,22 +191,22 @@ export function PosTableSelector() {
         <button
           className="btn btn-sm btn-outline-secondary"
           onClick={loadTables}
-          title="reincarca mesele"
+          title="Reîncarcă mesele"
         >
           <i className="fas fa-sync-alt"></i>
         </button>
       </div>
-      
+
       <div className="pos-table-grid">
         {tables.length === 0 ? (
           <div className="pos-table-empty">
-            <p className="text-muted">"nu exista mese disponibile"</p>
+            <p className="text-muted">Nu există mese disponibile</p>
           </div>
         ) : (
           tables.map((table) => {
             const isProcessing = processingTable === table.id;
             const isSelected = selectedTableId === table.id;
-            
+
             return (
               <button
                 key={table.id}
@@ -218,7 +218,7 @@ export function PosTableSelector() {
                 {isProcessing ? (
                   <div className="pos-table-processing">
                     <div className="spinner-border spinner-border-sm" role="status">
-                      <span className="visually-hidden">"se proceseaza"</span>
+                      <span className="visually-hidden">Se procesează...</span>
                     </div>
                   </div>
                 ) : (
@@ -244,7 +244,7 @@ export function PosTableSelector() {
           })
         )}
       </div>
-      
+
       {selectedTableId && (
         <div className="pos-table-actions">
           <button
@@ -254,7 +254,7 @@ export function PosTableSelector() {
               resetDraft();
             }}
           >
-            <i className="fas fa-times me-1"></i>"sterge selectia"</button>
+            <i className="fas fa-times me-1"></i>Șterge selecția</button>
         </div>
       )}
     </div>

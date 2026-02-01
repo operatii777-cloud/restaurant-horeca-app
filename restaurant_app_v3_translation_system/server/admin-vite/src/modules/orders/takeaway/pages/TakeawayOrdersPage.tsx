@@ -20,7 +20,7 @@ interface TakeawayOrder {
 }
 
 export const TakeawayOrdersPage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [orders, setOrders] = useState<TakeawayOrder[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterStatus, setFilterStatus] = useState('all');
@@ -42,15 +42,15 @@ export const TakeawayOrdersPage: React.FC = () => {
       if (dateRange.start) params.append('startDate', dateRange.start);
       if (dateRange.end) params.append('endDate', dateRange.end);
       params.append('limit', '1000');
-      
+
       const response = await httpClient.get<{ data: any[] }>(
         `/api/orders-delivery?${params.toString()}`
       );
-      
+
       if (response.data && response.data.data) {
         // Filtrează doar comenzi takeaway
         const takeawayOrders = response.data.data.filter(
-          (o: any) => 
+          (o: any) =>
             (o.type === 'takeaway' || o.type === 'takeout') &&
             o.order_source !== 'DELIVERY' &&
             o.order_source !== 'DRIVE_THRU'
@@ -91,15 +91,15 @@ export const TakeawayOrdersPage: React.FC = () => {
     const pending = orders.filter(o => o.status === "Pending:" || o.status === 'preparing').length;
     const completed = orders.filter(o => o.status === 'completed' || o.status === 'ready').length;
     const totalValue = orders.reduce((sum, o) => sum + (o.total || 0), 0);
-    
+
     // Calculează timp mediu preparare (dacă există completed_timestamp)
     const ordersWithTime = orders.filter(o => o.status === 'completed' && o.timestamp);
     const avgPrepTime = ordersWithTime.length > 0
       ? ordersWithTime.reduce((sum, o) => {
-          const created = new Date(o.timestamp).getTime();
-          const now = Date.now();
-          return sum + (now - created) / 60000; // minute (aproximativ)
-        }, 0) / ordersWithTime.length
+        const created = new Date(o.timestamp).getTime();
+        const now = Date.now();
+        return sum + (now - created) / 60000; // minute (aproximativ)
+      }, 0) / ordersWithTime.length
       : 0;
 
     const today = new Date().toDateString();
@@ -240,7 +240,7 @@ export const TakeawayOrdersPage: React.FC = () => {
                     <tr>
                       <td colSpan={8} className="text-center py-5">
                         <i className="fas fa-inbox fa-3x text-muted mb-3"></i>
-                        <p className="text-muted">"nu exista comenzi takeaway"</p>
+                        <p className="text-muted">Nu există comenzi Takeaway</p>
                       </td>
                     </tr>
                   ) : (
@@ -264,7 +264,7 @@ export const TakeawayOrdersPage: React.FC = () => {
                             size="sm"
                             onClick={() => openDetails(order)}
                           >
-                            <i className="fas fa-eye"></i>"Detalii"</Button>
+                            <i className="fas fa-eye"></i> Detalii</Button>
                         </td>
                       </tr>
                     ))
@@ -290,7 +290,7 @@ export const TakeawayOrdersPage: React.FC = () => {
             <>
               <Row className="mb-3">
                 <Col md={6}>
-                  <strong>Status:</strong>' '
+                  <strong>Status:</strong>{' '}
                   <Badge bg={selectedOrder.status === 'completed' ? 'success' : 'warning'}>
                     {selectedOrder.status}
                   </Badge>
@@ -300,9 +300,9 @@ export const TakeawayOrdersPage: React.FC = () => {
                 </Col>
               </Row>
 
-              <h6 className="mt-4">"informatii client"</h6>
+              <h6 className="mt-4">Informații Client</h6>
               {selectedOrder.customer_name && (
-                <p><strong>"Nume:"</strong> {selectedOrder.customer_name}</p>
+                <p><strong>Nume:</strong> {selectedOrder.customer_name}</p>
               )}
               {selectedOrder.customer_phone && (
                 <p><strong>Telefon:</strong> {selectedOrder.customer_phone}</p>
@@ -314,7 +314,7 @@ export const TakeawayOrdersPage: React.FC = () => {
                   <tr>
                     <th>Produs</th>
                     <th>Cantitate</th>
-                    <th>"Preț"</th>
+                    <th>Preț</th>
                     <th>Total</th>
                   </tr>
                 </thead>
@@ -337,7 +337,7 @@ export const TakeawayOrdersPage: React.FC = () => {
               </Table>
 
               <h6 className="mt-4">Plată</h6>
-              <p><strong>"Metodă:"</strong> {selectedOrder.payment_method}</p>
+              <p><strong>Metodă:</strong> {selectedOrder.payment_method}</p>
               <p><strong>Status:</strong> {selectedOrder.is_paid ? '✅ Plătit' : '❌ Neplătit'}</p>
               {selectedOrder.fiscal_receipt_printed && (
                 <p><strong>Bon fiscal:</strong> ✅ Printat</p>
@@ -346,7 +346,7 @@ export const TakeawayOrdersPage: React.FC = () => {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowDetailsModal(false)}>"Închide"</Button>
+          <Button variant="secondary" onClick={() => setShowDetailsModal(false)}>Închide</Button>
         </Modal.Footer>
       </Modal>
     </div>

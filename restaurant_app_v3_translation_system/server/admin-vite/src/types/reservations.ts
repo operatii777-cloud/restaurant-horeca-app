@@ -1,4 +1,4 @@
-export type ReservationStatus = "Pending:" | 'confirmed' | 'seated' | 'completed' | 'cancelled' | 'no_show';
+export type ReservationStatus = 'pending' | 'confirmed' | 'seated' | 'completed' | 'cancelled' | 'no_show';
 
 export interface Reservation {
   id: number;
@@ -27,6 +27,7 @@ export interface ReservationFilters {
   includeCancelled?: boolean;
   tableId?: number | null;
   search?: string;
+  customerPhone?: string;
 }
 
 export interface ReservationListMeta {

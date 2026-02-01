@@ -41,9 +41,9 @@ router.get('/admin/products', async (req, res) => {
   try {
     // Try to use adminController.getProducts if available
     if (adminController.getProducts && typeof adminController.getProducts === 'function') {
-      return adminController.getProducts(req, res, () => {});
+      return adminController.getProducts(req, res, () => { });
     }
-    
+
     // Fallback to direct query
     const db = await dbPromise;
     const products = await new Promise((resolve, reject) => {
@@ -70,7 +70,7 @@ router.get('/admin/products/:id/customizations', async (req, res) => {
   try {
     const { id } = req.params;
     const db = await dbPromise;
-    
+
     // Check if customization_options table exists
     const tableExists = await new Promise((resolve, reject) => {
       db.get(`
@@ -81,14 +81,14 @@ router.get('/admin/products/:id/customizations', async (req, res) => {
         else resolve(!!row);
       });
     });
-    
+
     if (!tableExists) {
-      return res.json({ 
-        success: true, 
-        customizations: [] 
+      return res.json({
+        success: true,
+        customizations: []
       });
     }
-    
+
     // Get customizations for this product
     // Try both menu_item_id and product_id columns
     const customizations = await new Promise((resolve, reject) => {
@@ -130,16 +130,16 @@ router.get('/admin/products/:id/customizations', async (req, res) => {
         }
       });
     });
-    
-    res.json({ 
-      success: true, 
-      customizations: customizations || [] 
+
+    res.json({
+      success: true,
+      customizations: customizations || []
     });
   } catch (error) {
     console.error('❌ Error in /api/admin/products/:id/customizations:', error);
-    res.json({ 
-      success: true, 
-      customizations: [] 
+    res.json({
+      success: true,
+      customizations: []
     });
   }
 });
@@ -172,11 +172,11 @@ router.get('/admin/top-products', async (req, res) => {
   try {
     const db = await dbPromise;
     const { startDate, endDate, days = 30 } = req.query;
-    
+
     // Folosim json_each ca în getProfitabilityReport
     let dateFilter = '';
     let params = [];
-    
+
     if (startDate && endDate) {
       dateFilter = 'DATE(o.timestamp) BETWEEN ? AND ?';
       params = [startDate, endDate];
@@ -184,7 +184,7 @@ router.get('/admin/top-products', async (req, res) => {
       dateFilter = 'o.timestamp >= datetime(\'now\', \'-\' || ? || \' days\')';
       params = [days];
     }
-    
+
     const topProducts = await new Promise((resolve, reject) => {
       db.all(`
         SELECT 
@@ -221,13 +221,13 @@ router.get('/admin/top-products', async (req, res) => {
         }
       });
     });
-    
+
     // Calculează statistici
     const stats = {
       total_quantity: topProducts.reduce((sum, p) => sum + (p.total_quantity || 0), 0),
       total_value: topProducts.reduce((sum, p) => sum + (p.total_value || 0), 0)
     };
-    
+
     res.json({ success: true, products: topProducts, stats });
   } catch (error) {
     console.error('❌ Error in /api/admin/top-products:', error);
@@ -245,7 +245,7 @@ router.get('/orders-cancelled', async (req, res) => {
   try {
     const db = await dbPromise;
     const { lang = 'ro' } = req.query;
-    
+
     // Obține doar comenzile anulate din ziua curentă
     // Folosesc strftime pentru filtrare precisă pe ziua curentă
     const cancelledOrders = await new Promise((resolve, reject) => {
@@ -261,7 +261,7 @@ router.get('/orders-cancelled', async (req, res) => {
         else resolve(rows || []);
       });
     });
-    
+
     const today = new Date().toLocaleDateString('ro-RO');
     console.log(`✅ [legacy-endpoints] Returnat ${cancelledOrders.length} comenzi anulate din ziua curentă (${today})`);
     res.json({ success: true, orders: cancelledOrders });
@@ -297,6 +297,12 @@ router.get('/orders-display/kitchen/unfinished', async (req, res) => {
     res.json({ success: true, orders: [] });
   }
 });
+
+// ✅ FIX: Main /orders-display/bar endpoint (called by comenzi bar.html)
+router.get('/orders-display/bar', adminController.getOrdersDisplayBar);
+
+// ✅ FIX: Main /orders-display/kitchen endpoint (called by kds.html)
+router.get('/orders-display/kitchen', adminController.getOrdersDisplayKitchen);
 
 // Orders Display - Bar
 router.get('/orders-display/bar/pending', async (req, res) => {
@@ -419,7 +425,44 @@ router.get('/daily-history/kitchen', async (req, res) => {
         else resolve(rows || []);
       });
     });
-    res.json({ success: true, orders });
+
+    // ✅ FIX: Filter items WITHIN each order to show only KITCHEN items
+    const kitchenOrders = orders.map(order => {
+      try {
+        let items = [];
+        if (order.items) {
+          items = typeof order.items === 'string' ? JSON.parse(order.items) : order.items;
+        }
+
+        // Filter to only include kitchen items (based on station or category)
+        const kitchenItems = items.filter(item => {
+          // Check station field first (most reliable)
+          if (item.station) {
+            return item.station.toLowerCase() === 'kitchen';
+          }
+          // Fallback: check category - exclude bar categories
+          const barCategories = ['Cafea/Ciocolată/Ceai', 'Răcoritoare', 'Băuturi și Coctailuri',
+            'Băuturi Spirtoase', 'Coctailuri Non-Alcoolice', 'Vinuri',
+            'Cafea/Ciocolata/Ceai', 'Racoritoare', 'Bauturi si Coctailuri',
+            'Bauturi Spirtoase'];
+          const itemCategory = item.category || item.category_name || '';
+          return !barCategories.some(bc => itemCategory.toLowerCase().includes(bc.toLowerCase()));
+        });
+
+        // Only include orders that have at least one kitchen item
+        if (kitchenItems.length === 0) return null;
+
+        return {
+          ...order,
+          items: JSON.stringify(kitchenItems),
+          items_count: kitchenItems.length
+        };
+      } catch (e) {
+        return order;
+      }
+    }).filter(order => order !== null);
+
+    res.json({ success: true, orders: kitchenOrders });
   } catch (error) {
     console.error('❌ Error in /api/daily-history/kitchen:', error);
     res.json({ success: true, orders: [] });
@@ -433,18 +476,53 @@ router.get('/daily-history/bar', async (req, res) => {
       db.all(`
         SELECT o.*
         FROM orders o
-        INNER JOIN order_items oi ON o.id = oi.order_id
-        INNER JOIN menu m ON oi.product_id = m.id
         WHERE DATE(o.timestamp) = DATE('now')
-          AND m.category LIKE '%Băuturi%'
-        GROUP BY o.id
         ORDER BY o.timestamp DESC
       `, (err, rows) => {
         if (err) reject(err);
         else resolve(rows || []);
       });
     });
-    res.json({ success: true, orders });
+
+    // ✅ FIX: Filter items WITHIN each order to show only BAR items
+    const barOrders = orders.map(order => {
+      try {
+        let items = [];
+        if (order.items) {
+          items = typeof order.items === 'string' ? JSON.parse(order.items) : order.items;
+        }
+
+        // Filter to only include bar items (based on station or category)
+        const barItems = items.filter(item => {
+          // Check station field first (most reliable)
+          if (item.station) {
+            return item.station.toLowerCase() === 'bar';
+          }
+          // Fallback: check category for bar categories
+          const barCategories = ['Cafea/Ciocolată/Ceai', 'Răcoritoare', 'Băuturi și Coctailuri',
+            'Băuturi Spirtoase', 'Coctailuri Non-Alcoolice', 'Vinuri',
+            'Cafea/Ciocolata/Ceai', 'Racoritoare', 'Bauturi si Coctailuri',
+            'Bauturi Spirtoase'];
+          const itemCategory = item.category || item.category_name || '';
+          return barCategories.some(bc => itemCategory.toLowerCase().includes(bc.toLowerCase())) ||
+            itemCategory.toLowerCase().includes('băuturi') ||
+            itemCategory.toLowerCase().includes('bauturi');
+        });
+
+        // Only include orders that have at least one bar item
+        if (barItems.length === 0) return null;
+
+        return {
+          ...order,
+          items: JSON.stringify(barItems),
+          items_count: barItems.length
+        };
+      } catch (e) {
+        return order;
+      }
+    }).filter(order => order !== null);
+
+    res.json({ success: true, orders: barOrders });
   } catch (error) {
     console.error('❌ Error in /api/daily-history/bar:', error);
     res.json({ success: true, orders: [] });
@@ -459,20 +537,20 @@ router.post('/verify-pin', async (req, res) => {
   try {
     const { pin, role } = req.body;
     const db = await dbPromise;
-    
+
     if (!pin || pin.length !== 4) {
       return res.json({ success: false, valid: false, error: 'PIN-ul trebuie să aibă 4 cifre' });
     }
-    
+
     // Fallback: PIN-ul default 5555 pentru admin (acceptat direct)
     if (pin === '5555') {
-      return res.json({ 
-        success: true, 
-        valid: true, 
-        user: { id: 1, username: 'admin', role: 'admin' } 
+      return res.json({
+        success: true,
+        valid: true,
+        user: { id: 1, username: 'admin', role: 'admin' }
       });
     }
-    
+
     // Verifică în tabelul users după coloana pin
     let user = await new Promise((resolve, reject) => {
       db.get('SELECT * FROM users WHERE pin = ?', [pin], (err, row) => {
@@ -480,7 +558,7 @@ router.post('/verify-pin', async (req, res) => {
         else resolve(row);
       });
     });
-    
+
     // Dacă nu găsește în users, verifică în waiters
     if (!user) {
       user = await new Promise((resolve, reject) => {
@@ -490,7 +568,7 @@ router.post('/verify-pin', async (req, res) => {
         });
       });
     }
-    
+
     // Verifică în user_pins (legacy)
     if (!user) {
       user = await new Promise((resolve, reject) => {
@@ -505,16 +583,16 @@ router.post('/verify-pin', async (req, res) => {
         });
       });
     }
-    
+
     if (user) {
-      res.json({ 
-        success: true, 
-        valid: true, 
-        user: { 
-          id: user.id, 
-          username: user.username || user.name, 
-          role: user.role || 'staff' 
-        } 
+      res.json({
+        success: true,
+        valid: true,
+        user: {
+          id: user.id,
+          username: user.username || user.name,
+          role: user.role || 'staff'
+        }
       });
     } else {
       res.json({ success: true, valid: false, error: 'PIN incorect' });
@@ -529,7 +607,7 @@ router.post('/verify-supervisor-pin', async (req, res) => {
   try {
     const { pin } = req.body;
     const db = await dbPromise;
-    
+
     const user = await new Promise((resolve, reject) => {
       db.get(`
         SELECT u.*, up.pin
@@ -541,7 +619,7 @@ router.post('/verify-supervisor-pin', async (req, res) => {
         else resolve(row);
       });
     });
-    
+
     if (user) {
       res.json({ success: true, user: { id: user.id, username: user.username, role: user.role } });
     } else {
@@ -562,7 +640,7 @@ router.post('/orders', async (req, res) => {
   try {
     // Redirect to orders module createOrder
     const ordersController = require('../src/modules/orders/controllers/orders.controller');
-    return ordersController.createOrder(req, res, () => {});
+    return ordersController.createOrder(req, res, () => { });
   } catch (error) {
     console.error('❌ Error in /api/orders (POST):', error);
     res.status(500).json({ success: false, error: error.message });
@@ -573,7 +651,7 @@ router.post('/orders', async (req, res) => {
 router.get('/supervisor/unpaid-orders', async (req, res) => {
   try {
     const db = await dbPromise;
-    
+
     // Obține toate comenzile supervisor neachitate din ziua curentă
     const orders = await new Promise((resolve, reject) => {
       db.all(`SELECT * FROM orders 
@@ -581,13 +659,13 @@ router.get('/supervisor/unpaid-orders', async (req, res) => {
                 AND status IN ('pending', 'preparing', 'completed', 'delivered')
                 AND is_paid = 0
                 AND DATE(timestamp) = DATE('now')
-              ORDER BY timestamp DESC`, 
+              ORDER BY timestamp DESC`,
         [], (err, rows) => {
           if (err) reject(err);
           else resolve(rows || []);
         });
     });
-    
+
     // Procesează comenzile
     const processedOrders = orders.map(order => {
       let items = [];
@@ -596,7 +674,7 @@ router.get('/supervisor/unpaid-orders', async (req, res) => {
       } catch (e) {
         items = [];
       }
-      
+
       return {
         id: order.id,
         table_number: order.table_number,
@@ -607,7 +685,7 @@ router.get('/supervisor/unpaid-orders', async (req, res) => {
         items: items
       };
     });
-    
+
     res.json({ success: true, orders: processedOrders });
   } catch (error) {
     console.error('❌ Error in /api/supervisor/unpaid-orders:', error);
@@ -620,20 +698,20 @@ router.get('/orders/unpaid/:tableNumber/:clientIdentifier', async (req, res) => 
   try {
     const db = await dbPromise;
     const { tableNumber, clientIdentifier } = req.params;
-    
+
     const orders = await new Promise((resolve, reject) => {
       db.all(`SELECT * FROM orders 
               WHERE table_number = ? 
                 AND client_identifier = ? 
                 AND is_paid = 0
                 AND DATE(timestamp) = DATE('now')
-              ORDER BY timestamp ASC`, 
+              ORDER BY timestamp ASC`,
         [tableNumber, clientIdentifier], (err, rows) => {
           if (err) reject(err);
           else resolve(rows || []);
         });
     });
-    
+
     const processedOrders = orders.map(order => {
       let items = [];
       try {
@@ -643,7 +721,7 @@ router.get('/orders/unpaid/:tableNumber/:clientIdentifier', async (req, res) => 
       }
       return { ...order, items };
     });
-    
+
     res.json({ success: true, orders: processedOrders });
   } catch (error) {
     console.error('❌ Error in /api/orders/unpaid/:tableNumber/:clientIdentifier:', error);
@@ -693,7 +771,7 @@ router.post('/supervisor/orders', async (req, res) => {
         notes || null,
         payment_method ? 1 : 0,
         waiter_id || null
-      ], function(err) {
+      ], function (err) {
         if (err) reject(err);
         else resolve(this.lastID);
       });
@@ -763,7 +841,7 @@ router.get('/daily-offer/check', async (req, res) => {
   try {
     const db = await dbPromise;
     const today = new Date().toISOString().split('T')[0];
-    
+
     const offer = await new Promise((resolve, reject) => {
       db.get(`
         SELECT * FROM daily_offers
@@ -792,7 +870,7 @@ router.get('/daily-menu', async (req, res) => {
   try {
     const db = await dbPromise;
     const today = new Date().toISOString().split('T')[0];
-    
+
     // Query pentru daily menu din tabela daily_menu (nu daily_menu_items)
     const dailyMenuRow = await new Promise((resolve, reject) => {
       db.get(`
@@ -828,8 +906,8 @@ router.get('/daily-menu', async (req, res) => {
     const discount = dailyMenuRow.discount || 0;
     const total = (soup ? soup.price : 0) + (mainCourse ? mainCourse.price : 0) - discount;
 
-    res.json({ 
-      success: true, 
+    res.json({
+      success: true,
       menu: dailyMenuRow,
       soup: soup,
       main_course: mainCourse,
@@ -849,7 +927,7 @@ router.get('/happy-hour/active', async (req, res) => {
     const now = new Date();
     const currentHour = now.getHours();
     const currentDay = now.getDay(); // 0 = Sunday, 6 = Saturday
-    
+
     const happyHour = await new Promise((resolve, reject) => {
       db.get(`
         SELECT * FROM happy_hour_settings
@@ -920,7 +998,7 @@ function writeMissingTranslations(translations) {
 router.post('/missing-translations', async (req, res) => {
   try {
     const { keys } = req.body;
-    
+
     if (!Array.isArray(keys) || keys.length === 0) {
       return res.json({
         success: true,
@@ -978,14 +1056,14 @@ router.post('/missing-translations', async (req, res) => {
 router.get('/missing-translations', async (req, res) => {
   try {
     const { status } = req.query;
-    
+
     let translations = readMissingTranslations();
-    
+
     // Filtrare după status dacă este specificat
     if (status) {
       translations = translations.filter(t => t.status === status);
     }
-    
+
     res.json({
       success: true,
       translations,
@@ -1010,27 +1088,27 @@ router.put('/missing-translations/:key', async (req, res) => {
   try {
     const key = decodeURIComponent(req.params.key);
     const { status, notes, translation_ro, translation_en } = req.body;
-    
+
     let translations = readMissingTranslations();
     const index = translations.findIndex(t => t.key === key);
-    
+
     if (index === -1) {
       return res.status(404).json({
         success: false,
         error: 'Translation key not found'
       });
     }
-    
+
     // Actualizează
     if (status !== undefined) translations[index].status = status;
     if (notes !== undefined) translations[index].notes = notes;
     if (translation_ro !== undefined) translations[index].translation_ro = translation_ro;
     if (translation_en !== undefined) translations[index].translation_en = translation_en;
     translations[index].updated_at = new Date().toISOString();
-    
+
     // Salvează
     writeMissingTranslations(translations);
-    
+
     res.json({
       success: true,
       translation: translations[index]
@@ -1052,20 +1130,20 @@ router.put('/missing-translations/:key', async (req, res) => {
 router.delete('/missing-translations/:key', async (req, res) => {
   try {
     const key = decodeURIComponent(req.params.key);
-    
+
     let translations = readMissingTranslations();
     const filtered = translations.filter(t => t.key !== key);
-    
+
     if (translations.length === filtered.length) {
       return res.status(404).json({
         success: false,
         error: 'Translation key not found'
       });
     }
-    
+
     // Salvează
     writeMissingTranslations(filtered);
-    
+
     res.json({
       success: true,
       message: 'Translation key deleted'

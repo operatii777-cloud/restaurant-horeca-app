@@ -28,11 +28,11 @@ router.get('/abc-analysis', controller.getABCAnalysisReport);
 router.get('/profit-loss', async (req, res, next) => {
   try {
     console.log('📊 [Profit-Loss Route] Request received:', req.query);
-    const cogsReporting = require('../../cogs/cogs.reporting');
+    const cogsReporting = require('../cogs/cogs.reporting');
     const { start_date, end_date, startDate, endDate } = req.query;
     const dateFrom = start_date || startDate;
     const dateTo = end_date || endDate;
-    
+
     // Folosim doar getDailyCogsSummary pentru consistență (aceeași logică ca admin-vite)
     let dailyData = [];
     try {
@@ -40,16 +40,16 @@ router.get('/profit-loss', async (req, res, next) => {
         dateFrom: dateFrom || undefined,
         dateTo: dateTo || undefined,
       });
-      
+
       console.log(`📊 [Profit-Loss Route] Daily summary received: ${dailySummary?.length || 0} days`);
-      
+
       // Transformă datele zilnice în formatul așteptat de frontend
       dailyData = (Array.isArray(dailySummary) ? dailySummary : []).map(day => {
         const revenue = parseFloat(day.revenue || 0);
         const costs = parseFloat(day.cogsTotal || 0);
         const profit = parseFloat(day.profit || (revenue - costs));
         const margin = revenue > 0 ? parseFloat(((profit / revenue) * 100).toFixed(2)) : 0;
-        
+
         return {
           date: day.day || day.date || '',
           revenue: revenue,
@@ -58,7 +58,7 @@ router.get('/profit-loss', async (req, res, next) => {
           margin: margin.toFixed(2) + '%'
         };
       });
-      
+
       // Calculăm totalurile din datele zilnice (pentru consistență)
       const totals = dailyData.reduce((acc, day) => {
         acc.total_revenue += day.revenue;
@@ -66,7 +66,7 @@ router.get('/profit-loss', async (req, res, next) => {
         acc.total_profit += day.profit;
         return acc;
       }, { total_revenue: 0, total_costs: 0, total_profit: 0 });
-      
+
       // Transformă formatul pentru compatibilitate cu ProfitLossPage
       const response = {
         totals: {
@@ -76,7 +76,7 @@ router.get('/profit-loss', async (req, res, next) => {
         },
         data: dailyData // Array de zile cu detalii
       };
-      
+
       console.log(`📊 [Profit-Loss Route] Sending response with ${dailyData.length} days, totals:`, totals);
       res.json(response);
     } catch (dailyError) {

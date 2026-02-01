@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { 
-  LayoutGrid, ChefHat, BarChart3, Settings, 
-  PackageOpen, Smartphone, CalendarDays, 
-  Truck, ScrollText, Layers, Tag, Bell, 
-  LogOut, Clock, Archive, Users, Landmark, 
-  Gift, ShoppingCart, Beer, PartyPopper, 
-  Monitor, Tv, ChevronDown, ChevronRight, 
+import {
+  LayoutGrid, ChefHat, BarChart3, Settings,
+  PackageOpen, Smartphone, CalendarDays,
+  Truck, ScrollText, Layers, Tag, Bell,
+  LogOut, Clock, Archive, Users, Landmark,
+  Gift, ShoppingCart, Beer, PartyPopper,
+  Monitor, Tv, ChevronDown, ChevronRight,
   RefreshCw, Check, Trophy, Megaphone, Bike,
   CalendarClock, Briefcase, Search, Shirt,
   FileText, ClipboardCheck, Globe, Book,
@@ -55,7 +55,7 @@ export const KioskSidebar = ({ user, onLogout }) => {
     const handleStatus = () => setIsOnline(navigator.onLine);
     window.addEventListener('online', handleStatus);
     window.addEventListener('offline', handleStatus);
-    
+
     const handleSave = () => {
       setSaveStatus('saving');
       setTimeout(() => setSaveStatus('saved'), 800);
@@ -133,10 +133,10 @@ export const KioskSidebar = ({ user, onLogout }) => {
         { id: 'catalog', label: 'Catalog Produse', icon: Layers, path: '/catalog' },
         { id: 'recipes', label: 'Rețetar & Fișe', icon: ScrollText, path: '/recipes' },
         { id: 'stocks', label: 'Stocuri', icon: PackageOpen, path: '/kiosk/stocks' },
-        { id: 'nir', label: 'NIR', icon: FileText, path: '/kiosk/tipizate-enterprise/nir' },
-        { id: 'bon-consum', label: 'Bon Consum', icon: FileText, path: '/kiosk/tipizate-enterprise/bon-consum' },
-        { id: 'inventar', label: 'Inventar', icon: FileText, path: '/kiosk/tipizate-enterprise/inventar' },
-        { id: 'transfer', label: 'Transferuri', icon: FileText, path: '/kiosk/tipizate-enterprise/transfer' },
+        { id: 'nir', label: 'NIR', icon: FileText, external: '/admin-advanced.html#inventory?iframe=true' },
+        { id: 'bon-consum', label: 'Bon Consum', icon: FileText, external: '/admin-advanced.html#inventory?iframe=true' },
+        { id: 'inventar', label: 'Inventar', icon: FileText, external: '/admin-advanced.html#inventory?iframe=true' },
+        { id: 'transfer', label: 'Transferuri', icon: FileText, external: '/admin-advanced.html#inventory?iframe=true' },
         { id: 'waste', label: 'Waste', icon: FileText, path: '/kiosk/tipizate-enterprise/waste' },
         { id: 'menu-pdf', label: 'Meniu PDF', icon: FileText, path: '/menu-pdf' },
         { id: 'laundry', label: 'Gestiune Textile', icon: Shirt, path: '/kiosk/laundry' },
@@ -203,7 +203,7 @@ export const KioskSidebar = ({ user, onLogout }) => {
   return (
     <>
       {/* Toggle Button - Always visible */}
-      <button 
+      <button
         className={`kiosk-sidebar__toggle ${isCollapsed ? 'kiosk-sidebar__toggle--collapsed' : ''}`}
         onClick={toggleCollapse}
         title={isCollapsed ? 'Deschide meniul' : 'Ascunde meniul'}
@@ -211,7 +211,7 @@ export const KioskSidebar = ({ user, onLogout }) => {
         {isCollapsed ? <Menu size={20} /> : <PanelLeftClose size={20} />}
       </button>
 
-      <div 
+      <div
         className={`kiosk-sidebar ${isCollapsed ? 'kiosk-sidebar--collapsed' : ''} ${isHovered && isCollapsed ? 'kiosk-sidebar--hovered' : ''}`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -233,7 +233,7 @@ export const KioskSidebar = ({ user, onLogout }) => {
             </div>
           )}
         </div>
-        
+
         {/* Navigare cu grupuri */}
         <nav className="kiosk-sidebar__nav">
           {menuGroups.map((group, idx) => {
@@ -242,23 +242,23 @@ export const KioskSidebar = ({ user, onLogout }) => {
             return (
               <div key={idx} className="kiosk-sidebar__group">
                 {shouldShowFull ? (
-                  <button 
+                  <button
                     onClick={() => toggleGroup(group.title)}
                     className="kiosk-sidebar__group-title"
                   >
                     {group.title}
-                    {isExpanded ? <ChevronDown size={12}/> : <ChevronRight size={12}/>}
+                    {isExpanded ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
                   </button>
                 ) : (
                   <div className="kiosk-sidebar__group-divider" />
                 )}
-                
+
                 {(shouldShowFull ? isExpanded : true) && (
                   <div className="kiosk-sidebar__group-items">
                     {group.items.map((item) => {
                       const Icon = item.icon;
                       const active = isActive(item.path);
-                      
+
                       return (
                         <button
                           key={item.id}
@@ -287,15 +287,15 @@ export const KioskSidebar = ({ user, onLogout }) => {
               <div className="kiosk-sidebar__status">
                 <div className={`kiosk-sidebar__save-status kiosk-sidebar__save-status--${saveStatus}`}>
                   {saveStatus === 'saving' ? (
-                    <RefreshCw size={14} className="kiosk-sidebar__save-icon--spin"/>
+                    <RefreshCw size={14} className="kiosk-sidebar__save-icon--spin" />
                   ) : (
-                    <Check size={14}/>
+                    <Check size={14} />
                   )}
                   {saveStatus === 'saving' ? 'Se salvează...' : 'Sincronizat'}
                 </div>
                 {isOnline && <span className="kiosk-sidebar__version">v3.0.0</span>}
               </div>
-              
+
               {/* Buton Admin - Navigare înapoi la Admin-Vite */}
               <button
                 onClick={() => window.location.href = '/admin-vite/dashboard'}
@@ -327,7 +327,7 @@ export const KioskSidebar = ({ user, onLogout }) => {
                 <ArrowLeft size={16} />
                 <span>Admin</span>
               </button>
-              
+
               <div className="kiosk-sidebar__user">
                 <div className="kiosk-sidebar__user-info">
                   <div className="kiosk-sidebar__user-avatar">
@@ -338,8 +338,8 @@ export const KioskSidebar = ({ user, onLogout }) => {
                     <p className="kiosk-sidebar__user-role">{user?.role || 'Viewer'}</p>
                   </div>
                 </div>
-                <button 
-                  onClick={onLogout} 
+                <button
+                  onClick={onLogout}
                   className="kiosk-sidebar__logout"
                   title="Deconectare"
                 >
@@ -377,12 +377,12 @@ export const KioskSidebar = ({ user, onLogout }) => {
               >
                 <ArrowLeft size={16} />
               </button>
-              
+
               <div className="kiosk-sidebar__user-avatar kiosk-sidebar__user-avatar--mini">
                 {user?.name?.slice(0, 2)?.toUpperCase() || 'GU'}
               </div>
-              <button 
-                onClick={onLogout} 
+              <button
+                onClick={onLogout}
                 className="kiosk-sidebar__logout kiosk-sidebar__logout--mini"
                 title="Deconectare"
               >

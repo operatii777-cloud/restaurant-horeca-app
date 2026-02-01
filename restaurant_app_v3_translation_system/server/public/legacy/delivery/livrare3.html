@@ -3321,13 +3321,53 @@
                     `?? ${firstOrderTime} - ${lastOrderTime}` : 
                     `?? ${firstOrderTime}`;
                 
-                // Badge DELIVERY pentru comenzile de livrare (05 Dec 2025)
+
+                // Unified platform/source and serving mode badge
+                const PLATFORM_LABELS = {
+                    'GLOVO': 'GLOVO',
+                    'WOLT': 'WOLT',
+                    'BOLT': 'BOLT',
+                    'TAZZ': 'TAZZ',
+                    'UBER_EATS': 'UBER EATS',
+                    'FRIENDSRIDE': 'FRIENDSRIDE',
+                    'DELIVERY': 'DELIVERY',
+                    'KIOSK': 'KIOSK',
+                    'POS': 'POS',
+                    'RESTORAPP': 'RESTORAPP',
+                    'SUPERVISOR': 'SUPERVISOR',
+                    'QR': 'QR',
+                };
                 const firstOrder = group.orders[0];
-                const deliveryBadge = firstOrder && firstOrder.order_source === 'DELIVERY' 
-                    ? `<span class="table-info" style="background: #ff6b35; margin-left: 8px;">?? DELIVERY</span>` 
-                    : '';
-                
-                const leftHtml = `${currentLang==='ro'?'Grup':'Group'} (${group.orders.length} ${currentLang==='ro'?'comenzi':'orders'})<span class=\"table-info\">${tableDisplay}</span>${clientDisplay ? `<span class=\"table-info\" style=\"background: #28a745; margin-left: 8px;\">${clientDisplay}</span>` : ''}${deliveryBadge}<span class=\"table-info\" style=\"background: #6f42c1; margin-left: 8px;\">${typeDisplay}</span><span class=\"table-info\" style=\"background: #17a2b8; margin-left: 8px;\">${timeDisplay}</span>`;
+                let platformLabel = '';
+                if (firstOrder && firstOrder.platform && PLATFORM_LABELS[firstOrder.platform]) {
+                    platformLabel = PLATFORM_LABELS[firstOrder.platform];
+                } else if (firstOrder && firstOrder.order_source && PLATFORM_LABELS[firstOrder.order_source]) {
+                    platformLabel = PLATFORM_LABELS[firstOrder.order_source];
+                } else if (firstOrder && firstOrder.order_source) {
+                    platformLabel = firstOrder.order_source.toUpperCase();
+                }
+                let platformBadge = '';
+                if (platformLabel) {
+                    platformBadge = `<span class="table-info" style="background: #ff6b35; margin-left: 8px;">${platformLabel}</span>`;
+                }
+
+                // Serving mode badge (restaurant, takeaway, delivery)
+                let servingMode = '';
+                if (firstOrder) {
+                    if (firstOrder.type === 'delivery') {
+                        servingMode = currentLang === 'ro' ? 'Livrare' : 'Delivery';
+                    } else if (firstOrder.type === 'takeaway' || firstOrder.type === 'TAKEAWAY') {
+                        servingMode = currentLang === 'ro' ? 'Acasa' : 'Takeaway';
+                    } else {
+                        servingMode = currentLang === 'ro' ? 'Restaurant' : 'Restaurant';
+                    }
+                }
+                let servingBadge = '';
+                if (servingMode) {
+                    servingBadge = `<span class="table-info" style="background: #6f42c1; margin-left: 8px;">${servingMode}</span>`;
+                }
+
+                const leftHtml = `${currentLang==='ro'?'Grup':'Group'} (${group.orders.length} ${currentLang==='ro'?'comenzi':'orders'})<span class=\"table-info\">${tableDisplay}</span>${clientDisplay ? `<span class=\"table-info\" style=\"background: #28a745; margin-left: 8px;\">${clientDisplay}</span>` : ''}${platformBadge}${servingBadge}<span class=\"table-info\" style=\"background: #17a2b8; margin-left: 8px;\">${timeDisplay}</span>`;
                 
                 // Afi?eaza toate produsele din toate comenzile din grup cu butoane individuale
                 let centerHtml = '';

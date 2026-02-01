@@ -26,7 +26,7 @@ interface DriveThruOrder {
 }
 
 export const DriveThruOrdersPage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [orders, setOrders] = useState<DriveThruOrder[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterStatus, setFilterStatus] = useState('all');
@@ -49,11 +49,11 @@ export const DriveThruOrdersPage: React.FC = () => {
       if (dateRange.start) params.append('startDate', dateRange.start);
       if (dateRange.end) params.append('endDate', dateRange.end);
       params.append('limit', '1000');
-      
+
       const response = await httpClient.get<{ data: any[] }>(
         `/api/orders-delivery?${params.toString()}`
       );
-      
+
       if (response.data && response.data.data) {
         // Filtrează doar comenzi drive-thru
         const driveThruOrders = response.data.data.filter(
@@ -105,10 +105,10 @@ export const DriveThruOrdersPage: React.FC = () => {
     const ordersWithTime = orders.filter(o => o.arrived_at && o.served_at);
     const avgTime = ordersWithTime.length > 0
       ? ordersWithTime.reduce((sum, o) => {
-          const arrived = new Date(o.arrived_at!).getTime();
-          const served = new Date(o.served_at!).getTime();
-          return sum + (served - arrived) / 60000; // minute
-        }, 0) / ordersWithTime.length
+        const arrived = new Date(o.arrived_at!).getTime();
+        const served = new Date(o.served_at!).getTime();
+        return sum + (served - arrived) / 60000; // minute
+      }, 0) / ordersWithTime.length
       : 0;
 
     const under3Min = ordersWithTime.filter(o => {
@@ -161,15 +161,15 @@ export const DriveThruOrdersPage: React.FC = () => {
             title="Total Comenzi"
             value={stats.total.toString()}
             helper={`Valoare: ${stats.totalValue.toFixed(2)} RON`}
-            icon={<span>ðŸš—</span>}
+            icon={<span>🚗</span>}
           />
         </Col>
         <Col md={3}>
           <StatCard
-            title="ÃŽn Așteptare"
+            title="În Așteptare"
             value={stats.pending.toString()}
             helper="Comenzi active"
-            icon={<span>â³</span>}
+            icon={<span>⏳</span>}
           />
         </Col>
         <Col md={3}>
@@ -177,7 +177,7 @@ export const DriveThruOrdersPage: React.FC = () => {
             title="Timp Mediu"
             value={stats.avgTime > 0 ? `${stats.avgTime.toFixed(1)} min` : 'N/A'}
             helper={`${stats.ordersWithTime} comenzi măsurate`}
-            icon={<span>â±ï¸</span>}
+            icon={<span>⏱️</span>}
           />
         </Col>
         <Col md={3}>
@@ -185,7 +185,7 @@ export const DriveThruOrdersPage: React.FC = () => {
             title="Sub 3 min"
             value={stats.ordersWithTime > 0 ? `${((stats.under3Min / stats.ordersWithTime) * 100).toFixed(1)}%` : 'N/A'}
             helper={`${stats.under3Min} din ${stats.ordersWithTime}`}
-            icon={<span>[Check]</span>}
+            icon={<span>✅</span>}
           />
         </Col>
       </Row>
@@ -198,8 +198,8 @@ export const DriveThruOrdersPage: React.FC = () => {
               <Form.Label>Status</Form.Label>
               <Form.Select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
                 <option value="all">Toate</option>
-                <option value="pending">în așteptare</option>
-                <option value="preparing">în preparare</option>
+                <option value="pending">În Așteptare</option>
+                <option value="preparing">În Preparare</option>
                 <option value="ready">Gata</option>
                 <option value="completed">Finalizat</option>
                 <option value="served">Servit</option>
@@ -237,7 +237,7 @@ export const DriveThruOrdersPage: React.FC = () => {
                 <InputGroup.Text><i className="fas fa-search"></i></InputGroup.Text>
                 <Form.Control
                   type="text"
-                  placeholder="cauta dupa numar masina banda id comanda"
+                  placeholder="Caută după număr mașină, bandă, ID comandă"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -282,7 +282,7 @@ export const DriveThruOrdersPage: React.FC = () => {
                     <tr>
                       <td colSpan={9} className="text-center py-5">
                         <i className="fas fa-inbox fa-3x text-muted mb-3"></i>
-                        <p className="text-muted">"nu exista comenzi drive thru"</p>
+                        <p className="text-muted">Nu există comenzi Drive-Thru</p>
                       </td>
                     </tr>
                   ) : (
@@ -307,7 +307,7 @@ export const DriveThruOrdersPage: React.FC = () => {
                             size="sm"
                             onClick={() => openDetails(order)}
                           >
-                            <i className="fas fa-eye"></i>"Detalii"</Button>
+                            <i className="fas fa-eye"></i> Detalii</Button>
                         </td>
                       </tr>
                     ))
@@ -333,18 +333,18 @@ export const DriveThruOrdersPage: React.FC = () => {
             <>
               <Row className="mb-3">
                 <Col md={6}>
-                  <strong>Status:</strong>' '
+                  <strong>Status:</strong>
                   <Badge bg={selectedOrder.status === 'completed' ? 'success' : 'warning'}>
                     {selectedOrder.status}
                   </Badge>
                 </Col>
                 <Col md={6}>
-                  <strong>"Bandă:"</strong> <Badge bg="warning">{selectedOrder.lane_number || 'N/A'}</Badge>
+                  <strong>Bandă:</strong> <Badge bg="warning">{selectedOrder.lane_number || 'N/A'}</Badge>
                 </Col>
               </Row>
 
-              <h6 className="mt-4">"informatii masina"</h6>
-              <p><strong>"numar masina"</strong> {selectedOrder.car_plate || 'N/A'}</p>
+              <h6 className="mt-4">Informații Mașină</h6>
+              <p><strong>Număr Mașină:</strong> {selectedOrder.car_plate || 'N/A'}</p>
               {selectedOrder.customer_phone && (
                 <p><strong>Telefon:</strong> {selectedOrder.customer_phone}</p>
               )}
@@ -364,7 +364,7 @@ export const DriveThruOrdersPage: React.FC = () => {
                   <tr>
                     <th>Produs</th>
                     <th>Cantitate</th>
-                    <th>"Preț"</th>
+                    <th>Preț</th>
                     <th>Total</th>
                   </tr>
                 </thead>
@@ -387,22 +387,23 @@ export const DriveThruOrdersPage: React.FC = () => {
               </Table>
 
               <h6 className="mt-4">Plată</h6>
-              <p><strong>"Metodă:"</strong> {selectedOrder.payment_method}</p>
-              <p><strong>Status:</strong> {selectedOrder.is_paid ? '[Check] Plătit' : 'âŒ Neplătit'}</p>
+              <p><strong>Metodă:</strong> {selectedOrder.payment_method}</p>
+              <p><strong>Status:</strong> {selectedOrder.is_paid ? '✅ Plătit' : '❌ Neplătit'}</p>
               {selectedOrder.fiscal_receipt_printed && (
-                <p><strong>Bon fiscal:</strong> [Check] Printat</p>
+                <p><strong>Bon fiscal:</strong> ✅ Printat</p>
               )}
             </>
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowDetailsModal(false)}>"ÃŽnchide"</Button>
+          <Button variant="secondary" onClick={() => setShowDetailsModal(false)}>Închide</Button>
         </Modal.Footer>
       </Modal>
     </div>
   );
 };
 
+export default DriveThruOrdersPage;
 
 
 

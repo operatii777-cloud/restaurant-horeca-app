@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useInventoryStore } from "../store/inventoryStore";
 import { validateInventory } from "../utils/validateInventory";
 import { toInventoryPayload } from "../utils/inventoryMapper";
-import { deleteInventory, saveInventory } from "../api/useInventory";
+import { deleteInventory, saveInventory, finalizeInventory } from "../api/useInventory";
 
 export default function InventoryActionsBar({
   mode = "create",
@@ -85,9 +85,34 @@ export default function InventoryActionsBar({
           </button>
         ) : null}
       </div>
-      <button type="button" className="btn btn-primary" onClick={handleSave} disabled={saving || deleting}>
-        {saving ? "Se salvează…" : "💾 Salvează"}
-      </button>
+      <div className="flex gap-2">
+        {mode === "details" && header?.id ? (
+          <button
+            type="button"
+            className="btn btn-success"
+            onClick={async () => {
+              if (!window.confirm("Ești sigur că vrei să finalizezi inventarul? Stocurile vor fi actualizate permanently.")) return;
+              setSaving(true);
+              try {
+                await finalizeInventory(header.id);
+                alert("Inventar finalizat cu succes! Stocurile au fost actualizate.");
+                navigate("/stocks/inventory/multi");
+              } catch (e) {
+                console.error(e);
+                alert("Eroare la finalizare: " + e.message);
+              } finally {
+                setSaving(false);
+              }
+            }}
+            disabled={saving || deleting}
+          >
+            ✅ Finalizează și Actualizează Stoc
+          </button>
+        ) : null}
+        <button type="button" className="btn btn-primary" onClick={handleSave} disabled={saving || deleting}>
+          {saving ? "Se salvează…" : "💾 Salvează (Interimar)"}
+        </button>
+      </div>
     </section>
   );
 }

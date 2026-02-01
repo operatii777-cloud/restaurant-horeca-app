@@ -1,3 +1,4 @@
+const KioskTransferIframePage = lazy(() => import('@/modules/tipizate-enterprise/pages/KioskTransferIframePage'));
 // import { useTranslation } from '@/i18n/I18nContext';
 import { Navigate, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
@@ -155,6 +156,9 @@ const CoatroomDashboardPage = lazy(() => import('@/modules/dashboards/coatroom/p
 const LostFoundDashboardPage = lazy(() => import('@/modules/dashboards/lostfound/pages/LostFoundDashboardPage').then(m => ({ default: m.LostFoundDashboardPage })));
 const PlatformStatsDashboardPage = lazy(() => import('@/modules/platform-stats/pages/PlatformStatsDashboardPage').then(m => ({ default: m.PlatformStatsDashboardPage })));
 
+// Call Center (Simulated) - Lazy loaded
+const CallCenterSimulatorPage = lazy(() => import('@/modules/call-center/pages/CallCenterSimulatorPage'));
+
 // Enterprise Rebuild (03 Dec 2025) - Lazy loaded
 const TechnicalSheetsPage = lazy(() => import('@/modules/technical-sheets/pages/TechnicalSheetsPage').then(m => ({ default: m.TechnicalSheetsPage })));
 const PortionsPage = lazy(() => import('@/modules/portions/pages/PortionsPage').then(m => ({ default: m.PortionsPage })));
@@ -189,18 +193,18 @@ const KioskClientMonitorPage = lazy(() => import('@/modules/kiosk/pages/KioskCli
 const KioskLaundryPage = lazy(() => import('@/modules/kiosk/pages/KioskLaundryPage').then(m => ({ default: m.KioskLaundryPage })));
 const KioskWidgetPage = lazy(() => import('@/modules/kiosk/pages/KioskWidgetPage').then(m => ({ default: m.KioskWidgetPage })));
 // KioskPOSSplitPage - folosește default export cu error handling
-const KioskPOSSplitPage = lazy(() => 
+const KioskPOSSplitPage = lazy(() =>
   import('@/modules/kiosk/pages/KioskPOSSplitPage')
     .then(m => ({ default: m.default || m.KioskPOSSplitPage }))
     .catch((err) => {
       console.error('Error loading KioskPOSSplitPage:', err);
-      return { 
+      return {
         default: () => (
           <div style={{ padding: '20px', textAlign: 'center' }}>
             <h3>⚠️ Eroare la încărcarea paginii POS Split</h3>
             <p>Verifică consola pentru detalii</p>
           </div>
-        ) 
+        )
       };
     })
 );
@@ -262,6 +266,7 @@ const BonConsumEditorPage = lazy(() => import('@/modules/tipizate-enterprise/pag
 const TransferListPage = lazy(() => import('@/modules/tipizate-enterprise/pages/TransferListPage'));
 const TransferEditorPage = lazy(() => import('@/modules/tipizate-enterprise/pages/TransferEditorPage'));
 const InventarListPage = lazy(() => import('@/modules/tipizate-enterprise/pages/InventarListPage'));
+const KioskInventarIframePage = lazy(() => import('@/modules/tipizate-enterprise/pages/KioskInventarIframePage'));
 const InventarEditorPage = lazy(() => import('@/modules/tipizate-enterprise/pages/InventarEditorPage'));
 const WasteListPage = lazy(() => import('@/modules/tipizate-enterprise/pages/WasteListPage'));
 const WasteEditorPage = lazy(() => import('@/modules/tipizate-enterprise/pages/WasteEditorPage'));
@@ -317,7 +322,7 @@ const AnafSyncPage = lazy(() => import('@/modules/stocks/fiscal/pages/AnafSyncPa
 const AnafIntegrationPage = lazy(() => import('@/modules/stocks/fiscal/pages/AnafIntegrationPage').then(m => ({ default: m.AnafIntegrationPage })));
 
 const App = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
 
   // PHASE PRODUCTION-READY: Accessible loading fallback
   const LoadingFallback = () => (
@@ -351,7 +356,7 @@ const App = () => {
   );
 
   console.log('🔍 App render - current pathname:', window.location.pathname);
-  
+
   return (
     <Routes>
       {/* KIOSK Routes fără Sidebar - trebuie să fie ÎNAINTE pentru a avea prioritate */}
@@ -425,7 +430,7 @@ const App = () => {
         <Route path="client-monitor" element={<KioskClientMonitorPage />} />
         <Route path="widget" element={<KioskWidgetPage />} />
         <Route path="laundry" element={<KioskLaundryPage />} />
-        
+
         {/* Tipizate Enterprise - Documente interne (admin-vite) */}
         <Route path="tipizate-enterprise/bon-consum" element={<LazyRoute component={BonConsumListPage} />} />
         <Route path="tipizate-enterprise/bon-consum/new" element={<LazyRoute component={BonConsumEditorPage} />} />
@@ -434,8 +439,8 @@ const App = () => {
         <Route path="tipizate-enterprise/waste/new" element={<LazyRoute component={WasteEditorPage} />} />
         <Route path="tipizate-enterprise/waste/:id" element={<LazyRoute component={WasteEditorPage} />} />
 
-  {/* NIR Enterprise KIOSK: Redirect către admin-advanced.html#inventory?iframe=true */}
-  <Route path="kiosk/tipizate-enterprise/nir" element={<LegacyRedirect url="/admin-advanced.html#inventory" />} />
+        {/* NIR Enterprise KIOSK: Redirect către admin-advanced.html#inventory?iframe=true */}
+        <Route path="kiosk/tipizate-enterprise/nir" element={<LegacyRedirect url="/admin-advanced.html#inventory" />} />
 
         {/* NIR Enterprise */}
         <Route path="tipizate-enterprise/nir" element={<LazyRoute component={NirListPage} />} />
@@ -443,12 +448,12 @@ const App = () => {
         <Route path="tipizate-enterprise/nir/:id" element={<LazyRoute component={NirEditorPage} />} />
 
         {/* Transfer Enterprise */}
-        <Route path="tipizate-enterprise/transfer" element={<LazyRoute component={TransferListPage} />} />
+        <Route path="tipizate-enterprise/transfer" element={<LazyRoute component={KioskTransferIframePage} />} />
         <Route path="tipizate-enterprise/transfer/new" element={<LazyRoute component={TransferEditorPage} />} />
         <Route path="tipizate-enterprise/transfer/:id" element={<LazyRoute component={TransferEditorPage} />} />
 
         {/* Inventar Enterprise */}
-        <Route path="tipizate-enterprise/inventar" element={<LazyRoute component={InventarListPage} />} />
+        <Route path="tipizate-enterprise/inventar" element={<LazyRoute component={KioskInventarIframePage} />} />
         <Route path="tipizate-enterprise/inventar/new" element={<LazyRoute component={InventarEditorPage} />} />
         <Route path="tipizate-enterprise/inventar/:id" element={<LazyRoute component={InventarEditorPage} />} />
 
@@ -466,12 +471,12 @@ const App = () => {
         <Route path="tipizate-enterprise/registru-casa" element={<LazyRoute component={RegistruCasaListPage} />} />
         <Route path="tipizate-enterprise/registru-casa/new" element={<LazyRoute component={RegistruCasaEditorPage} />} />
         <Route path="tipizate-enterprise/registru-casa/:id" element={<LazyRoute component={RegistruCasaEditorPage} />} />
-        
-        
+
+
         {/* Stocks - Aceeași componentă ca Admin-vite */}
         <Route path="stocks" element={<StockManagementPage />} />
       </Route>
-      
+
       {/* AdminV4 Routes - folosesc AppLayout */}
       {/* NU folosim path="*" pentru a nu captura /kiosk/* */}
       <Route path="/*" element={<AppLayout />}>
@@ -500,6 +505,7 @@ const App = () => {
         <Route path="stocks/inventory" element={<Navigate to="/admin-advanced/multi-inventory" replace />} />
         <Route path="stocks/inventory/new" element={<Navigate to="/admin-advanced/multi-inventory" replace />} />
         {/* Inventory Dashboard & Multi-Inventory remain (separate functionality) */}
+        <Route path="stocks/inventory/:id" element={<InventoryDetailsPage />} />
         <Route path="stocks/inventory/dashboard" element={<InventoryDashboardPage />} />
         <Route path="stocks/inventory/multi" element={<MultiInventoryPage />} />
         <Route path="stocks/inventory/import" element={<InventoryImportPage />} />
@@ -581,7 +587,7 @@ const App = () => {
         {/* PHASE S6.3 - Accounting Audit */}
         <Route path="accounting/audit/signatures" element={<LazyRoute component={DigitalSignaturesPage} />} />
         <Route path="settings/locations" element={<LocationsPage />} />
-        
+
         {/* Admin Advanced Routes - Legacy HTML Redirect */}
         <Route path="admin-advanced/dashboard" element={<LegacyRedirect url="/admin-advanced.html#dashboard" />} />
         <Route path="admin-advanced/queue-monitor" element={<LegacyRedirect url="/admin-advanced.html#queue-monitor" />} />
@@ -643,6 +649,10 @@ const App = () => {
         <Route path="marketing/feedback" element={<FeedbackPage />} />
         <Route path="marketing/vouchers" element={<VouchersPage />} />
         <Route path="marketing/loyalty" element={<LoyaltyPage />} />
+
+        {/* Call Center Simulator */}
+        <Route path="call-center-simulator" element={<LazyRoute component={CallCenterSimulatorPage} />} />
+
         <Route path="marketing/reservations-new" element={<ReservationsPage />} />
         <Route path="stocks/dashboard/executive" element={<ExecutiveDashboardPage />} />
         <Route path="stocks/dashboard/advanced" element={<AdvancedStockDashboardPage />} />
@@ -672,7 +682,7 @@ const App = () => {
         <Route path="dashboards/coatroom" element={<CoatroomDashboardPage />} />
         <Route path="dashboards/lostfound" element={<LostFoundDashboardPage />} />
         <Route path="dashboards/platform-stats" element={<PlatformStatsDashboardPage />} />
-        
+
         {/* Enterprise Rebuild Routes (03 Dec 2025) */}
         <Route path="technical-sheets" element={<TechnicalSheetsPage />} />
         <Route path="recipes/scaling" element={<RecipeScalingPage />} />
@@ -684,78 +694,78 @@ const App = () => {
         <Route path="variance-reports" element={<VarianceReportsPage />} />
         {/* Admin Diagnostics - Internal only */}
         <Route path="admin/diagnostics" element={<AdminDiagnosticsPage />} />
-        
+
         {/* ------------------------------------------------------------------ */}
         {/* PHASE S4.2 - TIPIZATE ENTERPRISE (NEW)                            */}
         {/* UI de lucru unificat pentru toate tipizatele                       */}
         {/* ------------------------------------------------------------------ */}
-        
+
         {/* PHASE S5.6 - Print Preview */}
         <Route path="print" element={<LazyRoute component={PrintPreviewPage} />} />
-        
+
         {/* NIR Enterprise → Admin Advanced */}
-        
+
         {/* Bon Consum Enterprise */}
         <Route path="tipizate-enterprise/bon-consum" element={<LazyRoute component={BonConsumListPage} />} />
         <Route path="tipizate-enterprise/bon-consum/new" element={<LazyRoute component={BonConsumEditorPage} />} />
         <Route path="tipizate-enterprise/bon-consum/:id" element={<LazyRoute component={BonConsumEditorPage} />} />
-        
+
         {/* Transfer Enterprise → Admin Advanced */}
-        
+
         {/* Inventar Enterprise → Admin Advanced */}
-        
+
         {/* Waste Enterprise */}
         <Route path="tipizate-enterprise/waste" element={<LazyRoute component={WasteListPage} />} />
         <Route path="tipizate-enterprise/waste/new" element={<LazyRoute component={WasteEditorPage} />} />
         <Route path="tipizate-enterprise/waste/:id" element={<LazyRoute component={WasteEditorPage} />} />
-        
+
         {/* Factură Enterprise → Admin Advanced */}
-        
+
         {/* Chitanță Enterprise → Admin Advanced */}
-        
+
         {/* Registru Casă Enterprise → Admin Advanced */}
-        
+
         {/* Raport Gestiune Enterprise */}
         <Route path="tipizate-enterprise/raport-gestiune" element={<RaportGestiuneListPage />} />
         <Route path="tipizate-enterprise/raport-gestiune/new" element={<RaportGestiuneEditorPage />} />
         <Route path="tipizate-enterprise/raport-gestiune/:id" element={<RaportGestiuneEditorPage />} />
-        
+
         {/* Raport X Enterprise */}
         <Route path="tipizate-enterprise/raport-x" element={<RaportXListPage />} />
         <Route path="tipizate-enterprise/raport-x/new" element={<RaportXEditorPage />} />
         <Route path="tipizate-enterprise/raport-x/:id" element={<RaportXEditorPage />} />
-        
+
         {/* Raport Z Enterprise */}
         <Route path="tipizate-enterprise/raport-z" element={<RaportZListPage />} />
         <Route path="tipizate-enterprise/raport-z/new" element={<RaportZEditorPage />} />
         <Route path="tipizate-enterprise/raport-z/:id" element={<RaportZEditorPage />} />
-        
+
         {/* Raport Lunar Enterprise */}
         <Route path="tipizate-enterprise/raport-lunar" element={<RaportLunarListPage />} />
         <Route path="tipizate-enterprise/raport-lunar/new" element={<RaportLunarEditorPage />} />
         <Route path="tipizate-enterprise/raport-lunar/:id" element={<RaportLunarEditorPage />} />
-        
+
         {/* Aviz Enterprise */}
         <Route path="tipizate-enterprise/aviz" element={<AvizListPage />} />
         <Route path="tipizate-enterprise/aviz/new" element={<AvizEditorPage />} />
         <Route path="tipizate-enterprise/aviz/:id" element={<AvizEditorPage />} />
-        
+
         {/* Proces Verbal Enterprise */}
         <Route path="tipizate-enterprise/proces-verbal" element={<ProcesVerbalListPage />} />
         <Route path="tipizate-enterprise/proces-verbal/new" element={<ProcesVerbalEditorPage />} />
         <Route path="tipizate-enterprise/proces-verbal/:id" element={<ProcesVerbalEditorPage />} />
-        
+
         {/* Retur Enterprise */}
         <Route path="tipizate-enterprise/retur" element={<ReturListPage />} />
         <Route path="tipizate-enterprise/retur/new" element={<ReturEditorPage />} />
         <Route path="tipizate-enterprise/retur/:id" element={<ReturEditorPage />} />
-        
+
         {/* ------------------------------------------------------------------ */}
         {/* LEGACY ROUTES (PHASE S3)                                          */}
         {/* Păstrate DOAR ca fallback / referință.                             */}
         {/* Vor fi înlocuite în S4/S5 cu UI enterprise pentru tipizate & POS.  */}
         {/* ------------------------------------------------------------------ */}
-        
+
         {/* LEGACY_ROUTE - PHASE S3: Invoices (legacy component) */}
         <Route path="invoices" element={<InvoicesListPage />} />
         {/* PHASE S11 - e-Factura UBL (ANAF) + UI React */}
@@ -764,10 +774,10 @@ const App = () => {
         {/* PHASE S12 - POS React Unificat + Plăți Enterprise */}
         <Route path="pos" element={<PosPage />} />
         <Route path="invoices/:id" element={<InvoiceDetailsPage />} />
-        
+
         {/* LEGACY_ROUTE - PHASE S3: POS (legacy component) */}
         <Route path="pos/:orderId" element={<PosPage />} />
-        
+
         {/* LEGACY_ROUTE - PHASE S3: Tipizate (redirected to admin-advanced or tipizate-enterprise) */}
         <Route path="tipizate" element={<Navigate to="/admin-advanced/inventory" replace />} />
         <Route path="tipizate/nir" element={<Navigate to="/admin-advanced/inventory" replace />} />
@@ -780,7 +790,7 @@ const App = () => {
         <Route path="tipizate/transfer" element={<Navigate to="/admin-advanced/transfers" replace />} />
         <Route path="tipizate/inventar" element={<Navigate to="/admin-advanced/multi-inventory" replace />} />
       </Route>
-      
+
       {/* Redirect pentru rute necunoscute - dar NU pentru /kiosk/* (deja procesat mai sus) */}
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>

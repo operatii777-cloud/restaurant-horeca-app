@@ -14,7 +14,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import './ProfitLossPage.css';
 
 export const ProfitLossPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [startDate, setStartDate] = useState(() => {
     const date = new Date();
     date.setMonth(date.getMonth() - 1); // Ultima lună
@@ -108,7 +108,7 @@ export const ProfitLossPage = () => {
       footer={footer}
     >
       {/* KPI Cards - Mutate în partea de sus, layout orizontal compact */}
-      <div 
+      <div
         className="kpi-cards-container"
         style={{
           display: 'grid',
@@ -255,9 +255,9 @@ export const ProfitLossPage = () => {
       {/* Timeline Chart - Compact Card */}
       <div className="excel-card">
         <div className="excel-card__header">
-          <h3 className="excel-card__title">"evolutie zilnica venituri cogs profit"</h3>
+          <h3 className="excel-card__title">Evoluție zilnică venituri, COGS și profit</h3>
         </div>
-        <div className="excel-card__body" style={{ maxHeight: '250px', overflowY: "Auto" }}>
+        <div className="excel-card__body" style={{ maxHeight: '250px', overflowY: "auto" }}>
           <DailyCogsTimelineChart data={chartData} loading={loading} height={250} />
         </div>
       </div>
@@ -287,7 +287,7 @@ export const ProfitLossPage = () => {
                 </tr>
               ) : data.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="text-center text-muted">"nu exista date pentru perioada selectata"</td>
+                  <td colSpan={6} className="text-center text-muted">Nu există date pentru perioada selectată</td>
                 </tr>
               ) : (
                 data.map((item, index) => (
@@ -305,8 +305,8 @@ export const ProfitLossPage = () => {
                             item.foodCostPercent > 35
                               ? 'text-danger'
                               : item.foodCostPercent > 30
-                              ? 'text-warning'
-                              : 'text-success'
+                                ? 'text-warning'
+                                : 'text-success'
                           }
                         >
                           {item.foodCostPercent.toFixed(1)}%

@@ -42,7 +42,7 @@ const ITEM_TYPES = [
 ];
 
 export const WastePage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [wasteRecords, setWasteRecords] = useState<WasteRecord[]>([]);
   const [dashboard, setDashboard] = useState<WasteDashboard | null>(null);
   const [loading, setLoading] = useState(true);
@@ -197,7 +197,7 @@ export const WastePage = () => {
   return (
     <div className="waste-page">
       <PageHeader
-        title='🗑️ pierderi & waste'
+        title='🗑️ Pierderi & Waste'
         description="Gestionare pierderi justificate (waste) și nejustificate (losses)"
         actions={[
           {
@@ -232,7 +232,7 @@ export const WastePage = () => {
           <Col md={4}>
             <Card className="shadow-sm">
               <Card.Body>
-                <h6 className="mb-3">"waste pe tip"</h6>
+                <h6 className="mb-3">Waste pe tip</h6>
                 {dashboard.by_type.map((type) => (
                   <div key={type.waste_type} className="d-flex justify-content-between mb-2">
                     <span>{WASTE_TYPES.find(t => t.value === type.waste_type)?.label || type.waste_type}</span>
@@ -262,12 +262,12 @@ export const WastePage = () => {
 
       {/* Period Filter */}
       <div className="mt-4 d-flex gap-2 align-items-center">
-        <span>"Perioadă:"</span>
+        <span>Perioadă:</span>
         <Button
           variant={period === 'today' ? 'primary' : 'outline-primary'}
           size="sm"
           onClick={() => setPeriod('today')}
-        >"Astăzi"</Button>
+        >Astăzi</Button>
         <Button
           variant={period === 'week' ? 'primary' : 'outline-primary'}
           size="sm"
@@ -287,7 +287,7 @@ export const WastePage = () => {
       {/* Waste Records Table */}
       <Card className="mt-4 shadow-sm">
         <Card.Header className="bg-white">
-          <h5 className="mb-0">"inregistrari waste"</h5>
+          <h5 className="mb-0">Înregistrări waste</h5>
         </Card.Header>
         <Card.Body className="p-0">
           {loading ? (
@@ -295,7 +295,7 @@ export const WastePage = () => {
               <Spinner animation="border" size="sm" className="me-2" />Se încarcă...</div>
           ) : (
             <DataGrid
-              columnDefs={columnDefs}
+              columnDefs={columnDefs as any}
               rowData={wasteRecords}
               height="60vh"
             />
@@ -433,7 +433,7 @@ export const WastePage = () => {
               </Col>
               <Col md={6}>
                 <Form.Group className="mb-3">
-                  <Form.Label>"raportat de"</Form.Label>
+                  <Form.Label>Raportat de</Form.Label>
                   <Form.Control
                     type="text"
                     value={formData.reported_by || ''}
@@ -454,7 +454,7 @@ export const WastePage = () => {
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseModal}>"Anulează"</Button>
+            <Button variant="secondary" onClick={handleCloseModal}>Anulează</Button>
             <Button variant="primary" type="submit">
               {editingWaste ? 'Actualizează' : 'Raportează'}
             </Button>
