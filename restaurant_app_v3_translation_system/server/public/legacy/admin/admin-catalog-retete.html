@@ -20,7 +20,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>📚 Catalog Rețete Template - White Label Setup</title>
-    <script src="/translation/translation.js"></script>
+
     <style>
         * {
             margin: 0;
@@ -66,6 +66,7 @@
             font-weight: 700;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
@@ -547,16 +548,19 @@
         <!-- TOOLBAR -->
         <div class="toolbar">
             <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Căutare produs / rețetă..." onkeyup="searchTable()">
+                <input type="text" id="searchInput" placeholder="Căutare produs / rețetă..." onkeyup="searchTable()"
+                    aria-label="Căutare produs sau rețetă">
             </div>
 
             <div class="filter-group">
-                <select class="filter-select" id="industryFilter" onchange="filterTable()">
+                <select class="filter-select" id="industryFilter" onchange="filterTable()"
+                    aria-label="Filtrare după industrie">
                     <option value="">🌐 Toate Categoriile</option>
                     <!-- Populate dinamic din categoriile rețetelor -->
                 </select>
 
-                <select class="filter-select" id="allergenFilter" onchange="filterTable()">
+                <select class="filter-select" id="allergenFilter" onchange="filterTable()"
+                    aria-label="Filtrare după alergeni">
                     <option value="">Toți Alergenii</option>
                     <option value="Gluten">🌾 Gluten</option>
                     <option value="Lapte">🥛 Lapte</option>
@@ -564,7 +568,8 @@
                     <option value="Nuci">🌰 Nuci</option>
                 </select>
 
-                <select class="filter-select" id="marginFilter" onchange="filterTable()">
+                <select class="filter-select" id="marginFilter" onchange="filterTable()"
+                    aria-label="Filtrare după marjă">
                     <option value="">Toate Marjele</option>
                     <option value="low">
                         < 50% (Scăzut)</option>
@@ -579,7 +584,8 @@
             <table class="excel-table" id="recipesTable">
                 <thead>
                     <tr>
-                        <th class="col-checkbox"><input type="checkbox" id="selectAll" onchange="toggleSelectAll()">
+                        <th class="col-checkbox"><input type="checkbox" id="selectAll" onchange="toggleSelectAll()"
+                                aria-label="Selectează toate rețetele">
                         </th>
                         <th class="col-id" onclick="sortTable(1)">ID</th>
                         <th class="col-image">Imagine</th>
@@ -628,7 +634,8 @@
     <div id="alergeni-section" class="tab-content" style="display: none;">
         <div class="toolbar">
             <div class="search-box">
-                <input type="text" id="searchAllergen" placeholder="Căutare alergen..." onkeyup="searchAllergens()">
+                <input type="text" id="searchAllergen" placeholder="Căutare alergen..." onkeyup="searchAllergens()"
+                    aria-label="Căutare alergen">
             </div>
             <button class="btn btn-primary" onclick="addNewAllergen()">➕ Adaugă Alergen</button>
         </div>
@@ -670,7 +677,7 @@
         <div class="toolbar">
             <div class="search-box">
                 <input type="text" id="searchAdditive" placeholder="Căutare aditiv (ex: E621, Glutamat)..."
-                    onkeyup="searchAdditives()">
+                    onkeyup="searchAdditives()" aria-label="Căutare aditiv">
             </div>
             <button class="btn btn-primary" onclick="addNewAdditive()">➕ Adaugă Aditiv</button>
         </div>
@@ -712,6 +719,7 @@
         </div>
     </div>
 
+    <script src="/translation/translation.js"></script>
     <script>
         let recipesData = [];
         let sortDirection = {};

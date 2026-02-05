@@ -8,13 +8,14 @@ import { AgGridTable } from '@/shared/components/AgGridTable';
 import './TemperatureLogTab.css';
 
 export const TemperatureLogTab = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [showFormModal, setShowFormModal] = useState(false);
   const [selectedEquipment, setSelectedEquipment] = useState<number | null>(null);
   const [dateRange, setDateRange] = useState({ start: '', end: '' });
-  
-  const { data: equipment, refetch: refetchEquipment } = useApiQuery('/api/compliance/equipment');
-  
+
+  const { data: equipmentData, refetch: refetchEquipment } = useApiQuery('/api/compliance/equipment');
+  const equipment = (equipmentData as any)?.data || [];
+
   // Construim URL-ul cu query params
   const temperatureLogUrl = useMemo(() => {
     const params = new URLSearchParams();
@@ -24,37 +25,41 @@ export const TemperatureLogTab = () => {
     const queryString = params.toString();
     return queryString ? `/api/compliance/temperature-log?${queryString}` : '/api/compliance/temperature-log';
   }, [selectedEquipment, dateRange]);
-  
-  const { data: logs, loading, refetch } = useApiQuery(temperatureLogUrl);
+
+  const { data: logsData, loading, refetch } = useApiQuery(temperatureLogUrl);
+  const logs = (logsData as any)?.data || [];
 
   const columnDefs = [
-    { field: 'created_at', headerName: 'Data/Ora', width: 180, valueFormatter: (params: any) => {
-      if (!params.value) return '-';
-      return new Date(params.value).toLocaleString('ro-RO');
-    }},
+    {
+      field: 'created_at', headerName: 'Data/Ora', width: 180, valueFormatter: (params: any) => {
+        if (!params.value) return '-';
+        return new Date(params.value).toLocaleString('ro-RO');
+      }
+    },
     { field: 'equipment_name', headerName: 'Echipament', width: 200 },
-    { field: 'temperature', headerName: 'Temperatură (°C)', width: 150, cellRenderer: (params: any) => {
-      const temp = params.value;
-      const status = params.data.status;
-      const color = status === 'ok' ? 'green' : status === 'warning' ? 'orange' : 'red';
-      return `<span style="color: "Color"; font-weight: bold;">Temp°C</span>`;
-    }},
-    { field: 'status', headerName: 'Status', width: 120, cellRenderer: (params: any) => {
-      const status = params.value;
-      const icons = {
-        ok: '<i class="fas fa-check-circle text-success"></i> OK',
-        warning: '<i class="fas fa-exclamation-triangle text-warning"></i> Warning',
-        critical: '<i class="fas fa-times-circle text-danger"></i> Critical'
-      };
-      return icons[status as keyof typeof icons] || status;
-    }},
+    {
+      field: 'temperature', headerName: 'Temperatură (°C)', width: 150, cellRenderer: (params: any) => {
+        const temp = params.value;
+        const status = params.data.status;
+        const color = status === 'ok' ? 'green' : status === 'warning' ? 'orange' : 'red';
+        return <span style={{ color, fontWeight: 'bold' }}>{temp}°C</span>;
+      }
+    },
+    {
+      field: 'status', headerName: 'Status', width: 120, cellRenderer: (params: any) => {
+        const status = params.value as 'ok' | 'warning' | 'critical';
+        if (status === 'ok') return <span className="text-success"><i className="fas fa-check-circle"></i> OK</span>;
+        if (status === 'warning') return <span className="text-warning"><i className="fas fa-exclamation-triangle"></i> Warning</span>;
+        if (status === 'critical') return <span className="text-danger"><i className="fas fa-times-circle"></i> Critical</span>;
+        return <span>{status}</span>;
+      }
+    },
     { field: 'operator_name', headerName: 'Operator', width: 150 },
     { field: 'notes', headerName: 'Note', width: 200, flex: 1 },
   ];
 
   const filteredLogs = useMemo(() => {
-    if (!logs?.data) return [];
-    return logs.data;
+    return logs;
   }, [logs]);
 
   const handleAddLog = () => {
@@ -83,12 +88,12 @@ export const TemperatureLogTab = () => {
             title="selecteaza echipamentul"
             aria-label="selecteaza echipamentul"
           >
-            <option value="">"toate echipamentele"</option>
-            {equipment?.data?.map((eq: any) => (
+            <option value="">Toate echipamentele</option>
+            {equipment.map((eq: any) => (
               <option key={eq.id} value={eq.id}>{eq.name} ({eq.type})</option>
             ))}
           </select>
-          
+
           <input
             type="date"
             className="form-control"
@@ -98,7 +103,7 @@ export const TemperatureLogTab = () => {
             title="data de inceput"
             aria-label="data de inceput"
           />
-          
+
           <input
             type="date"
             className="form-control"
@@ -109,9 +114,9 @@ export const TemperatureLogTab = () => {
             aria-label="data de sfarsit"
           />
         </div>
-        
+
         <button className="btn btn-primary" onClick={handleAddLog}>
-          <i className="fas fa-plus me-2"></i>"adauga temperatura"</button>
+          <i className="fas fa-plus me-2"></i>Adaugă Temperatură</button>
       </div>
 
       {/* Grafic Temperaturi */}
@@ -136,7 +141,7 @@ export const TemperatureLogTab = () => {
 
       {showFormModal && (
         <TemperatureLogFormModal
-          equipment={equipment?.data || []}
+          equipment={equipment}
           onSave={handleSaveLog}
           onClose={() => setShowFormModal(false)}
         />

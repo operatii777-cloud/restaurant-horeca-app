@@ -34,11 +34,11 @@ L.Marker.prototype.options.icon = DefaultIcon;
 
 // Custom icons
 const createCustomIcon = (color: string, iconChar: string) => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   return L.divIcon({
     className: 'custom-marker',
     html: `<div style="
-      background-color: "Color";
+      background-color: ${color};
       width: 32px;
       height: 32px;
       border-radius: 50%;
@@ -99,7 +99,7 @@ function MapBounds({ couriers, orders, restaurantLat, restaurantLng }: {
   restaurantLat?: number;
   restaurantLng?: number;
 }) {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const map = useMap();
 
   useEffect(() => {
@@ -139,7 +139,7 @@ export function DispatchMap({
   restaurantLat = 44.40535, // Prelungirea Ghencea 45, Bragadiru
   restaurantLng = 25.99008,
 }: DispatchMapProps) {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const mapRef = useRef<L.Map | null>(null);
 
   // Combine all orders

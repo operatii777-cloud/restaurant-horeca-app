@@ -13,9 +13,9 @@ import './CompliancePage.css';
 type TabType = 'dashboard' | 'equipment' | 'temperature-log' | 'cleaning-schedule' | 'equipment-maintenance';
 
 export const CompliancePage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<TabType>('dashboard');
-  
+
   const { data: kpis, loading: kpisLoading } = useApiQuery('/api/compliance/haccp/dashboard/kpis');
 
   const tabs = [
@@ -31,7 +31,7 @@ export const CompliancePage = () => {
       <div className="page-header d-flex justify-content-between align-items-center">
         <div className="header-content">
           <h1>🛡️ Conformitate & HACCP</h1>
-          <p>"gestiunea sigurantei alimentare si conformitatii"</p>
+          <p>Gestiunea siguranței alimentare și conformității</p>
         </div>
         <HelpButton
           title="Ajutor - Conformitate & HACCP"
@@ -39,26 +39,26 @@ export const CompliancePage = () => {
             <div>
               <h5>🛡️ Ce este Conformitatea & HACCP?</h5>
               <p>
-                Modulul de Conformitate & HACCP permite gestionarea siguranței alimentare și conformității 
+                Modulul de Conformitate & HACCP permite gestionarea siguranței alimentare și conformității
                 cu standardele HACCP (Hazard Analysis and Critical Control Points).
               </p>
               <h5 className="mt-4">📋 Tab-uri disponibile</h5>
               <ul>
                 <li><strong>Dashboard</strong> - Vizualizare generală KPIs și status conformitate</li>
                 <li><strong>Echipamente</strong> - Gestiunea echipamentelor și verificărilor</li>
-                <li><strong>"jurnal temperaturi"</strong> - Înregistrare și monitorizare temperaturi</li>
-                <li><strong>"plan curatenie"</strong> - Program de curățenie și verificări</li>
-                <li><strong>"mentenanta echipamente"</strong> - Planificare și urmărire mentenanță</li>
+                <li><strong>Jurnal Temperaturi</strong> - Înregistrare și monitorizare temperaturi</li>
+                <li><strong>Plan Curățenie</strong> - Program de curățenie și verificări</li>
+                <li><strong>Mentenanță Echipamente</strong> - Planificare și urmărire mentenanță</li>
               </ul>
               <h5 className="mt-4">📊 KPIs monitorizați</h5>
               <ul>
                 <li><strong>Temperaturi OK (24h)</strong> - Numărul de verificări de temperatură în limite normale</li>
                 <li><strong>Task-uri Overdue</strong> - Task-uri de curățenie sau mentenanță restante</li>
-                <li><strong>"mentenante saptamana aceasta"</strong> - Mentenanțe planificate pentru săptămâna curentă</li>
+                <li><strong>Mentenanțe săptămâna aceasta</strong> - Mentenanțe planificate pentru săptămâna curentă</li>
                 <li><strong>Conformitate %</strong> - Procentul de conformitate general</li>
               </ul>
               <div className="alert alert-warning mt-4">
-                <strong>⚠️ Important:</strong> Respectarea standardelor HACCP este obligatorie pentru 
+                <strong>⚠️ Important:</strong> Respectarea standardelor HACCP este obligatorie pentru
                 toate restaurantele. Monitorizează regulat statusul conformității.
               </div>
             </div>
@@ -70,30 +70,30 @@ export const CompliancePage = () => {
       <div className="kpi-grid">
         <StatCard
           title="Temperaturi OK (24h)"
-          value={kpisLoading ? '-' : (kpis?.data?.temperaturesOk24h || 0).toString()}
+          value={kpisLoading ? '-' : ((kpis as any)?.data?.temperaturesOk24h || 0).toString()}
           icon="✅"
           color="success"
           trend={null}
         />
         <StatCard
           title="Task-uri Overdue"
-          value={kpisLoading ? '-' : (kpis?.data?.cleaningTasksOverdue || 0).toString()}
+          value={kpisLoading ? '-' : ((kpis as any)?.data?.cleaningTasksOverdue || 0).toString()}
           icon="⚠️"
-          color={kpis?.data?.cleaningTasksOverdue > 0 ? 'danger' : 'success'}
+          color={(kpis as any)?.data?.cleaningTasksOverdue > 0 ? 'danger' : 'success'}
           trend={null}
         />
         <StatCard
-          title="mentenante saptamana aceasta"
-          value={kpisLoading ? '-' : (kpis?.data?.maintenanceScheduledThisWeek || 0).toString()}
+          title="Mentenanțe săptămâna aceasta"
+          value={kpisLoading ? '-' : ((kpis as any)?.data?.maintenanceScheduledThisWeek || 0).toString()}
           icon="📅"
           color="info"
           trend={null}
         />
         <StatCard
           title="Conformitate %"
-          value={kpisLoading ? '-' : `${(kpis?.data?.compliancePercentage || 0).toFixed(1)}%`}
+          value={kpisLoading ? '-' : `${((kpis as any)?.data?.compliancePercentage || 0).toFixed(1)}%`}
           icon="📊"
-          color={kpis?.data?.compliancePercentage >= 90 ? 'success' : kpis?.data?.compliancePercentage >= 70 ? 'warning' : 'danger'}
+          color={(kpis as any)?.data?.compliancePercentage >= 90 ? 'success' : (kpis as any)?.data?.compliancePercentage >= 70 ? 'warning' : 'danger'}
           trend={null}
         />
       </div>

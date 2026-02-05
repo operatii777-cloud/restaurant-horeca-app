@@ -41,9 +41,9 @@ const arraysEqual = (first: number[], second: number[]) =>
 
 type FeedbackState =
   | {
-      type: 'success' | 'error' | 'info' | 'warning';
-      message: string;
-    }
+    type: 'success' | 'error' | 'info' | 'warning';
+    message: string;
+  }
   | null;
 
 type ChefSummary = {
@@ -134,7 +134,7 @@ const findCategoryById = (categories: CatalogCategory[], id: number | null): Cat
 };
 
 export const CatalogPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   // Page load time debug (fixed calculation)
   const pageLoadStart = performance.now();
   useEffect(() => {
@@ -901,9 +901,9 @@ export const CatalogPage = () => {
     totalProducts === 0
       ? []
       : categoryDistribution.map((entry) => ({
-          ...entry,
-          display: `${entry.value}%`,
-        }));
+        ...entry,
+        display: `${entry.value}%`,
+      }));
 
   return (
     <div className="catalog-page" data-page-ready={isPageReady ? 'true' : 'false'}>
@@ -933,7 +933,7 @@ export const CatalogPage = () => {
       <section className="catalog-hero">
         <div className="catalog-hero__info">
           <div className="catalog-hero__labels">
-            <button 
+            <button
               type="button"
               className="catalog-chip catalog-chip--primary catalog-chip--clickable"
               onClick={handleDigitalMenu}
@@ -941,7 +941,7 @@ export const CatalogPage = () => {
             >
               Meniu digital sincronizat
             </button>
-            <button 
+            <button
               type="button"
               className="catalog-chip catalog-chip--clickable"
               onClick={handleRecipes}
@@ -949,7 +949,7 @@ export const CatalogPage = () => {
             >
               Rețete + costuri automat
             </button>
-            <button 
+            <button
               type="button"
               className="catalog-chip catalog-chip--clickable"
               onClick={handleExportPDF}
@@ -958,7 +958,7 @@ export const CatalogPage = () => {
               Export PDF / QR Instant
             </button>
           </div>
-          <h2>"catalog produse si meniuri active"</h2>
+          <h2>catalog produse si meniuri active</h2>
           <p>
             Gestionezi dintr-un singur loc meniurile, prețurile și traducerile pentru toate canalele (digital, PDF, QR,
             meniuri tipărite). Integrarea cu AG Grid îți oferă filtrare, sortare și export Excel fără efort.
@@ -1005,7 +1005,7 @@ export const CatalogPage = () => {
         <div className="catalog-hero__analytics">
           <div className="catalog-analytics-card">
             <header>
-              <span className="catalog-analytics-title">"top preturi produse active"</span>
+              <span className="catalog-analytics-title">top preturi produse active</span>
               <span className="catalog-analytics-helper">RON / produs</span>
             </header>
             <MiniBarChart
@@ -1017,7 +1017,7 @@ export const CatalogPage = () => {
 
           <div className="catalog-analytics-card">
             <header>
-              <span className="catalog-analytics-title">"distributie pe categorii"</span>
+              <span className="catalog-analytics-title">distributie pe categorii</span>
               <span className="catalog-analytics-helper">% din catalog</span>
             </header>
             <MiniDonutChart
@@ -1031,7 +1031,7 @@ export const CatalogPage = () => {
               {defaultLegend.length === 0 ? (
                 <li>
                   <span style={{ backgroundColor: '#94a3b8' }} aria-hidden="true" />
-                  <span>"fara date disponibile"</span>
+                  <span>fara date disponibile</span>
                   <strong>100%</strong>
                 </li>
               ) : (
@@ -1186,7 +1186,7 @@ export const CatalogPage = () => {
                   className="catalog-btn catalog-btn--ghost"
                   onClick={handleCancelReorder}
                   disabled={reorderSaving}
-                >"Renunță"</button>
+                >Renunță</button>
               </div>
             </div>
           ) : null}
@@ -1206,7 +1206,7 @@ export const CatalogPage = () => {
           <section className="catalog-grid-panel">
             <header>
               <div>
-                <h3>"lista completa de produse"</h3>
+                <h3>lista completa de produse</h3>
                 <p>{`${totalProducts} produse gestionate · ${withRecipe} cu rețetă`}</p>
               </div>
               <div className="catalog-selection">
@@ -1223,7 +1223,7 @@ export const CatalogPage = () => {
                 <button type="button" className="catalog-btn catalog-btn--outline">
                   Export PDF meniuri
                 </button>
-                <button type="button" className="catalog-btn catalog-btn--outline">"genereaza qr"</button>
+                <button type="button" className="catalog-btn catalog-btn--outline">genereaza qr</button>
               </div>
             </header>
             <DataGrid<CatalogProduct>
@@ -1271,13 +1271,13 @@ export const CatalogPage = () => {
                 {chefStats ? (
                   <ul className="catalog-chef-panel__stats">
                     <li>
-                      <span>"cu cost calculat"</span>
+                      <span>cu cost calculat</span>
                       <strong>
                         {chefStats.withCost}/{chefStats.total}
                       </strong>
                     </li>
                     <li>
-                      <span>"retete lipsa"</span>
+                      <span>retete lipsa</span>
                       <strong>{chefStats.missingRecipe}</strong>
                     </li>
                     <li>
@@ -1289,7 +1289,7 @@ export const CatalogPage = () => {
 
                 <div className="catalog-chef-panel__metrics">
                   <div>
-                    <span>"cost reteta"</span>
+                    <span>cost reteta</span>
                     <strong>
                       {chefSummary?.costPrice !== null && chefSummary?.costPrice !== undefined
                         ? formatPrice(Number(chefSummary.costPrice))
@@ -1300,27 +1300,27 @@ export const CatalogPage = () => {
                     ) : null}
                   </div>
                   <div>
-                    <span>"Marjă"</span>
+                    <span>Marjă</span>
                     <strong>{chefMarginText}</strong>
                   </div>
                   <div>
-                    <span>"status reteta"</span>
+                    <span>status reteta</span>
                     <strong>{chefSummary?.hasRecipe ?? selectedProduct?.has_recipe ? 'Completă' : 'Lipsește'}</strong>
                     {chefSummary?.recipe?.updated_at ? (
                       <small>Ultima actualizare: {formatDateTime(chefSummary.recipe.updated_at)}</small>
                     ) : null}
                   </div>
                   <div>
-                    <span>"alergeni monitorizati"</span>
+                    <span>alergeni monitorizati</span>
                     <strong>{allergensForPanel.length ? allergensForPanel.length : '—'}</strong>
                   </div>
                 </div>
 
                 <div className="catalog-chef-panel__details">
                   {!selectedProduct ? (
-                    <p>"selecteaza un produs din tabel pentru a vedea cost"</p>
+                    <p>selecteaza un produs din tabel pentru a vedea cost</p>
                   ) : chefSummaryLoading ? (
-                    <p>"se incarca detaliile pentru chef"</p>
+                    <p>se incarca detaliile pentru chef</p>
                   ) : chefSummaryError ? (
                     <InlineAlert variant="error" message={chefSummaryError} />
                   ) : (
@@ -1333,7 +1333,7 @@ export const CatalogPage = () => {
                             </span>
                           ))
                         ) : (
-                          <span className="catalog-chef-panel__muted">"fara alergeni declarati"</span>
+                          <span className="catalog-chef-panel__muted">fara alergeni declarati</span>
                         )}
                       </div>
                       <div className="catalog-chef-panel__list">
@@ -1345,7 +1345,7 @@ export const CatalogPage = () => {
                             ))}
                           </ul>
                         ) : (
-                          <p className="catalog-chef-panel__muted">"nu exista ingrediente detaliate"</p>
+                          <p className="catalog-chef-panel__muted">nu exista ingrediente detaliate</p>
                         )}
                       </div>
                       {chefSummary?.portion ? (
@@ -1368,15 +1368,15 @@ export const CatalogPage = () => {
               </header>
               <ul>
                 <li>
-                  <strong>"Română"</strong>
+                  <strong>Română</strong>
                   <span>Synchronizat · 2 PDF-uri active</span>
                 </li>
                 <li>
-                  <strong>"Engleză"</strong>
-                  <span>"in curs de actualizare"</span>
+                  <strong>Engleză</strong>
+                  <span>in curs de actualizare</span>
                 </li>
                 <li>
-                  <strong>"QRCodes"</strong>
+                  <strong>QRCodes</strong>
                   <span>3 locații generate</span>
                 </li>
               </ul>
@@ -1384,7 +1384,7 @@ export const CatalogPage = () => {
 
             <article className="catalog-secondary__card">
               <header>
-                <span>"fluxuri automate"</span>
+                <span>fluxuri automate</span>
                 <button type="button" className="catalog-link-button">
                   Configurează workflow →
                 </button>
@@ -1399,7 +1399,7 @@ export const CatalogPage = () => {
                   <span>Programat zilnic 03:00</span>
                 </li>
                 <li>
-                  <strong>"actualizare preturi"</strong>
+                  <strong>actualizare preturi</strong>
                   <span>Ultima modificare acum 15 min</span>
                 </li>
               </ul>

@@ -26,7 +26,7 @@ interface Location {
 }
 
 export const LocationsPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const { loadLocations, availableLocations } = useLocationStore();
   const [locations, setLocations] = useState<Location[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -86,10 +86,10 @@ export const LocationsPage = () => {
       name: location.name,
       type: location.type,
       description: location.description || '',
-      can_receive_deliveries: location.can_receive_deliveries === 1 || location.can_receive_deliveries === true,
-      can_transfer_out: location.can_transfer_out === 1 || location.can_transfer_out === true,
-      can_transfer_in: location.can_transfer_in === 1 || location.can_transfer_in === true,
-      can_consume: location.can_consume === 1 || location.can_consume === true,
+      can_receive_deliveries: !!location.can_receive_deliveries,
+      can_transfer_out: !!location.can_transfer_out,
+      can_transfer_in: !!location.can_transfer_in,
+      can_consume: !!location.can_consume,
       manager_name: location.manager_name || '',
     });
     setShowModal(true);
@@ -169,12 +169,12 @@ export const LocationsPage = () => {
         </div>
         <div className="flex gap-2">
           <HelpButton
-            title="ajutor gestionare locatii"
+            title="Ajutor Gestionare Locații"
             content={
               <div>
                 <h5>📍 Ce este Gestionarea Locațiilor?</h5>
                 <p>
-                  Gestionarea locațiilor permite crearea și administrarea locațiilor restaurantului, 
+                  Gestionarea locațiilor permite crearea și administrarea locațiilor restaurantului,
                   inclusiv depozite și unități operaționale, cu control granular asupra capabilităților fiecărei locații.
                 </p>
                 <h5 className="mt-4">🏢 Tipuri de locații</h5>
@@ -184,20 +184,20 @@ export const LocationsPage = () => {
                 </ul>
                 <h5 className="mt-4">⚙️ Capabilități disponibile</h5>
                 <ul>
-                  <li><strong>"poate primi livrari"</strong> - Locația poate primi livrări de la furnizori</li>
-                  <li><strong>"poate transfera in afara"</strong> - Locația poate transfera stocuri către alte locații</li>
-                  <li><strong>"poate transfera inauntru"</strong> - Locația poate primi transferuri de la alte locații</li>
+                  <li><strong>Poate primi livrări</strong> - Locația poate primi livrări de la furnizori</li>
+                  <li><strong>Poate transfera în afara</strong> - Locația poate transfera stocuri către alte locații</li>
+                  <li><strong>Poate transfera înăuntru</strong> - Locația poate primi transferuri de la alte locații</li>
                   <li><strong>Poate consuma</strong> - Locația poate consuma stocuri (pentru preparare, etc.)</li>
                 </ul>
                 <h5 className="mt-4">📋 Funcționalități</h5>
                 <ul>
-                  <li><strong>"creare locatie"</strong> - Adaugă locații noi cu nume, tip și capabilități</li>
-                  <li><strong>"editare locatie"</strong> - Modifică informațiile locațiilor existenți</li>
+                  <li><strong>Creare locație</strong> - Adaugă locații noi cu nume, tip și capabilități</li>
+                  <li><strong>Editare locație</strong> - Modifică informațiile locațiilor existenți</li>
                   <li><strong>Activare/Dezactivare</strong> - Activează sau dezactivează locații</li>
                   <li><strong>Manager</strong> - Asignează un manager pentru fiecare locație</li>
                 </ul>
                 <div className="alert alert-info mt-4">
-                  <strong>💡 Sfat:</strong> Configurează capabilitățile fiecărei locații în funcție de rolul său. 
+                  <strong>💡 Sfat:</strong> Configurează capabilitățile fiecărei locații în funcție de rolul său.
                   De exemplu, un depozit poate primi livrări și transfera, dar nu consuma.
                 </div>
               </div>
@@ -216,9 +216,8 @@ export const LocationsPage = () => {
         {locations.map((location) => (
           <div
             key={location.id}
-            className={`border rounded-lg p-4 ${
-              location.is_active ? 'border-green-200 bg-green-50' : 'border-gray-200 bg-gray-50'
-            }`}
+            className={`border rounded-lg p-4 ${location.is_active ? 'border-green-200 bg-green-50' : 'border-gray-200 bg-gray-50'
+              }`}
           >
             <div className="flex justify-between items-start mb-2">
               <div>
@@ -226,9 +225,8 @@ export const LocationsPage = () => {
                 <span className="text-sm text-gray-600 capitalize">{location.type}</span>
               </div>
               <span
-                className={`px-2 py-1 rounded text-xs ${
-                  location.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                }`}
+                className={`px-2 py-1 rounded text-xs ${location.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                  }`}
               >
                 {location.is_active ? 'Active' : 'Inactive'}
               </span>
@@ -244,7 +242,7 @@ export const LocationsPage = () => {
 
             <div className="flex flex-wrap gap-2 mb-3">
               {location.can_receive_deliveries && (
-                <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">"Deliveries"</span>
+                <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">Deliveries</span>
               )}
               {location.can_transfer_out && (
                 <span className="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded">
@@ -272,11 +270,10 @@ export const LocationsPage = () => {
               </button>
               <button
                 onClick={() => handleToggleActive(location.id, location.is_active)}
-                className={`px-3 py-1 text-sm rounded ${
-                  location.is_active
-                    ? 'bg-gray-600 text-white hover:bg-gray-700'
-                    : 'bg-green-600 text-white hover:bg-green-700'
-                }`}
+                className={`px-3 py-1 text-sm rounded ${location.is_active
+                  ? 'bg-gray-600 text-white hover:bg-gray-700'
+                  : 'bg-green-600 text-white hover:bg-green-700'
+                  }`}
               >
                 {location.is_active ? 'Deactivate' : 'Activate'}
               </button>
@@ -284,7 +281,7 @@ export const LocationsPage = () => {
                 <button
                   onClick={() => handleDelete(location.id)}
                   className="px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700"
-                >"Delete"</button>
+                >Șterge</button>
               )}
             </div>
           </div>
@@ -326,7 +323,7 @@ export const LocationsPage = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1">"Description"</label>
+                <label className="block text-sm font-medium mb-1">Descriere</label>
                 <textarea
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -355,7 +352,7 @@ export const LocationsPage = () => {
                       setFormData({ ...formData, can_receive_deliveries: e.target.checked })
                     }
                     className="mr-2"
-                  />"can receive deliveries"</label>
+                  />Poate primi livrări</label>
                 <label className="flex items-center">
                   <input
                     type="checkbox"

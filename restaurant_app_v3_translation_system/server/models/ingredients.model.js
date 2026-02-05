@@ -34,7 +34,8 @@ class IngredientsModel extends BaseModel {
         const db = require('../config/database');
         return await db.all(`
             SELECT * FROM ingredients
-            WHERE is_active = 1
+            WHERE is_available = 1
+              AND is_stock_item = 1
               AND current_stock < min_stock
               AND min_stock > 0
             ORDER BY (current_stock / NULLIF(min_stock, 0)) ASC
@@ -45,7 +46,8 @@ class IngredientsModel extends BaseModel {
         const db = require('../config/database');
         return await db.all(`
             SELECT * FROM ingredients
-            WHERE is_active = 1
+            WHERE is_available = 1
+              AND is_stock_item = 1
               AND current_stock <= (min_stock * 0.2)
               AND min_stock > 0
             ORDER BY current_stock ASC
@@ -88,6 +90,7 @@ class IngredientsModel extends BaseModel {
             last_purchase_date: data.last_purchase_date || null,
             is_hidden: data.is_hidden || 0,
             is_active: data.is_active !== undefined ? data.is_active : 1,
+            is_stock_item: data.is_stock_item !== undefined ? data.is_stock_item : 1,
             // 📊 CÂMPURI NUTRIȚIONALE NOI
             description: data.description || null,
             energy_kcal: data.energy_kcal || 0,
@@ -128,6 +131,10 @@ class IngredientsModel extends BaseModel {
         }
 
         data.updated_at = new Date().toISOString();
+        // Ensure boolean conversion if passed
+        if (data.is_stock_item !== undefined) {
+            data.is_stock_item = data.is_stock_item ? 1 : 0;
+        }
         return await this.update(id, data);
     }
 
@@ -155,7 +162,7 @@ class IngredientsModel extends BaseModel {
                 throw new Error(`Invalid operation. Must be: increase, decrease, or set`);
         }
 
-        return await this.update(id, { 
+        return await this.update(id, {
             current_stock: newStock,
             updated_at: new Date().toISOString()
         });

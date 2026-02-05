@@ -32,24 +32,24 @@ interface Shift {
 }
 
 export const EmployeeSchedulingPage = () => {
-//   const { t } = useTranslation();
+  const { t } = { t: (s: string) => s }; // Fallback or use real translation if context available
   // State Management
   const [activeView, setActiveView] = useState<'calendar' | 'employees'>('calendar');
   const [loading, setLoading] = useState(true);
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [shifts, setShifts] = useState<Shift[]>([]);
   const [liveStats, setLiveStats] = useState<any>(null);
-  
+
   // Date Filters
   const [quickFilter, setQuickFilter] = useState<'this_week' | 'next_week' | 'this_month'>('this_week');
   const [startDate, setStartDate] = useState<string>('');
   const [endDate, setEndDate] = useState<string>('');
-  
+
   // Modals
   const [showShiftModal, setShowShiftModal] = useState(false);
   const [showEmployeeModal, setShowEmployeeModal] = useState(false);
   const [editingShift, setEditingShift] = useState<Shift | null>(null);
-  
+
   // Forms
   const [shiftForm, setShiftForm] = useState({
     shift_date: '',
@@ -60,7 +60,7 @@ export const EmployeeSchedulingPage = () => {
     employee_id: '',
     status: 'scheduled'
   });
-  
+
   const [employeeForm, setEmployeeForm] = useState({
     name: '',
     role: 'waiter',
@@ -73,13 +73,13 @@ export const EmployeeSchedulingPage = () => {
   const applyQuickFilter = (filter: string) => {
     const now = new Date();
     let start, end;
-    
+
     if (filter === 'this_week') {
       const dayOfWeek = now.getDay();
       const monday = new Date(now);
       monday.setDate(now.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
       start = monday.toISOString().split('T')[0];
-      
+
       const sunday = new Date(monday);
       sunday.setDate(monday.getDate() + 6);
       end = sunday.toISOString().split('T')[0];
@@ -88,7 +88,7 @@ export const EmployeeSchedulingPage = () => {
       const monday = new Date(now);
       monday.setDate(now.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1) + 7);
       start = monday.toISOString().split('T')[0];
-      
+
       const sunday = new Date(monday);
       sunday.setDate(monday.getDate() + 6);
       end = sunday.toISOString().split('T')[0];
@@ -96,7 +96,7 @@ export const EmployeeSchedulingPage = () => {
       start = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split('T')[0];
       end = new Date(now.getFullYear(), now.getMonth() + 1, 0).toISOString().split('T')[0];
     }
-    
+
     setStartDate(start!);
     setEndDate(end!);
     setQuickFilter(filter as any);
@@ -117,7 +117,7 @@ export const EmployeeSchedulingPage = () => {
 
   const loadShifts = async () => {
     if (!startDate || !endDate) return;
-    
+
     setLoading(true);
     try {
       const params = new URLSearchParams({ startDate, endDate });
@@ -189,7 +189,7 @@ export const EmployeeSchedulingPage = () => {
   const handleUpdateShift = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingShift) return;
-    
+
     try {
       const res = await fetch(`/api/scheduling/shifts/${editingShift.id}`, {
         method: 'PUT',
@@ -214,7 +214,7 @@ export const EmployeeSchedulingPage = () => {
 
   const handleDeleteShift = async (shiftId: number) => {
     if (!confirm('Sigur ștergi această tură?')) return;
-    
+
     try {
       const res = await fetch(`/api/scheduling/shifts/${shiftId}`, {
         method: 'DELETE'
@@ -230,7 +230,7 @@ export const EmployeeSchedulingPage = () => {
 
   const handleDuplicateWeek = async () => {
     if (!confirm('Duplici turele din această săptămână pentru săptămâna următoare?')) return;
-    
+
     try {
       const res = await fetch('/api/scheduling/shifts/duplicate-week', {
         method: 'POST',
@@ -333,8 +333,8 @@ export const EmployeeSchedulingPage = () => {
 
   return (
     <div className="employee-scheduling-page">
-      <PageHeader 
-        title='📅 programare personal & ture' 
+      <PageHeader
+        title='📅 programare personal & ture'
         description="Gestionare completă program angajați (Standard HORECA Enterprise)"
       />
 
@@ -345,7 +345,7 @@ export const EmployeeSchedulingPage = () => {
             <div className="stat-icon">🟢</div>
             <div className="stat-content">
               <div className="stat-value">{liveStats.on_shift || 0}</div>
-              <div className="stat-label">"in tura acum"</div>
+              <div className="stat-label">în tură acum</div>
             </div>
           </div>
           <div className="stat-card stat-upcoming">
@@ -359,14 +359,14 @@ export const EmployeeSchedulingPage = () => {
             <div className="stat-icon">🟡</div>
             <div className="stat-content">
               <div className="stat-value">{liveStats.on_break || 0}</div>
-              <div className="stat-label">"in pauza"</div>
+              <div className="stat-label">în pauză</div>
             </div>
           </div>
           <div className="stat-card stat-late">
             <div className="stat-icon">🔴</div>
             <div className="stat-content">
               <div className="stat-value">{liveStats.late || 0}</div>
-              <div className="stat-label">"Întârziați"</div>
+              <div className="stat-label">Întârziați</div>
             </div>
           </div>
         </div>
@@ -398,17 +398,17 @@ export const EmployeeSchedulingPage = () => {
                 <button
                   className={quickFilter === 'this_week' ? 'active' : ''}
                   onClick={() => applyQuickFilter('this_week')}
-                >"saptamana aceasta"</button>
+                >săptămâna aceasta</button>
                 <button
                   className={quickFilter === 'next_week' ? 'active' : ''}
                   onClick={() => applyQuickFilter('next_week')}
-                >"saptamana viitoare"</button>
+                >săptămâna viitoare</button>
                 <button
                   className={quickFilter === 'this_month' ? 'active' : ''}
                   onClick={() => applyQuickFilter('this_month')}
-                >"luna curenta"</button>
+                >luna curentă</button>
               </div>
-              
+
               <div className="date-range-picker">
                 <input
                   type="date"
@@ -446,13 +446,13 @@ export const EmployeeSchedulingPage = () => {
                 <tr>
                   <th>Data</th>
                   <th>Ora Start</th>
-                  <th>"ora sfarsit"</th>
-                  <th>"Durată"</th>
-                  <th>"Pauză"</th>
-                  <th>"Poziție"</th>
+                  <th>ora sfârșit</th>
+                  <th>Durată</th>
+                  <th>Pauză</th>
+                  <th>Poziție</th>
                   <th>Angajat</th>
                   <th>Status</th>
-                  <th>"Acțiuni"</th>
+                  <th>Acțiuni</th>
                 </tr>
               </thead>
               <tbody>
@@ -462,7 +462,7 @@ export const EmployeeSchedulingPage = () => {
                   let duration = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
                   if (duration < 0) duration += 24;
                   const workHours = duration - (shift.break_duration / 60);
-                  
+
                   return (
                     <tr key={shift.id}>
                       <td><strong>{new Date(shift.shift_date).toLocaleDateString('ro-RO', { weekday: 'short', day: '2-digit', month: '2-digit' })}</strong></td>
@@ -530,7 +530,7 @@ export const EmployeeSchedulingPage = () => {
                       onChange={(e) => setShiftForm({ ...shiftForm, shift_date: e.target.value })}
                     />
                   </div>
-                  
+
                   <div className="form-row-2">
                     <div className="form-group">
                       <label>🕐 Ora Start:</label>
@@ -572,7 +572,7 @@ export const EmployeeSchedulingPage = () => {
                     <input
                       type="text"
                       required
-                      placeholder={t('$([ex_ospatar_sala_1_bucatar_grill_barman] -replace "\[|\]")')}
+                      placeholder="Ex: Ospătar, Bucătar"
                       value={shiftForm.position}
                       onChange={(e) => setShiftForm({ ...shiftForm, position: e.target.value })}
                     />

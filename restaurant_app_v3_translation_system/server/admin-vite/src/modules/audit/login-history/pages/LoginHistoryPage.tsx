@@ -16,7 +16,7 @@ interface LoginHistory {
 }
 
 export const LoginHistoryPage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [history, setHistory] = useState<LoginHistory[]>([]);
   const [loading, setLoading] = useState(true);
   const [failedLogins, setFailedLogins] = useState(0);
@@ -31,10 +31,10 @@ export const LoginHistoryPage: React.FC = () => {
       // Folosim endpoint-ul unificat pentru toți utilizatorii (admin + KIOSK)
       const response = await fetch('/api/audit/login-history?limit=500');
       if (!response.ok) throw new Error('Failed to load login history');
-      
+
       const data = await response.json();
       const historyData = Array.isArray(data) ? data : [];
-      
+
       // Calculează durata pentru fiecare sesiune
       const historyWithDuration = historyData.map((entry: any) => {
         let duration = null;
@@ -45,9 +45,9 @@ export const LoginHistoryPage: React.FC = () => {
         }
         return { ...entry, duration_minutes: duration };
       });
-      
+
       setHistory(historyWithDuration);
-      
+
       // Numără login-uri eșuate
       const failedResponse = await fetch('/api/audit/login-history/failed');
       if (failedResponse.ok) {
@@ -85,9 +85,9 @@ export const LoginHistoryPage: React.FC = () => {
       width: 100,
       cellRenderer: (params: any) => {
         if (params.value === false || params.value === 0) {
-          return `<span class="badge bg-danger">Eșuat</span>`;
+          return <span className="badge bg-danger">Eșuat</span>;
         }
-        return `<span class="badge bg-success">Succes</span>`;
+        return <span className="badge bg-success">Succes</span>;
       }
     }
   ];
@@ -97,13 +97,13 @@ export const LoginHistoryPage: React.FC = () => {
       <div className="page-header margin-bottom-20">
         <h1><i className="fas fa-history me-2"></i>Login History</h1>
         <button className="btn btn-primary" onClick={loadLoginHistory}>
-          <i className="fas fa-sync me-1"></i>"Reîncarcă"</button>
+          <i className="fas fa-sync me-1"></i>Reîncarcă</button>
       </div>
 
       {failedLogins > 0 && (
         <div className="alert alert-warning mb-4">
           <i className="fas fa-exclamation-triangle me-2"></i>
-          <strong>"login uri esuate"</strong> {failedLogins} încercări eșuate detectate
+          <strong>Login-uri eșuate:</strong> {failedLogins} încercări eșuate detectate
         </div>
       )}
 

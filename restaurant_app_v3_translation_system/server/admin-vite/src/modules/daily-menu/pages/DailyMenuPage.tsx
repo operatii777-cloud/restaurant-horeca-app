@@ -1,5 +1,5 @@
 // import { useTranslation } from '@/i18n/I18nContext';
-﻿import type { FormEvent } from 'react';
+import type { FormEvent } from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { StatCard } from '@/shared/components/StatCard';
 import { InlineAlert } from '@/shared/components/InlineAlert';
@@ -14,9 +14,9 @@ import './DailyMenuPage.css';
 
 type FeedbackState =
   | {
-      type: 'success' | 'error' | 'warning' | 'info';
-      message: string;
-    }
+    type: 'success' | 'error' | 'warning' | 'info';
+    message: string;
+  }
   | null;
 
 type SavingState = {
@@ -58,7 +58,7 @@ const matchesCategory = (product: CatalogProduct, patterns: RegExp[]) =>
 const getProductLabel = (product?: CatalogProduct | null) => product?.name ?? 'Produs indisponibil';
 
 export const DailyMenuPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const {
     products,
     currentMenu,
@@ -376,7 +376,7 @@ export const DailyMenuPage = () => {
                 cursor: 'pointer',
                 fontWeight: activeTab === 'today' ? 600 : 500,
               }}
-            >"Astăzi"</button>
+            >Astăzi</button>
             <button
               type="button"
               onClick={() => setActiveTab('calendar')}
@@ -406,7 +406,7 @@ export const DailyMenuPage = () => {
                 cursor: 'pointer',
                 fontWeight: activeTab === 'exceptions' ? 600 : 500,
               }}
-            >"Excepții"</button>
+            >Excepții</button>
           </div>
         </div>
       </div>
@@ -424,7 +424,7 @@ export const DailyMenuPage = () => {
             }}
           >
             <h3 style={{ marginTop: 0, marginBottom: '1rem', fontSize: '1.25rem', fontWeight: 600 }}>'daily-menu.meniul_zilei_pentru_astazi'</h3>
-            <form onSubmit={handleTodaySubmit} className="daily-menu-editor__row">
+            <form id="today-form" onSubmit={handleTodaySubmit} className="daily-menu-editor__row">
               <label>
                 Alege Ciorba:
                 <select
@@ -468,7 +468,7 @@ export const DailyMenuPage = () => {
               </label>
             </form>
             <div className="daily-menu-toolbar__actions" style={{ marginTop: '1rem' }}>
-              <button type="button" onClick={handleTodaySubmit} disabled={saving.today || loading.products}>
+              <button type="submit" form="today-form" disabled={saving.today || loading.products}>
                 {saving.today ? 'Se salvează...' : '💾 Salvează Meniul'}
               </button>
               {currentMenu && (
@@ -526,7 +526,7 @@ export const DailyMenuPage = () => {
             <h3 style={{ marginTop: 0, marginBottom: '1rem', fontSize: '1.25rem', fontWeight: 600 }}>
               Programare Meniu (Interval)
             </h3>
-            <form onSubmit={handleScheduleSubmit} className="daily-menu-editor__row">
+            <form id="schedule-form" onSubmit={handleScheduleSubmit} className="daily-menu-editor__row">
               <label>
                 Data început:
                 <input
@@ -538,12 +538,12 @@ export const DailyMenuPage = () => {
                 />
               </label>
               <label>'daily-menu.data_sfarsit'<input
-                  type="date"
-                  value={scheduleForm.endDate}
-                  onChange={(e) => setScheduleForm((prev) => ({ ...prev, endDate: e.target.value }))}
-                  disabled={saving.schedule}
-                  required
-                />
+                type="date"
+                value={scheduleForm.endDate}
+                onChange={(e) => setScheduleForm((prev) => ({ ...prev, endDate: e.target.value }))}
+                disabled={saving.schedule}
+                required
+              />
               </label>
               <label>
                 Ciorba:
@@ -590,7 +590,7 @@ export const DailyMenuPage = () => {
               </label>
             </form>
             <div className="daily-menu-toolbar__actions" style={{ marginTop: '1rem' }}>
-              <button type="button" onClick={handleScheduleSubmit} disabled={saving.schedule || loading.products}>
+              <button type="submit" form="schedule-form" disabled={saving.schedule || loading.products}>
                 {saving.schedule ? 'Se salvează...' : '📅 Creează Programare'}
               </button>
             </div>
@@ -637,7 +637,7 @@ export const DailyMenuPage = () => {
               </ul>
             </div>
           ) : (
-            <div className="daily-menu-empty" style={{ padding: '2rem', textAlign: 'center' }}>'daily-menu.nu_exista_programari_active'</div>
+            <div className="daily-menu-empty" style={{ padding: '2rem', textAlign: 'center' }}>Nu există programări active</div>
           )}
 
           {schedules.length > 0 && (
@@ -661,8 +661,8 @@ export const DailyMenuPage = () => {
                   background: 'white',
                 }}
               >
-                <h4 style={{ marginTop: 0, marginBottom: '1rem' }}>"Distribuție"</h4>
-                <MiniDonutChart data={donutDataset.chart} legend={donutDataset.legend} />
+                <h4 style={{ marginTop: 0, marginBottom: '1rem' }}>Distribuție</h4>
+                <MiniDonutChart data={donutDataset.chart} />
               </div>
             </div>
           )}
@@ -682,7 +682,7 @@ export const DailyMenuPage = () => {
             }}
           >
             <h3 style={{ marginTop: 0, marginBottom: '1rem', fontSize: '1.25rem', fontWeight: 600 }}>'daily-menu.exceptie_pentru_o_zi_specifica'</h3>
-            <form onSubmit={handleExceptionSubmit} className="daily-menu-editor__row">
+            <form id="exception-form" onSubmit={handleExceptionSubmit} className="daily-menu-editor__row">
               <label>
                 Data:
                 <input
@@ -738,7 +738,7 @@ export const DailyMenuPage = () => {
               </label>
             </form>
             <div className="daily-menu-toolbar__actions" style={{ marginTop: '1rem' }}>
-              <button type="button" onClick={handleExceptionSubmit} disabled={saving.exception || loading.products}>
+              <button type="submit" form="exception-form" disabled={saving.exception || loading.products}>
                 {saving.exception ? 'Se salvează...' : '➕ Creează Excepție'}
               </button>
             </div>

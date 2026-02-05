@@ -32,7 +32,7 @@ interface Holiday {
 const DAYS = ['Duminică', 'Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă'];
 
 export const SchedulePage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [schedules, setSchedules] = useState<Schedule[]>([]);
   const [holidays, setHolidays] = useState<Holiday[]>([]);
   const [loading, setLoading] = useState(true);
@@ -52,7 +52,7 @@ export const SchedulePage: React.FC = () => {
       // Inițializează programul pentru toate zilele dacă nu există
       const existingDays = schedulesData.map(s => s.day_of_week);
       const allSchedules: Schedule[] = [];
-      
+
       for (let i = 0; i < 7; i++) {
         const existing = schedulesData.find(s => s.day_of_week === i);
         if (existing) {
@@ -66,7 +66,7 @@ export const SchedulePage: React.FC = () => {
           });
         }
       }
-      
+
       setSchedules(allSchedules);
       setLoading(false);
     }
@@ -90,10 +90,10 @@ export const SchedulePage: React.FC = () => {
 
   const handleSaveSchedule = async () => {
     try {
-      await updateScheduleMutation.mutate({ 
-        url: '/api/settings/schedule', 
+      await updateScheduleMutation.mutate({
+        url: '/api/settings/schedule',
         method: 'PUT',
-        data: { schedules } 
+        data: { schedules }
       });
       setAlert({ type: 'success', message: 'Program salvat cu succes!' });
       refetchSchedules();
@@ -105,17 +105,17 @@ export const SchedulePage: React.FC = () => {
   const handleSaveHoliday = async (holiday: Holiday) => {
     try {
       if (editingHoliday?.id) {
-        await updateHolidayMutation.mutate({ 
-          url: `/api/settings/holidays/${editingHoliday.id}`, 
+        await updateHolidayMutation.mutate({
+          url: `/api/settings/holidays/${editingHoliday.id}`,
           method: 'PUT',
-          data: holiday 
+          data: holiday
         });
         setAlert({ type: 'success', message: 'Sărbătoare actualizată cu succes!' });
       } else {
-        await createHolidayMutation.mutate({ 
-          url: '/api/settings/holidays', 
+        await createHolidayMutation.mutate({
+          url: '/api/settings/holidays',
           method: 'POST',
-          data: holiday 
+          data: holiday
         });
         setAlert({ type: 'success', message: 'Sărbătoare adăugată cu succes!' });
       }
@@ -129,11 +129,11 @@ export const SchedulePage: React.FC = () => {
 
   const handleDeleteHoliday = async (id: number) => {
     if (!confirm('Sigur doriți să ștergeți această sărbătoare?')) return;
-    
+
     try {
-      await deleteHolidayMutation.mutate({ 
-        url: `/api/settings/holidays/"Id"`, 
-        method: 'DELETE' 
+      await deleteHolidayMutation.mutate({
+        url: `/api/settings/holidays/"Id"`,
+        method: 'DELETE'
       });
       setAlert({ type: 'success', message: 'Sărbătoare ștearsă cu succes!' });
       refetchHolidays();
@@ -162,17 +162,17 @@ export const SchedulePage: React.FC = () => {
       )}
 
       <div className="schedule-page__section">
-        <h3>"program saptamanal"</h3>
+        <h3>Program săptămânal</h3>
         <div className="schedule-table">
           <table className="table">
             <thead>
               <tr>
                 <th>Zi</th>
-                <th>"Închis"</th>
-                <th>"ora deschidere"</th>
-                <th>"ora inchidere"</th>
-                <th>"pauza start"</th>
-                <th>"pauza end"</th>
+                <th>Închis</th>
+                <th>Oră deschidere</th>
+                <th>Oră închidere</th>
+                <th>Pauză start</th>
+                <th>Pauză end</th>
               </tr>
             </thead>
             <tbody>
@@ -237,7 +237,7 @@ export const SchedulePage: React.FC = () => {
 
       <div className="schedule-page__section">
         <div className="section-header">
-          <h3>"Sărbători"</h3>
+          <h3>Sărbători</h3>
           <button
             className="btn btn-primary"
             onClick={() => {
@@ -254,15 +254,15 @@ export const SchedulePage: React.FC = () => {
               <tr>
                 <th>Dată</th>
                 <th>Nume</th>
-                <th>"Închis"</th>
-                <th>"Recurent"</th>
-                <th>"Acțiuni"</th>
+                <th>Închis</th>
+                <th>Recurent</th>
+                <th>Acțiuni</th>
               </tr>
             </thead>
             <tbody>
               {holidays.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="text-center">"nu exista sarbatori configurate"</td>
+                  <td colSpan={5} className="text-center">Nu există sărbători configurate</td>
                 </tr>
               ) : (
                 holidays.map((holiday) => (
@@ -371,12 +371,12 @@ const HolidayModal: React.FC<HolidayModalProps> = ({ holiday, onSave, onClose })
                 type="checkbox"
                 checked={formData.is_closed}
                 onChange={(e) => setFormData({ ...formData, is_closed: e.target.checked })}
-              />"restaurant inchis"</label>
+              />Restaurant închis</label>
           </div>
           {!formData.is_closed && (
             <>
               <div className="form-group">
-                <label>"ora deschidere speciala"</label>
+                <label>Oră deschidere specială</label>
                 <input
                   type="time"
                   value={formData.special_open_time || ''}
@@ -385,7 +385,7 @@ const HolidayModal: React.FC<HolidayModalProps> = ({ holiday, onSave, onClose })
                 />
               </div>
               <div className="form-group">
-                <label>"ora inchidere speciala"</label>
+                <label>Oră închidere specială</label>
                 <input
                   type="time"
                   value={formData.special_close_time || ''}
@@ -401,10 +401,10 @@ const HolidayModal: React.FC<HolidayModalProps> = ({ holiday, onSave, onClose })
                 type="checkbox"
                 checked={formData.is_recurring}
                 onChange={(e) => setFormData({ ...formData, is_recurring: e.target.checked })}
-              />"se repeta anual"</label>
+              />Se repetă anual</label>
           </div>
           <div className="modal-actions">
-            <button type="button" className="btn btn-secondary" onClick={onClose}>"Anulează"</button>
+            <button type="button" className="btn btn-secondary" onClick={onClose}>Anulează</button>
             <button type="submit" className="btn btn-primary">
               Salvează
             </button>

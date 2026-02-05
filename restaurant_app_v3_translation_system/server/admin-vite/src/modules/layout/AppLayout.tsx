@@ -47,6 +47,7 @@ export const AppLayout = () => {
             className="layout__main"
             role="main"
             aria-label="Conținut principal"
+            data-testid="admin-main-content"
           >
             <div className="layout__main-wrapper">
               <Outlet />

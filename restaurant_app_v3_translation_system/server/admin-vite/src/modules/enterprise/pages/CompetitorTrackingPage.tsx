@@ -43,7 +43,7 @@ interface Insight {
 }
 
 export const CompetitorTrackingPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [competitors, setCompetitors] = useState<Competitor[]>([]);
   const [selectedCompetitor, setSelectedCompetitor] = useState<number | null>(null);
   const [prices, setPrices] = useState<CompetitorPrice[]>([]);
@@ -190,15 +190,15 @@ export const CompetitorTrackingPage = () => {
           </div>
           <div className="stat-card success">
             <div className="stat-value">{comparison.stats.we_are_cheaper}</div>
-            <div className="stat-label">"noi mai ieftini"</div>
+            <div className="stat-label">noi mai ieftini</div>
           </div>
           <div className="stat-card warning">
             <div className="stat-value">{comparison.stats.we_are_more_expensive}</div>
-            <div className="stat-label">"noi mai scumpi"</div>
+            <div className="stat-label">noi mai scumpi</div>
           </div>
           <div className="stat-card info">
             <div className="stat-value">{comparison.stats.avg_price_diff}%</div>
-            <div className="stat-label">"diferenta medie"</div>
+            <div className="stat-label">diferență medie</div>
           </div>
         </div>
       )}
@@ -220,7 +220,7 @@ export const CompetitorTrackingPage = () => {
         <div className="competitors-panel">
           <h2>🏪 Competitori</h2>
           {competitors.length === 0 ? (
-            <div className="no-data">"nu aveti competitori adaugati"<button onClick={() => setShowAddModal(true)}>➕ Adaugă primul competitor</button>
+            <div className="no-data">nu aveți competitori adăugați<button onClick={() => setShowAddModal(true)}>➕ Adaugă primul competitor</button>
             </div>
           ) : (
             <div className="competitors-list">
@@ -252,15 +252,15 @@ export const CompetitorTrackingPage = () => {
                 </button>
               </div>
               {prices.length === 0 ? (
-                <div className="no-data">"nu sunt preturi inregistrate pentru acest competit"</div>
+                <div className="no-data">nu sunt prețuri înregistrate pentru acest competitor</div>
               ) : (
                 <table className="prices-table">
                   <thead>
                     <tr>
-                      <th>"produs competitor"</th>
-                      <th>"pret competitor"</th>
+                      <th>produs competitor</th>
+                      <th>preț competitor</th>
                       <th>Produsul Nostru</th>
-                      <th>"pretul nostru"</th>
+                      <th>prețul nostru</th>
                       <th>Diferență</th>
                     </tr>
                   </thead>
@@ -312,7 +312,7 @@ export const CompetitorTrackingPage = () => {
                 type="text"
                 value={newCompetitor.location}
                 onChange={(e) => setNewCompetitor({ ...newCompetitor, location: e.target.value })}
-                placeholder={t('$([bucuresti_sector_1] -replace "\[|\]")')}
+                placeholder="Ex: București, Sector 1"
               />
             </div>
             <div className="form-group">
@@ -330,7 +330,7 @@ export const CompetitorTrackingPage = () => {
                 value={newCompetitor.category}
                 onChange={(e) => setNewCompetitor({ ...newCompetitor, category: e.target.value })}
               >
-                <option value="Restaurant">"Restaurant"</option>
+                <option value="Restaurant">Restaurant</option>
                 <option value="Fast Food">Fast Food</option>
                 <option value="Pizzerie">Pizzerie</option>
                 <option value="Cafenea">Cafenea</option>
@@ -338,7 +338,7 @@ export const CompetitorTrackingPage = () => {
               </select>
             </div>
             <div className="modal-actions">
-              <button className="btn-cancel" onClick={() => setShowAddModal(false)}>"Anulează"</button>
+              <button className="btn-cancel" onClick={() => setShowAddModal(false)}>Anulează</button>
               <button className="btn-save" onClick={handleAddCompetitor}>Salvează</button>
             </div>
           </div>
@@ -379,7 +379,7 @@ export const CompetitorTrackingPage = () => {
               />
             </div>
             <div className="modal-actions">
-              <button className="btn-cancel" onClick={() => setShowAddPriceModal(false)}>"Anulează"</button>
+              <button className="btn-cancel" onClick={() => setShowAddPriceModal(false)}>Anulează</button>
               <button className="btn-save" onClick={handleAddPrice}>Salvează</button>
             </div>
           </div>

@@ -4,7 +4,7 @@ import { TemperatureChart } from './TemperatureChart';
 import './ComplianceDashboardTab.css';
 
 export const ComplianceDashboardTab = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const { data: recentTemps } = useApiQuery('/api/compliance/temperature-log?limit=24');
   const { data: overdueTasks } = useApiQuery('/api/compliance/cleaning-schedule?overdue=true');
   const { data: upcomingMaintenance } = useApiQuery('/api/compliance/equipment-maintenance?status=scheduled');
@@ -13,7 +13,7 @@ export const ComplianceDashboardTab = () => {
     <div className="compliance-dashboard-tab">
       <div className="dashboard-grid">
         <div className="dashboard-section">
-          <h3>"alertari critice"</h3>
+          <h3>Alertări Critice</h3>
           <div className="alerts-list">
             {overdueTasks?.data?.length > 0 ? (
               overdueTasks.data.map((task: any) => (
@@ -28,14 +28,14 @@ export const ComplianceDashboardTab = () => {
             ) : (
               <div className="no-alerts">
                 <i className="fas fa-check-circle text-success"></i>
-                <span>"nicio alerta critica"</span>
+                <span>Nicio alertă critică</span>
               </div>
             )}
           </div>
         </div>
 
         <div className="dashboard-section">
-          <h3>"mentenante aproape de termen"</h3>
+          <h3>Mentenanțe aproape de termen</h3>
           <div className="maintenance-list">
             {upcomingMaintenance?.data?.slice(0, 5).map((maint: any) => (
               <div key={maint.id} className="maintenance-item">
@@ -44,7 +44,7 @@ export const ComplianceDashboardTab = () => {
                   <p>{maint.maintenance_type} - {new Date(maint.scheduled_date).toLocaleDateString('ro-RO')}</p>
                 </div>
               </div>
-            )) || <p>"nicio mentenanta programata"</p>}
+            )) || <p>Nicio mentenanță programată</p>}
           </div>
         </div>
       </div>

@@ -44,7 +44,7 @@ interface WeatherSettings {
 }
 
 export const WeatherForecastPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [predictions, setPredictions] = useState<Prediction[]>([]);
@@ -69,21 +69,21 @@ export const WeatherForecastPage = () => {
       }
       const weatherData = await weatherRes.json();
       console.log('Weather data received:', weatherData);
-      
+
       if (weatherData.success && weatherData.weather) {
         setWeather(weatherData.weather);
-        
+
         // Load predictions using weather data
         const temp = weatherData.weather.temperature || 22;
         const condition = weatherData.weather.condition || 'normal';
-        const predRes = await fetch(`/api/weather-forecast/predictions?temperature="Temp"&condition="Condition"`);
-        
+        const predRes = await fetch(`/api/weather-forecast/predictions?temperature=${temp}&condition=${condition}`);
+
         if (!predRes.ok) {
           throw new Error(`HTTP error! status: ${predRes.status}`);
         }
         const predData = await predRes.json();
         console.log('Predictions data received:', predData);
-        
+
         if (predData.success) {
           setPredictions(predData.predictions || []);
           setRecommendations(predData.recommendations);
@@ -126,11 +126,11 @@ export const WeatherForecastPage = () => {
         },
         body: JSON.stringify(settings)
       });
-      
+
       if (!res.ok) {
         throw new Error('Eroare la salvarea setărilor');
       }
-      
+
       const data = await res.json();
       if (data.success) {
         setShowSettings(false);
@@ -183,7 +183,7 @@ export const WeatherForecastPage = () => {
         title="🌤️ Weather-Based Sales Forecasting"
         description="Predicții vânzări bazate pe condițiile meteo"
         actions={[
-          { label: '⚙️ Setări Locație', variant: 'outline-primary', onClick: () => setShowSettings(true) },
+          { label: '⚙️ Setări Locație', variant: 'primary', onClick: () => setShowSettings(true) },
           { label: '🔄 Refresh', variant: 'secondary', onClick: loadData },
         ]}
       />

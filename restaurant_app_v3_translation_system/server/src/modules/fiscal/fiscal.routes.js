@@ -12,6 +12,7 @@ const controller = require('./fiscal.controller');
 router.get('/anaf-sync-status', controller.getAnafSyncStatus);
 router.post('/retransmit-monthly', controller.retransmitMonthly);
 router.post('/sync-all', controller.syncAll);
+router.get('/z-report', controller.getZReport);
 
 module.exports = router;
 

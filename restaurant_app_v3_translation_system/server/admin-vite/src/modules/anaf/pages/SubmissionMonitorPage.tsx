@@ -13,7 +13,7 @@ import './SubmissionMonitorPage.css';
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
 async function resubmitDocument(documentId: number, documentType: string) {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const response = await fetch(`${API_BASE_URL}/api/anaf/resubmit/${documentId}?documentType=${documentType}`, {
     method: 'POST',
     headers: {
@@ -29,7 +29,7 @@ async function resubmitDocument(documentId: number, documentType: string) {
 }
 
 export function SubmissionMonitorPage() {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const [filters, setFilters] = useState({
     documentType: '',
@@ -117,7 +117,7 @@ export function SubmissionMonitorPage() {
     <div className="submission-monitor-page">
       <header className="page-header">
         <h1 className="page-title">Submission Monitor</h1>
-        <p className="page-subtitle">"monitorizare si gestionare trimiteri anaf"</p>
+        <p className="page-subtitle">Monitorizare și gestionare trimiteri ANAF</p>
         <button onClick={() => refetch()} className="btn btn-secondary btn-sm">
           🔄 Actualizează
         </button>
@@ -135,8 +135,8 @@ export function SubmissionMonitorPage() {
               className="form-control"
             >
               <option value="">"Toate"</option>
-              <option value="FACTURA">"Factură"</option>
-              <option value="CHITANTA">"Chitanță"</option>
+              <option value="FACTURA">Factură</option>
+              <option value="CHITANTA">Chitanță</option>
               <option value="BON_FISCAL">Bon Fiscal</option>
             </select>
           </div>
@@ -153,7 +153,7 @@ export function SubmissionMonitorPage() {
               <option value="PROCESSING">Processing</option>
               <option value="SUBMITTED">Submitted</option>
               <option value="FAILED">Failed</option>
-              <option value="DEAD_LETTER">"dead letter"</option>
+              <option value="DEAD_LETTER">Dead Letter</option>
             </select>
           </div>
 
@@ -187,18 +187,18 @@ export function SubmissionMonitorPage() {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>"Document"</th>
+                <th>Document</th>
                 <th>Status</th>
                 <th>Attempts</th>
                 <th>Created</th>
-                <th>"last error"</th>
-                <th>"Acțiuni"</th>
+                <th>Ultima Erore</th>
+                <th>Acțiuni</th>
               </tr>
             </thead>
             <tbody>
               {submissions.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="text-center text-muted">"nu exista submissions"</td>
+                  <td colSpan={7} className="text-center text-muted">Nu există submissions.</td>
                 </tr>
               ) : (
                 submissions.map((sub: any) => (

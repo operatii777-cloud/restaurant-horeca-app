@@ -18,7 +18,7 @@ interface Reward {
 }
 
 export const LoyaltyPage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [rewards, setRewards] = useState<Reward[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -40,7 +40,7 @@ export const LoyaltyPage: React.FC = () => {
       setLoading(true);
       const response = await fetch('/api/loyalty/rewards');
       if (!response.ok) throw new Error('Failed to load rewards');
-      
+
       const data = await response.json();
       setRewards(data || []);
     } catch (error) {
@@ -87,7 +87,7 @@ export const LoyaltyPage: React.FC = () => {
 
   const handleSaveReward = async () => {
     try {
-      const url = editingRewardId 
+      const url = editingRewardId
         ? `/api/loyalty/rewards/${editingRewardId}`
         : '/api/loyalty/rewards';
       const method = editingRewardId ? 'PUT' : 'POST';
@@ -136,14 +136,14 @@ export const LoyaltyPage: React.FC = () => {
   const columnDefs = [
     { field: 'name', headerName: 'Nume Recompensă', width: 200 },
     { field: 'combinations_required', headerName: 'Combinații Necesare', width: 180 },
-    { field: "Description", headerName: 'Descriere', width: 300, flex: 1 },
+    { field: 'description', headerName: 'Descriere', width: 300, flex: 1 },
     {
       field: 'is_active',
       headerName: 'Status',
       width: 120,
       cellRenderer: (params: any) => {
-        return params.value 
-          ? '<span class="badge bg-success">Activ</span>' 
+        return params.value
+          ? '<span class="badge bg-success">Activ</span>'
           : '<span class="badge bg-secondary">Inactiv</span>';
       }
     },
@@ -174,7 +174,7 @@ export const LoyaltyPage: React.FC = () => {
       <div className="page-header margin-bottom-20 flex-between">
         <h1><i className="fas fa-gift me-2"></i>Program Loialitate</h1>
         <button className="btn btn-primary" onClick={() => handleOpenModal()}>
-          <i className="fas fa-plus me-1"></i>"adauga recompensa"</button>
+          <i className="fas fa-plus me-1"></i>Adaugă recompensă</button>
       </div>
 
       <div className="ag-theme-alpine-dark" style={{ height: '600px', width: '100%' }}>
@@ -200,7 +200,7 @@ export const LoyaltyPage: React.FC = () => {
               </div>
               <div className="modal-body">
                 <div className="mb-3">
-                  <label className="form-label">"nume recompensa"</label>
+                  <label className="form-label">Nume Recompensă</label>
                   <input
                     type="text"
                     className="form-control"
@@ -210,7 +210,7 @@ export const LoyaltyPage: React.FC = () => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label className="form-label">"combinatii necesare"</label>
+                  <label className="form-label">Combinații Necesare</label>
                   <input
                     type="number"
                     className="form-control"
@@ -221,7 +221,7 @@ export const LoyaltyPage: React.FC = () => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label className="form-label">"Descriere:"</label>
+                  <label className="form-label">Descriere</label>
                   <textarea
                     className="form-control"
                     rows={3}
@@ -246,7 +246,7 @@ export const LoyaltyPage: React.FC = () => {
                 </div>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>"Anulează"</button>
+                <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>Anulează</button>
                 <button type="button" className="btn btn-primary" onClick={handleSaveReward}>
                   {editingRewardId ? 'Actualizează' : 'Salvează'}
                 </button>

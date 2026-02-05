@@ -17,17 +17,17 @@ interface StockAdjustModalProps {
 // Funcție helper pentru conversie unități
 function convertUnit(quantity: number, fromUnit: string, toUnit: string): number {
   if (!quantity || !fromUnit || !toUnit || fromUnit === toUnit) return quantity;
-  
+
   // Conversii pentru greutăți (kg ↔ gr)
   if ((fromUnit === 'kg' && toUnit === 'gr') || (fromUnit === 'gr' && toUnit === 'kg')) {
     return fromUnit === 'kg' ? quantity * 1000 : quantity / 1000;
   }
-  
+
   // Conversii pentru volume (l ↔ ml)
   if ((fromUnit === 'l' && toUnit === 'ml') || (fromUnit === 'ml' && toUnit === 'l')) {
     return fromUnit === 'l' ? quantity * 1000 : quantity / 1000;
   }
-  
+
   return quantity;
 }
 
@@ -37,11 +37,11 @@ function getCompatibleUnits(ingredientUnit: string): string[] {
   if (ingredientUnit === 'gr') return ['gr', 'kg'];
   if (ingredientUnit === 'l') return ['l', 'ml'];
   if (ingredientUnit === 'ml') return ['ml', 'l'];
-  return 'ingredientUnit'; // buc sau alte unități fără conversie
+  return [ingredientUnit]; // buc sau alte unități fără conversie
 }
 
 export const StockAdjustModal = ({ open, ingredient, onClose, onUpdated }: StockAdjustModalProps) => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [operation, setOperation] = useState<Operation>('set');
   const [quantity, setQuantity] = useState<number>(0);
   const [inputUnit, setInputUnit] = useState<string>('');
@@ -56,7 +56,7 @@ export const StockAdjustModal = ({ open, ingredient, onClose, onUpdated }: Stock
     setReason('Ajustare manuală');
     setFeedback(null);
   }, [ingredient]);
-  
+
   // Actualizează inputUnit când se schimbă ingredientul
   useEffect(() => {
     if (ingredient?.unit) {
@@ -98,7 +98,7 @@ export const StockAdjustModal = ({ open, ingredient, onClose, onUpdated }: Stock
         if (response.data?.conversion) {
           successMessage = `Stocul a fost ajustat: ${response.data.conversion.input} → ${response.data.conversion.converted}`;
         }
-        
+
         setFeedback({ type: 'success', message: successMessage });
         await onUpdated();
         resetState();
@@ -140,11 +140,11 @@ export const StockAdjustModal = ({ open, ingredient, onClose, onUpdated }: Stock
             <label className="stock-adjust-modal__label">Tip ajustare</label>
             <div className="stock-adjust-modal__radio-group">
               <label>
-                <input type="radio" name="operation" value="set" checked={operation === 'set'} onChange={() => setOperation('set')} />"seteaza valoare exacta"</label>
+                <input type="radio" name="operation" value="set" checked={operation === 'set'} onChange={() => setOperation('set')} />seteaza valoare exacta</label>
               <label>
-                <input type="radio" name="operation" value="increase" checked={operation === 'increase'} onChange={() => setOperation('increase')} />"adauga la stoc"</label>
+                <input type="radio" name="operation" value="increase" checked={operation === 'increase'} onChange={() => setOperation('increase')} />adauga la stoc</label>
               <label>
-                <input type="radio" name="operation" value="decrease" checked={operation === 'decrease'} onChange={() => setOperation('decrease')} />"scade din stoc"</label>
+                <input type="radio" name="operation" value="decrease" checked={operation === 'decrease'} onChange={() => setOperation('decrease')} />scade din stoc</label>
             </div>
           </div>
 
@@ -161,7 +161,7 @@ export const StockAdjustModal = ({ open, ingredient, onClose, onUpdated }: Stock
                 required
                 value={quantity}
                 onChange={(event) => setQuantity(Number(event.target.value))}
-                style={{ flex: 1 }}
+                style={{ flex: '1 1 auto', fontSize: '24px', padding: '12px', minWidth: '200px', height: '50px' }}
               />
               <select
                 value={inputUnit}
@@ -210,7 +210,7 @@ export const StockAdjustModal = ({ open, ingredient, onClose, onUpdated }: Stock
           ) : null}
 
           <footer className="stock-adjust-modal__footer">
-            <button type="button" className="btn btn-ghost" onClick={handleClose} disabled={submitting}>"Anulează"</button>
+            <button type="button" className="btn btn-ghost" onClick={handleClose} disabled={submitting}>Anulează</button>
             <button type="submit" className="btn btn-primary" disabled={submitting}>
               {submitting ? 'Se aplică…' : 'Aplică ajustarea'}
             </button>

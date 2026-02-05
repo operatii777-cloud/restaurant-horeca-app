@@ -19,7 +19,7 @@ interface FiscalDocument {
 }
 
 export const FiscalArchivePage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [documents, setDocuments] = useState<FiscalDocument[]>([]);
   const [loading, setLoading] = useState(false);
   const [filterType, setFilterType] = useState<string>('');
@@ -146,12 +146,12 @@ export const FiscalArchivePage = () => {
 
   return (
     <div className="fiscal-archive-page">
-      <h2 className="mb-4">"arhiva documente fiscale"</h2>
+      <h2 className="mb-4">Arhivă Documente Fiscale</h2>
 
       <Card className="shadow-sm mb-4">
         <Card.Header className="bg-info text-white d-flex justify-content-between align-items-center">
           <h5 className="mb-0">
-            <i className="fas fa-archive me-2"></i>"arhiva documente fiscale"</h5>
+            <i className="fas fa-archive me-2"></i>Arhivă Documente Fiscale</h5>
           <div>
             <Button variant="light" size="sm" className="me-2" onClick={() => handleExportArchive('excel')}>
               <i className="fas fa-file-excel me-1"></i>Export Excel
@@ -167,8 +167,8 @@ export const FiscalArchivePage = () => {
             <Col md={3}>
               <Form.Label>Tip Document</Form.Label>
               <Form.Select value={filterType} onChange={(e) => setFilterType(e.target.value)}>
-                <option value="">"Toate"</option>
-                <option value="invoice">"Factură"</option>
+                <option value="">Toate</option>
+                <option value="invoice">Factură</option>
                 <option value="receipt">Bon Fiscal</option>
                 <option value="fiscal_report">Raport Fiscal</option>
                 <option value="monthly_report">Raport Lunar</option>
@@ -178,10 +178,10 @@ export const FiscalArchivePage = () => {
             <Col md={3}>
               <Form.Label>Status</Form.Label>
               <Form.Select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
-                <option value="">"Toate"</option>
-                <option value="draft">"Ciornă"</option>
+                <option value="">Toate</option>
+                <option value="draft">Ciornă</option>
                 <option value="issued">Emis</option>
-                <option value="cancelled">"Anulat"</option>
+                <option value="cancelled">Anulat</option>
                 <option value="archived">Arhivat</option>
               </Form.Select>
             </Col>
@@ -212,7 +212,7 @@ export const FiscalArchivePage = () => {
                 </InputGroup.Text>
                 <Form.Control
                   type="text"
-                  placeholder="cauta dupa numar document sau tip"
+                  placeholder="Caută după număr document sau tip"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -227,7 +227,7 @@ export const FiscalArchivePage = () => {
           {loading ? (
             <div className="text-center py-4">
               <i className="fas fa-spinner fa-spin fa-2x text-info"></i>
-              <p className="mt-2">"se incarca documentele"</p>
+              <p className="mt-2">Se încarcă documentele...</p>
             </div>
           ) : (
             <div className="table-responsive">
@@ -235,12 +235,12 @@ export const FiscalArchivePage = () => {
                 <thead>
                   <tr>
                     <th>Tip</th>
-                    <th>"numar document"</th>
+                    <th>Număr document</th>
                     <th>Data</th>
                     <th>Valoare</th>
                     <th>TVA</th>
                     <th>Status</th>
-                    <th>"Acțiuni"</th>
+                    <th>Acțiuni</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -270,7 +270,7 @@ export const FiscalArchivePage = () => {
                       ))
                   ) : (
                     <tr>
-                      <td colSpan={7} className="text-center text-muted">"nu exista documente in arhiva pentru filtrele sele"</td>
+                      <td colSpan={7} className="text-center text-muted">Nu există documente în arhivă pentru filtrele selectate</td>
                     </tr>
                   )}
                 </tbody>
@@ -282,12 +282,12 @@ export const FiscalArchivePage = () => {
           {filteredDocuments.length > 0 && (
             <Card className="mt-4">
               <Card.Header>
-                <h6 className="mb-0">"statistici arhiva"</h6>
+                <h6 className="mb-0">Statistici Arhivă</h6>
               </Card.Header>
               <Card.Body>
                 <Row>
                   <Col md={3}>
-                    <strong>"total documente"</strong> {filteredDocuments.length}
+                    <strong>Total documente</strong> {filteredDocuments.length}
                   </Col>
                   <Col md={3}>
                     <strong>Valoare Totală:</strong>' '
@@ -298,7 +298,7 @@ export const FiscalArchivePage = () => {
                     {filteredDocuments.reduce((sum, doc) => sum + doc.tax_amount, 0).toFixed(2)} RON
                   </Col>
                   <Col md={3}>
-                    <strong>"valoare cu tva"</strong>' '
+                    <strong>Valoare cu TVA</strong>' '
                     {filteredDocuments
                       .reduce((sum, doc) => sum + doc.amount + doc.tax_amount, 0)
                       .toFixed(2)}' '

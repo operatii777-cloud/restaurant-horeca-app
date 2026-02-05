@@ -25,6 +25,13 @@ router.get('/ingredients', controller.getStocks);
 // IMPORTANT: Must be BEFORE stockAlertsRoutes to avoid route conflicts
 router.get('/finished-products', controller.getFinishedProducts);
 
+// GET /api/stock/finished-products/:id - Detalii stoc produs finit
+router.get('/finished-products/:id', controller.getFinishedProduct);
+
+// POST/PUT /api/stock/finished-products - Actualizare stoc produs finit
+router.post('/finished-products', controller.updateFinishedProductStock);
+router.put('/finished-products/:id', controller.updateFinishedProductStock);
+
 // ML Forecast routes (must be BEFORE stockAlertsRoutes)
 router.get('/forecast-ml/compare', forecastMLController.compareForecasts);
 router.get('/forecast-ml/batch', forecastMLController.getBatchForecastML);

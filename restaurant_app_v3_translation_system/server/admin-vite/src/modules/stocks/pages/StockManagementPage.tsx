@@ -16,10 +16,10 @@ import './StockManagementPage.css';
 type StockTabKey = 'ingredients' | 'finished' | 'recipes' | 'hidden';
 
 const TABS: Array<{ key: StockTabKey; label: string; emoji: string }> = [
-  { key: 'ingredients', label: 'Ingrediente', emoji: '🥬' },
-  { key: 'finished', label: 'Produse finite', emoji: '🍽️' },
-  { key: 'recipes', label: 'Rețete & F.T.P.', emoji: '📋' },
-  { key: 'hidden', label: 'Ingrediente ascunse', emoji: '👻' },
+  { key: 'ingredients', label: 'Ingrediente', emoji: 'fas fa-leaf' },
+  { key: 'finished', label: 'Produse finite', emoji: 'fas fa-utensils' },
+  { key: 'recipes', label: 'Rețete & F.T.P.', emoji: 'fas fa-scroll' },
+  { key: 'hidden', label: 'Ingrediente ascunse', emoji: 'fas fa-ghost' },
 ];
 
 export const StockManagementPage = () => {
@@ -61,7 +61,7 @@ export const StockManagementPage = () => {
             className={classNames({ 'is-active': activeTab === tab.key })}
             onClick={() => setActiveTab(tab.key)}
           >
-            <span aria-hidden="true">{tab.emoji}</span>
+            <i className={`${tab.emoji} me-2`} aria-hidden="true"></i>
             {tab.label}
           </button>
         ))}
@@ -86,8 +86,8 @@ export const StockManagementPage = () => {
               <div>
                 <h5>📦 Ce este Gestionarea Stocurilor?</h5>
                 <p>
-                  Gestionarea stocurilor permite monitorizarea și actualizarea ingredientelor, 
-                  produselor finite și recepțiilor în timp real, cu integrare directă cu NIR, 
+                  Gestionarea stocurilor permite monitorizarea și actualizarea ingredientelor,
+                  produselor finite și recepțiilor în timp real, cu integrare directă cu NIR,
                   trasabilitate și rețete.
                 </p>
                 <h5 className="mt-4">📋 Tab-uri disponibile</h5>
@@ -105,7 +105,7 @@ export const StockManagementPage = () => {
                   <li><strong>Alerte stoc</strong> - Notificări pentru stocuri sub prag minim</li>
                 </ul>
                 <div className="alert alert-info mt-4">
-                  <strong>💡 Sfat:</strong> Folosește Location Switcher pentru a gestiona stocurile 
+                  <strong>💡 Sfat:</strong> Folosește Location Switcher pentru a gestiona stocurile
                   pe locații diferite.
                 </div>
               </div>
@@ -119,9 +119,9 @@ export const StockManagementPage = () => {
         </div>
         {/* Location Switcher pentru Gestiune */}
         <div className="d-flex align-items-center gap-3 mt-3">
-          <span style={{ 
-            fontSize: '14px', 
-            color: theme.text, 
+          <span style={{
+            fontSize: '14px',
+            color: theme.text,
             fontWeight: 500,
           }}>Locație</span>
           <LocationSwitcher />
@@ -133,13 +133,13 @@ export const StockManagementPage = () => {
               title="Ingrediente active"
               helper="Disponibile în gestiune"
               value={`${summary.activeIngredients} / ${summary.totalIngredients}`}
-              icon={<span>✅</span>}
+              icon={<i className="fas fa-check-circle text-success"></i>}
             />
             <StatCard
               title="Ingrediente ascunse"
               helper="Marcate neinventariabile"
               value={`${summary.hiddenIngredients}`}
-              icon={<span>👻</span>}
+              icon={<i className="fas fa-ghost text-muted"></i>}
             />
             <StatCard
               title="Alerte stoc"
@@ -147,13 +147,13 @@ export const StockManagementPage = () => {
               value={`${summary.lowStockIngredients}`}
               trendDirection={summary.lowStockIngredients > 0 ? 'down' : 'flat'}
               trendLabel={summary.lowStockIngredients > 0 ? 'Necesită acțiune' : 'OK'}
-              icon={<span>⚠️</span>}
+              icon={<i className="fas fa-exclamation-triangle text-warning"></i>}
             />
             <StatCard
               title="Produse finite monitorizate"
               helper="Configurate cu stoc"
               value={`${summary.finishedProductsWithStock}`}
-              icon={<span>🍽️</span>}
+              icon={<i className="fas fa-utensils text-primary"></i>}
               footer={<span>{summary.autoManagedProducts} automate</span>}
             />
           </div>

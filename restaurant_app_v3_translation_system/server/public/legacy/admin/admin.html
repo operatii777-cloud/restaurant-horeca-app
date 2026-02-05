@@ -4717,7 +4717,7 @@
             // ✅ Reîncarcă tabelele dinamice din Gestionare Stocuri după schimbarea limbii
             const currentSection = document.querySelector('.section.active, .section[style*="display: block"]');
             if (currentSection && currentSection.id === 'stockSection') {
-                const ingredientsTab = document.getElementById('ingredientsSubsection');
+                const ingredientsTab = document.getElementById('ingredientsSubsection_v2');
                 const finishedProductsTab = document.getElementById('finishedProductsSubsection');
                 const recipesTab = document.getElementById('recipesSubsection');
                 const hiddenIngredientsTab = document.getElementById('hiddenIngredientsSubsection');
@@ -6238,7 +6238,7 @@ Email: contact@trattoria.ro
                 </div>
 
                 <!-- Ingredients Subsection -->
-                <div id="ingredientsSubsection" class="stock-subsection active" data-subsection="ingredients">
+                <div id="ingredientsSubsection_v2" class="stock-subsection active" data-subsection="ingredients">
                     <div class="action-buttons">
                         <button class="btn btn-primary" onclick="loadStockProducts()"
                             data-translate="Actualizează Stocurile">
@@ -6286,7 +6286,7 @@ Email: contact@trattoria.ro
                                     <th data-translate="Acțiuni">Acțiuni</th>
                                 </tr>
                             </thead>
-                            <tbody id="stockTableBody">
+                            <tbody id="stockTableBody_v2">
                             </tbody>
                         </table>
                     </div>
@@ -12399,7 +12399,7 @@ Email: contact@trattoria.ro
 
                 // ✅ GOLEȘTE TABELELE pentru a evita afișarea datelor vechi
                 const tableBody = sub.querySelector('tbody');
-                if (tableBody && sub.id !== subsection + 'Subsection') {
+                if (tableBody && sub.id !== subsection + 'Subsection' && sub.id !== subsection + 'Subsection_v2') {
                     // Nu goli tabelul subsecțiunii care urmează să fie afișată
                     tableBody.innerHTML = '<tr><td colspan="10" class="text-center">Se încarcă...</td></tr>';
                 }
@@ -12416,6 +12416,8 @@ Email: contact@trattoria.ro
                 subsectionElement = document.getElementById('finishedProductsSubsection');
             } else if (subsection === 'hidden-ingredients') {
                 subsectionElement = document.getElementById('hiddenIngredientsSubsection');
+            } else if (subsection === 'ingredients') {
+                subsectionElement = document.getElementById('ingredientsSubsection_v2');
             } else {
                 subsectionElement = document.getElementById(subsection + 'Subsection');
             }
@@ -12491,7 +12493,7 @@ Email: contact@trattoria.ro
         // Încarcă ingredientele cu stocuri (WITH CACHING!)
         function loadStockProducts(forceRefresh = false) {
             const loading = document.getElementById('stockLoading');
-            const tableBody = document.getElementById('stockTableBody');
+            const tableBody = document.getElementById('stockTableBody_v2');
 
             // Check cache first
             if (!forceRefresh) {
@@ -12598,7 +12600,12 @@ Email: contact@trattoria.ro
 
         // Afișează ingredientele cu stocuri în tabel
         function displayStockProducts(ingredients) {
-            const tableBody = document.getElementById('stockTableBody');
+            console.log('📊 Displaying stock products into stockTableBody_v2. Count:', ingredients.length);
+            const tableBody = document.getElementById('stockTableBody_v2');
+            if (!tableBody) {
+                console.error('❌ stockTableBody_v2 NOT FOUND!');
+                return;
+            }
             tableBody.innerHTML = '';
 
             ingredients.forEach(ingredient => {
@@ -12677,6 +12684,7 @@ Email: contact@trattoria.ro
                     </td>
                 `;
                 tableBody.appendChild(row);
+                console.log('✅ Row added for:', ingredient.name);
             });
         }
 

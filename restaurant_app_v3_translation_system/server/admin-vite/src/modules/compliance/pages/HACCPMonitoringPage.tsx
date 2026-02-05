@@ -4,7 +4,7 @@ import { QuickMonitoringForm } from '../components/monitoring/QuickMonitoringFor
 import { MonitoringHistoryTable } from '../components/monitoring/MonitoringHistoryTable';
 
 export const HACCPMonitoringPage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export const HACCPMonitoringPage: React.FC = () => {
     <div className="p-6">
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-gray-900">Monitorizare HACCP</h1>
-        <p className="text-gray-600 mt-1">"inregistrare si vizualizare monitorizari haccp"</p>
+        <p className="text-gray-600 mt-1">înregistrare și vizualizare monitorizări HACCP</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

@@ -79,7 +79,7 @@ const DeleteConfirmModal = ({
 );
 
 export const WaitersPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [filter, setFilter] = useState('');
   const debouncedFilter = useDebouncedValue(filter, 250);
   const [selectedPin, setSelectedPin] = useState<PinRow | null>(null);
@@ -199,7 +199,7 @@ export const WaitersPage = () => {
     return [
       {
         headerName: 'Interfață',
-        field: "Label",
+        field: "label",
         pinned: 'left',
         minWidth: 240,
         cellRenderer: (params: ICellRendererParams<PinRow>) => {
@@ -293,7 +293,7 @@ export const WaitersPage = () => {
   return (
     <div className="waiters-page" data-page-ready={isReady ? 'true' : 'false'}>
       <PageHeader
-        title="gestionare pin uri interfete"
+        title="Gestionare PIN-uri Interfețe"
         description="Administrează codurile de acces pentru Admin Panel, ospătari POS, KDS și stațiile de bar. Rotația PIN-urilor garantează securitatea operațională."
         actions={[
           {
@@ -324,7 +324,7 @@ export const WaitersPage = () => {
             transition: 'all 0.2s ease',
           }}
         >
-          <i className="fas fa-key me-2"></i>"pin uri interfete"</button>
+          <i className="fas fa-key me-2"></i>PIN-uri Interfețe</button>
         <button
           type="button"
           onClick={() => setActiveTab('user-pins')}
@@ -369,54 +369,54 @@ export const WaitersPage = () => {
       {activeTab === 'pins' && (
         <>
 
-      {feedback ? <InlineAlert type={feedback.type} message={feedback.message} /> : null}
-      {error ? <InlineAlert type="error" message={error} /> : null}
+          {feedback ? <InlineAlert type={feedback.type} message={feedback.message} /> : null}
+          {error ? <InlineAlert type="error" message={error} /> : null}
 
-      <section className="waiters-stats">
-        <StatCard title="interfete totale" value={`${stats.total}`} helper="conectate la POS" />
-        <StatCard
-          title="PIN-uri active (hash)"
-          value={`${stats.configured}`}
-          helper={`${stats.missing + stats.legacy} nesetate sau legacy`}
-        />
-        <StatCard title="rotatie intarziata" value={`${stats.due}`} helper="necesită acțiune imediată" />
-        <StatCard title="atentie rotatie" value={`${stats.warning}`} helper="sub 5 zile până la expirare" />
-        <StatCard title="PIN-uri legacy" value={`${stats.legacy}`} helper="de migrat la hash" />
-      </section>
+          <section className="waiters-stats">
+            <StatCard title="Interfețe totale" value={`${stats.total}`} helper="conectate la POS" />
+            <StatCard
+              title="PIN-uri active (hash)"
+              value={`${stats.configured}`}
+              helper={`${stats.missing + stats.legacy} nesetate sau legacy`}
+            />
+            <StatCard title="rotatie intarziata" value={`${stats.due}`} helper="necesită acțiune imediată" />
+            <StatCard title="atentie rotatie" value={`${stats.warning}`} helper="sub 5 zile până la expirare" />
+            <StatCard title="PIN-uri legacy" value={`${stats.legacy}`} helper="de migrat la hash" />
+          </section>
 
-      <section className="waiters-toolbar">
-        <TableFilter value={filter} onChange={setFilter} placeholder="cauta dupa interfata cod sau categorie" />
-      </section>
+          <section className="waiters-toolbar">
+            <TableFilter value={filter} onChange={setFilter} placeholder="Caută după interfață, cod sau categorie" />
+          </section>
 
-      <section className="pin-grid-section">
-        <DataGrid<PinRow>
-          columnDefs={columnDefs}
-          rowData={filteredRows}
-          loading={loading}
-          quickFilterText={debouncedFilter}
-          height="60vh"
-          agGridProps={{
-            rowHeight: 60, // ✅ Înălțime mărită pentru a vedea bine categoriile
-          }}
-        />
-      </section>
+          <section className="pin-grid-section">
+            <DataGrid<PinRow>
+              columnDefs={columnDefs}
+              rowData={filteredRows}
+              loading={loading}
+              quickFilterText={debouncedFilter}
+              height="60vh"
+              agGridProps={{
+                rowHeight: 60, // ✅ Înălțime mărită pentru a vedea bine categoriile
+              }}
+            />
+          </section>
 
-      <PinEditorModal
-        open={editorOpen}
-        interfaceId={selectedPin?.interface ?? null}
-        interfaceLabel={selectedPin?.label ?? ''}
-        onClose={handleCloseEditor}
-        onSuccess={handleEditorSuccess}
-      />
+          <PinEditorModal
+            open={editorOpen}
+            interfaceId={selectedPin?.interface ?? null}
+            interfaceLabel={selectedPin?.label ?? ''}
+            onClose={handleCloseEditor}
+            onSuccess={handleEditorSuccess}
+          />
 
-      <DeleteConfirmModal
-        open={Boolean(pendingDelete)}
-        interfaceLabel={pendingDelete?.label ?? ''}
-        loading={deleteLoading}
-        error={deleteError}
-        onCancel={handleCancelDelete}
-        onConfirm={handleConfirmDelete}
-      />
+          <DeleteConfirmModal
+            open={Boolean(pendingDelete)}
+            interfaceLabel={pendingDelete?.label ?? ''}
+            loading={deleteLoading}
+            error={deleteError}
+            onCancel={handleCancelDelete}
+            onConfirm={handleConfirmDelete}
+          />
         </>
       )}
     </div>

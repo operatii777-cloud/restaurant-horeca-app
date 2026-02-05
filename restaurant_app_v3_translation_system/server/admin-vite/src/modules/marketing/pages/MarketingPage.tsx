@@ -11,7 +11,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import './MarketingPage.css';
 
 export const MarketingPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [segments, setSegments] = useState<CustomerSegment[]>([]);
   const [campaigns, setCampaigns] = useState<MarketingCampaign[]>([]);
   const [loading, setLoading] = useState(true);
@@ -159,7 +159,7 @@ export const MarketingPage = () => {
         <div className="col-md-4">
           <Card>
             <Card.Header className="bg-success text-white">
-              <i className="fas fa-users me-2"></i>"segmente clienti"</Card.Header>
+              <i className="fas fa-users me-2"></i>segmente clienți</Card.Header>
             <Card.Body>
               <p className="text-muted small">
                 Segmentele sunt calculate automat (VIP, Regular, New) pe baza istoricului de comenzi.
@@ -173,10 +173,10 @@ export const MarketingPage = () => {
               >
                 {segmenting ? (
                   <>
-                    <span className="spinner-border spinner-border-sm me-2" role="status"></span>"se proceseaza"</>
+                    <span className="spinner-border spinner-border-sm me-2" role="status"></span>se procesează</>
                 ) : (
                   <>
-                    <i className="fas fa-magic me-2"></i>"ruleaza segmentare acum"</>
+                    <i className="fas fa-magic me-2"></i>rulează segmentare acum</>
                 )}
               </Button>
 
@@ -209,7 +209,7 @@ export const MarketingPage = () => {
               {segments.length === 0 && (
                 <div className="text-center py-4 text-muted">
                   <i className="fas fa-users fa-3x mb-3 opacity-50"></i>
-                  <p>"nu exista segmente ruleaza segmentarea automata pe"</p>
+                  <p>nu există segmente, rulează segmentarea automată</p>
                 </div>
               )}
             </Card.Body>
@@ -220,21 +220,21 @@ export const MarketingPage = () => {
         <div className="col-md-8">
           <Card>
             <Card.Header>
-              <i className="fas fa-tags me-2"></i>"gestiune campanii de marketing"</Card.Header>
+              <i className="fas fa-tags me-2"></i>gestiune campanii de marketing</Card.Header>
             <Card.Body>
-              <p className="text-muted">"creeaza campanii de reduceri sau fidelizare tintin"</p>
+              <p className="text-muted">creează campanii de reduceri sau fidelizare țintite</p>
               {campaigns.length === 0 ? (
                 <div className="text-center py-4 text-muted">
                   <i className="fas fa-tags fa-3x mb-3 opacity-50"></i>
-                  <p>"nu exista campanii active"</p>
+                  <p>nu există campanii active</p>
                   <Button variant="primary" onClick={handleOpenCampaignModal}>
-                    <i className="fas fa-plus me-2"></i>"adauga prima campanie"</Button>
+                    <i className="fas fa-plus me-2"></i>adaugă prima campanie</Button>
                 </div>
               ) : (
                 <Table striped hover responsive>
                   <thead>
                     <tr>
-                      <th>"nume campanie"</th>
+                      <th>nume campanie</th>
                       <th>Tip</th>
                       <th>Perioadă</th>
                       <th>Status</th>
@@ -271,7 +271,7 @@ export const MarketingPage = () => {
             </Card.Body>
           </Card>
         </div>
-      </div>
+      </div >
 
       <CampaignModal
         show={showCampaignModal}
@@ -284,7 +284,7 @@ export const MarketingPage = () => {
         segment={selectedSegment}
         onClose={handleCloseSegmentModal}
       />
-    </div>
+    </div >
   );
 };
 

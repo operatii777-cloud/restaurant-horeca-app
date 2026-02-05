@@ -39,7 +39,7 @@ const ITEM_TYPES = [
 ];
 
 export const CoatroomPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [tickets, setTickets] = useState<CoatroomTicket[]>([]);
   const [stats, setStats] = useState<CoatroomStats | null>(null);
   const [loading, setLoading] = useState(true);
@@ -118,7 +118,7 @@ export const CoatroomPage = () => {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'OPEN': return <Badge bg="success">Activ</Badge>;
-      case 'CLOSED': return <Badge bg="secondary">"Închis"</Badge>;
+      case 'CLOSED': return <Badge bg="secondary">Închis</Badge>;
       case 'LOST': return <Badge bg="danger">Pierdut</Badge>;
       default: return <Badge bg="secondary">{status}</Badge>;
     }
@@ -127,7 +127,7 @@ export const CoatroomPage = () => {
   return (
     <div className="coatroom-page">
       <PageHeader
-        title='🧥 garderoba & valet'
+        title='🧥 Garderobă & Valet'
         description="Gestionare tichete garderobă și valet parking"
         actions={[
           {
@@ -137,7 +137,7 @@ export const CoatroomPage = () => {
           },
           {
             label: 'Check-out',
-            variant: 'warning',
+            variant: 'secondary',
             onClick: () => setShowCheckoutModal(true)
           },
           {
@@ -161,7 +161,7 @@ export const CoatroomPage = () => {
             <Card className="text-center shadow-sm">
               <Card.Body>
                 <h3 className="mb-0">{stats.today_tickets}</h3>
-                <p className="text-muted mb-0">"Astăzi"</p>
+                <p className="text-muted mb-0">Astăzi</p>
               </Card.Body>
             </Card>
           </Col>
@@ -177,7 +177,7 @@ export const CoatroomPage = () => {
             <Card className="text-center shadow-sm border-secondary">
               <Card.Body>
                 <h3 className="mb-0">{stats.closed_tickets}</h3>
-                <p className="text-muted mb-0">"Închise"</p>
+                <p className="text-muted mb-0">Închise</p>
               </Card.Body>
             </Card>
           </Col>
@@ -197,9 +197,9 @@ export const CoatroomPage = () => {
         <Card.Body>
           <Form.Label>Status</Form.Label>
           <Form.Select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-            <option value="">"Toate"</option>
+            <option value="">Toate</option>
             <option value="OPEN">Active</option>
-            <option value="CLOSED">"Închise"</option>
+            <option value="CLOSED">Închise</option>
             <option value="LOST">Pierdute</option>
           </Form.Select>
         </Card.Body>
@@ -208,7 +208,7 @@ export const CoatroomPage = () => {
       {/* Tickets Table */}
       <Card className="mt-4 shadow-sm">
         <Card.Header className="bg-white">
-          <h5 className="mb-0">"tichete garderoba"</h5>
+          <h5 className="mb-0">Tichete Garderobă</h5>
         </Card.Header>
         <Card.Body className="p-0">
           {loading ? (
@@ -224,13 +224,13 @@ export const CoatroomPage = () => {
                   <th>Client</th>
                   <th>Data</th>
                   <th>Status</th>
-                  <th>"Observații"</th>
+                  <th>Observații</th>
                 </tr>
               </thead>
               <tbody>
                 {tickets.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="text-center py-4">"nu exista tichete"</td>
+                    <td colSpan={6} className="text-center py-4">Nu există tichete</td>
                   </tr>
                 ) : (
                   tickets.map(ticket => (
@@ -278,7 +278,7 @@ export const CoatroomPage = () => {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>"Observații"</Form.Label>
+              <Form.Label>Observații</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={2}
@@ -290,9 +290,9 @@ export const CoatroomPage = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowCheckinModal(false)}>"Anulează"</Button>
+          <Button variant="secondary" onClick={() => setShowCheckinModal(false)}>Anulează</Button>
           <Button variant="success" onClick={handleCheckin}>
-            <i className="fas fa-check me-2"></i>"creeaza tichet"</Button>
+            <i className="fas fa-check me-2"></i>Creează tichet</Button>
         </Modal.Footer>
       </Modal>
 
@@ -312,12 +312,12 @@ export const CoatroomPage = () => {
                 placeholder="Ex: C-20251203-0001"
                 autoFocus
               />
-              <Form.Text className="text-muted">"introdu codul de pe tichet"</Form.Text>
+              <Form.Text className="text-muted">Introdu codul de pe tichet</Form.Text>
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowCheckoutModal(false)}>"Anulează"</Button>
+          <Button variant="secondary" onClick={() => setShowCheckoutModal(false)}>Anulează</Button>
           <Button variant="warning" onClick={handleCheckout}>
             <i className="fas fa-check me-2"></i>Check-out
           </Button>

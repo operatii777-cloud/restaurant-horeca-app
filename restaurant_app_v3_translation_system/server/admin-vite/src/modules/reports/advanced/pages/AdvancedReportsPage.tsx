@@ -64,7 +64,7 @@ interface RevenueChartData {
 }
 
 export const AdvancedReportsPage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<string>('sales');
   const [loading, setLoading] = useState(false);
   const [startDate, setStartDate] = useState(() => {
@@ -87,10 +87,10 @@ export const AdvancedReportsPage: React.FC = () => {
       };
       const endpoint = reportMap[reportType] || 'sales-detailed';
       const url = `/api/reports/"Endpoint"?startDate=${startDate}&endDate=${endDate}&format="Format"`;
-      
+
       const response = await fetch(url);
       if (!response.ok) throw new Error('Export failed');
-      
+
       const blob = await response.blob();
       const downloadUrl = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -169,7 +169,7 @@ export const AdvancedReportsPage: React.FC = () => {
 
   const formatPercent = (value: number) => {
     const sign = value >= 0 ? '+' : '';
-    return `"Sign"${value.toFixed(1)}%`;
+    return `${sign}${value.toFixed(1)}%`;
   };
 
   // Ensure revenueChart is always an array
@@ -213,7 +213,7 @@ export const AdvancedReportsPage: React.FC = () => {
   const getInventoryAlertsChartData = () => {
     const lowStock = inventoryAlerts.filter(a => a.alert_type === 'low').length;
     const outOfStock = inventoryAlerts.filter(a => a.alert_type === 'out').length;
-    
+
     return {
       labels: ['Stoc Scăzut', 'Stoc Epuizat'],
       datasets: [
@@ -238,7 +238,7 @@ export const AdvancedReportsPage: React.FC = () => {
     <div className="advanced-reports-page">
       <div className="page-header">
         <h1>📊 Analytics Avansat</h1>
-        <p>"dashboard avansat cu metrici detaliate grafice int"</p>
+        <p>Dashboard avansat cu metrici detaliate și grafice interactive</p>
       </div>
 
       {error && (
@@ -253,7 +253,7 @@ export const AdvancedReportsPage: React.FC = () => {
           <Col md={3}>
             <Card className="text-center">
               <Card.Body>
-                <h6>"venituri astazi"</h6>
+                <h6>Venituri Astăzi</h6>
                 <h4 className="text-success">{formatCurrency(metrics.todayRevenue)}</h4>
                 <small className={metrics.revenueChange >= 0 ? 'text-success' : 'text-danger'}>
                   {formatPercent(metrics.revenueChange)} față de ieri
@@ -264,7 +264,7 @@ export const AdvancedReportsPage: React.FC = () => {
           <Col md={3}>
             <Card className="text-center">
               <Card.Body>
-                <h6>"comenzi astazi"</h6>
+                <h6>Comenzi Astăzi</h6>
                 <h4>{metrics.todayOrders}</h4>
                 <small className={metrics.ordersChange >= 0 ? 'text-success' : 'text-danger'}>
                   {formatPercent(metrics.ordersChange)} față de ieri
@@ -326,13 +326,13 @@ export const AdvancedReportsPage: React.FC = () => {
 
       {/* Tabs */}
       <Tabs activeKey={activeTab} onSelect={(k) => k && setActiveTab(k)} className="mb-4">
-        <Tab eventKey="sales" title='💰 vanzari'>
+        <Tab eventKey="sales" title='💰 Vânzări'>
           <SalesReportTab
             startDate={startDate}
             endDate={endDate}
             onExport={async (format) => {
               try {
-                const url = `/api/reports/sales-detailed?startDate=${startDate}&endDate=${endDate}&format="Format"`;
+                const url = `/api/reports/sales-detailed?startDate=${startDate}&endDate=${endDate}&format=${format}`;
                 window.open(url, '_blank');
               } catch (err) {
                 console.error('Export error:', err);
@@ -356,7 +356,7 @@ export const AdvancedReportsPage: React.FC = () => {
           />
         </Tab>
 
-        <Tab eventKey="customers" title='👥 comportament clienti'>
+        <Tab eventKey="customers" title='👥 Comportament Clienți'>
           <CustomerBehaviorReportTab
             startDate={startDate}
             endDate={endDate}
@@ -424,7 +424,7 @@ export const AdvancedReportsPage: React.FC = () => {
                     </div>
                   ) : inventoryAlerts.length === 0 ? (
                     <Alert variant="success">
-                      <i className="fas fa-check-circle me-2"></i>"nu exista alerte de inventar"</Alert>
+                      <i className="fas fa-check-circle me-2"></i>Nu există alerte de inventar</Alert>
                   ) : (
                     <>
                       <div className="mb-3" style={{ height: '200px' }}>
@@ -463,7 +463,7 @@ export const AdvancedReportsPage: React.FC = () => {
         <Tab eventKey="revenue" title="💰 Venituri">
           <Card>
             <Card.Header>
-              <h5 className="mb-0">"analiza venituri"</h5>
+              <h5 className="mb-0">Analiză Venituri</h5>
             </Card.Header>
             <Card.Body>
               {loading ? (
@@ -526,7 +526,7 @@ export const AdvancedReportsPage: React.FC = () => {
                 </div>
               ) : inventoryAlerts.length === 0 ? (
                 <Alert variant="success">
-                  <i className="fas fa-check-circle me-2"></i>"nu exista alerte de inventar toate ingredientele a"</Alert>
+                  <i className="fas fa-check-circle me-2"></i>Nu există alerte de inventar, toate ingredientele sunt în stoc.</Alert>
               ) : (
                 <>
                   {inventoryAlerts.length > 0 && (
@@ -540,7 +540,7 @@ export const AdvancedReportsPage: React.FC = () => {
                         <th>Ingredient</th>
                         <th>Stoc Curent</th>
                         <th>Stoc Minim</th>
-                        <th>"tip alerta"</th>
+                        <th>Tip Alertă</th>
                         <th>Acțiune</th>
                       </tr>
                     </thead>

@@ -29,7 +29,7 @@ interface VoucherStats {
 }
 
 export const VouchersPage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [vouchers, setVouchers] = useState<Voucher[]>([]);
   const [filteredVouchers, setFilteredVouchers] = useState<Voucher[]>([]);
@@ -236,7 +236,7 @@ export const VouchersPage: React.FC = () => {
   return (
     <div className="vouchers-page">
       <PageHeader
-        title='🎫 vouchere & bonuri valorice'
+        title='🎫 Vouchere & Bonuri Valorice'
         description="Gestionare vouchere, coduri promoționale și bonuri cadou"
       />
 
@@ -319,7 +319,7 @@ export const VouchersPage: React.FC = () => {
       <Card className="mb-4">
         <Card.Header className="d-flex justify-content-between align-items-center">
           <h5 className="mb-0">
-            <i className="fas fa-list me-2"></i>"lista vouchere"</h5>
+            <i className="fas fa-list me-2"></i>Lista Vouchere</h5>
           <Button variant="primary" onClick={() => setShowModal(true)}>
             <i className="fas fa-plus me-2"></i>Voucher Nou
           </Button>
@@ -331,7 +331,7 @@ export const VouchersPage: React.FC = () => {
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
               >
-                <option value="">"toate statusurile"</option>
+                <option value="">Toate statusurile</option>
                 <option value="active">Active</option>
                 <option value="used">Utilizate</option>
                 <option value="expired">Expirate</option>
@@ -342,9 +342,9 @@ export const VouchersPage: React.FC = () => {
                 value={typeFilter}
                 onChange={(e) => setTypeFilter(e.target.value)}
               >
-                <option value="">"toate tipurile"</option>
-                <option value="percentage">"reducere procentuala"</option>
-                <option value="fixed">"valoare fixa"</option>
+                <option value="">Toate tipurile</option>
+                <option value="percentage">Reducere Procentuală</option>
+                <option value="fixed">Valoare Fixă</option>
                 <option value="gift">Bon Cadou</option>
               </Form.Select>
             </div>
@@ -367,8 +367,8 @@ export const VouchersPage: React.FC = () => {
           ) : filteredVouchers.length === 0 ? (
             <div className="text-center py-5">
               <i className="fas fa-ticket-alt fa-4x text-muted mb-3"></i>
-              <h5>"nu exista vouchere"</h5>
-              <p className="text-muted">"creeaza primul voucher sau cod promotional"</p>
+              <h5>Nu există vouchere</h5>
+              <p className="text-muted">Creează primul voucher sau cod promoțional</p>
             </div>
           ) : (
             <Table striped hover responsive>
@@ -377,10 +377,10 @@ export const VouchersPage: React.FC = () => {
                   <th>Cod</th>
                   <th>Tip</th>
                   <th>Valoare</th>
-                  <th>"Utilizări"</th>
-                  <th>"Valabilitate"</th>
+                  <th>Utilizări</th>
+                  <th>Valabilitate</th>
                   <th>Status</th>
-                  <th>"Acțiuni"</th>
+                  <th>Acțiuni</th>
                 </tr>
               </thead>
               <tbody>
@@ -435,7 +435,7 @@ export const VouchersPage: React.FC = () => {
                   required
                 />
                 <Button variant="secondary" onClick={generateVoucherCode}>
-                  <i className="fas fa-random"></i>"Generează"</Button>
+                  <i className="fas fa-random"></i> Generează</Button>
               </div>
             </Form.Group>
 
@@ -446,7 +446,7 @@ export const VouchersPage: React.FC = () => {
                 onChange={(e) => setFormData({ ...formData, type: e.target.value as any })}
                 required
               >
-                <option value="">"selecteaza tip"</option>
+                <option value="">Selectează tip</option>
                 <option value="percentage">Reducere Procentuală (%)</option>
                 <option value="fixed">Valoare Fixă (RON)</option>
                 <option value="gift">Bon Cadou</option>
@@ -491,7 +491,7 @@ export const VouchersPage: React.FC = () => {
             </div>
 
             <Form.Group className="mb-3">
-              <Form.Label>"utilizari maxime"</Form.Label>
+              <Form.Label>Utilizări maxime</Form.Label>
               <Form.Control
                 type="number"
                 min="1"
@@ -515,7 +515,7 @@ export const VouchersPage: React.FC = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => { setShowModal(false); resetForm(); }}>"Anulează"</Button>
+          <Button variant="secondary" onClick={() => { setShowModal(false); resetForm(); }}>Anulează</Button>
           <Button variant="success" onClick={handleCreateVoucher} disabled={loading}>
             <i className="fas fa-check me-2"></i>"creeaza voucher"</Button>
         </Modal.Footer>

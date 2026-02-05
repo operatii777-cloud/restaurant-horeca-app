@@ -33,7 +33,7 @@ interface UserActivity {
 }
 
 export const UserActivityPage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [activities, setActivities] = useState<UserActivity[]>([]);
   const [loading, setLoading] = useState(true);
   const [topUsers, setTopUsers] = useState<UserActivity[]>([]);
@@ -48,10 +48,10 @@ export const UserActivityPage: React.FC = () => {
     try {
       const response = await fetch('/api/audit/user-activity/chart?days=30');
       if (!response.ok) throw new Error('Failed to load chart data');
-      
+
       const data = await response.json();
       const chartDataPoints = Array.isArray(data) ? data : [];
-      
+
       setChartData({
         labels: chartDataPoints.map((d: any) => new Date(d.date).toLocaleDateString('ro-RO')),
         datasets: [
@@ -82,10 +82,10 @@ export const UserActivityPage: React.FC = () => {
       // Folosim endpoint-ul dedicat pentru user activity
       const response = await fetch('/api/audit/user-activity?limit=1000');
       if (!response.ok) throw new Error('Failed to load user activity');
-      
+
       const data = await response.json();
       const activitiesList = Array.isArray(data) ? data : [];
-      
+
       setActivities(activitiesList);
       setTopUsers(activitiesList.slice(0, 10));
     } catch (error) {
@@ -104,8 +104,8 @@ export const UserActivityPage: React.FC = () => {
       width: 300,
       cellRenderer: (params: any) => {
         const actions = params.data.actions_by_type;
-        return Object.entries(actions).map(([action, count]: [string, any]) => 
-          `"Action": "Count"`
+        return Object.entries(actions).map(([action, count]: [string, any]) =>
+          `${action}: ${count}`
         ).join(', ');
       }
     }
@@ -116,7 +116,7 @@ export const UserActivityPage: React.FC = () => {
       <div className="page-header margin-bottom-20">
         <h1><i className="fas fa-user-clock me-2"></i>User Activity</h1>
         <button className="btn btn-primary" onClick={loadUserActivity}>
-          <i className="fas fa-sync me-1"></i>"Reîncarcă"</button>
+          <i className="fas fa-sync me-1"></i>Reîncarcă</button>
       </div>
 
       <div className="row mb-4">
@@ -143,7 +143,7 @@ export const UserActivityPage: React.FC = () => {
             </div>
             <div className="card-body">
               {chartData ? (
-                <Line 
+                <Line
                   data={chartData}
                   options={{
                     responsive: true,

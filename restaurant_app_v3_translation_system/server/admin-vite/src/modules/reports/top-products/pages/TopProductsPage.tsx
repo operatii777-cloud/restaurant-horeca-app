@@ -55,7 +55,7 @@ interface ProductAnalytics {
 }
 
 export const TopProductsPage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<string>('top-sold');
   const [loading, setLoading] = useState(false);
   const [startDate, setStartDate] = useState(() => {
@@ -212,7 +212,7 @@ export const TopProductsPage: React.FC = () => {
     <div className="top-products-page">
       <div className="page-header">
         <h1>📊 Top Products & Analytics</h1>
-        <p>"analiza produse top vanzari si performanta"</p>
+        <p>Analiză produse top vânzări și performanță</p>
       </div>
 
       {error && (
@@ -371,7 +371,7 @@ export const TopProductsPage: React.FC = () => {
           </Card>
         </Tab>
 
-        <Tab eventKey="top-quantity" title='📦 top cantitati'>
+        <Tab eventKey="top-quantity" title='📦 Top Cantități'>
           <Card>
             <Card.Header className="d-flex justify-content-between align-items-center">
               <h5 className="mb-0">Top {limit} Produse după Cantitate Vândută</h5>
@@ -401,7 +401,7 @@ export const TopProductsPage: React.FC = () => {
                         <th>Categorie</th>
                         <th>Cantitate Vândută</th>
                         <th>Venit Total</th>
-                        <th>"numar comenzi"</th>
+                        <th>Număr Comenzi</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -453,7 +453,7 @@ export const TopProductsPage: React.FC = () => {
                         <th>#</th>
                         <th>Produs</th>
                         <th>Categorie</th>
-                        <th>"numar comenzi"</th>
+                        <th>Număr Comenzi</th>
                         <th>Cantitate Totală</th>
                         <th>Venit Total</th>
                       </tr>
@@ -504,7 +504,7 @@ export const TopProductsPage: React.FC = () => {
                       <p className="mb-1"><strong>Produs:</strong> {analytics.bestSeller.name}</p>
                       <p className="mb-1"><strong>Categorie:</strong> {analytics.bestSeller.category}</p>
                       <p className="mb-1"><strong>Venit Total:</strong> {formatCurrency(analytics.bestSeller.total_revenue)}</p>
-                      <p className="mb-0"><strong>"cantitate vanduta"</strong> {analytics.bestSeller.total_quantity_sold}</p>
+                      <p className="mb-0"><strong>Cantitate Vândută:</strong> {analytics.bestSeller.total_quantity_sold}</p>
                     </Alert>
                   )}
                 </>

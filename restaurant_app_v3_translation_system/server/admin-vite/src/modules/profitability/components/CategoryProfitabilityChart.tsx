@@ -28,11 +28,11 @@ export const CategoryProfitabilityChart = ({
   loading = false,
   height = 400,
 }: CategoryProfitabilityChartProps) => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   // Afișează loading doar când se încarcă efectiv
   if (loading) {
     return (
-      <div className="category-profitability-chart" style={{ height: `"Height"px` }}>
+      <div className="category-profitability-chart" style={{ height: `${height}px` }}>
         <div className="chart-loading">
           <div className="spinner-border text-primary" role="status">
             <span className="visually-hidden">Se încarcă...</span>
@@ -46,7 +46,7 @@ export const CategoryProfitabilityChart = ({
   // Dacă nu există date după ce s-a terminat loading-ul, afișează mesaj
   if (data.length === 0) {
     return (
-      <div className="category-profitability-chart" style={{ height: `"Height"px` }}>
+      <div className="category-profitability-chart" style={{ height: `${height}px` }}>
         <div className="chart-loading" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
           <p className="text-muted">📊 Nu există date disponibile pentru perioada selectată</p>
           <small className="text-muted">"incearca sa selectezi o alta perioada"</small>

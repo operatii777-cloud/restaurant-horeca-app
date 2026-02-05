@@ -37,7 +37,7 @@ export const HorizontalNav = () => {
   };
 
   return (
-    <nav className="horizontal-nav">
+    <nav className="horizontal-nav" data-testid="admin-horizontal-nav">
 
       <div className="horizontal-nav__menu">
         {NAVIGATION_ITEMS.map((item, index) => {

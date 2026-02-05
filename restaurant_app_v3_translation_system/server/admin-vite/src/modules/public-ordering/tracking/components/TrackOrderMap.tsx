@@ -34,11 +34,11 @@ L.Marker.prototype.options.icon = DefaultIcon;
 
 // Custom icons
 const createCustomIcon = (color: string, iconChar: string) => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   return L.divIcon({
     className: 'custom-marker',
     html: `<div style="
-      background-color: "Color";
+      background-color: ${color};
       width: 36px;
       height: 36px;
       border-radius: 50%;
@@ -75,7 +75,7 @@ function MapBounds({ deliveryLat, deliveryLng, courierLat, courierLng, restauran
   restaurantLat?: number;
   restaurantLng?: number;
 }) {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const map = useMap();
 
   useEffect(() => {
@@ -108,7 +108,7 @@ export function TrackOrderMap({
   restaurantLat = 44.40535,
   restaurantLng = 25.99008,
 }: TrackOrderMapProps) {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [courierLocation, setCourierLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [eta, setEta] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
@@ -122,10 +122,10 @@ export function TrackOrderMap({
         setLoading(true);
         const response = await fetch(`/api/couriers/${courierId}/location`);
         const data = await response.json();
-        
+
         if (data.success && data.lat && data.lng) {
           setCourierLocation({ lat: data.lat, lng: data.lng });
-          
+
           // Calculate ETA using tracking endpoint
           const trackingResponse = await fetch(`/api/orders/${orderId}/tracking`);
           const trackingData = await trackingResponse.json();

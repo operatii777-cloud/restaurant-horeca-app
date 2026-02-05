@@ -9,13 +9,13 @@ import './SmartRestockPage.css';
 
 interface RestockPrediction {
   id: number;
-  name: string;
+  ingredient_name: string;
   current_stock: number;
   min_stock_alert: number;
   unit: string;
   cost_per_unit: number;
   supplier_name: string;
-  avg_daily_consumption: string;
+  daily_consumption: string;
   days_until_stockout: number;
   recommended_order_qty: number;
   estimated_cost: string;
@@ -40,13 +40,18 @@ interface AnalysisData {
     critical_items: number;
     total_estimated_cost: string;
     suppliers_to_contact: number;
+    // Pure sales-based metrics
+    sales_reorder_count: number;
+    sales_low_count: number;
+    sales_critical_count: number;
+    sales_total_cost: string;
   };
   predictions: RestockPrediction[];
   supplier_orders: SupplierOrder[];
 }
 
 export const SmartRestockPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<AnalysisData | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -72,6 +77,10 @@ export const SmartRestockPage = () => {
             critical_items: 0,
             total_estimated_cost: '0.00',
             suppliers_to_contact: 0,
+            sales_reorder_count: 0,
+            sales_low_count: 0,
+            sales_critical_count: 0,
+            sales_total_cost: '0.00',
           },
         };
         setData(normalizedData);
@@ -90,6 +99,10 @@ export const SmartRestockPage = () => {
           critical_items: 0,
           total_estimated_cost: '0.00',
           suppliers_to_contact: 0,
+          sales_reorder_count: 0,
+          sales_low_count: 0,
+          sales_critical_count: 0,
+          sales_total_cost: '0.00',
         },
         predictions: [],
         supplier_orders: [],
@@ -167,7 +180,15 @@ export const SmartRestockPage = () => {
         actions={[
           { label: '🔄 Refresh', variant: 'secondary', onClick: loadAnalysis },
         ]}
-      />
+      >
+        {data?.summary && (
+          <div className="suppliers-header-badge">
+            <span className="badge-icon">🏪</span>
+            <span className="badge-value">{data.summary.suppliers_to_contact}</span>
+            <span className="badge-label">Furnizori</span>
+          </div>
+        )}
+      </PageHeader>
 
       {/* Period Selector */}
       <div className="period-selector">
@@ -184,26 +205,42 @@ export const SmartRestockPage = () => {
       {/* Summary Cards */}
       {data?.summary && (
         <div className="summary-grid">
+          {/* Group 1: Consolidated / Real-time Stock Needs */}
           <div className="summary-card">
             <div className="summary-value">{data.summary.total_low_stock_items}</div>
-            <div className="summary-label">Stoc Scăzut</div>
+            <div className="summary-label">Stoc Scăzut (Total)</div>
           </div>
           <div className="summary-card warning">
             <div className="summary-value">{data.summary.items_needing_reorder}</div>
-            <div className="summary-label">"necesita comanda"</div>
+            <div className="summary-label">Necesită Comandă</div>
           </div>
           <div className="summary-card danger">
             <div className="summary-value">{data.summary.critical_items}</div>
-            <div className="summary-label">Critice</div>
+            <div className="summary-label">Critice (Real)</div>
           </div>
           <div className="summary-card info">
             <div className="summary-value">{data.summary.total_estimated_cost} RON</div>
             <div className="summary-label">Cost Estimat Total</div>
           </div>
-          <div className="summary-card">
-            <div className="summary-value">{data.summary.suppliers_to_contact}</div>
-            <div className="summary-label">Furnizori</div>
+
+          {/* Group 2: Pure Sales Predictions (Logica Inițială) */}
+          <div className="summary-card alt">
+            <div className="summary-value">{data.summary.sales_reorder_count}</div>
+            <div className="summary-label">Analiză Vânzări</div>
           </div>
+          <div className="summary-card alt warning">
+            <div className="summary-value">{data.summary.sales_low_count}</div>
+            <div className="summary-label">Cerere Prognozată</div>
+          </div>
+          <div className="summary-card alt danger">
+            <div className="summary-value">{data.summary.sales_critical_count}</div>
+            <div className="summary-label">Urgențe Vânzări</div>
+          </div>
+          <div className="summary-card alt info">
+            <div className="summary-value">{data.summary.sales_total_cost} RON</div>
+            <div className="summary-label">Cost Prognozat</div>
+          </div>
+
         </div>
       )}
 
@@ -222,11 +259,11 @@ export const SmartRestockPage = () => {
                     {order.max_urgency >= 4 ? '🔴 URGENT' : order.max_urgency >= 3 ? '🟠 HIGH' : '🟡 MEDIUM'}
                   </span>
                 </div>
-                
+
                 <div className="supplier-items">
                   {order.items.map((item) => (
                     <div key={item.id} className="supplier-item">
-                      <span className="item-name">{item.name}</span>
+                      <span className="item-name">{item.ingredient_name}</span>
                       <span className="item-qty">
                         {item.recommended_order_qty} {item.unit}
                       </span>
@@ -237,7 +274,7 @@ export const SmartRestockPage = () => {
                     </div>
                   ))}
                 </div>
-                
+
                 <div className="supplier-footer">
                   <span className="total-cost">
                     Total: <strong>{order.total_cost.toFixed(2)} RON</strong>
@@ -269,16 +306,16 @@ export const SmartRestockPage = () => {
               <th>Zile Rămase</th>
               <th>Recomandare</th>
               <th>Cost Est.</th>
-              <th>"Urgență"</th>
+              <th>Urgență</th>
             </tr>
           </thead>
           <tbody>
             {data?.predictions.map((pred) => (
               <tr key={pred.id} className={getUrgencyClass(pred.urgency)}>
-                <td><strong>{pred.name}</strong></td>
+                <td><strong>{pred.ingredient_name}</strong></td>
                 <td>{pred.current_stock} {pred.unit}</td>
                 <td>{pred.min_stock_alert} {pred.unit}</td>
-                <td>{pred.avg_daily_consumption} {pred.unit}</td>
+                <td>{pred.daily_consumption} {pred.unit}</td>
                 <td className={pred.days_until_stockout <= 3 ? 'critical' : ''}>
                   {pred.days_until_stockout === 999 ? '∞' : pred.days_until_stockout}
                 </td>

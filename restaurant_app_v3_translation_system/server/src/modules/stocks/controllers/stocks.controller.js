@@ -25,7 +25,7 @@ function dbGet(db, query, params = []) {
 
 function dbRun(db, query, params = []) {
   return new Promise((resolve, reject) => {
-    db.run(query, params, function(err) {
+    db.run(query, params, function (err) {
       if (err) reject(err);
       else resolve(this);
     });
@@ -36,7 +36,7 @@ function dbRun(db, query, params = []) {
 async function getStocks(req, res, next) {
   try {
     const db = await dbPromise;
-    
+
     const stocks = await dbAll(db, `
       SELECT 
         i.id,
@@ -50,7 +50,7 @@ async function getStocks(req, res, next) {
       WHERE i.is_hidden = 0
       ORDER BY i.name ASC
     `);
-    
+
     console.log(`✅ Returnat ${stocks.length} intrări de stoc`);
     res.json({
       success: true,
@@ -70,7 +70,7 @@ async function getStocks(req, res, next) {
 async function getLowStock(req, res, next) {
   try {
     const db = await dbPromise;
-    
+
     const lowStock = await dbAll(db, `
       SELECT 
         i.id,
@@ -87,7 +87,7 @@ async function getLowStock(req, res, next) {
       HAVING current_stock < i.min_stock
       ORDER BY (current_stock - i.min_stock) ASC
     `);
-    
+
     // Formatează răspunsul în formatul așteptat de admin.html
     res.json({
       success: true,
@@ -115,7 +115,7 @@ async function getLowStock(req, res, next) {
 async function getLowStockAlerts(req, res, next) {
   try {
     const db = await dbPromise;
-    
+
     const lowStock = await dbAll(db, `
       SELECT 
         i.id,
@@ -130,7 +130,7 @@ async function getLowStockAlerts(req, res, next) {
         AND i.current_stock < i.min_stock
       ORDER BY percentage ASC, i.name ASC
     `);
-    
+
     console.log(`⚠️ Găsite ${lowStock.length} ingrediente cu stoc scăzut`);
     res.json({
       success: true,
@@ -147,7 +147,7 @@ async function getIngredientStock(req, res, next) {
   try {
     const { ingredientId } = req.params;
     const db = await dbPromise;
-    
+
     const stock = await dbGet(db, `
       SELECT 
         i.id,
@@ -160,14 +160,14 @@ async function getIngredientStock(req, res, next) {
       FROM ingredients i
       WHERE i.id = ?
     `, [ingredientId]);
-    
+
     if (!stock) {
-      return res.status(404).json({ 
-        success: false, 
-        message: 'Ingredient nu a fost găsit' 
+      return res.status(404).json({
+        success: false,
+        message: 'Ingredient nu a fost găsit'
       });
     }
-    
+
     res.json({
       success: true,
       data: stock,
@@ -183,16 +183,16 @@ async function getStockHistory(req, res, next) {
     const { ingredientId } = req.params;
     const { days = 30 } = req.query;
     const db = await dbPromise;
-    
+
     const tableExists = await dbGet(
       db,
       "SELECT name FROM sqlite_master WHERE type='table' AND name='stock_movements'"
     );
-    
+
     if (!tableExists) {
       return res.json({ success: true, data: [] });
     }
-    
+
     const history = await dbAll(db, `
       SELECT 
         sm.*,
@@ -204,7 +204,7 @@ async function getStockHistory(req, res, next) {
         AND sm.created_at >= date('now', '-' || ? || ' days')
       ORDER BY sm.created_at DESC
     `, [ingredientId, days]);
-    
+
     console.log(`✅ Returnat ${history.length} mișcări de stoc pentru ingredient ${ingredientId}`);
     res.json({
       success: true,
@@ -220,40 +220,40 @@ async function getStockHistory(req, res, next) {
 async function adjustStock(req, res, next) {
   try {
     const { ingredient_id, quantity, reason } = req.body;
-    
+
     if (!ingredient_id || !quantity || !reason) {
-      return res.status(400).json({ 
-        success: false, 
-        message: 'Ingredient ID, cantitate și motiv sunt obligatorii' 
+      return res.status(400).json({
+        success: false,
+        message: 'Ingredient ID, cantitate și motiv sunt obligatorii'
       });
     }
-    
+
     const db = await dbPromise;
-    
+
     const ingredient = await db.get('SELECT * FROM ingredients WHERE id = ?', [ingredient_id]);
-    
+
     if (!ingredient) {
-      return res.status(404).json({ 
-        success: false, 
-        message: 'Ingredient nu a fost găsit' 
+      return res.status(404).json({
+        success: false,
+        message: 'Ingredient nu a fost găsit'
       });
     }
-    
+
     const currentQuantity = ingredient.current_stock || 0;
     const newQuantity = Math.max(0, currentQuantity + parseFloat(quantity));
-    
+
     await dbRun(db, `
       UPDATE ingredients
       SET current_stock = ?,
           last_updated = CURRENT_TIMESTAMP
       WHERE id = ?
     `, [newQuantity, ingredient_id]);
-    
+
     const tableExists = await dbGet(
       db,
       "SELECT name FROM sqlite_master WHERE type='table' AND name='stock_movements'"
     );
-    
+
     if (tableExists) {
       await dbRun(db, `
         INSERT INTO stock_movements (
@@ -271,9 +271,9 @@ async function adjustStock(req, res, next) {
         reason
       ]);
     }
-    
+
     console.log(`✅ Stoc ajustat: ${ingredient.name} ${quantity > 0 ? '+' : ''}${quantity} ${ingredient.unit}`);
-    
+
     res.json({
       success: true,
       previous_quantity: currentQuantity,
@@ -291,29 +291,29 @@ async function getStockMovements(req, res, next) {
   try {
     const { ingredient_id, type, date_from, date_to, limit = 100 } = req.query;
     const db = await dbPromise;
-    
+
     // Check if stock_moves table exists (preferred) or stock_movements (fallback)
     const stockMovesExists = await dbGet(
       db,
       "SELECT name FROM sqlite_master WHERE type='table' AND name='stock_moves'"
     );
-    
+
     const stockMovementsExists = await dbGet(
       db,
       "SELECT name FROM sqlite_master WHERE type='table' AND name='stock_movements'"
     );
-    
+
     if (!stockMovesExists && !stockMovementsExists) {
       return res.json({ success: true, data: [], count: 0 });
     }
-    
+
     // Use stock_moves if available, otherwise stock_movements
     const tableName = stockMovesExists ? 'stock_moves' : 'stock_movements';
     const isStockMoves = stockMovesExists;
-    
+
     // Build query based on table schema
     let quantityOutExpr, quantityInExpr, typeExpr, typeFilterColumn;
-    
+
     if (isStockMoves) {
       // stock_moves table: has 'type', 'quantity_in', 'quantity_out'
       quantityOutExpr = 'COALESCE(sm.quantity_out, 0)';
@@ -328,7 +328,7 @@ async function getStockMovements(req, res, next) {
       typeExpr = `COALESCE(sm.movement_type, 'order')`;
       typeFilterColumn = 'sm.movement_type';
     }
-    
+
     // Build notes column expression based on table
     let notesExpr, dateExpr, createdAtExpr, dateFilterExpr, orderByExpr;
     if (isStockMoves) {
@@ -348,7 +348,7 @@ async function getStockMovements(req, res, next) {
       dateFilterExpr = `sm.created_at`;
       orderByExpr = `sm.created_at`;
     }
-    
+
     let query = `
       SELECT 
         sm.id,
@@ -367,34 +367,34 @@ async function getStockMovements(req, res, next) {
       LEFT JOIN ingredients i ON i.id = sm.ingredient_id
       WHERE 1=1
     `;
-    
+
     const params = [];
-    
+
     if (ingredient_id) {
       query += ' AND sm.ingredient_id = ?';
       params.push(ingredient_id);
     }
-    
+
     if (type) {
       query += ` AND ${typeFilterColumn} = ?`;
       params.push(type);
     }
-    
+
     if (date_from) {
       query += ` AND DATE(${dateFilterExpr}) >= DATE(?)`;
       params.push(date_from);
     }
-    
+
     if (date_to) {
       query += ` AND DATE(${dateFilterExpr}) <= DATE(?)`;
       params.push(date_to);
     }
-    
+
     query += ` ORDER BY ${orderByExpr} DESC LIMIT ?`;
     params.push(parseInt(limit, 10));
-    
+
     const movements = await dbAll(db, query, params);
-    
+
     console.log(`✅ Returnat ${movements.length} mișcări de stoc`);
     res.json({
       success: true,
@@ -412,13 +412,13 @@ async function getFinishedProducts(req, res, next) {
   console.log('🔍 [getFinishedProducts] Endpoint called');
   try {
     const db = await dbPromise;
-    
+
     // Verificăm dacă există tabelul menu și recipes
     const menuTableExists = await dbGet(
       db,
       "SELECT name FROM sqlite_master WHERE type='table' AND name='menu'"
     );
-    
+
     if (!menuTableExists) {
       console.log('⚠️ Tabelul menu nu există');
       return res.json({
@@ -427,13 +427,13 @@ async function getFinishedProducts(req, res, next) {
         count: 0,
       });
     }
-    
+
     // Verificăm dacă există tabelul recipes
     const recipesTableExists = await dbGet(
       db,
       "SELECT name FROM sqlite_master WHERE type='table' AND name='recipes'"
     );
-    
+
     if (!recipesTableExists) {
       console.log('⚠️ Tabelul recipes nu există');
       return res.json({
@@ -442,24 +442,24 @@ async function getFinishedProducts(req, res, next) {
         count: 0,
       });
     }
-    
+
     // Verificăm ce coloane există în tabelul menu
     const menuColumns = await dbAll(db, "PRAGMA table_info(menu)");
     const columnNames = menuColumns.map(col => col.name);
-    
+
     const hasCurrentStock = columnNames.includes('current_stock');
     const hasMinStock = columnNames.includes('min_stock');
     const hasMaxStock = columnNames.includes('max_stock');
     const hasAutoManaged = columnNames.includes('is_auto_managed');
     const hasLastUpdated = columnNames.includes('last_updated');
-    
+
     // Construim query-ul dinamic în funcție de coloanele disponibile
     const currentStockExpr = hasCurrentStock ? 'COALESCE(m.current_stock, 0)' : '0';
     const minStockExpr = hasMinStock ? 'COALESCE(m.min_stock, 0)' : '0';
     const maxStockExpr = hasMaxStock ? 'COALESCE(m.max_stock, 0)' : '0';
     const autoManagedExpr = hasAutoManaged ? 'COALESCE(m.is_auto_managed, 0)' : '0';
     const lastUpdatedExpr = hasLastUpdated ? 'm.last_updated' : 'NULL';
-    
+
     const finishedProducts = await dbAll(db, `
       SELECT 
         m.id as product_id,
@@ -484,7 +484,7 @@ async function getFinishedProducts(req, res, next) {
       )
       ORDER BY m.name ASC
     `);
-    
+
     console.log(`✅ Returnat ${finishedProducts.length} produse finite cu stoc`);
     res.json({
       success: true,
@@ -502,6 +502,122 @@ async function getFinishedProducts(req, res, next) {
   }
 }
 
+// GET /api/stock/finished-products/:id
+async function getFinishedProduct(req, res, next) {
+  try {
+    const { id } = req.params;
+    const db = await dbPromise;
+
+    // Verificăm dacă există tabelul menu
+    const menuTableExists = await dbGet(
+      db,
+      "SELECT name FROM sqlite_master WHERE type='table' AND name='menu'"
+    );
+
+    if (!menuTableExists) {
+      return res.status(404).json({ success: false, message: 'Tabelul menu nu există' });
+    }
+
+    // Verificăm ce coloane există în tabelul menu
+    const menuColumns = await dbAll(db, "PRAGMA table_info(menu)");
+    const columnNames = menuColumns.map(col => col.name);
+
+    if (!columnNames.includes('current_stock')) {
+      return res.status(500).json({ success: false, message: 'Coloanele de stoc lipsesc din tabelul menu' });
+    }
+
+    const hasMinStock = columnNames.includes('min_stock');
+    const hasMaxStock = columnNames.includes('max_stock');
+    const hasAutoManaged = columnNames.includes('is_auto_managed');
+
+    const product = await dbGet(db, `
+      SELECT 
+        id as product_id,
+        name as product_name,
+        COALESCE(current_stock, 0) as current_stock,
+        ${hasMinStock ? 'COALESCE(min_stock, 0)' : '0'} as min_stock,
+        ${hasMaxStock ? 'COALESCE(max_stock, 0)' : '0'} as max_stock,
+        ${hasAutoManaged ? 'COALESCE(is_auto_managed, 0)' : '0'} as is_auto_managed
+      FROM menu
+      WHERE id = ?
+    `, [id]);
+
+    if (!product) {
+      return res.status(404).json({ success: false, message: 'Produsul nu a fost găsit' });
+    }
+
+    res.json({
+      success: true,
+      product
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+// POST/PUT /api/stock/finished-products/:id?
+async function updateFinishedProductStock(req, res, next) {
+  try {
+    const id = req.params.id || req.body.product_id;
+    const { current_stock, min_stock, max_stock, is_auto_managed } = req.body;
+
+    if (!id) {
+      return res.status(400).json({ success: false, message: 'ID-ul produsului este obligatoriu' });
+    }
+
+    const db = await dbPromise;
+
+    // Build dynamic update query based on existing columns
+    const menuColumns = await dbAll(db, "PRAGMA table_info(menu)");
+    const columnNames = menuColumns.map(col => col.name);
+
+    let updateFields = [];
+    let params = [];
+
+    if (current_stock !== undefined && columnNames.includes('current_stock')) {
+      updateFields.push('current_stock = ?');
+      params.push(current_stock);
+    }
+    if (min_stock !== undefined && columnNames.includes('min_stock')) {
+      updateFields.push('min_stock = ?');
+      params.push(min_stock);
+    }
+    if (max_stock !== undefined && columnNames.includes('max_stock')) {
+      updateFields.push('max_stock = ?');
+      params.push(max_stock);
+    }
+    if (is_auto_managed !== undefined && columnNames.includes('is_auto_managed')) {
+      updateFields.push('is_auto_managed = ?');
+      params.push(is_auto_managed ? 1 : 0);
+    }
+
+    if (updateFields.length === 0) {
+      return res.json({ success: true, message: 'Nicio modificare de stoc de aplicat' });
+    }
+
+    // Add last_updated if exists
+    if (columnNames.includes('last_updated')) {
+      updateFields.push("last_updated = CURRENT_TIMESTAMP");
+    }
+
+    params.push(id);
+
+    await dbRun(db, `
+      UPDATE menu
+      SET ${updateFields.join(', ')}
+      WHERE id = ?
+    `, params);
+
+    res.json({
+      success: true,
+      message: 'Stoc produs actualizat cu succes'
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   getStocks,
   getLowStockAlerts,
@@ -511,5 +627,7 @@ module.exports = {
   getStockMovements,
   adjustStock,
   getFinishedProducts,
+  getFinishedProduct,
+  updateFinishedProductStock,
 };
 

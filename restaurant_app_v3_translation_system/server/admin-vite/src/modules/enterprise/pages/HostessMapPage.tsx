@@ -30,7 +30,7 @@ interface TableStats {
 }
 
 export const HostessMapPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [tables, setTables] = useState<Table[]>([]);
   const [stats, setStats] = useState<TableStats | null>(null);
   const [loading, setLoading] = useState(true);
@@ -156,7 +156,7 @@ export const HostessMapPage = () => {
             <Card className="text-center shadow-sm border-danger">
               <Card.Body>
                 <h3 className="mb-0 text-danger">{stats.occupied_tables}</h3>
-                <p className="text-muted mb-0">"mese ocupate"</p>
+                <p className="text-muted mb-0">Mese Ocupate</p>
               </Card.Body>
             </Card>
           </Col>
@@ -164,7 +164,7 @@ export const HostessMapPage = () => {
             <Card className="text-center shadow-sm border-info">
               <Card.Body>
                 <h3 className="mb-0 text-info">{stats.total_covers}</h3>
-                <p className="text-muted mb-0">"total clienti"</p>
+                <p className="text-muted mb-0">Total Clienți</p>
               </Card.Body>
             </Card>
           </Col>
@@ -178,7 +178,7 @@ export const HostessMapPage = () => {
             <Col md={6}>
               <Form.Label>"Zonă"</Form.Label>
               <Form.Select value={zoneFilter} onChange={(e) => setZoneFilter(e.target.value)}>
-                <option value="">"toate zonele"</option>
+                <option value="">Toate zonele</option>
                 {zones.map(zone => (
                   <option key={zone} value={zone}>{zone}</option>
                 ))}
@@ -187,7 +187,7 @@ export const HostessMapPage = () => {
             <Col md={6}>
               <Form.Label>Status</Form.Label>
               <Form.Select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-                <option value="">"Toate"</option>
+                <option value="">Toate</option>
                 <option value="active">Doar active</option>
               </Form.Select>
             </Col>
@@ -224,18 +224,18 @@ export const HostessMapPage = () => {
                   {table.session_id ? (
                     <>
                       <hr />
-                      <p className="mb-1"><strong>"Clienți:"</strong> {table.covers || 0}</p>
+                      <p className="mb-1"><strong>Clienți:</strong> {table.covers || 0}</p>
                       {table.server_name && (
-                        <p className="mb-1"><strong>"Ospătar:"</strong> {table.server_name}</p>
+                        <p className="mb-1"><strong>Ospătar:</strong> {table.server_name}</p>
                       )}
-                      <p className="mb-2"><strong>"de la"</strong> {new Date(table.started_at!).toLocaleTimeString('ro-RO')}</p>
+                      <p className="mb-2"><strong>De la:</strong> {new Date(table.started_at!).toLocaleTimeString('ro-RO')}</p>
                       <Button
                         variant="warning"
                         size="sm"
                         className="w-100"
                         onClick={() => handleCloseSession(table.session_id!)}
                       >
-                        <i className="fas fa-times me-2"></i>"inchide sesiune"</Button>
+                        <i className="fas fa-times me-2"></i>Închide sesiune</Button>
                     </>
                   ) : (
                     <Button
@@ -247,7 +247,7 @@ export const HostessMapPage = () => {
                         setShowSessionModal(true);
                       }}
                     >
-                      <i className="fas fa-plus me-2"></i>"deschide sesiune"</Button>
+                      <i className="fas fa-plus me-2"></i>Deschide sesiune</Button>
                   )}
                 </Card.Body>
               </Card>
@@ -282,7 +282,7 @@ export const HostessMapPage = () => {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>"Observații"</Form.Label>
+              <Form.Label>Observații</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={2}
@@ -293,9 +293,9 @@ export const HostessMapPage = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowSessionModal(false)}>"Anulează"</Button>
+          <Button variant="secondary" onClick={() => setShowSessionModal(false)}>Anulează</Button>
           <Button variant="success" onClick={handleStartSession}>
-            <i className="fas fa-check me-2"></i>"deschide sesiune"</Button>
+            <i className="fas fa-check me-2"></i>Deschide sesiune</Button>
         </Modal.Footer>
       </Modal>
     </div>

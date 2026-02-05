@@ -59,9 +59,9 @@ export const AgGridTable: React.FC<AgGridTableProps> = ({
   }, [gridOptions, loading, onGridReady, onRowSelected, onCellClicked]);
 
   return (
-    <div 
+    <div
       className={`ag-grid-table-wrapper ag-theme-alpine-dark ${className}`}
-      style={{ height: typeof height === 'number' ? `"Height"px` : height, width }}
+      style={{ height: typeof height === 'number' ? `${height}px` : height, width }}
     >
       <AgGridReact
         theme="legacy"

@@ -5,7 +5,7 @@ import type { Process, CCP, Limit } from '../../services/haccp.service';
 import { MonitoringStatusBadge } from './MonitoringStatusBadge';
 
 export const QuickMonitoringForm: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [processes, setProcesses] = useState<Process[]>([]);
   const [ccps, setCcps] = useState<CCP[]>([]);
   const [limits, setLimits] = useState<Limit[]>([]);
@@ -132,12 +132,12 @@ export const QuickMonitoringForm: React.FC = () => {
       });
 
       setSuccess(`Monitorizare înregistrată cu succes! Status: ${result.status.toUpperCase()}`);
-      
+
       // Reset form
       setMeasuredValue('');
       setNotes('');
       setSelectedParameter('');
-      
+
       // Trigger reload event for parent components
       window.dispatchEvent(new CustomEvent('haccp-monitoring-recorded', { detail: result }));
 
@@ -156,7 +156,7 @@ export const QuickMonitoringForm: React.FC = () => {
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-6">
-      <h2 className="text-xl font-semibold mb-4">"monitorizare rapida haccp"</h2>
+      <h2 className="text-xl font-semibold mb-4">monitorizare rapidă HACCP</h2>
 
       {error && (
         <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-800 rounded">
@@ -184,7 +184,7 @@ export const QuickMonitoringForm: React.FC = () => {
             disabled={loadingProcesses}
             required
           >
-            <option value="">"selecteaza proces"</option>
+            <option value="">selectează proces</option>
             {processes.map(process => (
               <option key={process.id} value={process.id}>
                 {process.name} ({process.category})
@@ -208,7 +208,7 @@ export const QuickMonitoringForm: React.FC = () => {
             disabled={!selectedProcessId || loadingCcps || ccps.length === 0}
             required
           >
-            <option value="">"selecteaza ccp"</option>
+            <option value="">selectează CCP</option>
             {ccps.map(ccp => (
               <option key={ccp.id} value={ccp.id}>
                 {ccp.ccp_number} - {ccp.hazard_description}
@@ -236,7 +236,7 @@ export const QuickMonitoringForm: React.FC = () => {
             disabled={!selectedCcpId || availableParameters.length === 0}
             required
           >
-            <option value="">"selecteaza parametru"</option>
+            <option value="">selectează parametru</option>
             {availableParameters.map(param => (
               <option key={param} value={param}>{param}</option>
             ))}
@@ -249,7 +249,7 @@ export const QuickMonitoringForm: React.FC = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">"valoare masurata"<span className="text-red-500">*</span>
+          <label className="block text-sm font-medium text-gray-700 mb-1">valoare măsurată<span className="text-red-500">*</span>
           </label>
           <div className="flex items-center gap-3">
             <input
@@ -279,7 +279,7 @@ export const QuickMonitoringForm: React.FC = () => {
             rows={3}
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            placeholder="adauga observatii"
+            placeholder="adaugă observații"
           />
         </div>
 
@@ -290,10 +290,10 @@ export const QuickMonitoringForm: React.FC = () => {
         >
           {loading ? (
             <>
-              <i className="fas fa-spinner fa-spin mr-2"></i>"se inregistreaza"</>
+              <i className="fas fa-spinner fa-spin mr-2"></i>se înregistrează...</>
           ) : (
             <>
-              <i className="fas fa-save mr-2"></i>"inregistreaza monitorizare"</>
+              <i className="fas fa-save mr-2"></i>înregistrează monitorizare</>
           )}
         </button>
       </form>

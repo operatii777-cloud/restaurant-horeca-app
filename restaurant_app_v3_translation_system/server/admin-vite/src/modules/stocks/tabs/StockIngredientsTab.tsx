@@ -61,7 +61,9 @@ const StockCurrentCell: React.FC<StockCurrentCellProps> = ({ params, onAdjust })
         type="button"
         onClick={(e) => {
           e.stopPropagation();
-          onAdjust(params.data!);
+          if (params.data) {
+            onAdjust(params.data);
+          }
         }}
         title="ajusteaza stoc"
         style={{
@@ -298,7 +300,8 @@ export const StockIngredientsTab = ({ onSummary, onFeedback }: StockIngredientsT
               icon: '🗑️',
               variant: 'danger',
               onClick: () => {
-                if (window.confirm(`Ești sigur că vrei să ștergi ingredientul "${params.data!.name}"?`)) {
+                const ingredientName = params.data?.name || 'acest ingredient';
+                if (window.confirm(`Ești sigur că vrei să ștergi ingredientul "${ingredientName}"?`)) {
                   // TODO: Implement delete
                 }
               },

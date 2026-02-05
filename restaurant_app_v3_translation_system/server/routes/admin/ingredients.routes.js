@@ -37,7 +37,7 @@ router.get('/categories', asyncHandler(async (req, res) => {
     res.json({ success: true, data: categories });
 }));
 
-router.get('/:id', 
+router.get('/:id',
     validateParams({ id: { required: true, type: 'number' } }),
     asyncHandler(async (req, res) => {
         const ingredient = await ingredientsService.getById(req.params.id);
@@ -45,7 +45,7 @@ router.get('/:id',
     })
 );
 
-router.get('/:id/usage-history', 
+router.get('/:id/usage-history',
     validateParams({ id: { required: true, type: 'number' } }),
     asyncHandler(async (req, res) => {
         const days = parseInt(req.query.days) || 30;
@@ -69,6 +69,7 @@ router.post('/',
         last_purchase_price: { required: false, type: 'number', min: 0 },
         is_hidden: { required: false, type: 'number', enum: [0, 1] },
         is_active: { required: false, type: 'number', enum: [0, 1] },
+        is_stock_item: { required: false, type: 'number', enum: [0, 1] },
         // Câmpuri nutriționale noi
         description: { required: false, type: 'string', maxLength: 1000 },
         energy_kcal: { required: false, type: 'number', min: 0 },
@@ -105,6 +106,7 @@ router.put('/:id',
         last_purchase_price: { required: false, type: 'number', min: 0 },
         is_hidden: { required: false, type: 'number', enum: [0, 1] },
         is_active: { required: false, type: 'number', enum: [0, 1] },
+        is_stock_item: { required: false, type: 'number', enum: [0, 1] },
         // Câmpuri nutriționale noi
         description: { required: false, type: 'string', maxLength: 1000 },
         energy_kcal: { required: false, type: 'number', min: 0 },

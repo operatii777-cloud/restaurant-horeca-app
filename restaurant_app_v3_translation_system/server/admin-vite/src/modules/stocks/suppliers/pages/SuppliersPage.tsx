@@ -11,7 +11,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import './SuppliersPage.css';
 
 export const SuppliersPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [suppliers, setSuppliers] = useState<Supplier[]>([]);
   const [stats, setStats] = useState<SupplierStats | null>(null);
   const [loading, setLoading] = useState(true);
@@ -109,12 +109,12 @@ export const SuppliersPage = () => {
     }
   };
 
-  const columnDefs = [
+  const columnDefs: any[] = [
     { field: 'id', headerName: 'ID', width: 80 },
     { field: 'company_name', headerName: 'Nume Companie', flex: 1 },
-    { field: "CUI:", headerName: 'CUI', width: 120 },
-    { field: 'phone', headerName: 'Telefon', width: 150 },
-    { field: "Email:", headerName: 'Email', flex: 1 },
+    { field: 'cui' as any, headerName: 'CUI', width: 120 },
+    { field: 'phone' as any, headerName: 'Telefon', width: 150 },
+    { field: 'email' as any, headerName: 'Email', flex: 1 },
     {
       field: 'is_active',
       headerName: 'Status',
@@ -280,7 +280,7 @@ export const SuppliersPage = () => {
             <Row>
               <Col md={6}>
                 <Form.Group className="mb-3">
-                  <Form.Label>"Oraș"</Form.Label>
+                  <Form.Label>Oraș</Form.Label>
                   <Form.Control
                     type="text"
                     value={formData.address_city || ''}
@@ -301,7 +301,7 @@ export const SuppliersPage = () => {
             </Row>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseModal}>"Anulează"</Button>
+            <Button variant="secondary" onClick={handleCloseModal}>Anulează</Button>
             <Button variant="primary" type="submit">
               {editingSupplier ? 'Actualizează' : 'Adaugă'}
             </Button>

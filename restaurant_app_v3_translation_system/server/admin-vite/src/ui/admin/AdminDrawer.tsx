@@ -42,7 +42,7 @@ export const AdminDrawer: React.FC<AdminDrawerProps> = ({
       <div className="admin-drawer__backdrop" onClick={onClose} />
       <div
         className={`admin-drawer ${className}`}
-        style={{ width: `"Width"px` }}
+        style={{ width: `${width}px` }}
       >
         <div className="admin-drawer__header">
           <h2 className="admin-drawer__title">{title}</h2>

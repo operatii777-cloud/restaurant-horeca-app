@@ -21,30 +21,32 @@ export const agGridDefaultColDef: ColDef = {
 export const agGridDefaultGridOptions: GridOptions = {
   // Theme - Alpine (clean, minimal)
   theme: 'legacy', // Use legacy theme to avoid conflict with CSS files
-  
+
   // Înălțimi - Excel-like (minimal)
   rowHeight: 32,         // Excel default
   headerHeight: 48,      // Header mai înalt pentru lizibilitate
-  
+
   // Default column definition
   defaultColDef: agGridDefaultColDef,
-  
+
   // Overlays - minimal
   overlayNoRowsTemplate: '<span class="ag-overlay-loading-center">Nu există date</span>',
   overlayLoadingTemplate: '<span class="ag-overlay-loading-center">Se încarcă...</span>',
-  
+
   // Funcționalități - MINIMAL (doar ce e necesar)
   animateRows: false,              // NU - minimal (Excel nu are animații)
-  enableRangeSelection: false,     // NU - minimal
-  suppressRowClickSelection: false, // Permitem click (Excel-like)
-  rowSelection: 'single',          // Default - single selection
+  cellSelection: false,            // NU - minimal
+  rowSelection: {
+    mode: 'singleRow',
+    enableClickSelection: true
+  },          // Default - single selection with click enabled
   suppressCellFocus: false,        // Permitem focus (Excel-like)
   suppressDragLeaveHidesColumns: true,
   suppressScrollOnNewData: true,
-  
+
   // Paginare - NU forțăm aici (fiecare componentă decide)
   // pagination: false - minimal (doar dacă e necesar)
-  
+
   // Locale - Romanian (minimal)
   localeText: {
     noRowsToShow: 'Nu există date de afișat',
@@ -56,7 +58,7 @@ export const agGridDefaultGridOptions: GridOptions = {
  * Merge local grid options with defaults
  */
 export const mergeGridOptions = (localOptions?: Partial<GridOptions>): GridOptions => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   return {
     ...agGridDefaultGridOptions,
     ...localOptions,

@@ -31,7 +31,7 @@ const PRINTER_TYPES = [
 ];
 
 export const PrintersPage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [printers, setPrinters] = useState<Printer[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -78,7 +78,7 @@ export const PrintersPage: React.FC = () => {
 
   const handleDelete = async (id: number) => {
     if (!confirm('Sigur doriți să ștergeți această imprimantă?')) return;
-    
+
     try {
       await deleteMutation.mutate({
         url: `/api/settings/printers/"Id"`,
@@ -111,7 +111,7 @@ export const PrintersPage: React.FC = () => {
   return (
     <div className="printers-page">
       <PageHeader
-        title='imprimante & periferice'
+        title='Imprimante & Periferice'
         description="Gestionare imprimante pentru bucătărie, bar, bon și etichetă"
       />
 
@@ -145,13 +145,13 @@ export const PrintersPage: React.FC = () => {
               <th>Conectare</th>
               <th>Status</th>
               <th>Test Print</th>
-              <th>"Acțiuni"</th>
+              <th>Acțiuni</th>
             </tr>
           </thead>
           <tbody>
             {printers.length === 0 ? (
               <tr>
-                <td colSpan={7} className="text-center">"nu exista imprimante configurate"</td>
+                <td colSpan={7} className="text-center">Nu există imprimante configurate</td>
               </tr>
             ) : (
               printers.map((printer) => (
@@ -332,7 +332,7 @@ const PrinterModal: React.FC<PrinterModalProps> = ({ printer, onSave, onClose })
                 type="checkbox"
                 checked={formData.auto_print}
                 onChange={(e) => setFormData({ ...formData, auto_print: e.target.checked })}
-              />"print automat la comanda"</label>
+              />Print automat la comandă</label>
           </div>
           <div className="form-group">
             <label>
@@ -340,10 +340,10 @@ const PrinterModal: React.FC<PrinterModalProps> = ({ printer, onSave, onClose })
                 type="checkbox"
                 checked={formData.is_active}
                 onChange={(e) => setFormData({ ...formData, is_active: e.target.checked })}
-              />"Activă"</label>
+              />Activă</label>
           </div>
           <div className="modal-actions">
-            <button type="button" className="btn btn-secondary" onClick={onClose}>"Anulează"</button>
+            <button type="button" className="btn btn-secondary" onClick={onClose}>Anulează</button>
             <button type="submit" className="btn btn-primary">
               Salvează
             </button>

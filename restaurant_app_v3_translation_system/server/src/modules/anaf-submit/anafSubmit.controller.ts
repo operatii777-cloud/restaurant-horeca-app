@@ -16,7 +16,7 @@ const { dbPromise } = require('../../../database');
 async function getAnafHealth(req, res, next) {
   try {
     const db = await dbPromise;
-    
+
     // Create anaf_queue table if it doesn't exist
     await new Promise((resolve, reject) => {
       db.run(`
@@ -37,12 +37,12 @@ async function getAnafHealth(req, res, next) {
         if (err) reject(err);
         else {
           // Create indexes
-          db.run(`CREATE INDEX IF NOT EXISTS idx_anaf_queue_status ON anaf_queue(status, scheduled_at)`, () => {});
+          db.run(`CREATE INDEX IF NOT EXISTS idx_anaf_queue_status ON anaf_queue(status, scheduled_at)`, () => { });
           db.run(`CREATE INDEX IF NOT EXISTS idx_anaf_queue_priority ON anaf_queue(priority, scheduled_at)`, () => resolve());
         }
       });
     });
-    
+
     // Get certificate info
     const certificate = await new Promise((resolve, reject) => {
       db.get(`
@@ -55,11 +55,11 @@ async function getAnafHealth(req, res, next) {
         else resolve(row);
       });
     });
-    
+
     // Get token info
     const tokenInfo = await anafTokenService.getCurrentToken();
     const isTokenExpiring = await anafTokenService.isTokenExpiredOrExpiringSoon();
-    
+
     // Get queue stats
     const queueStats = await new Promise((resolve, reject) => {
       db.get(`
@@ -86,7 +86,7 @@ async function getAnafHealth(req, res, next) {
         }
       });
     });
-    
+
     // Get errors last 24h
     const errorsLast24h = await new Promise((resolve, reject) => {
       db.get(`
@@ -143,12 +143,12 @@ async function getAnafHealth(req, res, next) {
         if (err) reject(err);
         else {
           // Create indexes
-          db.run(`CREATE INDEX IF NOT EXISTS idx_anaf_journal_document ON anaf_journal(document_id, document_type)`, () => {});
+          db.run(`CREATE INDEX IF NOT EXISTS idx_anaf_journal_document ON anaf_journal(document_id, document_type)`, () => { });
           db.run(`CREATE INDEX IF NOT EXISTS idx_anaf_journal_status ON anaf_journal(status, created_at)`, () => resolve());
         }
       });
     });
-    
+
     // Get submission timeline (last 7 days)
     const timeline = await new Promise((resolve, reject) => {
       db.all(`
@@ -169,13 +169,13 @@ async function getAnafHealth(req, res, next) {
         }
       });
     });
-    
+
     // Get recent submissions (last 10)
     const recentSubmissions = await AnafJournalRepository.list({
       limit: 10,
       offset: 0
     });
-    
+
     res.json({
       success: true,
       data: {
@@ -183,7 +183,7 @@ async function getAnafHealth(req, res, next) {
           hasCertificate: true,
           expiryDate: certificate.expiry_date,
           isExpired: certificate.expiry_date ? new Date(certificate.expiry_date) < new Date() : null,
-          daysUntilExpiry: certificate.expiry_date 
+          daysUntilExpiry: certificate.expiry_date
             ? Math.ceil((new Date(certificate.expiry_date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
             : null
         } : {
@@ -223,7 +223,7 @@ async function getAnafHealth(req, res, next) {
 async function getSubmissions(req, res, next) {
   try {
     const { documentType, status, startDate, endDate, limit = 100, offset = 0 } = req.query;
-    
+
     const submissions = await AnafJournalRepository.list({
       documentType,
       status,
@@ -232,7 +232,7 @@ async function getSubmissions(req, res, next) {
       limit: parseInt(limit),
       offset: parseInt(offset)
     });
-    
+
     res.json({
       success: true,
       data: submissions
@@ -249,7 +249,7 @@ async function getSubmissions(req, res, next) {
 async function refreshToken(req, res, next) {
   try {
     const newToken = await anafTokenService.refreshToken();
-    
+
     if (newToken) {
       res.json({
         success: true,
@@ -272,9 +272,9 @@ async function getStatus(req, res, next) {
   try {
     const { id } = req.params;
     const { documentType } = req.query;
-    
+
     const status = await anafSubmitService.getSubmissionStatus(parseInt(id), documentType || 'FACTURA');
-    
+
     res.json({
       success: true,
       data: status
@@ -291,9 +291,9 @@ async function resubmit(req, res, next) {
   try {
     const { id } = req.params;
     const { documentType } = req.body;
-    
+
     const result = await anafSubmitService.resubmitDocument(parseInt(id), documentType || 'FACTURA');
-    
+
     res.json({
       success: true,
       message: 'Document queued for resubmission',
@@ -307,7 +307,7 @@ async function resubmit(req, res, next) {
 async function getJournal(req, res, next) {
   try {
     const { documentType, status, startDate, endDate, limit = 100, offset = 0 } = req.query;
-    
+
     const entries = await AnafJournalRepository.list({
       documentType,
       status,
@@ -316,7 +316,7 @@ async function getJournal(req, res, next) {
       limit: parseInt(limit),
       offset: parseInt(offset)
     });
-    
+
     res.json({
       success: true,
       data: entries
@@ -326,12 +326,61 @@ async function getJournal(req, res, next) {
   }
 }
 
+/**
+ * GET /api/anaf/config
+ * Get ANAF configuration
+ */
+async function getAnafConfig(req: any, res: any, next: any) {
+  try {
+    const { dbPromise } = require('../../../database');
+    const db = await dbPromise;
+
+    // Get config from settings table or restaurant data
+    const settings = await new Promise((resolve) => {
+      db.get('SELECT * FROM settings WHERE key = ?', ['anaf_config'], (err: any, row: any) => {
+        if (err) resolve(null);
+        else resolve(row ? JSON.parse(row.value) : null);
+      });
+    });
+
+    if (settings) {
+      return res.json({
+        success: true,
+        data: settings
+      });
+    }
+
+    // Fallback to restaurant data
+    const restaurant: any = await new Promise((resolve) => {
+      db.get('SELECT * FROM restaurant_info LIMIT 1', [], (err: any, row: any) => {
+        if (err) resolve({});
+        else resolve(row || {});
+      });
+    });
+
+    res.json({
+      success: true,
+      data: {
+        company_name: restaurant.name || '',
+        cui: restaurant.cui || '',
+        invoice_series: restaurant.invoice_series || 'FAC',
+        invoice_current_number: restaurant.invoice_current_number || 1,
+        anaf_enabled: false,
+        anaf_test_mode: true
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   getAnafHealth,
-  getHealth, // Alias for backward compatibility
+  getHealth: getAnafHealth,
   getSubmissions,
   refreshToken,
   getStatus,
   resubmit,
-  getJournal
+  getJournal,
+  getAnafConfig
 };

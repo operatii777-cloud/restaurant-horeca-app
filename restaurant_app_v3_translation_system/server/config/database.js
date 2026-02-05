@@ -28,10 +28,10 @@ class Database {
         }
 
         return new Promise((resolve, reject) => {
-            // Use the MAIN app database (restaurant.db, not database.db!)
-            const dbPath = path.join(__dirname, '../../../server/restaurant.db');
+            // Use the MAIN app database (restaurant.db)
+            const dbPath = path.join(__dirname, '../restaurant.db');
             console.log('🔍 Attempting to connect to:', dbPath);
-            
+
             this.db = new sqlite3.Database(dbPath, (err) => {
                 if (err) {
                     console.error('❌ Database connection failed:', err.message);
@@ -39,10 +39,10 @@ class Database {
                 } else {
                     this.isConnected = true;
                     console.log('✅ Database connected:', dbPath);
-                    
+
                     // Enable foreign keys
                     this.db.run('PRAGMA foreign_keys = ON');
-                    
+
                     resolve();
                 }
             });
@@ -61,7 +61,7 @@ class Database {
         }
 
         return new Promise((resolve, reject) => {
-            this.db.run(sql, params, function(err) {
+            this.db.run(sql, params, function (err) {
                 if (err) {
                     console.error('❌ Query failed:', sql);
                     console.error('   Error:', err.message);

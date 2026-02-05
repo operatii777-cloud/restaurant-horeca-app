@@ -12,7 +12,7 @@ import { CertificatesTable } from '../components/CertificatesTable';
 import './CertificateManagerPage.css';
 
 export function CertificateManagerPage() {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const { data: certData, isLoading, refetch } = useCertificateStatus();
   const certificate = certData?.data;
 
@@ -27,13 +27,13 @@ export function CertificateManagerPage() {
 
   const getStatusBadge = () => {
     if (!certificate?.hasCertificate) {
-      return <span className="badge badge-danger">"Lipsă"</span>;
+      return <span className="badge badge-danger">Lipsă</span>;
     }
     const status = certificate.status;
     if (status === 'valid') {
       return <span className="badge badge-success">Valid</span>;
     } else if (status === 'expiring_soon') {
-      return <span className="badge badge-warning">"expira curand"</span>;
+      return <span className="badge badge-warning">Expiră curând</span>;
     } else if (status === 'expired') {
       return <span className="badge badge-danger">Expirat</span>;
     } else {
@@ -53,7 +53,7 @@ export function CertificateManagerPage() {
     <div className="certificate-manager-page">
       <header className="page-header">
         <h1 className="page-title">Gestionare Certificat ANAF</h1>
-        <p className="page-subtitle">"incarca si gestioneaza certificatul digital pentru"</p>
+        <p className="page-subtitle">Încarcă și gestionează certificatul digital pentru ANAF</p>
       </header>
 
       {/* Certificates Table */}
@@ -61,7 +61,7 @@ export function CertificateManagerPage() {
 
       {/* Upload Certificate Form */}
       <div className="certificate-upload-card">
-        <h2 className="card-title">"incarca certificat nou"</h2>
+        <h2 className="card-title">Încarcă certificat nou</h2>
         <CertificateUpload
           onSuccess={() => {
             refetch();
@@ -74,12 +74,12 @@ export function CertificateManagerPage() {
 
       {/* Help Section */}
       <div className="certificate-help-card">
-        <h3 className="card-title">"Informații"</h3>
+        <h3 className="card-title">Informații</h3>
         <ul className="help-list">
           <li>Certificatul trebuie să fie în format .pfx sau .p12</li>
-          <li>"parola certificatului este necesara pentru semnare"</li>
-          <li>"certificatul este stocat criptat in baza de date"</li>
-          <li>"verifica data expirarii si reinnoieste certificatu"</li>
+          <li>Parola certificatului este necesară pentru semnare</li>
+          <li>Certificatul este stocat criptat în baza de date</li>
+          <li>Verifică data expirării și reînnoiește certificatul anual</li>
         </ul>
       </div>
     </div>

@@ -17,7 +17,7 @@ interface Area {
 }
 
 export const AreasPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [areas, setAreas] = useState<Area[]>([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -138,7 +138,7 @@ export const AreasPage = () => {
 
   return (
     <div className="areas-page">
-      <h2 className="mb-4">"gestionare zone restaurant"</h2>
+      <h2 className="mb-4">Gestionare Zone Restaurant</h2>
 
       {error && <Alert variant="danger" dismissible onClose={() => setError(null)}>{error}</Alert>}
       {success && <Alert variant="success" dismissible onClose={() => setSuccess(null)}>{success}</Alert>}
@@ -146,9 +146,9 @@ export const AreasPage = () => {
       <Card className="shadow-sm mb-4">
         <Card.Header className="bg-success text-white d-flex justify-content-between align-items-center">
           <h5 className="mb-0">
-            <i className="fas fa-map-marked-alt me-2"></i>"gestionare zone restaurant"</h5>
+            <i className="fas fa-map-marked-alt me-2"></i>Gestionare Zone Restaurant</h5>
           <Button variant="light" size="sm" onClick={() => handleOpenModal()}>
-            <i className="fas fa-plus me-1"></i>"adauga zona noua"</Button>
+            <i className="fas fa-plus me-1"></i>Adaugă zonă nouă</Button>
         </Card.Header>
         <Card.Body>
           <Alert variant="info">
@@ -159,7 +159,7 @@ export const AreasPage = () => {
           {loading ? (
             <div className="text-center py-4">
               <i className="fas fa-spinner fa-spin fa-2x text-success"></i>
-              <p className="mt-2">"se incarca zonele"</p>
+              <p className="mt-2">Se încarcă zonele...</p>
             </div>
           ) : (
             <div className="table-responsive">
@@ -172,7 +172,7 @@ export const AreasPage = () => {
                     <th>Capacitate</th>
                     <th>Ordine</th>
                     <th>Status</th>
-                    <th>"Acțiuni"</th>
+                    <th>Acțiuni</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -218,7 +218,7 @@ export const AreasPage = () => {
                       ))
                   ) : (
                     <tr>
-                      <td colSpan={7} className="text-center text-muted">"nu exista zone configurate"</td>
+                      <td colSpan={7} className="text-center text-muted">Nu există zone configurate</td>
                     </tr>
                   )}
                 </tbody>
@@ -295,7 +295,7 @@ export const AreasPage = () => {
               <Col md={6} className="d-flex align-items-end">
                 <Form.Check
                   type="switch"
-                  label="zona activa"
+                  label="Zonă activă"
                   checked={formData.is_active}
                   onChange={(e) => setFormData({ ...formData, is_active: e.target.checked })}
                 />
@@ -306,7 +306,7 @@ export const AreasPage = () => {
             {success && <Alert variant="success" className="mt-3">{success}</Alert>}
 
             <div className="d-flex justify-content-end gap-2 mt-3">
-              <Button variant="secondary" onClick={handleCloseModal}>"Anulează"</Button>
+              <Button variant="secondary" onClick={handleCloseModal}>Anulează</Button>
               <Button variant="success" type="submit">
                 {editingArea ? 'Actualizează' : 'Creează'}
               </Button>

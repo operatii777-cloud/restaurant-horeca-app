@@ -42,10 +42,10 @@ export const DailyCogsTimelineChart = ({
   loading = false,
   height = 400,
 }: DailyCogsTimelineChartProps) => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   if (loading || data.length === 0) {
     return (
-      <div className="daily-cogs-timeline-chart" style={{ height: `"Height"px` }}>
+      <div className="daily-cogs-timeline-chart" style={{ height: `${height}px` }}>
         <div className="chart-loading">
           <div className="spinner-border text-primary" role="status">
             <span className="visually-hidden">Se încarcă...</span>

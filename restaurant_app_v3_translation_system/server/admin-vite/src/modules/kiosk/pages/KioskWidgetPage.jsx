@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Button, Form, Alert, Badge, Tabs, Tab, Row, Col } from 'react-bootstrap';
-import { 
-  ExternalLink, Copy, CheckCircle, Code as CodeIcon, 
+import {
+  ExternalLink, Copy, CheckCircle, Code as CodeIcon,
   Eye, Settings, Smartphone, Monitor, Globe
 } from 'lucide-react';
 import './KioskWidgetPage.css';
@@ -73,8 +73,8 @@ export const KioskWidgetPage = () => {
     // Generate iframe embed code
     const iframeCode = `<iframe 
   src="${widgetUrl}" 
-  width=""Width"" 
-  height=""Height"" 
+  width={width} 
+  height={height} 
   frameborder="0" 
   scrolling="auto"
   style="border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"
@@ -88,8 +88,8 @@ export const KioskWidgetPage = () => {
   (function() {
     var iframe = document.createElement('iframe');
     iframe.src = '${widgetUrl}';
-    iframe.width = '"Width"';
-    iframe.height = '"Height"';
+    iframe.width = width;
+    iframe.height = height;
     iframe.frameBorder = '0';
     iframe.style.border = 'none';
     iframe.style.borderRadius = '8px';
@@ -246,8 +246,8 @@ export const KioskWidgetPage = () => {
               </Card.Header>
               <Card.Body className="p-0">
                 {previewUrl ? (
-                  <div style={{ 
-                    width: '100%', 
+                  <div style={{
+                    width: '100%',
                     height: selectedSize?.height || '600px',
                     border: '1px solid #dee2e6',
                     borderRadius: '8px',

@@ -56,7 +56,7 @@ interface FeedbackDetails {
 }
 
 export const FeedbackPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
   const [stats, setStats] = useState<FeedbackData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -83,7 +83,7 @@ export const FeedbackPage = () => {
 
       const response = await fetch(`/api/feedback/recent?${new URLSearchParams(params as any).toString()}`);
       const data: FeedbackData = await response.json();
-      
+
       if (data.success !== false) {
         setFeedbacks(data.recentFeedback || []);
         setStats(data);
@@ -195,7 +195,7 @@ export const FeedbackPage = () => {
       <div className="feedback-page">
         <div className="text-center py-5">
           <Spinner animation="border" variant="primary" />
-          <p className="mt-3">"se incarca feedback urile"</p>
+          <p className="mt-3">Se încarcă feedback-urile...</p>
         </div>
       </div>
     );
@@ -204,7 +204,7 @@ export const FeedbackPage = () => {
   return (
     <div className="feedback-page" data-page-ready="true">
       <PageHeader
-        title="feedback clienti"
+        title="Feedback Clienți"
         description="Vizualizează și analizează feedback-urile clienților."
         actions={[
           {
@@ -227,7 +227,7 @@ export const FeedbackPage = () => {
                   <h4>{stats?.total || 0}</h4>
                   <small>Feedback-uri ({periodLabel})</small>
                 </div>
-                  <i className="fas fa-comment-dots fa-2x text-warning"></i>
+                <i className="fas fa-comment-dots fa-2x text-warning"></i>
               </div>
             </Card.Body>
           </Card>
@@ -253,7 +253,7 @@ export const FeedbackPage = () => {
                   <h4>{lowRatings}</h4>
                   <small>Rating-uri Scăzute (≤2★)</small>
                 </div>
-                  <i className="fas fa-exclamation-triangle fa-2x text-danger"></i>
+                <i className="fas fa-exclamation-triangle fa-2x text-danger"></i>
               </div>
             </Card.Body>
           </Card>
@@ -339,7 +339,7 @@ export const FeedbackPage = () => {
                   value={filters.period}
                   onChange={(e) => changePeriod(e.target.value)}
                   className="form-select-sm feedback-period-select"
-                  style={{ 
+                  style={{
                     width: '200px',
                     backgroundColor: '#343a40',
                     color: 'white',
@@ -369,7 +369,7 @@ export const FeedbackPage = () => {
                   <Button
                     variant={filters.rating === '' ? 'light' : 'outline-light'}
                     onClick={() => filterByRating('all')}
-                  >"Toate"</Button>
+                  >Toate</Button>
                   <Button
                     variant={filters.rating === '5' ? 'light' : 'outline-light'}
                     onClick={() => filterByRating(5)}
@@ -408,7 +408,7 @@ export const FeedbackPage = () => {
                 {feedbacks.length === 0 ? (
                   <div className="text-center py-4 text-muted">
                     <i className="fas fa-star fa-3x mb-3 opacity-50"></i>
-                    <p>"nu exista feedback uri"</p>
+                    <p>Nu există feedback-uri</p>
                   </div>
                 ) : (
                   <Table striped hover responsive>
@@ -420,7 +420,7 @@ export const FeedbackPage = () => {
                         <th>Rating</th>
                         <th>Comentariu</th>
                         <th>Data</th>
-                        <th>"Acțiuni"</th>
+                        <th>Acțiuni</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -429,8 +429,8 @@ export const FeedbackPage = () => {
                           feedback.rating <= 2
                             ? 'text-danger'
                             : feedback.rating >= 4
-                            ? 'text-success'
-                            : 'text-warning';
+                              ? 'text-success'
+                              : 'text-warning';
                         return (
                           <tr key={feedback.id} className="feedback-row" data-rating={feedback.rating}>
                             <td>#{feedback.id}</td>
@@ -456,7 +456,7 @@ export const FeedbackPage = () => {
                               style={{ maxWidth: '300px' }}
                               title={feedback.comment || ''}
                             >
-                              {feedback.comment || <em className="text-muted">"fara comentariu"</em>}
+                              {feedback.comment || <em className="text-muted">Fără comentariu</em>}
                             </td>
                             <td className="small">
                               {new Date(feedback.timestamp).toLocaleString('ro-RO')}
@@ -486,7 +486,7 @@ export const FeedbackPage = () => {
       <Modal show={showDetailsModal} onHide={() => setShowDetailsModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>
-            <i className="fas fa-star me-2"></i>"detalii feedback"</Modal.Title>
+            <i className="fas fa-star me-2"></i>Detalii Feedback</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {selectedFeedback && (
@@ -501,13 +501,13 @@ export const FeedbackPage = () => {
                 </Badge>
               </p>
               <p>
-                <strong>"Comandă:"</strong> #{selectedFeedback.orderId}
+                <strong>Comandă:</strong> #{selectedFeedback.orderId}
               </p>
               <p>
                 <strong>Client:</strong> {selectedFeedback.client}
               </p>
               <p>
-                <strong>"Masă:"</strong> {selectedFeedback.table}
+                <strong>Masă:</strong> {selectedFeedback.table}
               </p>
               <p>
                 <strong>Data:</strong> {selectedFeedback.date}
@@ -520,7 +520,7 @@ export const FeedbackPage = () => {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowDetailsModal(false)}>"Închide"</Button>
+          <Button variant="secondary" onClick={() => setShowDetailsModal(false)}>Închide</Button>
         </Modal.Footer>
       </Modal>
     </div>

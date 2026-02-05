@@ -24,7 +24,7 @@ interface ReportXData {
 }
 
 export const FiscalReportXPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [reportDate, setReportDate] = useState(() => {
     return new Date().toISOString().split('T')[0];
   });
@@ -59,7 +59,7 @@ export const FiscalReportXPage = () => {
 
   const displayVATBreakdown = (vatBreakdown?: Array<{ rate: number; amount: number; base: number }>) => {
     if (!vatBreakdown || vatBreakdown.length === 0) {
-      return `<p class="text-muted">"nu exista defalcare tva disponibila"</p>`;
+      return `<p class="text-muted">Nu există defalcare TVA disponibilă</p>`;
     }
 
     return `
@@ -73,16 +73,16 @@ export const FiscalReportXPage = () => {
         </thead>
         <tbody>
           ${vatBreakdown
-            .map(
-              (item) => `
+        .map(
+          (item) => `
             <tr>
               <td>${item.rate}%</td>
               <td>${item.base.toFixed(2)}</td>
               <td>${item.amount.toFixed(2)}</td>
             </tr>
           `,
-            )
-            .join('')}
+        )
+        .join('')}
         </tbody>
       </table>
     `;
@@ -95,12 +95,12 @@ export const FiscalReportXPage = () => {
           <i className="fas fa-file-alt me-1"></i> Raport X
         </Card.Header>
         <Card.Body>
-          <p className="text-muted">"raportul x se genereaza pentru a afisa totalurile "</p>
+          <p className="text-muted">Raportul X se generează pentru a afișa totalurile intermediare.</p>
 
           <div className="row">
             <div className="col-md-6">
               <Form.Group className="mb-3">
-                <Form.Label>"selecteaza data pentru raport"</Form.Label>
+                <Form.Label>Selectează data pentru raport</Form.Label>
                 <Form.Control
                   type="date"
                   value={reportDate}
@@ -133,10 +133,10 @@ export const FiscalReportXPage = () => {
 
                     <div className="row mb-3">
                       <div className="col-6">
-                        <strong>"numar raport x"</strong> X-{reportData.xNumber}
+                        <strong>Număr raport X</strong> X-{reportData.xNumber}
                       </div>
                       <div className="col-6">
-                        <strong>"ora generarii"</strong>' '
+                        <strong>Ora generării</strong>' '
                         {new Date(reportData.timestamp).toLocaleString('ro-RO')}
                       </div>
                     </div>
@@ -145,7 +145,7 @@ export const FiscalReportXPage = () => {
 
                     <div className="row mb-3">
                       <div className="col-6">
-                        <strong>"total bonuri fiscale"</strong> {reportData.summary.totalReceipts}
+                        <strong>Total bonuri fiscale</strong> {reportData.summary.totalReceipts}
                       </div>
                       <div className="col-6">
                         <strong>Total Valoare:</strong> {reportData.summary.totalAmount.toFixed(2)} RON
@@ -156,10 +156,10 @@ export const FiscalReportXPage = () => {
 
                     <div className="row mb-3">
                       <div className="col-6">
-                        <strong>"total intrari cash"</strong> {reportData.summary.totalCash.toFixed(2)} RON
+                        <strong>Total intrări cash</strong> {reportData.summary.totalCash.toFixed(2)} RON
                       </div>
                       <div className="col-6">
-                        <strong>"total intrari card"</strong> {reportData.summary.totalCard.toFixed(2)} RON
+                        <strong>Total intrări card</strong> {reportData.summary.totalCard.toFixed(2)} RON
                       </div>
                     </div>
 
@@ -174,7 +174,7 @@ export const FiscalReportXPage = () => {
 
                     <hr />
 
-                    <h6 className="mt-3">"defalcare tva pe cote"</h6>
+                    <h6 className="mt-3">Defalcare TVA pe cote</h6>
                     <div
                       dangerouslySetInnerHTML={{
                         __html: DOMPurify.sanitize(displayVATBreakdown(reportData.summary.vatBreakdown)),
@@ -185,8 +185,8 @@ export const FiscalReportXPage = () => {
 
                     <Alert variant="info">
                       <i className="fas fa-info-circle me-2"></i>
-                      <strong>"raportul a fost salvat permanent"</strong>
-                      <br />"poti vizualiza rapoartele x generate in sectiunea"<strong>"Arhivă"</strong> din tab-ul fiscal.
+                      <strong>Raportul a fost salvat permanent.</strong>
+                      <br />Poți vizualiza rapoartele X generate în secțiunea <strong>Arhivă</strong> din tab-ul fiscal.
                     </Alert>
                   </Card.Body>
                 </Card>

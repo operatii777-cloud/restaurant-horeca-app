@@ -19,6 +19,7 @@ try {
 }
 
 const { createEnterpriseTables } = require('./database-enterprise-tables.js');
+const { createHaccpTables } = require('./database-haccp-tables.js');
 
 const PIN_SALT_BYTES = 16;
 const PIN_SCRYPT_KEY_LENGTH = 64;
@@ -143,6 +144,10 @@ const dbPromise = new Promise((resolve, reject) => {
           .then(() => {
             // Creează tabelele Enterprise
             return createEnterpriseTables(db);
+          })
+          .then(() => {
+            // Creează tabelele HACCP
+            return createHaccpTables(db);
           })
           .then(() => {
             // Inițializează sistemul de protecție după inițializarea tabelelor

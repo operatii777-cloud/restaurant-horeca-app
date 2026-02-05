@@ -23,7 +23,7 @@ interface Area {
 }
 
 export const TablesPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [tables, setTables] = useState<TableConfig[]>([]);
   const [areas, setAreas] = useState<Area[]>([]);
   const [loading, setLoading] = useState(false);
@@ -229,7 +229,7 @@ export const TablesPage = () => {
               <i className="fas fa-layer-group me-1"></i>Configurare Bulk
             </Button>
             <Button variant="light" size="sm" onClick={() => handleOpenModal()}>
-              <i className="fas fa-plus me-1"></i>"masa noua"</Button>
+              <i className="fas fa-plus me-1"></i>Masă nouă</Button>
           </div>
         </Card.Header>
         <Card.Body>
@@ -241,7 +241,7 @@ export const TablesPage = () => {
             <Col md={4}>
               <Form.Label>Filtrează după zonă</Form.Label>
               <Form.Select value={filterArea} onChange={(e) => setFilterArea(e.target.value ? parseInt(e.target.value) : '')}>
-                <option value="">"toate zonele"</option>
+                <option value="">Toate zonele</option>
                 {areas.map((area) => (
                   <option key={area.id} value={area.id}>
                     {area.name}
@@ -268,10 +268,10 @@ export const TablesPage = () => {
           {loading ? (
             <div className="text-center py-4">
               <i className="fas fa-spinner fa-spin fa-2x text-warning"></i>
-              <p className="mt-2">"se incarca mesele"</p>
+              <p className="mt-2">Se încarcă mesele...</p>
             </div>
           ) : (
-            <div className="table-responsive" style={{ maxHeight: '500px', overflowY: "Auto" }}>
+            <div className="table-responsive" style={{ maxHeight: '500px', overflowY: "auto" }}>
               <Table hover size="sm">
                 <thead className="table-light sticky-top">
                   <tr>
@@ -324,7 +324,7 @@ export const TablesPage = () => {
                       ))
                   ) : (
                     <tr>
-                      <td colSpan={6} className="text-center text-muted">"nu exista mese configurate"</td>
+                      <td colSpan={6} className="text-center text-muted">Nu există mese configurate</td>
                     </tr>
                   )}
                 </tbody>
@@ -363,7 +363,7 @@ export const TablesPage = () => {
                     onChange={(e) => setFormData({ ...formData, area_id: parseInt(e.target.value) || 0 })}
                     required
                   >
-                    <option value="">"selecteaza zona"</option>
+                    <option value="">Selectează zona</option>
                     {areas.map((area) => (
                       <option key={area.id} value={area.id}>
                         {area.name}
@@ -416,7 +416,7 @@ export const TablesPage = () => {
 
             <Form.Check
               type="switch"
-              label="masa activa"
+              label="Masă activă"
               checked={formData.is_active}
               onChange={(e) => setFormData({ ...formData, is_active: e.target.checked })}
             />
@@ -481,7 +481,7 @@ export const TablesPage = () => {
                     onChange={(e) => setBulkFormData({ ...bulkFormData, area_id: parseInt(e.target.value) || 0 })}
                     required
                   >
-                    <option value="">"selecteaza zona"</option>
+                    <option value="">Selectează zona</option>
                     {areas.map((area) => (
                       <option key={area.id} value={area.id}>
                         {area.name}

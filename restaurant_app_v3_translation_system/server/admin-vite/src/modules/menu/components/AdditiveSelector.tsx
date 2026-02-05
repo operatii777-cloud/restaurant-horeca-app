@@ -20,7 +20,7 @@ interface AdditiveSelectorProps {
 }
 
 export const AdditiveSelector = ({ value, onChange, label = 'Aditivi', placeholder = 'Selectează aditivi...' }: AdditiveSelectorProps) => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [additives, setAdditives] = useState<Additive[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
@@ -64,13 +64,13 @@ export const AdditiveSelector = ({ value, onChange, label = 'Aditivi', placehold
     const newSelected = selectedIds.includes(additiveId)
       ? selectedIds.filter(id => id !== additiveId)
       : [...selectedIds, additiveId];
-    
+
     setSelectedIds(newSelected);
     onChange(JSON.stringify(newSelected));
   };
 
   const filteredAdditives = additives.filter(a =>
-    a.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (a.name && a.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
     (a.name_en && a.name_en.toLowerCase().includes(searchTerm.toLowerCase())) ||
     (a.e_code && a.e_code.toLowerCase().includes(searchTerm.toLowerCase()))
   );
@@ -80,7 +80,7 @@ export const AdditiveSelector = ({ value, onChange, label = 'Aditivi', placehold
   return (
     <div className="additive-selector">
       <Form.Label>{label}</Form.Label>
-      
+
       {/* Selected additives display */}
       {selectedAdditives.length > 0 && (
         <div className="selected-additives mb-2">

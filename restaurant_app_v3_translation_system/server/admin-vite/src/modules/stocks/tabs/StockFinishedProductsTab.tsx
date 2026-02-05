@@ -21,7 +21,12 @@ const isTrue = (value: unknown) => value === true || value === 1 || value === '1
 export const StockFinishedProductsTab = ({ onSummary, onFeedback }: StockFinishedProductsTabProps) => {
   //   const { t } = useTranslation();
   const { data, loading, error, refetch } = useApiQuery<FinishedProductStock[]>('/api/stocks/finished-products');
-  const products = useMemo<FinishedProductStock[]>(() => (Array.isArray(data) ? data : []), [data]);
+  const products = useMemo<FinishedProductStock[]>(() => {
+    if (Array.isArray(data)) return data;
+    if (data && typeof data === 'object' && 'data' in data && Array.isArray((data as any).data)) return (data as any).data;
+    if (data && typeof data === 'object' && 'products' in data && Array.isArray((data as any).products)) return (data as any).products;
+    return [];
+  }, [data]);
 
   const decoratedProducts = useMemo<FinishedProductStock[]>(() =>
     products.map((product) => {

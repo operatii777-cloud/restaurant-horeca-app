@@ -12,14 +12,14 @@ interface MonthlyReportData {
   total_transactions: number;
   total_revenue: number;
   total_tax: number;
-  status: "Pending:" | 'generated' | 'submitted' | 'approved';
+  status: 'pending' | 'generated' | 'submitted' | 'approved';
   generated_at?: string;
   submitted_at?: string;
   file_url?: string;
 }
 
 export const MonthlyReportPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [reportData, setReportData] = useState<MonthlyReportData | null>(null);
@@ -158,22 +158,22 @@ export const MonthlyReportPage = () => {
             </Button>
             {reportData?.file_url && (
               <Button variant="success" size="sm" className="me-2" onClick={handleDownloadReport}>
-                <i className="fas fa-download me-1"></i>"Descarcă"</Button>
+                <i className="fas fa-download me-1"></i>Descarcă</Button>
             )}
             {reportData?.status === 'generated' && (
               <Button variant="warning" size="sm" onClick={handleSubmitToAnaf}>
-                <i className="fas fa-paper-plane me-1"></i>"trimite la anaf"</Button>
+                <i className="fas fa-paper-plane me-1"></i>Trimite la ANAF</Button>
             )}
           </div>
         </Card.Header>
         <Card.Body>
           <Alert variant="info">
-            <i className="fas fa-info-circle me-2"></i>"raportul lunar contine toate tranzactiile dintr o "</Alert>
+            <i className="fas fa-info-circle me-2"></i>Raportul lunar conține toate tranzacțiile dintr-o perioadă specificată.</Alert>
 
           {/* Selectare Lună/An */}
           <Row className="mb-4">
             <Col md={4}>
-              <Form.Label>"Lună"</Form.Label>
+              <Form.Label>Lună</Form.Label>
               <Form.Select value={selectedMonth} onChange={(e) => setSelectedMonth(parseInt(e.target.value))}>
                 {monthNames.map((month, index) => (
                   <option key={index + 1} value={index + 1}>
@@ -194,7 +194,7 @@ export const MonthlyReportPage = () => {
             </Col>
             <Col md={4} className="d-flex align-items-end">
               <Button variant="secondary" className="w-100" onClick={loadMonthlyReport} disabled={loading}>
-                <i className={`fas ${loading ? 'fa-spinner fa-spin' : 'fa-sync-alt'} me-1`}></i>"Reîmprospătează"</Button>
+                <i className={`fas ${loading ? 'fa-spinner fa-spin' : 'fa-sync-alt'} me-1`}></i>Reîmprospătează</Button>
             </Col>
           </Row>
 
@@ -208,7 +208,7 @@ export const MonthlyReportPage = () => {
                     <div className="mt-1">{getStatusBadge(reportData.status)}</div>
                   </Col>
                   <Col md={3}>
-                    <strong>"Tranzacții:"</strong>
+                    <strong>Tranzacții:</strong>
                     <div className="mt-1">{reportData.total_transactions.toLocaleString('ro-RO')}</div>
                   </Col>
                   <Col md={3}>
@@ -246,7 +246,7 @@ export const MonthlyReportPage = () => {
           {loading ? (
             <div className="text-center py-4">
               <i className="fas fa-spinner fa-spin fa-2x text-warning"></i>
-              <p className="mt-2">"se incarca raportul"</p>
+              <p className="mt-2">Se încarcă raportul...</p>
             </div>
           ) : reportData ? (
             <Card>
@@ -264,13 +264,13 @@ export const MonthlyReportPage = () => {
                     </thead>
                     <tbody>
                       <tr>
-                        <td>"Lună"</td>
+                        <td>Lună</td>
                         <td>
                           <strong>{monthNames[selectedMonth - 1]} {selectedYear}</strong>
                         </td>
                       </tr>
                       <tr>
-                        <td>"numar tranzactii"</td>
+                        <td>Număr tranzacții</td>
                         <td>{reportData.total_transactions.toLocaleString('ro-RO')}</td>
                       </tr>
                       <tr>

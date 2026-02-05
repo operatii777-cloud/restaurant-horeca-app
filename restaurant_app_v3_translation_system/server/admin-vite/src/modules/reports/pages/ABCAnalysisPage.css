@@ -56,14 +56,10 @@
   color: #000 !important;
   border-color: #64b5f6 !important;
   box-shadow: 0 0 0 0.2rem rgba(187, 222, 251, 0.5) !important;
-}
-
-.abc-analysis-page .form-select-blue option {
+}.abc-analysis-page .form-select-blue option {
   color: #000 !important;
   background-color: #fff !important;
-}
-
-/* Blue styling for refresh button */
+}/* Blue styling for refresh button */
 .abc-analysis-page .btn-refresh-blue {
   background-color: #bbdefb !important;
   color: #000 !important;
@@ -82,9 +78,7 @@
   color: #000 !important;
   border-color: #64b5f6 !important;
   box-shadow: 0 0 0 0.2rem rgba(187, 222, 251, 0.5) !important;
-}
-
-.abc-analysis-page .btn-refresh-blue:disabled {
+}.abc-analysis-page .btn-refresh-blue:disabled {
   background-color: #bbdefb !important;
   color: #000 !important;
   border-color: #90caf9 !important;

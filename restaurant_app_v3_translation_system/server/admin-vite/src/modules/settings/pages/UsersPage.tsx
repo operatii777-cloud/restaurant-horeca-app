@@ -26,7 +26,7 @@ interface Role {
 }
 
 export const UsersPage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [users, setUsers] = useState<User[]>([]);
   const [roles, setRoles] = useState<Role[]>([]);
   const [loading, setLoading] = useState(true);
@@ -84,7 +84,7 @@ export const UsersPage: React.FC = () => {
   return (
     <div className="users-page">
       <PageHeader
-        title='utilizatori & permisiuni'
+        title='Utilizatori & Permisiuni'
         description="Gestionare utilizatori și roluri"
       />
 
@@ -117,13 +117,13 @@ export const UsersPage: React.FC = () => {
               <th>Rol</th>
               <th>Status</th>
               <th>Ultimul Login</th>
-              <th>"Acțiuni"</th>
+              <th>Acțiuni</th>
             </tr>
           </thead>
           <tbody>
             {users.length === 0 ? (
               <tr>
-                <td colSpan={6} className="text-center">"nu exista utilizatori"</td>
+                <td colSpan={6} className="text-center">Nu există utilizatori</td>
               </tr>
             ) : (
               users.map((user) => (
@@ -248,7 +248,7 @@ const UserModal: React.FC<UserModalProps> = ({ user, roles, onSave, onClose }) =
             </select>
           </div>
           <div className="modal-actions">
-            <button type="button" className="btn btn-secondary" onClick={onClose}>"Anulează"</button>
+            <button type="button" className="btn btn-secondary" onClick={onClose}>Anulează</button>
             <button type="submit" className="btn btn-primary">
               Salvează
             </button>

@@ -147,7 +147,7 @@ class HACCPService {
 
       const queryString = params.toString();
       const url = queryString ? `${this.baseUrl}/monitoring?${queryString}` : `${this.baseUrl}/monitoring`;
-      
+
       const response = await httpClient.get(url);
       return response.data?.data || [];
     } catch (error) {
@@ -158,7 +158,7 @@ class HACCPService {
 
   async getDashboardKPIs(): Promise<DashboardKPIs> {
     try {
-      const response = await httpClient.get(`${this.baseUrl}/haccp/dashboard/kpis`);
+      const response = await httpClient.get(`${this.baseUrl}/dashboard/kpis`);
       return response.data?.data || {
         monitoringsToday: 0,
         criticalAlerts: 0,
@@ -213,7 +213,7 @@ class HACCPService {
 
       const queryString = params.toString();
       const url = queryString ? `${this.baseUrl}/corrective-actions?${queryString}` : `${this.baseUrl}/corrective-actions`;
-      
+
       const response = await httpClient.get(url);
       return response.data?.data || [];
     } catch (error) {

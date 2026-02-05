@@ -5,7 +5,8 @@
   margin: 0 auto;
 }
 
-.loading-spinner, .error-message {
+.loading-spinner,
+.error-message {
   text-align: center;
   padding: 60px;
   font-size: 1.2rem;
@@ -50,6 +51,36 @@
 }
 
 /* Summary Grid */
+.suppliers-header-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-base, #e5e7eb);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  margin-right: 8px;
+}
+
+.suppliers-header-badge .badge-icon {
+  font-size: 1.1rem;
+}
+
+.suppliers-header-badge .badge-value {
+  font-weight: 700;
+  color: #1f2937;
+  font-size: 1rem;
+}
+
+.suppliers-header-badge .badge-label {
+  font-size: 0.75rem;
+  color: #6b7280;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 .summary-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -61,7 +92,7 @@
   background: white;
   padding: 24px;
   border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   text-align: center;
   border: 2px solid transparent;
   transition: transform 0.2s;
@@ -86,6 +117,26 @@
   background: #eff6ff;
 }
 
+.summary-card.alt {
+  border-style: dashed;
+  background: #f9fafb;
+}
+
+.summary-card.alt.warning {
+  border-color: #f59e0b;
+  background: #fffbeb;
+}
+
+.summary-card.alt.danger {
+  border-color: #ef4444;
+  background: #fef2f2;
+}
+
+.summary-card.alt.info {
+  border-color: #3b82f6;
+  background: #eff6ff;
+}
+
 .summary-value {
   font-size: 2rem;
   font-weight: 700;
@@ -99,11 +150,13 @@
 }
 
 /* Supplier Orders */
-.supplier-orders-section, .predictions-section {
+.supplier-orders-section,
+.predictions-section {
   margin-bottom: 40px;
 }
 
-.supplier-orders-section h2, .predictions-section h2 {
+.supplier-orders-section h2,
+.predictions-section h2 {
   font-size: 1.25rem;
   color: #1f2937;
   margin-bottom: 20px;
@@ -120,7 +173,7 @@
 .supplier-order-card {
   background: white;
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   border-left: 5px solid #d1d5db;
 }
@@ -275,7 +328,7 @@
   background: white;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .predictions-table th {
@@ -294,7 +347,7 @@
   padding: 12px 16px;
   border-bottom: 1px solid #f3f4f6;
   font-size: 0.9rem;
-  color: #4b5563;
+  color: #000000 !important;
 }
 
 .predictions-table tr:hover {
@@ -322,4 +375,3 @@
   background: #f0fdf4;
   border-radius: 12px;
 }
-

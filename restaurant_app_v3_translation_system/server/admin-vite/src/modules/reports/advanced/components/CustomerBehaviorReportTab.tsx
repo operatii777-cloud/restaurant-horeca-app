@@ -42,7 +42,7 @@ interface CustomerBehaviorReportTabProps {
 }
 
 export const CustomerBehaviorReportTab: React.FC<CustomerBehaviorReportTabProps> = ({ startDate, endDate, onExport }) => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<CustomerBehaviorReportData | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -138,7 +138,7 @@ export const CustomerBehaviorReportTab: React.FC<CustomerBehaviorReportTabProps>
   }
 
   if (!data) {
-    return <Alert variant="info">"selecteaza o perioada pentru a genera raportul"</Alert>;
+    return <Alert variant="info">selectați o perioadă pentru a genera raportul</Alert>;
   }
 
   return (
@@ -148,7 +148,7 @@ export const CustomerBehaviorReportTab: React.FC<CustomerBehaviorReportTabProps>
         <Col md={3}>
           <Card className="text-center">
             <Card.Body>
-              <h6>"total clienti"</h6>
+              <h6>total clienți</h6>
               <h4>{data.summary.totalCustomers}</h4>
             </Card.Body>
           </Card>
@@ -184,7 +184,7 @@ export const CustomerBehaviorReportTab: React.FC<CustomerBehaviorReportTabProps>
         <Col md={4}>
           <Card className="text-center border-success">
             <Card.Body>
-              <h6>"clienti vip"</h6>
+              <h6>clienți VIP</h6>
               <h4 className="text-success">{data.summary.vipCustomers}</h4>
             </Card.Body>
           </Card>
@@ -192,7 +192,7 @@ export const CustomerBehaviorReportTab: React.FC<CustomerBehaviorReportTabProps>
         <Col md={4}>
           <Card className="text-center border-primary">
             <Card.Body>
-              <h6>"clienti regulari"</h6>
+              <h6>clienți regulat</h6>
               <h4 className="text-primary">{data.summary.regularCustomers}</h4>
             </Card.Body>
           </Card>
@@ -200,7 +200,7 @@ export const CustomerBehaviorReportTab: React.FC<CustomerBehaviorReportTabProps>
         <Col md={4}>
           <Card className="text-center border-warning">
             <Card.Body>
-              <h6>"clienti ocazionali"</h6>
+              <h6>clienți ocazionali</h6>
               <h4 className="text-warning">{data.summary.occasionalCustomers}</h4>
             </Card.Body>
           </Card>
@@ -277,7 +277,7 @@ export const CustomerBehaviorReportTab: React.FC<CustomerBehaviorReportTabProps>
                     <th>Vizite</th>
                     <th>Total Cheltuit</th>
                     <th>Valoare Medie</th>
-                    <th>"categorie preferata"</th>
+                    <th>categorie preferată</th>
                     <th>Produs Preferat</th>
                   </tr>
                 </thead>

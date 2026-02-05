@@ -108,7 +108,7 @@ export const MultiInventoryPage: React.FC = () => {
     { field: 'scope' as any, headerName: 'Scope', width: 120, valueFormatter: (params: any) => params.value === 'global' ? 'Toate Gestiunile' : 'Specifice' },
     { field: 'started_at' as any, headerName: 'Dată Început', width: 180, valueFormatter: (params: any) => new Date(params.value).toLocaleString('ro-RO') },
     {
-      field: 'status', headerName: 'Status', width: 120, cellRenderer: (params: any) => {
+      field: 'status' as any, headerName: 'Status', width: 120, cellRenderer: (params: any) => {
         const status = params.value;
         const colors: Record<string, string> = {
           'în progres': 'warning',

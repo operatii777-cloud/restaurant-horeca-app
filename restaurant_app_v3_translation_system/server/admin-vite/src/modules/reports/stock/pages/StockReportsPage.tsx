@@ -59,7 +59,7 @@ interface StockAlert {
 }
 
 export const StockReportsPage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<string>('current');
   const [loading, setLoading] = useState(false);
   const [startDate, setStartDate] = useState(() => {
@@ -214,7 +214,7 @@ export const StockReportsPage: React.FC = () => {
 
     const lowStock = stockAlerts.filter(a => a.alert_type === 'low').length;
     const outOfStock = stockAlerts.filter(a => a.alert_type === 'out').length;
-    
+
     return {
       labels: ['Stoc Scăzut', 'Stoc Epuizat'],
       datasets: [
@@ -329,7 +329,7 @@ export const StockReportsPage: React.FC = () => {
         <Tab eventKey="current" title='📦 stocuri curente'>
           <Card>
             <Card.Header className="d-flex justify-content-between align-items-center">
-              <h5 className="mb-0">"situatie stocuri curente"</h5>
+              <h5 className="mb-0">situație stocuri curente</h5>
               <Badge bg="info">{ingredients.length} ingrediente</Badge>
             </Card.Header>
             <Card.Body>
@@ -363,8 +363,8 @@ export const StockReportsPage: React.FC = () => {
                             ingredient.current_stock < ingredient.min_stock
                               ? 'table-warning'
                               : ingredient.current_stock === 0
-                              ? 'table-danger'
-                              : ''
+                                ? 'table-danger'
+                                : ''
                           }
                         >
                           <td><strong>{ingredient.name}</strong></td>
@@ -458,7 +458,7 @@ export const StockReportsPage: React.FC = () => {
                 </div>
               ) : stockAlerts.length === 0 ? (
                 <Alert variant="success">
-                  <i className="fas fa-check-circle me-2"></i>"nu exista alerte de stoc toate ingredientele au st"</Alert>
+                  <i className="fas fa-check-circle me-2"></i>nu există alerte de stoc, toate ingredientele au stoc suficient</Alert>
               ) : (
                 <>
                   {stockAlerts.length > 0 && getStockAlertsChartData() && (
@@ -472,7 +472,7 @@ export const StockReportsPage: React.FC = () => {
                         <th>Ingredient</th>
                         <th>Stoc Curent</th>
                         <th>Stoc Minim</th>
-                        <th>"tip alerta"</th>
+                        <th>tip alertă</th>
                         <th>Acțiune</th>
                       </tr>
                     </thead>

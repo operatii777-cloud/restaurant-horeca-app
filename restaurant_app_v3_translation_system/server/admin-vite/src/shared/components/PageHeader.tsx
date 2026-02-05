@@ -13,28 +13,27 @@ type PageHeaderProps = {
   actions?: HeaderAction[];
 };
 
-export const PageHeader = ({ title, description, actions = [] }: PageHeaderProps) => {
-//   const { t } = useTranslation();
+export const PageHeader = ({ title, description, actions = [], children }: PageHeaderProps & { children?: React.ReactNode }) => {
+  //   const { t } = useTranslation();
   return (
     <div className="page-header">
       <div>
         <h2 className="page-header__title">{title}</h2>
         {description ? <p className="page-header__description">{description}</p> : null}
       </div>
-      {actions.length ? (
-        <div className="page-header__actions">
-          {actions.map(({ label, variant = 'secondary', onClick }) => (
-            <button
-              key={label}
-              type="button"
-              className={`page-header__button page-header__button--"Variant"`}
-              onClick={onClick}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-      ) : null}
+      <div className="page-header__actions">
+        {children}
+        {actions.length > 0 && actions.map(({ label, variant = 'secondary', onClick }) => (
+          <button
+            key={label}
+            type="button"
+            className={`page-header__button page-header__button--${variant}`}
+            onClick={onClick}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };

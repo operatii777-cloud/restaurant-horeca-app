@@ -11,7 +11,7 @@ import { getAnafErrorMessage } from '../api/anaf.api';
 import './AnafHealthDashboardPage.css';
 
 export function AnafHealthDashboardPage() {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const { data, isLoading, error, refetch } = useAnafHealth();
 
   if (isLoading) {
@@ -163,7 +163,7 @@ export function AnafHealthDashboardPage() {
       {/* Alerts */}
       {certAlert && (
         <div className={`alert alert-${certAlert}`}>
-          {certAlert === 'danger' 
+          {certAlert === 'danger'
             ? '⚠️ Certificat ANAF EXPIRAT! Reînnoiește certificatul imediat.'
             : '⚠️ Certificat ANAF expiră în mai puțin de 7 zile. Reînnoiește certificatul.'}
         </div>
@@ -198,7 +198,7 @@ export function AnafHealthDashboardPage() {
                 )}
               </>
             ) : (
-              <div className="kpi-value text-muted">"nu exista certificat"</div>
+              <div className="kpi-value text-muted">Nu există certificat</div>
             )}
           </div>
         </div>
@@ -224,7 +224,7 @@ export function AnafHealthDashboardPage() {
                 )}
               </>
             ) : (
-              <div className="kpi-value text-muted">"nu exista token"</div>
+              <div className="kpi-value text-muted">Nu există token</div>
             )}
           </div>
         </div>
@@ -332,7 +332,7 @@ export function AnafHealthDashboardPage() {
             <table className="submissions-table">
               <thead>
                 <tr>
-                  <th>"Document"</th>
+                  <th>Document</th>
                   <th>Status</th>
                   <th>Data</th>
                   <th>Attempts</th>
@@ -346,13 +346,12 @@ export function AnafHealthDashboardPage() {
                     </td>
                     <td>
                       <span
-                        className={`badge ${
-                          sub.status === 'SUBMITTED' || sub.status === 'CONFIRMED'
+                        className={`badge ${sub.status === 'SUBMITTED' || sub.status === 'CONFIRMED'
                             ? 'badge-success'
                             : sub.status === 'FAILED'
-                            ? 'badge-danger'
-                            : 'badge-warning'
-                        }`}
+                              ? 'badge-danger'
+                              : 'badge-warning'
+                          }`}
                       >
                         {sub.status}
                       </span>

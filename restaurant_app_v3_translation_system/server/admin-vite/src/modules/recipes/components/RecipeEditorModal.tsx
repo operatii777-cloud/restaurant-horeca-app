@@ -41,7 +41,7 @@ const EMPTY_ROW: EditableIngredient = {
 };
 
 export function RecipeEditorModal({ open, product, onClose, onSaved }: RecipeEditorModalProps) {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   console.log('RecipeEditorModal Render - open:', open, 'product:', product);
   const productId = product?.product_id ?? null;
   const { productName, ingredients, loading, error, refetch } = useRecipeDetails(productId, open);
@@ -56,21 +56,21 @@ export function RecipeEditorModal({ open, product, onClose, onSaved }: RecipeEdi
     margin: number;
   } | null>(null);
   const [priceLoading, setPriceLoading] = useState(false);
-  
+
   // ✅ Servings state
   const [servings, setServings] = useState<number>(1);
   const [servingsLoading, setServingsLoading] = useState(false);
-  
+
   // ✅ SĂPTĂMÂNA 1 - ZIUA 2: Fetch preparations (sub-rețete)
   const [preparations, setPreparations] = useState<Array<{ id: number; name: string; name_en?: string }>>([]);
   const [preparationsLoading, setPreparationsLoading] = useState(false);
-  
+
   // ✅ TASK 3: Recipe Versioning
   const [versionHistoryOpen, setVersionHistoryOpen] = useState(false);
   const [changeDescription, setChangeDescription] = useState('');
   const [changeReason, setChangeReason] = useState('');
   const [recipeId, setRecipeId] = useState<number | null>(null);
-  
+
   // ✅ Nutrition Search & Auto-calculation
   const [nutritionSearchOpen, setNutritionSearchOpen] = useState(false);
   const [calculatedNutrition, setCalculatedNutrition] = useState<{
@@ -85,7 +85,7 @@ export function RecipeEditorModal({ open, product, onClose, onSaved }: RecipeEdi
     salt: number;
   } | null>(null);
   const [nutritionLoading, setNutritionLoading] = useState(false);
-  
+
   /**
    * Încarcă servings-ul pentru produs
    */
@@ -139,23 +139,28 @@ export function RecipeEditorModal({ open, product, onClose, onSaved }: RecipeEdi
             console.error('Error fetching recipe for versioning:', err);
           });
       }
-      
-      // Fetch preparations
+
+      // Fetch preparations (DEBUG ADDED)
       setPreparationsLoading(true);
       fetch('/api/recipes/preparations')
         .then(res => res.json())
         .then(data => {
-          if (data.preparations) {
+          console.log('RecipeEditorModal: Fetched preparations:', data);
+          if (data && data.preparations && Array.isArray(data.preparations)) {
             setPreparations(data.preparations);
+          } else if (Array.isArray(data)) {
+            setPreparations(data);
+          } else {
+            console.warn('RecipeEditorModal: Unexpected preparations data format', data);
+            setPreparations([]);
           }
         })
         .catch(err => {
-          console.error('Eroare la fetch preparations:', err);
+          console.error('RecipeEditorModal: Error fetching preparations:', err);
+          setPreparations([]);
         })
-        .finally(() => {
-          setPreparationsLoading(false);
-        });
-      
+        .finally(() => setPreparationsLoading(false));
+
       // Fetch servings from product
       if (productId) {
         fetchServingsFromProduct(productId);
@@ -174,15 +179,16 @@ export function RecipeEditorModal({ open, product, onClose, onSaved }: RecipeEdi
         setRows(
           ingredients.map((ingredient) => {
             // ✅ Detectează dacă e sub-rețetă sau ingredient
-            const isSubRecipe = ingredient.recipe_id || ingredient.sub_recipe_name;
-            const itemType: EditableIngredient['itemType'] = isSubRecipe 
-              ? 'recipe' 
+            const raw = ingredient as any;
+            const isSubRecipe = raw.recipe_id || raw.sub_recipe_name;
+            const itemType: EditableIngredient['itemType'] = isSubRecipe
+              ? 'recipe'
               : ((ingredient.item_type as EditableIngredient['itemType']) ?? 'ingredient');
-            
+
             return {
-              name: isSubRecipe ? (ingredient.sub_recipe_name || ingredient.ingredient_name || '') : (ingredient.ingredient_name || ''),
+              name: isSubRecipe ? (raw.sub_recipe_name || raw.ingredient_name || '') : (ingredient.ingredient_name || ''),
               ingredientId: ingredient.ingredient_id || undefined,
-              recipeId: ingredient.recipe_id || undefined,  // ✅ Sub-rețetă
+              recipeId: raw.recipe_id || undefined,  // ✅ Sub-rețetă
               quantity: ingredient.quantity_needed ? String(ingredient.quantity_needed) : '',
               unit: ingredient.unit ?? '',
               wastePercentage: ingredient.waste_percentage ? String(ingredient.waste_percentage) : '0',
@@ -192,7 +198,7 @@ export function RecipeEditorModal({ open, product, onClose, onSaved }: RecipeEdi
           }),
         );
       } else {
-        setRows("EMPTY ROW");
+        setRows([]);
       }
     }
   }, [open, ingredients, reset]);
@@ -214,15 +220,15 @@ export function RecipeEditorModal({ open, product, onClose, onSaved }: RecipeEdi
         id: ingredient.id,
         name: ingredient.name,
       })),
-    'catalogIngredients',
+    [catalogIngredients],
   );
 
   const handleRowChange =
     (index: number, field: keyof EditableIngredient, value: string | EditableIngredient['itemType']) => {
       setRows((prev) => {
         const next = [...prev];
-          next[index] = {
-            ...next[index],
+        next[index] = {
+          ...next[index],
           [field]: value,
         };
         return next;
@@ -233,8 +239,8 @@ export function RecipeEditorModal({ open, product, onClose, onSaved }: RecipeEdi
     const matched = catalogOptions.get(value.trim().toLowerCase());
     setRows((prev) => {
       const next = [...prev];
-          next[index] = {
-            ...next[index],
+      next[index] = {
+        ...next[index],
         name: value,
         ingredientId: matched?.id,
         unit: matched?.unit || next[index].unit,
@@ -261,8 +267,8 @@ export function RecipeEditorModal({ open, product, onClose, onSaved }: RecipeEdi
   const handleItemTypeChange = (index: number, value: EditableIngredient['itemType']) => {
     setRows((prev) => {
       const next = [...prev];
-          next[index] = {
-            ...next[index],
+      next[index] = {
+        ...next[index],
         itemType: value,
         wastePercentage: value === 'packaging' ? '0' : next[index].wastePercentage,
         // ✅ Clear recipeId/ingredientId când schimbăm tipul
@@ -273,15 +279,15 @@ export function RecipeEditorModal({ open, product, onClose, onSaved }: RecipeEdi
       return next;
     });
   };
-  
+
   // ✅ Handler pentru selectare preparation (sub-rețetă)
   const handlePreparationChange = (index: number, preparationId: number) => {
     const preparation = preparations.find(p => p.id === preparationId);
     if (preparation) {
       setRows((prev) => {
         const next = [...prev];
-          next[index] = {
-            ...next[index],
+        next[index] = {
+          ...next[index],
           name: preparation.name,
           recipeId: preparation.id,
           ingredientId: undefined,  // Clear ingredientId
@@ -297,38 +303,38 @@ export function RecipeEditorModal({ open, product, onClose, onSaved }: RecipeEdi
 
   const validateRecipe = (): { valid: boolean; errors: string[] } => {
     const errors: string[] = [];
-    
+
     if (rows.length === 0) {
       errors.push('Rețeta trebuie să conțină cel puțin un ingredient.');
     }
-    
+
     rows.forEach((row, index) => {
       if (!row.name || row.name.trim() === '') {
         errors.push(`Rândul ${index + 1}: Numele ingredientului este obligatoriu.`);
       }
-      
+
       if (!row.quantity || parseFloat(row.quantity) <= 0) {
         errors.push(`Rândul ${index + 1}: Cantitatea trebuie să fie mai mare decât 0.`);
       }
-      
+
       if (!row.unit || row.unit.trim() === '') {
         errors.push(`Rândul ${index + 1}: Unitatea de măsură este obligatorie.`);
       }
-      
+
       if (row.itemType === 'ingredient' && !row.ingredientId && !catalogOptions.has(row.name.trim().toLowerCase())) {
         errors.push(`Rândul ${index + 1}: Ingredientul "${row.name}" nu există în catalog.`);
       }
-      
+
       if (row.itemType === 'recipe' && !row.recipeId) {
         errors.push(`Rândul ${index + 1}: Sub-rețeta trebuie să fie selectată.`);
       }
-      
+
       const wastePercent = parseFloat(row.wastePercentage) || 0;
       if (wastePercent < 0 || wastePercent > 100) {
         errors.push(`Rândul ${index + 1}: Procentul de waste trebuie să fie între 0 și 100.`);
       }
     });
-    
+
     return { valid: errors.length === 0, errors };
   };
 
@@ -345,10 +351,10 @@ export function RecipeEditorModal({ open, product, onClose, onSaved }: RecipeEdi
         .filter((row) => row.itemType === 'ingredient' && row.ingredientId && row.quantity && row.unit)
         .map((row) => {
           const quantity = parseFloat(row.quantity) || 0;
-          const quantityInGrams = canConvertToGrams(row.unit) 
+          const quantityInGrams = canConvertToGrams(row.unit)
             ? convertToGrams(quantity, row.unit)
             : quantity; // If can't convert, use as-is
-          
+
           return {
             ingredient_id: row.ingredientId!,
             quantity: quantityInGrams,
@@ -477,14 +483,14 @@ export function RecipeEditorModal({ open, product, onClose, onSaved }: RecipeEdi
         // We need to get the first recipe row for this product to use as recipe_id
         const recipeResponse = await httpClient.get(`/api/recipes/product/${productId}`);
         const recipes = recipeResponse.data?.data || recipeResponse.data || [];
-        
+
         if (Array.isArray(recipes) && recipes.length > 0) {
           // Use the first recipe's id as recipe_id for versioning
           const firstRecipeId = recipes[0]?.id || recipes[0]?.recipe_id;
-          
+
           if (firstRecipeId) {
             setRecipeId(firstRecipeId);
-            
+
             // Create version snapshot
             await httpClient.post(`/api/admin/recipes/${firstRecipeId}/versions`, {
               change_description: changeDescription || 'Salvare rețetă',
@@ -515,314 +521,314 @@ export function RecipeEditorModal({ open, product, onClose, onSaved }: RecipeEdi
 
   return (
     <div className="recipe-editor-modal-wrapper">
-      <Modal 
-        isOpen={open} 
-        title={modalTitle} 
-        size="full" 
+      <Modal
+        isOpen={open}
+        title={modalTitle}
+        size="full"
         onClose={onClose}
-        draggable={false}
+        draggable={true}
       >
-      {localError ? <InlineAlert variant="warning" title="Atenție" message={localError} /> : null}
-      {error ? <InlineAlert variant="error" title="Eroare" message={error} /> : null}
-      {saveError ? <InlineAlert variant="error" title="Eroare salvare" message={saveError} /> : null}
-      {suggestedPrice ? (
-        <InlineAlert
-          variant="success"
-          title="pret sugestiv"
-          message={`Recomandare: ${suggestedPrice.value.toFixed(2)} RON · Cost total ${suggestedPrice.totalCost.toFixed(
-            2,
-          )} RON · Marjă ${suggestedPrice.margin.toFixed(1)}%`}
-        />
-      ) : null}
+        {localError ? <InlineAlert variant="warning" title="Atenție" message={localError} /> : null}
+        {error ? <InlineAlert variant="error" title="Eroare" message={error} /> : null}
+        {saveError ? <InlineAlert variant="error" title="Eroare salvare" message={saveError} /> : null}
+        {suggestedPrice ? (
+          <InlineAlert
+            variant="success"
+            title="pret sugestiv"
+            message={`Recomandare: ${suggestedPrice.value.toFixed(2)} RON · Cost total ${suggestedPrice.totalCost.toFixed(
+              2,
+            )} RON · Marjă ${suggestedPrice.margin.toFixed(1)}%`}
+          />
+        ) : null}
 
-      <div className="recipe-editor-header">
-        <div>
-          <div className="recipe-editor-product">{productName || product?.product_name}</div>
-          <div className="recipe-editor-meta">
-            {product?.product_category ? `Categorie: ${product.product_category}` : 'Categorie necunoscută'}
-          </div>
-          {/* ✅ SĂPTĂMÂNA 1 - ZIUA 4: Yield Configuration */}
-          <div className="recipe-yield-config" style={{ marginTop: '0.5rem', padding: '0.5rem', background: '#f5f5f5', borderRadius: '4px' }}>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem' }}>
-              <span>Servings (Portions):</span>
-              <input 
-                type="number" 
-                min="1" 
-                value={servings}
-                disabled={servingsLoading || !productId}
-                style={{ width: '60px', padding: '0.25rem' }}
-                onChange={async (e) => {
-                  const newServings = parseInt(e.target.value) || 1;
-                  setServings(newServings);
-                  
-                  // Save to product
-                  if (productId && newServings > 0) {
-                    try {
-                      await saveServingsToProduct(productId, newServings);
-                    } catch (error: any) {
-                      console.error('Error saving servings:', error);
-                      // Revert on error
-                      setServings(product?.servings || 1);
+        <div className="recipe-editor-header">
+          <div>
+            <div className="recipe-editor-product">{productName || product?.product_name}</div>
+            <div className="recipe-editor-meta">
+              {product?.product_category ? `Categorie: ${product.product_category}` : 'Categorie necunoscută'}
+            </div>
+            {/* ✅ SĂPTĂMÂNA 1 - ZIUA 4: Yield Configuration */}
+            <div className="recipe-yield-config" style={{ marginTop: '0.5rem', padding: '0.5rem', background: '#f5f5f5', borderRadius: '4px' }}>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem' }}>
+                <span>Servings (Portions):</span>
+                <input
+                  type="number"
+                  min="1"
+                  value={servings}
+                  disabled={servingsLoading || !productId}
+                  style={{ width: '60px', padding: '0.25rem' }}
+                  onChange={async (e) => {
+                    const newServings = parseInt(e.target.value) || 1;
+                    setServings(newServings);
+
+                    // Save to product
+                    if (productId && newServings > 0) {
+                      try {
+                        await saveServingsToProduct(productId, newServings);
+                      } catch (error: any) {
+                        console.error('Error saving servings:', error);
+                        // Revert on error
+                        setServings(product?.servings || 1);
+                      }
                     }
-                  }
-                }}
-              />
-              {servingsLoading && <span className="spinner-border spinner-border-sm" />}
-            </label>
-            <div style={{ fontSize: '0.75rem', color: '#666', marginTop: '0.25rem' }}>
-              Cost per serving: {suggestedPrice ? (suggestedPrice.totalCost / servings).toFixed(2) : 'N/A'} RON
+                  }}
+                />
+                {servingsLoading && <span className="spinner-border spinner-border-sm" />}
+              </label>
+              <div style={{ fontSize: '0.75rem', color: '#666', marginTop: '0.25rem' }}>
+                Cost per serving: {suggestedPrice ? (suggestedPrice.totalCost / servings).toFixed(2) : 'N/A'} RON
+              </div>
             </div>
           </div>
-        </div>
-        <div className="recipe-editor-actions">
-          <button
-            type="button"
-            className="menu-product-button menu-product-button--ghost"
-            onClick={handleRefetch}
-            disabled={loading}
-          >
-            🔄 Reîncarcă
-          </button>
-          <button
-            type="button"
-            className="menu-product-button menu-product-button--secondary"
-            onClick={handleCalculateSuggestedPrice}
-            disabled={priceLoading}
-          >
-            {priceLoading ? 'Se calculează…' : '💰 Preț sugestiv'}
-          </button>
-          {/* ✅ Nutrition Search Button */}
-          <button
-            type="button"
-            className="menu-product-button menu-product-button--ghost"
-            onClick={() => setNutritionSearchOpen(true)}
-            title="cauta date nutritionale"
-          >
-            🔍 Nutriție
-          </button>
-          {/* ✅ Auto-calculate Nutrition Button */}
-          <button
-            type="button"
-            className="menu-product-button menu-product-button--ghost"
-            onClick={handleCalculateNutrition}
-            disabled={nutritionLoading || rows.length === 0}
-            title="calculeaza automat valorile nutritionale din ingre"
-          >
-            {nutritionLoading ? 'Se calculează…' : '⚡ Auto Nutriție'}
-          </button>
-          {/* ✅ TASK 3: Version History Button */}
-          {recipeId && (
+          <div className="recipe-editor-actions">
             <button
               type="button"
               className="menu-product-button menu-product-button--ghost"
-              onClick={() => setVersionHistoryOpen(true)}
-              title="istoric versiuni reteta"
+              onClick={handleRefetch}
+              disabled={loading}
             >
-              📜 Versiuni
+              🔄 Reîncarcă
             </button>
-          )}
-          <button type="button" className="menu-product-button menu-product-button--ghost" onClick={onClose}>"Închide"</button>
-        </div>
-      </div>
-
-      <form className="recipe-editor-form" onSubmit={handleSubmit}>
-        <div className="recipe-editor-table">
-          <div className="recipe-editor-table-header">
-            <span>#</span>
-            <span>Ingredient</span>
-            <span>Cantitate</span>
-            <span>Unitate</span>
-            <span>Waste %</span>
-            <span>Tip</span>
-            <span>Consum variabil / observații</span>
-            <span />
+            <button
+              type="button"
+              className="menu-product-button menu-product-button--secondary"
+              onClick={handleCalculateSuggestedPrice}
+              disabled={priceLoading}
+            >
+              {priceLoading ? 'Se calculează…' : '💰 Preț sugestiv'}
+            </button>
+            {/* ✅ Nutrition Search Button */}
+            <button
+              type="button"
+              className="menu-product-button menu-product-button--ghost"
+              onClick={() => setNutritionSearchOpen(true)}
+              title="cauta date nutritionale"
+            >
+              🔍 Nutriție
+            </button>
+            {/* ✅ Auto-calculate Nutrition Button */}
+            <button
+              type="button"
+              className="menu-product-button menu-product-button--ghost"
+              onClick={handleCalculateNutrition}
+              disabled={nutritionLoading || rows.length === 0}
+              title="calculeaza automat valorile nutritionale din ingre"
+            >
+              {nutritionLoading ? 'Se calculează…' : '⚡ Auto Nutriție'}
+            </button>
+            {/* ✅ TASK 3: Version History Button */}
+            {recipeId && (
+              <button
+                type="button"
+                className="menu-product-button menu-product-button--ghost"
+                onClick={() => setVersionHistoryOpen(true)}
+                title="istoric versiuni reteta"
+              >
+                📜 Versiuni
+              </button>
+            )}
+            <button type="button" className="menu-product-button menu-product-button--ghost" onClick={onClose}>Închide</button>
           </div>
-          {rows.map((row, index) => (
-            <div key={`"Index"-${row.name}`} className="recipe-editor-row">
-              <span className="recipe-editor-index">{index + 1}</span>
-              <div className="recipe-editor-cell">
-                {row.itemType === 'recipe' ? (
-                  // ✅ Select pentru preparations (sub-rețete)
-                  <select
-                    value={row.recipeId || ''}
-                    onChange={(event) => handlePreparationChange(index, parseInt(event.target.value))}
+        </div>
+
+        <form className="recipe-editor-form" onSubmit={handleSubmit}>
+          <div className="recipe-editor-table">
+            <div className="recipe-editor-table-header">
+              <span>#</span>
+              <span>Ingredient</span>
+              <span>Cantitate</span>
+              <span>Unitate</span>
+              <span>Waste %</span>
+              <span>Tip</span>
+              <span>Consum variabil / observații</span>
+              <span />
+            </div>
+            {rows.map((row, index) => (
+              <div key={`Index-${row.name}`} className="recipe-editor-row">
+                <span className="recipe-editor-index">{index + 1}</span>
+                <div className="recipe-editor-cell">
+                  {row.itemType === 'recipe' ? (
+                    // ✅ Select pentru preparations (sub-rețete)
+                    <select
+                      value={row.recipeId || ''}
+                      onChange={(event) => handlePreparationChange(index, parseInt(event.target.value))}
+                      required
+                      disabled={preparationsLoading}
+                      title="Selectează preparație (sub-rețetă)"
+                      aria-label="Selectează preparație"
+                    >
+                      <option value="">Selectează preparație ({preparations.length} disp.)</option>
+                      {preparations.map((prep) => (
+                        <option key={prep.id} value={prep.id}>
+                          {prep.name} {prep.name_en ? `(${prep.name_en})` : ''}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <input
+                      type="text"
+                      list="recipe-ingredients-list"
+                      value={row.name}
+                      onChange={(event) => handleIngredientNameChange(index, event.target.value)}
+                      placeholder={row.itemType === 'packaging' ? 'Nume ambalaj' : 'Nume ingredient'}
+                      required
+                      title={row.itemType === 'packaging' ? 'Nume ambalaj' : 'Nume ingredient'}
+                      aria-label={row.itemType === 'packaging' ? 'Nume ambalaj' : 'Nume ingredient'}
+                    />
+                  )}
+                </div>
+                <div className="recipe-editor-cell">
+                  <input
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    value={row.quantity}
+                    onChange={(event) => handleRowChange(index, 'quantity', event.target.value)}
+                    placeholder="Cantitate"
                     required
-                    disabled={preparationsLoading}
-                    title="Selectează preparație (sub-rețetă)"
-                    aria-label="Selectează preparație"
-                  >
-                    <option value="">"selecteaza preparatie"</option>
-                    {preparations.map((prep) => (
-                      <option key={prep.id} value={prep.id}>
-                        {prep.name} {prep.name_en ? `(${prep.name_en})` : ''}
-                      </option>
-                    ))}
-                  </select>
-                ) : (
+                  />
+                </div>
+                <div className="recipe-editor-cell">
                   <input
                     type="text"
-                    list="recipe-ingredients-list"
-                    value={row.name}
-                    onChange={(event) => handleIngredientNameChange(index, event.target.value)}
-                    placeholder={row.itemType === 'packaging' ? 'Nume ambalaj' : 'Nume ingredient'}
-                    required
-                    title={row.itemType === 'packaging' ? 'Nume ambalaj' : 'Nume ingredient'}
-                    aria-label={row.itemType === 'packaging' ? 'Nume ambalaj' : 'Nume ingredient'}
+                    value={row.unit}
+                    onChange={(event) => handleRowChange(index, 'unit', event.target.value)}
+                    placeholder="Unitate"
                   />
-                )}
+                </div>
+                <div className="recipe-editor-cell">
+                  <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    step="0.1"
+                    value={row.wastePercentage}
+                    onChange={(event) => handleRowChange(index, 'wastePercentage', event.target.value)}
+                    disabled={row.itemType === 'packaging'}
+                    title="Procent pierderi"
+                  />
+                </div>
+                <div className="recipe-editor-cell">
+                  <select
+                    value={row.itemType}
+                    onChange={(event) => handleItemTypeChange(index, event.target.value as EditableIngredient['itemType'])}
+                    title="Tip item (Ingredient, Sub-rețetă sau Ambalaj)"
+                    aria-label="Tip item"
+                  >
+                    <option value="ingredient">Ingredient</option>
+                    <option value="recipe">Sub-rețetă (Preparation)</option>
+                    <option value="packaging">Ambalaj</option>
+                  </select>
+                </div>
+                <div className="recipe-editor-cell">
+                  <textarea
+                    value={row.variableConsumption}
+                    onChange={(event) => handleRowChange(index, 'variableConsumption', event.target.value)}
+                    placeholder='[ex_10%_extra_pentru_plating]'
+                    rows={2}
+                  />
+                </div>
+                <div className="recipe-editor-cell recipe-editor-actions-cell">
+                  <button
+                    type="button"
+                    className="recipe-editor-remove"
+                    onClick={() => handleRemoveRow(index)}
+                    title="sterge ingredient"
+                  >
+                    🗑️
+                  </button>
+                </div>
               </div>
-              <div className="recipe-editor-cell">
-                <input
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  value={row.quantity}
-                  onChange={(event) => handleRowChange(index, 'quantity', event.target.value)}
-                  placeholder="Cantitate"
-                  required
-                />
-              </div>
-              <div className="recipe-editor-cell">
-                <input
-                  type="text"
-                  value={row.unit}
-                  onChange={(event) => handleRowChange(index, 'unit', event.target.value)}
-                  placeholder="Unitate"
-                />
-              </div>
-              <div className="recipe-editor-cell">
-                <input
-                  type="number"
-                  min="0"
-                  max="100"
-                  step="0.1"
-                  value={row.wastePercentage}
-                  onChange={(event) => handleRowChange(index, 'wastePercentage', event.target.value)}
-                  disabled={row.itemType === 'packaging'}
-                  title="Procent pierderi"
-                />
-              </div>
-              <div className="recipe-editor-cell">
-                <select
-                  value={row.itemType}
-                  onChange={(event) => handleItemTypeChange(index, event.target.value as EditableIngredient['itemType'])}
-                  title="Tip item (Ingredient, Sub-rețetă sau Ambalaj)"
-                  aria-label="Tip item"
-                >
-                  <option value="ingredient">Ingredient</option>
-                  <option value="recipe">Sub-rețetă (Preparation)</option>
-                  <option value="packaging">"Ambalaj"</option>
-                </select>
-              </div>
-              <div className="recipe-editor-cell">
-                <textarea
-                  value={row.variableConsumption}
-                  onChange={(event) => handleRowChange(index, 'variableConsumption', event.target.value)}
-                  placeholder='[ex_10%_extra_pentru_plating]'
-                  rows={2}
-                />
-              </div>
-              <div className="recipe-editor-cell recipe-editor-actions-cell">
-                <button
-                  type="button"
-                  className="recipe-editor-remove"
-                  onClick={() => handleRemoveRow(index)}
-                  title="sterge ingredient"
-                >
-                  🗑️
-                </button>
-              </div>
-            </div>
+            ))}
+          </div>
+
+          <div className="recipe-editor-additions">
+            <button
+              type="button"
+              className="menu-product-button menu-product-button--primary"
+              onClick={() => handleAddRow('ingredient')}
+            >
+              ➕ Ingredient
+            </button>
+            <button
+              type="button"
+              className="menu-product-button menu-product-button--secondary"
+              onClick={() => handleAddRow('recipe')}
+            >
+              🔄 Sub-rețetă
+            </button>
+            <button
+              type="button"
+              className="menu-product-button menu-product-button--ghost"
+              onClick={() => handleAddRow('packaging')}
+            >
+              📦 Ambalaj
+            </button>
+          </div>
+
+          <footer className="recipe-editor-footer">
+            <button type="button" className="menu-product-button menu-product-button--ghost" onClick={onClose} disabled={saving}>Anulează</button>
+            <button type="submit" className="menu-product-button menu-product-button--primary" disabled={saving}>
+              {saving ? 'Se salvează…' : 'Salvează rețeta'}
+            </button>
+          </footer>
+        </form>
+
+        <datalist id="recipe-ingredients-list">
+          {catalogList.map((ingredient) => (
+            <option key={ingredient.id} value={ingredient.name} />
           ))}
-        </div>
+        </datalist>
 
-        <div className="recipe-editor-additions">
-          <button
-            type="button"
-            className="menu-product-button menu-product-button--primary"
-            onClick={() => handleAddRow('ingredient')}
-          >
-            ➕ Ingredient
-          </button>
-          <button
-            type="button"
-            className="menu-product-button menu-product-button--secondary"
-            onClick={() => handleAddRow('recipe')}
-          >
-            🔄 Sub-rețetă
-          </button>
-          <button
-            type="button"
-            className="menu-product-button menu-product-button--ghost"
-            onClick={() => handleAddRow('packaging')}
-          >
-            📦 Ambalaj
-          </button>
-        </div>
+        {/* ✅ Nutrition Search Modal */}
+        <NutritionSearchModal
+          open={nutritionSearchOpen}
+          onClose={() => setNutritionSearchOpen(false)}
+          onSelect={handleNutritionSelect}
+        />
 
-        <footer className="recipe-editor-footer">
-          <button type="button" className="menu-product-button menu-product-button--ghost" onClick={onClose} disabled={saving}>"Anulează"</button>
-          <button type="submit" className="menu-product-button menu-product-button--primary" disabled={saving}>
-            {saving ? 'Se salvează…' : 'Salvează rețeta'}
-          </button>
-        </footer>
-      </form>
-
-      <datalist id="recipe-ingredients-list">
-        {catalogList.map((ingredient) => (
-          <option key={ingredient.id} value={ingredient.name} />
-        ))}
-      </datalist>
-
-      {/* ✅ Nutrition Search Modal */}
-      <NutritionSearchModal
-        open={nutritionSearchOpen}
-        onClose={() => setNutritionSearchOpen(false)}
-        onSelect={handleNutritionSelect}
-      />
-
-      {/* ✅ Calculated Nutrition Display */}
-      {calculatedNutrition && (
-        <div className="alert alert-info mt-3">
-          <h6>📊 Valori Nutriționale Calculate (per {servings} porții):</h6>
-          <div className="row mt-2">
-            <div className="col-md-6">
-              <strong>Calorii:</strong> {calculatedNutrition.energy_kcal.toFixed(2)} kcal ({calculatedNutrition.energy_kj.toFixed(2)} kJ)
-            </div>
-            <div className="col-md-6">
-              <strong>Proteine:</strong> {calculatedNutrition.protein.toFixed(2)} g
-            </div>
-            <div className="col-md-6">
-              <strong>"Carbohidrați:"</strong> {calculatedNutrition.carbs.toFixed(2)} g
-            </div>
-            <div className="col-md-6">
-              <strong>"Zahăr:"</strong> {calculatedNutrition.sugars.toFixed(2)} g
-            </div>
-            <div className="col-md-6">
-              <strong>"Grăsimi:"</strong> {calculatedNutrition.fat.toFixed(2)} g
-            </div>
-            <div className="col-md-6">
-              <strong>"grasimi saturate"</strong> {calculatedNutrition.saturated_fat.toFixed(2)} g
-            </div>
-            <div className="col-md-6">
-              <strong>Fibre:</strong> {calculatedNutrition.fiber.toFixed(2)} g
-            </div>
-            <div className="col-md-6">
-              <strong>Sare:</strong> {calculatedNutrition.salt.toFixed(2)} g
+        {/* ✅ Calculated Nutrition Display */}
+        {calculatedNutrition && (
+          <div className="alert alert-info mt-3">
+            <h6>📊 Valori Nutriționale Calculate (per {servings} porții):</h6>
+            <div className="row mt-2">
+              <div className="col-md-6">
+                <strong>Calorii:</strong> {calculatedNutrition.energy_kcal.toFixed(2)} kcal ({calculatedNutrition.energy_kj.toFixed(2)} kJ)
+              </div>
+              <div className="col-md-6">
+                <strong>Proteine:</strong> {calculatedNutrition.protein.toFixed(2)} g
+              </div>
+              <div className="col-md-6">
+                <strong>Carbohidrați:</strong> {calculatedNutrition.carbs.toFixed(2)} g
+              </div>
+              <div className="col-md-6">
+                <strong>Zahăr:</strong> {calculatedNutrition.sugars.toFixed(2)} g
+              </div>
+              <div className="col-md-6">
+                <strong>Grăsimi:</strong> {calculatedNutrition.fat.toFixed(2)} g
+              </div>
+              <div className="col-md-6">
+                <strong>Grăsimi saturate:</strong> {calculatedNutrition.saturated_fat.toFixed(2)} g
+              </div>
+              <div className="col-md-6">
+                <strong>Fibre:</strong> {calculatedNutrition.fiber.toFixed(2)} g
+              </div>
+              <div className="col-md-6">
+                <strong>Sare:</strong> {calculatedNutrition.salt.toFixed(2)} g
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* ✅ TASK 3: Recipe Version History Modal */}
-      {recipeId && (
-        <RecipeVersionHistory
-          open={versionHistoryOpen}
-          recipeId={recipeId}
-          onClose={() => setVersionHistoryOpen(false)}
-        />
-      )}
-    </Modal>
+        {/* ✅ TASK 3: Recipe Version History Modal */}
+        {recipeId && (
+          <RecipeVersionHistory
+            open={versionHistoryOpen}
+            recipeId={recipeId}
+            onClose={() => setVersionHistoryOpen(false)}
+          />
+        )}
+      </Modal>
     </div>
   );
 }

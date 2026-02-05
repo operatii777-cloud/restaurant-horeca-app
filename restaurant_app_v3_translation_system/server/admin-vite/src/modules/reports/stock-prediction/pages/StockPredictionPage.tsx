@@ -20,7 +20,7 @@ import './StockPredictionPage.css';
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 export const StockPredictionPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [predictions, setPredictions] = useState<StockPrediction[]>([]);
   const [daysAhead, setDaysAhead] = useState(14);
   const [loading, setLoading] = useState(false);
@@ -76,8 +76,8 @@ export const StockPredictionPage = () => {
     <div className="stock-prediction-page" data-page-ready="true">
       <div className="page-header">
         <div>
-          <h1>"predictie stoc"</h1>
-          <p>"predictie stocuri bazata pe analiza abc si viteza "</p>
+          <h1>predicție stoc</h1>
+          <p>predicție stocuri bazată pe analiza ABC și viteză</p>
         </div>
         <button className="btn btn-secondary" onClick={() => void loadPrediction()}>
           ↻ Reîmprospătare
@@ -91,7 +91,7 @@ export const StockPredictionPage = () => {
         <Card.Body>
           <div className="row align-items-end">
             <div className="col-md-4">
-              <Form.Label>"zile in viitor pentru predictie"</Form.Label>
+              <Form.Label>zile în viitor pentru predicție</Form.Label>
               <Form.Control
                 type="number"
                 min="1"
@@ -104,10 +104,10 @@ export const StockPredictionPage = () => {
               <Button variant="primary" onClick={() => void loadPrediction()} disabled={loading}>
                 {loading ? (
                   <>
-                    <span className="spinner-border spinner-border-sm me-2" role="status"></span>"se calculeaza"</>
+                    <span className="spinner-border spinner-border-sm me-2" role="status"></span>se calculează...&lpar;</>
                 ) : (
                   <>
-                    <i className="fas fa-bolt me-2"></i>"ruleaza predictia"</>
+                    <i className="fas fa-bolt me-2"></i>rulează predicția</>
                 )}
               </Button>
             </div>
@@ -118,7 +118,7 @@ export const StockPredictionPage = () => {
       {loading && (
         <div className="text-center py-5">
           <Spinner animation="border" variant="primary" />
-          <p className="mt-3">"se calculeaza predictia"</p>
+          <p className="mt-3">se calculează predicția...</p>
         </div>
       )}
 
@@ -137,7 +137,7 @@ export const StockPredictionPage = () => {
           {/* Tabel Predicții */}
           <Card>
             <Card.Header>
-              <h6 className="mb-0">"predictii detaliate"</h6>
+              <h6 className="mb-0">predicții detaliate</h6>
             </Card.Header>
             <Card.Body>
               <Table striped hover responsive>
@@ -147,9 +147,9 @@ export const StockPredictionPage = () => {
                     <th>Unit</th>
                     <th className="text-end">Stoc Curent</th>
                     <th className="text-end">Stoc Minim</th>
-                    <th className="text-end">"consum predictie"</th>
-                    <th className="text-center">"zile pana la minim"</th>
-                    <th className="text-center">"zile pana la zero"</th>
+                    <th className="text-end">consum predicție</th>
+                    <th className="text-center">zile până la minim</th>
+                    <th className="text-center">zile până la zero</th>
                     <th>Recomandare</th>
                   </tr>
                 </thead>
@@ -192,7 +192,7 @@ export const StockPredictionPage = () => {
       {!loading && predictions.length === 0 && (
         <div className="text-center py-5 text-muted">
           <i className="fas fa-chart-line fa-3x mb-3 opacity-50"></i>
-          <p>"nu exista predictii disponibile ruleaza predictia "</p>
+          <p>nu există predicții disponibile, rulează predicția</p>
         </div>
       )}
     </div>

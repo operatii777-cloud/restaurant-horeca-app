@@ -16,7 +16,7 @@ interface SecurityAlert {
 }
 
 export const SecurityAlertsPage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [alerts, setAlerts] = useState<SecurityAlert[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeAlerts, setActiveAlerts] = useState(0);
@@ -31,10 +31,10 @@ export const SecurityAlertsPage: React.FC = () => {
       // Folosim endpoint-ul cu reguli configurabile
       const response = await fetch('/api/audit/alerts');
       if (!response.ok) throw new Error('Failed to load security alerts');
-      
+
       const data = await response.json();
       const alertsData = Array.isArray(data) ? data : [];
-      
+
       setAlerts(alertsData);
       setActiveAlerts(alertsData.filter((a: SecurityAlert) => !a.resolved).length);
     } catch (error) {
@@ -58,7 +58,7 @@ export const SecurityAlertsPage: React.FC = () => {
           'medium': 'warning',
           'low': 'info'
         };
-        return `<span class="badge bg-${colors[severity] || 'secondary'}">${severity}</span>`;
+        return <span className={`badge bg-${colors[severity] || 'secondary'}`}>{severity}</span>;
       }
     },
     { field: 'message', headerName: 'Mesaj', width: 400 },
@@ -70,7 +70,7 @@ export const SecurityAlertsPage: React.FC = () => {
       headerName: 'Status',
       width: 120,
       cellRenderer: (params: any) => {
-        return params.value ? '<span class="badge bg-success">Rezolvat</span>' : '<span class="badge bg-danger">Activ</span>';
+        return params.value ? <span className="badge bg-success">Rezolvat</span> : <span className="badge bg-danger">Activ</span>;
       }
     }
   ];
@@ -78,15 +78,15 @@ export const SecurityAlertsPage: React.FC = () => {
   return (
     <div className="security-alerts-page padding-20">
       <div className="page-header margin-bottom-20">
-        <h1><i className="fas fa-bell me-2"></i>"security alerts"</h1>
+        <h1><i className="fas fa-bell me-2"></i>Alerte Securitate</h1>
         <button className="btn btn-primary" onClick={loadSecurityAlerts}>
-          <i className="fas fa-sync me-1"></i>"Reîncarcă"</button>
+          <i className="fas fa-sync me-1"></i>Reîncarcă</button>
       </div>
 
       {activeAlerts > 0 && (
         <div className="alert alert-danger mb-4">
           <i className="fas fa-exclamation-triangle me-2"></i>
-          <strong>"Alertă:"</strong> {activeAlerts} alertări active necesită atenție!
+          <strong>Alertă:</strong> {activeAlerts} alertări active necesită atenție!
         </div>
       )}
 

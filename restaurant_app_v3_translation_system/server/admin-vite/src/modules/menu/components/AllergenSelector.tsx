@@ -20,7 +20,7 @@ interface AllergenSelectorProps {
 }
 
 export const AllergenSelector = ({ value, onChange, label = 'Alergeni', placeholder = 'Selectează alergeni...' }: AllergenSelectorProps) => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [allergens, setAllergens] = useState<Allergen[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
@@ -76,15 +76,15 @@ export const AllergenSelector = ({ value, onChange, label = 'Alergeni', placehol
     const newSelected = selectedIds.includes(allergenId)
       ? selectedIds.filter(id => id !== allergenId)
       : [...selectedIds, allergenId];
-    
+
     setSelectedIds(newSelected);
-    
+
     // Update parent with JSON array of IDs
     onChange(JSON.stringify(newSelected));
   };
 
   const filteredAllergens = allergens.filter(a =>
-    a.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (a.name && a.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
     (a.name_en && a.name_en.toLowerCase().includes(searchTerm.toLowerCase())) ||
     (a.code && a.code.toLowerCase().includes(searchTerm.toLowerCase()))
   );
@@ -94,7 +94,7 @@ export const AllergenSelector = ({ value, onChange, label = 'Alergeni', placehol
   return (
     <div className="allergen-selector">
       <Form.Label>{label}</Form.Label>
-      
+
       {/* Selected allergens display */}
       {selectedAllergens.length > 0 && (
         <div className="selected-allergens mb-2">

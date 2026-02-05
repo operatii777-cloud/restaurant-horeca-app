@@ -100,7 +100,7 @@ function buildColumnDefs(
       cellRenderer: (params: ICellRendererParams<Reservation>) => {
         const status = params.value as ReservationStatus;
         const label = STATUS_LABELS[status] ?? status;
-        return `<span class="reservation-status-badge reservation-status-${status}">${label}</span>`;
+        return `<span className="reservation-status-badge reservation-status-${status}">${label}</span>`;
       },
     },
     {
@@ -109,7 +109,7 @@ function buildColumnDefs(
       width: 120,
       cellRenderer: (params: ICellRendererParams<Reservation>) => {
         if (!params.data) return '';
-        return `<button class="reservation-grid-button" data-res-id="${params.data.id}">🕒</button>`;
+        return `<button className="reservation-grid-button" data-res-id="${params.data.id}"><i className="fas fa-history me-1"></i></button>`;
       },
       onCellClicked: (event: CellClickedEvent<Reservation>) => {
         if (!event.data) return;
@@ -283,17 +283,17 @@ Email: contact@trattoria.ro`);
         </div>
         <div className="reservations-page__header-actions">
           <button type="button" onClick={() => setModalOpen(true)}>
-            ➕ Rezervare nouă
+            <i className="fas fa-plus me-1"></i> Rezervare nouă
           </button>
           <button type="button" onClick={refreshAll}>
-            🔄 Reîmprospătează datele
+            <i className="fas fa-sync-alt me-1"></i> Reîmprospătează datele
           </button>
         </div>
       </header>
 
       <section className="reservations-page__stats">
         <StatCard
-          icon="📅"
+          icon={<i className="fas fa-calendar-day"></i>}
           title="Rezervări Astăzi"
           value={metrics ? String(metrics.today.total) : '—'}
           helper="Total programate pentru azi"
@@ -304,19 +304,19 @@ Email: contact@trattoria.ro`);
           }
         />
         <StatCard
-          icon="✅"
+          icon={<i className="fas fa-check-circle"></i>}
           title="Confirmați"
           value={metrics ? String(metrics.stats.confirmed_reservations) : '—'}
           helper="Interval selectat"
         />
         <StatCard
-          icon="🚫"
+          icon={<i className="fas fa-ban"></i>}
           title="Anulați"
           value={metrics ? String(metrics.stats.cancelled_reservations) : '—'}
           helper="Include no-show"
         />
         <StatCard
-          icon="📊"
+          icon={<i className="fas fa-chart-line"></i>}
           title="Grad Ocupare"
           value={metrics ? `${metrics.occupancy.percentage}%` : '—'}
           helper={
@@ -359,22 +359,22 @@ Email: contact@trattoria.ro`);
 
       <section className="reservations-page__actions">
         <button type="button" onClick={() => void 0} disabled={!selectedReservation}>
-          ✏️ Editează
+          <i className="fas fa-edit me-1"></i> Editează
         </button>
         <button type="button" onClick={() => void 0} disabled={!selectedReservation}>
-          ✅ Confirmă
+          <i className="fas fa-check me-1"></i> Confirmă
         </button>
         <button type="button" onClick={() => void 0} disabled={!selectedReservation}>
-          ❌ Anulează
+          <i className="fas fa-times me-1"></i> Anulează
         </button>
         <button type="button" onClick={() => void 0} disabled={!selectedReservation}>
-          🏁 Marchează finalizat
+          <i className="fas fa-flag-checkered me-1"></i> Marchează finalizat
         </button>
         <button type="button" onClick={() => void 0} disabled={!selectedReservation}>
-          📤 Trimite reminder
+          <i className="fas fa-paper-plane me-1"></i> Trimite reminder
         </button>
         <button type="button" onClick={() => setTimelineReservation(selectedReservation)} disabled={!selectedReservation}>
-          📅 Timeline
+          <i className="fas fa-stream me-1"></i> Timeline
         </button>
       </section>
 

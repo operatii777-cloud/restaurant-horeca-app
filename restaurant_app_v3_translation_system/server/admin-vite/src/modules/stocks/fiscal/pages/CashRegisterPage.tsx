@@ -23,7 +23,7 @@ interface CashRegisterSummary {
 }
 
 export const CashRegisterPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [transactions, setTransactions] = useState<CashTransaction[]>([]);
   const [summary, setSummary] = useState<CashRegisterSummary>({
@@ -41,10 +41,10 @@ export const CashRegisterPage = () => {
     setLoading(true);
     try {
       const response = await httpClient.get('/api/admin/fiscal/cash-register');
-      
+
       if (response.data) {
         const data = response.data;
-        
+
         // Calculate summary
         const totalIn = data.total_in || 0;
         const totalOut = data.total_out || 0;
@@ -105,7 +105,7 @@ export const CashRegisterPage = () => {
     <div className="cash-register-page">
       <Card className="shadow-sm">
         <Card.Header className="bg-dark text-white">
-          <i className="fas fa-cash-register me-1"></i>"registrul de casa"</Card.Header>
+          <i className="fas fa-cash-register me-1"></i>Registrul de casă</Card.Header>
         <Card.Body>
           {/* Summary Cards */}
           <div className="row mb-3 text-center">
@@ -147,13 +147,13 @@ export const CashRegisterPage = () => {
           </div>
 
           {/* Transactions Table */}
-          <h6 className="mt-4">"ultimele tranzactii"</h6>
+          <h6 className="mt-4">Ultimele tranzacții</h6>
           <Table striped hover responsive className="table-sm">
             <thead>
               <tr>
                 <th>Time</th>
                 <th>Tip</th>
-                <th>"Document"</th>
+                <th>Document</th>
                 <th>Suma</th>
                 {showDetails && <th>Descriere</th>}
               </tr>
@@ -162,11 +162,11 @@ export const CashRegisterPage = () => {
               {loading ? (
                 <tr>
                   <td colSpan={showDetails ? 5 : 4} className="text-center text-muted">
-                    <i className="fas fa-spinner fa-spin me-2"></i>"se incarca tranzactiile"</td>
+                    <i className="fas fa-spinner fa-spin me-2"></i>Se încarcă tranzacțiile...</td>
                 </tr>
               ) : transactions.length === 0 ? (
                 <tr>
-                  <td colSpan={showDetails ? 5 : 4} className="text-center text-muted">"nu exista tranzactii pentru ziua curenta"</td>
+                  <td colSpan={showDetails ? 5 : 4} className="text-center text-muted">Nu există tranzacții pentru ziua curentă</td>
                 </tr>
               ) : (
                 transactions.map((tx) => (

@@ -7,7 +7,7 @@ import { AlertsList } from '../components/dashboard/AlertsList';
 import { ComplianceChart } from '../components/dashboard/ComplianceChart';
 
 export const HACCPDashboardPage: React.FC = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [kpis, setKpis] = useState<DashboardKPIs | null>(null);
   const [recentAlerts, setRecentAlerts] = useState<Monitoring[]>([]);
   const [loading, setLoading] = useState(true);
@@ -54,7 +54,7 @@ export const HACCPDashboardPage: React.FC = () => {
     return (
       <div className="p-8 text-center">
         <i className="fas fa-spinner fa-spin text-4xl text-gray-400 mb-4"></i>
-        <p className="text-gray-500">"se incarca dashboard ul haccp"</p>
+        <p className="text-gray-500">Se încarcă dashboard-ul HACCP</p>
       </div>
     );
   }
@@ -74,13 +74,13 @@ export const HACCPDashboardPage: React.FC = () => {
     <div className="p-6 space-y-6">
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-gray-900">Dashboard HACCP</h1>
-        <p className="text-gray-600 mt-1">"vizualizare generala a conformitatii haccp"</p>
+        <p className="text-gray-600 mt-1">vizualizare generală a conformității HACCP</p>
       </div>
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <KPICard
-          title="monitorizari astazi"
+          title="monitorizări astăzi"
           value={kpis?.monitoringsToday || 0}
           icon="fas fa-clipboard-check"
           status="info"
@@ -92,18 +92,18 @@ export const HACCPDashboardPage: React.FC = () => {
           status={kpis && kpis.criticalAlerts > 0 ? 'critical' : 'success'}
         />
         <KPICard
-          title="actiuni in asteptare"
+          title="acțiuni în așteptare"
           value={kpis?.pendingActions || 0}
           icon="fas fa-tasks"
           status={kpis && kpis.pendingActions > 0 ? 'warning' : 'success'}
         />
         <KPICard
-          title="rata conformitatii"
+          title="rata conformității"
           value={`${(kpis?.complianceRate || 0).toFixed(1)}%`}
           icon="fas fa-percentage"
           status={
             kpis && kpis.complianceRate >= 95 ? 'success' :
-            kpis && kpis.complianceRate >= 85 ? 'warning' : 'critical'
+              kpis && kpis.complianceRate >= 85 ? 'warning' : 'critical'
           }
         />
       </div>
@@ -113,7 +113,7 @@ export const HACCPDashboardPage: React.FC = () => {
         {/* Recent Alerts */}
         <div className="bg-white rounded-lg shadow-sm p-6">
           <h2 className="text-xl font-semibold mb-4">Alerte Recente (Critice)</h2>
-          <AlertsList 
+          <AlertsList
             alerts={recentAlerts}
             onAlertClick={(alert) => {
               // Navigate to monitoring page with filter
@@ -130,23 +130,23 @@ export const HACCPDashboardPage: React.FC = () => {
 
       {/* Quick Actions */}
       <div className="bg-white rounded-lg shadow-sm p-6">
-        <h2 className="text-xl font-semibold mb-4">"actiuni rapide"</h2>
+        <h2 className="text-xl font-semibold mb-4">acțiuni rapide</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <a
             href="/compliance/haccp/monitoring"
             className="p-4 border-2 border-blue-200 rounded-lg hover:bg-blue-50 transition-colors text-center"
           >
             <i className="fas fa-plus-circle text-3xl text-blue-600 mb-2"></i>
-            <p className="font-semibold text-gray-900">"monitorizare rapida"</p>
-            <p className="text-sm text-gray-600 mt-1">"inregistreaza o monitorizare noua"</p>
+            <p className="font-semibold text-gray-900">monitorizare rapidă</p>
+            <p className="text-sm text-gray-600 mt-1">înregistrează o monitorizare nouă</p>
           </a>
           <a
             href="/compliance/haccp/corrective-actions"
             className="p-4 border-2 border-yellow-200 rounded-lg hover:bg-yellow-50 transition-colors text-center"
           >
             <i className="fas fa-tools text-3xl text-yellow-600 mb-2"></i>
-            <p className="font-semibold text-gray-900">"actiuni corective"</p>
-            <p className="text-sm text-gray-600 mt-1">"gestioneaza actiunile corective"</p>
+            <p className="font-semibold text-gray-900">acțiuni corective</p>
+            <p className="text-sm text-gray-600 mt-1">gestionează acțiunile corective</p>
           </a>
           <a
             href="/compliance/haccp/processes"
@@ -154,7 +154,7 @@ export const HACCPDashboardPage: React.FC = () => {
           >
             <i className="fas fa-project-diagram text-3xl text-green-600 mb-2"></i>
             <p className="font-semibold text-gray-900">Procese HACCP</p>
-            <p className="text-sm text-gray-600 mt-1">"vezi procesele si ccp urile"</p>
+            <p className="text-sm text-gray-600 mt-1">vezi procesele și CCP-urile</p>
           </a>
         </div>
       </div>

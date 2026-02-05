@@ -40,7 +40,7 @@ interface Summary {
 }
 
 export const MenuEngineeringPage = () => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState<Product[]>([]);
   const [summary, setSummary] = useState<Summary | null>(null);
@@ -113,15 +113,15 @@ export const MenuEngineeringPage = () => {
 
   return (
     <div className="menu-engineering-page">
-      <PageHeader 
-        title='📊 menu engineering' 
+      <PageHeader
+        title='📊 menu engineering'
         description="Analiză profitabilitate și popularitate produse"
       />
 
       {/* Filters */}
       <div className="menu-engineering-filters">
         <div className="filter-group">
-          <label>"Perioadă:"</label>
+          <label>Perioadă:</label>
           <input
             type="date"
             value={startDate}
@@ -137,10 +137,10 @@ export const MenuEngineeringPage = () => {
         <div className="filter-group">
           <label>Categorie:</label>
           <select value={category} onChange={(e) => setCategory(e.target.value)}>
-            <option value="all">"Toate"</option>
+            <option value="all">Toate</option>
             <option value="Pizza">Pizza</option>
             <option value="Bauturi">Bauturi</option>
-            <option value="Desert">"Desert"</option>
+            <option value="Desert">Desert</option>
           </select>
         </div>
         <button onClick={loadAnalysis} className="btn-refresh">
@@ -213,10 +213,10 @@ export const MenuEngineeringPage = () => {
         <table className="products-table">
           <thead>
             <tr>
-              <th>"Clasificare"</th>
+              <th>Clasificare</th>
               <th>Produs</th>
               <th>Categorie</th>
-              <th>"Preț"</th>
+              <th>Preț</th>
               <th>Cantitate</th>
               <th>Venituri</th>
               <th>Food Cost</th>
@@ -259,22 +259,22 @@ export const MenuEngineeringPage = () => {
         <div className="matrix-grid">
           <div className="matrix-cell" style={{ borderColor: '#3b82f6' }}>
             <strong>🧩 PUZZLE</strong>
-            <p>"profitabile dar nu populare"</p>
+            <p>Profitabile dar nu populare</p>
             <p>→ Crește vizibilitatea</p>
           </div>
           <div className="matrix-cell" style={{ borderColor: '#22c55e' }}>
             <strong>⭐ STARS</strong>
-            <p>"profitabile si populare"</p>
+            <p>Profitabile și populare</p>
             <p>→ Menține și promovează</p>
           </div>
           <div className="matrix-cell" style={{ borderColor: '#ef4444' }}>
             <strong>🐕 DOGS</strong>
-            <p>"nici profitabile nici populare"</p>
+            <p>Nici profitabile nici populare</p>
             <p>→ Consideră eliminarea</p>
           </div>
           <div className="matrix-cell" style={{ borderColor: '#f59e0b' }}>
             <strong>🐴 PLOWHORSES</strong>
-            <p>"populare dar profit mic"</p>
+            <p>Populare dar profit mic</p>
             <p>→ Crește prețul sau reduce costurile</p>
           </div>
         </div>

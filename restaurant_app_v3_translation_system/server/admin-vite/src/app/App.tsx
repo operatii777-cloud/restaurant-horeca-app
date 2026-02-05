@@ -349,7 +349,7 @@ const App = () => {
   );
 
   // Helper component pentru lazy loading cu Suspense
-  const LazyRoute = ({ component: Component }: { component: React.LazyExoticComponent<any> }) => (
+  const LazyRoute = ({ component: Component }: { component: React.ComponentType<any> }) => (
     <Suspense fallback={<LoadingFallback />}>
       <Component />
     </Suspense>
@@ -636,7 +636,7 @@ const App = () => {
         {/* FAZA 1 - ANAF Certificate & Health Management */}
         <Route path="anaf/submissions" element={<LazyRoute component={SubmissionMonitorPage} />} />
         {/* FAZA 1.5 - SAF-T Export */}
-        <Route path="saft/export" element={<SaftExportPage />} />
+        <Route path="anaf/saft-export" element={<SaftExportPage />} />
         {/* SAGA Export */}
         <Route path="saga/export" element={<SagaExportPage />} />
         {/* Portion Control și Variance - disponibile în Admin Advanced */}

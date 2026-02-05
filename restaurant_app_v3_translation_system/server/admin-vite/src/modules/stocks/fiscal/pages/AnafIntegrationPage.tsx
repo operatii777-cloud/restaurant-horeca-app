@@ -25,7 +25,7 @@ interface TransmissionLog {
 }
 
 export const AnafIntegrationPage = () => {
-//   const { t } = useTranslation();
+  const { t } = { t: (s: string) => s };
   const [loading, setLoading] = useState(false);
   const [config, setConfig] = useState<AnafConfig | null>(null);
   const [transmissionLog, setTransmissionLog] = useState<TransmissionLog[]>([]);
@@ -141,7 +141,7 @@ export const AnafIntegrationPage = () => {
     if (!config) return null;
     return config.anaf_enabled ? (
       <Badge bg="success" className="p-2">
-        <i className="fas fa-check-circle me-2"></i>"PRODUCȚIE"</Badge>
+        <i className="fas fa-check-circle me-2"></i>PRODUCȚIE</Badge>
     ) : (
       <Badge bg="warning" className="p-2">
         <i className="fas fa-flask me-2"></i>SANDBOX
@@ -151,7 +151,7 @@ export const AnafIntegrationPage = () => {
 
   const getTransmissionStatusBadge = (status: string) => {
     if (status?.includes('SIMULATĂ')) {
-      return <Badge bg="warning">"SIMULATĂ"</Badge>;
+      return <Badge bg="warning">SIMULATĂ</Badge>;
     } else if (status?.includes('ACCEPTED') || status?.includes('ACCEPTAT')) {
       return <Badge bg="success">ACCEPTAT</Badge>;
     } else if (status?.includes('REJECTED') || status?.includes('RESPINS')) {
@@ -183,7 +183,7 @@ export const AnafIntegrationPage = () => {
         <h5 className="alert-heading">
           <i className="fas fa-info-circle me-2"></i>Mod Sandbox Activ
         </h5>
-        <p className="mb-2">"anaf integration este in"<strong>MOD SANDBOX</strong> (test mode).</p>
+        <p className="mb-2">Integrarea ANAF este în <strong>MOD SANDBOX</strong> (test mode).</p>
         <ul className="mb-0">
           <li><strong>✅ Validare CUI:</strong> Funcțională (API public ANAF fără certificat)</li>
           <li><strong>⚠️ Transmitere Rapoarte:</strong> SIMULATĂ (nu se transmit real la ANAF)</li>
@@ -191,7 +191,7 @@ export const AnafIntegrationPage = () => {
         </ul>
         <hr />
         <p className="mb-0">
-          <strong>"pentru productie"</strong> Este necesar certificat digital calificat de la ANAF + configurare OAuth2.
+          <strong>Pentru producție:</strong> Este necesar certificat digital calificat de la ANAF + configurare OAuth2.
         </p>
       </Alert>
 
@@ -210,10 +210,10 @@ export const AnafIntegrationPage = () => {
                   type="text"
                   value={cuiInput}
                   onChange={(e) => setCuiInput(e.target.value)}
-                  placeholder={t('$([ex_ro12345678_sau_12345678] -replace "\[|\]")')}
+                  placeholder={t('ex: RO12345678 sau 12345678')}
                 />
                 <Button variant="primary" onClick={validateCUI} disabled={validatingCui}>
-                  <i className={`fas ${validatingCui ? 'fa-spinner fa-spin' : 'fa-search'} me-2`}></i>"valideaza cui"</Button>
+                  <i className={`fas ${validatingCui ? 'fa-spinner fa-spin' : 'fa-search'} me-2`}></i>validează CUI</Button>
               </div>
             </div>
           </div>
@@ -222,20 +222,20 @@ export const AnafIntegrationPage = () => {
               {cuiResult.valid ? (
                 <Alert variant="success">
                   <h5 className="alert-heading">
-                    <i className="fas fa-check-circle me-2"></i>"cui valid"</h5>
+                    <i className="fas fa-check-circle me-2"></i>CUI valid</h5>
                   {cuiResult.data && (
                     <>
-                      <p className="mb-1"><strong>"Denumire:"</strong> {cuiResult.data.denumire}</p>
-                      <p className="mb-1"><strong>"CUI:"</strong> {cuiResult.data.cui}</p>
-                      <p className="mb-1"><strong>"Adresă:"</strong> {cuiResult.data.adresa || '-'}</p>
-                      <p className="mb-0"><strong>"platitor tva"</strong> {cuiResult.data.scpTVA ? '✅ DA' : '❌ NU'}</p>
+                      <p className="mb-1"><strong>Denumire:</strong> {cuiResult.data.denumire}</p>
+                      <p className="mb-1"><strong>CUI:</strong> {cuiResult.data.cui}</p>
+                      <p className="mb-1"><strong>Adresă:</strong> {cuiResult.data.adresa || '-'}</p>
+                      <p className="mb-0"><strong>Plătitor TVA:</strong> {cuiResult.data.scpTVA ? '✅ DA' : '❌ NU'}</p>
                     </>
                   )}
                 </Alert>
               ) : (
                 <Alert variant="danger">
                   <i className="fas fa-times-circle me-2"></i>
-                  <strong>"cui invalid sau nu exista in baza anaf"</strong>
+                  <strong>CUI invalid sau nu există în baza ANAF</strong>
                 </Alert>
               )}
             </div>
@@ -253,7 +253,7 @@ export const AnafIntegrationPage = () => {
         <Card.Body>
           <div className="row">
             <div className="col-md-6">
-              <Form.Label>"data raport z"</Form.Label>
+              <Form.Label>Data raport Z</Form.Label>
               <div className="input-group">
                 <Form.Control
                   type="date"
@@ -276,7 +276,7 @@ export const AnafIntegrationPage = () => {
               {transmissionResult.simulated ? (
                 <Alert variant="warning">
                   <h5 className="alert-heading">
-                    <i className="fas fa-flask me-2"></i>"transmisie simulata"</h5>
+                    <i className="fas fa-flask me-2"></i>transmisie simulată</h5>
                   <p className="mb-1"><strong>Upload ID:</strong> {transmissionResult.upload_id}</p>
                   <p className="mb-1"><strong>Status:</strong> {transmissionResult.status}</p>
                   <p className="mb-0">{transmissionResult.message}</p>
@@ -300,7 +300,7 @@ export const AnafIntegrationPage = () => {
         </Card.Header>
         <Card.Body>
           {transmissionLog.length === 0 ? (
-            <p className="text-muted text-center">"nicio transmisie inregistrata"</p>
+            <p className="text-muted text-center">Nicio transmisie înregistrată</p>
           ) : (
             <Table striped hover responsive>
               <thead>
@@ -353,13 +353,13 @@ export const AnafIntegrationPage = () => {
                 <p className="mb-2"><strong>Companie:</strong> {config.company_name}</p>
               </div>
               <div className="col-md-6">
-                <p className="mb-2"><strong>"CUI:"</strong> {config.cui}</p>
+                <p className="mb-2"><strong>CUI:</strong> {config.cui}</p>
               </div>
               <div className="col-md-6">
                 <p className="mb-2"><strong>Serie Facturi:</strong> {config.invoice_series}</p>
               </div>
               <div className="col-md-6">
-                <p className="mb-2"><strong>"nr curent"</strong> {config.invoice_current_number}</p>
+                <p className="mb-2"><strong>Nr. curent:</strong> {config.invoice_current_number}</p>
               </div>
               <div className="col-md-6">
                 <p className="mb-2">
@@ -368,12 +368,12 @@ export const AnafIntegrationPage = () => {
               </div>
               <div className="col-md-6">
                 <p className="mb-2">
-                  <strong>"test mode"</strong> {config.anaf_test_mode ? '✅ DA' : '❌ NU'}
+                  <strong>Test Mode:</strong> {config.anaf_test_mode ? '✅ DA' : '❌ NU'}
                 </p>
               </div>
             </div>
           ) : (
-            <p className="text-muted">"nu s au putut incarca datele de configurare"</p>
+            <p className="text-muted">nu s-au putut încărca datele de configurare</p>
           )}
         </Card.Body>
       </Card>

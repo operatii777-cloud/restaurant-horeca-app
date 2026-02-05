@@ -15,8 +15,8 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
  * Validate SAF-T export
  */
 async function validateSaftExport(month: string) {
-//   const { t } = useTranslation();
-  const response = await fetch(`${API_BASE_URL}/api/saft/validate-export?month="Month"`, {
+  //   const { t } = useTranslation();
+  const response = await fetch(`${API_BASE_URL}/api/saft/export/validate?month=${month}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ async function validateSaftExport(month: string) {
  * Get export history
  */
 async function getExportHistory() {
-  const response = await fetch(`${API_BASE_URL}/api/saft/export-history`, {
+  const response = await fetch(`${API_BASE_URL}/api/saft/export/history`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -52,12 +52,12 @@ async function getExportHistory() {
  * Download SAF-T export
  */
 function downloadSaftExport(month: string) {
-  const url = `${API_BASE_URL}/api/saft/export?month="Month"`;
+  const url = `${API_BASE_URL}/api/saft/export?month=${month}`;
   window.open(url, '_blank');
 }
 
 export function SaftExportPage() {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [selectedMonth, setSelectedMonth] = useState(() => {
     const now = new Date();
     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
@@ -114,14 +114,14 @@ export function SaftExportPage() {
     <div className="saft-export-page">
       <header className="page-header">
         <h1 className="page-title">Export SAF-T ANAF</h1>
-        <p className="page-subtitle">"genereaza export saf t xml pentru trimitere catre "</p>
+        <p className="page-subtitle">Generează export SAF-T XML pentru trimitere către ANAF</p>
       </header>
 
       {/* Export Form */}
       <div className="export-form-card">
         <h3 className="card-title">Generare Export</h3>
         <div className="form-group">
-          <label htmlFor="export-month" className="form-label">"selecteaza luna"</label>
+          <label htmlFor="export-month" className="form-label">Selectează Luna</label>
           <input
             id="export-month"
             type="month"
@@ -144,7 +144,7 @@ export function SaftExportPage() {
             onClick={handleExport}
             disabled={!validation?.valid || validating}
             className="btn btn-primary"
-          >"descarca saf t xml"</button>
+          >Descarcă SAF-T XML</button>
         </div>
       </div>
 
@@ -168,7 +168,7 @@ export function SaftExportPage() {
               </ul>
             </div>
           ) : (
-            <p className="validation-success-message">"toate datele sunt valide poti genera exportul saf "</p>
+            <p className="validation-success-message">Toate datele sunt valide. Poți genera exportul SAF-T.</p>
           )}
         </div>
       )}
@@ -179,16 +179,16 @@ export function SaftExportPage() {
         {historyLoading ? (
           <div className="loading-spinner">Se încarcă...</div>
         ) : history.length === 0 ? (
-          <p className="text-muted">"nu exista exporturi"</p>
+          <p className="text-muted">Nu există exporturi anterioare.</p>
         ) : (
           <table className="history-table">
             <thead>
               <tr>
-                <th>"Lună"</th>
+                <th>Lună</th>
                 <th>Data Export</th>
                 <th>Status</th>
                 <th>Dimensiune</th>
-                <th>"Acțiuni"</th>
+                <th>Acțiuni</th>
               </tr>
             </thead>
             <tbody>
@@ -207,7 +207,7 @@ export function SaftExportPage() {
                       <button
                         onClick={() => downloadSaftExport(item.month)}
                         className="btn btn-sm btn-primary"
-                      >"Descarcă"</button>
+                      >Descarcă</button>
                     )}
                   </td>
                 </tr>

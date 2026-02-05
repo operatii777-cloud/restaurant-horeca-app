@@ -9,7 +9,7 @@ interface MonitoringHistoryTableProps {
 }
 
 export const MonitoringHistoryTable: React.FC<MonitoringHistoryTableProps> = ({ refreshTrigger }) => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const [monitorings, setMonitorings] = useState<Monitoring[]>([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState<MonitoringFilters>({
@@ -105,7 +105,7 @@ export const MonitoringHistoryTable: React.FC<MonitoringHistoryTableProps> = ({ 
             value={selectedStatus}
             onChange={(e) => setSelectedStatus(e.target.value as any)}
           >
-            <option value="">"Toate"</option>
+            <option value="">Toate</option>
             <option value="ok">OK</option>
             <option value="warning">Atenție</option>
             <option value="critical">Critic</option>
@@ -141,7 +141,7 @@ export const MonitoringHistoryTable: React.FC<MonitoringHistoryTableProps> = ({ 
             onClick={clearFilters}
             className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 text-sm"
           >
-            <i className="fas fa-times mr-1"></i>"Resetează"</button>
+            <i className="fas fa-times mr-1"></i>Resetează</button>
         </div>
       </div>
 

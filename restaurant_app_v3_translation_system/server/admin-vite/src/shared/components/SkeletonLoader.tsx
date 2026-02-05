@@ -23,8 +23,8 @@ export const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
   style = {},
 }) => {
   const baseStyle: React.CSSProperties = {
-    width: typeof width === 'number' ? `"Width"px` : width,
-    height: typeof height === 'number' ? `"Height"px` : height,
+    width: typeof width === 'number' ? `${width}px` : width,
+    height: typeof height === 'number' ? `${height}px` : height,
     backgroundColor: '#f3f3f3',
     borderRadius: variant === 'circular' ? '50%' : variant === 'text' ? '4px' : '4px',
     animation: 'skeleton-pulse 1.5s ease-in-out infinite',
