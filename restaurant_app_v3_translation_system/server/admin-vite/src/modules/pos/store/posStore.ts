@@ -33,7 +33,7 @@ export interface PosDraftItem {
 
 export interface PosPayment {
   id: string; // Unique payment ID
-  type: 'cash' | 'card' | 'voucher' | 'other';
+  type: 'cash' | 'card' | 'voucher' | 'protocol' | 'degustare' | 'other';
   amount: number;
   timestamp?: Date;
   reference?: string; // Transaction reference, card last 4 digits, etc.
@@ -94,6 +94,9 @@ interface PosState {
   // Split Bill
   splitBill: SplitBillPayload | null;
   selectedGroupId: string | null;
+
+  // Preț tier (1=standard, 2=preț 2, 3=preț 3)
+  priceTier: 1 | 2 | 3;
   
   // Fiscalization
   fiscalReceiptNumber: string | null;
@@ -125,6 +128,9 @@ interface PosState {
   setSplitBill: (splitPayload: SplitBillPayload) => void;
   clearSplitBill: () => void;
   setSelectedGroup: (groupId: string | null) => void;
+
+  // Preț tier
+  setPriceTier: (tier: 1 | 2 | 3) => void;
   
   // Computed for Split Bill
   getGroupTotal: (groupId: string) => number;
@@ -162,6 +168,7 @@ export const usePosStore = create<PosState>((set, get) => ({
   payments: [],
   splitBill: null,
   selectedGroupId: null,
+  priceTier: 1,
   fiscalReceiptNumber: null,
   fiscalReceiptDate: null,
   isFiscalized: false,
@@ -279,6 +286,10 @@ export const usePosStore = create<PosState>((set, get) => ({
   
   setSelectedGroup: (groupId) => {
     set({ selectedGroupId: groupId });
+  },
+
+  setPriceTier: (tier) => {
+    set({ priceTier: tier });
   },
   
   getGroupTotal: (groupId) => {

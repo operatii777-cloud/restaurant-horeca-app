@@ -167,8 +167,8 @@ export const DeliveryMonitorPage: React.FC = () => {
             </div>
             <div className="order-meta">
               <span className="platform-badge">{getPlatformIcon(order.platform)}</span>
-              <Badge bg={order.payment_method === 'cash' ? 'success' : 'info'}>
-                {order.payment_method === 'cash' ? '💵 NUMERAR' : '💳 CARD'}
+              <Badge bg={order.payment_method === 'cash' ? 'success' : order.payment_method === 'protocol' || order.payment_method === 'degustare' ? 'secondary' : 'info'}>
+                {order.payment_method === 'cash' ? '💵 NUMERAR' : order.payment_method === 'card' ? '💳 CARD' : order.payment_method === 'protocol' ? '📋 PROTOCOL' : order.payment_method === 'degustare' ? '🍷 DEGUSTARE' : (order.payment_method || 'CARD')}
               </Badge>
             </div>
           </div>
@@ -228,7 +228,7 @@ export const DeliveryMonitorPage: React.FC = () => {
               >
                 ✅ Livrat
               </Button>
-              {order.payment_method === 'cash' && !order.is_paid && (
+              {(order.payment_method === 'cash' || order.payment_method === 'protocol' || order.payment_method === 'degustare') && !order.is_paid && (
                 <Button 
                   variant="warning" 
                   size="sm" 

@@ -4,20 +4,21 @@
  */
 
 const { dbPromise } = require('../../../../database');
+const { parseAllergens, formatAllergens } = require('../../../../allergens-config');
 
 // GET /api/allergens
 async function getAllergens(req, res, next) {
   try {
     const db = await dbPromise;
     const activeOnly = req.query.active_only === 'true';
-    
+
     const tableExists = await db.get(
       "SELECT name FROM sqlite_master WHERE type='table' AND name='allergens'"
     );
-    
+
     if (!tableExists) {
       console.log('⚠️ Tabela allergens nu există, o creez...');
-      
+
       await db.run(`
         CREATE TABLE IF NOT EXISTS allergens (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -29,10 +30,10 @@ async function getAllergens(req, res, next) {
           updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )
       `);
-      
+
       console.log('✅ Tabela allergens creată cu succes');
     }
-    
+
     let query = `
       SELECT 
         a.*,
@@ -43,17 +44,17 @@ async function getAllergens(req, res, next) {
         ) as ingredients_count
       FROM allergens a
     `;
-    
+
     if (activeOnly) {
       query += ' WHERE a.is_active = 1';
     }
-    
+
     query += ' ORDER BY a.id ASC';
-    
+
     const allergens = await db.all(query);
-    
+
     console.log(`✅ Returnat ${allergens.length} alergeni${activeOnly ? ' (doar active)' : ''}`);
-    
+
     // Return format compatible with client interface
     res.json({
       success: true,
@@ -70,7 +71,7 @@ async function getAllergenById(req, res, next) {
   try {
     const { id } = req.params;
     const db = await dbPromise;
-    
+
     const allergen = await db.get(`
       SELECT 
         a.*,
@@ -82,14 +83,14 @@ async function getAllergenById(req, res, next) {
       FROM allergens a
       WHERE a.id = ?
     `, [id]);
-    
+
     if (!allergen) {
-      return res.status(404).json({ 
-        success: false, 
-        message: 'Alergen nu a fost găsit' 
+      return res.status(404).json({
+        success: false,
+        message: 'Alergen nu a fost găsit'
       });
     }
-    
+
     res.json(allergen);
   } catch (error) {
     next(error);
@@ -100,16 +101,16 @@ async function getAllergenById(req, res, next) {
 async function createAllergen(req, res, next) {
   try {
     const { icon, name_ro, name_en, is_active } = req.body;
-    
+
     if (!name_ro) {
-      return res.status(400).json({ 
-        success: false, 
-        message: 'Denumirea în română este obligatorie' 
+      return res.status(400).json({
+        success: false,
+        message: 'Denumirea în română este obligatorie'
       });
     }
-    
+
     const db = await dbPromise;
-    
+
     const result = await db.run(`
       INSERT INTO allergens (icon, name_ro, name_en, is_active, created_at, updated_at)
       VALUES (?, ?, ?, ?, datetime('now'), datetime('now'))
@@ -119,9 +120,9 @@ async function createAllergen(req, res, next) {
       name_en || name_ro,
       is_active !== undefined ? is_active : 1
     ]);
-    
+
     console.log(`✅ Alergen creat: ${name_ro} (ID: ${result.lastID})`);
-    
+
     res.status(201).json({
       success: true,
       id: result.lastID,
@@ -137,12 +138,12 @@ async function updateAllergen(req, res, next) {
   try {
     const { id } = req.params;
     const updates = req.body;
-    
+
     const db = await dbPromise;
-    
+
     const fields = [];
     const values = [];
-    
+
     if (updates.icon !== undefined) {
       fields.push('icon = ?');
       values.push(updates.icon);
@@ -159,25 +160,25 @@ async function updateAllergen(req, res, next) {
       fields.push('is_active = ?');
       values.push(updates.is_active);
     }
-    
+
     if (fields.length === 0) {
-      return res.status(400).json({ 
-        success: false, 
-        message: 'Niciun câmp de actualizat' 
+      return res.status(400).json({
+        success: false,
+        message: 'Niciun câmp de actualizat'
       });
     }
-    
+
     fields.push('updated_at = datetime("now")');
     values.push(id);
-    
+
     await db.run(`
       UPDATE allergens
       SET ${fields.join(', ')}
       WHERE id = ?
     `, values);
-    
+
     console.log(`✅ Alergen ${id} actualizat`);
-    
+
     res.json({
       success: true,
       message: 'Alergen actualizat cu succes'
@@ -192,20 +193,20 @@ async function deleteAllergen(req, res, next) {
   try {
     const { id } = req.params;
     const db = await dbPromise;
-    
+
     await db.run('DELETE FROM ingredient_allergens WHERE allergen_id = ?', [id]);
-    
+
     const result = await db.run('DELETE FROM allergens WHERE id = ?', [id]);
-    
+
     if (result.changes === 0) {
-      return res.status(404).json({ 
-        success: false, 
-        message: 'Alergen nu a fost găsit' 
+      return res.status(404).json({
+        success: false,
+        message: 'Alergen nu a fost găsit'
       });
     }
-    
+
     console.log(`✅ Alergen ${id} șters`);
-    
+
     res.json({
       success: true,
       message: 'Alergen șters cu succes'
@@ -222,7 +223,7 @@ async function deleteAllergen(req, res, next) {
 async function getProductsWithAllergens(req, res, next) {
   try {
     const db = await dbPromise;
-    
+
     // Verifică dacă tabelele există
     const menuExists = await new Promise((resolve, reject) => {
       db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='menu'", (err, row) => {
@@ -230,11 +231,11 @@ async function getProductsWithAllergens(req, res, next) {
         else resolve(!!row);
       });
     });
-    
+
     if (!menuExists) {
       return res.json({ products: [] });
     }
-    
+
     // Obține toate produsele din meniu
     const products = await new Promise((resolve, reject) => {
       db.all(`
@@ -255,11 +256,11 @@ async function getProductsWithAllergens(req, res, next) {
         else resolve(rows || []);
       });
     });
-    
+
     // Calculează alergenii pentru fiecare produs
     const productsWithAllergens = await Promise.all(products.map(async (product) => {
       let calculatedAllergens = [];
-      
+
       // Obține ingredientele din rețetă
       const ingredients = await new Promise((resolve, reject) => {
         db.all(`
@@ -272,7 +273,7 @@ async function getProductsWithAllergens(req, res, next) {
           else resolve(rows || []);
         });
       });
-      
+
       // Extrage alergenii unici din ingrediente
       const allergenSet = new Set();
       for (const ing of ingredients) {
@@ -285,17 +286,17 @@ async function getProductsWithAllergens(req, res, next) {
           potential.forEach(a => allergenSet.add(a.toLowerCase()));
         }
       }
-      
+
       calculatedAllergens = Array.from(allergenSet);
-      
+
       // Compară alergenii declarați cu cei calculați
-      const currentAllergensList = product.current_allergens 
+      const currentAllergensList = product.current_allergens
         ? product.current_allergens.split(',').map(a => a.trim().toLowerCase()).filter(a => a)
         : [];
-      
-      const hasDifference = JSON.stringify(currentAllergensList.sort()) !== 
-                           JSON.stringify(calculatedAllergens.sort());
-      
+
+      const hasDifference = JSON.stringify(currentAllergensList.sort()) !==
+        JSON.stringify(calculatedAllergens.sort());
+
       return {
         id: product.id,
         name: product.name,
@@ -306,7 +307,7 @@ async function getProductsWithAllergens(req, res, next) {
         has_difference: hasDifference
       };
     }));
-    
+
     console.log(`✅ Returnat ${productsWithAllergens.length} produse cu alergeni`);
     res.json({ products: productsWithAllergens });
   } catch (error) {
@@ -323,35 +324,48 @@ async function recalculateProductAllergens(req, res, next) {
   try {
     const { productId } = req.params;
     const db = await dbPromise;
-    
-    // Obține produsul
+
+    // Obține produsul din catalog_products (folosit de noul admin)
     const product = await new Promise((resolve, reject) => {
-      db.get('SELECT id, name FROM menu WHERE id = ?', [productId], (err, row) => {
+      db.get('SELECT id, name FROM catalog_products WHERE id = ?', [productId], (err, row) => {
         if (err) reject(err);
         else resolve(row);
       });
     });
-    
+
     if (!product) {
-      return res.status(404).json({ 
-        success: false, 
-        message: 'Produs nu a fost găsit' 
+      return res.status(404).json({
+        success: false,
+        message: 'Produsul nu a fost găsit în catalog'
       });
     }
-    
-    // Obține ingredientele din rețetă
-    const ingredients = await new Promise((resolve, reject) => {
-      db.all(`
-        SELECT DISTINCT r.ingredient_id, i.allergens, i.potential_allergens
-        FROM recipes r
-        LEFT JOIN ingredients i ON r.ingredient_id = i.id
-        WHERE r.product_id = ?
-      `, [productId], (err, rows) => {
+
+    // Găsește ID-ul corespunzător în tabela menu (unde sunt legate rețetele) după nume
+    const menuProduct = await new Promise((resolve, reject) => {
+      db.get('SELECT id FROM menu WHERE name = ?', [product.name], (err, row) => {
         if (err) reject(err);
-        else resolve(rows || []);
+        else resolve(row);
       });
     });
-    
+
+    const linkedMenuId = menuProduct ? menuProduct.id : null;
+
+    // Obține ingredientele din rețetă folosing ID-ul din menu
+    let ingredients = [];
+    if (linkedMenuId) {
+      ingredients = await new Promise((resolve, reject) => {
+        db.all(`
+          SELECT DISTINCT r.ingredient_id, i.allergens, i.potential_allergens
+          FROM recipes r
+          LEFT JOIN ingredients i ON r.ingredient_id = i.id
+          WHERE r.product_id = ?
+        `, [linkedMenuId], (err, rows) => {
+          if (err) reject(err);
+          else resolve(rows || []);
+        });
+      });
+    }
+
     // Extrage alergenii unici
     const allergenSet = new Set();
     for (const ing of ingredients) {
@@ -364,27 +378,40 @@ async function recalculateProductAllergens(req, res, next) {
         potential.forEach(a => allergenSet.add(a));
       }
     }
-    
-    const calculatedAllergens = Array.from(allergenSet).join(', ');
-    
-    // Actualizează alergenii în meniu
+
+    const codes = parseAllergens(Array.from(allergenSet).join(', '));
+    const formattedRo = formatAllergens(codes, 'ro', true);
+    const formattedEn = formatAllergens(codes, 'en', true);
+
+    // Actualizează alergenii în AMBELE tabele sincronizat prin nume
     await new Promise((resolve, reject) => {
       db.run(`
-        UPDATE menu 
+        UPDATE catalog_products 
         SET allergens = ?, allergens_en = ?
-        WHERE id = ?
-      `, [calculatedAllergens, calculatedAllergens, productId], (err) => {
+        WHERE name = ?
+      `, [formattedRo, formattedEn, product.name], (err) => {
         if (err) reject(err);
         else resolve();
       });
     });
-    
-    console.log(`✅ Alergeni recalculați pentru produs ${productId}: ${calculatedAllergens || 'niciunul'}`);
-    
+
+    await new Promise((resolve, reject) => {
+      db.run(`
+        UPDATE menu 
+        SET allergens = ?, allergens_en = ?
+        WHERE name = ?
+      `, [formattedRo, formattedEn, product.name], (err) => {
+        if (err) reject(err);
+        else resolve();
+      });
+    });
+
+    console.log(`✅ Alergeni recalculați pentru produs ${productId} ("${product.name}"): ${formattedRo || 'niciunul'}`);
+
     res.json({
       success: true,
       message: 'Alergeni recalculați cu succes',
-      calculated_allergens: calculatedAllergens || null
+      calculated_allergens: formattedRo || null
     });
   } catch (error) {
     console.error('❌ Error in recalculateProductAllergens:', error);
@@ -399,34 +426,47 @@ async function recalculateProductAllergens(req, res, next) {
 async function recalculateAllProductsAllergens(req, res, next) {
   try {
     const db = await dbPromise;
-    
-    // Obține toate produsele
+
+    // Obține toate produsele din noul catalog
     const products = await new Promise((resolve, reject) => {
-      db.all('SELECT id, name FROM menu WHERE is_sellable = 1', [], (err, rows) => {
+      db.all('SELECT id, name FROM catalog_products WHERE is_sellable = 1 AND is_active = 1', [], (err, rows) => {
         if (err) reject(err);
         else resolve(rows || []);
       });
     });
-    
+
     let successCount = 0;
     let errorCount = 0;
-    
+
     // Recalculează pentru fiecare produs
     for (const product of products) {
       try {
-        // Obține ingredientele din rețetă
-        const ingredients = await new Promise((resolve, reject) => {
-          db.all(`
-            SELECT DISTINCT r.ingredient_id, i.allergens, i.potential_allergens
-            FROM recipes r
-            LEFT JOIN ingredients i ON r.ingredient_id = i.id
-            WHERE r.product_id = ?
-          `, [product.id], (err, rows) => {
+        // Găsește ID-ul corespunzător în tabela menu (unde sunt legate rețetele)
+        const menuProduct = await new Promise((resolve, reject) => {
+          db.get('SELECT id FROM menu WHERE name = ?', [product.name], (err, row) => {
             if (err) reject(err);
-            else resolve(rows || []);
+            else resolve(row);
           });
         });
-        
+
+        const linkedMenuId = menuProduct ? menuProduct.id : null;
+
+        // Obține ingredientele din rețetă folosing ID-ul din menu
+        let ingredients = [];
+        if (linkedMenuId) {
+          ingredients = await new Promise((resolve, reject) => {
+            db.all(`
+              SELECT DISTINCT r.ingredient_id, i.allergens, i.potential_allergens
+              FROM recipes r
+              LEFT JOIN ingredients i ON r.ingredient_id = i.id
+              WHERE r.product_id = ?
+            `, [linkedMenuId], (err, rows) => {
+              if (err) reject(err);
+              else resolve(rows || []);
+            });
+          });
+        }
+
         // Extrage alergenii unici
         const allergenSet = new Set();
         for (const ing of ingredients) {
@@ -439,30 +479,43 @@ async function recalculateAllProductsAllergens(req, res, next) {
             potential.forEach(a => allergenSet.add(a));
           }
         }
-        
-        const calculatedAllergens = Array.from(allergenSet).join(', ');
-        
-        // Actualizează alergenii în meniu
+
+        const codes = parseAllergens(Array.from(allergenSet).join(', '));
+        const formattedRo = formatAllergens(codes, 'ro', true);
+        const formattedEn = formatAllergens(codes, 'en', true);
+
+        // Actualizează alergenii sincronizat în ambele tabele
         await new Promise((resolve, reject) => {
           db.run(`
-            UPDATE menu 
+            UPDATE catalog_products 
             SET allergens = ?, allergens_en = ?
-            WHERE id = ?
-          `, [calculatedAllergens, calculatedAllergens, product.id], (err) => {
+            WHERE name = ?
+          `, [formattedRo, formattedEn, product.name], (err) => {
             if (err) reject(err);
             else resolve();
           });
         });
-        
+
+        await new Promise((resolve, reject) => {
+          db.run(`
+            UPDATE menu 
+            SET allergens = ?, allergens_en = ?
+            WHERE name = ?
+          `, [formattedRo, formattedEn, product.name], (err) => {
+            if (err) reject(err);
+            else resolve();
+          });
+        });
+
         successCount++;
       } catch (error) {
         console.error(`❌ Eroare la recalculare produs ${product.id}:`, error.message);
         errorCount++;
       }
     }
-    
+
     console.log(`✅ Recalculare completă: ${successCount} succes, ${errorCount} erori din ${products.length} produse`);
-    
+
     res.json({
       success: true,
       message: `Recalculare completă: ${successCount} produse actualizate`,
@@ -477,13 +530,13 @@ async function recalculateAllProductsAllergens(req, res, next) {
 }
 
 module.exports = {
-    getAllergens,
-    getAllergenById,
-    createAllergen,
-    updateAllergen,
-    deleteAllergen,
-    getProductsWithAllergens,
-    recalculateProductAllergens,
-    recalculateAllProductsAllergens,
+  getAllergens,
+  getAllergenById,
+  createAllergen,
+  updateAllergen,
+  deleteAllergen,
+  getProductsWithAllergens,
+  recalculateProductAllergens,
+  recalculateAllProductsAllergens,
 };
 

@@ -797,7 +797,9 @@ router.get('/shift-handover', async (req, res) => {
           COUNT(*) as total_orders,
           SUM(total) as total_sales,
           SUM(CASE WHEN payment_method = 'cash' THEN total ELSE 0 END) as cash_sales,
-          SUM(CASE WHEN payment_method = 'card' THEN total ELSE 0 END) as card_sales
+          SUM(CASE WHEN payment_method = 'card' THEN total ELSE 0 END) as card_sales,
+          SUM(CASE WHEN payment_method = 'protocol' THEN total ELSE 0 END) as protocol_sales,
+          SUM(CASE WHEN payment_method = 'degustare' THEN total ELSE 0 END) as degustare_sales
         FROM orders
         WHERE DATE(timestamp) = DATE('now')
       `);

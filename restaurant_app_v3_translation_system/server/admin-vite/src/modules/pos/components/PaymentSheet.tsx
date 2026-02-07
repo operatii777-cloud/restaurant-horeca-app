@@ -77,10 +77,15 @@ export function PaymentSheet({
   const displayTotal = isSplitMode ? activeGroupTotal : orderTotal;
   const displayPaid = isSplitMode ? activeGroupPaid : totalPaid;
 
-  // Auto-set amount to remaining when method changes
+  // Auto-set amount when method changes
   useEffect(() => {
-    if (selectedMethod && displayRemaining > 0 && !amount) {
-      setAmount(displayRemaining.toFixed(2));
+    if (selectedMethod) {
+      // Protocol și Degustare: plată 0 (cadou / pe protocol)
+      if (selectedMethod === 'protocol' || selectedMethod === 'degustare') {
+        setAmount('0');
+      } else if (displayRemaining > 0 && !amount) {
+        setAmount(displayRemaining.toFixed(2));
+      }
     }
   }, [selectedMethod, displayRemaining]);
 
@@ -115,7 +120,12 @@ export function PaymentSheet({
       }
 
       const numericAmount = parseAmount();
-      if (numericAmount <= 0) {
+      const isProtocolOrDegustare = selectedMethod === 'protocol' || selectedMethod === 'degustare';
+      if (numericAmount < 0) {
+        setError('Suma nu poate fi negativă');
+        return;
+      }
+      if (numericAmount <= 0 && !isProtocolOrDegustare) {
         setError('Introdu o sumă mai mare decât 0');
         return;
       }
@@ -173,7 +183,7 @@ export function PaymentSheet({
         });
 
         // Clear amount input
-        setAmoun('');
+        setAmount('');
         if (remaining - numericAmount > 0) {
           setAmount((remaining - numericAmount).toFixed(2));
         }
@@ -234,11 +244,13 @@ export function PaymentSheet({
   };
 
   const handleClear = () => {
-    setAmoun('');
+    setAmount('');
   };
 
   const isFullyPaid = isSplitMode ? areAllGroupsPaid() : remaining <= 0.01;
-  const canAddPayment = !loading && !isAdding && selectedMethod && displayRemaining > 0;
+  const isProtocolOrDegustare = selectedMethod === 'protocol' || selectedMethod === 'degustare';
+  // Pentru protocol/degustare permitem plată 0 (comandă cadou); altfel rămas > 0
+  const canAddPayment = !loading && !isAdding && selectedMethod && (displayRemaining > 0 || (isProtocolOrDegustare && displayRemaining >= 0));
   
   // Convert draftItems to SplitBill format
   const splitBillItems = useMemo(() => {

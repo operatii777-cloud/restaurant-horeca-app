@@ -13,7 +13,7 @@ export default function ReturListPage() {
     <TipizateListPage
       type="RETUR"
       newRoute="/tipizate-enterprise/retur/new"
-      detailsRouteBase="/tipizate-enterprise/r-et-ur"
+      detailsRouteBase="/tipizate-enterprise/retur"
     />
   );
 }

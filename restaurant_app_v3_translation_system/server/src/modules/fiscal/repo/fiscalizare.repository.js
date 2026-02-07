@@ -397,6 +397,8 @@ class FiscalizareRepository extends BaseRepository {
         totalAmount: receipts.reduce((sum, r) => sum + (r.total || 0), 0),
         totalCash: receipts.filter(r => r.payment_method === 'cash').reduce((sum, r) => sum + (r.total || 0), 0),
         totalCard: receipts.filter(r => r.payment_method === 'card').reduce((sum, r) => sum + (r.total || 0), 0),
+        totalProtocol: receipts.filter(r => r.payment_method === 'protocol').reduce((sum, r) => sum + (r.total || 0), 0),
+        totalDegustare: receipts.filter(r => r.payment_method === 'degustare').reduce((sum, r) => sum + (r.total || 0), 0),
         totalVAT: receipts.reduce((sum, r) => sum + (r.vat_amount || 0), 0),
         netAmount: receipts.reduce((sum, r) => sum + ((r.total || 0) - (r.vat_amount || 0)), 0),
         vatBreakdown: this.calculateVATBreakdown(receipts)

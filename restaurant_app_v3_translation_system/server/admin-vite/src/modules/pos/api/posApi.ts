@@ -143,7 +143,7 @@ export const posApi = {
    * NOTE: Uses /api/admin/pos/pay endpoint (same as Kiosk) for consistency
    */
   async sendPayment(orderId: number, payment: {
-    method: 'cash' | 'card' | 'voucher' | 'other';
+    method: 'cash' | 'card' | 'voucher' | 'protocol' | 'degustare' | 'other';
     amount: number;
     metadata?: {
       reference?: string;

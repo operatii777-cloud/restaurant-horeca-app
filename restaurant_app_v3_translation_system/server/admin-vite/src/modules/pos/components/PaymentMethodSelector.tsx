@@ -9,7 +9,7 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import './PaymentMethodSelector.css';
 
-export type PaymentMethod = 'cash' | 'card' | 'voucher' | 'other';
+export type PaymentMethod = 'cash' | 'card' | 'voucher' | 'protocol' | 'degustare' | 'other';
 
 interface PaymentMethodSelectorProps {
   selectedMethod: PaymentMethod | null;
@@ -21,6 +21,8 @@ const PAYMENT_METHODS: Array<{ id: PaymentMethod; label: string; icon: string }>
   { id: 'cash', label: 'Cash', icon: '💵' },
   { id: 'card', label: 'Card', icon: '💳' },
   { id: 'voucher', label: 'Voucher', icon: '🎫' },
+  { id: 'protocol', label: 'Protocol', icon: '📋' },
+  { id: 'degustare', label: 'Degustare', icon: '🍷' },
 ];
 
 export function PaymentMethodSelector({

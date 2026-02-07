@@ -35,6 +35,18 @@ const methods = {
     needsExternalFlow: false,
     icon: '📝',
   },
+  PROTOCOL: {
+    label: 'Protocol',
+    labelRo: 'Protocol',
+    needsExternalFlow: false,
+    icon: '📋',
+  },
+  DEGUSTARE: {
+    label: 'Degustare',
+    labelRo: 'Degustare',
+    needsExternalFlow: false,
+    icon: '🍷',
+  },
 };
 
 /**

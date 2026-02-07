@@ -27,7 +27,7 @@ function normalizeOrderPayload(body) {
     total: body.total || 0,
     payment_method: body.payment_method || body.paymentMethod || 'cash',
     payment_timing: body.payment_timing || body.paymentTiming || null,
-    is_paid: body.is_paid !== undefined ? body.is_paid : (body.payment_method === 'card' || body.payment_method === 'online' ? 1 : 0),
+    is_paid: body.is_paid !== undefined ? body.is_paid : (body.payment_method === 'card' || body.payment_method === 'online' ? 1 : ((body.payment_method === 'protocol' || body.payment_method === 'degustare') && /^pos$/i.test(String(body.order_source || body.orderSource || '')) ? 1 : 0)),
     platform: body.platform || 'POS',
     order_source: body.order_source || body.orderSource || 'POS'
   };

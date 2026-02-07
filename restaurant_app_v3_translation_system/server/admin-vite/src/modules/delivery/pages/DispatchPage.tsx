@@ -385,7 +385,7 @@ export const DispatchPage = () => {
                     <div className="order-card-footer">
                       <span className="order-total">{order.total?.toFixed(2)} RON</span>
                       <span className={`payment-badge ${order.payment_method}`}>
-                        {order.payment_method === 'cash' ? '💵 Cash' : '💳 Card'}
+                        {order.payment_method === 'cash' ? '💵 Cash' : order.payment_method === 'protocol' ? '📋 Protocol' : order.payment_method === 'degustare' ? '🍷 Degustare' : '💳 Card'}
                       </span>
                     </div>
                     

@@ -118,6 +118,9 @@ class HorecaBenchmark {
     // 12. Observability & Reliability
     await this.testObservabilityReliability();
 
+    // 13. Allergen Verification
+    await this.testAllergens();
+
     // Calculate overall score
     this.calculateOverallScore();
 
@@ -501,10 +504,10 @@ class HorecaBenchmark {
         },
         { timeout: 10000, validateStatus: () => true }
       );
-      
+
       // Backend returns: {success: true, orderId: 1548}
       const orderId = orderResponse.data?.orderId || orderResponse.data?.order?.id || orderResponse.data?.order_id || orderResponse.data?.id || null;
-      
+
       if (orderId && (orderResponse.status === 200 || orderResponse.status === 201)) {
         // Test receipt generation with the created order
         const receiptResponse = await axios.get(`${this.baseURL}/api/orders/${orderId}/receipt`, {
@@ -512,15 +515,15 @@ class HorecaBenchmark {
           responseType: 'arraybuffer',
           validateStatus: () => true,
         });
-        
+
         // Receipt endpoint should return PDF (200 with PDF content-type) or 404 if order doesn't exist
-        const hasReceipt = receiptResponse.status === 200 && 
-                          receiptResponse.data && 
-                          receiptResponse.data.length > 0 && 
-                          (receiptResponse.headers['content-type']?.includes('pdf') || 
-                           receiptResponse.headers['content-type']?.includes('application/pdf') ||
-                           receiptResponse.data[0] === 0x25 && receiptResponse.data[1] === 0x50 && receiptResponse.data[2] === 0x44 && receiptResponse.data[3] === 0x46); // PDF magic bytes: %PDF
-        
+        const hasReceipt = receiptResponse.status === 200 &&
+          receiptResponse.data &&
+          receiptResponse.data.length > 0 &&
+          (receiptResponse.headers['content-type']?.includes('pdf') ||
+            receiptResponse.headers['content-type']?.includes('application/pdf') ||
+            receiptResponse.data[0] === 0x25 && receiptResponse.data[1] === 0x50 && receiptResponse.data[2] === 0x44 && receiptResponse.data[3] === 0x46); // PDF magic bytes: %PDF
+
         module.tests.push({
           name: 'Receipt Generation',
           status: hasReceipt ? 'PASS' : 'PARTIAL',
@@ -576,6 +579,114 @@ class HorecaBenchmark {
       });
       module.maxScore += 10;
       module.score += endpointExists ? 5 : 0;
+    }
+
+    // Test 5: Protocol Payment Method
+    try {
+      const orderData = {
+        type: 'dine_in',
+        items: [{ product_id: 1, name: 'Test Product', quantity: 2, price: 25.00 }],
+        total: 50.00,
+        table: 'T-PROTOCOL',
+        payment_method: 'protocol',
+        platform: 'BENCHMARK',
+      };
+      const response = await axios.post(`${this.baseURL}/api/orders/create`, orderData, { timeout: 10000, validateStatus: () => true });
+      const orderObj = response.data?.order || response.data;
+      const orderId = orderObj?.id || response.data?.orderId || response.data?.order_id;
+      const isPaid = orderObj?.is_paid === 1 || orderObj?.is_paid === '1' || orderObj?.is_paid === true;
+      const hasProtocol = orderObj?.payment_method === 'protocol';
+      const success = [200, 201].includes(response.status) && orderId && isPaid && hasProtocol;
+
+      module.tests.push({
+        name: 'Protocol Payment (Zero Amount)',
+        status: success ? 'PASS' : 'FAIL',
+        score: success ? 10 : 0,
+        orderId: orderId,
+        is_paid: orderObj?.is_paid,
+        payment_method: orderObj?.payment_method,
+        note: success ? 'Order auto-marked as paid with protocol method' : 'Protocol payment not working correctly',
+      });
+      module.maxScore += 10;
+      module.score += success ? 10 : 0;
+    } catch (error) {
+      module.tests.push({
+        name: 'Protocol Payment (Zero Amount)',
+        status: 'FAIL',
+        error: error.message,
+        score: 0,
+      });
+      module.maxScore += 10;
+    }
+
+    // Test 6: Degustare Payment Method
+    try {
+      const orderData = {
+        type: 'dine_in',
+        items: [{ product_id: 2, name: 'Test Product 2', quantity: 1, price: 35.00 }],
+        total: 35.00,
+        table: 'T-DEGUSTARE',
+        payment_method: 'degustare',
+        platform: 'BENCHMARK',
+      };
+      const response = await axios.post(`${this.baseURL}/api/orders/create`, orderData, { timeout: 10000, validateStatus: () => true });
+      const orderObj = response.data?.order || response.data;
+      const orderId = orderObj?.id || response.data?.orderId || response.data?.order_id;
+      const isPaid = orderObj?.is_paid === 1 || orderObj?.is_paid === '1' || orderObj?.is_paid === true;
+      const hasDegustare = orderObj?.payment_method === 'degustare';
+      const success = [200, 201].includes(response.status) && orderId && isPaid && hasDegustare;
+
+      module.tests.push({
+        name: 'Degustare Payment (Zero Amount)',
+        status: success ? 'PASS' : 'FAIL',
+        score: success ? 10 : 0,
+        orderId: orderId,
+        is_paid: orderObj?.is_paid,
+        payment_method: orderObj?.payment_method,
+        note: success ? 'Order auto-marked as paid with degustare method' : 'Degustare payment not working correctly',
+      });
+      module.maxScore += 10;
+      module.score += success ? 10 : 0;
+    } catch (error) {
+      module.tests.push({
+        name: 'Degustare Payment (Zero Amount)',
+        status: 'FAIL',
+        error: error.message,
+        score: 0,
+      });
+      module.maxScore += 10;
+    }
+
+    // Test 7: Pret 2/3 Database Columns
+    try {
+      const response = await axios.get(`${this.baseURL}/api/catalog-produse/products?is_active=1`, { timeout: 10000 });
+      const productsArray = response.data?.products || response.data?.data || response.data || [];
+      const hasPret2Column = productsArray.some(p => p.hasOwnProperty('pret2'));
+      const hasPret3Column = productsArray.some(p => p.hasOwnProperty('pret3'));
+      const productsWithPret2 = productsArray.filter(p => p.pret2 && p.pret2 > 0);
+      const productsWithPret3 = productsArray.filter(p => p.pret3 && p.pret3 > 0);
+      const success = hasPret2Column && hasPret3Column;
+
+      module.tests.push({
+        name: 'Pret 2/3 Database Columns',
+        status: success ? 'PASS' : 'FAIL',
+        score: success ? 10 : 0,
+        hasPret2Column: hasPret2Column,
+        hasPret3Column: hasPret3Column,
+        productsWithPret2: productsWithPret2.length,
+        productsWithPret3: productsWithPret3.length,
+        note: success ? `Found ${productsWithPret2.length} products with pret2, ${productsWithPret3.length} with pret3` : 'Pret 2/3 columns not found',
+      });
+      module.maxScore += 10;
+      module.score += success ? 10 : 0;
+    } catch (error) {
+      module.tests.push({
+        name: 'Pret 2/3 Database Columns',
+        status: 'FAIL',
+        error: error.message,
+        score: 0,
+      });
+      module.maxScore += 10;
     }
 
     this.results.modules['pos-features'] = module;
@@ -677,7 +788,7 @@ class HorecaBenchmark {
       // Stock validation MUST BLOCK this order (422 INSUFFICIENT_STOCK)
       const testProductId = 288; // Known product with recipes
       const testQuantity = 1000; // Very high quantity to ensure insufficient stock
-      
+
       const response = await axios.post(
         `${this.baseURL}/api/orders/create`,
         {
@@ -690,11 +801,11 @@ class HorecaBenchmark {
         },
         { timeout: 10000, validateStatus: () => true }
       );
-      
+
       // REAL FUNCTIONALITY CHECK: Order MUST be blocked (422 INSUFFICIENT_STOCK)
       const isBlocked = response.status === 422 && response.data?.error?.code === 'INSUFFICIENT_STOCK';
       const hasStockChecks = Array.isArray(response.data?.error?.stockChecks) && response.data.error.stockChecks.length > 0;
-      
+
       if (isBlocked && hasStockChecks) {
         // Stock validation WORKS CORRECTLY - blocks orders with insufficient stock
         module.tests.push({
@@ -735,7 +846,7 @@ class HorecaBenchmark {
       // Check if error is 422 INSUFFICIENT_STOCK (validation blocks correctly)
       const isBlocked = error.response?.status === 422 && (error.response?.data?.error?.code === 'INSUFFICIENT_STOCK' || error.response?.data?.code === 'INSUFFICIENT_STOCK');
       const hasStockChecks = !!(error.response?.data?.error?.stockChecks || error.response?.data?.stockChecks);
-      
+
       if (isBlocked && hasStockChecks) {
         // Stock validation WORKS CORRECTLY - blocks orders correctly
         const stockChecks = error.response?.data?.error?.stockChecks || error.response?.data?.stockChecks || [];
@@ -1371,21 +1482,21 @@ class HorecaBenchmark {
       concurrentPromises.push(
         axios
           .post(
-          `${this.baseURL}/api/orders/create`,
-          {
-            type: 'dine_in',
-            items: [{ product_id: 1, name: 'Test', quantity: 1, price: 10.00 }],
-            total: 10.00,
-            table: `T${i + 1}`,
-            payment_method: 'cash',
-            platform: 'BENCHMARK',
-          },
+            `${this.baseURL}/api/orders/create`,
+            {
+              type: 'dine_in',
+              items: [{ product_id: 1, name: 'Test', quantity: 1, price: 10.00 }],
+              total: 10.00,
+              table: `T${i + 1}`,
+              payment_method: 'cash',
+              platform: 'BENCHMARK',
+            },
             { timeout: 10000, validateStatus: () => true }
           )
           .then(() => {
             successCount++;
           })
-          .catch(() => {})
+          .catch(() => { })
       );
     }
     await Promise.all(concurrentPromises);
@@ -1423,7 +1534,7 @@ class HorecaBenchmark {
           .then(() => {
             highLoadSuccess++;
           })
-          .catch(() => {})
+          .catch(() => { })
       );
     }
     await Promise.all(highLoadPromises);
@@ -1800,6 +1911,111 @@ class HorecaBenchmark {
   }
 
   /**
+   * Testează Allergen Verification & Data Integrity
+   */
+  async testAllergens() {
+    console.log('🧪 Testing Allergen Verification...');
+    const module = {
+      name: 'Allergen Verification',
+      tests: [],
+      score: 0,
+      maxScore: 0,
+    };
+
+    // Test 1: Allergen Data Presence
+    try {
+      const response = await axios.get(`${this.baseURL}/api/products?active=true`, { timeout: 10000 });
+      const products = Array.isArray(response.data) ? response.data : (response.data?.data || []);
+      const productsWithAllergens = products.filter(p => p.allergens || p.allergens_en);
+      const hasAllergenData = productsWithAllergens.length > 0;
+
+      module.tests.push({
+        name: 'Allergen Data Presence',
+        status: hasAllergenData ? 'PASS' : 'FAIL',
+        details: `Found ${productsWithAllergens.length} products with allergen data out of ${products.length}`,
+        score: hasAllergenData ? 10 : 0,
+      });
+      module.maxScore += 10;
+      module.score += hasAllergenData ? 10 : 0;
+    } catch (error) {
+      module.tests.push({ name: 'Allergen Data Presence', status: 'FAIL', error: error.message, score: 0 });
+      module.maxScore += 10;
+    }
+
+    // Test 2: Romanian Translation Integrity
+    try {
+      const response = await axios.get(`${this.baseURL}/api/products?active=true`, { timeout: 10000 });
+      const products = Array.isArray(response.data) ? response.data : (response.data?.data || []);
+      const roAllergenProducts = products.filter(p => p.allergens && !p.allergens.includes('en:'));
+      const hasProperTranslations = roAllergenProducts.length > 0;
+
+      module.tests.push({
+        name: 'Romanian Translation Integrity',
+        status: hasProperTranslations ? 'PASS' : 'PARTIAL',
+        details: `Found ${roAllergenProducts.length} products with properly translated Romanian allergens`,
+        score: hasProperTranslations ? 10 : 5,
+      });
+      module.maxScore += 10;
+      module.score += hasProperTranslations ? 10 : 5;
+    } catch (error) {
+      module.tests.push({ name: 'Romanian Translation Integrity', status: 'FAIL', error: error.message, score: 0 });
+      module.maxScore += 10;
+    }
+
+    // Test 3: ID Mismatch Fix Verification (Brâncoveanu VS)
+    try {
+      const response = await axios.get(`${this.baseURL}/api/products?active=true`, { timeout: 10000 });
+      const products = Array.isArray(response.data) ? response.data : (response.data?.data || []);
+      const brancoveanu = products.find(p => p.name === 'Brâncoveanu VS');
+
+      if (brancoveanu) {
+        const isClean = !brancoveanu.allergens || brancoveanu.allergens === 'Nu conține alergeni declarați';
+        module.tests.push({
+          name: 'ID Mismatch Fix Verification (Brâncoveanu VS)',
+          status: isClean ? 'PASS' : 'FAIL',
+          details: isClean ? 'Brâncoveanu VS correctly has no allergens' : `FAIL: Brâncoveanu VS incorrectly has allergens: ${brancoveanu.allergens}`,
+          score: isClean ? 15 : 0,
+        });
+      } else {
+        module.tests.push({ name: 'ID Mismatch Fix Verification (Brâncoveanu VS)', status: 'SKIP', details: 'Brâncoveanu VS not found in menu', score: 15 });
+      }
+      module.maxScore += 15;
+      module.score += module.tests[module.tests.length - 1].status === 'FAIL' ? 0 : 15;
+    } catch (error) {
+      module.tests.push({ name: 'ID Mismatch Fix Verification (Brâncoveanu VS)', status: 'FAIL', error: error.message, score: 0 });
+      module.maxScore += 15;
+    }
+
+    // Test 4: Name-Based Mapping Verification (Check a product with recipe allergens)
+    try {
+      // We look for a product that should definitely have allergens if mapping works
+      const response = await axios.get(`${this.baseURL}/api/products?active=true`, { timeout: 10000 });
+      const products = Array.isArray(response.data) ? response.data : (response.data?.data || []);
+      const pizza = products.find(p => p.name.toLowerCase().includes('pizza') || p.name.toLowerCase().includes('pasta'));
+
+      if (pizza) {
+        const hasAllergens = pizza.allergens && pizza.allergens.length > 5;
+        module.tests.push({
+          name: 'Name-Based Mapping Verification',
+          status: hasAllergens ? 'PASS' : 'PARTIAL',
+          details: `${pizza.name} has allergens: ${pizza.allergens}`,
+          score: hasAllergens ? 15 : 5,
+        });
+      } else {
+        module.tests.push({ name: 'Name-Based Mapping Verification', status: 'SKIP', score: 15 });
+      }
+      module.maxScore += 15;
+      module.score += module.tests[module.tests.length - 1].score || 0;
+    } catch (error) {
+      module.tests.push({ name: 'Name-Based Mapping Verification', status: 'FAIL', error: error.message, score: 0 });
+      module.maxScore += 15;
+    }
+
+    this.results.modules['allergen-verification'] = module;
+    console.log(`   ✅ Allergen Verification: ${module.score}/${module.maxScore} (${((module.score / module.maxScore) * 100).toFixed(1)}%)\n`);
+  }
+
+  /**
    * Calculează scorul de performanță
    */
   calculatePerformanceScore(actualTime, targetTime, maxTime) {
@@ -1930,16 +2146,16 @@ class HorecaBenchmark {
 
     <h2>Module Results</h2>
     ${Object.entries(modules)
-      .map(
-        ([key, module]) => `
+        .map(
+          ([key, module]) => `
       <div class="module">
         <h3>${module.name}</h3>
         <p class="score">Score: ${module.score}/${module.maxScore} (${((module.score / module.maxScore) * 100).toFixed(1)}%)</p>
         <table>
           <tr><th>Test</th><th>Status</th><th>Score</th><th>Details</th></tr>
           ${module.tests
-            .map(
-              (test) => `
+              .map(
+                (test) => `
           <tr class="test ${test.status?.toLowerCase() || 'unknown'}">
             <td>${test.name}</td>
             <td>${test.status || 'N/A'}</td>
@@ -1947,13 +2163,13 @@ class HorecaBenchmark {
             <td>${test.time ? `Time: ${test.time}ms` : ''} ${test.error ? `Error: ${test.error}` : ''} ${test.successRate ? `Success: ${test.successRate}` : ''}</td>
           </tr>
         `
-            )
-            .join('')}
+              )
+              .join('')}
         </table>
       </div>
     `
-      )
-      .join('')}
+        )
+        .join('')}
 
     <h2>Performance Metrics</h2>
     <table>

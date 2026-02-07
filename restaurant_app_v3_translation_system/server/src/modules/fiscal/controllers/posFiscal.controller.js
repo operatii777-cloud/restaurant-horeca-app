@@ -113,10 +113,18 @@ class PosFiscalController {
         });
       }
 
-      if (!method || !amount) {
+      if (!method) {
         return res.status(400).json({
           success: false,
-          error: 'method and amount are required'
+          error: 'method is required'
+        });
+      }
+      const numAmount = parseFloat(amount);
+      const isProtocolOrDegustareZero = (method === 'protocol' || method === 'degustare') && (numAmount === 0 || numAmount === undefined || numAmount === null || isNaN(numAmount));
+      if (!isProtocolOrDegustareZero && (amount === undefined || amount === null || isNaN(numAmount) || numAmount <= 0)) {
+        return res.status(400).json({
+          success: false,
+          error: 'amount is required and must be positive (except for protocol/degustare where 0 is allowed)'
         });
       }
 
@@ -320,15 +328,20 @@ class PosFiscalController {
       }
 
       // Update order if fully paid (only if payments table exists)
-      const newPaidTotal = paidTotal + parseFloat(amount);
-      const isFullyPaid = newPaidTotal >= orderTotal - 0.01;
-      
+      const effectiveAmount = parseFloat(amount);
+      const isProtocolOrDegustare = (method === 'protocol' || method === 'degustare') && effectiveAmount <= 0;
+      const newPaidTotal = paidTotal + effectiveAmount;
+      // Protocol/Degustare cu amount 0 = comandă cadou, considerată plătită
+      const isFullyPaid = newPaidTotal >= orderTotal - 0.01 || isProtocolOrDegustare;
+
       if (isFullyPaid && paymentsTableExists) {
         try {
+          // Actualizează payment_method pe order cu metoda principală (ultima plată sau cea cu sumă > 0)
+          const primaryMethod = method || order.payment_method || 'cash';
           await new Promise((resolve, reject) => {
             db.run(
-              'UPDATE orders SET is_paid = 1, paid_timestamp = datetime("now") WHERE id = ?',
-              [order_id],
+              'UPDATE orders SET is_paid = 1, paid_timestamp = datetime("now"), payment_method = ? WHERE id = ?',
+              [primaryMethod, order_id],
               (err) => {
                 if (err) {
                   console.warn('[POS Payment] Error updating order:', err.message);
@@ -351,7 +364,7 @@ class PosFiscalController {
         order_id: parseInt(order_id),
         amount: parseFloat(amount),
         method: method,
-        remaining: Math.max(0, orderTotal - newPaidTotal),
+        remaining: isProtocolOrDegustare ? 0 : Math.max(0, orderTotal - newPaidTotal),
         is_fully_paid: isFullyPaid,
         split_bill: false
       });

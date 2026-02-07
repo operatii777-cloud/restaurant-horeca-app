@@ -400,7 +400,9 @@ async function getReceipt(req, res, next) {
         toPay: 'To pay on delivery',
         cash: 'Cash',
         card: 'Card',
-        online: 'Online'
+        online: 'Online',
+        protocol: 'Protocol',
+        degustare: 'Degustare'
       }
       : {
         orderNo: 'Comanda Nr:',
@@ -417,7 +419,9 @@ async function getReceipt(req, res, next) {
         toPay: 'Se achită la livrare',
         cash: 'Numerar',
         card: 'Card',
-        online: 'Online'
+        online: 'Online',
+        protocol: 'Protocol',
+        degustare: 'Degustare'
       };
 
     doc.text(sanitizeRomanianText(`${labels.orderNo} ${id}`));
@@ -481,7 +485,9 @@ async function getReceipt(req, res, next) {
 
     Promise.all(itemPromises).then(enrichedItems => {
       enrichedItems.forEach(item => {
-        const itemTotal = item.finalPrice * item.quantity;
+        // FIX: Use item.price (from order) or item.basePrice (from DB lookup) instead of non-existent item.finalPrice
+        const itemPrice = item.price || item.basePrice || 0;
+        const itemTotal = itemPrice * item.quantity;
         const isFree = item.isFree || false;
         const displayTotal = isFree ? 0 : itemTotal;
         total += displayTotal;
@@ -489,7 +495,7 @@ async function getReceipt(req, res, next) {
         const startY = doc.y;
         const priceStr = isFree ? '0.00 RON' : `${displayTotal.toFixed(2)} RON`;
         const priceWidth = doc.widthOfString(priceStr, { size: 9 });
-        const gap = 8;
+        const gap = 12; // Increased from 8 to prevent text overlap
         const contentWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;
         const nameBlockWidth = Math.max(40, contentWidth - priceWidth - gap);
 
@@ -533,7 +539,7 @@ async function getReceipt(req, res, next) {
             doc.fontSize(9);
           });
         }
-        doc.moveDown(0.3);
+        doc.moveDown(0.6); // Increased from 0.3 for better spacing between products
       });
 
       doc.moveDown();
@@ -619,6 +625,10 @@ async function getReceipt(req, res, next) {
         paymentMethodLabel = labels.card;
       } else if (paymentMethod === 'online') {
         paymentMethodLabel = labels.online;
+      } else if (paymentMethod === 'protocol') {
+        paymentMethodLabel = labels.protocol;
+      } else if (paymentMethod === 'degustare') {
+        paymentMethodLabel = labels.degustare;
       } else {
         paymentMethodLabel = paymentMethod;
       }
@@ -1389,6 +1399,9 @@ async function createOrder(req, res, next) {
       }
     }
 
+    // Protocol și Degustare: doar pentru comenzi plasate prin POS (nu delivery, Friendsride, Glovo etc.)
+    const isPosSource = /^pos$/i.test(String(order_source || ''));
+
     // Parse split_bill from request if present
     let splitBillData = null;
     if (req.body.split_bill) {
@@ -1513,13 +1526,13 @@ async function createOrder(req, res, next) {
 
         // Setează station pe baza categoriei (pentru filtrarea Bar/Kitchen)
         // BAR_CATEGORIES (standardized list)
-                const BAR_CATEGORIES = [
-            'Cafea/Ciocolată/Ceai', 'Cafea/Ciocolata/Ceai',
-            'Răcoritoare', 'Racoritoare',
-            'Băuturi și Coctailuri', 'Bauturi si Coctailuri',
-            'Băuturi Spirtoase', 'Bauturi Spirtoase',
-            'Coctailuri Non-Alcoolice',
-            'Vinuri'
+        const BAR_CATEGORIES = [
+          'Cafea/Ciocolată/Ceai', 'Cafea/Ciocolata/Ceai',
+          'Răcoritoare', 'Racoritoare',
+          'Băuturi și Coctailuri', 'Bauturi si Coctailuri',
+          'Băuturi Spirtoase', 'Bauturi Spirtoase',
+          'Coctailuri Non-Alcoolice',
+          'Vinuri'
         ];
         let station = item.station; // Păstrează station dacă există deja
         if (!station && productCategory) {
@@ -1565,7 +1578,7 @@ async function createOrder(req, res, next) {
           // Construiește query-ul dinamic pentru a include mențiunile dacă coloanele există
           let insertCols = 'type, order_source, platform, table_number, items, total, payment_method, status, timestamp, is_paid, customer_name, customer_phone, delivery_address, car_plate, lane_number, split_bill, client_identifier, idempotency_key';
           let insertVals = '?, ?, ?, ?, ?, ?, ?, ?, datetime(\'now\'), ?, ?, ?, ?, ?, ?, ?, ?, ?';
-          let insertParams = [type, order_source, platform, table || null, JSON.stringify(itemsWithBenefits), calculatedTotal, payment_method || null, 'pending', req.body.is_paid !== undefined ? (req.body.is_paid ? 1 : 0) : (payment_method && (payment_method === 'card' || payment_method === 'online') ? 1 : 0), customer?.name || null, customer?.phone || null, delivery?.address || null, drive_thru?.car_plate || null, drive_thru?.lane_number || null, splitBillData ? JSON.stringify(splitBillData) : null, clientIdentifier, idempotencyKey || null];
+          let insertParams = [type, order_source, platform, table || null, JSON.stringify(itemsWithBenefits), calculatedTotal, payment_method || null, 'pending', req.body.is_paid !== undefined ? (req.body.is_paid ? 1 : 0) : (payment_method && (payment_method === 'card' || payment_method === 'online' || (isPosSource && (payment_method === 'protocol' || payment_method === 'degustare'))) ? 1 : 0), customer?.name || null, customer?.phone || null, delivery?.address || null, drive_thru?.car_plate || null, drive_thru?.lane_number || null, splitBillData ? JSON.stringify(splitBillData) : null, clientIdentifier, idempotencyKey || null];
 
           // Adaugă mențiunile (coloanele au fost deja create mai sus dacă nu existau)
           insertCols += ', food_notes, drink_notes, general_notes';
@@ -1583,7 +1596,7 @@ async function createOrder(req, res, next) {
                   // Dacă select eșuează, încercă fallback fără idempotency_key
                   let insertCols = 'type, order_source, table_number, items, total, payment_method, status, timestamp, is_paid, customer_name, customer_phone, delivery_address, car_plate, lane_number, split_bill, client_identifier';
                   let insertVals = '?, ?, ?, ?, ?, ?, ?, datetime(\'now\'), ?, ?, ?, ?, ?, ?, ?, ?';
-                  let insertParams = [type, order_source, table || null, JSON.stringify(itemsWithBenefits), calculatedTotal, payment_method || null, 'pending', req.body.is_paid !== undefined ? (req.body.is_paid ? 1 : 0) : (payment_method && (payment_method === 'card' || payment_method === 'online') ? 1 : 0), customer?.name || null, customer?.phone || null, delivery?.address || null, drive_thru?.car_plate || null, drive_thru?.lane_number || null, splitBillData ? JSON.stringify(splitBillData) : null, clientIdentifier];
+                  let insertParams = [type, order_source, table || null, JSON.stringify(itemsWithBenefits), calculatedTotal, payment_method || null, 'pending', req.body.is_paid !== undefined ? (req.body.is_paid ? 1 : 0) : (payment_method && (payment_method === 'card' || payment_method === 'online' || (isPosSource && (payment_method === 'protocol' || payment_method === 'degustare'))) ? 1 : 0), customer?.name || null, customer?.phone || null, delivery?.address || null, drive_thru?.car_plate || null, drive_thru?.lane_number || null, splitBillData ? JSON.stringify(splitBillData) : null, clientIdentifier];
 
                   // Adaugă mențiunile
                   try {
@@ -1644,7 +1657,7 @@ async function createOrder(req, res, next) {
                 payment_method || null,
                 'pending',
                 notes?.general || notes || null,
-                req.body.is_paid !== undefined ? (req.body.is_paid ? 1 : 0) : (payment_method && (payment_method === 'card' || payment_method === 'online') ? 1 : 0), // is_paid: folosește din payload sau calculează
+                req.body.is_paid !== undefined ? (req.body.is_paid ? 1 : 0) : (payment_method && (payment_method === 'card' || payment_method === 'online' || (isPosSource && (payment_method === 'protocol' || payment_method === 'degustare'))) ? 1 : 0), // is_paid: folosește din payload sau calculează
                 customer?.name || null,
                 customer?.phone || null,
                 delivery?.address || null,
@@ -2019,7 +2032,9 @@ async function createOrder(req, res, next) {
         status: 'pending',
         total: calculatedTotal,
         type: type,
-        platform: platform || 'MOBILE_APP'
+        platform: platform || 'MOBILE_APP',
+        is_paid: is_paid || (payment_method && (payment_method === 'card' || payment_method === 'online' || (isPosSource && (payment_method === 'protocol' || payment_method === 'degustare'))) ? 1 : 0),
+        payment_method: payment_method
       }
     });
   } catch (error) {

@@ -35,6 +35,15 @@ export function mapRawOrderToCanonical(raw: any): CanonicalOrder {
     // Normalize legacy/standard statuses to unconventional project status "Pending:"
     if (status === ('pending' as any) || status === ('confirmed' as any)) status = 'Pending:';
 
+    const toUtc = (ts: string | null): string | null => {
+        if (!ts) return null;
+        // If timestamp has no timezone info (no Z, no +HH:MM), treat as UTC
+        if (!ts.endsWith('Z') && !/[+-]\d{2}:?\d{2}$/.test(ts)) {
+            return ts.replace(' ', 'T') + 'Z';
+        }
+        return ts;
+    };
+
     // Map type (OrderMode)
     let type: OrderMode = 'dine_in';
     if (raw.type === 'delivery') type = 'Delivery' as OrderMode;
@@ -84,12 +93,12 @@ export function mapRawOrderToCanonical(raw: any): CanonicalOrder {
             currency: raw.currency || 'RON',
         },
         timestamps: {
-            created_at: raw.timestamp || raw.created_at || null,
-            updated_at: raw.updated_at || null,
-            ready_at: raw.ready_at || null,
-            delivered_at: raw.delivered_timestamp || null,
-            paid_at: raw.paid_timestamp || null,
-            cancelled_at: raw.cancelled_timestamp || null,
+            created_at: toUtc(raw.timestamp || raw.created_at),
+            updated_at: toUtc(raw.updated_at),
+            ready_at: toUtc(raw.ready_at),
+            delivered_at: toUtc(raw.delivered_timestamp),
+            paid_at: toUtc(raw.paid_timestamp),
+            cancelled_at: toUtc(raw.cancelled_timestamp),
         },
         is_paid: !!raw.is_paid,
         is_cancelled: raw.status === 'cancelled' || !!raw.is_cancelled,

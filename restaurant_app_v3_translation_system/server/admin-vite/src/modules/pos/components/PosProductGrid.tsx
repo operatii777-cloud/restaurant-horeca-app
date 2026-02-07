@@ -20,6 +20,8 @@ interface PosProduct {
   name: string;
   name_en?: string;
   price: number;
+  pret2?: number;
+  pret3?: number;
   category: string;
   image_url?: string;
   is_active: boolean;
@@ -34,9 +36,16 @@ interface DailyMenuData {
   discount?: number;
 }
 
+/** Returnează prețul efectiv pe baza tier-ului (1=standard, 2=preț 2, 3=preț 3) */
+function getEffectivePrice(p: PosProduct, tier: 1 | 2 | 3): number {
+  if (tier === 2 && p.pret2 != null && p.pret2 > 0) return p.pret2;
+  if (tier === 3 && p.pret3 != null && p.pret3 > 0) return p.pret3;
+  return p.price;
+}
+
 export function PosProductGrid() {
-//   const { t } = useTranslation();
-  const { addItem } = usePosStore();
+  //   const { t } = useTranslation();
+  const { addItem, priceTier, setPriceTier } = usePosStore();
   const [products, setProducts] = useState<PosProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -88,8 +97,8 @@ export function PosProductGrid() {
         },
       });
 
-      const productsData = response.data?.data || response.data || [];
-      setProducts(productsData);
+      const productsData = response.data?.products || response.data?.data || (Array.isArray(response.data) ? response.data : []) || [];
+      setProducts(Array.isArray(productsData) ? productsData : []);
     } catch (err: any) {
       console.error('PosProductGrid Error loading products:', err);
       setError(err.response?.data?.error || 'Eroare la încărcarea produselor');
@@ -127,7 +136,7 @@ export function PosProductGrid() {
   // Filter products
   const filteredProducts = useMemo(() => {
     console.log('PosProductGrid filteredProducts - searchTerm:', searchTerm, 'selectedCategory:', selectedCategory, 'products:', products.length);
-    
+
     // If "Meniul Zilei" is selected, return empty array (will show special UI)
     if (selectedCategory === 'Meniul Zilei') {
       return [];
@@ -164,10 +173,10 @@ export function PosProductGrid() {
     const grouped: Record<string, PosProduct[]> = {};
     filteredProducts.forEach((product) => {
       const category = product.category || 'Necategorizat';
-        if (!grouped[category]) {
-          grouped[category] = [];
+      if (!grouped[category]) {
+        grouped[category] = [];
       }
-        grouped[category].push(product);
+      grouped[category].push(product);
     });
     return grouped;
   }, [filteredProducts]);
@@ -185,15 +194,15 @@ export function PosProductGrid() {
       return;
     }
 
-    // Add to order
+    const effectivePrice = getEffectivePrice(product, priceTier);
     addItem({
       productId: product.id,
       name: product.name,
       qty: 1,
-      unitPrice: product.price,
-      total: product.price,
+      unitPrice: effectivePrice,
+      total: effectivePrice,
       categoryId: undefined, // Can be enhanced
-      station: product.preparation_section === 'bar' ? 'bar' : 'kitchen',
+      station: product.preparation_section?.toLowerCase() === 'bar' ? 'bar' : 'kitchen',
     });
   };
 
@@ -231,6 +240,21 @@ export function PosProductGrid() {
 
   return (
     <div className="pos-product-grid">
+      {/* Preț Tier Selector */}
+      <div className="pos-product-grid-price-tier mb-2">
+        <span className="me-2" style={{ fontSize: '0.9rem', color: '#666' }}>Preț:</span>
+        {([1, 2, 3] as const).map((tier) => (
+          <button
+            key={tier}
+            type="button"
+            className={`btn btn-sm ${priceTier === tier ? 'btn-primary' : 'btn-outline-secondary'}`}
+            onClick={() => setPriceTier(tier)}
+          >
+            Preț {tier}
+          </button>
+        ))}
+      </div>
+
       {/* Search Bar */}
       <div className="pos-product-grid-search">
         <div className="input-group">
@@ -292,7 +316,7 @@ export function PosProductGrid() {
         })() ? (
           dailyMenuData && dailyMenuData.soup && dailyMenuData.mainCourse ? (
             <div style={{ width: '100%', padding: '2rem' }}>
-              <div style={{ 
+              <div style={{
                 width: '100%',
                 background: 'rgba(255, 255, 255, 0.95)',
                 padding: '1.5rem',
@@ -307,12 +331,12 @@ export function PosProductGrid() {
                     🍲 Meniul Zilei
                   </h1>
                 </div>
-                
+
                 <div style={{ marginBottom: '1.5rem' }}>
                   {/* Soup */}
-                  <div style={{ 
-                    display: 'flex', 
-                    justifyContent: 'space-between', 
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
                     alignItems: 'center',
                     marginBottom: '1rem',
                     padding: '1rem',
@@ -322,8 +346,8 @@ export function PosProductGrid() {
                   }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: 1 }}>
                       {dailyMenuData.soup.image_url ? (
-                        <img 
-                          src={dailyMenuData.soup.image_url} 
+                        <img
+                          src={dailyMenuData.soup.image_url}
                           alt={dailyMenuData.soup.name}
                           style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '8px' }}
                         />
@@ -352,14 +376,14 @@ export function PosProductGrid() {
                       {dailyMenuData.soup.price?.toFixed(2)} RON
                     </span>
                   </div>
-                  
+
                   {/* Plus symbol */}
                   <div style={{ textAlign: 'center', fontSize: '1.5rem', color: '#ff6b35', margin: '1rem 0', fontWeight: 'bold' }}>+</div>
-                  
+
                   {/* Main Course */}
-                  <div style={{ 
-                    display: 'flex', 
-                    justifyContent: 'space-between', 
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
                     alignItems: 'center',
                     padding: '1rem',
                     background: 'rgba(255, 107, 53, 0.05)',
@@ -368,8 +392,8 @@ export function PosProductGrid() {
                   }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: 1 }}>
                       {dailyMenuData.mainCourse.image_url ? (
-                        <img 
-                          src={dailyMenuData.mainCourse.image_url} 
+                        <img
+                          src={dailyMenuData.mainCourse.image_url}
                           alt={dailyMenuData.mainCourse.name}
                           style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '8px' }}
                         />
@@ -399,9 +423,9 @@ export function PosProductGrid() {
                     </span>
                   </div>
                 </div>
-                
+
                 <hr style={{ margin: '1.5rem 0', border: '1px dashed rgba(0, 0, 0, 0.2)' }} />
-                
+
                 <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
                   <div style={{ marginBottom: '0.75rem' }}>
                     <span style={{ fontSize: '0.65rem', color: '#888', textDecoration: 'line-through' }}>
@@ -413,7 +437,7 @@ export function PosProductGrid() {
                     </span>
                   </div>
                 </div>
-                
+
                 <button
                   className="btn btn-danger"
                   onClick={() => {
@@ -438,10 +462,10 @@ export function PosProductGrid() {
                       station: 'kitchen',
                     });
                   }}
-                  style={{ 
-                    width: '100%', 
-                    padding: '0.75rem', 
-                    fontSize: '0.75rem', 
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    fontSize: '0.75rem',
                     fontWeight: 'bold',
                     borderRadius: '8px',
                     background: '#ff6b35',
@@ -481,7 +505,7 @@ export function PosProductGrid() {
                       title={
                         unavailable
                           ? 'Produs indisponibil'
-                          : `${product.name} - ${product.price.toFixed(2)} RON`
+                          : `${product.name} - ${getEffectivePrice(product, priceTier).toFixed(2)} RON`
                       }
                     >
                       {product.image_url ? (
@@ -499,7 +523,7 @@ export function PosProductGrid() {
                       <div className="pos-product-info">
                         <div className="pos-product-name">{product.name}</div>
                         <div className="pos-product-price">
-                          {product.price.toFixed(2)} RON
+                          {getEffectivePrice(product, priceTier).toFixed(2)} RON
                         </div>
                         {product.stock_management && (
                           <div className="pos-product-stock">

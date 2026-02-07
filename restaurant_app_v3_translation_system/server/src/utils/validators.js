@@ -204,7 +204,7 @@ function validatePayment(payment) {
     errors.push('Payment amount must be a positive number');
   }
 
-  const validMethods = ['cash', 'card', 'online', 'voucher', 'split'];
+  const validMethods = ['cash', 'card', 'online', 'voucher', 'split', 'protocol', 'degustare'];
   if (!payment.method || !validMethods.includes(payment.method)) {
     errors.push(`Payment method must be one of: ${validMethods.join(', ')}`);
   }

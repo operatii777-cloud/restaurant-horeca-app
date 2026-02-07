@@ -78,6 +78,8 @@ export function KdsPage() {
     return () => clearInterval(interval);
   }, []);
 
+
+
   return (
     <div className="kds-page">
       <header className="kds-header">
@@ -101,6 +103,8 @@ export function KdsPage() {
           </span>
         </div>
       </header>
+
+
 
       <div className="kds-orders-grid">
         {sortedOrders.map((order) => {

@@ -15,6 +15,19 @@
   height: 100%;
 }
 
+.pos-product-grid-price-tier {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.pos-product-grid-price-tier .btn {
+  margin-right: 4px;
+}
+
 .pos-product-grid-search {
   padding: 16px;
   background: white;

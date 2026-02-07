@@ -28,14 +28,9 @@ export const useKdsStore = create<KdsState>((_set, get) => ({
   getKitchenOrders: () => {
     const allOrders = useOrderStore.getState().getOrders();
 
-    // Filter orders that have kitchen items
+    // DIRECT MAPPING: Rely on server-side filtering and just check for kitchen items
+    // This matches legacy KDS behavior exactly
     return allOrders.filter((order) => {
-      // Corrected exclusion: only exclude truly finished or cancelled orders
-      const status = order.status.toLowerCase();
-      if (['paid', 'completed', 'delivered', 'cancelled'].includes(status)) {
-        return false;
-      }
-
       // Check if order has kitchen items
       return order.items.some((item) => item.station === 'kitchen');
     });

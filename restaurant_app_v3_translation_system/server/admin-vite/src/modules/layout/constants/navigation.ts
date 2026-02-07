@@ -59,6 +59,7 @@ export const NAVIGATION_ITEMS: NavItem[] = [
       { label: 'Furnizori', path: '/stocks/suppliers', icon: '🏢', badge: 'nou' },
       { label: 'Comenzi Furnizori', path: '/stocks/suppliers/orders', icon: '📦', badge: 'nou' },
       { label: 'Pierderi & Waste', path: '/stocks/waste', icon: '🗑️', badge: 'nou' },
+      { label: 'Retur / Restituiri', path: '/tipizate-enterprise/retur', icon: '↩️' },
       { label: 'Etichete Produse', path: '/stocks/labels', icon: '🏷️', badge: 'nou' },
       { label: 'Alergeni', path: '/stocks/allergens', icon: '⚠️', badge: 'nou' },
       { label: 'Stock & Risk Alerts', path: '/stocks/risk-alerts', icon: '⚠️', badge: 'nou' },

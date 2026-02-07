@@ -29,13 +29,9 @@ export const useBarStore = create<BarState>((_set, get) => ({
     const allOrders = useOrderStore.getState().getOrders();
 
     // Filter orders that have bar items
+    // DIRECT MAPPING: Rely on server-side filtering and just check for bar items
+    // This matches legacy Bar behavior exactly
     return allOrders.filter((order) => {
-      // Corrected exclusion: only exclude truly finished or cancelled orders
-      const status = order.status.toLowerCase();
-      if (['paid', 'completed', 'delivered', 'cancelled'].includes(status)) {
-        return false;
-      }
-
       // Check if order has bar items
       return order.items.some((item) => item.station === 'bar');
     });

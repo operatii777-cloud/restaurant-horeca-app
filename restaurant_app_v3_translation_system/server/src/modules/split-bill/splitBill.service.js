@@ -202,9 +202,14 @@ class SplitBillService {
       }
 
       // Validează suma
-      const amountNum = parseFloat(amount);
-      if (amountNum <= 0) {
+      let amountNum = parseFloat(amount);
+      const isProtocolOrDegustare = (method === 'protocol' || method === 'degustare') && (amountNum <= 0 || isNaN(amountNum));
+      if (!isProtocolOrDegustare && (amountNum <= 0 || isNaN(amountNum))) {
         throw new Error('Amount must be positive');
+      }
+      // Protocol/Degustare cu 0: înregistrăm rămasul grupului ca valoare (grupul se consideră plătit)
+      if (isProtocolOrDegustare) {
+        amountNum = group.remaining;
       }
 
       if (amountNum > group.remaining + 0.01) { // Toleranță 0.01 RON
@@ -216,7 +221,8 @@ class SplitBillService {
         const meta = JSON.stringify({
           splitBill: true,
           groupId: groupId,
-          groupName: group.name
+          groupName: group.name,
+          ...(isProtocolOrDegustare && { protocolDegustare: true })
         });
 
       // Verifică dacă coloana este created_at sau timestamp

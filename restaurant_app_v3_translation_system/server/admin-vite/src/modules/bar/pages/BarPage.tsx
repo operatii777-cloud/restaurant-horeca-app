@@ -101,6 +101,8 @@ export function BarPage() {
         </div>
       </header>
 
+
+
       <div className="bar-orders-grid">
         {sortedOrders.map((order) => {
           const elapsed = getElapsedSeconds?.(order) || 0;

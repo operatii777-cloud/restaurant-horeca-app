@@ -114,6 +114,10 @@ router.use((req, res, next) => {
   if (req.path.includes('/table/')) {
     return next();
   }
+  // Skip auth for display endpoints (KDS, Bar, Monitor needs public/local access)
+  if (req.path.includes('/orders-display/') || req.path.includes('/display/')) {
+    return next();
+  }
   controller.checkAdminAuth(req, res, next);
 });
 
@@ -342,6 +346,20 @@ router.get('/display/kitchen/unfinished', displayController.getKitchenUnfinished
 router.get('/orders-display/client-monitor', (req, res, next) => {
   // Forward to new endpoint
   req.url = '/display/client-monitor';
+  router.handle(req, res, next);
+});
+
+// Alias for KDS frontend compatibility
+router.get('/orders-display/kitchen', (req, res, next) => {
+  // Forward to kitchen unfinished endpoint
+  req.url = '/display/kitchen/unfinished';
+  router.handle(req, res, next);
+});
+
+// Alias for Bar frontend compatibility
+router.get('/orders-display/bar', (req, res, next) => {
+  // Forward to bar unfinished endpoint
+  req.url = '/display/bar/unfinished';
   router.handle(req, res, next);
 });
 

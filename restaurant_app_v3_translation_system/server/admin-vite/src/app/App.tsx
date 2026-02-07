@@ -514,6 +514,7 @@ const App = () => {
         {/* PHASE S5.5 - Legacy Waste Route → Redirect to Tipizate Enterprise */}
         <Route path="stocks/waste" element={<Navigate to="/tipizate-enterprise/waste" replace />} />
         <Route path="stocks/costs" element={<CostsPage />} />
+        <Route path="stocks/retur" element={<Navigate to="/tipizate-enterprise/retur" replace />} />
         <Route path="stocks/risk-alerts" element={<RiskAlertsPage />} />
         <Route path="stocks/suppliers" element={<SuppliersPage />} />
         <Route path="stocks/suppliers/orders" element={<SupplierOrdersPage />} />

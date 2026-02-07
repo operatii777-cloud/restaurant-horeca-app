@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HoReCa Benchmark Report - Restaurant App Hybrid</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f7fa; padding: 20px; }
+    .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px 12px 0 0; }
+    .header h1 { font-size: 32px; margin-bottom: 10px; }
+    .header p { opacity: 0.9; }
+    .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; padding: 30px; }
+    .summary-card { background: #f8f9fa; padding: 20px; border-radius: 8px; text-align: center; }
+    .summary-card h3 { color: #666; font-size: 14px; margin-bottom: 10px; }
+    .summary-card .value { font-size: 32px; font-weight: bold; color: #667eea; }
+    .grade-A, .grade-Aplus { color: #10b981; }
+    .grade-B { color: #3b82f6; }
+    .grade-C { color: #f59e0b; }
+    .grade-D, .grade-F { color: #ef4444; }
+    .modules { padding: 30px; }
+    .module { margin-bottom: 30px; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden; }
+    .module-header { background: #f8f9fa; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+    .module-header h3 { font-size: 18px; color: #1f2937; }
+    .module-score { font-size: 16px; font-weight: bold; }
+    .tests { padding: 20px; }
+    .test { padding: 12px; border-bottom: 1px solid #f3f4f6; display: flex; justify-content: space-between; align-items: center; }
+    .test:last-child { border-bottom: none; }
+    .test-name { flex: 1; }
+    .test-status { padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+    .status-PASS { background: #d1fae5; color: #065f46; }
+    .status-FAIL { background: #fee2e2; color: #991b1b; }
+    .test-score { margin-left: 15px; font-weight: bold; }
+    .industry { padding: 30px; background: #f8f9fa; }
+    .industry h2 { margin-bottom: 20px; }
+    .comparison { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    .comparison-card { background: white; padding: 20px; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🏆 HoReCa Benchmark Report</h1>
+      <p>Restaurant App Hybrid • 2026-02-05T19:51:41.134Z</p>
+    </div>
+    
+    <div class="summary">
+      <div class="summary-card">
+        <h3>Overall Score</h3>
+        <div class="value">135/290</div>
+      </div>
+      <div class="summary-card">
+        <h3>Percentage</h3>
+        <div class="value">46.6%</div>
+      </div>
+      <div class="summary-card">
+        <h3>Weighted Score</h3>
+        <div class="value">49.0%</div>
+      </div>
+      <div class="summary-card">
+        <h3>Grade</h3>
+        <div class="value grade-F">F</div>
+      </div>
+    </div>
+    
+    <div class="modules">
+      <h2 style="margin-bottom: 20px;">Module Results</h2>
+      
+        <div class="module">
+          <div class="module-header">
+            <h3>Core Functionality (Weight: 10)</h3>
+            <div class="module-score">40/60 (66.7%)</div>
+          </div>
+          <div class="tests">
+            
+              <div class="test">
+                <div class="test-name">Health Check</div>
+                <span class="test-status status-ok">ok</span>
+                <span class="test-score">15/15</span>
+              </div>
+            
+              <div class="test">
+                <div class="test-name">Menu Loading</div>
+                <span class="test-status status-PASS">PASS</span>
+                <span class="test-score">15/15</span>
+              </div>
+            
+              <div class="test">
+                <div class="test-name">Order Creation</div>
+                <span class="test-status status-FAIL">FAIL</span>
+                <span class="test-score">0/20</span>
+              </div>
+            
+              <div class="test">
+                <div class="test-name">Database Connectivity</div>
+                <span class="test-status status-ok">ok</span>
+                <span class="test-score">10/10</span>
+              </div>
+            
+          </div>
+        </div>
+      
+        <div class="module">
+          <div class="module-header">
+            <h3>Performance (Weight: 9)</h3>
+            <div class="module-score">60/60 (100.0%)</div>
+          </div>
+          <div class="tests">
+            
+              <div class="test">
+                <div class="test-name">Order Processing Time</div>
+                <span class="test-status status-PASS">PASS</span>
+                <span class="test-score">25/25</span>
+              </div>
+            
+              <div class="test">
+                <div class="test-name">Menu Load Time</div>
+                <span class="test-status status-PASS">PASS</span>
+                <span class="test-score">20/20</span>
+              </div>
+            
+              <div class="test">
+                <div class="test-name">Concurrent Requests (50)</div>
+                <span class="test-status status-PASS">PASS</span>
+                <span class="test-score">15/15</span>
+              </div>
+            
+          </div>
+        </div>
+      
+        <div class="module">
+          <div class="module-header">
+            <h3>POS Features (Weight: 10)</h3>
+            <div class="module-score">20/70 (28.6%)</div>
+          </div>
+          <div class="tests">
+            
+              <div class="test">
+                <div class="test-name">Payment Methods</div>
+                <span class="test-status status-PASS">PASS</span>
+                <span class="test-score">10/10</span>
+              </div>
+            
+              <div class="test">
+                <div class="test-name">Split Bill</div>
+                <span class="test-status status-FAIL">FAIL</span>
+                <span class="test-score">0/10</span>
+              </div>
+            
+              <div class="test">
+                <div class="test-name">Table Management</div>
+                <span class="test-status status-PASS">PASS</span>
+                <span class="test-score">10/10</span>
+              </div>
+            
+              <div class="test">
+                <div class="test-name">Receipt Generation</div>
+                <span class="test-status status-FAIL">FAIL</span>
+                <span class="test-score">0/10</span>
+              </div>
+            
+              <div class="test">
+                <div class="test-name">Protocol Payment (Zero Amount)</div>
+                <span class="test-status status-FAIL">FAIL</span>
+                <span class="test-score">0/10</span>
+              </div>
+            
+              <div class="test">
+                <div class="test-name">Degustare Payment (Zero Amount)</div>
+                <span class="test-status status-FAIL">FAIL</span>
+                <span class="test-score">0/10</span>
+              </div>
+            
+              <div class="test">
+                <div class="test-name">Preț 2/3 Pricing Tiers</div>
+                <span class="test-status status-FAIL">FAIL</span>
+                <span class="test-score">0/10</span>
+              </div>
+            
+          </div>
+        </div>
+      
+        <div class="module">
+          <div class="module-header">
+            <h3>Mobile & Kiosk (Weight: 7)</h3>
+            <div class="module-score">15/50 (30.0%)</div>
+          </div>
+          <div class="tests">
+            
+              <div class="test">
+                <div class="test-name">Native Mobile App API</div>
+                <span class="test-status status-available">available</span>
+                <span class="test-score">15/15</span>
+              </div>
+            
+              <div class="test">
+                <div class="test-name">Kiosk Ordering</div>
+                <span class="test-status status-FAIL">FAIL</span>
+                <span class="test-score">0/10</span>
+              </div>
+            
+              <div class="test">
+                <div class="test-name">QR Code Table Ordering</div>
+                <span class="test-status status-FAIL">FAIL</span>
+                <span class="test-score">0/15</span>
+              </div>
+            
+              <div class="test">
+                <div class="test-name">Online Ordering (Delivery/Pickup)</div>
+                <span class="test-status status-FAIL">FAIL</span>
+                <span class="test-score">0/10</span>
+              </div>
+            
+          </div>
+        </div>
+      
+        <div class="module">
+          <div class="module-header">
+            <h3>Delivery & Dispatch (Weight: 7)</h3>
+            <div class="module-score">0/50 (0.0%)</div>
+          </div>
+          <div class="tests">
+            
+              <div class="test">
+                <div class="test-name">Delivery Orders Management</div>
+                <span class="test-status status-FAIL">FAIL</span>
+                <span class="test-score">0/10</span>
+              </div>
+            
+              <div class="test">
+                <div class="test-name">Courier Management & Mobile App</div>
+                <span class="test-status status-FAIL">FAIL</span>
+                <span class="test-score">0/15</span>
+              </div>
+            
+              <div class="test">
+                <div class="test-name">Order Tracking (Real-time GPS)</div>
+                <span class="test-status status-FAIL">FAIL</span>
+                <span class="test-score">0/10</span>
+              </div>
+            
+              <div class="test">
+                <div class="test-name">External Delivery Platforms Integration</div>
+                <span class="test-status status-FAIL">FAIL</span>
+                <span class="test-score">0/15</span>
+              </div>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+    <div class="industry">
+      <h2>Industry Comparison</h2>
+      <div class="comparison">
+        <div class="comparison-card">
+          <h3>Order Processing Time</h3>
+          <p><strong>Your App:</strong> 1.12</p>
+          <p><strong>Square:</strong> 40ms</p>
+          <p><strong>Toast:</strong> 45ms</p>
+          <p><strong>Verdict:</strong> EXCELLENT</p>
+        </div>
+        <div class="comparison-card">
+          <h3>Menu Load Time</h3>
+          <p><strong>Your App:</strong> 3.11</p>
+          <p><strong>Square:</strong> 120ms</p>
+          <p><strong>Toast:</strong> 150ms</p>
+          <p><strong>Verdict:</strong> EXCELLENT</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

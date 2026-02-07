@@ -57,7 +57,7 @@ async function dbGet(query, params = []) {
 async function dbRun(query, params = []) {
     const db = await getDb();
     return new Promise((resolve, reject) => {
-        db.run(query, params, function(err) {
+        db.run(query, params, function (err) {
             if (err) reject(err);
             else resolve({ lastID: this.lastID, changes: this.changes });
         });
@@ -77,8 +77,8 @@ async function dbGetOptional(query, params = []) {
 
 // Controller factory - receives dependencies
 function createCatalogController(deps = {}) {
-    const invalidateCache = typeof deps.invalidateMenuCache === 'function' ? deps.invalidateMenuCache : () => {};
-    
+    const invalidateCache = typeof deps.invalidateMenuCache === 'function' ? deps.invalidateMenuCache : () => { };
+
     const safeInvalidateMenuCache = () => {
         try {
             invalidateCache();
@@ -135,7 +135,7 @@ function createCatalogController(deps = {}) {
                 GROUP BY c.id
                 ORDER BY c.display_order, c.name
             `);
-            
+
             const buildTree = (parentId = null) => {
                 return categories
                     .filter(cat => cat.parent_id === parentId)
@@ -144,9 +144,9 @@ function createCatalogController(deps = {}) {
                         children: buildTree(cat.id)
                     }));
             };
-            
+
             const tree = buildTree(null);
-            
+
             res.json({
                 success: true,
                 categories: tree,
@@ -161,13 +161,15 @@ function createCatalogController(deps = {}) {
     async function getProducts(req, res, next) {
         try {
             const { category, search, is_active, has_recipe } = req.query;
-            
+
             let query = `
                 SELECT 
                     m.id,
                     m.name,
                     m.name_en,
                     m.price,
+                    m.pret2,
+                    m.pret3,
                     m.vat_rate,
                     m.unit,
                     m.category,
@@ -188,33 +190,33 @@ function createCatalogController(deps = {}) {
                 FROM menu m
                 WHERE 1=1
             `;
-            
+
             const params = [];
-            
+
             if (category) {
                 query += ` AND m.category = ?`;
                 params.push(category);
             }
-            
+
             if (search) {
                 query += ` AND (m.name LIKE ? OR m.name_en LIKE ?)`;
                 params.push(`%${search}%`, `%${search}%`);
             }
-            
+
             if (is_active !== undefined) {
                 query += ` AND m.is_sellable = ?`;
                 params.push(is_active === 'true' || is_active === '1' ? 1 : 0);
             }
-            
+
             if (has_recipe !== undefined) {
                 query += ` AND m.has_recipe = ?`;
                 params.push(has_recipe === 'true' || has_recipe === '1' ? 1 : 0);
             }
-            
+
             query += ` ORDER BY m.display_order, m.name`;
-            
+
             const products = await dbAll(query, params);
-            
+
             res.json({
                 success: true,
                 data: products,
@@ -299,17 +301,17 @@ function createCatalogController(deps = {}) {
                     ingredients: parseArray(product.ingredients),
                     recipe: recipeInfo
                         ? {
-                              id: recipeInfo.id,
-                              version: recipeInfo.version ?? null,
-                              updated_at: recipeInfo.updated_at ?? null,
-                          }
+                            id: recipeInfo.id,
+                            version: recipeInfo.version ?? null,
+                            updated_at: recipeInfo.updated_at ?? null,
+                        }
                         : null,
                     cost_last_updated: costInfo?.updated_at ?? null,
                     portion: portionInfo
                         ? {
-                              quantity: portionInfo.quantity ?? null,
-                              unit: portionInfo.unit ?? null,
-                          }
+                            quantity: portionInfo.quantity ?? null,
+                            unit: portionInfo.unit ?? null,
+                        }
                         : null,
                 },
             });
@@ -451,7 +453,7 @@ function createCatalogController(deps = {}) {
                 is_sellable,
                 has_recipe
             };
-            
+
             const validation = validateProduct(productData, 'create');
             if (!validation.valid) {
                 return res.status(400).json({
@@ -540,16 +542,16 @@ function createCatalogController(deps = {}) {
     async function bulkPriceChange(req, res, next) {
         try {
             const { product_ids, new_price, new_vat_rate, changed_by } = req.body;
-            
+
             if (!product_ids || !Array.isArray(product_ids) || product_ids.length === 0) {
                 return res.status(400).json({ success: false, error: 'product_ids array is required' });
             }
-            
+
             let updated = 0;
-            
+
             for (const productId of product_ids) {
                 const product = await dbGet('SELECT price, vat_rate FROM menu WHERE id = ?', [productId]);
-                
+
                 if (product) {
                     await dbRun(`
                         INSERT INTO product_price_history (product_id, old_price, new_price, old_vat_rate, new_vat_rate, changed_by)
@@ -562,20 +564,20 @@ function createCatalogController(deps = {}) {
                         new_vat_rate !== undefined ? new_vat_rate : product.vat_rate,
                         changed_by || 'admin'
                     ]);
-                    
+
                     const updates = [];
                     const params = [];
-                    
+
                     if (new_price !== undefined) {
                         updates.push('price = ?');
                         params.push(new_price);
                     }
-                    
+
                     if (new_vat_rate !== undefined) {
                         updates.push('vat_rate = ?');
                         params.push(new_vat_rate);
                     }
-                    
+
                     if (updates.length > 0) {
                         params.push(productId);
                         await dbRun(`UPDATE menu SET ${updates.join(', ')} WHERE id = ?`, params);
@@ -583,7 +585,7 @@ function createCatalogController(deps = {}) {
                     }
                 }
             }
-            
+
             safeInvalidateMenuCache();
 
             res.json({
@@ -601,7 +603,7 @@ function createCatalogController(deps = {}) {
         try {
             const { id } = req.params;
             const updates = req.body;
-            
+
             // PHASE PRODUCTION-READY: Validate product data
             const validation = validateProduct(updates, 'update');
             if (!validation.valid) {
@@ -614,15 +616,15 @@ function createCatalogController(deps = {}) {
                     }
                 });
             }
-            
+
             const existing = await dbGet('SELECT id FROM menu WHERE id = ?', [id]);
             if (!existing) {
                 return res.status(404).json({ success: false, error: 'Product not found' });
             }
-            
+
             const fields = [];
             const values = [];
-            
+
             const allowedFields = [
                 'name', 'name_en', 'category', 'price', 'vat_rate', 'unit',
                 'description', 'description_en', 'weight', 'allergens', 'allergens_computed', 'info',
@@ -631,28 +633,28 @@ function createCatalogController(deps = {}) {
                 'preparation_section', 'is_fraction', 'has_recipe',
                 'is_active', 'display_order'
             ];
-            
+
             for (const field of allowedFields) {
                 if (updates[field] !== undefined) {
                     fields.push(`${field} = ?`);
                     values.push(updates[field]);
                 }
             }
-            
+
             if (fields.length === 0) {
                 return res.status(400).json({ success: false, error: 'No fields to update' });
             }
-            
+
             values.push(id);
-            
+
             await dbRun(`
                 UPDATE menu
                 SET ${fields.join(', ')}
                 WHERE id = ?
             `, values);
-            
+
             const updated = await dbGet('SELECT * FROM menu WHERE id = ?', [id]);
-            
+
             safeInvalidateMenuCache();
 
             res.json({
@@ -670,17 +672,17 @@ function createCatalogController(deps = {}) {
         try {
             const { id } = req.params;
             const { new_name } = req.body;
-            
+
             if (!new_name) {
                 return res.status(400).json({ success: false, error: 'new_name is required' });
             }
-            
+
             const original = await dbGet('SELECT * FROM menu WHERE id = ?', [id]);
-            
+
             if (!original) {
                 return res.status(404).json({ success: false, error: 'Product not found' });
             }
-            
+
             const result = await dbRun(`
                 INSERT INTO menu (
                     name, name_en, category, price, vat_rate, unit,
@@ -715,10 +717,10 @@ function createCatalogController(deps = {}) {
                 original.is_active,
                 original.display_order + 1
             ]);
-            
+
             if (original.has_recipe === 1) {
                 const recipeItems = await dbAll('SELECT * FROM recipes WHERE product_id = ?', [id]);
-                
+
                 for (const item of recipeItems) {
                     await dbRun(`
                         INSERT INTO recipes (product_id, ingredient_id, quantity, unit)
@@ -726,7 +728,7 @@ function createCatalogController(deps = {}) {
                     `, [result.lastID, item.ingredient_id, item.quantity, item.unit]);
                 }
             }
-            
+
             safeInvalidateMenuCache();
 
             res.json({
@@ -782,7 +784,7 @@ function createCatalogController(deps = {}) {
     async function getPriceHistory(req, res, next) {
         try {
             const { id } = req.params;
-            
+
             const history = await dbAll(`
                 SELECT *
                 FROM product_price_history
@@ -790,7 +792,7 @@ function createCatalogController(deps = {}) {
                 ORDER BY changed_at DESC
                 LIMIT 50
             `, [id]);
-            
+
             res.json({
                 success: true,
                 history: history
@@ -804,7 +806,7 @@ function createCatalogController(deps = {}) {
     async function getDependencies(req, res, next) {
         try {
             const { id } = req.params;
-            
+
             const recipeIngredients = await dbAll(`
                 SELECT 
                     i.id,
@@ -818,7 +820,7 @@ function createCatalogController(deps = {}) {
                 JOIN ingredients i ON r.ingredient_id = i.id
                 WHERE r.product_id = ?
             `, [id]);
-            
+
             const relatedProducts = await dbAll(`
                 SELECT DISTINCT
                     m.id,
@@ -831,7 +833,7 @@ function createCatalogController(deps = {}) {
                 )
                 AND m.id != ?
             `, [id, id]);
-            
+
             res.json({
                 success: true,
                 dependencies: {
@@ -848,7 +850,7 @@ function createCatalogController(deps = {}) {
     async function exportProducts(req, res, next) {
         try {
             const { format, category } = req.query;
-            
+
             let query = `
                 SELECT 
                     m.id,
@@ -866,24 +868,24 @@ function createCatalogController(deps = {}) {
                 FROM menu m
                 WHERE 1=1
             `;
-            
+
             const params = [];
-            
+
             if (category) {
                 query += ` AND m.category = ?`;
                 params.push(category);
             }
-            
+
             query += ` ORDER BY m.category, m.name`;
-            
+
             const products = await dbAll(query, params);
-            
+
             let csv = 'ID,Nume,Preț,TVA %,U.M.,Categorie,Gestiune,Secție,La Vânzare,Are Rețetă,Fracție,Cost\n';
-            
+
             products.forEach(p => {
                 csv += `${p.id},"${p.name}",${p.price},${p.vat_rate},${p.unit},"${p.category}","${p.stock_management}","${p.preparation_section}",${p.is_sellable},${p.has_recipe},${p.is_fraction},${p.cost_price}\n`;
             });
-            
+
             res.setHeader('Content-Type', 'text/csv');
             res.setHeader('Content-Disposition', `attachment; filename="catalog-produse-${Date.now()}.csv"`);
             res.send(csv);
@@ -896,7 +898,7 @@ function createCatalogController(deps = {}) {
     async function createCategory(req, res, next) {
         try {
             const { name, name_en, parent_id, icon } = req.body;
-            
+
             // PHASE PRODUCTION-READY: Use centralized validators
             const validation = validateCategory({ name, name_en, parent_id, icon }, 'create');
             if (!validation.valid) {
@@ -909,12 +911,12 @@ function createCatalogController(deps = {}) {
                     }
                 });
             }
-            
+
             const result = await dbRun(`
                 INSERT INTO categories (name, name_en, parent_id, icon)
                 VALUES (?, ?, ?, ?)
             `, [name, name_en || name, parent_id || null, icon || '📁']);
-            
+
             safeInvalidateMenuCache();
 
             res.json({
@@ -932,7 +934,7 @@ function createCatalogController(deps = {}) {
         try {
             const { id } = req.params;
             const { name, name_en, icon, is_active } = req.body;
-            
+
             // PHASE PRODUCTION-READY: Validate category data
             const validation = validateCategory({ name, name_en, icon }, 'update');
             if (!validation.valid) {
@@ -945,37 +947,37 @@ function createCatalogController(deps = {}) {
                     }
                 });
             }
-            
+
             const updates = [];
             const params = [];
-            
+
             if (name) {
                 updates.push('name = ?');
                 params.push(name);
             }
-            
+
             if (name_en) {
                 updates.push('name_en = ?');
                 params.push(name_en);
             }
-            
+
             if (icon) {
                 updates.push('icon = ?');
                 params.push(icon);
             }
-            
+
             if (is_active !== undefined) {
                 updates.push('is_active = ?');
                 params.push(is_active ? 1 : 0);
             }
-            
+
             if (updates.length === 0) {
                 return res.status(400).json({ success: false, error: 'No fields to update' });
             }
-            
+
             params.push(id);
             await dbRun(`UPDATE categories SET ${updates.join(', ')} WHERE id = ?`, params);
-            
+
             safeInvalidateMenuCache();
 
             res.json({ success: true, message: 'Category updated' });
@@ -988,30 +990,30 @@ function createCatalogController(deps = {}) {
     async function deleteCategory(req, res, next) {
         try {
             const { id } = req.params;
-            
+
             const productCount = await dbGet(
                 'SELECT COUNT(*) as count FROM menu WHERE category = (SELECT name FROM categories WHERE id = ?)',
                 [id]
             );
-            
+
             if (productCount && productCount.count > 0) {
                 return res.status(400).json({
                     success: false,
                     error: `Cannot delete category: ${productCount.count} products assigned`
                 });
             }
-            
+
             const childCount = await dbGet('SELECT COUNT(*) as count FROM categories WHERE parent_id = ?', [id]);
-            
+
             if (childCount && childCount.count > 0) {
                 return res.status(400).json({
                     success: false,
                     error: `Cannot delete category: has ${childCount.count} sub-categories`
                 });
             }
-            
+
             await dbRun('DELETE FROM categories WHERE id = ?', [id]);
-            
+
             safeInvalidateMenuCache();
 
             res.json({ success: true, message: 'Category deleted' });

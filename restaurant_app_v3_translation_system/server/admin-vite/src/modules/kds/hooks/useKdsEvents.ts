@@ -26,7 +26,8 @@ export function useKdsEvents() {
   useEffect(() => {
     const fetchInitialOrders = async () => {
       try {
-        const response = await axios.get(`${API_BASE}/orders-display/kitchen`);
+        // Correct API path hardcoded to avoid env var issues
+        const response = await axios.get('/api/orders/orders-display/kitchen');
         if (response.data && Array.isArray(response.data.orders)) {
           const canonicalOrders = response.data.orders.map(mapRawOrderToCanonical);
           setOrders(canonicalOrders);
