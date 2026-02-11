@@ -10,6 +10,7 @@
 
 const express = require('express');
 const router = express.Router();
+const { DB_PATH } = require('../config/db-constants');
 
 // Obține conexiunea la DB
 const getDb = () => {
@@ -18,9 +19,7 @@ const getDb = () => {
     return getDbConnection();
   } catch (e) {
     const sqlite3 = require('sqlite3').verbose();
-    const path = require('path');
-    const dbPath = path.join(__dirname, '../restaurant.db');
-    return new sqlite3.Database(dbPath);
+    return new sqlite3.Database(DB_PATH);
   }
 };
 
