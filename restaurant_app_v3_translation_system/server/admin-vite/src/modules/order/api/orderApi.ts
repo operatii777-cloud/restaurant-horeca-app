@@ -36,7 +36,7 @@ export async function createOrder(payload: {
     isFree?: boolean;
   }>;
   table?: string | number;
-  type?: 'dine_in' | 'takeout' | 'delivery';
+  type?: 'dine_in' | 'takeaway' | 'delivery';
   notes?: string;
   total: number;
 }): Promise<{ success: boolean; orderId: number }> {
