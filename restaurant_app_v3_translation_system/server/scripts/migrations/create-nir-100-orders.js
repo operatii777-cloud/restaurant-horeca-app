@@ -11,7 +11,7 @@
  * - Stock moves
  */
 
-const { dbPromise } = require('./database');
+const { dbPromise } = require('../../database');
 
 // Configurare
 const ORDERS_COUNT = 100; // Număr de comenzi pentru care calculăm stocul

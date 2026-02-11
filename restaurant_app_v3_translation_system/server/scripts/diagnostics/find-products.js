@@ -1,4 +1,4 @@
-const { dbPromise } = require('./database');
+const { dbPromise } = require('../../database');
 
 async function findProducts() {
   const db = await dbPromise;

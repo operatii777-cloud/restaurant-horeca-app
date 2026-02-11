@@ -1,5 +1,5 @@
 
-const { dbPromise } = require('./database');
+const { dbPromise } = require('../../database');
 
 async function checkIngredientsSchema() {
     const db = await dbPromise;

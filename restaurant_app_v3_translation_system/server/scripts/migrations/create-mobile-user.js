@@ -1,9 +1,8 @@
 const sqlite3 = require('sqlite3').verbose();
 const crypto = require('crypto');
-const path = require('path');
-const dbPath = path.join(__dirname, 'database.db');
+const { DB_PATH } = require('../../config/db-constants');
 
-const db = new sqlite3.Database(dbPath, (err) => {
+const db = new sqlite3.Database(DB_PATH, (err) => {
   if (err) {
     console.error('❌ Error opening database:', err);
     process.exit(1);

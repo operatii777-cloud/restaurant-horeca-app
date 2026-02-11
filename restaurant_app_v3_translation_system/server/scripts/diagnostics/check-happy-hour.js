@@ -2,7 +2,7 @@
  * Script pentru verificarea și crearea Happy Hour de testare
  */
 
-const { dbPromise } = require('./database');
+const { dbPromise } = require('../../database');
 
 async function checkAndCreateHappyHour() {
   try {

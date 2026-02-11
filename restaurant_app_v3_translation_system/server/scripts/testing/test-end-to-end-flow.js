@@ -1,5 +1,5 @@
 
-const { dbPromise } = require('./database');
+const { dbPromise } = require('../../database');
 const technicalSheetService = require('./services/technical-sheet.service');
 const haccpService = require('./src/modules/compliance/haccp.service');
 const crypto = require('crypto');

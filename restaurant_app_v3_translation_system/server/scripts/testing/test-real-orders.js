@@ -4,7 +4,7 @@
  */
 
 const http = require('http');
-const { dbPromise } = require('./database');
+const { dbPromise } = require('../../database');
 
 const BASE_URL = 'http://localhost:3001';
 const API_URL = `${BASE_URL}/api`;

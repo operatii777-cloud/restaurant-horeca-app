@@ -2,7 +2,7 @@
  * Script pentru crearea unui Happy Hour activ ACUM pentru testare
  */
 
-const { dbPromise } = require('./database');
+const { dbPromise } = require('../../database');
 
 async function createHappyHourNow() {
   try {

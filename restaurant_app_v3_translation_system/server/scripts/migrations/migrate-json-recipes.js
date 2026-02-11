@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { dbPromise } = require('./database');
+const { dbPromise } = require('../../database');
 
 async function migrateRecipes() {
     const db = await dbPromise;

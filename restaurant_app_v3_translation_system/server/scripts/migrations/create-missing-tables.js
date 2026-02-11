@@ -8,7 +8,7 @@
  * - Webhooks
  */
 
-const { dbPromise } = require('./database');
+const { dbPromise } = require('../../database');
 const fs = require('fs');
 const path = require('path');
 

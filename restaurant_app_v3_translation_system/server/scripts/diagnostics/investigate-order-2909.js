@@ -3,7 +3,7 @@
  * Verifică de ce comanda #2909 nu are stock_movements
  */
 
-const { dbPromise } = require('./database');
+const { dbPromise } = require('../../database');
 
 async function investigateOrder2909() {
   try {

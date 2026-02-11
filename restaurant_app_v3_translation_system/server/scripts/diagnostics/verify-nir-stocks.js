@@ -4,7 +4,7 @@
  * după introducerea NIR-ului în sistem
  */
 
-const { dbPromise } = require('./database');
+const { dbPromise } = require('../../database');
 
 async function verifyNIRStocks() {
   try {
