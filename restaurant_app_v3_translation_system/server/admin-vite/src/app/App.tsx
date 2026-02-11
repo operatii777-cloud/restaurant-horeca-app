@@ -1,5 +1,4 @@
 const KioskTransferIframePage = lazy(() => import('@/modules/tipizate-enterprise/pages/KioskTransferIframePage'));
-// import { useTranslation } from '@/i18n/I18nContext';
 import { Navigate, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { AppLayout } from "@/modules/layout/AppLayout";
