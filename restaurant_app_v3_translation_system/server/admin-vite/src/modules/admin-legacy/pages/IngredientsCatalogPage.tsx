@@ -118,6 +118,7 @@ export const IngredientsCatalogPage: React.FC = () => {
 
   const handleImportIngredient = useCallback((id: number) => {
     console.log('Importing ingredient:', id);
+    // TODO: Replace with API call and toast notification system
     // API call would go here
     alert(`Ingredientul ${id} a fost importat cu succes!`);
   }, []);
@@ -128,10 +129,12 @@ export const IngredientsCatalogPage: React.FC = () => {
 
   const handleBulkImport = useCallback(() => {
     if (selectedRows.length === 0) {
+      // TODO: Replace with toast notification system
       alert('Selectați cel puțin un ingredient pentru import.');
       return;
     }
     console.log('Bulk importing:', selectedRows);
+    // TODO: Replace with API call and toast notification system
     alert(`${selectedRows.length} ingrediente au fost importate cu succes!`);
   }, [selectedRows]);
 

@@ -4,10 +4,7 @@ import { ColDef } from 'ag-grid-community';
 import { 
   BookOpen, 
   Download, 
-  Search, 
-  Filter,
-  CheckSquare,
-  Square,
+  Search,
   AlertCircle
 } from 'lucide-react';
 import 'ag-grid-community/styles/ag-grid.css';
@@ -111,6 +108,7 @@ export const RecipesCatalogPage: React.FC = () => {
 
   const handleImportRecipe = useCallback((id: number) => {
     console.log('Importing recipe:', id);
+    // TODO: Replace with API call and toast notification system
     // API call would go here
     alert(`Rețeta ${id} a fost importată cu succes!`);
   }, []);
@@ -121,10 +119,12 @@ export const RecipesCatalogPage: React.FC = () => {
 
   const handleBulkImport = useCallback(() => {
     if (selectedRows.length === 0) {
+      // TODO: Replace with toast notification system
       alert('Selectați cel puțin o rețetă pentru import.');
       return;
     }
     console.log('Bulk importing:', selectedRows);
+    // TODO: Replace with API call and toast notification system
     alert(`${selectedRows.length} rețete au fost importate cu succes!`);
   }, [selectedRows]);
 

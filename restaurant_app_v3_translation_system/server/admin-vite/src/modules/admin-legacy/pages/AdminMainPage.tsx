@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, 
@@ -22,7 +22,6 @@ interface MenuItem {
 
 export const AdminMainPage: React.FC = () => {
   const navigate = useNavigate();
-  const [activeSection, setActiveSection] = useState<string | null>(null);
 
   const menuItems: MenuItem[] = [
     {
@@ -107,8 +106,6 @@ export const AdminMainPage: React.FC = () => {
   const handleCardClick = (item: MenuItem) => {
     if (item.route) {
       navigate(item.route);
-    } else {
-      setActiveSection(item.id);
     }
   };
 

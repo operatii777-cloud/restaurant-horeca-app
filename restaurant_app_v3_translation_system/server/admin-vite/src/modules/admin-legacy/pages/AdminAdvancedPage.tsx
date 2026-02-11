@@ -74,7 +74,7 @@ export const AdminAdvancedPage: React.FC = () => {
       id: 'happy-hour',
       label: 'Happy Hour',
       icon: <Clock className="w-6 h-6" />,
-      description: 'Configurare promotii temporale',
+      description: 'Configurare promoții temporale',
       route: '/promotions/happy-hour',
       category: 'operations'
     },
