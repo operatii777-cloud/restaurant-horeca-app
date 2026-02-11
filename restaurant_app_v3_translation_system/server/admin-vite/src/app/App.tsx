@@ -1,4 +1,3 @@
-const KioskTransferIframePage = lazy(() => import('@/modules/tipizate-enterprise/pages/KioskTransferIframePage'));
 import { Navigate, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { AppLayout } from "@/modules/layout/AppLayout";
@@ -115,6 +114,10 @@ import { ImportPage } from "@/modules/settings/pages/ImportPage";
 import { ExportPage } from "@/modules/settings/pages/ExportPage";
 import { BrandingPage } from "@/modules/settings/pages/BrandingPage";
 import { ManualInstructiuniPage } from "@/modules/settings/pages/ManualInstructiuniPage";
+
+// Lazy loaded pages (loaded on demand to reduce initial bundle size)
+// Tipizate Enterprise
+const KioskTransferIframePage = lazy(() => import('@/modules/tipizate-enterprise/pages/KioskTransferIframePage'));
 // Kiosk - Lazy loaded (mare modul)
 const KioskLayout = lazy(() => import('@/modules/kiosk/layout/KioskLayout').then(m => ({ default: m.KioskLayout })));
 const KioskMainLayout = lazy(() => import('@/modules/kiosk/layout/KioskMainLayout').then(m => ({ default: m.KioskMainLayout })));

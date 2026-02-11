@@ -1,3 +1,8 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f8eb522f5bd685f245e42981ee7bfe262ee734d2c1c33f82e9509188c99d01ab
-size 88918
+{
+  "common": {
+    "welcome": "Welcome",
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "logout": "Logout"
+  }
+}

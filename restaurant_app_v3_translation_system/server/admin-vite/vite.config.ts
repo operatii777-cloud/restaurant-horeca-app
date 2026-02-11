@@ -128,6 +128,10 @@ export default defineConfig({
         },
       },
       onwarn(warning, warn) {
+        // Ignore all UNRESOLVED_IMPORT warnings (mostly CSS and optional modules)
+        if (warning.code === 'UNRESOLVED_IMPORT') {
+          return;
+        }
         if (warning.code === 'CSS_SYNTAX_ERROR') {
           return;
         }

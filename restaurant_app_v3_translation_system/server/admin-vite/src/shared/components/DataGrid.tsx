@@ -2,14 +2,11 @@
 import { useEffect, useRef } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import type { AgGridReact as AgGridReactType, AgGridReactProps } from 'ag-grid-react';
-import { ModuleRegistry } from 'ag-grid-community';
-import { AllCommunityModule } from 'ag-grid-community';
 import type { ColDef, GridReadyEvent, SelectionChangedEvent, GridOptions } from 'ag-grid-community';
 import { DEFAULT_COLUMN_DEF, getDefaultGridOptions, getRowSelectionOptions, mergeGridOptions } from '@/shared/agGrid/presets';
 import './DataGrid.css';
 
-// Register AG Grid modules at module level (no translation needed for module names)
-ModuleRegistry.registerModules([AllCommunityModule]);
+// AG Grid v30+ doesn't require manual module registration for community features
 
 export type DataGridProps<TData> = {
   columnDefs: ColDef<TData>[];
