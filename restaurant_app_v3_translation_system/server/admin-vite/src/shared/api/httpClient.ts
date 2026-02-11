@@ -12,15 +12,15 @@ export const httpClient = axios.create({
 httpClient.interceptors.request.use((config) => {
   const token = localStorage.getItem('restaurant_app_token');
   if (token) {
-    config.headers.Authorization = `Bearer "Token"`;
+    config.headers.Authorization = `Bearer ${token}`;
   }
-  
+
   // FAZA MT.4 - Add location header if available
   const currentLocationId = localStorage.getItem('currentLocationId');
   if (currentLocationId) {
     config.headers['X-Location-ID'] = currentLocationId;
   }
-  
+
   return config;
 });
 
@@ -30,12 +30,12 @@ httpClient.interceptors.response.use(
     // Nu logăm erorile 404 sau 400 (așteptate în unele cazuri)
     const status = error?.response?.status;
     const isExpectedError = status === 404 || status === 400;
-    
+
     if (!isExpectedError) {
       // Logăm doar erorile neașteptate
       console.error('API error', error);
     }
-    
+
     return Promise.reject(error);
   },
 );

@@ -1,0 +1,40 @@
+
+model EventLog {
+  id              String   @id @default(uuid())
+  tenant_id       Int
+  location_id     Int
+  event_type      String   // ORDER_CREATED, ORDER_FISCALIZED, STOCK_OVERRIDE, USER_LOGIN, FISCAL_FAILURE
+  user_id         Int?     // Who performed the action
+  resource_id     String?  // The ID of the affected resource (Order #1234, Product #56)
+  payload_before  Json?    // State before the event (for Audits)
+  payload_after   Json?    // State after the event
+  metadata        Json?    // Additional context (IP, Device, Version)
+  created_at      DateTime @default(now())
+
+  @@index([tenant_id, location_id, event_type])
+  @@index([created_at]) // For "Log Purgatory" (30 days rotation)
+}
+
+// Ensure Fiscal Queue exists for Degraded Mode
+model FiscalQueue {
+  id              String   @id @default(uuid())
+  tenant_id       Int
+  location_id     Int
+  order_id        Int
+  status          String   // PENDING, PROCESSING, COMPLETED, FAILED, RETRY
+  payload         Json     // The exact commands sent to the printer
+  attempts        Int      @default(0)
+  last_error      String?
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+
+  @@index([tenant_id, status]) // Find pending jobs fast
+}
+
+// Add snapshot fields to OrderItem if missing (v10 requirement)
+// model OrderItem {
+//   ... existing fields ...
+//   snapshot_price  Decimal? // The frozen price at sale time
+//   snapshot_vat    Decimal? // The frozen VAT rate at sale time
+//   snapshot_name   String?  // The frozen product name
+// }

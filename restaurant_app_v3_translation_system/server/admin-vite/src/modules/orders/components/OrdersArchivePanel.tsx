@@ -12,7 +12,7 @@ type OrdersArchivePanelProps = {
 };
 
 export const OrdersArchivePanel = ({ onFeedback }: OrdersArchivePanelProps) => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
   const { data, loading, error, refetch } = useApiQuery<OrdersArchiveStats>('/api/admin/archive-stats');
   const [archiveLoading, setArchiveLoading] = useState(false);
   const [exportDates, setExportDates] = useState<{ start: string | null; end: string | null }>({
@@ -126,31 +126,31 @@ export const OrdersArchivePanel = ({ onFeedback }: OrdersArchivePanelProps) => {
           title="Prima arhivare"
           helper="Dată minimă în arhivă"
           value={stats.oldestArchive ? new Date(stats.oldestArchive).toLocaleDateString('ro-RO') : 'N/A'}
-          icon={<span>â³</span>}
+          icon={<span>📅</span>}
         />
         <StatCard
           title="Total înregistrări"
           helper="Active + arhivate"
           value={`${stats.totalSize}`}
-          icon={<span>Î£</span>}
+          icon={<span>Σ</span>}
         />
       </section>
 
-      {loading ? <p>"se incarca statisticile"</p> : null}
+      {loading ? <p>Se încarcă statisticile...</p> : null}
       {error ? <InlineAlert variant="error" message={error} /> : null}
 
       <section className="archive-actions">
         <div className="archive-card">
-          <h3>"arhivare manuala"</h3>
+          <h3>Arhivare manuală</h3>
           <p>Mută în mod manual comenzile vechi (peste 1 an) în tabela orders_archive.</p>
           <button type="button" className="btn btn-primary" onClick={handleArchive} disabled={archiveLoading}>
-            {archiveLoading ? 'Se arhivează"¦' : 'Lansează arhivarea'}
+            {archiveLoading ? 'Se arhivează...' : 'Lansează arhivarea'}
           </button>
         </div>
 
         <div className="archive-card">
           <h3>Export CSV</h3>
-          <p>"selecteaza intervalul de timp pe care doresti sa i"</p>
+          <p>Selectează intervalul de timp pe care dorești să îl exporți.</p>
           <div className="archive-card__range">
             <label htmlFor="archive-export-start">De la</label>
             <input
@@ -168,13 +168,13 @@ export const OrdersArchivePanel = ({ onFeedback }: OrdersArchivePanelProps) => {
             />
           </div>
           <button type="button" className="btn btn-ghost" onClick={handleExport} disabled={exporting}>
-            {exporting ? 'Se exportă"¦' : 'Exportă CSV'}
+            {exporting ? 'Se exportă...' : 'Exportă CSV'}
           </button>
         </div>
 
         <div className="archive-card">
-          <h3>"stergere arhiva"</h3>
-          <p>"elimina definitiv comenzile arhivate pentru un int"</p>
+          <h3>Ștergere arhivă</h3>
+          <p>Elimină definitiv comenzile arhivate pentru un interval selectat.</p>
           <div className="archive-card__range">
             <label htmlFor="archive-delete-start">De la</label>
             <input
@@ -192,7 +192,7 @@ export const OrdersArchivePanel = ({ onFeedback }: OrdersArchivePanelProps) => {
             />
           </div>
           <button type="button" className="btn btn-ghost" onClick={handleDelete} disabled={deleting}>
-            {deleting ? 'Se șterge"¦' : 'Șterge arhiva'}
+            {deleting ? 'Se șterge...' : 'Șterge arhiva'}
           </button>
         </div>
       </section>

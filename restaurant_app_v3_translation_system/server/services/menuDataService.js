@@ -30,9 +30,9 @@ function getDB() {
  */
 async function getMenuData(type, lang = 'ro') {
   const db = getDB();
-  
+
   console.log(`📊 [MenuDataService] Obțin date pentru ${type} (${lang})...`);
-  
+
   // STEP 1: Obține categorii configurate (doar cele vizibile, în ordinea configurată)
   const configuredCategories = await new Promise((resolve, reject) => {
     db.all(`
@@ -51,7 +51,7 @@ async function getMenuData(type, lang = 'ro') {
       else resolve(rows || []);
     });
   });
-  
+
   if (configuredCategories.length === 0) {
     console.log(`   ⚠️  Nicio categorie configurată pentru ${type}!`);
     return {
@@ -67,16 +67,16 @@ async function getMenuData(type, lang = 'ro') {
       }
     };
   }
-  
+
   console.log(`   ✅ ${configuredCategories.length} categorii configurate`);
-  
+
   // STEP 2: Pentru fiecare categorie, obține produse configurate
   const groupedCategories = [];
   let totalProducts = 0;
-  
+
   for (const categoryConfig of configuredCategories) {
     const categoryName = categoryConfig.category_name;
-    
+
     // Obține produse pentru această categorie (doar cele vizibile, în ordinea configurată)
     const products = await new Promise((resolve, reject) => {
       db.all(`
@@ -100,20 +100,20 @@ async function getMenuData(type, lang = 'ro') {
         else resolve(rows || []);
       });
     });
-    
+
     // Skip categorii fără produse
     if (products.length === 0) {
       continue;
     }
-    
+
     totalProducts += products.length;
-    
+
     // Obține traducerea categoriei (primul produs o are în category_en)
     const firstProduct = products[0];
-    
+
     // Calculează împărțirea optimă pentru această categorie
     const split = calculateOptimalSplit(products.length);
-    
+
     // Calculează pozițiile unde trebuie page break
     const breakPositions = [];
     let cumulativeCount = 0;
@@ -121,7 +121,7 @@ async function getMenuData(type, lang = 'ro') {
       cumulativeCount += split.perPage[i];
       breakPositions.push(cumulativeCount - 1); // Index de la 0
     }
-    
+
     // Creează categorie cu produse + info despre split optim
     const formattedProducts = products.map((p, index) => {
       const formatted = formatProductForPDF(p, lang);
@@ -129,23 +129,47 @@ async function getMenuData(type, lang = 'ro') {
       formatted.index_in_category = index;
       return formatted;
     });
-    
+
     // Traduce numele categoriei
     let categoryNameTranslated;
     if (lang === 'ro') {
       categoryNameTranslated = categoryName;
     } else {
       // ENGLEZĂ: Folosește category_en dacă există, altfel traduce automat
-      categoryNameTranslated = (firstProduct.category_en && firstProduct.category_en.trim()) 
+      categoryNameTranslated = (firstProduct.category_en && firstProduct.category_en.trim())
         ? firstProduct.category_en.trim()
         : translateCategory(categoryName);
     }
-    
+
+    // Obține imaginea categoriei (Base64)
+    let categoryImageUrl = null;
+    if (categoryConfig.header_image) {
+      // Dacă avem imagine custom în config, încercăm să o convertim în Base64
+      const fullPath = path.join(__dirname, '..', 'public', categoryConfig.header_image);
+      if (fsSync.existsSync(fullPath)) {
+        try {
+          const imageBuffer = fsSync.readFileSync(fullPath);
+          const ext = path.extname(categoryConfig.header_image).toLowerCase();
+          let mimeType = 'image/jpeg';
+          if (ext === '.png') mimeType = 'image/png';
+          if (ext === '.webp') mimeType = 'image/webp';
+          categoryImageUrl = `data:${mimeType};base64,${imageBuffer.toString('base64')}`;
+        } catch (e) {
+          console.error(`   ⚠️  Eroare citire imagine custom ${categoryConfig.header_image}:`, e.message);
+          categoryImageUrl = getCategoryImageUrl(categoryName);
+        }
+      } else {
+        categoryImageUrl = getCategoryImageUrl(categoryName);
+      }
+    } else {
+      categoryImageUrl = getCategoryImageUrl(categoryName);
+    }
+
     const categoryData = {
       name_ro: categoryName,
       name_en: categoryNameTranslated,
       icon: getCategoryIcon(categoryName),
-      category_image_url: categoryConfig.header_image || getCategoryImageUrl(categoryName), // Folosește header_image din config
+      category_image_url: categoryImageUrl,
       page_break_after: categoryConfig.page_break_after === 1, // Flag pentru page break
       products: formattedProducts,
       // INFO ÎMPĂRȚIRE OPTIMĂ
@@ -157,17 +181,17 @@ async function getMenuData(type, lang = 'ro') {
         break_positions: breakPositions // [3, 7] pentru 4+4+...
       }
     };
-    
+
     groupedCategories.push(categoryData);
   }
-  
+
   console.log(`   ✅ ${totalProducts} produse găsite`);
   console.log(`   🔍 Limba setată: ${lang}`);
   console.log(`   📊 Categorii: ${groupedCategories.length}`);
-  
+
   // Obține info restaurant
   const restaurantInfo = await getRestaurantInfo();
-  
+
   // Metadata
   const metadata = {
     type: type,
@@ -177,7 +201,7 @@ async function getMenuData(type, lang = 'ro') {
     total_products: totalProducts,
     total_categories: groupedCategories.length
   };
-  
+
   return {
     restaurant: restaurantInfo,
     categories: groupedCategories,
@@ -192,7 +216,7 @@ function formatProductForPDF(product, lang) {
   // Nume și descriere în limba selectată
   // IMPORTANT: Pentru engleză, folosește DOAR câmpurile _en, FĂRĂ fallback la română
   let name, description;
-  
+
   if (lang === 'ro') {
     name = product.name;
     description = product.description || '';
@@ -201,71 +225,71 @@ function formatProductForPDF(product, lang) {
     name = (product.name_en && product.name_en.trim()) || '[Name not translated]';
     description = (product.description_en && product.description_en.trim()) || '';
   }
-  
+
   // Gramaj/Cantitate
   const portion = product.weight || '';
-  
+
   // Alergeni
   let allergens = [];
   let allergensFormatted = '';
-  
+
   // Pentru engleză, folosește DOAR allergens_en (FĂRĂ fallback la română)
-  const allergensData = lang === 'ro' 
+  const allergensData = lang === 'ro'
     ? (product.allergens || '[]')
     : (product.allergens_en || '[]'); // FĂRĂ fallback la allergens
-  
+
   if (allergensData && allergensData !== '[]') {
     try {
       // Parsează alergeni
       allergens = parseAllergens(allergensData);
-      
+
       if (allergens.length > 0) {
         // Formatează cu emoji icons
         allergensFormatted = formatAllergens(allergens, lang, true);
       } else {
-        allergensFormatted = lang === 'ro' 
-          ? 'Nu conține alergeni declarați' 
+        allergensFormatted = lang === 'ro'
+          ? 'Nu conține alergeni declarați'
           : 'No declared allergens';
       }
     } catch (e) {
       console.error(`   ⚠️  Eroare parsare alergeni pentru ${product.name}:`, e.message);
-      allergensFormatted = lang === 'ro' 
-        ? 'Informații indisponibile' 
+      allergensFormatted = lang === 'ro'
+        ? 'Informații indisponibile'
         : 'Information unavailable';
     }
   } else {
-    allergensFormatted = lang === 'ro' 
-      ? 'Nu conține alergeni declarați' 
+    allergensFormatted = lang === 'ro'
+      ? 'Nu conține alergeni declarați'
       : 'No declared allergens';
   }
-  
+
   // Aditivi (E-uri)
   let additivesFormatted = '';
-  
+
   // Pentru engleză, folosește DOAR additives_en (FĂRĂ fallback la română)
-  const additivesData = lang === 'ro' 
+  const additivesData = lang === 'ro'
     ? (product.additives || '')
     : (product.additives_en || ''); // FĂRĂ fallback la additives
-  
+
   if (additivesData && additivesData.trim() !== '') {
     additivesFormatted = additivesData.trim();
   } else {
-    additivesFormatted = lang === 'ro' 
-      ? 'Fără aditivi declarați' 
+    additivesFormatted = lang === 'ro'
+      ? 'Fără aditivi declarați'
       : 'No declared additives';
   }
-  
+
   // Imagine produs - COMPLET DEZACTIVAT pentru PDF
   // NICIO imagine individuală de produs în PDF (nici food, nici drinks)
   // Doar imaginile categoriilor rămân (cele din header)
   let image_url = null;
   let image_base64 = null;
-  
+
   // MOTIVAȚIE:
   // 1. HTML devine > 500MB cu Base64
   // 2. Imaginile de mâncare apar greșit în meniul de băuturi
   // 3. Layout mai curat și consistent
-  
+
   return {
     id: product.id,
     name: name,
@@ -303,16 +327,16 @@ function getCategoryImageUrl(categoryName) {
     'Pizza': '/images/menu/categories/pizza-1.jpg',
     'Garnituri': '/images/menu/categories/garnituri-1.jpeg',
     'Deserturi': '/images/menu/categories/deserturi-1.jpeg',
-    
+
     // === DRINKS CATEGORIES === //
     'Băuturi și Coctailuri': '/images/menu/categories/deserturi-2.jpeg', // Placeholder
     'Coctailuri Non-Alcoolice': null, // FĂRĂ IMAGINE - evită text fiscal
     'Cafea/Ciocolată/Ceai': '/images/menu/categories/deserturi-3.jpeg', // Placeholder
     'Răcoritoare': '/images/menu/categories/deserturi-4.jpeg' // Placeholder
   };
-  
+
   const imagePath = categoryImages[categoryName];
-  
+
   if (imagePath) {
     const fullPath = path.join(__dirname, '..', 'public', imagePath);
     if (fs.existsSync(fullPath)) {
@@ -323,7 +347,7 @@ function getCategoryImageUrl(categoryName) {
         let mimeType = 'image/jpeg';
         if (ext === '.png') mimeType = 'image/png';
         if (ext === '.webp') mimeType = 'image/webp';
-        
+
         return `data:${mimeType};base64,${imageBuffer.toString('base64')}`;
       } catch (e) {
         console.error(`   ⚠️  Eroare citire imagine categorie ${imagePath}:`, e.message);
@@ -331,7 +355,7 @@ function getCategoryImageUrl(categoryName) {
       }
     }
   }
-  
+
   return null;
 }
 
@@ -363,14 +387,14 @@ function calculateOptimalSplit(numProducts) {
   if (numProducts <= 8) {
     return { pages: 1, perPage: [numProducts] };
   }
-  
+
   // >8 produse: Aplică regulile CORECTE
-  
+
   // PASUL 1: Încearcă cu 8 produse/pagină
   let perPage = 8;
   let fullPages = Math.floor(numProducts / perPage);
   let lastPage = numProducts % perPage;
-  
+
   // Dacă split perfect (toate paginile au 8) SAU ultima pagină are 4-8 produse
   if (lastPage === 0) {
     // Split perfect cu 8 produse pe fiecare pagină
@@ -381,12 +405,12 @@ function calculateOptimalSplit(numProducts) {
     splits.push(lastPage);
     return { pages: fullPages + 1, perPage: splits };
   }
-  
+
   // PASUL 2: Dacă ultima < 4 cu 8/pag, încearcă cu 7 produse/pagină
   perPage = 7;
   fullPages = Math.floor(numProducts / perPage);
   lastPage = numProducts % perPage;
-  
+
   if (lastPage === 0) {
     // Split perfect cu 7 produse pe fiecare pagină
     return { pages: fullPages, perPage: Array(fullPages).fill(perPage) };
@@ -396,7 +420,7 @@ function calculateOptimalSplit(numProducts) {
     splits.push(lastPage);
     return { pages: fullPages + 1, perPage: splits };
   }
-  
+
   // PASUL 3: Dacă ultima < 4 cu 7/pag, redistribuie produsele
   // Ex: 43 produse → 6 pagini × 7 = 42, rest 1 (prea mic)
   // Soluție: 5 pagini × 7 + 1 pagină × 8 = 35 + 8 = 43
@@ -404,25 +428,25 @@ function calculateOptimalSplit(numProducts) {
     // Reducem numărul de pagini pline și punem restul pe ultima pagină
     const redistributedFullPages = fullPages - 1;
     const redistributedLastPage = perPage + lastPage; // 7 + 1 = 8
-    
+
     if (redistributedLastPage >= 4 && redistributedLastPage <= 8) {
       const splits = Array(redistributedFullPages).fill(perPage);
       splits.push(redistributedLastPage);
       return { pages: redistributedFullPages + 1, perPage: splits };
     }
   }
-  
+
   // FALLBACK: Split echilibrat (cazuri extreme rare)
   const pages = Math.ceil(numProducts / 7);
   const avgPerPage = Math.floor(numProducts / pages);
   const remainder = numProducts % pages;
-  
+
   const splits = Array(pages).fill(avgPerPage);
   // Distribuie restul pe ultimele pagini
   for (let i = 0; i < remainder; i++) {
     splits[splits.length - 1 - i]++;
   }
-  
+
   return { pages, perPage: splits };
 }
 
@@ -451,7 +475,7 @@ function getCategoryIcon(categoryName) {
     'Cafea/Ciocolată/Ceai': '☕',
     'Răcoritoare': '🥤'
   };
-  
+
   return icons[categoryName] || '🍽️';
 }
 
@@ -480,7 +504,7 @@ function translateCategory(categoryRo) {
     'Cafea/Ciocolată/Ceai': 'Coffee/Chocolate/Tea',
     'Răcoritoare': 'Soft Drinks'
   };
-  
+
   return translations[categoryRo] || categoryRo;
 }
 

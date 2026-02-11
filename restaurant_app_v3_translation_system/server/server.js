@@ -94,6 +94,16 @@ const url = require('url');
 const { dbPromise } = require('./database');
 const path = require('path');
 const fs = require('fs');
+const multer = require('multer');
+
+// Configure multer for PDF uploads
+const upload = multer({
+  dest: 'uploads/',
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype === 'application/pdf') cb(null, true);
+    else cb(new Error('Only PDF files are allowed'), false);
+  }
+});
 
 // ========================================
 // LOADERS
@@ -677,6 +687,28 @@ app.get('/kiosk/tipizate-enterprise/nir', (req, res) => {
 app.get('/admin-vite/kiosk/tipizate-enterprise/nir', (req, res) => {
   console.log(`[Redirect] Redirecting /admin-vite/kiosk/tipizate-enterprise/nir to /admin-advanced.html#inventory?iframe=true from ${req.ip}`);
   res.redirect('/admin-advanced.html#inventory?iframe=true');
+});
+
+// Serve Horeca Certificate PDF
+app.get('/admin/certificate.pdf', (req, res) => {
+  const certPath = path.join(__dirname, 'CERTIFICAT_HORECA_ANTIGRAVITY.pdf');
+  if (fs.existsSync(certPath)) {
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'inline; filename="CERTIFICAT_HORECA_ANTIGRAVITY.pdf"');
+    res.sendFile(certPath);
+  } else {
+    res.status(404).send('Certificate not found. Please run the compliance tests first.');
+  }
+});
+
+// Certificate verification page
+app.get('/verify-certificate', (req, res) => {
+  const verifyPath = path.join(__dirname, 'public', 'verify-certificate.html');
+  if (fs.existsSync(verifyPath)) {
+    res.sendFile(verifyPath);
+  } else {
+    res.status(404).send('Verification page not found.');
+  }
 });
 
 // ========================================
@@ -3582,6 +3614,7 @@ dbPromise.then(async (db) => {
             sm.unit_price,
             sm.value_in as value,
             sm.tva_percent,
+            sm.sale_price,
             sm.created_at,
             i.name as ingredient_name,
             i.unit,
@@ -3617,24 +3650,42 @@ dbPromise.then(async (db) => {
       }, 0);
 
       // Formatează articolele pentru frontend
-      const formattedItems = items.map(item => ({
-        id: item.id,
-        ingredient_id: item.ingredient_id,
-        product_name: item.ingredient_name,
-        product_code: item.product_code || `ING-${item.ingredient_id}`,
-        official_name: item.official_name || item.ingredient_name,
-        category: item.category || 'N/A',
-        quantity: parseFloat(item.quantity) || 0,
-        unit: item.unit || 'buc',
-        unit_price: parseFloat(item.unit_price) || 0,
-        value: parseFloat(item.value) || 0,
-        vat_percent: parseFloat(item.tva_percent) || 21,
-        vat_amount: (parseFloat(item.value) || 0) * ((parseFloat(item.tva_percent) || 21) / 100),
-        value_with_vat: (parseFloat(item.value) || 0) * (1 + (parseFloat(item.tva_percent) || 21) / 100),
-        accounting_code: '301', // Cod contabil standard pentru mărfuri
-        cost_per_unit: parseFloat(item.cost_per_unit) || 0,
-        current_stock: parseFloat(item.current_stock) || 0
-      }));
+      const formattedItems = items.map(item => {
+        const quantity = parseFloat(item.quantity) || 0;
+        const unitPrice = parseFloat(item.unit_price) || 0;
+        const value = parseFloat(item.value) || 0;
+        const vatPercent = parseFloat(item.tva_percent) || 21;
+        const vatAmount = value * (vatPercent / 100);
+        const valueWithVAT = value + vatAmount;
+
+        const salePrice = parseFloat(item.sale_price) || 0;
+        const saleValue = salePrice * quantity;
+        const markupValue = (salePrice > 0 && unitPrice > 0) ? (salePrice - unitPrice) : 0;
+        const markupPercent = (unitPrice > 0) ? (markupValue / unitPrice * 100) : 0;
+
+        return {
+          id: item.id,
+          ingredient_id: item.ingredient_id,
+          product_name: item.ingredient_name,
+          product_code: item.product_code || `ING-${item.ingredient_id}`,
+          official_name: item.official_name || item.ingredient_name,
+          category: item.category || 'N/A',
+          quantity: quantity,
+          unit: item.unit || 'buc',
+          unit_price: unitPrice,
+          value: value,
+          vat_percent: vatPercent,
+          vat_amount: vatAmount,
+          value_with_vat: valueWithVAT,
+          sale_price: salePrice,
+          sale_value: saleValue,
+          markup_value: markupValue * quantity, // total markup for all items
+          markup_percent: markupPercent,
+          accounting_code: '301',
+          cost_per_unit: parseFloat(item.cost_per_unit) || 0,
+          current_stock: parseFloat(item.current_stock) || 0
+        };
+      });
 
       res.json({
         success: true,
@@ -3664,6 +3715,325 @@ dbPromise.then(async (db) => {
     }
   });
 
+  // POST /api/inventory/nir - Creare NIR nou
+  app.post('/api/inventory/nir', async (req, res) => {
+    try {
+      const { dbPromise } = require('./database');
+      const db = await dbPromise;
+
+      const {
+        nirNumber,
+        date,
+        supplierName,
+        invoiceNumber,
+        items,
+        totalBase,
+        totalVat,
+        totalIncVat,
+        unitName,
+        cui,
+        address,
+        gestion,
+        created_by,
+        plata_baza,
+        plata_tva,
+        valoare_totala_baza,
+        valoare_totala_tva
+      } = req.body;
+
+      // Validare
+      if (!nirNumber || !supplierName || !items || items.length === 0) {
+        return res.status(400).json({
+          success: false,
+          error: 'Lipsesc câmpuri obligatorii: nirNumber, supplierName, items'
+        });
+      }
+
+      // Extrage serie și număr din nirNumber (ex: "NIR 123" -> serie="NIR", numar="123")
+      const nirParts = nirNumber.trim().split(/\s+/);
+      const serie = nirParts.length > 1 ? nirParts[0] : 'NIR';
+      const numar = nirParts.length > 1 ? nirParts.slice(1).join(' ') : nirNumber;
+
+      // Creează aviz de însoțire (NIR)
+      const nirId = await new Promise((resolve, reject) => {
+        db.run(`
+          INSERT INTO avize_insotire (
+            serie, numar, data_emitere, 
+            expeditor_denumire, expeditor_cui, expeditor_adresa,
+            destinatar_denumire, destinatar_cui, destinatar_adresa,
+            status, observatii, 
+            plata_baza, plata_tva, valoare_totala_baza, valoare_totala_tva,
+            created_at, updated_at
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'))
+        `, [
+          serie,
+          numar,
+          date || new Date().toISOString().split('T')[0],
+          supplierName,
+          '', // expeditor_cui (opțional)
+          '', // expeditor_adresa (opțional)
+          unitName || 'Restaurant',
+          cui || '',
+          address || '',
+          'draft',
+          `Factură: ${invoiceNumber || 'N/A'}`,
+          parseFloat(plata_baza) || 0,
+          parseFloat(plata_tva) || 0,
+          parseFloat(valoare_totala_baza) || parseFloat(totalBase) || 0,
+          parseFloat(valoare_totala_tva) || parseFloat(totalVat) || 0
+        ], function (err) {
+          if (err) reject(err);
+          else resolve(this.lastID);
+        });
+      });
+
+      // Adaugă articolele în stock_moves
+      for (const item of items) {
+        // Găsește sau creează ingredientul
+        let ingredientId = await new Promise((resolve, reject) => {
+          db.get(`
+            SELECT id FROM ingredients WHERE name = ? COLLATE NOCASE
+          `, [item.name], (err, row) => {
+            if (err) reject(err);
+            else resolve(row?.id);
+          });
+        });
+
+        // Dacă ingredientul nu există, creează-l
+        if (!ingredientId) {
+          // Generează cod temporar pentru a putea insera ingredientul
+          const tempCode = `ING-TEMP-${Date.now()}`;
+
+          ingredientId = await new Promise((resolve, reject) => {
+            db.run(`
+              INSERT INTO ingredients (
+                name, code, unit, category, supplier, 
+                cost_per_unit, min_stock, current_stock,
+                created_at, updated_at
+              ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'))
+            `, [
+              item.name,
+              tempCode,
+              item.unit || 'buc',
+              'Materii Prime',
+              supplierName,
+              parseFloat(item.priceExVat) || 0,
+              0,
+              0
+            ], function (err) {
+              if (err) reject(err);
+              else resolve(this.lastID);
+            });
+          });
+
+          // Actualizează codul cu ID-ul real
+          const finalCode = item.code || `ING-${String(ingredientId).padStart(5, '0')}`;
+          await new Promise((resolve, reject) => {
+            db.run(`UPDATE ingredients SET code = ? WHERE id = ?`, [finalCode, ingredientId], (err) => {
+              if (err) reject(err);
+              else resolve();
+            });
+          });
+
+          console.log(`✅ Ingredient nou creat: ${item.name} (${finalCode})`);
+        }
+
+        // Adaugă mișcare de stoc (intrare)
+        const quantity = parseFloat(item.qtyReceived) || parseFloat(item.quantity) || 0;
+        const unitPrice = parseFloat(item.priceExVat) || parseFloat(item.unit_price) || 0;
+        const value = parseFloat(item.valueExVat) || parseFloat(item.total_price) || (quantity * unitPrice);
+        const tvaPercent = parseInt(item.vatRate) || 0;
+
+        const tvaValoare = parseFloat(item.vatAmount) || (value * tvaPercent / 100) || 0;
+
+        await new Promise((resolve, reject) => {
+          db.run(`
+            INSERT INTO stock_moves (
+              ingredient_id, type, quantity_in, unit_price, value_in,
+              tva_percent, tva_valoare, cont_inter, sale_price,
+              reference_type, reference_id, notes,
+              created_at
+            ) VALUES (?, 'NIR', ?, ?, ?, ?, ?, ?, ?, 'NIR', ?, ?, datetime('now'))
+          `, [
+            ingredientId,
+            quantity,
+            unitPrice,
+            value,
+            tvaPercent,
+            tvaValoare,
+            '46061', // cont_inter default
+            parseFloat(item.salePrice) || 0,
+            nirId,
+            `NIR ${nirNumber} - ${item.name}`
+          ], (err) => {
+            if (err) reject(err);
+            else resolve();
+          });
+        });
+
+        // Actualizează stocul curent al ingredientului
+        await new Promise((resolve, reject) => {
+          db.run(`
+            UPDATE ingredients 
+            SET current_stock = current_stock + ?,
+                cost_per_unit = ?,
+                updated_at = datetime('now')
+            WHERE id = ?
+          `, [quantity, unitPrice, ingredientId], (err) => {
+            if (err) reject(err);
+            else resolve();
+          });
+        });
+      }
+
+      res.status(201).json({
+        success: true,
+        message: 'NIR creat cu succes',
+        nir_id: nirId,
+        nir_number: nirNumber
+      });
+
+    } catch (error) {
+      console.error('❌ Error creating NIR:', error);
+      res.status(500).json({
+        success: false,
+        error: error.message
+      });
+    }
+  });
+
+  // POST /api/inventory/nir/upload-pdf - Încarcă factură PDF pentru prelucrare NIR automată
+  app.post('/api/inventory/nir/upload-pdf', upload.single('invoice'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ success: false, error: 'No file uploaded' });
+      }
+
+      const pdfParsingService = require('./src/services/pdf-parsing.service');
+      const dataBuffer = fs.readFileSync(req.file.path);
+      const extractedData = await pdfParsingService.parseInvoicePdf(dataBuffer);
+
+      // Șterge fișierul temporar
+      fs.unlinkSync(req.file.path);
+
+      res.json({
+        success: true,
+        data: extractedData
+      });
+
+    } catch (error) {
+      console.error('❌ Error parsing invoice PDF:', error);
+      if (req.file && fs.existsSync(req.file.path)) fs.unlinkSync(req.file.path);
+      res.status(500).json({
+        success: false,
+        error: error.message
+      });
+    }
+  });
+
+  // GET /api/inventory/products/search - Căutare produse și ingrediente
+  // GET /api/inventory/products/search - Căutare produse și ingrediente
+  app.get('/api/inventory/products/search', async (req, res) => {
+    try {
+      const q = req.query.q;
+      // Allow '*' to return all items (limit 1000)
+      if ((!q || q.length < 2) && q !== '*') {
+        return res.json([]);
+      }
+
+      const { dbPromise } = require('./database');
+      const db = await dbPromise;
+
+      const searchTerm = q === '*' ? '%' : `%${q}%`;
+      const limit = q === '*' ? 5000 : 100;
+
+      // Caută în ingrediente
+      const ingredients = await new Promise((resolve, reject) => {
+        db.all(`
+          SELECT 
+            id,
+            name,
+            code,
+            unit,
+            'ingredient' as type,
+            category,
+            cost_per_unit as price,
+            current_stock
+          FROM ingredients
+          WHERE name LIKE ? OR code LIKE ?
+          ORDER BY name ASC
+          LIMIT ?
+        `, [searchTerm, searchTerm, limit], (err, rows) => {
+          if (err) {
+            console.error('Error searching ingredients:', err);
+            // Return empty on error instead of crashing, but logging it
+            resolve([]);
+          } else {
+            resolve(rows || []);
+          }
+        });
+      });
+
+      // Caută în produse
+      const products = await new Promise((resolve) => {
+        db.all(`
+          SELECT 
+            id,
+            name,
+            code,
+            'buc' as unit,
+            'product' as type,
+            CAST(category_id AS TEXT) as category,
+            price,
+            0 as current_stock
+          FROM products
+          WHERE name LIKE ? OR code LIKE ?
+          ORDER BY name ASC
+          LIMIT ?
+        `, [searchTerm, searchTerm, limit], (err, rows) => {
+          if (err) {
+            // If 'products' table doesn't exist, try 'menu'
+            if (err.message && err.message.includes('no such table: products')) {
+              db.all(`
+                 SELECT 
+                   id,
+                   name,
+                   barcode as code,
+                   unit,
+                   'product' as type,
+                   category,
+                   price,
+                   0 as current_stock
+                 FROM menu
+                 WHERE name LIKE ?
+                 ORDER BY name ASC
+                 LIMIT ?
+               `, [searchTerm, limit], (errMenu, rowsMenu) => {
+                resolve(rowsMenu || []);
+              });
+            } else {
+              resolve([]);
+            }
+          } else {
+            resolve(rows || []);
+          }
+        });
+      });
+
+      // Combină rezultatele
+      const results = [...ingredients, ...products];
+
+      res.json(results);
+
+    } catch (error) {
+      console.error('❌ Error searching products:', error);
+      res.status(500).json({
+        success: false,
+        error: error.message
+      });
+    }
+  });
+
   // Inventory base endpoint (for audit compatibility)
   app.get('/api/inventory', (req, res) => {
     res.json({
@@ -3671,9 +4041,155 @@ dbPromise.then(async (db) => {
       message: 'Inventory API',
       endpoints: {
         sessions: '/api/inventory/sessions',
-        nirs: '/api/inventory/nirs'
+        nirs: '/api/inventory/nirs',
+        createNir: '/api/inventory/nir',
+        searchProducts: '/api/inventory/products/search'
       }
     });
+  });
+
+  // DEBUG ENDPOINT - Inspect Ingredients Schema
+  app.get('/api/debug/schema-ingredients', async (req, res) => {
+    try {
+      const { dbPromise } = require('./database');
+      const db = await dbPromise;
+      db.all('PRAGMA table_info(ingredients)', (err, rows) => {
+        if (err) res.status(500).json({ error: err.message });
+        else res.json(rows);
+      });
+    } catch (e) { res.status(500).json({ error: e.message }); }
+  });
+
+  // DEBUG ENDPOINT - Force Fix Schema (Ingredients AND Products)
+  app.post('/api/debug/fix-schema', async (req, res) => {
+    try {
+      const { dbPromise } = require('./database');
+      const db = await dbPromise;
+
+      const log = [];
+
+      // 1. Fix Ingredients
+      await new Promise((resolve) => {
+        db.run("ALTER TABLE ingredients ADD COLUMN code TEXT", (err) => {
+          if (!err) log.push('✅ Ingredients: Added code column');
+          resolve();
+        });
+      });
+
+      // Populate ingredients
+      const ingRows = await new Promise(r => db.all("SELECT id FROM ingredients WHERE code IS NULL OR code = ''", [], (e, rows) => r(rows || [])));
+      if (ingRows.length > 0) {
+        await new Promise((resolve) => {
+          db.serialize(() => {
+            db.run("BEGIN TRANSACTION");
+            const stmt = db.prepare("UPDATE ingredients SET code = ? WHERE id = ?");
+            ingRows.forEach(row => stmt.run(`ING - ${String(row.id).padStart(5, '0')
+              }`, row.id));
+            stmt.finalize();
+            db.run("COMMIT", () => resolve());
+          });
+        });
+        log.push(`✅ Ingredients: Generated codes for ${ingRows.length} items`);
+      }
+
+      // 2. Fix Products
+      await new Promise((resolve) => {
+        db.run("ALTER TABLE products ADD COLUMN code TEXT", (err) => {
+          if (!err) log.push('✅ Products: Added code column');
+          resolve();
+        });
+      });
+
+      // Populate products
+      const prodRows = await new Promise(r => db.all("SELECT id FROM products WHERE code IS NULL OR code = ''", [], (e, rows) => r(rows || [])));
+      if (prodRows.length > 0) {
+        await new Promise((resolve) => {
+          db.serialize(() => {
+            db.run("BEGIN TRANSACTION");
+            const stmt = db.prepare("UPDATE products SET code = ? WHERE id = ?");
+            prodRows.forEach(row => stmt.run(`PROD - ${String(row.id).padStart(5, '0')} `, row.id));
+            stmt.finalize();
+            db.run("COMMIT", () => resolve());
+          });
+        });
+        log.push(`✅ Products: Generated codes for ${prodRows.length} items`);
+      }
+
+      // 3. Fix Avize Insotire Columns
+      const avizeCols = ['expeditor_cui', 'expeditor_adresa', 'destinatar_denumire', 'destinatar_cui', 'destinatar_adresa'];
+      for (const col of avizeCols) {
+        await new Promise((resolve) => {
+          db.run(`ALTER TABLE avize_insotire ADD COLUMN ${col} TEXT`, (err) => {
+            if (!err) log.push(`✅ Avize: Added column ${col} `);
+            resolve();
+          });
+        });
+      }
+
+      // 4. Fix Stock Moves
+      await new Promise((resolve) => {
+        db.run("ALTER TABLE stock_moves ADD COLUMN notes TEXT", (err) => {
+          if (!err) log.push('✅ Stock Moves: Added notes column');
+          resolve();
+        });
+      });
+
+      // 5. Fix Ingredients updated_at
+      await new Promise((resolve) => {
+        db.run("ALTER TABLE ingredients ADD COLUMN updated_at TEXT", (err) => {
+          if (err) {
+            log.push(`❌ Ingredients Error: ${err.message} `);
+          } else {
+            log.push('✅ Ingredients: Added updated_at column');
+            // Populate default value manually
+            db.run("UPDATE ingredients SET updated_at = datetime('now') WHERE updated_at IS NULL");
+          }
+          resolve();
+        });
+      });
+
+      // 6. Extend Avize Insotire for Payments and Validation
+      const avizePaymentCols = ['plata_baza', 'plata_tva', 'valoare_totala_baza', 'valoare_totala_tva'];
+      for (const col of avizePaymentCols) {
+        await new Promise((resolve) => {
+          db.run(`ALTER TABLE avize_insotire ADD COLUMN ${col} REAL DEFAULT 0`, (err) => {
+            if (!err) log.push(`✅ Avize: Added column ${col} `);
+            resolve();
+          });
+        });
+      }
+
+      // 7. Extend Stock Moves for Detailed NIR
+      const stockCols = [
+        { name: 'tva_valoare', type: 'REAL DEFAULT 0' },
+        { name: 'cont_inter', type: 'TEXT' }, // 46061
+        { name: 'sale_price', type: 'REAL DEFAULT 0' }
+      ];
+      for (const col of stockCols) {
+        await new Promise((resolve) => {
+          db.run(`ALTER TABLE stock_moves ADD COLUMN ${col.name} ${col.type} `, (err) => {
+            if (!err) log.push(`✅ Stock Moves: Added column ${col.name} `);
+            resolve();
+          });
+        });
+      }
+
+      res.json({ success: true, log });
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
+  });
+
+  // DEBUG ENDPOINT - Inspect Menu Schema
+  app.get('/api/debug/schema-menu', async (req, res) => {
+    try {
+      const { dbPromise } = require('./database');
+      const db = await dbPromise;
+      db.all('PRAGMA table_info(menu)', (err, rows) => {
+        if (err) res.json({ error: err.message });
+        else res.json(rows);
+      });
+    } catch (e) { res.status(500).json({ error: e.message }); }
   });
 
   // Restaurant config endpoint (for admin-advanced.html)
@@ -3744,19 +4260,19 @@ dbPromise.then(async (db) => {
       // NOTE: fiscal_receipts table doesn't have 'is_cancelled' column, so we default to 'active' status
       const receipts = await new Promise((resolve, reject) => {
         db.all(`
-          SELECT 
-            id, order_id, receipt_number as document_number,
-            issue_date as created_at,
-            'active' as status, 
-            total_amount as total, vat_amount,
-            payment_method, waiter_id, NULL as cashier_id,
-            'receipt' as document_type,
-            receipt_number as receipt_number,
-            NULL as invoice_number,
-            NULL as invoice_id,
-            NULL as xml_content,
-            NULL as spv_id,
-            NULL as spv_response
+      SELECT
+      id, order_id, receipt_number as document_number,
+        issue_date as created_at,
+        'active' as status,
+        total_amount as total, vat_amount,
+        payment_method, waiter_id, NULL as cashier_id,
+        'receipt' as document_type,
+        receipt_number as receipt_number,
+        NULL as invoice_number,
+        NULL as invoice_id,
+        NULL as xml_content,
+        NULL as spv_id,
+        NULL as spv_response
           FROM fiscal_receipts
           ORDER BY issue_date DESC
           LIMIT 50
@@ -3776,25 +4292,25 @@ dbPromise.then(async (db) => {
       // Get e-Factura invoices
       const invoices = await new Promise((resolve, reject) => {
         db.all(`
-          SELECT 
-            id as invoice_id,
-            order_id,
-            invoice_number as document_number,
-            created_at,
-            status,
-            NULL as total,
-            NULL as vat_amount,
-            NULL as payment_method,
-            NULL as waiter_id,
-            NULL as cashier_id,
-            'invoice' as document_type,
-            NULL as receipt_number,
-            invoice_number,
-            xml_content,
-            spv_id,
-            spv_response,
-            client_name,
-            client_cui
+      SELECT
+      id as invoice_id,
+        order_id,
+        invoice_number as document_number,
+        created_at,
+        status,
+        NULL as total,
+        NULL as vat_amount,
+        NULL as payment_method,
+        NULL as waiter_id,
+        NULL as cashier_id,
+        'invoice' as document_type,
+        NULL as receipt_number,
+        invoice_number,
+        xml_content,
+        spv_id,
+        spv_response,
+        client_name,
+        client_cui
           FROM invoices
           ORDER BY created_at DESC
           LIMIT 50
@@ -3847,11 +4363,11 @@ dbPromise.then(async (db) => {
       const db = await dbPromise;
       const register = await new Promise((resolve, reject) => {
         db.all(`
-          SELECT 
-            DATE(created_at) as date,
-            COUNT(*) as receipts_count,
-            SUM(total_amount) as total_amount,
-            SUM(vat_amount) as total_vat
+      SELECT
+      DATE(created_at) as date,
+        COUNT(*) as receipts_count,
+        SUM(total_amount) as total_amount,
+        SUM(vat_amount) as total_vat
           FROM fiscal_receipts
           WHERE DATE(created_at) >= DATE('now', '-30 days')
             AND is_cancelled = 0
@@ -3888,12 +4404,12 @@ dbPromise.then(async (db) => {
       const db = await dbPromise;
       const orders = await new Promise((resolve, reject) => {
         db.all(`
-          SELECT 
-            o.id, o.table_number, o.total, o.status,
-            o.timestamp, o.client_identifier, o.items,
-            o.timestamp as created_at, o.timestamp as updated_at
+      SELECT
+      o.id, o.table_number, o.total, o.status,
+        o.timestamp, o.client_identifier, o.items,
+        o.timestamp as created_at, o.timestamp as updated_at
           FROM orders o
-          WHERE (o.status = 'paid' OR o.status = 'completed')
+      WHERE(o.status = 'paid' OR o.status = 'completed')
           ORDER BY o.timestamp DESC
           LIMIT 100
         `, [], (err, rows) => {
@@ -4228,7 +4744,7 @@ dbPromise.then(async (db) => {
       // Filtrare după email client (dacă aplicația mobilă trimite email-ul)
       if (customerEmail) {
         query += ' AND (customer_email = ? OR customer_name LIKE ?)';
-        params.push(customerEmail, `%${customerEmail}%`);
+        params.push(customerEmail, `% ${customerEmail}% `);
       }
 
       // Ordonează după dată (cele mai recente primul)
@@ -4246,7 +4762,7 @@ dbPromise.then(async (db) => {
         let items = [];
         try {
           const orderItemsExists = await new Promise((resolve) => {
-            db.get(`SELECT name FROM sqlite_master WHERE type='table' AND name='order_items'`, (err, row) => {
+            db.get(`SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'order_items'`, (err, row) => {
               resolve(!!row);
             });
           });
@@ -4348,7 +4864,7 @@ dbPromise.then(async (db) => {
             SELECT id, name, is_sellable, is_active
             FROM menu
             WHERE id = ?
-          `, [item.product_id], (err, row) => {
+        `, [item.product_id], (err, row) => {
             if (err) reject(err);
             else resolve(row);
           });
@@ -4387,7 +4903,7 @@ dbPromise.then(async (db) => {
   app.get('/api/kiosk/menu', async (req, res) => {
     try {
       const lang = req.query.lang || 'ro'; // Limba selectată (ro sau en)
-      console.log(`📱 GET /api/kiosk/menu - Request received (lang: ${lang})`);
+      console.log(`📱 GET / api / kiosk / menu - Request received(lang: ${lang})`);
       const { dbPromise } = require('./database');
       const db = await dbPromise;
 
@@ -4440,23 +4956,23 @@ dbPromise.then(async (db) => {
       let products = await new Promise((resolve, reject) => {
         // Mai întâi obține produsele din menu
         db.all(`
-          SELECT 
-            m.id,
-            m.name,
-            m.description,
-            m.price,
-            m.category as category_name,
-            m.category,
-            m.image_url,
-            m.is_active,
-            m.is_sellable,
-            m.allergens,
-            ${additivesSelect}
-            m.display_order,
-            m.name_en,
-            m.description_en
+      SELECT
+      m.id,
+        m.name,
+        m.description,
+        m.price,
+        m.category as category_name,
+        m.category,
+        m.image_url,
+        m.is_active,
+        m.is_sellable,
+        m.allergens,
+        ${additivesSelect}
+      m.display_order,
+        m.name_en,
+        m.description_en
           FROM menu m
-          WHERE m.is_sellable = 1 AND (m.is_active = 1 OR m.is_active IS NULL)
+          WHERE m.is_sellable = 1 AND(m.is_active = 1 OR m.is_active IS NULL)
           ORDER BY m.category ASC, m.name ASC
         `, [], async (err, menuRows) => {
           if (err) {
@@ -4470,33 +4986,33 @@ dbPromise.then(async (db) => {
           const catalogProducts = await new Promise((resolveCatalog, rejectCatalog) => {
             db.all(`
               SELECT DISTINCT
-                cp.id,
-                cp.name,
-                cp.description,
-                cp.price,
-                cc.name as category_name,
-                cc.name as category,
-                cp.image_url,
-                cp.is_active,
-                1 as is_sellable,
-                cp.allergens,
-                COALESCE(cp.additives, NULL) as additives,
-                0 as display_order,
-                cp.name_en,
-                cp.description_en
+      cp.id,
+        cp.name,
+        cp.description,
+        cp.price,
+        cc.name as category_name,
+        cc.name as category,
+        cp.image_url,
+        cp.is_active,
+        1 as is_sellable,
+        cp.allergens,
+        COALESCE(cp.additives, NULL) as additives,
+        0 as display_order,
+        cp.name_en,
+        cp.description_en
               FROM catalog_products cp
               LEFT JOIN catalog_categories cc ON cp.category_id = cc.id
-              INNER JOIN daily_menu dm ON (cp.id = dm.soup_id OR cp.id = dm.main_course_id)
+              INNER JOIN daily_menu dm ON(cp.id = dm.soup_id OR cp.id = dm.main_course_id)
               WHERE cp.is_active = 1
                 AND dm.is_active = 1
                 AND dm.date = ?
-                AND cp.id NOT IN (SELECT id FROM menu WHERE is_sellable = 1 AND (is_active = 1 OR is_active IS NULL))
+        AND cp.id NOT IN(SELECT id FROM menu WHERE is_sellable = 1 AND(is_active = 1 OR is_active IS NULL))
             `, [today], (err2, rows2) => {
               if (err2) {
                 console.warn('⚠️ Error loading catalog_products for Daily Menu (non-critical):', err2.message);
                 resolveCatalog([]);
               } else {
-                console.log(`✅ Loaded ${rows2?.length || 0} additional products from catalog_products (used in Daily Menu)`);
+                console.log(`✅ Loaded ${rows2?.length || 0} additional products from catalog_products(used in Daily Menu)`);
                 resolveCatalog(rows2 || []);
               }
             });
@@ -4522,7 +5038,7 @@ dbPromise.then(async (db) => {
             return (a.name || '').localeCompare(b.name || '');
           });
 
-          console.log(`✅ Loaded ${uniqueProducts.length} total products (${menuRows?.length || 0} from menu, ${catalogProducts?.length || 0} from catalog_products)`);
+          console.log(`✅ Loaded ${uniqueProducts.length} total products(${menuRows?.length || 0} from menu, ${catalogProducts?.length || 0} from catalog_products)`);
 
           // Asigură-te că image_url este null dacă nu există
           const productsWithNullImage = uniqueProducts.map(p => ({
@@ -4542,17 +5058,17 @@ dbPromise.then(async (db) => {
           const placeholders = productIds.map(() => '?').join(',');
           const customizations = await new Promise((resolve, reject) => {
             db.all(`
-              SELECT 
-                id,
-                menu_item_id,
-                option_name,
-                option_type,
-                extra_price,
-                option_name_en
+  SELECT
+  id,
+    menu_item_id,
+    option_name,
+    option_type,
+    extra_price,
+    option_name_en
               FROM customization_options
-              WHERE menu_item_id IN (${placeholders})
+              WHERE menu_item_id IN(${placeholders})
               ORDER BY menu_item_id, id
-            `, productIds, (err, rows) => {
+    `, productIds, (err, rows) => {
               if (err) {
                 console.warn('⚠️ Error fetching customizations (non-critical):', err.message);
                 resolve([]); // Nu e eroare critică - continuă fără customizations
@@ -4596,9 +5112,9 @@ dbPromise.then(async (db) => {
               db.get(`
                 SELECT id, name, price, description, image_url
                 FROM menu
-                WHERE id = ? AND (is_active = 1 OR is_active IS NULL)
+                WHERE id = ? AND(is_active = 1 OR is_active IS NULL)
                 LIMIT 1
-              `, [productId], (err, row) => {
+    `, [productId], (err, row) => {
                 if (err || !row) {
                   // Fallback: caută în catalog_products
                   db.get(`
@@ -4648,7 +5164,7 @@ dbPromise.then(async (db) => {
               if (err) {
                 console.warn('⚠️ Error querying daily_menu:', err.message);
               } else {
-                console.log('🔍 Existing menu query result:', row ? `Found ID: ${row.id}` : 'Not found');
+                console.log('🔍 Existing menu query result:', row ? `Found ID: ${row.id} ` : 'Not found');
               }
               resolve(err ? null : (row || null));
             });
@@ -4666,14 +5182,14 @@ dbPromise.then(async (db) => {
               db.run(`
                 UPDATE daily_menu
                 SET soup_id = ?,
-                    main_course_id = ?
-                WHERE id = ?
-              `, [soup.id, mainCourse.id, existingMenu.id], (err) => {
+    main_course_id = ?
+      WHERE id = ?
+        `, [soup.id, mainCourse.id, existingMenu.id], (err) => {
                 if (err) {
                   console.warn('⚠️ Error updating daily_menu:', err.message);
                   reject(err);
                 } else {
-                  console.log(`✅ Daily Menu auto-updated (ID: ${existingMenu.id}) - ${soup.name} + ${mainCourse.name}`);
+                  console.log(`✅ Daily Menu auto - updated(ID: ${existingMenu.id}) - ${soup.name} + ${mainCourse.name} `);
                   resolve();
                 }
               });
@@ -4682,14 +5198,14 @@ dbPromise.then(async (db) => {
             // Inserează nou Daily Menu (await pentru a aștepta finalizarea)
             await new Promise((resolve, reject) => {
               db.run(`
-                INSERT INTO daily_menu (date, soup_id, main_course_id, discount, is_active, created_at)
-                VALUES (?, ?, ?, 0, 1, datetime('now'))
+                INSERT INTO daily_menu(date, soup_id, main_course_id, discount, is_active, created_at)
+  VALUES(?, ?, ?, 0, 1, datetime('now'))
               `, [today, soup.id, mainCourse.id], function (err) {
                 if (err) {
                   console.warn('⚠️ Error creating daily_menu:', err.message);
                   reject(err);
                 } else {
-                  console.log(`✅ Daily Menu auto-created (ID: ${this.lastID}) - ${soup.name} + ${mainCourse.name}`);
+                  console.log(`✅ Daily Menu auto - created(ID: ${this.lastID}) - ${soup.name} + ${mainCourse.name} `);
                   resolve();
                 }
               });
@@ -4791,11 +5307,11 @@ dbPromise.then(async (db) => {
         // Query direct în loc de controller pentru a evita probleme de dependențe
         const offer = await new Promise((resolve, reject) => {
           db.get(`
-            SELECT * FROM daily_offers
+  SELECT * FROM daily_offers
             WHERE is_active = 1
             ORDER BY created_at DESC
             LIMIT 1
-          `, [], (err, row) => {
+    `, [], (err, row) => {
             if (err) {
               // Tabela poate să nu existe - nu e eroare critică
               console.warn('⚠️ Daily offers table may not exist:', err.message);
@@ -4810,16 +5326,16 @@ dbPromise.then(async (db) => {
           // Obține conditions cu produsele asociate
           const conditions = await new Promise((resolve, reject) => {
             db.all(`
-              SELECT * FROM daily_offer_conditions
+  SELECT * FROM daily_offer_conditions
               WHERE offer_id = ?
-              ORDER BY id
+    ORDER BY id
             `, [offer.id], (err, rows) => {
               if (err) {
                 console.warn('⚠️ Daily offer conditions table may not exist:', err.message);
                 console.warn('⚠️ Offer ID:', offer.id);
                 resolve([]);
               } else {
-                console.log(`🔍 Daily offer conditions query result: ${rows?.length || 0} conditions found for offer ID ${offer.id}`);
+                console.log(`🔍 Daily offer conditions query result: ${rows?.length || 0} conditions found for offer ID ${offer.id} `);
                 if (rows && rows.length > 0) {
                   console.log('🔍 First condition sample:', JSON.stringify(rows[0], null, 2));
                 }
@@ -4841,7 +5357,7 @@ dbPromise.then(async (db) => {
                     LEFT JOIN catalog_categories c ON p.category_id = c.id
                     WHERE c.name = ? AND p.is_active = 1
                     ORDER BY p.name
-                  `, [condition.category], (err, rows) => {
+    `, [condition.category], (err, rows) => {
                     if (err) {
                       resolve([]);
                     } else {
@@ -4855,9 +5371,9 @@ dbPromise.then(async (db) => {
                     db.all(`
                       SELECT id, name, price, category, image_url
                       FROM menu
-                      WHERE category = ? AND (is_active = 1 OR is_active IS NULL)
+                      WHERE category = ? AND(is_active = 1 OR is_active IS NULL)
                       ORDER BY name
-                    `, [condition.category], (err, rows) => {
+    `, [condition.category], (err, rows) => {
                       if (err) {
                         resolve([]);
                       } else {
@@ -4883,13 +5399,13 @@ dbPromise.then(async (db) => {
             db.all(`
               SELECT product_id FROM daily_offer_benefit_products
               WHERE offer_id = ?
-            `, [offer.id], (err, rows) => {
+    `, [offer.id], (err, rows) => {
               if (err) {
                 console.warn('⚠️ Daily offer benefit products table may not exist:', err.message);
                 console.warn('⚠️ Offer ID:', offer.id);
                 resolve([]);
               } else {
-                console.log(`🔍 Daily offer benefit products query result: ${rows?.length || 0} benefit products found for offer ID ${offer.id}`);
+                console.log(`🔍 Daily offer benefit products query result: ${rows?.length || 0} benefit products found for offer ID ${offer.id} `);
                 if (rows && rows.length > 0) {
                   console.log('🔍 Benefit product IDs:', rows.map(r => r.product_id).join(', '));
                 }
@@ -4911,7 +5427,7 @@ dbPromise.then(async (db) => {
                 LEFT JOIN catalog_categories c ON p.category_id = c.id
                 WHERE c.name = ? AND p.is_active = 1
                 ORDER BY p.name
-              `, [offer.benefit_category], (err, rows) => {
+    `, [offer.benefit_category], (err, rows) => {
                 if (err) {
                   resolve([]);
                 } else {
@@ -4925,9 +5441,9 @@ dbPromise.then(async (db) => {
                 db.all(`
                   SELECT id, name, price, category, image_url
                   FROM menu
-                  WHERE category = ? AND (is_active = 1 OR is_active IS NULL)
+                  WHERE category = ? AND(is_active = 1 OR is_active IS NULL)
                   ORDER BY name
-                `, [offer.benefit_category], (err, rows) => {
+    `, [offer.benefit_category], (err, rows) => {
                   if (err) {
                     resolve([]);
                   } else {
@@ -4944,9 +5460,9 @@ dbPromise.then(async (db) => {
                 SELECT p.id, p.name, p.price, c.name as category, p.image_url
                 FROM catalog_products p
                 LEFT JOIN catalog_categories c ON p.category_id = c.id
-                WHERE p.id IN (${placeholders}) AND p.is_active = 1
+                WHERE p.id IN(${placeholders}) AND p.is_active = 1
                 ORDER BY p.name
-              `, benefitProductIdsList, (err, rows) => {
+    `, benefitProductIdsList, (err, rows) => {
                 if (err) {
                   resolve([]);
                 } else {
@@ -4961,9 +5477,9 @@ dbPromise.then(async (db) => {
                 db.all(`
                   SELECT id, name, price, category, image_url
                   FROM menu
-                  WHERE id IN (${placeholders}) AND (is_active = 1 OR is_active IS NULL)
+                  WHERE id IN(${placeholders}) AND(is_active = 1 OR is_active IS NULL)
                   ORDER BY name
-                `, benefitProductIdsList, (err, rows) => {
+    `, benefitProductIdsList, (err, rows) => {
                   if (err) {
                     resolve([]);
                   } else {
@@ -5024,11 +5540,11 @@ dbPromise.then(async (db) => {
         // Query direct pentru happy hour settings active
         const hhSettings = await new Promise((resolve, reject) => {
           db.all(`
-            SELECT * FROM happy_hour_settings
+  SELECT * FROM happy_hour_settings
             WHERE is_active = 1
             ORDER BY created_at DESC
             LIMIT 1
-          `, [], (err, rows) => {
+    `, [], (err, rows) => {
             if (err) {
               // Tabela poate să nu existe - nu e eroare critică
               console.warn('⚠️ Happy hour settings table may not exist:', err.message);
@@ -5072,7 +5588,7 @@ dbPromise.then(async (db) => {
 
         const menu = await new Promise((resolve, reject) => {
           db.get(`
-            SELECT * FROM daily_menu
+  SELECT * FROM daily_menu
             WHERE date = ? AND is_active = 1
             ORDER BY created_at DESC
             LIMIT 1
@@ -5099,11 +5615,11 @@ dbPromise.then(async (db) => {
           // Caută în tabelul menu (tabelul principal pentru produse), apoi în catalog_products dacă nu găsește
           const soup = menu.soup_id ? await new Promise((resolve) => {
             // Încearcă mai întâi în tabelul menu
-            db.get(`SELECT id, name, description, price, image_url FROM menu WHERE id = ?`, [menu.soup_id], (err, row) => {
+            db.get(`SELECT id, name, description, price, image_url FROM menu WHERE id = ? `, [menu.soup_id], (err, row) => {
               if (err || !row) {
                 console.log('🔍 Soup not found in menu table, trying catalog_products for id:', menu.soup_id);
                 // Dacă nu găsește în menu, încearcă în catalog_products
-                db.get(`SELECT id, name, description, price, image_url FROM catalog_products WHERE id = ?`, [menu.soup_id], (err2, row2) => {
+                db.get(`SELECT id, name, description, price, image_url FROM catalog_products WHERE id = ? `, [menu.soup_id], (err2, row2) => {
                   if (err2) {
                     console.warn('⚠️ Soup not found in catalog_products:', err2.message);
                   } else if (row2) {
@@ -5122,11 +5638,11 @@ dbPromise.then(async (db) => {
 
           const mainCourse = menu.main_course_id ? await new Promise((resolve) => {
             // Încearcă mai întâi în tabelul menu
-            db.get(`SELECT id, name, description, price, image_url FROM menu WHERE id = ?`, [menu.main_course_id], (err, row) => {
+            db.get(`SELECT id, name, description, price, image_url FROM menu WHERE id = ? `, [menu.main_course_id], (err, row) => {
               if (err || !row) {
                 console.log('🔍 Main course not found in menu table, trying catalog_products for id:', menu.main_course_id);
                 // Dacă nu găsește în menu, încearcă în catalog_products
-                db.get(`SELECT id, name, description, price, image_url FROM catalog_products WHERE id = ?`, [menu.main_course_id], (err2, row2) => {
+                db.get(`SELECT id, name, description, price, image_url FROM catalog_products WHERE id = ? `, [menu.main_course_id], (err2, row2) => {
                   if (err2) {
                     console.warn('⚠️ Main course not found in catalog_products:', err2.message);
                   } else if (row2) {
@@ -5220,7 +5736,7 @@ dbPromise.then(async (db) => {
         timestamp: new Date().toISOString(),
       };
       console.log('✅ Menu response prepared successfully');
-      console.log('🔍 Daily offer in response:', dailyOffer ? `ID: ${dailyOffer.id}, keys: ${Object.keys(dailyOffer).join(', ')}` : 'null');
+      console.log('🔍 Daily offer in response:', dailyOffer ? `ID: ${dailyOffer.id}, keys: ${Object.keys(dailyOffer).join(', ')} ` : 'null');
       console.log('🔍 Daily menu in response:', dailyMenu && dailyMenu.items ? `${dailyMenu.items.length} items` : 'null');
       res.json(response);
     } catch (error) {
@@ -5254,25 +5770,25 @@ dbPromise.then(async (db) => {
       const findProductByName = (productNames) => {
         return new Promise((resolve) => {
           const conditions = productNames.map(() => 'name LIKE ?').join(' OR ');
-          const params = productNames.map(name => `%${name}%`);
+          const params = productNames.map(name => `% ${name}% `);
 
           // Caută în catalog_products
           db.get(`
             SELECT id, name, price, description, image_url
             FROM catalog_products
-            WHERE (${conditions}) AND is_active = 1
+  WHERE(${conditions}) AND is_active = 1
             ORDER BY name
             LIMIT 1
-          `, params, (err, row) => {
+    `, params, (err, row) => {
             if (err || !row) {
               // Caută în menu
               db.get(`
                 SELECT id, name, price, description, image_url
                 FROM menu
-                WHERE (${conditions}) AND (is_active = 1 OR is_active IS NULL)
+  WHERE(${conditions}) AND(is_active = 1 OR is_active IS NULL)
                 ORDER BY name
                 LIMIT 1
-              `, params, (err2, row2) => {
+    `, params, (err2, row2) => {
                 resolve(err2 ? null : (row2 || null));
               });
             } else {
@@ -5305,7 +5821,7 @@ dbPromise.then(async (db) => {
           WHERE date = ? AND is_active = 1
           ORDER BY created_at DESC
           LIMIT 1
-        `, [today], (err, row) => {
+    `, [today], (err, row) => {
           resolve(err ? null : (row || null));
         });
       });
@@ -5328,10 +5844,10 @@ dbPromise.then(async (db) => {
         db.run(`
           UPDATE daily_menu
           SET soup_id = ?,
-              main_course_id = ?,
-              updated_at = datetime('now')
+    main_course_id = ?,
+    updated_at = datetime('now')
           WHERE id = ?
-        `, [soup.id, mainCourse.id, existingMenu.id], (err) => {
+    `, [soup.id, mainCourse.id, existingMenu.id], (err) => {
           if (err) {
             return res.status(500).json({
               success: false,
@@ -5353,8 +5869,8 @@ dbPromise.then(async (db) => {
       } else {
         // Inserează nou Daily Menu
         db.run(`
-          INSERT INTO daily_menu (date, soup_id, main_course_id, discount, is_active, created_at, updated_at)
-          VALUES (?, ?, ?, 0, 1, datetime('now'), datetime('now'))
+          INSERT INTO daily_menu(date, soup_id, main_course_id, discount, is_active, created_at, updated_at)
+  VALUES(?, ?, ?, 0, 1, datetime('now'), datetime('now'))
         `, [today, soup.id, mainCourse.id], function (err) {
           if (err) {
             return res.status(500).json({
@@ -5390,7 +5906,7 @@ dbPromise.then(async (db) => {
   app.get('/api/menu/all', async (req, res) => {
     try {
       const lang = req.query.lang || 'ro';
-      console.log(`🌐 GET /api/menu/all - Request received (lang: ${lang})`);
+      console.log(`🌐 GET / api / menu / all - Request received(lang: ${lang})`);
       const { dbPromise } = require('./database');
       const db = await dbPromise;
 
@@ -5438,23 +5954,23 @@ dbPromise.then(async (db) => {
       // Folosește tabelul menu (nu products) - menu este tabelul principal pentru produse
       let products = await new Promise((resolve, reject) => {
         db.all(`
-          SELECT 
-            m.id,
-            m.name,
-            m.name_en,
-            m.description,
-            m.description_en,
-            m.price,
-            m.category as category_name,
-            m.category,
-            m.image_url,
-            m.is_active,
-            m.is_sellable,
-            m.allergens,
-            ${additivesSelect}
-            m.display_order
+  SELECT
+  m.id,
+    m.name,
+    m.name_en,
+    m.description,
+    m.description_en,
+    m.price,
+    m.category as category_name,
+    m.category,
+    m.image_url,
+    m.is_active,
+    m.is_sellable,
+    m.allergens,
+    ${additivesSelect}
+  m.display_order
           FROM menu m
-          WHERE m.is_sellable = 1 AND (m.is_active = 1 OR m.is_active IS NULL)
+          WHERE m.is_sellable = 1 AND(m.is_active = 1 OR m.is_active IS NULL)
           ORDER BY m.category ASC, m.name ASC
         `, [], (err, rows) => {
           if (err) {
@@ -5678,7 +6194,7 @@ dbPromise.then(async (db) => {
             // Adaugă produsele din meniul zilnic în categoria "Meniul Zilei"
             const dailyMenuProducts = [
               {
-                id: `daily_soup_${soup.id}`,
+                id: `daily_soup_${soup.id} `,
                 name: soup.name,
                 name_en: soup.name_en || null,
                 description: soup.description || null,
@@ -5693,7 +6209,7 @@ dbPromise.then(async (db) => {
                 display_order: 1,
               },
               {
-                id: `daily_main_${mainCourse.id}`,
+                id: `daily_main_${mainCourse.id} `,
                 name: mainCourse.name,
                 name_en: mainCourse.name_en || null,
                 description: mainCourse.description || null,
@@ -6074,7 +6590,7 @@ dbPromise.then(async (db) => {
         tables.push(i);
       }
 
-      console.log(`[Waiter ${waiterIdNum}] Tables range: ${minTable}-${maxTable}`);
+      console.log(`[Waiter ${waiterIdNum}] Tables range: ${minTable} -${maxTable} `);
 
       res.json({
         success: true,
@@ -6131,8 +6647,8 @@ dbPromise.then(async (db) => {
           todayEnd.setHours(23, 59, 59, 999);
 
           // DEBUG LOGS
-          console.log(`🔍 [Notifications] Filtering for today: ${todayStart.toISOString()} - ${todayEnd.toISOString()}`);
-          console.log(`🔍 [Notifications] Total fetched: ${notifications.length}`);
+          console.log(`🔍[Notifications] Filtering for today: ${todayStart.toISOString()} - ${todayEnd.toISOString()} `);
+          console.log(`🔍[Notifications] Total fetched: ${notifications.length} `);
 
           notifications = notifications.filter(notif => {
             // Fix pentru date din SQLite care pot fi șiruri simple
@@ -6147,11 +6663,11 @@ dbPromise.then(async (db) => {
 
             // Log first 3 rejected to debug
             if (!keep && notifications.indexOf(notif) < 3) {
-              console.log(`❌ [Notifications] Excluded: ${notif.title} (${notif.created_at}) -> Parsed: ${notifDate.toISOString()}`);
+              console.log(`❌[Notifications] Excluded: ${notif.title} (${notif.created_at}) -> Parsed: ${notifDate.toISOString()} `);
             }
             return keep;
           });
-          console.log(`🔍 [Notifications] Kept after filter: ${notifications.length}`);
+          console.log(`🔍[Notifications] Kept after filter: ${notifications.length} `);
         } else if (dateFilter) {
           const filterDate = new Date(dateFilter);
           const dayStart = new Date(filterDate);
@@ -6222,14 +6738,14 @@ dbPromise.then(async (db) => {
           categories = await new Promise((resolve, reject) => {
             // Verifică dacă coloana icon există
             db.all(`
-              SELECT id, name, name_en, 
-                     CASE WHEN EXISTS (SELECT 1 FROM pragma_table_info('catalog_categories') WHERE name='icon') 
+              SELECT id, name, name_en,
+  CASE WHEN EXISTS(SELECT 1 FROM pragma_table_info('catalog_categories') WHERE name = 'icon') 
                           THEN icon ELSE NULL END as icon,
-                     display_order, is_active
+  display_order, is_active
               FROM catalog_categories
               WHERE is_active = 1
               ORDER BY display_order, name
-            `, [], (err, rows) => {
+  `, [], (err, rows) => {
               if (err) {
                 // Fallback: încearcă fără coloana icon
                 db.all(`
@@ -6237,7 +6753,7 @@ dbPromise.then(async (db) => {
                   FROM catalog_categories
                   WHERE is_active = 1
                   ORDER BY display_order, name
-                `, [], (err2, rows2) => {
+  `, [], (err2, rows2) => {
                   if (err2) reject(err2);
                   else resolve(rows2 || []);
                 });
@@ -6295,24 +6811,24 @@ dbPromise.then(async (db) => {
           const whereClause = active === 'true' ? 'WHERE p.is_active = 1' : '';
           products = await new Promise((resolve, reject) => {
             db.all(`
-              SELECT 
-                p.id,
-                p.name,
-                p.name_en,
-                p.description,
-                p.description_en,
-                p.price,
-                p.pret2,
-                p.pret3,
-                p.category_id,
-                p.image_url,
-                p.is_active,
-                c.name as category_name
+SELECT
+p.id,
+  p.name,
+  p.name_en,
+  p.description,
+  p.description_en,
+  p.price,
+  p.pret2,
+  p.pret3,
+  p.category_id,
+  p.image_url,
+  p.is_active,
+  c.name as category_name
               FROM catalog_products p
               LEFT JOIN catalog_categories c ON p.category_id = c.id
               ${whereClause}
               ORDER BY c.display_order, p.display_order, p.name
-            `, [], (err, rows) => {
+  `, [], (err, rows) => {
               if (err) reject(err);
               else resolve(rows || []);
             });
@@ -6322,23 +6838,23 @@ dbPromise.then(async (db) => {
           const whereClause = active === 'true' ? 'AND is_active = 1' : '';
           products = await new Promise((resolve, reject) => {
             db.all(`
-              SELECT 
-                id,
-                name,
-                name_en,
-                description,
-                description_en,
-                price,
-                pret2,
-                pret3,
-                category as category_name,
-                image_url,
-                is_active,
-                NULL as category_id
+SELECT
+id,
+  name,
+  name_en,
+  description,
+  description_en,
+  price,
+  pret2,
+  pret3,
+  category as category_name,
+  image_url,
+  is_active,
+  NULL as category_id
               FROM menu
-              WHERE 1=1 ${whereClause}
+              WHERE 1 = 1 ${whereClause}
               ORDER BY category, name
-            `, [], (err, rows) => {
+  `, [], (err, rows) => {
               if (err) reject(err);
               else {
                 // Adaugă category_id bazat pe numele categoriei
@@ -6368,9 +6884,15 @@ dbPromise.then(async (db) => {
     }
   });
 
-  // Menu PDF routes
+  // Menu PDF Builder routes (Advanced configuration)
+  // IMPORTANT: Must be mounted BEFORE /api/menu/pdf to avoid wildcard collision
+  const menuPdfConfigRoutes = require('./routes/menuPdfConfigRoutes');
+  app.use('/api/menu/pdf/builder', menuPdfConfigRoutes);
+
+  // Menu PDF routes (Serving generated PDFs)
   const menuPdfRoutes = require('./routes/menuPdfRoutes');
   app.use('/api/menu/pdf', menuPdfRoutes);
+
   console.log('✅ Menu PDF routes mounted');
   console.log('✅ QR Ordering endpoints mounted: /api/categories, /api/products');
 
@@ -6389,12 +6911,12 @@ dbPromise.then(async (db) => {
       // Include și comenzile MOBILE_APP
       const orders = await new Promise((resolve, reject) => {
         db.all(`
-          SELECT * FROM orders 
+SELECT * FROM orders 
           WHERE DATE(timestamp) = DATE('now')
-            AND (status IN ('completed', 'delivered', 'paid', 'ready') OR is_paid = 1)
+AND(status IN('completed', 'delivered', 'paid', 'ready') OR is_paid = 1)
             AND status != 'cancelled'
           ORDER BY timestamp DESC
-        `, [], (err, rows) => {
+  `, [], (err, rows) => {
           if (err) reject(err);
           else resolve(rows || []);
         });
@@ -6431,12 +6953,12 @@ dbPromise.then(async (db) => {
       // Include și comenzile MOBILE_APP
       const orders = await new Promise((resolve, reject) => {
         db.all(`
-          SELECT * FROM orders 
+SELECT * FROM orders 
           WHERE DATE(timestamp) = DATE('now')
-            AND (status IN ('completed', 'delivered', 'paid', 'ready') OR is_paid = 1)
+AND(status IN('completed', 'delivered', 'paid', 'ready') OR is_paid = 1)
             AND status != 'cancelled'
           ORDER BY timestamp DESC
-        `, [], (err, rows) => {
+  `, [], (err, rows) => {
           if (err) reject(err);
           else resolve(rows || []);
         });
@@ -6476,7 +6998,7 @@ dbPromise.then(async (db) => {
       // Folosesc strftime pentru filtrare precisă pe ziua curentă
       const orders = await new Promise((resolve, reject) => {
         db.all(`
-          SELECT * FROM orders 
+SELECT * FROM orders 
           WHERE status = 'cancelled'
             AND cancelled_timestamp IS NOT NULL
             AND strftime('%Y-%m-%d', cancelled_timestamp) = strftime('%Y-%m-%d', 'now')
@@ -6489,7 +7011,7 @@ dbPromise.then(async (db) => {
       });
 
       const today = new Date().toLocaleDateString('ro-RO');
-      console.log(`✅ Returnat ${orders.length} comenzi anulate din ziua curentă (${today})`);
+      console.log(`✅ Returnat ${orders.length} comenzi anulate din ziua curentă(${today})`);
       res.json({ success: true, orders });
     } catch (error) {
       console.error('❌ Error in /api/orders-cancelled:', error);
@@ -6590,7 +7112,7 @@ dbPromise.then(async (db) => {
             success: true,
             receipt_number: existingReceipt.receipt_number,
             receipt_id: existingReceipt.id,
-            pdfUrl: `/api/orders/${id}/receipt?lang=ro`,
+            pdfUrl: `/ api / orders / ${id}/receipt?lang=ro`,
             message: `Bon nefiscal ${existingReceipt.receipt_number} deja există.`
           });
         }

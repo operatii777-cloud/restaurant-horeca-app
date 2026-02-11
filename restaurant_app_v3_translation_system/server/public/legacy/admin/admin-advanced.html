@@ -92,6 +92,11 @@
             opacity: 1;
         }
 
+        .input-large-text {
+            font-size: 1.1rem !important;
+            padding: 8px 12px !important;
+        }
+
         /* JavaScript Code Control Styles */
         .js-code-panel {
             position: fixed;
@@ -1712,10 +1717,11 @@
 
             <div class="tab-pane fade" id="inventory">
                 <div class="row">
-                    <div class="col-md-5">
-                        <div class="card shadow-sm mb-4">
+                    <!-- Formular NIR Stânga (Date Factură) -->
+                    <div class="col-12 mb-4">
+                        <div class="card shadow-sm h-100">
                             <div class="card-header bg-primary text-white">
-                                <i class="fas fa-plus-circle me-1"></i> Înregistrare Notă de Intrare (NIR)
+                                <h5 class="mb-0"><i class="fas fa-file-invoice me-2"></i>Date Factură</h5>
                             </div>
                             <div class="card-body">
                                 <form id="nirForm">
@@ -1774,11 +1780,36 @@
                                     <hr class="my-3">
 
                                     <h6 class="mt-4">Articole NIR:</h6>
-                                    <div id="nirItemsContainer">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover table-sm" id="nirTable">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th style="width: 40px;">Nr.</th>
+                                                    <th>Denumire Produs <span class="text-danger">*</span></th>
+                                                    <th style="width: 100px;">Cod</th>
+                                                    <th style="width: 80px;">U.M.</th>
+                                                    <th style="width: 100px;">Cantitate</th>
+                                                    <th style="width: 110px;">Preț Unit (fără TVA)</th>
+                                                    <th style="width: 80px;">TVA %</th>
+                                                    <th style="width: 100px;">Valoare</th>
+                                                    <th style="width: 110px;">Preț Vânzare</th>
+                                                    <th style="width: 90px;">Total</th>
+                                                    <th style="width: 40px;">Act.</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="nirItemsContainer">
+                                                <!-- Items added here -->
+                                            </tbody>
+                                        </table>
                                     </div>
+                                    <button type="button" class="btn btn-primary btn-sm mt-2"
+                                        onclick="openStockModal()">
+                                        <i class="fas fa-search me-1"></i> Selectează din Stoc
+                                    </button>
                                     <button type="button" class="btn btn-outline-secondary btn-sm mt-2"
-                                        onclick="addNirItem()"><i class="fas fa-cart-plus me-1"></i> Adaugă
-                                        Articol</button>
+                                        onclick="addNirItem()">
+                                        <i class="fas fa-plus me-1"></i> Adaugă Manual
+                                    </button>
 
                                     <hr class="my-3">
 
@@ -1805,6 +1836,21 @@
                                             <div id="nirVatSummary">
                                                 <!-- Rezumat pe cote TVA -->
                                             </div>
+                                            <div class="row mt-3 border-top pt-2">
+                                                <h6 class="card-title text-muted mb-2">Sume Plătite (Opțional):</h6>
+                                                <div class="col-md-6">
+                                                    <label class="form-label small">Plată Bază:</label>
+                                                    <input type="number" step="0.01"
+                                                        class="form-control form-control-sm" id="nirPaidBase"
+                                                        placeholder="0.00">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label small">Plată TVA:</label>
+                                                    <input type="number" step="0.01"
+                                                        class="form-control form-control-sm" id="nirPaidVat"
+                                                        placeholder="0.00">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -1822,7 +1868,36 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-7">
+                </div>
+
+                <div class="row">
+                    <!-- Tabel Articole NIR Dreapta -->
+                    <div class="col-12">
+                        <div class="card shadow-sm h-100">
+                            <div
+                                class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0"><i class="fas fa-boxes me-2"></i>Articole Recepționate</h5>
+                                <span class="badge bg-primary" id="queueLiveCount">0</span>
+                            </div>
+                            <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                                <div id="queueItemsList">
+                                    <div class="text-center text-muted py-4">
+                                        <i class="fas fa-inbox fa-3x mb-2"></i>
+                                        <p>Coada este goală</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-end">
+                                <button class="btn btn-sm btn-outline-primary" onclick="loadQueueMonitor()">
+                                    <i class="fas fa-sync-alt me-1"></i> Reîmprospătează
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-12">
                         <div class="card shadow-sm">
                             <div class="card-header bg-white">
                                 <h5><i class="fas fa-list-alt me-1"></i> NIR History</h5>
@@ -1920,19 +1995,19 @@
                         <div class="row mb-3">
                             <div class="col-md-3">
                                 <label class="form-label">Category</label>
-                                <select id="filterCategory" class="form-select" onchange="applyQuickFilters()">
+                                <select class="form-select" id="filterCategory" onchange="applyQuickFilters()">
                                     <option value="">Toate Categoriile</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label" data-translate="suppliers.furnizor">Furnizor</label>
-                                <select id="filterSupplier" class="form-select" onchange="applyQuickFilters()">
+                                <select class="form-select" id="filterSupplier" onchange="applyQuickFilters()">
                                     <option value="" data-translate="ui.toti_furnizorii">Toți Furnizorii</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Status Stoc</label>
-                                <select id="filterStockStatus" class="form-select" onchange="applyQuickFilters()">
+                                <select class="form-select" id="filterStockStatus" onchange="applyQuickFilters()">
                                     <option value="">Toate Statusurile</option>
                                     <option value="out_of_stock" data-translate="ui.fara_stoc">Fără Stoc</option>
                                     <option value="low_stock" data-translate="ui.stoc_sczut">Stoc Scăzut</option>
@@ -1941,7 +2016,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Sortare</label>
-                                <select id="filterSortBy" class="form-select" onchange="applyQuickFilters()">
+                                <select class="form-select" id="filterSortBy" onchange="applyQuickFilters()">
                                     <option value="name">Name</option>
                                     <option value="category" data-translate="categories.category">Categorie</option>
                                     <option value="current_stock" data-translate="ui.stoc_curent">Stoc Curent</option>
@@ -3051,13 +3126,13 @@
                                         <div class="row mt-3">
                                             <div class="col-md-6">
                                                 <label class="form-label" data-translate="ui.creat_de">Creat de</label>
-                                                <input type="text" id="vrNewCreatedBy" class="form-control"
+                                                <input type="text" class="form-control" id="vrNewCreatedBy"
                                                     placeholder="Nume manager" value="Administrator">
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label" data-translate="ui.note_optional">Note
                                                     (Opțional)</label>
-                                                <input type="text" id="vrNewNotes" class="form-control"
+                                                <input type="text" class="form-control" id="vrNewNotes"
                                                     placeholder="Ex: Raport lunar octombrie 2025">
                                             </div>
                                         </div>
@@ -7716,180 +7791,315 @@
         // ==================== GESTIUNE STOCURI (NIR) ====================
 
         let nirItemCounter = 0;
+        let allStockItems = []; // Cache for modal
+
+        // ==================== MODAL LOGIC ====================
+        async function openStockModal() {
+            var modalEl = document.getElementById('stockSelectionModal');
+            var modal = new bootstrap.Modal(modalEl);
+            modal.show();
+
+            // Load data if empty
+            if (allStockItems.length === 0) {
+                try {
+                    document.getElementById('stockListBody').innerHTML = '<tr><td colspan="6" class="text-center">Se încarcă...</td></tr>';
+                    const response = await fetch('/api/inventory/products/search?q=*');
+                    allStockItems = await response.json();
+                } catch (e) {
+                    console.error("Error loading stock:", e);
+                    allStockItems = [];
+                }
+            }
+            filterStockList();
+        }
+
+        function filterStockList() {
+            const query = document.getElementById('stockSearchInput').value.toLowerCase();
+            const tbody = document.getElementById('stockListBody');
+            tbody.innerHTML = '';
+
+            const filtered = allStockItems.filter(item =>
+                (item.name && item.name.toLowerCase().includes(query)) ||
+                (item.code && item.code.toLowerCase().includes(query))
+            ).slice(0, 5000); // Limit display extended to 5000 items
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center">Nu s-au găsit rezultate.</td></tr>';
+                return;
+            }
+
+            filtered.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${item.code || '-'}</td>
+                    <td><strong>${item.name}</strong></td>
+                    <td>${item.unit || 'buc'}</td>
+                    <td>${item.category || '-'}</td>
+                    <td>${(item.price || 0).toFixed(2)}</td>
+                    <td>
+                        <button class="btn btn-sm btn-success" onclick='selectStockItem(${JSON.stringify(item).replace(/'/g, "&#39;")})'>
+                            Selectează
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function selectStockItem(item) {
+            addNirItem({
+                code: item.code,
+                name: item.name,
+                unit: item.unit,
+                priceExVat: item.price || 0,
+                // Default logic if available (e.g. VAT from category)
+            });
+            const modalEl = document.getElementById('stockSelectionModal');
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            modal.hide();
+        }
+
         function addNirItem(item = {}) {
             nirItemCounter++;
-            const container = document.getElementById('nirItemsContainer');
-            const itemDiv = document.createElement('div');
-            itemDiv.className = 'border p-3 mb-3 bg-white rounded shadow-sm';
-            itemDiv.id = 'nir-item-' + nirItemCounter;
-            itemDiv.innerHTML = `
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h6 class="mb-0">Articol #${nirItemCounter}</h6>
-                    <button type="button" class="btn btn-sm btn-danger" onclick="removeNirItem(${nirItemCounter})">
+            const tbody = document.getElementById('nirItemsContainer');
+            const tr = document.createElement('tr');
+            tr.id = 'nir-item-' + nirItemCounter;
+
+            tr.innerHTML = `
+                <td class="text-center align-middle">${nirItemCounter}</td>
+                <td>
+                    <input type="text" class="form-control input-large-text" name="name" value="${item.name || ''}" required placeholder="Denumire..." autocomplete="off">
+                </td>
+                <td>
+                    <input type="text" class="form-control input-large-text bg-light" name="code" value="${item.code || ''}" readonly tabindex="-1">
+                </td>
+                <td>
+                    <select class="form-select input-large-text" name="unit" required style="min-width: 100px;">
+                        <option value="kg" ${item.unit === 'kg' ? 'selected' : ''}>kg</option>
+                        <option value="l" ${item.unit === 'l' ? 'selected' : ''}>l</option>
+                        <option value="buc" ${item.unit === 'buc' ? 'selected' : ''}>buc</option>
+                        <option value="cutie" ${item.unit === 'cutie' ? 'selected' : ''}>cutie</option>
+                        <option value="pachet" ${item.unit === 'pachet' ? 'selected' : ''}>pachet</option>
+                        <option value="pliculet" ${item.unit === 'pliculet' ? 'selected' : ''}>pliculet</option>
+                        <option value="portie" ${item.unit === 'portie' ? 'selected' : ''}>portie</option>
+                        <option value="g" ${item.unit === 'g' ? 'selected' : ''}>g</option>
+                        <option value="ml" ${item.unit === 'ml' ? 'selected' : ''}>ml</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="number" step="0.01" class="form-control input-large-text" name="qtyReceived" 
+                           value="${item.qtyReceived || ''}" required placeholder="0.00" onchange="calculateNirTotals()">
+                </td>
+                <td>
+                    <input type="number" step="0.01" class="form-control input-large-text" name="priceExVat" 
+                           value="${item.priceExVat || ''}" required placeholder="0.00" onchange="calculateNirTotals()">
+                </td>
+                <td>
+                    <select class="form-select input-large-text" name="vatRate" required onchange="calculateNirTotals()" style="min-width: 120px;">
+                        <option value="11" ${item.vatRate == 11 || !item.vatRate ? 'selected' : ''}>11%</option>
+                        <option value="21" ${item.vatRate == 21 ? 'selected' : ''}>21%</option>
+                        <option value="9" ${item.vatRate == 9 ? 'selected' : ''}>9% (Vechi)</option>
+                        <option value="19" ${item.vatRate == 19 ? 'selected' : ''}>19% (Vechi)</option>
+                        <option value="0" ${item.vatRate == 0 ? 'selected' : ''}>0%</option>
+                        <option value="5" ${item.vatRate == 5 ? 'selected' : ''}>5%</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" class="form-control input-large-text bg-light" name="valueExVat" readonly value="0.00" style="min-width: 90px;">
+                </td>
+                <td>
+                    <input type="number" step="0.01" class="form-control input-large-text" name="salePrice" 
+                           value="${item.salePrice || ''}" placeholder="0.00" style="min-width: 100px;">
+                </td>
+                <td>
+                    <input type="text" class="form-control input-large-text bg-light" name="valueIncVat" readonly value="0.00" style="min-width: 90px;">
+                </td>
+                <td class="text-center align-middle">
+                    <button type="button" class="btn btn-sm btn-text text-danger" onclick="removeNirItem(${nirItemCounter})">
                         <i class="fas fa-trash"></i>
                     </button>
-                </div>
-                <div class="row g-2">
-                    <div class="col-md-6">
-                        <label class="form-label">Denumire Produs: <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control form-control-sm product-name-autocomplete" name="name" value="${item.name || ''}" required placeholder="Introdu denumirea..." autocomplete="off">
-                        <div class="autocomplete-suggestions" style="display:none; position:absolute; z-index:1000; background:white; border:1px solid #ddd; max-height:200px; overflow-y:auto; width:100%;"></div>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Cod Produs: <small class="text-muted">(opțional, se generează automat)</small></label>
-                        <input type="text" class="form-control form-control-sm" name="code" value="${item.code || ''}" placeholder="Ex: P001 (opțional)" data-translate-placeholder="ui.ex_p001_optional">
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label">UM: <span class="text-danger">*</span></label>
-                        <select class="form-select form-select-sm" name="unit" required>
-                            <option value="kg" ${item.unit === 'kg' ? 'selected' : ''}>kg</option>
-                            <option value="l" ${item.unit === 'l' ? 'selected' : ''}>l</option>
-                            <option value="buc" ${item.unit === 'buc' ? 'selected' : ''}>buc</option>
-                            <option value="cutie" ${item.unit === 'cutie' ? 'selected' : ''} data-translate="quantities_measurements.cutie">cutie</option>
-                            <option value="pachet" ${item.unit === 'pachet' ? 'selected' : ''}>pachet</option>
-                            <option value="pliculet" ${item.unit === 'pliculet' ? 'selected' : ''}>pliculet</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label">Cant. Factură: <span class="text-danger">*</span></label>
-                        <input type="number" step="0.01" class="form-control form-control-sm" name="qtyInvoice" 
-                               value="${item.qtyInvoice || ''}" required placeholder="0.00" onchange="calculateNirTotals()">
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label">Cant. Recepționată: <span class="text-danger">*</span></label>
-                        <input type="number" step="0.01" class="form-control form-control-sm" name="qtyReceived" 
-                               value="${item.qtyReceived || ''}" required placeholder="0.00" onchange="calculateNirTotals()">
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label">Price/UM (fără TVA): <span class="text-danger">*</span></label>
-                        <input type="number" step="0.01" class="form-control form-control-sm" name="priceExVat" 
-                               value="${item.priceExVat || ''}" required placeholder="0.00" onchange="calculateNirTotals()">
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label">TVA (%): <span class="text-danger">*</span></label>
-                        <select class="form-select form-select-sm" name="vatRate" required onchange="calculateNirTotals()">
-                            <option value="0" ${item.vatRate === 0 ? 'selected' : ''}>0%</option>
-                            <option value="5" ${item.vatRate === 5 ? 'selected' : ''}>5%</option>
-                            <option value="11" ${item.vatRate === 11 || !item.vatRate ? 'selected' : ''}>11%</option>
-                            <option value="21" ${item.vatRate === 21 ? 'selected' : ''}>21%</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label" data-translate="ui.valoare_fara_tva">Valoare (fără TVA):</label>
-                        <input type="text" class="form-control form-control-sm bg-light" name="valueExVat" readonly value="0.00 RON">
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label">TVA:</label>
-                        <input type="text" class="form-control form-control-sm bg-light" name="vatAmount" readonly value="0.00 RON">
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label" data-translate="ui.valoare_cu_tva">Valoare (cu TVA):</label>
-                        <input type="text" class="form-control form-control-sm bg-light" name="valueIncVat" readonly value="0.00 RON">
-                    </div>
-                </div>
+                </td>
             `;
-            container.appendChild(itemDiv);
+            tbody.appendChild(tr);
 
-            // Atașează autocomplete la câmpul de denumire produs
-            const nameInput = itemDiv.querySelector('.product-name-autocomplete');
-            const suggestionsDiv = itemDiv.querySelector('.autocomplete-suggestions');
-            const codeInput = itemDiv.querySelector('[name="code"]');
-            const unitSelect = itemDiv.querySelector('[name="unit"]');
-
-            let searchTimeout;
-            nameInput.addEventListener('input', function () {
-                clearTimeout(searchTimeout);
-                const query = this.value.trim();
-
-                if (query.length < 2) {
-                    suggestionsDiv.style.display = 'none';
-                    return;
-                }
-
-                searchTimeout = setTimeout(async () => {
-                    try {
-                        const response = await fetch(`/api/inventory/products/search?q=${encodeURIComponent(query)}`);
-                        const products = await response.json();
-
-                        if (products.length === 0) {
-                            suggestionsDiv.style.display = 'none';
-                            codeInput.value = ''; // Cod va fi generat automat pentru produs nou
-                            return;
-                        }
-
-                        suggestionsDiv.innerHTML = products.map(p => `
-                            <div class="autocomplete-item p-2" style="cursor:pointer; border-bottom:1px solid #eee;" 
-                                 data-code="${p.code}" data-name="${p.name}" data-unit="${p.unit}" data-type="${p.type}">
-                                <strong>${p.name}</strong> <small class="text-muted">(${p.code})</small>
-                                <br><small class="text-info">${p.type === 'ingredient' ? 'Ingredient' : 'Produs meniu'} - ${p.unit}</small>
-                            </div>
-                        `).join('');
-
-                        suggestionsDiv.style.display = 'block';
-
-                        // Atașează click pe fiecare sugestie
-                        suggestionsDiv.querySelectorAll('.autocomplete-item').forEach(item => {
-                            item.addEventListener('click', function () {
-                                nameInput.value = this.dataset.name;
-                                codeInput.value = this.dataset.code;
-                                unitSelect.value = this.dataset.unit;
-                                suggestionsDiv.style.display = 'none';
-                            });
-                        });
-                    } catch (error) {
-                        console.error('Eroare autocomplete:', error);
-                    }
-                }, 300); // Debounce 300ms
-            });
-
-            // Ascunde sugestiile când se face click în afara lor
-            document.addEventListener('click', function (e) {
-                if (!nameInput.contains(e.target) && !suggestionsDiv.contains(e.target)) {
-                    suggestionsDiv.style.display = 'none';
-                }
-            });
-
-            // Calculează totalurile
-            calculateNirTotals();
+            // Calculate initial totals if data provided
+            if (item.qtyReceived && item.priceExVat) {
+                calculateNirTotals();
+            }
         }
 
         function removeNirItem(itemId) {
             const item = document.getElementById('nir-item-' + itemId);
             if (item) {
+                // Remove the row
                 item.remove();
+
+                // Recalculate totals
                 calculateNirTotals();
+
+                // Renumber rows
+                let counter = 0;
+                const rows = document.querySelectorAll('#nirItemsContainer tr');
+                rows.forEach((row) => {
+                    counter++;
+                    // Update the visible number in the first cell
+                    // Assuming the first cell contains the number directly
+                    if (row.cells && row.cells.length > 0) {
+                        row.cells[0].textContent = counter;
+                    }
+                });
+
+                // Update global counter to avoid ID conflicts? 
+                // Actually keeping global counter incrementing is safer for ID uniqueness
+                // but checking the count is good for validation.
             }
         }
 
-        // 🧮 CALCULARE TOTALURI NIR (conform model Java)
+        // ==================== 2D BARCODE SCANNER & PDF IMPORT ====================
+
+        let barcodeBuffer = "";
+        let lastKeyTime = 0;
+
+        document.addEventListener('keydown', (e) => {
+            // Only listen if NIR tab is active
+            const inventoryTab = document.getElementById('inventory');
+            if (!inventoryTab || (inventoryTab.style.display === 'none' && !inventoryTab.classList.contains('active'))) return;
+
+            const currentTime = Date.now();
+
+            // Scanners send keys very fast (usually < 50ms)
+            if (currentTime - lastKeyTime > 100) {
+                barcodeBuffer = "";
+            }
+
+            if (e.key === 'Enter') {
+                if (barcodeBuffer.length >= 3) {
+                    console.log("📡 Barcode Scanned:", barcodeBuffer);
+                    searchAndAddByBarcode(barcodeBuffer);
+                    barcodeBuffer = "";
+                    e.preventDefault();
+                }
+            } else if (e.key.length === 1) {
+                barcodeBuffer += e.key;
+            }
+
+            lastKeyTime = currentTime;
+        });
+
+        async function searchAndAddByBarcode(barcode) {
+            try {
+                const response = await fetch(`/api/inventory/products/search?q=${barcode}`);
+                const results = await response.json();
+
+                // Exact match on code?
+                const match = results.find(r => r.code === barcode);
+                if (match) {
+                    addNirItem({
+                        code: match.code,
+                        name: match.name,
+                        unit: match.unit || 'buc',
+                        qtyReceived: 1,
+                        priceExVat: match.price || 0,
+                        vatRate: 11
+                    });
+                    if (typeof showNotification === 'function') showNotification(`✅ Produs adăugat: ${match.name}`, 'success');
+                } else {
+                    if (typeof showNotification === 'function') showNotification(`⚠️ Codul ${barcode} nu a fost găsit în nomenclator.`, 'warning');
+                }
+            } catch (e) {
+                console.error("Error searching barcode:", e);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const importForm = document.getElementById('importInvoiceForm');
+            if (importForm) {
+                importForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const fileInput = document.getElementById('invoiceFile');
+                    const file = fileInput.files[0];
+                    if (!file) {
+                        alert('Vă rugăm selectați un fișier PDF!');
+                        return;
+                    }
+
+                    const formData = new FormData();
+                    formData.append('invoice', file);
+
+                    try {
+                        if (typeof showNotification === 'function') showNotification('⏳ Prelucrare factură PDF...', 'info');
+                        const response = await fetch('/api/inventory/nir/upload-pdf', {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                            }
+                        });
+                        const result = await response.json();
+
+                        if (result.success) {
+                            const data = result.data;
+                            // Pre-fill NIR form
+                            if (data.supplierName) document.getElementById('supplierName').value = data.supplierName;
+                            if (data.cui) document.getElementById('cui').value = data.cui;
+                            if (data.invoiceNumber) document.getElementById('invoiceNumber').value = data.invoiceNumber;
+                            if (data.date) document.getElementById('documentDate').value = data.date;
+
+                            // Clear items and add extracted ones
+                            document.getElementById('nirItemsContainer').innerHTML = '';
+                            // We need to access nirItemCounter if we can, else just add items
+                            // Since addNirItem increments it, it's fine.
+
+                            data.items.forEach(item => {
+                                addNirItem(item);
+                            });
+
+                            calculateNirTotals();
+                            if (typeof showNotification === 'function') showNotification('✅ Date extrase cu succes din PDF!', 'success');
+                        } else {
+                            alert('Eroare la prelucrare: ' + result.error);
+                        }
+                    } catch (error) {
+                        console.error('Error importing invoice:', error);
+                        alert('Eroare la import: ' + error.message);
+                    }
+                });
+            }
+        });
+
+        // 🧮 CALCULARE TOTALURI NIR (Updated for Table)
         function calculateNirTotals() {
-            const items = document.querySelectorAll('#nirItemsContainer > div');
+            const rows = document.querySelectorAll('#nirItemsContainer tr');
             let totalBase = 0;
             let totalVat = 0;
             let totalIncVat = 0;
-            const vatSummary = {}; // { vatRate: { base, vat, total } }
+            const vatSummary = {};
 
-            items.forEach(itemDiv => {
-                const qtyReceived = parseFloat(itemDiv.querySelector('[name="qtyReceived"]')?.value || 0);
-                const priceExVat = parseFloat(itemDiv.querySelector('[name="priceExVat"]')?.value || 0);
-                const vatRate = parseInt(itemDiv.querySelector('[name="vatRate"]')?.value || 0);
+            rows.forEach(row => {
+                const qtyReceived = parseFloat(row.querySelector('[name="qtyReceived"]')?.value || 0);
+                const priceExVat = parseFloat(row.querySelector('[name="priceExVat"]')?.value || 0);
+                const vatRate = parseInt(row.querySelector('[name="vatRate"]')?.value || 0);
 
-                // Calculare conform model Java
-                const valueExVat = Math.round(qtyReceived * priceExVat * 100) / 100; // 2 zecimale
-                const vatAmount = Math.round(valueExVat * vatRate) / 100; // 2 zecimale
-                const valueIncVat = Math.round((valueExVat + vatAmount) * 100) / 100; // 2 zecimale
+                // Calculare
+                const valueExVat = Math.round(qtyReceived * priceExVat * 100) / 100;
+                const vatAmount = Math.round(valueExVat * vatRate / 100 * 100) / 100;
+                const valueIncVat = Math.round((valueExVat + vatAmount) * 100) / 100;
 
-                // Actualizare câmpuri articol
-                itemDiv.querySelector('[name="valueExVat"]').value = valueExVat.toFixed(2) + ' RON';
-                itemDiv.querySelector('[name="vatAmount"]').value = vatAmount.toFixed(2) + ' RON';
-                itemDiv.querySelector('[name="valueIncVat"]').value = valueIncVat.toFixed(2) + ' RON';
+                // Actualizare câmpuri rând
+                const valExField = row.querySelector('[name="valueExVat"]');
+                const vatField = row.querySelector('[name="vatAmount"]');
+                const valIncField = row.querySelector('[name="valueIncVat"]');
 
-                // Acumulare totaluri
+                if (valExField) valExField.value = valueExVat.toFixed(2);
+                if (vatField) vatField.value = vatAmount.toFixed(2);
+                if (valIncField) valIncField.value = valueIncVat.toFixed(2);
+
+                // Acumulare
                 totalBase += valueExVat;
                 totalVat += vatAmount;
                 totalIncVat += valueIncVat;
 
-                // Grupare pe cote TVA
+                // Grupare TVA
                 if (!vatSummary[vatRate]) {
                     vatSummary[vatRate] = { base: 0, vat: 0, total: 0 };
                 }
@@ -7898,31 +8108,35 @@
                 vatSummary[vatRate].total += valueIncVat;
             });
 
-            // Rotunjire totaluri generale (conform Java)
+            // Rotunjire totaluri
             totalBase = Math.round(totalBase * 100) / 100;
             totalVat = Math.round(totalVat * 100) / 100;
             totalIncVat = Math.round(totalIncVat * 100) / 100;
 
-            // Afișare totaluri generale
-            document.getElementById('nirTotalBase').textContent = totalBase.toFixed(2) + ' RON';
-            document.getElementById('nirTotalVat').textContent = totalVat.toFixed(2) + ' RON';
-            document.getElementById('nirTotalIncVat').textContent = totalIncVat.toFixed(2) + ' RON';
+            // Update footer totals
+            const baseEl = document.getElementById('nirTotalBase');
+            const vatEl = document.getElementById('nirTotalVat');
+            const incEl = document.getElementById('nirTotalIncVat');
+            if (baseEl) baseEl.textContent = totalBase.toFixed(2) + ' RON';
+            if (vatEl) vatEl.textContent = totalVat.toFixed(2) + ' RON';
+            if (incEl) incEl.textContent = totalIncVat.toFixed(2) + ' RON';
 
             // Afișare rezumat TVA
             const summaryDiv = document.getElementById('nirVatSummary');
-            summaryDiv.innerHTML = '';
-
-            Object.keys(vatSummary).sort((a, b) => parseInt(a) - parseInt(b)).forEach(rate => {
-                const summary = vatSummary[rate];
-                summaryDiv.innerHTML += `
-                    <div class="row mb-1">
-                        <div class="col-3"><small><strong>TVA ${rate}%:</strong></small></div>
-                        <div class="col-3"><small>Bază: ${summary.base.toFixed(2)} RON</small></div>
-                        <div class="col-3"><small>TVA: ${summary.vat.toFixed(2)} RON</small></div>
-                        <div class="col-3"><small>Total: ${summary.total.toFixed(2)} RON</small></div>
-                    </div>
-                `;
-            });
+            if (summaryDiv) {
+                summaryDiv.innerHTML = '';
+                Object.keys(vatSummary).sort((a, b) => parseInt(a) - parseInt(b)).forEach(rate => {
+                    const summary = vatSummary[rate];
+                    summaryDiv.innerHTML += `
+                        <div class="row mb-1">
+                            <div class="col-3"><small><strong>TVA ${rate}%:</strong></small></div>
+                            <div class="col-3"><small>Bază: ${summary.base.toFixed(2)} RON</small></div>
+                            <div class="col-3"><small>TVA: ${summary.vat.toFixed(2)} RON</small></div>
+                            <div class="col-3"><small>Total: ${summary.total.toFixed(2)} RON</small></div>
+                        </div>
+                    `;
+                });
+            }
         }
 
         // 📄 EXPORT JSON (conform model Java)
@@ -7968,27 +8182,30 @@
             URL.revokeObjectURL(url);
         }
 
-        // 📦 COLECTARE DATE NIR (conform model Java)
+        // 📦 COLECTARE DATE NIR (Updated for Table)
         function collectNirData() {
             const items = [];
-            const itemDivs = document.querySelectorAll('#nirItemsContainer > div');
+            const rows = document.querySelectorAll('#nirItemsContainer tr');
             let totalBase = 0;
             let totalVat = 0;
             let totalIncVat = 0;
             const vatSummary = {};
 
-            itemDivs.forEach(itemDiv => {
-                const code = itemDiv.querySelector('[name="code"]')?.value || '';
-                const name = itemDiv.querySelector('[name="name"]')?.value || '';
-                const unit = itemDiv.querySelector('[name="unit"]')?.value || '';
-                const qtyInvoice = parseFloat(itemDiv.querySelector('[name="qtyInvoice"]')?.value || 0);
-                const qtyReceived = parseFloat(itemDiv.querySelector('[name="qtyReceived"]')?.value || 0);
-                const priceExVat = parseFloat(itemDiv.querySelector('[name="priceExVat"]')?.value || 0);
-                const vatRate = parseInt(itemDiv.querySelector('[name="vatRate"]')?.value || 0);
+            rows.forEach(row => {
+                const code = row.querySelector('[name="code"]')?.value || '';
+                const name = row.querySelector('[name="name"]')?.value || '';
+                const unit = row.querySelector('[name="unit"]')?.value || '';
+                // Invoice quantity assumed same as received if not present (simplified for table)
+                const qtyReceived = parseFloat(row.querySelector('[name="qtyReceived"]')?.value || 0);
+                const qtyInvoice = qtyReceived;
+                const priceExVat = parseFloat(row.querySelector('[name="priceExVat"]')?.value || 0);
+                const vatRate = parseInt(row.querySelector('[name="vatRate"]')?.value || 0);
 
                 const valueExVat = Math.round(qtyReceived * priceExVat * 100) / 100;
-                const vatAmount = Math.round(valueExVat * vatRate) / 100;
+                const vatAmount = Math.round(valueExVat * vatRate / 100 * 100) / 100;
                 const valueIncVat = Math.round((valueExVat + vatAmount) * 100) / 100;
+
+                const salePrice = parseFloat(row.querySelector('[name="salePrice"]')?.value || 0);
 
                 items.push({
                     code,
@@ -7996,14 +8213,15 @@
                     unit,
                     qtyInvoice: qtyInvoice.toFixed(2),
                     qtyReceived: qtyReceived.toFixed(2),
-                    quantity: qtyReceived, // Adăugat pentru server
+                    quantity: qtyReceived,
                     priceExVat: priceExVat.toFixed(2),
-                    unit_price: priceExVat, // Adăugat pentru server
+                    unit_price: priceExVat,
                     vatRate,
                     valueExVat: valueExVat.toFixed(2),
-                    total_price: valueExVat, // Adăugat pentru server (valoare fără TVA)
+                    total_price: valueExVat,
                     vatAmount: vatAmount.toFixed(2),
-                    valueIncVat: valueIncVat.toFixed(2)
+                    valueIncVat: valueIncVat.toFixed(2),
+                    salePrice: salePrice // Added field
                 });
 
                 totalBase += valueExVat;
@@ -8018,12 +8236,10 @@
                 vatSummary[vatRate].total += valueIncVat;
             });
 
-            // Rotunjire totaluri
             totalBase = Math.round(totalBase * 100) / 100;
             totalVat = Math.round(totalVat * 100) / 100;
             totalIncVat = Math.round(totalIncVat * 100) / 100;
 
-            // Rotunjire rezumat TVA
             Object.keys(vatSummary).forEach(rate => {
                 vatSummary[rate].base = Math.round(vatSummary[rate].base * 100) / 100;
                 vatSummary[rate].vat = Math.round(vatSummary[rate].vat * 100) / 100;
@@ -8039,6 +8255,10 @@
                 date: document.getElementById('documentDate')?.value || '',
                 supplierName: document.getElementById('supplierName')?.value || '',
                 invoiceNumber: document.getElementById('invoiceNumber')?.value || '',
+                plata_baza: parseFloat(document.getElementById('nirPaidBase')?.value || 0).toFixed(2),
+                plata_tva: parseFloat(document.getElementById('nirPaidVat')?.value || 0).toFixed(2),
+                valoare_totala_baza: totalBase.toFixed(2),
+                valoare_totala_tva: totalVat.toFixed(2),
                 items,
                 totalBase: totalBase.toFixed(2),
                 totalVat: totalVat.toFixed(2),
@@ -8048,23 +8268,8 @@
         }
 
         async function fetchProductsList(selectElement, counter, selectedId = null) {
-            try {
-                const productType = selectElement.value;
-                const productSelect = document.getElementById(`productId-${counter}`);
-
-                if (!productType) {
-                    productSelect.innerHTML = '<option value="" data-translate="ui.selecteaza_tipul_mai_intii">Selectează tipul mai întâi...</option>';
-                    return;
-                }
-
-                // Pentru moment, afișează mesaj că endpoint-ul pentru produse nu este implementat
-                productSelect.innerHTML = '<option value="" data-translate="ui.endpoint_api_pentru_produse_in_dezvoltare">Endpoint API pentru produse în dezvoltare...</option>';
-                console.log('ℹ️ Listă produse/ingrediente - endpoint API în dezvoltare');
-            } catch (error) {
-                console.error('Eroare la încărcarea listei de produse:', error);
-                const productSelect = document.getElementById(`productId-${counter}`);
-                productSelect.innerHTML = '<option value="" data-translate="ui.eroare_la_incarcarea_produselor">Eroare la încărcarea produselor</option>';
-            }
+            // Deprecated or unused in table flow, but kept for compatibility if needed.
+            console.log('ℹ️ Listă produse/ingrediente - folosiți Modalul.');
         }
 
         document.getElementById('nirForm').addEventListener('submit', async function (e) {
@@ -8259,7 +8464,7 @@
         function showNirDetailsModal(nir, nirNumber) {
             const modalHTML = `
                 <div class="modal fade" id="nirDetailsModal" tabindex="-1">
-                    <div class="modal-dialog modal-lg">
+                    <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                             <div class="modal-header bg-primary text-white">
                                 <h5 class="modal-title"><i class="fas fa-file-invoice me-2"></i>Detalii NIR: ${nirNumber}</h5>
@@ -8354,18 +8559,18 @@
                                 <table class="table table-sm table-bordered table-hover">
                                     <thead class="table-light">
                                         <tr>
-                                            <th>#</th>
-                                            <th>Cod Produs</th>
-                                            <th>Denumire Produs</th>
-                                            <th>Categorie</th>
-                                            <th class="text-end">Cantitate</th>
-                                            <th>UM</th>
-                                            <th class="text-end">Preț Unitar</th>
+                                            <th>Nr.crt</th>
+                                            <th>Denumire</th>
+                                            <th>U.M.</th>
+                                            <th class="text-end">Cant. intrare</th>
+                                            <th class="text-end">Preț unitar</th>
                                             <th class="text-end">Valoare</th>
-                                            <th>TVA %</th>
                                             <th class="text-end">TVA</th>
-                                            <th class="text-end">Total cu TVA</th>
-                                            <th>Cod Contabil</th>
+                                            <th class="text-end">Valoare + TVA</th>
+                                            <th class="text-end">Adaos %</th>
+                                            <th class="text-end">Valoare adaos</th>
+                                            <th class="text-end">Preț vânzare</th>
+                                            <th class="text-end">Valoare vânzare</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -8375,26 +8580,29 @@
                             const quantity = parseFloat(item.quantity) || 0;
                             const unitPrice = parseFloat(item.unit_price) || 0;
                             const value = parseFloat(item.value) || 0;
-                            const vatPercent = parseFloat(item.vat_percent) || 21;
-                            const vatAmount = parseFloat(item.vat_amount) || (value * vatPercent / 100);
-                            const valueWithVAT = parseFloat(item.value_with_vat) || (value + vatAmount);
+                            const vatAmount = parseFloat(item.vat_amount) || 0;
+                            const valueWithVAT = parseFloat(item.value_with_vat) || 0;
+                            const markupPercent = parseFloat(item.markup_percent) || 0;
+                            const markupValue = parseFloat(item.markup_value) || 0;
+                            const salePrice = parseFloat(item.sale_price) || 0;
+                            const saleValue = parseFloat(item.sale_value) || 0;
 
                             itemsHTML += `
-                                <tr>
-                                    <td>${index + 1}</td>
-                                    <td><code>${item.product_code || `ING-${item.ingredient_id}`}</code></td>
-                                    <td><strong>${item.product_name || item.official_name || 'N/A'}</strong></td>
-                                    <td><span class="badge bg-secondary">${item.category || 'N/A'}</span></td>
-                                    <td class="text-end">${quantity.toFixed(2)}</td>
-                                    <td>${item.unit || 'buc'}</td>
-                                    <td class="text-end">${unitPrice.toFixed(2)} RON</td>
-                                    <td class="text-end">${value.toFixed(2)} RON</td>
-                                    <td class="text-center">${vatPercent}%</td>
-                                    <td class="text-end">${vatAmount.toFixed(2)} RON</td>
-                                    <td class="text-end"><strong>${valueWithVAT.toFixed(2)} RON</strong></td>
-                                    <td><code>${item.accounting_code || '301'}</code></td>
-                                </tr>
-                            `;
+                                    <tr>
+                                        <td>${index + 1}</td>
+                                        <td><strong>${item.product_name || item.official_name || 'N/A'}</strong> <small class="text-muted">(${item.product_code || ''})</small></td>
+                                        <td>${item.unit || 'buc'}</td>
+                                        <td class="text-end">${quantity.toFixed(2)}</td>
+                                        <td class="text-end">${unitPrice.toFixed(2)}</td>
+                                        <td class="text-end">${value.toFixed(2)}</td>
+                                        <td class="text-end">${vatAmount.toFixed(2)}</td>
+                                        <td class="text-end">${valueWithVAT.toFixed(2)}</td>
+                                        <td class="text-end">${markupPercent.toFixed(1)}%</td>
+                                        <td class="text-end">${markupValue.toFixed(2)}</td>
+                                        <td class="text-end">${salePrice.toFixed(2)}</td>
+                                        <td class="text-end"><strong>${saleValue.toFixed(2)}</strong></td>
+                                    </tr>
+                                `;
                         });
 
                         // Adaugă totaluri
@@ -8403,20 +8611,14 @@
                                     </tbody>
                                     <tfoot class="table-light">
                                         <tr>
-                                            <th colspan="7" class="text-end"><strong>TOTALURI:</strong></th>
-                                            <th class="text-end">${(totals.total_value || 0).toFixed(2)} RON</th>
+                                            <th colspan="5" class="text-end"><strong>TOTALURI:</strong></th>
+                                            <th class="text-end">${(totals.total_value || 0).toFixed(2)}</th>
+                                            <th class="text-end">${((totals.total_vat || 0)).toFixed(2)}</th>
+                                            <th class="text-end">${(totals.total_value_with_vat || 0).toFixed(2)}</th>
                                             <th></th>
-                                            <th class="text-end">${((totals.total_vat || 0)).toFixed(2)} RON</th>
-                                            <th class="text-end"><strong>${(totals.total_value_with_vat || 0).toFixed(2)} RON</strong></th>
+                                            <th class="text-end">${details.items.reduce((sum, item) => sum + (parseFloat(item.markup_value) || 0), 0).toFixed(2)}</th>
                                             <th></th>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="12" class="text-muted small">
-                                                <i class="fas fa-info-circle me-1"></i>
-                                                Total articole: ${details.items.length} | 
-                                                Cod contabil: 301 (Mărfuri) | 
-                                                TVA: ${details.items[0]?.vat_percent || 21}%
-                                            </td>
+                                            <th class="text-end"><strong>${details.items.reduce((sum, item) => sum + (parseFloat(item.sale_value) || 0), 0).toFixed(2)}</strong></th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -16394,6 +16596,44 @@
         console.log('✅ Event listeners pentru Restaurant Config atașate');
 
     </script>
+    <!-- Stock Selection Modal -->
+    <div class="modal fade" id="stockSelectionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Selectează Ingredient din Stoc</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        <input type="text" class="form-control" id="stockSearchInput" placeholder="Caută ingredient..."
+                            oninput="filterStockList()">
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-sm table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Cod</th>
+                                    <th>Denumire</th>
+                                    <th>U.M.</th>
+                                    <th>Categorie</th>
+                                    <th>Preț</th>
+                                    <th>Acțiune</th>
+                                </tr>
+                            </thead>
+                            <tbody id="stockListBody">
+                                <!-- Populated via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Închide</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <!-- Validare Manuală Ingrediente - Anti-Duplicate System -->
 <script src="/js/ingredient-validator.js"></script>

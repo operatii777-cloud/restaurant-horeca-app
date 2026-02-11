@@ -64,7 +64,7 @@ async function createOrUpdateCleaningSchedule(req, res, next) {
           `INSERT INTO compliance_cleaning_schedule (title, description, frequency, shift_type, checklist_items, assigned_to, due_date, status, created_at)
            VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)`,
           [title, description || null, frequency, shift_type || null, checklistItemsJson, assigned_to || null, due_date || null, status || 'pending'],
-          function(err) {
+          function (err) {
             if (err) reject(err);
             else resolve({ id: this.lastID });
           }
@@ -91,7 +91,7 @@ async function getEquipmentMaintenance(req, res, next) {
   try {
     const db = await dbPromise;
     const { status, equipment_id, limit = 100, offset = 0 } = req.query;
-    
+
     let query = `
       SELECT 
         em.*,
@@ -102,35 +102,35 @@ async function getEquipmentMaintenance(req, res, next) {
       LEFT JOIN compliance_equipment e ON em.equipment_id = e.id
       WHERE 1=1
     `;
-    
+
     const params = [];
-    
+
     // Filter by status
     if (status) {
       query += ' AND em.status = ?';
       params.push(status);
     }
-    
+
     // Filter by equipment_id
     if (equipment_id) {
       query += ' AND em.equipment_id = ?';
       params.push(parseInt(equipment_id));
     }
-    
+
     // Order by date
     query += ' ORDER BY em.scheduled_date DESC, em.created_at DESC';
-    
+
     // Pagination
     query += ' LIMIT ? OFFSET ?';
     params.push(parseInt(limit), parseInt(offset));
-    
+
     const rows = await new Promise((resolve, reject) => {
       db.all(query, params, (err, rows) => {
         if (err) reject(err);
         else resolve(rows || []);
       });
     });
-    
+
     res.json({ success: true, data: rows });
   } catch (error) {
     console.error('Error in getEquipmentMaintenance:', error);
@@ -215,7 +215,7 @@ async function createOrUpdateEquipmentMaintenance(req, res, next) {
           `INSERT INTO compliance_equipment_maintenance (equipment_id, maintenance_type, scheduled_date, description, operator_id, cost, documents, status, created_at)
            VALUES (?, ?, ?, ?, ?, ?, ?, 'scheduled', CURRENT_TIMESTAMP)`,
           [equipment_id, maintenance_type, scheduled_date || null, description || null, operator_id || null, cost || null, documentsJson],
-          function(err) {
+          function (err) {
             if (err) reject(err);
             else resolve({ id: this.lastID });
           }
@@ -286,7 +286,7 @@ async function createTemperatureLog(req, res, next) {
         `INSERT INTO compliance_temperature_log (equipment_id, temperature, operator_id, notes, status, created_at)
          VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)`,
         [equipment_id, temperature, operator_id || null, notes || null, status],
-        function(err) {
+        function (err) {
           if (err) reject(err);
           else resolve({ id: this.lastID });
         }
@@ -315,7 +315,7 @@ async function createTemperatureLog(req, res, next) {
 async function getComplianceDashboardKPIs(req, res, next) {
   try {
     const db = await dbPromise;
-    
+
     // 1. Echipamente active
     const equipmentCount = await new Promise((resolve, reject) => {
       db.get('SELECT COUNT(*) as count FROM compliance_equipment WHERE is_active = 1', (err, row) => {
@@ -323,7 +323,7 @@ async function getComplianceDashboardKPIs(req, res, next) {
         else resolve(row?.count || 0);
       });
     });
-    
+
     // 2. Loguri de temperatură din ultimele 24h
     const tempLogsToday = await new Promise((resolve, reject) => {
       db.get(
@@ -335,7 +335,7 @@ async function getComplianceDashboardKPIs(req, res, next) {
         }
       );
     });
-    
+
     // 3. Alerte critice (temperaturi în afara limitelor)
     const criticalAlerts = await new Promise((resolve, reject) => {
       db.get(
@@ -347,7 +347,7 @@ async function getComplianceDashboardKPIs(req, res, next) {
         }
       );
     });
-    
+
     // 4. Curățenie programată restantă
     const overdueCleaning = await new Promise((resolve, reject) => {
       db.get(
@@ -359,7 +359,7 @@ async function getComplianceDashboardKPIs(req, res, next) {
         }
       );
     });
-    
+
     // 5. Întrețineri programate
     const scheduledMaintenance = await new Promise((resolve, reject) => {
       db.get(
@@ -371,12 +371,12 @@ async function getComplianceDashboardKPIs(req, res, next) {
         }
       );
     });
-    
+
     // Calculează rata de conformitate (simplificată: % echipamente fără alerte critice)
-    const complianceRate = equipmentCount > 0 
+    const complianceRate = equipmentCount > 0
       ? Math.round(((equipmentCount - criticalAlerts) / equipmentCount) * 100)
       : 100;
-    
+
     res.json({
       success: true,
       data: {
@@ -402,30 +402,30 @@ async function getCleaningSchedule(req, res, next) {
   try {
     const db = await dbPromise;
     const { overdue, status, limit = 100, offset = 0 } = req.query;
-    
+
     let query = 'SELECT * FROM compliance_cleaning_schedule WHERE 1=1';
     const params = [];
-    
+
     if (overdue === 'true') {
       query += ` AND status = 'pending' AND due_date < date('now')`;
     }
-    
+
     if (status) {
       query += ' AND status = ?';
       params.push(status);
     }
-    
+
     query += ' ORDER BY due_date ASC, created_at DESC';
     query += ' LIMIT ? OFFSET ?';
     params.push(parseInt(limit), parseInt(offset));
-    
+
     const rows = await new Promise((resolve, reject) => {
       db.all(query, params, (err, rows) => {
         if (err) reject(err);
         else resolve(rows || []);
       });
     });
-    
+
     res.json({ success: true, data: rows });
   } catch (error) {
     console.error('Error in getCleaningSchedule:', error);
@@ -441,7 +441,7 @@ async function getTemperatureLogs(req, res, next) {
   try {
     const db = await dbPromise;
     const { equipment_id, status, limit = 100, offset = 0 } = req.query;
-    
+
     let query = `
       SELECT 
         ctl.*,
@@ -453,28 +453,28 @@ async function getTemperatureLogs(req, res, next) {
       WHERE 1=1
     `;
     const params = [];
-    
+
     if (equipment_id) {
       query += ' AND ctl.equipment_id = ?';
       params.push(parseInt(equipment_id));
     }
-    
+
     if (status) {
       query += ' AND ctl.status = ?';
       params.push(status);
     }
-    
+
     query += ' ORDER BY ctl.created_at DESC';
     query += ' LIMIT ? OFFSET ?';
     params.push(parseInt(limit), parseInt(offset));
-    
+
     const rows = await new Promise((resolve, reject) => {
       db.all(query, params, (err, rows) => {
         if (err) reject(err);
         else resolve(rows || []);
       });
     });
-    
+
     res.json({ success: true, data: rows });
   } catch (error) {
     console.error('Error in getTemperatureLogs:', error);
@@ -531,24 +531,15 @@ async function getHaccpLimits(req, res, next) {
 /**
  * POST /api/compliance/haccp/monitoring
  * Înregistrează o monitorizare HACCP
- */
-async function recordHaccpMonitoring(req, res, next) {
-  try {
-    const { ccp_id, parameter_name, measured_value, monitored_by, notes } = req.body;
-
-    if (!ccp_id || !parameter_name || measured_value === undefined || measured_value === null) {
-      return res.status(400).json({
-        success: false,
-        error: 'ccp_id, parameter_name, și measured_value sunt obligatorii'
-      });
-    }
+    // ... validation ...
 
     const monitoring = await haccpService.recordMonitoring(
       parseInt(ccp_id),
       parameter_name,
       parseFloat(measured_value),
       monitored_by || 1, // TODO: Use user_id from session
-      notes || null
+      notes || null,
+      unit || null
     );
 
     if (!monitoring) {
@@ -561,7 +552,7 @@ async function recordHaccpMonitoring(req, res, next) {
     res.json({
       success: true,
       data: monitoring,
-      message: monitoring.status === 'critical' 
+      message: monitoring.status === 'critical'
         ? 'Monitorizare înregistrată cu succes. ALERTĂ CRITICĂ declanșată!'
         : 'Monitorizare înregistrată cu succes'
     });
@@ -578,7 +569,7 @@ async function recordHaccpMonitoring(req, res, next) {
 async function getHaccpMonitoring(req, res, next) {
   try {
     const { ccp_id, status, date_from, date_to, limit = 100, offset = 0 } = req.query;
-    
+
     const filters = {};
     if (ccp_id) filters.ccp_id = parseInt(ccp_id);
     if (status) filters.status = status;
@@ -675,7 +666,7 @@ async function getAllCorrectiveActions(req, res, next) {
   try {
     const { resolved, ccp_id, limit = 50, offset = 0 } = req.query;
     const db = await dbPromise;
-    
+
     let query = `
       SELECT 
         hca.*,
@@ -689,35 +680,35 @@ async function getAllCorrectiveActions(req, res, next) {
       LEFT JOIN users u1 ON hca.taken_by = u1.id
       WHERE 1=1
     `;
-    
+
     const params = [];
-    
+
     // Filter by resolved status
     if (resolved !== undefined) {
       query += ' AND hca.resolved = ?';
       params.push(resolved === 'true' || resolved === '1' ? 1 : 0);
     }
-    
+
     // Filter by CCP
     if (ccp_id) {
       query += ' AND hca.ccp_id = ?';
       params.push(parseInt(ccp_id));
     }
-    
+
     // Order by date
     query += ' ORDER BY hca.created_at DESC';
-    
+
     // Pagination
     query += ' LIMIT ? OFFSET ?';
     params.push(parseInt(limit), parseInt(offset));
-    
+
     const rows = await new Promise((resolve, reject) => {
       db.all(query, params, (err, rows) => {
         if (err) reject(err);
         else resolve(rows || []);
       });
     });
-    
+
     res.json({ success: true, data: rows });
   } catch (error) {
     console.error('Error in getAllCorrectiveActions:', error);
@@ -735,23 +726,23 @@ async function getEquipment(req, res, next) {
   try {
     const db = await dbPromise;
     const { active_only } = req.query;
-    
+
     let query = 'SELECT * FROM compliance_equipment';
     const params = [];
-    
+
     if (active_only === 'true') {
       query += ' WHERE is_active = 1';
     }
-    
+
     query += ' ORDER BY name ASC';
-    
+
     const rows = await new Promise((resolve, reject) => {
       db.all(query, params, (err, rows) => {
         if (err) reject(err);
         else resolve(rows || []);
       });
     });
-    
+
     res.json({ success: true, data: rows });
   } catch (error) {
     console.error('Error in getEquipment:', error);
@@ -767,18 +758,18 @@ async function getEquipmentById(req, res, next) {
   try {
     const db = await dbPromise;
     const { id } = req.params;
-    
+
     const equipment = await new Promise((resolve, reject) => {
       db.get('SELECT * FROM compliance_equipment WHERE id = ?', [id], (err, row) => {
         if (err) reject(err);
         else resolve(row);
       });
     });
-    
+
     if (!equipment) {
       return res.status(404).json({ success: false, error: 'Echipamentul nu există' });
     }
-    
+
     res.json({ success: true, data: equipment });
   } catch (error) {
     console.error('Error in getEquipmentById:', error);
@@ -794,31 +785,31 @@ async function createEquipment(req, res, next) {
   try {
     const db = await dbPromise;
     const { name, type, location, min_temp, max_temp, is_active } = req.body;
-    
+
     if (!name || !type) {
       return res.status(400).json({ success: false, error: 'name și type sunt obligatorii' });
     }
-    
+
     const validTypes = ['fridge', 'freezer', 'hot_holding', 'receiving', 'other'];
     if (!validTypes.includes(type)) {
-      return res.status(400).json({ 
-        success: false, 
-        error: `type invalid. Valori acceptate: ${validTypes.join(', ')}` 
+      return res.status(400).json({
+        success: false,
+        error: `type invalid. Valori acceptate: ${validTypes.join(', ')}`
       });
     }
-    
+
     const result = await new Promise((resolve, reject) => {
       db.run(
         `INSERT INTO compliance_equipment (name, type, location, min_temp, max_temp, is_active, created_at, updated_at)
          VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)`,
         [name, type, location || null, min_temp || null, max_temp || null, is_active !== false ? 1 : 0],
-        function(err) {
+        function (err) {
           if (err) reject(err);
           else resolve({ id: this.lastID });
         }
       );
     });
-    
+
     res.status(201).json({ success: true, message: 'Echipament creat', id: result.id });
   } catch (error) {
     console.error('Error in createEquipment:', error);
@@ -835,7 +826,7 @@ async function updateEquipment(req, res, next) {
     const db = await dbPromise;
     const { id } = req.params;
     const { name, type, location, min_temp, max_temp, is_active } = req.body;
-    
+
     // Verifică dacă există
     const existing = await new Promise((resolve, reject) => {
       db.get('SELECT * FROM compliance_equipment WHERE id = ?', [id], (err, row) => {
@@ -843,11 +834,11 @@ async function updateEquipment(req, res, next) {
         else resolve(row);
       });
     });
-    
+
     if (!existing) {
       return res.status(404).json({ success: false, error: 'Echipamentul nu există' });
     }
-    
+
     await new Promise((resolve, reject) => {
       db.run(
         `UPDATE compliance_equipment 
@@ -868,7 +859,7 @@ async function updateEquipment(req, res, next) {
         }
       );
     });
-    
+
     res.json({ success: true, message: 'Echipament actualizat' });
   } catch (error) {
     console.error('Error in updateEquipment:', error);
@@ -884,7 +875,7 @@ async function deleteEquipment(req, res, next) {
   try {
     const db = await dbPromise;
     const { id } = req.params;
-    
+
     await new Promise((resolve, reject) => {
       db.run(
         'UPDATE compliance_equipment SET is_active = 0, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
@@ -895,7 +886,7 @@ async function deleteEquipment(req, res, next) {
         }
       );
     });
-    
+
     res.json({ success: true, message: 'Echipament dezactivat' });
   } catch (error) {
     console.error('Error in deleteEquipment:', error);
@@ -910,7 +901,7 @@ async function deleteEquipment(req, res, next) {
 async function populateEquipmentTemplate(req, res, next) {
   try {
     const db = await dbPromise;
-    
+
     // Template echipamente standard restaurant
     const standardEquipment = [
       // Frigidere (2°C - 8°C)
@@ -921,25 +912,25 @@ async function populateEquipmentTemplate(req, res, next) {
       { name: 'Frigider Deserturi', type: 'fridge', location: 'Patiserie', min_temp: 2, max_temp: 6 },
       { name: 'Frigider Bar', type: 'fridge', location: 'Bar', min_temp: 2, max_temp: 8 },
       { name: 'Frigider Depozit', type: 'fridge', location: 'Depozit', min_temp: 2, max_temp: 8 },
-      
+
       // Congelatoare (-18°C - -15°C)
       { name: 'Congelator Carne', type: 'freezer', location: 'Depozit', min_temp: -20, max_temp: -18 },
       { name: 'Congelator Pește & Fructe de Mare', type: 'freezer', location: 'Depozit', min_temp: -22, max_temp: -18 },
       { name: 'Congelator Produse Semifabricate', type: 'freezer', location: 'Bucătărie', min_temp: -20, max_temp: -18 },
       { name: 'Congelator Înghețată & Deserturi', type: 'freezer', location: 'Patiserie', min_temp: -22, max_temp: -18 },
-      
+
       // Menținere caldă (63°C - 85°C) - pentru bufet/linie servire
       { name: 'Bain-Marie Linie Caldă 1', type: 'hot_holding', location: 'Bucătărie - Linie Servire', min_temp: 63, max_temp: 85 },
       { name: 'Bain-Marie Linie Caldă 2', type: 'hot_holding', location: 'Bucătărie - Linie Servire', min_temp: 63, max_temp: 85 },
       { name: 'Vitrină Caldă Bufet', type: 'hot_holding', location: 'Sala Restaurant', min_temp: 65, max_temp: 80 },
-      
+
       // Zona recepție marfă
       { name: 'Zonă Recepție Marfă', type: 'receiving', location: 'Recepție', min_temp: null, max_temp: 15 },
     ];
-    
+
     let inserted = 0;
     let skipped = 0;
-    
+
     for (const eq of standardEquipment) {
       // Verifică dacă există deja (după nume)
       const existing = await new Promise((resolve, reject) => {
@@ -948,12 +939,12 @@ async function populateEquipmentTemplate(req, res, next) {
           else resolve(row);
         });
       });
-      
+
       if (existing) {
         skipped++;
         continue;
       }
-      
+
       await new Promise((resolve, reject) => {
         db.run(
           `INSERT INTO compliance_equipment (name, type, location, min_temp, max_temp, is_active, created_at, updated_at)
@@ -967,9 +958,9 @@ async function populateEquipmentTemplate(req, res, next) {
       });
       inserted++;
     }
-    
-    res.json({ 
-      success: true, 
+
+    res.json({
+      success: true,
       message: `Template echipamente populate: ${inserted} adăugate, ${skipped} existente (skip)`,
       inserted,
       skipped,
@@ -1017,14 +1008,14 @@ module.exports = {
 async function populateHaccpTemplate(req, res, next) {
   try {
     const db = await dbPromise;
-    
+
     let insertedProcesses = 0;
     let insertedCCPs = 0;
     let insertedLimits = 0;
     let skippedProcesses = 0;
     let skippedCCPs = 0;
     let skippedLimits = 0;
-    
+
     // ==================== PROCESE HACCP ====================
     const haccpProcesses = [
       {
@@ -1070,9 +1061,9 @@ async function populateHaccpTemplate(req, res, next) {
         sort_order: 7
       }
     ];
-    
+
     const processIdMap = {};
-    
+
     for (const proc of haccpProcesses) {
       const existing = await new Promise((resolve, reject) => {
         db.get('SELECT id FROM haccp_processes WHERE name = ?', [proc.name], (err, row) => {
@@ -1080,29 +1071,29 @@ async function populateHaccpTemplate(req, res, next) {
           else resolve(row);
         });
       });
-      
+
       if (existing) {
         processIdMap[proc.name] = existing.id;
         skippedProcesses++;
         continue;
       }
-      
+
       const processId = await new Promise((resolve, reject) => {
         db.run(
           `INSERT INTO haccp_processes (name, description, category, sort_order, is_active, created_at, updated_at)
            VALUES (?, ?, ?, ?, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)`,
           [proc.name, proc.description, proc.category, proc.sort_order],
-          function(err) {
+          function (err) {
             if (err) reject(err);
             else resolve(this.lastID);
           }
         );
       });
-      
+
       processIdMap[proc.name] = processId;
       insertedProcesses++;
     }
-    
+
     // ==================== CCP-uri (Puncte Critice de Control) ====================
     const haccpCCPs = [
       // Recepție
@@ -1120,7 +1111,7 @@ async function populateHaccpTemplate(req, res, next) {
         hazard_description: 'Contaminare fizică - ambalaje deteriorate, corpuri străine',
         control_measure: 'Inspecție vizuală ambalaje, respingere loturi compromise'
       },
-      
+
       // Depozitare
       {
         process: 'Depozitare la Rece',
@@ -1136,7 +1127,7 @@ async function populateHaccpTemplate(req, res, next) {
         hazard_description: 'Contaminare încrucișată chimică (detergenți, alergeni)',
         control_measure: 'Separare produse chimice, etichetare clară, FIFO'
       },
-      
+
       // Preparare
       {
         process: 'Preparare Alimente',
@@ -1152,7 +1143,7 @@ async function populateHaccpTemplate(req, res, next) {
         hazard_description: 'Prezența corpuri străine (metal, plastic, păr)',
         control_measure: 'Purtare echipament protecție (bonetă, mănuși), inspecție vizuală'
       },
-      
+
       // Gătire
       {
         process: 'Tratament Termic (Gătire)',
@@ -1168,7 +1159,7 @@ async function populateHaccpTemplate(req, res, next) {
         hazard_description: 'Formare compuși toxici (acrilamidă) din prăjire excesivă',
         control_measure: 'Control temperatură ulei (<180°C), schimbare ulei conform program'
       },
-      
+
       // Menținere Caldă
       {
         process: 'Menținere Caldă',
@@ -1184,7 +1175,7 @@ async function populateHaccpTemplate(req, res, next) {
         hazard_description: 'Depășire timp maxim menținere la cald (>4 ore)',
         control_measure: 'Etichetare cu ora start, eliminare după 4 ore'
       },
-      
+
       // Răcire
       {
         process: 'Răcire Rapidă',
@@ -1193,7 +1184,7 @@ async function populateHaccpTemplate(req, res, next) {
         hazard_description: 'Multiplicare sporită bacterii în zona de temperatură periculoasă (5-60°C)',
         control_measure: 'Răcire de la 60°C la 10°C în max 2 ore, apoi <5°C'
       },
-      
+
       // Servire
       {
         process: 'Servire Mese',
@@ -1210,46 +1201,46 @@ async function populateHaccpTemplate(req, res, next) {
         control_measure: 'Etichetare corectă alergeni în meniu, instruire personal'
       }
     ];
-    
+
     const ccpIdMap = {};
-    
+
     for (const ccp of haccpCCPs) {
       const processId = processIdMap[ccp.process];
       if (!processId) {
         console.warn(`⚠️ Proces "${ccp.process}" nu a fost găsit, skip CCP ${ccp.ccp_number}`);
         continue;
       }
-      
+
       const existing = await new Promise((resolve, reject) => {
-        db.get('SELECT id FROM haccp_ccp WHERE ccp_number = ? AND process_id = ?', 
+        db.get('SELECT id FROM haccp_ccp WHERE ccp_number = ? AND process_id = ?',
           [ccp.ccp_number, processId], (err, row) => {
-          if (err) reject(err);
-          else resolve(row);
-        });
+            if (err) reject(err);
+            else resolve(row);
+          });
       });
-      
+
       if (existing) {
         ccpIdMap[ccp.ccp_number] = existing.id;
         skippedCCPs++;
         continue;
       }
-      
+
       const ccpId = await new Promise((resolve, reject) => {
         db.run(
           `INSERT INTO haccp_ccp (process_id, ccp_number, hazard_type, hazard_description, control_measure, is_active, created_at, updated_at)
            VALUES (?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)`,
           [processId, ccp.ccp_number, ccp.hazard_type, ccp.hazard_description, ccp.control_measure],
-          function(err) {
+          function (err) {
             if (err) reject(err);
             else resolve(this.lastID);
           }
         );
       });
-      
+
       ccpIdMap[ccp.ccp_number] = ccpId;
       insertedCCPs++;
     }
-    
+
     // ==================== LIMITE CRITICE ====================
     // monitoring_frequency: 'every_batch', 'hourly', 'daily', 'weekly'
     const haccpLimits = [
@@ -1273,7 +1264,7 @@ async function populateHaccpTemplate(req, res, next) {
         unit: '°C',
         monitoring_frequency: 'every_batch' // La fiecare livrare
       },
-      
+
       // CCP-3: Frigider general (3x/zi = every 8 hours ≈ hourly când e monitorizat)
       {
         ccp: 'CCP-3',
@@ -1294,7 +1285,7 @@ async function populateHaccpTemplate(req, res, next) {
         unit: '°C',
         monitoring_frequency: 'daily' // De 2 ori pe zi
       },
-      
+
       // CCP-5: Timp preparare (alimente perisabile la temperatura camerei)
       {
         ccp: 'CCP-5',
@@ -1305,7 +1296,7 @@ async function populateHaccpTemplate(req, res, next) {
         unit: 'minute',
         monitoring_frequency: 'hourly' // Continuu (verificare orară)
       },
-      
+
       // CCP-7: Temperatură internă carne
       {
         ccp: 'CCP-7',
@@ -1326,7 +1317,7 @@ async function populateHaccpTemplate(req, res, next) {
         unit: '°C',
         monitoring_frequency: 'every_batch' // La fiecare lot preparat
       },
-      
+
       // CCP-8: Temperatură ulei prăjit
       {
         ccp: 'CCP-8',
@@ -1347,7 +1338,7 @@ async function populateHaccpTemplate(req, res, next) {
         unit: 'utilizări',
         monitoring_frequency: 'daily' // Zilnic
       },
-      
+
       // CCP-9: Menținere caldă
       {
         ccp: 'CCP-9',
@@ -1358,7 +1349,7 @@ async function populateHaccpTemplate(req, res, next) {
         unit: '°C',
         monitoring_frequency: 'hourly' // Orar
       },
-      
+
       // CCP-10: Timp maxim menținere la cald
       {
         ccp: 'CCP-10',
@@ -1369,7 +1360,7 @@ async function populateHaccpTemplate(req, res, next) {
         unit: 'minute',
         monitoring_frequency: 'hourly' // Continuu (verificare orară)
       },
-      
+
       // CCP-11: Răcire rapidă - Etapa 1 (60°C → 10°C)
       {
         ccp: 'CCP-11',
@@ -1390,7 +1381,7 @@ async function populateHaccpTemplate(req, res, next) {
         unit: 'minute',
         monitoring_frequency: 'every_batch' // La fiecare lot răcit
       },
-      
+
       // CCP-12: Igienă personal (spălări mâini pe tură)
       {
         ccp: 'CCP-12',
@@ -1401,7 +1392,7 @@ async function populateHaccpTemplate(req, res, next) {
         unit: 'spălări/tură',
         monitoring_frequency: 'daily' // Zilnic
       },
-      
+
       // CCP-13: Etichetare alergeni (produse cu alergeni etichetate corect)
       {
         ccp: 'CCP-13',
@@ -1413,42 +1404,42 @@ async function populateHaccpTemplate(req, res, next) {
         monitoring_frequency: 'weekly' // Săptămânal
       }
     ];
-    
+
     for (const limit of haccpLimits) {
       const ccpId = ccpIdMap[limit.ccp];
       if (!ccpId) {
         console.warn(`⚠️ CCP "${limit.ccp}" nu a fost găsit, skip limită ${limit.parameter_name}`);
         continue;
       }
-      
+
       const existing = await new Promise((resolve, reject) => {
-        db.get('SELECT id FROM haccp_limits WHERE ccp_id = ? AND parameter_name = ?', 
+        db.get('SELECT id FROM haccp_limits WHERE ccp_id = ? AND parameter_name = ?',
           [ccpId, limit.parameter_name], (err, row) => {
-          if (err) reject(err);
-          else resolve(row);
-        });
+            if (err) reject(err);
+            else resolve(row);
+          });
       });
-      
+
       if (existing) {
         skippedLimits++;
         continue;
       }
-      
+
       await new Promise((resolve, reject) => {
         db.run(
           `INSERT INTO haccp_limits (ccp_id, parameter_name, min_value, max_value, target_value, unit, monitoring_frequency, is_active, created_at, updated_at)
            VALUES (?, ?, ?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)`,
           [ccpId, limit.parameter_name, limit.min_value, limit.max_value, limit.target_value, limit.unit, limit.monitoring_frequency],
-          function(err) {
+          function (err) {
             if (err) reject(err);
             else resolve(this.lastID);
           }
         );
       });
-      
+
       insertedLimits++;
     }
-    
+
     // ==================== RĂSPUNS ====================
     res.json({
       success: true,
@@ -1462,7 +1453,7 @@ async function populateHaccpTemplate(req, res, next) {
         limits: { inserted: insertedLimits, skipped: skippedLimits, total: haccpLimits.length }
       }
     });
-    
+
   } catch (error) {
     console.error('❌ Error in populateHaccpTemplate:', error);
     next(error);

@@ -102,3 +102,6 @@ npm-audit-results.json
 railway-logs-extracted.txt
 railway-variables.png
 erver
+
+docs/
+dev-files/

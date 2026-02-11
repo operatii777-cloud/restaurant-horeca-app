@@ -38,7 +38,7 @@ const upload = multer({
         const allowedTypes = /jpeg|jpg|png|webp/;
         const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
         const mimetype = allowedTypes.test(file.mimetype);
-        
+
         if (extname && mimetype) {
             return cb(null, true);
         } else {
@@ -53,18 +53,30 @@ const upload = multer({
  * Returnează configurația completă pentru PDF builder
  */
 exports.getConfig = (req, res) => {
-    const type = req.query.type || 'food'; // 'food' sau 'drinks'
-    
+    // DEBUG: Log received query parameters
+    console.log('🔍 [PDF Config] GET /config query:', req.query);
+
+    // Asigură-te că type este string curat (fără spații, fără quote-uri)
+    let type = req.query.type || 'food';
+
+    // Curățare agresivă pentru a preveni probleme de encoding/quotes
+    if (typeof type === 'string') {
+        type = type.replace(/['"]/g, '').trim();
+    }
+
+    console.log(`🔍 [PDF Config] Processed type: '${type}'`);
+
     // Validare tip
     if (!['food', 'drinks'].includes(type)) {
+        console.warn(`⚠️ [PDF Config] Invalid type rejected: '${type}'`);
         return res.status(400).json({
             success: false,
-            error: 'Type must be "food" or "drinks"'
+            error: `Type must be "food" or "drinks". Received: '${type}'`
         });
     }
-    
+
     console.log(`📊 [PDF Config] Loading config for type: ${type}`);
-    
+
     const db = new sqlite3.Database(DB_PATH, (err) => {
         if (err) {
             console.error('❌ [PDF Config] DB connection error:', err.message);
@@ -74,7 +86,7 @@ exports.getConfig = (req, res) => {
             });
         }
     });
-    
+
     // Obține categorii
     db.all(`
         SELECT * FROM menu_pdf_categories
@@ -84,18 +96,18 @@ exports.getConfig = (req, res) => {
         if (err) {
             console.error('❌ [PDF Config] Query error:', err.message);
             db.close();
-            return res.status(500).json({ 
-                success: false, 
-                error: 'Eroare la încărcarea categoriilor: ' + err.message 
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la încărcarea categoriilor: ' + err.message
             });
         }
-        
+
         console.log(`📋 [PDF Config] Found ${categories.length} categories for ${type}`);
-        
+
         // Obține produse pentru fiecare categorie
         const categoriesWithProducts = [];
         let processed = 0;
-        
+
         if (categories.length === 0) {
             db.close();
             return res.json({
@@ -104,7 +116,7 @@ exports.getConfig = (req, res) => {
                 categories: []
             });
         }
-        
+
         categories.forEach(category => {
             db.all(`
                 SELECT 
@@ -125,7 +137,7 @@ exports.getConfig = (req, res) => {
                     console.error('Eroare produse:', err);
                     products = [];
                 }
-                
+
                 categoriesWithProducts.push({
                     ...category,
                     products: products.map(p => ({
@@ -133,9 +145,9 @@ exports.getConfig = (req, res) => {
                         display_in_pdf: p.display_in_pdf !== null ? p.display_in_pdf : 1
                     }))
                 });
-                
+
                 processed++;
-                
+
                 if (processed === categories.length) {
                     db.close();
                     res.json({
@@ -157,19 +169,19 @@ exports.getConfig = (req, res) => {
  */
 exports.updateCategories = (req, res) => {
     const { categories } = req.body;
-    
+
     if (!Array.isArray(categories)) {
-        return res.status(400).json({ 
-            success: false, 
-            error: 'Categoriile trebuie să fie un array' 
+        return res.status(400).json({
+            success: false,
+            error: 'Categoriile trebuie să fie un array'
         });
     }
-    
+
     const db = new sqlite3.Database(DB_PATH);
-    
+
     db.serialize(() => {
         db.run('BEGIN TRANSACTION');
-        
+
         const stmt = db.prepare(`
             UPDATE menu_pdf_categories
             SET display_in_pdf = ?,
@@ -178,7 +190,7 @@ exports.updateCategories = (req, res) => {
                 updated_at = CURRENT_TIMESTAMP
             WHERE id = ?
         `);
-        
+
         categories.forEach(cat => {
             stmt.run(
                 cat.display_in_pdf ? 1 : 0,
@@ -187,30 +199,30 @@ exports.updateCategories = (req, res) => {
                 cat.id
             );
         });
-        
+
         stmt.finalize((err) => {
             if (err) {
                 db.run('ROLLBACK');
                 db.close();
-                return res.status(500).json({ 
-                    success: false, 
-                    error: 'Eroare la salvarea categoriilor' 
+                return res.status(500).json({
+                    success: false,
+                    error: 'Eroare la salvarea categoriilor'
                 });
             }
-            
+
             db.run('COMMIT', (err) => {
                 db.close();
-                
+
                 if (err) {
-                    return res.status(500).json({ 
-                        success: false, 
-                        error: 'Eroare la commit' 
+                    return res.status(500).json({
+                        success: false,
+                        error: 'Eroare la commit'
                     });
                 }
-                
-                res.json({ 
-                    success: true, 
-                    message: 'Configurație categorii salvată cu succes!' 
+
+                res.json({
+                    success: true,
+                    message: 'Configurație categorii salvată cu succes!'
                 });
             });
         });
@@ -225,24 +237,24 @@ exports.updateCategories = (req, res) => {
  */
 exports.updateProducts = (req, res) => {
     const { products } = req.body;
-    
+
     if (!Array.isArray(products)) {
-        return res.status(400).json({ 
-            success: false, 
-            error: 'Produsele trebuie să fie un array' 
+        return res.status(400).json({
+            success: false,
+            error: 'Produsele trebuie să fie un array'
         });
     }
-    
+
     const db = new sqlite3.Database(DB_PATH);
-    
+
     db.serialize(() => {
         db.run('BEGIN TRANSACTION');
-        
+
         const stmt = db.prepare(`
             INSERT OR REPLACE INTO menu_pdf_products (product_id, display_in_pdf, custom_order, updated_at)
             VALUES (?, ?, ?, CURRENT_TIMESTAMP)
         `);
-        
+
         products.forEach(prod => {
             stmt.run(
                 prod.product_id,
@@ -250,30 +262,30 @@ exports.updateProducts = (req, res) => {
                 prod.custom_order || null
             );
         });
-        
+
         stmt.finalize((err) => {
             if (err) {
                 db.run('ROLLBACK');
                 db.close();
-                return res.status(500).json({ 
-                    success: false, 
-                    error: 'Eroare la salvarea produselor' 
+                return res.status(500).json({
+                    success: false,
+                    error: 'Eroare la salvarea produselor'
                 });
             }
-            
+
             db.run('COMMIT', (err) => {
                 db.close();
-                
+
                 if (err) {
-                    return res.status(500).json({ 
-                        success: false, 
-                        error: 'Eroare la commit' 
+                    return res.status(500).json({
+                        success: false,
+                        error: 'Eroare la commit'
                     });
                 }
-                
-                res.json({ 
-                    success: true, 
-                    message: 'Configurație produse salvată cu succes!' 
+
+                res.json({
+                    success: true,
+                    message: 'Configurație produse salvată cu succes!'
                 });
             });
         });
@@ -288,34 +300,34 @@ exports.updateProducts = (req, res) => {
 exports.uploadCategoryImage = (req, res) => {
     upload(req, res, (err) => {
         if (err) {
-            return res.status(400).json({ 
-                success: false, 
-                error: err.message 
+            return res.status(400).json({
+                success: false,
+                error: err.message
             });
         }
-        
+
         if (!req.file) {
-            return res.status(400).json({ 
-                success: false, 
-                error: 'Nicio imagine uploadată' 
+            return res.status(400).json({
+                success: false,
+                error: 'Nicio imagine uploadată'
             });
         }
-        
+
         const categoryId = req.params.categoryId;
         const imagePath = `/images/menu/categories/${req.file.filename}`;
-        
+
         const db = new sqlite3.Database(DB_PATH);
-        
+
         // Obține imaginea veche pentru a o șterge
         db.get('SELECT header_image FROM menu_pdf_categories WHERE id = ?', [categoryId], (err, row) => {
             if (err) {
                 db.close();
-                return res.status(500).json({ 
-                    success: false, 
-                    error: 'Eroare la verificarea imaginii vechi' 
+                return res.status(500).json({
+                    success: false,
+                    error: 'Eroare la verificarea imaginii vechi'
                 });
             }
-            
+
             // Șterge imaginea veche dacă există
             if (row && row.header_image) {
                 const oldImagePath = path.join(__dirname, '..', 'public', row.header_image);
@@ -323,7 +335,7 @@ exports.uploadCategoryImage = (req, res) => {
                     fs.unlinkSync(oldImagePath);
                 }
             }
-            
+
             // Salvează noua imagine în DB
             db.run(`
                 UPDATE menu_pdf_categories
@@ -332,16 +344,16 @@ exports.uploadCategoryImage = (req, res) => {
                 WHERE id = ?
             `, [imagePath, categoryId], (err) => {
                 db.close();
-                
+
                 if (err) {
-                    return res.status(500).json({ 
-                        success: false, 
-                        error: 'Eroare la salvarea imaginii în DB' 
+                    return res.status(500).json({
+                        success: false,
+                        error: 'Eroare la salvarea imaginii în DB'
                     });
                 }
-                
-                res.json({ 
-                    success: true, 
+
+                res.json({
+                    success: true,
                     message: 'Imagine uploadată cu succes!',
                     imagePath: imagePath
                 });
@@ -357,33 +369,33 @@ exports.uploadCategoryImage = (req, res) => {
  */
 exports.deleteCategoryImage = (req, res) => {
     const categoryId = req.params.categoryId;
-    
+
     const db = new sqlite3.Database(DB_PATH);
-    
+
     // Obține calea imaginii
     db.get('SELECT header_image FROM menu_pdf_categories WHERE id = ?', [categoryId], (err, row) => {
         if (err) {
             db.close();
-            return res.status(500).json({ 
-                success: false, 
-                error: 'Eroare la verificarea imaginii' 
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la verificarea imaginii'
             });
         }
-        
+
         if (!row || !row.header_image) {
             db.close();
-            return res.status(404).json({ 
-                success: false, 
-                error: 'Imaginea nu există' 
+            return res.status(404).json({
+                success: false,
+                error: 'Imaginea nu există'
             });
         }
-        
+
         // Șterge fișierul fizic
         const imagePath = path.join(__dirname, '..', 'public', row.header_image);
         if (fs.existsSync(imagePath)) {
             fs.unlinkSync(imagePath);
         }
-        
+
         // Șterge din DB
         db.run(`
             UPDATE menu_pdf_categories
@@ -392,17 +404,17 @@ exports.deleteCategoryImage = (req, res) => {
             WHERE id = ?
         `, [categoryId], (err) => {
             db.close();
-            
+
             if (err) {
-                return res.status(500).json({ 
-                    success: false, 
-                    error: 'Eroare la ștergerea imaginii din DB' 
+                return res.status(500).json({
+                    success: false,
+                    error: 'Eroare la ștergerea imaginii din DB'
                 });
             }
-            
-            res.json({ 
-                success: true, 
-                message: 'Imagine ștearsă cu succes!' 
+
+            res.json({
+                success: true,
+                message: 'Imagine ștearsă cu succes!'
             });
         });
     });
@@ -417,10 +429,10 @@ exports.deleteCategoryImage = (req, res) => {
 exports.regeneratePDFs = async (req, res) => {
     const { type } = req.body;
     const startTime = Date.now();
-    
+
     try {
         let result;
-        
+
         if (type === 'all' || !type) {
             result = await generateAllPDFs();
         } else {
@@ -435,9 +447,9 @@ exports.regeneratePDFs = async (req, res) => {
             }
             result = results;
         }
-        
+
         const duration = Date.now() - startTime;
-        
+
         // Log în DB
         const db = new sqlite3.Database(DB_PATH);
         db.run(`
@@ -446,15 +458,15 @@ exports.regeneratePDFs = async (req, res) => {
         `, [type || 'all', 'manual', 1, duration], () => {
             db.close();
         });
-        
-        res.json({ 
-            success: true, 
+
+        res.json({
+            success: true,
             message: `PDF-uri regenerate cu succes în ${duration}ms!`,
             result: result
         });
     } catch (error) {
         const duration = Date.now() - startTime;
-        
+
         // Log eroare în DB
         const db = new sqlite3.Database(DB_PATH);
         db.run(`
@@ -463,9 +475,9 @@ exports.regeneratePDFs = async (req, res) => {
         `, [type || 'all', 'manual', 0, error.message, duration], () => {
             db.close();
         });
-        
-        res.status(500).json({ 
-            success: false, 
+
+        res.status(500).json({
+            success: false,
             error: 'Eroare la regenerarea PDF-urilor',
             details: error.message
         });
@@ -479,26 +491,26 @@ exports.regeneratePDFs = async (req, res) => {
  */
 exports.getRegenerationHistory = (req, res) => {
     const limit = parseInt(req.query.limit) || 20;
-    
+
     const db = new sqlite3.Database(DB_PATH);
-    
+
     db.all(`
         SELECT * FROM menu_pdf_regeneration_log
         ORDER BY created_at DESC
         LIMIT ?
     `, [limit], (err, rows) => {
         db.close();
-        
+
         if (err) {
-            return res.status(500).json({ 
-                success: false, 
-                error: 'Eroare la încărcarea istoricului' 
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la încărcarea istoricului'
             });
         }
-        
-        res.json({ 
-            success: true, 
-            history: rows 
+
+        res.json({
+            success: true,
+            history: rows
         });
     });
 };

@@ -93,7 +93,7 @@ export function groupOrdersByVisit(orders: Order[]): OrderVisit[] {
         key: visitKey,
         tableNumber: order.table_number ?? null,
         clientIdentifier: order.client_identifier ?? null,
-        orders: 'order',
+        orders: [order],
         isPaid,
         totalAmount: orderTotal,
         firstTimestamp: timestamp,

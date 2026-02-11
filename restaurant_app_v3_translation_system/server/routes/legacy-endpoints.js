@@ -262,9 +262,19 @@ router.get('/orders-cancelled', async (req, res) => {
       });
     });
 
+    const processedOrders = cancelledOrders.map(order => {
+      let items = [];
+      try {
+        items = typeof order.items === 'string' ? JSON.parse(order.items) : (order.items || []);
+      } catch (e) {
+        items = [];
+      }
+      return { ...order, items };
+    });
+
     const today = new Date().toLocaleDateString('ro-RO');
-    console.log(`✅ [legacy-endpoints] Returnat ${cancelledOrders.length} comenzi anulate din ziua curentă (${today})`);
-    res.json({ success: true, orders: cancelledOrders });
+    console.log(`✅ [legacy-endpoints] Returnat ${processedOrders.length} comenzi anulate din ziua curentă (${today})`);
+    res.json({ success: true, orders: processedOrders });
   } catch (error) {
     console.error('❌ Error in /api/orders-cancelled:', error);
     res.json({ success: true, orders: [] });

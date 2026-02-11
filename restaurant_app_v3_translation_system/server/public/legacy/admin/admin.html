@@ -48,8 +48,8 @@
             margin: 0;
             padding: 0;
             width: 100%;
-            max-width: 100vw;
-            overflow-x: hidden;
+            height: auto;
+            min-height: 100vh;
         }
 
         /* 🎨 MOTOR DE TEME DINAMICE - Variabile CSS */
@@ -92,8 +92,6 @@
             margin: 0;
             padding: 0;
             width: 100%;
-            max-width: 100vw;
-            overflow-x: hidden;
             box-sizing: border-box;
         }
 
@@ -116,23 +114,20 @@
 
         /* Container principal - FULL WIDTH */
         .admin-container {
-            width: 100vw;
-            max-width: 100%;
-            height: calc(100vh - 80px);
-            margin-top: 80px;
-            margin-left: 0;
-            margin-right: 0;
-            padding: 0;
+            width: 100%;
+            min-height: calc(100vh - 85px);
+            margin-top: 85px;
             display: flex;
-            overflow: hidden;
+            background: #ffffff;
+            /* Page background */
+            position: relative;
         }
 
         .admin-header {
             display: none;
-            /* Ascuns - nu mai e necesar */
         }
 
-        /* Sidebar - dimensiuni fixe */
+        /* Sidebar - sticky position */
         .admin-nav {
             width: 230px;
             min-width: 230px;
@@ -140,9 +135,13 @@
             padding: 28px 22px;
             border-right: 1px solid #e6ebf5;
             background: #ffffff;
+            position: sticky;
+            top: 85px;
+            height: calc(100vh - 85px);
             overflow-y: auto;
             transition: all 0.3s ease;
             flex-shrink: 0;
+            z-index: 100;
         }
 
         /* Sidebar ascuns */
@@ -159,34 +158,20 @@
            📜 CONTENT AREA - SCROLL FUNCȚIONAL
            ======================================== */
 
-        /* Content Area - Container cu scroll */
+        /* Content Area - Natural flow */
         .admin-content {
             flex: 1;
-            width: 100%;
-            max-width: 100%;
-            padding: 20px 50px 20px 20px;
-            /* ✅ Padding pe dreapta mărit pentru scrollbar + aliniere */
-            background: #f8fafc;
-            overflow-y: scroll !important;
-            /* ✅ FORȚEAZĂ scrollbar vizibil MEREU */
-            overflow-x: hidden !important;
+            min-width: 0;
+            padding: 20px 40px 20px 80px;
+            background: #ffffff;
             display: block !important;
-            /* ✅ Display block pentru scroll corect (NU flex) */
-            height: calc(100vh - 80px) !important;
-            /* Înălțime fixă pentru scroll */
-            max-height: calc(100vh - 80px) !important;
-            /* Max height pentru scroll */
             position: relative;
             box-sizing: border-box;
         }
 
-        /* Când sidebar-ul este închis - mai mult padding pe stânga */
+        /* Când sidebar-ul este închis - menținem spațiul pentru buton */
         body.sidebar-collapsed .admin-content {
-            padding-left: 60px;
-            /* Mai mult spațiu când nu e sidebar */
-            overflow-y: scroll !important;
-            /* ✅ MENȚINE scrollbar-ul vizibil */
-            overflow-x: hidden !important;
+            padding-left: 80px;
         }
 
         /* ========================================
@@ -313,20 +298,12 @@
 
         /* Container tabel rezervări */
         .reservations-table-container {
-            background: var(--bg-card, #ffffff);
+            background: #ffffff;
             border-radius: 12px;
-            box-shadow: var(--shadow-light, 0 2px 8px rgba(0, 0, 0, 0.1));
             width: 100%;
-            max-width: 100%;
             margin-bottom: 20px;
-            /* ✅ SCROLL CONTAINER - permite scroll vertical cu scrollbar vizibil */
             position: relative;
-            max-height: 70vh;
-            /* 70% din înălțimea viewport-ului */
-            overflow-y: auto !important;
-            /* ✅ Scrollbar vizibil */
             overflow-x: auto !important;
-            /* ✅ Scrollbar orizontal dacă e nevoie */
             border: 1px solid #e0e0e0;
         }
 
@@ -347,10 +324,9 @@
             padding: 0;
         }
 
-        /* Tabel - full width */
+        /* Tabel - permite expansiunea pentru scroll orizontal local */
         .admin-content table {
             width: 100%;
-            max-width: 100%;
             table-layout: auto;
             border-collapse: collapse;
         }
@@ -997,11 +973,11 @@
         }
 
         .section {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+            border-radius: 0;
+            padding: 0;
+            margin-bottom: 0;
+            box-shadow: none;
             display: none !important;
             /* ✅ FORȚEAZĂ ascunderea tuturor secțiunilor */
             visibility: hidden !important;
@@ -4372,44 +4348,20 @@
             padding-top: 60px !important;
         }
 
-        /* Ajustări pentru conținut principal */
+        /* ✅ CONSISTENT MARGIN-TOP FOR ALL MEDIA QUERIES */
         .admin-container {
-            margin-top: 50px !important;
+            margin-top: 85px !important;
         }
 
         @media (max-width: 768px) {
-
-            .admin-header,
-            .navbar,
-            .nav-tabs,
-            .nav-pills {
-                margin-top: 45px !important;
-            }
-
-            .login-container {
-                padding-top: 55px !important;
-            }
-
             .admin-container {
-                margin-top: 45px !important;
+                margin-top: 85px !important;
             }
         }
 
         @media (max-width: 576px) {
-
-            .admin-header,
-            .navbar,
-            .nav-tabs,
-            .nav-pills {
-                margin-top: 40px !important;
-            }
-
-            .login-container {
-                padding-top: 50px !important;
-            }
-
             .admin-container {
-                margin-top: 40px !important;
+                margin-top: 85px !important;
             }
         }
 
@@ -4488,14 +4440,13 @@
             }
         }
 
-        /* ✅ STICKY TABLE HEADER - Ingrediente Table */
+        /* ✅ NO LIMIT FOR TABLE CONTAINER */
         .table-container {
             position: relative;
-            max-height: 600px;
-            overflow-y: auto;
             overflow-x: auto;
             border: 1px solid #ddd;
             border-radius: 8px;
+            margin-bottom: 20px;
         }
 
         .admin-table {
@@ -10613,8 +10564,17 @@ Email: contact@trattoria.ro
             grid.innerHTML = '';
 
             try {
+                // Contruiește URL-ul cu parametrii de filtrare dacă există
+                let url = '/api/orders-delivery?lang=ro';
+
+                // Verifică dacă dateFilter este definit și activ global
+                if (typeof dateFilter !== 'undefined' && dateFilter.active && dateFilter.startDate) {
+                    url += `&startDate=${dateFilter.startDate}`;
+                    if (dateFilter.endDate) url += `&endDate=${dateFilter.endDate}`;
+                }
+
                 // Use the same endpoint as livrare.html for consistency
-                const response = await fetch('/api/orders-delivery?lang=ro');
+                const response = await fetch(url);
                 if (!response.ok) {
                     throw new Error(`Server returned ${response.status}`);
                 }
@@ -10653,13 +10613,29 @@ Email: contact@trattoria.ro
             applyOrderFilter();
         }
 
+        // Helper function for date filtering
+        function filterOrdersByDate(orders, startDate, endDate) {
+            if (!startDate) return orders;
+
+            const start = new Date(startDate);
+            start.setHours(0, 0, 0, 0);
+
+            const end = endDate ? new Date(endDate) : new Date(start);
+            end.setHours(23, 59, 59, 999);
+
+            return orders.filter(order => {
+                const orderDate = new Date(order.timestamp);
+                return orderDate >= start && orderDate <= end;
+            });
+        }
+
         // This function applies the actual filtering logic (synchronized with livrare.html)
         function applyOrderFilter() {
             let filteredOrders = [];
 
             if (currentOrderFilter === 'all') {
-                // Toate comenzile: livrate + nelivrate
-                filteredOrders = allOrders.filter(order => order.status === 'delivered' || order.completed_timestamp);
+                // Toate comenzile: livrate + nelivrate (active) + istorice, exceptând cele anulate explicit
+                filteredOrders = allOrders.filter(order => order.status !== 'cancelled');
             } else if (currentOrderFilter === 'unpaid') {
                 // Doar comenzile livrate dar neachitate
                 filteredOrders = allOrders.filter(order => order.status === 'delivered' && !order.is_paid);
@@ -10670,7 +10646,18 @@ Email: contact@trattoria.ro
 
             // Apply date filter if active
             if (dateFilter.active && dateFilter.startDate && dateFilter.endDate) {
-                filteredOrders = filterOrdersByDate(filteredOrders, dateFilter.startDate, dateFilter.endDate);
+                // Keep active/stuck orders visible regardless of date filter
+                const activeOrders = filteredOrders.filter(o => !['delivered', 'completed', 'cancelled'].includes(o.status));
+                const historicalOrders = filteredOrders.filter(o => ['delivered', 'completed', 'cancelled'].includes(o.status));
+
+                // Filter only historical orders by date
+                const filteredHistorical = filterOrdersByDate(historicalOrders, dateFilter.startDate, dateFilter.endDate);
+
+                // Combine results
+                filteredOrders = [...activeOrders, ...filteredHistorical];
+
+                // Sort by timestamp descending to keep order
+                filteredOrders.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
             }
 
             renderOrders(filteredOrders);

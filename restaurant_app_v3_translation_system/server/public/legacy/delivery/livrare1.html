@@ -3484,17 +3484,8 @@
                     // Filtrează strict după ziua curentă
                     const isToday = orderDate.getTime() === today.getTime();
 
-                    // ✅ FIX: Comenzile takeaway cu status 'ready' dispar din ecran (apar doar în istoric)
-                    // Comenzile takeaway marcate ca 'ready' în bar nu mai apar în listă
-                    const isTakeaway = order.type === 'takeaway' || order.type === 'TAKEAWAY' || order.type === 'pickup' || order.type === 'PICKUP';
-                    const isReady = order.status === 'ready' || order.status === 'READY';
-
-                    if (isTakeaway && isReady) {
-                        // Comandă takeaway gata - nu apare în listă (apare doar în istoric)
-                        console.log(`🔍 Comandă takeaway #${order.id} marcată ca ready - excludere din listă`);
-                        return false;
-                    }
-
+                    // ✅ MODIFICARE: Păstrăm toate comenzile de astăzi, indiferent de status, 
+                    // pentru a permite marcarea lor ca achitate/livrate în pagină.
                     return isToday;
                 });
                 console.log('Comenzi după filtrare timp și status:', allOrders.length);

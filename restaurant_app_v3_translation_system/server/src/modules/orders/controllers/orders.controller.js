@@ -2903,7 +2903,48 @@ async function submitOrderFeedback(req, res, next) {
   }
 }
 
+// GET /api/orders/cancelled - List cancelled orders with parsed items
+async function getCancelledOrders(req, res, next) {
+  try {
+    const { dbPromise } = require('../../../../database');
+    const db = await dbPromise;
+    const limit = parseInt(req.query.limit) || 100;
+    const offset = parseInt(req.query.offset) || 0;
+
+    const orders = await new Promise((resolve, reject) => {
+      db.all(`
+        SELECT * FROM orders 
+        WHERE status = 'cancelled'
+        ORDER BY timestamp DESC
+        LIMIT ? OFFSET ?
+      `, [limit, offset], (err, rows) => {
+        if (err) reject(err);
+        else resolve(rows || []);
+      });
+    });
+
+    // Parse nested JSON fields
+    const parsedOrders = orders.map(order => {
+      let items = [];
+      try {
+        items = typeof order.items === 'string' ? JSON.parse(order.items) : (order.items || []);
+      } catch (e) {
+        items = [];
+      }
+      return {
+        ...order,
+        items
+      };
+    });
+
+    res.json(parsedOrders);
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
+  getCancelledOrders, // Added
   cancelDelivery,
   getCancellations,
   approveCancellation,

@@ -203,6 +203,13 @@ router.put('/:id', async (req, res, next) => {
   }
 });
 
+// Cancel order
+router.post('/:id/cancel', controller.cancelOrder);
+router.post('/:id/cancel-delivery', controller.cancelDelivery);
+router.get('/cancellations', controller.getCancellations);
+router.get('/cancelled', controller.getCancelledOrders);
+router.put('/cancellations/:id/approve', controller.approveCancellation);
+
 // Get order by ID
 router.get('/:id', async (req, res, next) => {
   try {
@@ -222,11 +229,6 @@ router.get('/:id', async (req, res, next) => {
     next(error);
   }
 });
-// Cancel order
-router.post('/:id/cancel', controller.cancelOrder);
-router.post('/:id/cancel-delivery', controller.cancelDelivery);
-router.get('/cancellations', controller.getCancellations);
-router.put('/cancellations/:id/approve', controller.approveCancellation);
 router.get('/:id/receipt', controller.getReceipt); // No auth required for public receipts
 // S17.A - Tracking endpoint (public for track-order page)
 router.get('/:id/tracking', controller.getOrderTracking);

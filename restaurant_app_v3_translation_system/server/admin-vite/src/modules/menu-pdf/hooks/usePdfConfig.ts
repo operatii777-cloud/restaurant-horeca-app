@@ -52,7 +52,7 @@ export function usePdfConfig(type: PdfMenuType): UsePdfConfigResult {
     setError(null);
     try {
       const response = await httpClient.get<{ success: boolean; type?: string; categories?: PdfCategory[] }>(
-        `/api/menu/pdf/builder/config?type="Type"`
+        `/api/menu/pdf/builder/config?type=${type}`
       );
       
       if (response.data.success && response.data.categories) {

@@ -162,17 +162,8 @@ class HaccpService {
   async getLimitsByCCP(ccpId) {
     const db = await dbPromise;
     return new Promise((resolve, reject) => {
-      db.all('SELECT * FROM haccp_limit WHERE ccp_id = ?', [ccpId], (err, rows) => {
-        // Table might be named haccp_limits or haccp_limit
-        if (err) {
-          // Fallback to check if table exists or handle error
-          // For now assuming haccp_limits based on naming convention, but let's try strict first
-          // Actually usually it's haccp_limits (plural). Let me try plurals.
-          db.all('SELECT * FROM haccp_limits WHERE ccp_id = ?', [ccpId], (err2, rows2) => {
-            if (err2) reject(err); // Return original error/or fallback
-            else resolve(rows2 || []);
-          });
-        }
+      db.all('SELECT * FROM haccp_limits WHERE ccp_id = ?', [ccpId], (err, rows) => {
+        if (err) reject(err);
         else resolve(rows || []);
       });
     });
@@ -181,31 +172,46 @@ class HaccpService {
   /**
    * Record monitoring data
    */
-  async recordMonitoring(ccpId, parameterName, value, userId, notes) {
+  async recordMonitoring(ccpId, parameterName, value, userId, notes, unit = null) {
     const db = await dbPromise;
 
     // Determine status (simple logic for now, should check limits)
-    // For this fix, we default to 'compliant' unless value seems extreme
-    let status = 'compliant';
+    let status = 'ok';
+    let derivedUnit = unit;
 
     // Check limits if possible
     try {
       const limits = await this.getLimitsByCCP(ccpId);
       const limit = limits.find(l => l.parameter_name === parameterName);
       if (limit) {
-        if (limit.min_val !== null && value < limit.min_val) status = 'critical';
-        if (limit.max_val !== null && value > limit.max_val) status = 'critical';
+        // Check Minimum Limit
+        if (limit.min_value !== null && limit.min_value !== undefined) {
+          if (value < limit.min_value) status = 'critical';
+        }
+
+        // Check Maximum Limit
+        if (limit.max_value !== null && limit.max_value !== undefined) {
+          if (value > limit.max_value) status = 'critical';
+        }
+
+        // Use unit from limit if not provided
+        if (!derivedUnit) {
+          derivedUnit = limit.unit;
+        }
       }
     } catch (e) {
-      // Ignore limit check errors
+      console.error('Error checking HACCP limits:', e);
     }
+
+    // Final fallback for unit to avoid Not Null constraint
+    if (!derivedUnit) derivedUnit = '-';
 
     return new Promise((resolve, reject) => {
       db.run(
         `INSERT INTO haccp_monitoring (
-          ccp_id, parameter_name, measured_value, monitored_by, notes, status, monitored_at
-        ) VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)`,
-        [ccpId, parameterName, value, userId, notes, status],
+          ccp_id, parameter_name, measured_value, monitored_by, notes, status, monitored_at, unit
+        ) VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?)`,
+        [ccpId, parameterName, value, userId, notes, status, derivedUnit],
         function (err) {
           if (err) reject(err);
           else resolve({
@@ -215,6 +221,7 @@ class HaccpService {
             measured_value: value,
             monitored_by: userId,
             status,
+            unit: derivedUnit,
             monitored_at: new Date()
           });
         }

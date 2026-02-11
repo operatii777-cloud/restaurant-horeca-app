@@ -149,6 +149,60 @@ const dbPromise = new Promise((resolve, reject) => {
             // Creează tabelele HACCP
             return createHaccpTables(db);
           })
+          .then(async () => {
+            // FIX: Verificare și reparare schemă ingredients (coloana code) - Rulat DUPĂ creare tabele
+            try {
+              await new Promise((resolveMig, rejectMig) => {
+                db.all("PRAGMA table_info(ingredients)", [], (err, cols) => {
+                  if (err) {
+                    console.warn('⚠️ Nu s-a putut verifica tabelul ingredients:', err.message);
+                    return resolveMig();
+                  }
+
+                  const hasCode = cols.some(c => c.name === 'code');
+                  if (!hasCode && cols.length > 0) {
+                    console.log('⚠️ Coloana [code] lipsește din tabelul ingredients. Se adaugă...');
+                    db.run("ALTER TABLE ingredients ADD COLUMN code TEXT", (err) => {
+                      if (err) console.error('Eroare la adăugarea coloanei code:', err);
+                      else console.log('✅ Coloana [code] adăugată cu succes.');
+                      // Re-indexăm coloana code
+                      db.run("CREATE INDEX IF NOT EXISTS idx_ingredients_code ON ingredients(code)", () => resolveMig());
+                    });
+                  } else {
+                    resolveMig();
+                  }
+                });
+              });
+
+              // Populare coduri lipsă
+              await new Promise((resolvePop, rejectPop) => {
+                db.all("SELECT id FROM ingredients WHERE code IS NULL OR code = ''", [], (err, rows) => {
+                  if (err) return resolvePop();
+
+                  if (rows && rows.length > 0) {
+                    console.log(`📝 Se generează coduri pentru ${rows.length} ingrediente...`);
+                    db.serialize(() => {
+                      db.run("BEGIN TRANSACTION");
+                      const stmt = db.prepare("UPDATE ingredients SET code = ? WHERE id = ?");
+                      rows.forEach(row => {
+                        stmt.run(`ING-${String(row.id).padStart(5, '0')}`, row.id);
+                      });
+                      stmt.finalize();
+                      db.run("COMMIT", (err) => {
+                        if (err) console.error('Eroare commit:', err);
+                        else console.log('✅ Coduri generate cu succes.');
+                        resolvePop();
+                      });
+                    });
+                  } else {
+                    resolvePop();
+                  }
+                });
+              });
+            } catch (err) {
+              console.error('❌ Eroare la repararea schemei ingredients:', err);
+            }
+          }) // Added this closing brace and parenthesis
           .then(() => {
             // Inițializează sistemul de protecție după inițializarea tabelelor
             return initializeDatabaseProtection(db);
@@ -268,12 +322,14 @@ const dbPromise = new Promise((resolve, reject) => {
   }); // închide callback Database
 }); // închide Promise
 
+
 dbPromise
   .then((db) => migrateWaiterPinStorage(db))
   .catch((error) => {
     console.error('❌ Migrarea hash-urilor pentru PIN-urile ospătarilor a eșuat:', error);
   });
 
+// Initialize the database
 function initializeDb(db) {
   return new Promise((resolve, reject) => {
     // IMPORTANT: Creează order_items înainte de serialize pentru a evita race conditions
@@ -289,6 +345,7 @@ function initializeDb(db) {
       station TEXT,
       notes TEXT,
       customizations TEXT,
+      status TEXT DEFAULT 'pending', 
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (order_id) REFERENCES orders (id) ON DELETE CASCADE,
       FOREIGN KEY (product_id) REFERENCES menu (id) ON DELETE SET NULL
@@ -3752,6 +3809,30 @@ function initializeDb(db) {
           last_calculated DATETIME
       )`);
 
+      // Tabele Marketing NOI (pentru marketing.controller.js)
+      db.run(`CREATE TABLE IF NOT EXISTS marketing_segments (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          name TEXT NOT NULL UNIQUE,
+          description TEXT,
+          criteria TEXT, 
+          customer_count INTEGER DEFAULT 0,
+          last_calculated TEXT,
+          created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+          updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )`);
+
+      db.run(`CREATE TABLE IF NOT EXISTS marketing_segment_customers (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          segment_id INTEGER NOT NULL,
+          customer_token TEXT NOT NULL,
+          order_count INTEGER DEFAULT 0,
+          last_order_date TEXT,
+          first_order_date TEXT,
+          created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+          FOREIGN KEY (segment_id) REFERENCES marketing_segments(id) ON DELETE CASCADE,
+          UNIQUE(segment_id, customer_token)
+      )`);
+
       // 7. Migrație: Adaugă coloane pentru P&L și Urmărire Fiscalizare
       db.run(`ALTER TABLE menu ADD COLUMN cost_price REAL DEFAULT 0.00`, (err) => {
         if (err && !err.message.includes('duplicate column name')) {
@@ -5406,6 +5487,36 @@ function initializeDb(db) {
           console.error('Eroare la adăugarea coloanei variable_consumption la recipes:', err);
         }
       });
+
+      // --- MIGRĂRI PENTRU REZOLVARE ERORI SEMNALATE ---
+
+      // 1. Marketing Campaigns (Lipsea type, status, statistics din query-urile controller-ului)
+      db.run(`ALTER TABLE marketing_campaigns ADD COLUMN type TEXT`, (err) => {
+        if (err && !err.message.includes('duplicate column name')) console.warn('⚠️ Nota migrare marketing_campaigns.type:', err.message);
+      });
+      db.run(`ALTER TABLE marketing_campaigns ADD COLUMN status TEXT DEFAULT 'active'`, (err) => {
+        if (err && !err.message.includes('duplicate column name')) console.warn('⚠️ Nota migrare marketing_campaigns.status:', err.message);
+      });
+      db.run(`ALTER TABLE marketing_campaigns ADD COLUMN statistics TEXT`, (err) => {
+        if (err && !err.message.includes('duplicate column name')) console.warn('⚠️ Nota migrare marketing_campaigns.statistics:', err.message);
+      });
+
+      // 2. Inventory Sessions (Lipsea counted_by din log-urile sistemului)
+      db.run(`ALTER TABLE inventory_sessions ADD COLUMN counted_by TEXT`, (err) => {
+        if (err && !err.message.includes('duplicate column name')) console.warn('⚠️ Nota migrare inventory_sessions.counted_by:', err.message);
+      });
+
+      // 3. Happy Hour (Lipsea day_of_week, start_hour, end_hour din query-ul legacy)
+      db.run(`ALTER TABLE happy_hour_settings ADD COLUMN day_of_week INTEGER`, (err) => {
+        if (err && !err.message.includes('duplicate column name')) console.warn('⚠️ Nota migrare happy_hour_settings.day_of_week:', err.message);
+      });
+      db.run(`ALTER TABLE happy_hour_settings ADD COLUMN start_hour INTEGER`, (err) => {
+        if (err && !err.message.includes('duplicate column name')) console.warn('⚠️ Nota migrare happy_hour_settings.start_hour:', err.message);
+      });
+      db.run(`ALTER TABLE happy_hour_settings ADD COLUMN end_hour INTEGER`, (err) => {
+        if (err && !err.message.includes('duplicate column name')) console.warn('⚠️ Nota migrare happy_hour_settings.end_hour:', err.message);
+      });
+      // ------------------------------------------------
 
       // Trecem la popularea meniului
       db.get("SELECT COUNT(*) as count FROM menu", (err, row) => {

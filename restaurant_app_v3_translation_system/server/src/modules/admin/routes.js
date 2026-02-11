@@ -16,7 +16,7 @@ const productionController = require('./controllers/production.controller');
 // Archive controller - check if exists, otherwise use placeholder
 let archiveController;
 try {
-  archiveController = require('../../archive/archive.controller');
+  archiveController = require('../archive/archive.controller');
 } catch (err) {
   // Archive module not available, use placeholder
   archiveController = {
@@ -37,11 +37,11 @@ const reservationsRoutes = require('../../../routes/admin/reservations.routes');
 
 // Import batch routes
 const {
-    stockTransfersRouter,
-    gestiuniRouter,
-    suppliersRouter,
-    categoriesRouter,
-    cashAccountsRouter
+  stockTransfersRouter,
+  gestiuniRouter,
+  suppliersRouter,
+  categoriesRouter,
+  cashAccountsRouter
 } = require('../../../routes/admin/all-simple-routes-batch');
 
 // Register sub-routes with their paths (same structure as original)

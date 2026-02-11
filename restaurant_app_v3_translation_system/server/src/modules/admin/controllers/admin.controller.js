@@ -1748,8 +1748,8 @@ async function getOrdersDelivery(req, res, next) {
             query += ' AND DATE(timestamp) >= ?';
             params.push(startDate);
         } else {
-            // Filtrare automată pentru ziua curentă
-            query += " AND DATE(timestamp) = DATE('now')";
+            // Filtrare automată pentru ziua curentă SAU comenzi active din trecut (stuck)
+            query += " AND (DATE(timestamp) = DATE('now') OR status NOT IN ('delivered', 'completed', 'cancelled'))";
         }
         if (endDate) {
             query += ' AND DATE(timestamp) <= ?';

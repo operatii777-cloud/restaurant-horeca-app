@@ -12,19 +12,19 @@ const { dbPromise } = require('../../database');
 function convertUnit(quantity, fromUnit, toUnit) {
     if (!quantity || !fromUnit || !toUnit) return quantity;
     if (fromUnit === toUnit) return quantity;
-    
+
     // Conversii pentru greutăți (kg ↔ gr)
     if ((fromUnit === 'kg' && toUnit === 'gr') || (fromUnit === 'gr' && toUnit === 'kg')) {
         if (fromUnit === 'kg') return quantity * 1000; // kg → gr
         if (fromUnit === 'gr') return quantity / 1000; // gr → kg
     }
-    
+
     // Conversii pentru volume (l ↔ ml)
     if ((fromUnit === 'l' && toUnit === 'ml') || (fromUnit === 'ml' && toUnit === 'l')) {
         if (fromUnit === 'l') return quantity * 1000; // l → ml
         if (fromUnit === 'ml') return quantity / 1000; // ml → l
     }
-    
+
     // Pentru buc (bucăți) sau alte unități incompatibile, returnează valoarea originală
     return quantity;
 }
@@ -40,13 +40,13 @@ function detectInputUnit(quantity, ingredientUnit) {
     if (quantity >= 1000 && (ingredientUnit === 'kg' || ingredientUnit === 'l')) {
         return ingredientUnit === 'kg' ? 'gr' : 'ml';
     }
-    
+
     // Dacă valoarea este < 1 și unitatea ingredientului este 'gr' sau 'ml',
     // probabil utilizatorul a introdus valoarea în 'kg' sau 'l'
     if (quantity < 1 && (ingredientUnit === 'gr' || ingredientUnit === 'ml')) {
         return ingredientUnit === 'gr' ? 'kg' : 'l';
     }
-    
+
     // Altfel, presupunem că valoarea este deja în unitatea corectă
     return ingredientUnit;
 }
@@ -56,7 +56,7 @@ router.get('/', async (req, res) => {
     try {
         const hiddenOnly = req.query.hidden_only === 'true';
         console.log(`📦 Fetching ingredients from real database... (hidden_only: ${hiddenOnly})`);
-        
+
         const db = await dbPromise;
         const ingredients = await new Promise((resolve, reject) => {
             const whereClause = hiddenOnly ? 'WHERE is_hidden = 1' : '';
@@ -71,7 +71,13 @@ router.get('/', async (req, res) => {
                 category,
                 category_en,
                 supplier,
+                cost_per_unit,
                 cost_per_unit as avg_price,
+                energy_kcal,
+                fat,
+                carbs,
+                protein,
+                allergens,
                 is_hidden,
                 is_available
             FROM ingredients
@@ -82,16 +88,28 @@ router.get('/', async (req, res) => {
                 else resolve(rows || []);
             });
         });
-        
-        console.log(`✅ Found ${ingredients.length} ingredients`);
-        
-        res.json({
-            success: true,
-            data: ingredients.map(i => ({
+
+        const processedIngredients = ingredients.map(i => {
+            const current = Number(i.current_stock || 0);
+            const min = Number(i.min_stock || 0);
+            let status = 'ok';
+            if (current <= 0) status = 'out';
+            else if (current < min) status = 'low';
+
+            return {
                 ...i,
+                stock_status: status, // Expected by admin.html
                 is_active: i.is_available && !i.is_hidden ? 1 : 0,
                 name_en: i.name_en || i.name // Use EN name if available, fallback to RO
-            }))
+            };
+        });
+
+        console.log(`✅ Found ${ingredients.length} ingredients`);
+
+        res.json({
+            success: true,
+            data: processedIngredients,
+            ingredients: processedIngredients // Add for legacy admin.html compatibility
         });
     } catch (error) {
         console.error('❌ Error fetching ingredients:', error.message);
@@ -119,7 +137,7 @@ router.get('/statistics', async (req, res) => {
                 else resolve(row);
             });
         });
-        
+
         res.json({
             success: true,
             data: stats
@@ -138,14 +156,14 @@ router.post('/:id/update-stock', async (req, res) => {
     try {
         const { id } = req.params;
         const { quantity, operation = 'set', reason = 'Ajustare manuală' } = req.body;
-        
+
         if (!quantity || typeof quantity !== 'number' || quantity < 0) {
             return res.status(400).json({
                 success: false,
                 error: 'Cantitatea trebuie să fie un număr pozitiv'
             });
         }
-        
+
         const validOperations = ['set', 'increase', 'decrease'];
         if (!validOperations.includes(operation)) {
             return res.status(400).json({
@@ -153,9 +171,9 @@ router.post('/:id/update-stock', async (req, res) => {
                 error: `Operația trebuie să fie una dintre: ${validOperations.join(', ')}`
             });
         }
-        
+
         const db = await dbPromise;
-        
+
         // Verifică dacă ingredientul există
         const ingredient = await new Promise((resolve, reject) => {
             db.get('SELECT id, name, current_stock, unit FROM ingredients WHERE id = ?', [id], (err, row) => {
@@ -163,25 +181,25 @@ router.post('/:id/update-stock', async (req, res) => {
                 else resolve(row);
             });
         });
-        
+
         if (!ingredient) {
             return res.status(404).json({
                 success: false,
                 error: 'Ingredient negăsit'
             });
         }
-        
+
         // Detectează unitatea introdusă și convertește la unitatea ingredientului
         const ingredientUnit = ingredient.unit || 'buc';
         const inputUnit = req.body.input_unit || detectInputUnit(quantity, ingredientUnit);
         const convertedQuantity = convertUnit(quantity, inputUnit, ingredientUnit);
-        
+
         console.log(`📊 Unit conversion: ${quantity} ${inputUnit} → ${convertedQuantity} ${ingredientUnit}`);
-        
+
         // Calculează noul stoc (folosind cantitatea convertită)
         let newStock = 0;
         const oldStock = Number(ingredient.current_stock || 0);
-        
+
         if (operation === 'set') {
             newStock = convertedQuantity;
         } else if (operation === 'increase') {
@@ -189,7 +207,7 @@ router.post('/:id/update-stock', async (req, res) => {
         } else if (operation === 'decrease') {
             newStock = Math.max(0, oldStock - convertedQuantity);
         }
-        
+
         // Actualizează stocul în baza de date
         await new Promise((resolve, reject) => {
             db.run('UPDATE ingredients SET current_stock = ? WHERE id = ?', [newStock, id], (err) => {
@@ -197,7 +215,7 @@ router.post('/:id/update-stock', async (req, res) => {
                 else resolve();
             });
         });
-        
+
         // Creează stock move pentru istoric
         const stockDiff = newStock - oldStock;
         if (stockDiff !== 0) {
@@ -227,7 +245,7 @@ router.post('/:id/update-stock', async (req, res) => {
                 });
             });
         }
-        
+
         // Reîncarcă ingredientul actualizat
         const updatedIngredient = await new Promise((resolve, reject) => {
             db.get(`
@@ -242,9 +260,9 @@ router.post('/:id/update-stock', async (req, res) => {
                 else resolve(row);
             });
         });
-        
+
         console.log(`✅ Stock updated for ingredient ${id}: ${oldStock} → ${newStock} ${ingredient.unit} (operation: ${operation}, input: ${quantity} ${inputUnit})`);
-        
+
         res.json({
             success: true,
             data: {

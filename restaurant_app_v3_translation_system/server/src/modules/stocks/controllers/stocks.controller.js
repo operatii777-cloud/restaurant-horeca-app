@@ -489,6 +489,7 @@ async function getFinishedProducts(req, res, next) {
     res.json({
       success: true,
       data: finishedProducts,
+      products: finishedProducts, // Add for legacy admin.html compatibility
       count: finishedProducts.length,
     });
   } catch (error) {

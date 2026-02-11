@@ -4,9 +4,9 @@
  */
 
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  Navigation, Phone, CheckCircle, Package, MapPin, RefreshCw, 
-  Bike, X, History, ArrowLeft, Clock, DollarSign, Download 
+import {
+  Navigation, Phone, CheckCircle, Package, MapPin, RefreshCw,
+  Bike, X, History, ArrowLeft, Clock, DollarSign, Download
 } from 'lucide-react';
 import { getApiUrl } from '@/utils/serverConfig';
 import { initPWAInstall, showInstallPrompt, isPWAInstalled, isInstallPromptAvailable } from '@/utils/pwa-install';
@@ -40,7 +40,7 @@ export const CourierMobileApp: React.FC = () => {
   const [showInstallButton, setShowInstallButton] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
   const [buttonEnabled, setButtonEnabled] = useState(false);
-  
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
 
@@ -48,37 +48,37 @@ export const CourierMobileApp: React.FC = () => {
   useEffect(() => {
     initPWAInstall();
     setIsInstalled(isPWAInstalled());
-    
+
     // Listen for install prompt availability
     const handleInstallAvailable = () => {
       console.log('📱 PWA install prompt available - showing button');
       setShowInstallButton(true);
     };
-    
+
     const handleInstalled = () => {
       console.log('✅ PWA installed - hiding button');
       setIsInstalled(true);
       setShowInstallButton(false);
     };
-    
+
     window.addEventListener('pwa-install-available', handleInstallAvailable);
     window.addEventListener('pwa-installed', handleInstalled);
-    
+
     // Check if install prompt is available (Android/Chrome)
     if (isInstallPromptAvailable()) {
       console.log('📱 Install prompt already available');
       setShowInstallButton(true);
     }
-    
+
     // For iOS Safari - always show install button (uses Share menu)
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
     const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-    
+
     if (isIOS && isSafari && !isPWAInstalled()) {
       console.log('🍎 iOS Safari detected - showing manual install button');
       setShowInstallButton(true);
     }
-    
+
     // Check again after a delay (in case event fires late)
     const timeout = setTimeout(() => {
       if (!isPWAInstalled() && !showInstallButton) {
@@ -88,7 +88,7 @@ export const CourierMobileApp: React.FC = () => {
         }
       }
     }, 2000);
-    
+
     return () => {
       window.removeEventListener('pwa-install-available', handleInstallAvailable);
       window.removeEventListener('pwa-installed', handleInstalled);
@@ -101,7 +101,7 @@ export const CourierMobileApp: React.FC = () => {
     const params = new URLSearchParams(window.location.search);
     const token = params.get('token') || localStorage.getItem('courier_api_token');
     const id = params.get("courier id") || localStorage.getItem('courier_id');
-    
+
     if (token) {
       setApiToken(token);
       localStorage.setItem('courier_api_token', token);
@@ -121,7 +121,7 @@ export const CourierMobileApp: React.FC = () => {
       // apiUrl deja conține /api, deci folosim doar /couriers/me
       const res = await fetch(`${apiUrl}/couriers/me`, {
         headers: {
-          'Authorization': `Bearer "Token"`
+          'Authorization': `Bearer ${token}`
         }
       });
       const data = await res.json();
@@ -144,12 +144,12 @@ export const CourierMobileApp: React.FC = () => {
 
   const refreshOrders = async () => {
     if (!courierId && !apiToken) return;
-    
+
     setIsRefreshing(true);
     try {
       const apiUrl = getApiUrl();
       let res;
-      
+
       // Dacă avem token, folosim endpoint-ul cu autentificare
       // Include toate statusurile: active (assigned, picked_up) și istoric (delivered)
       if (apiToken) {
@@ -166,7 +166,7 @@ export const CourierMobileApp: React.FC = () => {
         // Include toate statusurile pentru a avea și istoricul
         res = await fetch(`${apiUrl}/couriers/${courierId}/deliveries?status=assigned,picked_up,delivered`);
       }
-      
+
       const data = await res.json();
       if (data.success) {
         setMyOrders(data.deliveries || []);
@@ -205,27 +205,27 @@ export const CourierMobileApp: React.FC = () => {
   // 🔴 FIX: Grupează istoricul pe zile calendaristice cu câștigurile respective
   const getHistoryByDate = () => {
     const groupedByDate: { [key: string]: { deliveries: DeliveryOrder[], earnings: number } } = {};
-    
+
     historyDeliveries.forEach(delivery => {
       if (!delivery.delivered_at) return;
-      
+
       const deliveredDate = new Date(delivery.delivered_at).toISOString().split('T')[0];
       const dateKey = deliveredDate;
-      
-        if (!groupedByDate[dateKey]) {
-          groupedByDate[dateKey] = { deliveries: [], earnings: 0 };
+
+      if (!groupedByDate[dateKey]) {
+        groupedByDate[dateKey] = { deliveries: [], earnings: 0 };
       }
-      
+
       groupedByDate[dateKey].deliveries.push(delivery);
       groupedByDate[dateKey].earnings += delivery.delivery_fee || 15;
     });
-    
+
     // Sortează zilele descrescător (cele mai recente primele)
     return Object.entries(groupedByDate)
-        .sort(([dateA], [dateB]) => dateB.localeCompare(dateA))
+      .sort(([dateA], [dateB]) => dateB.localeCompare(dateA))
       .map(([date, data]) => ({
         date,
-        deliveries: data.deliveries.sort((a, b) => 
+        deliveries: data.deliveries.sort((a, b) =>
           new Date(b.delivered_at!).getTime() - new Date(a.delivered_at!).getTime()
         ),
         earnings: data.earnings
@@ -249,24 +249,24 @@ export const CourierMobileApp: React.FC = () => {
     try {
       const apiUrl = getApiUrl();
       const headers: HeadersInit = { 'Content-Type': 'application/json' };
-      
+
       // Dacă avem token, adaugă-l în header
       if (apiToken) {
         headers['Authorization'] = `Bearer ${apiToken}`;
       }
-      
+
       // apiUrl deja conține /api, deci folosim doar /couriers/...
       const res = await fetch(`${apiUrl}/couriers/delivery/${deliveryId}/status`, {
         method: 'PUT',
         headers,
         body: JSON.stringify({ status }),
       });
-      
+
       if (!res.ok) {
         const errorData = await res.json().catch(() => ({ error: 'Eroare necunoscută' }));
         throw new Error(errorData.error || `HTTP ${res.status}`);
       }
-      
+
       const data = await res.json();
       if (data.success) {
         refreshOrders();
@@ -282,10 +282,10 @@ export const CourierMobileApp: React.FC = () => {
 
   const confirmDelivery = async () => {
     if (!selectedOrder) return;
-    
+
     const canvas = canvasRef.current;
     const signature = canvas ? canvas.toDataURL() : '';
-    
+
     try {
       await updateDeliveryStatus(selectedOrder.id, 'delivered');
       setShowSignaturePad(false);
@@ -353,7 +353,7 @@ export const CourierMobileApp: React.FC = () => {
   const handleTokenLogin = async (token: string) => {
     setIsLoggingIn(true);
     setLoginError(null);
-    
+
     try {
       await verifyTokenAndLoadCourier(token);
     } catch (err) {
@@ -367,7 +367,7 @@ export const CourierMobileApp: React.FC = () => {
   const handleUsernamePasswordLogin = async (username: string, password: string) => {
     setIsLoggingIn(true);
     setLoginError(null);
-    
+
     try {
       const apiUrl = getApiUrl();
       // apiUrl deja conține /api, deci folosim doar /couriers/login
@@ -376,7 +376,7 @@ export const CourierMobileApp: React.FC = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
-      
+
       const data = await res.json();
       if (data.success && data.token) {
         setApiToken(data.token);
@@ -403,13 +403,13 @@ export const CourierMobileApp: React.FC = () => {
     // Check if iOS Safari
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
     const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-    
+
     if (isIOS && isSafari) {
       // iOS Safari - show instructions
       alert('📱 Pentru a instala aplicația pe iOS:\n\n1. Apasă butonul Share (pătrat cu săgeată)\n2. Selectează "Adaugă pe ecranul principal"\n3. Confirmă instalarea');
       return;
     }
-    
+
     // Android/Chrome - use install prompt
     const installed = await showInstallPrompt();
     if (installed) {
@@ -422,10 +422,10 @@ export const CourierMobileApp: React.FC = () => {
   };
 
   useEffect(() => {
-        if (apiToken) {
-            setButtonEnabled(true);
-        }
-    }, [apiToken]);
+    if (apiToken) {
+      setButtonEnabled(true);
+    }
+  }, [apiToken]);
 
   if (!courierId && !apiToken) {
     return (
@@ -433,7 +433,7 @@ export const CourierMobileApp: React.FC = () => {
         <div className="courier-mobile-login__card">
           <Bike size={48} className="courier-mobile-login__icon" />
           <h2>Mod Curier</h2>
-          
+
           {/* Tabs pentru moduri de login */}
           <div className="d-flex gap-2 mb-3">
             <button
@@ -469,13 +469,13 @@ export const CourierMobileApp: React.FC = () => {
               Token API
             </button>
           </div>
-          
+
           {loginError && (
             <div style={{ color: 'red', marginBottom: '1rem', fontSize: '0.875rem', padding: '0.5rem', background: '#fee', borderRadius: '0.5rem' }}>
               {loginError}
             </div>
           )}
-          
+
           {loginMode === 'username' ? (
             <>
               <p style={{ fontSize: '0.875rem', color: '#666', marginBottom: '1rem' }}>
@@ -564,15 +564,15 @@ export const CourierMobileApp: React.FC = () => {
               </div>
             </>
           )}
-          
-          <button 
+
+          <button
             onClick={() => window.location.href = '/couriers'}
             className="courier-mobile-login__link"
             style={{ marginTop: '1rem' }}
           >
             Vezi lista curieri →
           </button>
-          
+
           {/* Backward compatibility: ID curier (pentru testare) */}
           <div style={{ marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid #e5e7eb' }}>
             <p style={{ fontSize: '0.75rem', color: '#999', marginBottom: '0.5rem' }}>
@@ -618,7 +618,7 @@ export const CourierMobileApp: React.FC = () => {
         </div>
         <div className="courier-mobile-header__actions">
           {showInstallButton && !isInstalled && (
-            <button 
+            <button
               onClick={handleInstallPWA}
               className="btn-install-pwa"
               title='Instalează aplicația pe telefon'
@@ -643,14 +643,14 @@ export const CourierMobileApp: React.FC = () => {
 
       {/* Tabs */}
       <div className="courier-mobile-tabs">
-        <button 
-          onClick={() => setActiveTab('active')} 
+        <button
+          onClick={() => setActiveTab('active')}
           className={`courier-mobile-tab ${activeTab === 'active' ? 'active' : ''}`}
         >
           <Bike size={16} /> Active ({activeDeliveries.length})
         </button>
-        <button 
-          onClick={() => setActiveTab('history')} 
+        <button
+          onClick={() => setActiveTab('history')}
           className={`courier-mobile-tab ${activeTab === 'history' ? 'active' : ''}`}
         >
           <History size={16} /> Istoric ({historyDeliveries.length})
@@ -688,18 +688,18 @@ export const CourierMobileApp: React.FC = () => {
                       <span>{order.delivery_address}</span>
                     </div>
                     <div className="courier-order-actions">
-                      <button 
+                      <button
                         onClick={() => window.open(`tel:${order.customer_phone}`, '_self')}
                         className="action-btn action-btn--call"
                       >
                         <Phone size={14} />"Sună"</button>
-                      <button 
+                      <button
                         onClick={() => openNavigation(order.delivery_address, 'google')}
                         className="action-btn action-btn--maps"
                       >
                         <Navigation size={14} /> Maps
                       </button>
-                      <button 
+                      <button
                         onClick={() => openNavigation(order.delivery_address, 'waze')}
                         className="action-btn action-btn--waze"
                       >
@@ -708,7 +708,7 @@ export const CourierMobileApp: React.FC = () => {
                     </div>
                   </div>
 
-                  <button 
+                  <button
                     onClick={() => handleAction(order)}
                     className={`courier-order-action ${order.status === 'picked_up' ? 'action--confirm' : 'action--pickup'}`}
                   >
@@ -727,10 +727,10 @@ export const CourierMobileApp: React.FC = () => {
             {getHistoryByDate().map(({ date, deliveries, earnings }) => {
               const dateObj = new Date(date);
               const isToday = date === new Date().toISOString().split('T')[0];
-              const dateLabel = isToday 
-                ? 'Astăzi' 
+              const dateLabel = isToday
+                ? 'Astăzi'
                 : dateObj.toLocaleDateString('ro-RO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-              
+
               return (
                 <div key={date} className="courier-history-day-group">
                   <div className="history-day-header">
@@ -775,9 +775,9 @@ export const CourierMobileApp: React.FC = () => {
                 <X size={20} />
               </button>
             </div>
-            
+
             <div className="signature-pad">
-              <canvas 
+              <canvas
                 ref={canvasRef}
                 className="signature-canvas"
                 width={300}
@@ -801,7 +801,7 @@ export const CourierMobileApp: React.FC = () => {
       )}
 
       {/* Back to Admin Button */}
-      <button 
+      <button
         onClick={() => window.location.href = '/dispatch'}
         className="courier-mobile-back"
         title='Înapoi la dispecerat'
