@@ -1,3 +1,19 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b43ab32550081d2a125f436dbf00dc753674b1a892a0cf64a9b35f9e7c480626
-size 53
+{
+  "name": "restaurant-horeca-workspace",
+  "version": "3.0.0",
+  "description": "Restaurant Horeca Workspace Root",
+  "private": true,
+  "workspaces": [
+    "restaurant_app_v3_translation_system",
+    "restaurant_app_v3_translation_system/server",
+    "restaurant_app_v3_translation_system/server/admin-vite"
+  ],
+  "scripts": {
+    "start": "cd restaurant_app_v3_translation_system/server && npm start",
+    "dev": "cd restaurant_app_v3_translation_system/server && npm run dev",
+    "build": "cd restaurant_app_v3_translation_system/server/admin-vite && npm run build",
+    "postinstall": "echo 'Please run: cd restaurant_app_v3_translation_system/server && npm install'"
+  },
+  "author": "Restaurant Horeca Team",
+  "license": "ISC"
+}

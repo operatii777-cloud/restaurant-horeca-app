@@ -1,3 +1,55 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:2a420090e24a0ec832171ae60a1a97c9912275c593e589d4a6e8d5bd5a5a6a6f
-size 1863
+{
+  "name": "restaurant-horeca-admin-vite",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.16.0",
+    "react-bootstrap": "^2.9.0",
+    "bootstrap": "^5.3.2",
+    "@tanstack/react-query": "^4.35.3",
+    "axios": "^1.5.0",
+    "zustand": "^4.4.3",
+    "immer": "^10.0.3",
+    "react-hook-form": "^7.47.0",
+    "@hookform/resolvers": "^3.3.2",
+    "zod": "^3.22.4",
+    "ag-grid-community": "^30.2.0",
+    "ag-grid-react": "^30.2.0",
+    "recharts": "^2.9.0",
+    "d3": "^7.8.5",
+    "lucide-react": "^0.288.0",
+    "react-leaflet": "^4.2.1",
+    "leaflet": "^1.9.4",
+    "qrcode": "^1.5.3",
+    "react-draggable": "^4.4.6",
+    "framer-motion": "^10.16.4",
+    "classnames": "^2.3.2",
+    "date-fns": "^2.30.0",
+    "react-hot-toast": "^2.4.1",
+    "@restart/hooks": "^0.4.15",
+    "dom-helpers": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.25",
+    "@types/react-dom": "^18.2.11",
+    "@types/leaflet": "^1.9.6",
+    "@types/qrcode": "^1.5.2",
+    "@vitejs/plugin-react": "^4.1.0",
+    "typescript": "^5.2.2",
+    "vite": "^4.5.0",
+    "eslint": "^8.51.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.5",
+    "@typescript-eslint/parser": "^6.7.5",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3"
+  }
+}

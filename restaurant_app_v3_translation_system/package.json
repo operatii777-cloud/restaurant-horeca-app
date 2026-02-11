@@ -1,3 +1,24 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ad9f42578c8e0cdf280f6e5420dcfe7e3e2a94aac7c68e42289037edece924b2
-size 529
+{
+  "name": "restaurant-horeca-app",
+  "version": "3.0.0",
+  "description": "Restaurant Horeca Management Application",
+  "private": true,
+  "workspaces": [
+    "server",
+    "server/admin-vite"
+  ],
+  "scripts": {
+    "start": "cd server && npm start",
+    "dev": "cd server && npm run dev",
+    "build": "cd server/admin-vite && npm run build",
+    "install:all": "npm install && cd server && npm install && cd admin-vite && npm install"
+  },
+  "keywords": [
+    "restaurant",
+    "horeca",
+    "management",
+    "pos"
+  ],
+  "author": "Restaurant Horeca Team",
+  "license": "ISC"
+}
