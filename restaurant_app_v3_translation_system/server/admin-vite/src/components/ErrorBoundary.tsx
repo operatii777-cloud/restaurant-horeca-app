@@ -1,12 +1,10 @@
-import { I18nContext } from '@/i18n/I18nContext';
-import React, { Component, ErrorInfo, ReactNode, useContext } from 'react';
+import React, { Component, ErrorInfo, ReactNode } from 'react';
 // CRITICAL: Nu folosim react-bootstrap în ErrorBoundary pentru a evita "Invalid hook call"
 // când hooks-urile nu sunt disponibile (multiple React instances sau bundling issues)
 
 interface Props {
   children: ReactNode;
   fallback?: ReactNode;
-  t?: (key: string) => string;
 }
 
 interface State {
@@ -19,7 +17,7 @@ interface State {
  * Global Error Boundary pentru captarea erorilor React
  * Previne crash-ul aplicației și afișează un mesaj user-friendly
  */
-class ErrorBoundaryInner extends Component<Props, State> {
+export class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -55,9 +53,6 @@ class ErrorBoundaryInner extends Component<Props, State> {
   };
 
   render() {
-    const { t } = this.props;
-    const translate = (key: string) => t ? t(key) : key;
-
     if (this.state.hasError) {
       // Custom fallback UI dacă e furnizat
       if (this.props.fallback) {
@@ -86,7 +81,7 @@ class ErrorBoundaryInner extends Component<Props, State> {
             <h2 style={{ marginTop: 0, marginBottom: '1rem', fontSize: '1.5rem' }}>
               ⚠️ Ceva nu a mers bine
             </h2>
-            <p style={{ marginBottom: '1rem' }}>{translate("Aplicația a întâmpinat o eroare neașteptată. Echipa tehnică a fost notificată.")}</p>
+            <p style={{ marginBottom: '1rem' }}>Aplicația a întâmpinat o eroare neașteptată. Echipa tehnică a fost notificată.</p>
             {this.state.error && (
               <details style={{ marginTop: '1rem' }}>
                 <summary style={{ cursor: 'pointer', fontWeight: 'bold', marginBottom: '0.5rem' }}>
@@ -164,12 +159,6 @@ class ErrorBoundaryInner extends Component<Props, State> {
     return this.props.children;
   }
 }
-
-export const ErrorBoundary = (props: Props) => {
-  const context = React.useContext(I18nContext);
-  const t = context ? context.t : (key: string) => key;
-  return <ErrorBoundaryInner {...props} t={t} />;
-};
 
 export default ErrorBoundary;
 

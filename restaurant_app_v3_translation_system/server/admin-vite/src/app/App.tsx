@@ -1,5 +1,4 @@
 const KioskTransferIframePage = lazy(() => import('@/modules/tipizate-enterprise/pages/KioskTransferIframePage'));
-// import { useTranslation } from '@/i18n/I18nContext';
 import { Navigate, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { AppLayout } from "@/modules/layout/AppLayout";
@@ -322,18 +321,16 @@ const AnafSyncPage = lazy(() => import('@/modules/stocks/fiscal/pages/AnafSyncPa
 const AnafIntegrationPage = lazy(() => import('@/modules/stocks/fiscal/pages/AnafIntegrationPage').then(m => ({ default: m.AnafIntegrationPage })));
 
 const App = () => {
-  //   const { t } = useTranslation();
-
   // PHASE PRODUCTION-READY: Accessible loading fallback
   const LoadingFallback = () => (
     <div
       className="loading-spinner-container"
       role="status"
       aria-live="polite"
-      aria-label="se incarca continutul"
+      aria-label="Se încarcă conținutul"
     >
       <div className="loading-spinner" aria-hidden="true"></div>
-      <span className="sr-only">"se incarca continutul"</span>
+      <span className="sr-only">Se încarcă conținutul</span>
       <style>{`
         @keyframes spin {
           0% { transform: rotate(0deg); }
