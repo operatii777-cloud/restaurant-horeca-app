@@ -25,6 +25,13 @@ import { DailyMenuPage } from "@/modules/daily-menu/pages/DailyMenuPage";
 import { LotsPage } from "@/modules/lots/pages/LotsPage";
 import { TraceabilityPage } from "@/modules/traceability/pages/TraceabilityPage";
 import { MenuPDFBuilderPage } from "@/modules/menu-pdf/pages/MenuPDFBuilderPage";
+// REFACTORED LEGACY PAGES - React + Vite + AG Grid + Tailwind
+import { 
+  AdminMainPage, 
+  AdminAdvancedPage, 
+  RecipesCatalogPage, 
+  IngredientsCatalogPage 
+} from "@/modules/admin-legacy/pages";
 // LEGACY - PHASE S3: Stocks NIR (legacy component) - REMOVED, using tipizate-enterprise instead
 // import NirListPageLegacy from "@/modules/stocks/nir/pages/NirListPage";
 // import NirCreatePage from "@/modules/stocks/nir/pages/NirCreatePage";
@@ -479,6 +486,13 @@ const App = () => {
       <Route path="/*" element={<AppLayout />}>
         <Route index element={<Navigate to="/welcome" replace />} />
         <Route path="welcome" element={<WelcomePage />} />
+        
+        {/* REFACTORED LEGACY ADMIN PAGES - React + Vite + AG Grid + Tailwind */}
+        <Route path="admin-main" element={<AdminMainPage />} />
+        <Route path="admin-advanced-menu" element={<AdminAdvancedPage />} />
+        <Route path="catalog-recipes" element={<RecipesCatalogPage />} />
+        <Route path="catalog-ingredients" element={<IngredientsCatalogPage />} />
+        
         <Route path="dashboard" element={<DashboardPage />} />
         <Route path="dashboard/monitoring" element={<MonitoringPage />} />
         <Route path="monitoring/performance" element={<MonitoringPage />} />
