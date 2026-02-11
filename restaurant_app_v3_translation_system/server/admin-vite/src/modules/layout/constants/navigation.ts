@@ -272,6 +272,22 @@ export const NAVIGATION_ITEMS: NavItem[] = [
   },
 
   // ========================================
+  // 9.5. MENIURI ADMIN (REFACTORIZATE DIN HTML)
+  // ========================================
+  {
+    label: 'Admin Refactorizat',
+    path: '#',
+    icon: '🔧',
+    badge: 'nou',
+    children: [
+      { label: 'Admin Principal', path: '/admin-main', icon: '🏠', badge: 'react' },
+      { label: 'Admin Avansat', path: '/admin-advanced-menu', icon: '📊', badge: 'react' },
+      { label: 'Catalog Rețete', path: '/catalog-recipes', icon: '📚', badge: 'react' },
+      { label: 'Catalog Ingrediente', path: '/catalog-ingredients', icon: '📦', badge: 'react' },
+    ],
+  },
+
+  // ========================================
   // 10. SETĂRI & CONFIGURARE
   // ========================================
   {
