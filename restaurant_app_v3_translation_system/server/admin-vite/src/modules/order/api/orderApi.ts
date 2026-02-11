@@ -1,4 +1,3 @@
-// import { useTranslation } from '@/i18n/I18nContext';
 /**
  * PHASE S10 - Order API Client
  * 
@@ -37,7 +36,7 @@ export async function createOrder(payload: {
     isFree?: boolean;
   }>;
   table?: string | number;
-  type?: 'dine_in' | 'takeout' | "Delivery";
+  type?: 'dine_in' | 'takeout' | 'delivery';
   notes?: string;
   total: number;
 }): Promise<{ success: boolean; orderId: number }> {
