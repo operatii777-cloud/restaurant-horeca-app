@@ -212,7 +212,16 @@ export const IngredientsCatalogPage: React.FC = () => {
   const handleImportIngredient = useCallback(async (id: number) => {
     try {
       const costPerUnit = prompt('Introduceți costul per unitate (RON):');
+      if (costPerUnit && (isNaN(parseFloat(costPerUnit)) || parseFloat(costPerUnit) < 0)) {
+        alert('Cost invalid');
+        return;
+      }
+      
       const currentStock = prompt('Introduceți stocul curent:');
+      if (currentStock && (isNaN(parseFloat(currentStock)) || parseFloat(currentStock) < 0)) {
+        alert('Stoc invalid');
+        return;
+      }
       
       const response = await httpClient.post(`/api/ingredient-catalog/import/${id}`, {
         cost_per_unit: costPerUnit ? parseFloat(costPerUnit) : undefined,
@@ -249,7 +258,7 @@ export const IngredientsCatalogPage: React.FC = () => {
     }
     
     const costPerUnit = prompt(`Introduceți costul per unitate pentru ${selectedRows.length} ingrediente (RON):`);
-    if (!costPerUnit || parseFloat(costPerUnit) <= 0) {
+    if (!costPerUnit || isNaN(parseFloat(costPerUnit)) || parseFloat(costPerUnit) <= 0) {
       alert('Cost invalid');
       return;
     }

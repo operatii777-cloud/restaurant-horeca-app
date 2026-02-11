@@ -177,7 +177,7 @@ export const RecipesCatalogPage: React.FC = () => {
     try {
       // In a real implementation, you'd show a modal to get the price
       const price = prompt('Introduceți prețul de vânzare (RON):');
-      if (!price || parseFloat(price) <= 0) {
+      if (!price || isNaN(parseFloat(price)) || parseFloat(price) <= 0) {
         alert('Preț invalid');
         return;
       }
@@ -215,7 +215,7 @@ export const RecipesCatalogPage: React.FC = () => {
     }
     
     const price = prompt(`Introduceți prețul pentru ${selectedRows.length} rețete (RON):`);
-    if (!price || parseFloat(price) <= 0) {
+    if (!price || isNaN(parseFloat(price)) || parseFloat(price) <= 0) {
       alert('Preț invalid');
       return;
     }
