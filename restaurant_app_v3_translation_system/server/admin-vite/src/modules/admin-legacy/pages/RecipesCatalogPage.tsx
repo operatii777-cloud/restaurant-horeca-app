@@ -1,48 +1,87 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { ColDef } from 'ag-grid-community';
 import { 
   BookOpen, 
   Download, 
   Search,
-  AlertCircle
+  AlertCircle,
+  Loader2
 } from 'lucide-react';
+import { httpClient } from '@/shared/api/httpClient';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 interface RecipeTemplate {
   id: number;
   name: string;
-  industry: string;
-  allergens: string[];
-  margin: number;
+  name_en?: string;
   category: string;
+  category_en?: string;
+  allergens?: string | string[];
+  template_category?: string;
+  cuisine_type?: string;
+  suggested_price?: number;
+  estimated_cost?: number;
   selected?: boolean;
+}
+
+interface Allergen {
+  id: number;
+  code: string;
+  name: string;
+  description: string;
 }
 
 export const RecipesCatalogPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedIndustry, setSelectedIndustry] = useState('all');
+  const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedAllergen, setSelectedAllergen] = useState('all');
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
   const [activeTab, setActiveTab] = useState<'recipes' | 'allergens' | 'additives'>('recipes');
+  
+  // API state
+  const [recipeTemplates, setRecipeTemplates] = useState<RecipeTemplate[]>([]);
+  const [allergensList, setAllergensList] = useState<Allergen[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // Mock data - in production, this would come from API
-  const recipeTemplates: RecipeTemplate[] = [
-    { id: 1, name: 'Pizza Margherita', industry: 'Italian', allergens: ['Gluten', 'Lactose'], margin: 65, category: 'Main Course' },
-    { id: 2, name: 'Caesar Salad', industry: 'American', allergens: ['Gluten', 'Eggs'], margin: 70, category: 'Appetizer' },
-    { id: 3, name: 'Burger Clasic', industry: 'Fast Food', allergens: ['Gluten', 'Lactose'], margin: 60, category: 'Main Course' },
-    { id: 4, name: 'Pasta Carbonara', industry: 'Italian', allergens: ['Gluten', 'Eggs', 'Lactose'], margin: 68, category: 'Main Course' },
-    { id: 5, name: 'Sushi Roll', industry: 'Japanese', allergens: ['Fish', 'Soy'], margin: 75, category: 'Main Course' },
-  ];
+  // Load recipes from API
+  useEffect(() => {
+    const loadRecipes = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await httpClient.get('/api/recipe-templates');
+        if (response.data.success && response.data.recipes) {
+          setRecipeTemplates(response.data.recipes);
+        }
+      } catch (err: any) {
+        console.error('Error loading recipes:', err);
+        setError(err.message || 'Failed to load recipes');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const allergensList = [
-    { id: 1, code: 'A1', name: 'Cereale cu gluten', description: 'Grâu, secară, orz, ovăz, etc.' },
-    { id: 2, code: 'A2', name: 'Crustacee', description: 'Creveți, crabi, homari, etc.' },
-    { id: 3, code: 'A3', name: 'Ouă', description: 'Ouă și produse din ouă' },
-    { id: 4, code: 'A4', name: 'Pește', description: 'Pește și produse din pește' },
-    { id: 5, code: 'A7', name: 'Lapte', description: 'Lapte și produse lactate (incl. lactoză)' },
-  ];
+    loadRecipes();
+  }, []);
+
+  // Load allergens from API
+  useEffect(() => {
+    const loadAllergens = async () => {
+      try {
+        const response = await httpClient.get('/api/ingredient-catalog/allergens');
+        if (response.data.success && response.data.allergens) {
+          setAllergensList(response.data.allergens);
+        }
+      } catch (err) {
+        console.error('Error loading allergens:', err);
+      }
+    };
+
+    loadAllergens();
+  }, []);
 
   const columnDefs: ColDef<RecipeTemplate>[] = [
     {
@@ -55,19 +94,34 @@ export const RecipesCatalogPage: React.FC = () => {
     },
     { headerName: 'ID', field: 'id', width: 80, filter: true },
     { headerName: 'Nume Rețetă', field: 'name', flex: 1, filter: true, sortable: true },
-    { headerName: 'Industrie', field: 'industry', width: 150, filter: true, sortable: true },
+    { headerName: 'Categorie', field: 'category', width: 150, filter: true, sortable: true },
     { 
       headerName: 'Alergeni', 
       field: 'allergens',
       width: 200,
-      valueFormatter: (params) => params.value.join(', ')
+      valueFormatter: (params) => {
+        const allergens = params.value;
+        if (!allergens) return 'Fără';
+        if (typeof allergens === 'string') {
+          try {
+            const parsed = JSON.parse(allergens);
+            return Array.isArray(parsed) ? parsed.join(', ') : allergens;
+          } catch {
+            return allergens;
+          }
+        }
+        if (Array.isArray(allergens)) {
+          return allergens.join(', ');
+        }
+        return 'Fără';
+      }
     },
     { 
-      headerName: 'Marjă (%)', 
-      field: 'margin', 
+      headerName: 'Preț estimat', 
+      field: 'suggested_price', 
       width: 120,
       filter: 'agNumberColumnFilter',
-      valueFormatter: (params) => `${params.value}%`
+      valueFormatter: (params) => params.value ? `${params.value.toFixed(2)} RON` : 'N/A'
     },
     {
       headerName: 'Acțiuni',
@@ -100,36 +154,130 @@ export const RecipesCatalogPage: React.FC = () => {
   const filteredRecipes = useMemo(() => {
     return recipeTemplates.filter(recipe => {
       const matchesSearch = recipe.name.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesIndustry = selectedIndustry === 'all' || recipe.industry === selectedIndustry;
-      const matchesAllergen = selectedAllergen === 'all' || recipe.allergens.includes(selectedAllergen);
-      return matchesSearch && matchesIndustry && matchesAllergen;
+      const matchesCategory = selectedCategory === 'all' || recipe.category === selectedCategory;
+      
+      // Parse allergens if they're a string
+      let recipeAllergens: string[] = [];
+      if (typeof recipe.allergens === 'string') {
+        try {
+          recipeAllergens = JSON.parse(recipe.allergens);
+        } catch {
+          recipeAllergens = recipe.allergens ? [recipe.allergens] : [];
+        }
+      } else if (Array.isArray(recipe.allergens)) {
+        recipeAllergens = recipe.allergens;
+      }
+      
+      const matchesAllergen = selectedAllergen === 'all' || recipeAllergens.includes(selectedAllergen);
+      return matchesSearch && matchesCategory && matchesAllergen;
     });
-  }, [searchTerm, selectedIndustry, selectedAllergen]);
+  }, [recipeTemplates, searchTerm, selectedCategory, selectedAllergen]);
 
-  const handleImportRecipe = useCallback((id: number) => {
-    console.log('Importing recipe:', id);
-    // TODO: Replace with API call and toast notification system
-    // API call would go here
-    alert(`Rețeta ${id} a fost importată cu succes!`);
+  const handleImportRecipe = useCallback(async (id: number) => {
+    try {
+      // In a real implementation, you'd show a modal to get the price
+      const price = prompt('Introduceți prețul de vânzare (RON):');
+      if (!price || parseFloat(price) <= 0) {
+        alert('Preț invalid');
+        return;
+      }
+
+      const response = await httpClient.post(`/api/recipe-templates/import/${id}`, {
+        price: parseFloat(price)
+      });
+
+      if (response.data.success) {
+        alert(response.data.message || 'Rețeta a fost importată cu succes!');
+      }
+    } catch (err: any) {
+      console.error('Error importing recipe:', err);
+      alert(err.response?.data?.error || 'Eroare la importarea rețetei');
+    }
   }, []);
 
-  const handleViewDetails = useCallback((id: number) => {
-    console.log('Viewing details for:', id);
+  const handleViewDetails = useCallback(async (id: number) => {
+    try {
+      const response = await httpClient.get(`/api/recipe-templates/${id}`);
+      if (response.data.success) {
+        const { template, ingredients } = response.data;
+        alert(`${template.name}\n\nIngrediente: ${ingredients.length}\n\nDetalii complete în consolă`);
+        console.log('Recipe details:', response.data);
+      }
+    } catch (err) {
+      console.error('Error loading recipe details:', err);
+    }
   }, []);
 
-  const handleBulkImport = useCallback(() => {
+  const handleBulkImport = useCallback(async () => {
     if (selectedRows.length === 0) {
-      // TODO: Replace with toast notification system
       alert('Selectați cel puțin o rețetă pentru import.');
       return;
     }
-    console.log('Bulk importing:', selectedRows);
-    // TODO: Replace with API call and toast notification system
-    alert(`${selectedRows.length} rețete au fost importate cu succes!`);
+    
+    const price = prompt(`Introduceți prețul pentru ${selectedRows.length} rețete (RON):`);
+    if (!price || parseFloat(price) <= 0) {
+      alert('Preț invalid');
+      return;
+    }
+
+    let successCount = 0;
+    let errorCount = 0;
+
+    for (const id of selectedRows) {
+      try {
+        await httpClient.post(`/api/recipe-templates/import/${id}`, {
+          price: parseFloat(price)
+        });
+        successCount++;
+      } catch (err) {
+        errorCount++;
+        console.error(`Error importing recipe ${id}:`, err);
+      }
+    }
+
+    alert(`Import complet!\n${successCount} rețete importate cu succes\n${errorCount} erori`);
   }, [selectedRows]);
 
-  const industries = ['all', ...Array.from(new Set(recipeTemplates.map(r => r.industry)))];
-  const allergens = ['all', ...Array.from(new Set(recipeTemplates.flatMap(r => r.allergens)))];
+  const categories = useMemo(() => {
+    const cats = recipeTemplates.map(r => r.category).filter(Boolean);
+    return ['all', ...Array.from(new Set(cats))];
+  }, [recipeTemplates]);
+
+  const allergens = useMemo(() => {
+    const allAllergens: string[] = [];
+    recipeTemplates.forEach(r => {
+      let recipeAllergens: string[] = [];
+      if (typeof r.allergens === 'string') {
+        try {
+          recipeAllergens = JSON.parse(r.allergens);
+        } catch {
+          if (r.allergens) recipeAllergens = [r.allergens];
+        }
+      } else if (Array.isArray(r.allergens)) {
+        recipeAllergens = r.allergens;
+      }
+      allAllergens.push(...recipeAllergens);
+    });
+    return ['all', ...Array.from(new Set(allAllergens))];
+  }, [recipeTemplates]);
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50 flex items-center justify-center">
+        <div className="bg-white rounded-lg shadow-lg p-8 max-w-md">
+          <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+          <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Eroare</h2>
+          <p className="text-gray-600 text-center">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-6 w-full px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+          >
+            Reîncarcă pagina
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50">
@@ -210,13 +358,13 @@ export const RecipesCatalogPage: React.FC = () => {
                   />
                 </div>
                 <select
-                  value={selectedIndustry}
-                  onChange={(e) => setSelectedIndustry(e.target.value)}
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
                   className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 >
-                  {industries.map(industry => (
-                    <option key={industry} value={industry}>
-                      {industry === 'all' ? 'Toate Industriile' : industry}
+                  {categories.map(category => (
+                    <option key={category} value={category}>
+                      {category === 'all' ? 'Toate Categoriile' : category}
                     </option>
                   ))}
                 </select>
@@ -257,32 +405,41 @@ export const RecipesCatalogPage: React.FC = () => {
                 <div className="text-2xl font-bold text-green-600">{selectedRows.length}</div>
               </div>
               <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-                <div className="text-sm text-gray-600 mb-1">Marjă Medie</div>
+                <div className="text-sm text-gray-600 mb-1">Preț mediu estimat</div>
                 <div className="text-2xl font-bold text-orange-600">
-                  {(recipeTemplates.reduce((acc, r) => acc + r.margin, 0) / recipeTemplates.length).toFixed(1)}%
+                  {recipeTemplates.length > 0
+                    ? (recipeTemplates.reduce((acc, r) => acc + (r.suggested_price || 0), 0) / recipeTemplates.length).toFixed(2)
+                    : '0.00'} RON
                 </div>
               </div>
             </div>
 
             {/* AG Grid */}
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-              <div className="ag-theme-alpine" style={{ height: 500 }}>
-                <AgGridReact
-                  rowData={filteredRecipes}
-                  columnDefs={columnDefs}
-                  defaultColDef={{
-                    sortable: true,
-                    resizable: true,
-                  }}
-                  rowSelection="multiple"
-                  onSelectionChanged={(event) => {
-                    const selectedNodes = event.api.getSelectedNodes();
-                    setSelectedRows(selectedNodes.map(node => node.data.id));
-                  }}
-                  pagination={true}
-                  paginationPageSize={10}
-                />
-              </div>
+              {loading ? (
+                <div className="flex items-center justify-center py-20">
+                  <Loader2 className="w-8 h-8 text-purple-600 animate-spin" />
+                  <span className="ml-3 text-gray-600">Se încarcă rețetele...</span>
+                </div>
+              ) : (
+                <div className="ag-theme-alpine" style={{ height: 500 }}>
+                  <AgGridReact
+                    rowData={filteredRecipes}
+                    columnDefs={columnDefs}
+                    defaultColDef={{
+                      sortable: true,
+                      resizable: true,
+                    }}
+                    rowSelection="multiple"
+                    onSelectionChanged={(event) => {
+                      const selectedNodes = event.api.getSelectedNodes();
+                      setSelectedRows(selectedNodes.map(node => node.data.id));
+                    }}
+                    pagination={true}
+                    paginationPageSize={10}
+                  />
+                </div>
+              )}
             </div>
           </>
         )}
