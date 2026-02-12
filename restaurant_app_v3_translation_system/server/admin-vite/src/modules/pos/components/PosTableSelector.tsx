@@ -87,7 +87,7 @@ export function PosTableSelector() {
       setError(null);
     } catch (err: any) {
       console.error('PosTableSelector Error loading tables:', err);
-      setError(err.response?.data?.error || 'Eroare la încărcarea meselor');
+      setError(err.response?.data?.error || t('pos.tables.errorLoading'));
     } finally {
       setLoading(false);
     }
@@ -106,7 +106,7 @@ export function PosTableSelector() {
           // Convert order items to draftItems
           const draftItems = (order.items || []).map((item: any) => ({
             productId: item.product_id || item.productId,
-            name: item.name || item.product_name || 'Produs',
+            name: item.name || item.product_name || t('common.product'),
             qty: item.quantity || item.qty || 1,
             unitPrice: item.price || item.unit_price || 0,
             total: (item.quantity || item.qty || 1) * (item.price || item.unit_price || 0),
@@ -128,7 +128,7 @@ export function PosTableSelector() {
       }
     } catch (err: any) {
       console.error('PosTableSelector Error handling table click:', err);
-      alert(err.response?.data?.error || 'Eroare la procesarea mesei');
+      alert(err.response?.data?.error || t('pos.tables.errorProcessing'));
     } finally {
       setProcessingTable(null);
     }
@@ -138,9 +138,9 @@ export function PosTableSelector() {
     return (
       <div className="pos-table-selector-loading">
         <div className="spinner-border spinner-border-sm text-primary" role="status">
-          <span className="visually-hidden">Se încarcă mesele...</span>
+          <span className="visually-hidden">{t('pos.tables.loading')}</span>
         </div>
-        <p className="text-muted mt-2">Se încarcă mesele...</p>
+        <p className="text-muted mt-2">{t('pos.tables.loading')}</p>
       </div>
     );
   }
@@ -153,7 +153,8 @@ export function PosTableSelector() {
           {error}
         </div>
         <button className="btn btn-outline-primary btn-sm" onClick={loadTables}>
-          <i className="fas fa-redo me-1"></i>Reîncearcă</button>
+          <i className="fas fa-redo me-1"></i>{t('actions.retry')}
+        </button>
       </div>
     );
   }
@@ -161,11 +162,11 @@ export function PosTableSelector() {
   const getStatusLabel = (status: Table['status']) => {
     switch (status) {
       case 'FREE':
-        return 'Liberă';
+        return t('pos.tables.available');
       case 'OCCUPIED':
-        return 'Ocupată';
+        return t('pos.tables.occupied');
       case 'HAS_OPEN_ORDER':
-        return 'Comandă deschisă';
+        return t('pos.tables.openOrder');
       default:
         return status;
     }
@@ -187,11 +188,11 @@ export function PosTableSelector() {
   return (
     <div className="pos-table-selector">
       <div className="pos-table-selector-header">
-        <h4 className="pos-table-selector-title">Selectează Masa</h4>
+        <h4 className="pos-table-selector-title">{t('pos.tables.selectTable')}</h4>
         <button
           className="btn btn-sm btn-outline-secondary"
           onClick={loadTables}
-          title="Reîncarcă mesele"
+          title={t('pos.tables.reloadTables')}
         >
           <i className="fas fa-sync-alt"></i>
         </button>
@@ -200,7 +201,7 @@ export function PosTableSelector() {
       <div className="pos-table-grid">
         {tables.length === 0 ? (
           <div className="pos-table-empty">
-            <p className="text-muted">Nu există mese disponibile</p>
+            <p className="text-muted">{t('pos.tables.noTables')}</p>
           </div>
         ) : (
           tables.map((table) => {
@@ -213,12 +214,12 @@ export function PosTableSelector() {
                 className={`pos-table-btn ${isSelected ? 'selected' : ''} ${getStatusClass(table.status)}`}
                 onClick={() => handleTableClick(table)}
                 disabled={isProcessing}
-                title={`Masa ${table.table_number} - ${getStatusLabel(table.status)}`}
+                title={`${t('pos.tables.table')} ${table.table_number} - ${getStatusLabel(table.status)}`}
               >
                 {isProcessing ? (
                   <div className="pos-table-processing">
                     <div className="spinner-border spinner-border-sm" role="status">
-                      <span className="visually-hidden">Se procesează...</span>
+                      <span className="visually-hidden">{t('common.processing')}</span>
                     </div>
                   </div>
                 ) : (
@@ -254,7 +255,8 @@ export function PosTableSelector() {
               resetDraft();
             }}
           >
-            <i className="fas fa-times me-1"></i>Șterge selecția</button>
+            <i className="fas fa-times me-1"></i>{t('pos.tables.clearSelection')}
+          </button>
         </div>
       )}
     </div>

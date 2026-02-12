@@ -65,7 +65,8 @@ export const translations = {
       create: "Creează",
       update: "Actualizează",
       clone: "Clonează",
-      duplicate: "Duplică"
+      duplicate: "Duplică",
+      retry: "Reîncearcă"
     },
     // Common labels
     common: {
@@ -99,6 +100,8 @@ export const translations = {
       required: "Obligatoriu",
       selected: "Selectat",
       filtered: "Filtrate",
+      product: "Produs",
+      processing: "Se procesează...",
       items: "Articole",
       results: "Rezultate",
       showing: "Afișare",
@@ -330,7 +333,13 @@ export const translations = {
         available: "Disponibilă",
         occupied: "Ocupată",
         reserved: "Rezervată",
-        noTables: "Nu există mese disponibile"
+        noTables: "Nu există mese disponibile",
+        openOrder: "Comandă deschisă",
+        loading: "Se încarcă mesele...",
+        reloadTables: "Reîncarcă mesele",
+        errorLoading: "Eroare la încărcarea meselor",
+        errorProcessing: "Eroare la procesarea mesei",
+        clearSelection: "Șterge selecția"
       },
       
       // Products
@@ -378,7 +387,8 @@ export const translations = {
           online: "Online",
           account: "Cont",
           protocol: "Protocol",
-          degustare: "Degustare"
+          degustare: "Degustare",
+          other: "Altă metodă"
         },
         amount: "Sumă",
         remaining: "Rămas",
@@ -399,7 +409,10 @@ export const translations = {
         enterAmount: "Introdu suma",
         clearAll: "Șterge tot",
         invalidAmount: "Sumă invalidă",
-        amountExceedsRemaining: "Suma depășește rămasul ({remaining} RON)"
+        amountExceedsRemaining: "Suma depășește rămasul ({remaining} RON)",
+        noPayments: "Nu există plăți înregistrate",
+        paymentsRecorded: "Plăți efectuate",
+        removePayment: "Șterge plată"
       },
       
       // Fiscal
@@ -1375,7 +1388,8 @@ export const translations = {
           online: "Online",
           account: "Account",
           protocol: "Protocol",
-          degustare: "Tasting"
+          degustare: "Tasting",
+          other: "Other method"
         },
         amount: "Amount",
         remaining: "Remaining",
@@ -1396,7 +1410,10 @@ export const translations = {
         enterAmount: "Enter amount",
         clearAll: "Clear all",
         invalidAmount: "Invalid amount",
-        amountExceedsRemaining: "Amount exceeds remaining ({remaining} RON)"
+        amountExceedsRemaining: "Amount exceeds remaining ({remaining} RON)",
+        noPayments: "No payments recorded",
+        paymentsRecorded: "Payments recorded",
+        removePayment: "Remove payment"
       },
       
       // Fiscal
