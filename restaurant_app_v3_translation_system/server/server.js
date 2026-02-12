@@ -2506,8 +2506,19 @@ dbPromise.then(async (db) => {
   // API PROXY ROUTES (Fix frontend API calls)
   // Must be AFTER modules are loaded
   // ========================================
+  
+  // Initialize config/database connection for admin routes
+  const configDb = require('./config/database');
+  configDb.connect().then(() => {
+    console.log('✅ Config database connection initialized for admin routes');
+  }).catch((err) => {
+    console.error('⚠️ Config database connection failed, admin routes may not work:', err.message);
+  });
+
   const ingredientsRoutes = require('./routes/admin/ingredients-simple.routes');
   const recipesRoutes = require('./routes/admin/recipes-simple.routes');
+  const productsRoutes = require('./routes/admin/products-simple.routes');
+  const menuRoutes = require('./routes/admin/menu.routes');
 
   // Direct routes for /api/ingredients (proxy to admin)
   app.use('/api/ingredients', ingredientsRoutes);
@@ -2518,7 +2529,13 @@ dbPromise.then(async (db) => {
   // Direct routes for /api/recipes (proxy to admin)
   app.use('/api/recipes', recipesRoutes);
 
-  console.log('✅ API proxy routes configured: /api/ingredients, /api/admin/ingredients, /api/recipes');
+  // Products routes
+  app.use('/api/admin/products', productsRoutes);
+
+  // Menu routes (alias to products for frontend compatibility)
+  app.use('/api/admin/menu', menuRoutes);
+
+  console.log('✅ API proxy routes configured: /api/ingredients, /api/admin/ingredients, /api/recipes, /api/admin/products, /api/admin/menu');
 
   // PHASE S7.1 - POS Fiscal Routes (after modules loaded)
   const posFiscalRoutes = require('./src/modules/fiscal/routes.pos');
