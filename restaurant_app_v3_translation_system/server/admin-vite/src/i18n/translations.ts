@@ -1015,6 +1015,28 @@ export const translations = {
         cancel: "Anulează"
       },
       
+      // Modal
+      modal: {
+        edit: "Editează rezervarea",
+        table: "Masă",
+        fullNamePlaceholder: "Nume complet",
+        phonePlaceholder: "07xx xxx xxx",
+        emailPlaceholder: "client@email.com",
+        duration: "Durată (minute)",
+        persons: "pers.",
+        selectTable: "Selectează masa",
+        occupied: "ocupată",
+        checkingAvailability: "Se verifică disponibilitatea meselor...",
+        errorLoadingTables: "Eroare la încărcarea meselor",
+        customerNotes: "Note client",
+        customerNotesPlaceholder: "Preferințe, alergii, cereri speciale",
+        internalNotes: "Note interne",
+        internalNotesPlaceholder: "Instrucțiuni pentru staff, notificări către host",
+        saving: "Se salvează...",
+        saveChanges: "Salvează modificările",
+        errorSaving: "Nu am putut salva rezervarea"
+      },
+      
       // Calendar
       calendar: {
         title: "Calendar Rezervări",
@@ -2108,6 +2130,28 @@ export const translations = {
         occasion: "Occasion",
         create: "Create Reservation",
         cancel: "Cancel"
+      },
+      
+      // Modal
+      modal: {
+        edit: "Edit reservation",
+        table: "Table",
+        fullNamePlaceholder: "Full name",
+        phonePlaceholder: "07xx xxx xxx",
+        emailPlaceholder: "client@email.com",
+        duration: "Duration (minutes)",
+        persons: "pers.",
+        selectTable: "Select table",
+        occupied: "occupied",
+        checkingAvailability: "Checking table availability...",
+        errorLoadingTables: "Error loading tables",
+        customerNotes: "Customer notes",
+        customerNotesPlaceholder: "Preferences, allergies, special requests",
+        internalNotes: "Internal notes",
+        internalNotesPlaceholder: "Staff instructions, host notifications",
+        saving: "Saving...",
+        saveChanges: "Save changes",
+        errorSaving: "Could not save reservation"
       },
       
       // Calendar
