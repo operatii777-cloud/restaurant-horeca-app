@@ -7,7 +7,10 @@ router.get('/', async (req, res) => {
     try {
         console.log('🍕 Fetching products from real database...');
         
-        const products = await db.all(`
+        // Get category filter if provided
+        const { category } = req.query;
+        
+        let query = `
             SELECT 
                 id,
                 name,
@@ -22,15 +25,26 @@ router.get('/', async (req, res) => {
                 is_vegetarian,
                 is_spicy,
                 is_sellable as is_available,
+                is_takeout_only,
                 allergens,
                 allergens_en,
                 prep_time,
                 spice_level,
                 image_url
             FROM menu
-            WHERE is_sellable = 1
-            ORDER BY category, name
-        `);
+        `;
+        
+        const params = [];
+        
+        // Add category filter if provided
+        if (category && category.trim() !== '') {
+            query += ' WHERE category = ?';
+            params.push(category.trim());
+        }
+        
+        query += ' ORDER BY category, name';
+        
+        const products = await db.all(query, params);
         
         console.log(`✅ Found ${products.length} products`);
         
@@ -43,14 +57,12 @@ router.get('/', async (req, res) => {
             return {
                 ...product,
                 has_recipe: recipeCount.count > 0 ? 1 : 0,
-                name_en: product.name_en || product.name
+                name_en: product.name_en || product.name,
+                display_order: 0  // Add default display_order if missing
             };
         }));
         
-        res.json({
-            success: true,
-            data: productsWithRecipes
-        });
+        res.json(productsWithRecipes);
     } catch (error) {
         console.error('❌ Error fetching products:', error.message);
         res.status(500).json({
