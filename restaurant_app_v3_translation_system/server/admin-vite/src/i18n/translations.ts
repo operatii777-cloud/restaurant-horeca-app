@@ -916,7 +916,51 @@ export const translations = {
         margin: "Marjă",
         growth: "Creștere",
         change: "Schimbare",
-        vs: "vs"
+        vs: "vs",
+        revenueToday: "Venituri Astăzi",
+        ordersToday: "Comenzi Astăzi",
+        profitToday: "Profit Astăzi",
+        cogsToday: "COGS Astăzi",
+        cogsDescription: "Cost ingrediente vândute",
+        marginLabel: "Marjă",
+        vsYesterday: "față de ieri",
+        salesToday: "Vânzări Astăzi",
+        estimatedProfit: "Profit Estimat",
+        criticalStock: "Stocuri Critice",
+        warnings: "avertismente"
+      },
+      
+      // KPI Business
+      kpi: {
+        loading: "Se încarcă KPI-urile business...",
+        error: "Eroare la încărcarea KPI-urilor:",
+        stockAlerts: "Alerte Stoc",
+        lowStockProducts: "Produse sub minim stoc",
+        customerRetention: "Retenție Clienți",
+        returningCustomers: "Clienți care revin",
+        tableRotation: "Rotație Mese",
+        groupsPerTable: "Grupuri per masă ocupată",
+        tableUtilization: "Utilizare Mese",
+        tablesUsed: "Mese folosite din 200",
+        overallRating: "Rating Mediu OVERALL",
+        overallRatings: "evaluări (overall)",
+        excellentRatings: "Rating-uri 5★ (OVERALL)",
+        veryHappyCustomers: "Clienți foarte mulțumiți",
+        lowRatings: "Rating-uri ≤2★ (OVERALL)",
+        needsAttention: "Necesită atenție urgentă",
+        revenueChart: "Evoluție Venituri & Marjă Brută (Ultimele 7 zile)",
+        revenueLabel: "Venituri (RON)",
+        grossMargin: "Marjă Brută (%)",
+        revenueTooltip: "Venituri:",
+        marginTooltip: "Marjă:",
+        top5Products: "Top 5 Produse Astăzi",
+        product: "Produs",
+        quantity: "Cantitate",
+        revenue: "Venit",
+        percentage: "%",
+        noData: "Nu există date disponibile",
+        topProductsDistribution: "Top Produse - Distribuție Venituri",
+        revenueRon: "Venit (RON)"
       },
       
       // Charts
@@ -928,7 +972,11 @@ export const translations = {
         hourlyActivity: "Activitate pe Ore",
         dailyActivity: "Activitate Zilnică",
         weeklyTrend: "Trend Săptămânal",
-        monthlyTrend: "Trend Lunar"
+        monthlyTrend: "Trend Lunar",
+        dailySalesPerPlatform: "Vânzări Zilnice per Platformă",
+        salesPerPlatformToday: "Vânzări per Platformă (Astăzi)",
+        top10Products: "Top 10 Produse Vândute",
+        cancellationRatePerPlatform: "Rată Anulare per Platformă"
       },
       
       // Widgets
@@ -950,7 +998,128 @@ export const translations = {
         paymentMethod: "Metodă Plată",
         orderType: "Tip Comandă",
         apply: "Aplică Filtre",
-        reset: "Resetează Filtre"
+        reset: "Resetează Filtre",
+        from: "De la",
+        to: "Până la",
+        date: "Data"
+      },
+      
+      // PIN Rotation (DashboardPage)
+      pinRotation: {
+        title: "Audit rotație PIN-uri",
+        subtitle: "Monitorizare automată Admin · POS · KDS",
+        interface: "Interfață",
+        category: "Categorie",
+        status: "Status",
+        lastRotation: "Ultima rotație",
+        summary: "Sumar",
+        errorLoading: "Nu am putut încărca statusurile PIN:",
+        retry: "Reîncearcă",
+        updating: "Se actualizează statusurile PIN...",
+        filterPlaceholder: "Filtrează după interfață, categorie sau status",
+        urgentRotations: "Rotații urgente",
+        noUrgentRotations: "Nicio rotație urgentă identificată în acest moment."
+      },
+      
+      // Monitoring
+      monitoring: {
+        title: "Dashboard Monitorizare și Performanță",
+        refresh: "Reîncarcă",
+        tabOverview: "Prezentare Generală",
+        tabQueue: "Monitor Coadă",
+        tabPerformance: "Performance Metrics",
+        systemMetrics: "Metrici Sistem",
+        responseTime: "Timp de Răspuns:",
+        activeConnections: "Conexiuni Active:",
+        memoryUsage: "Utilizare Memorie:",
+        orderMetrics: "Metrici Comenzi",
+        avgPrepTime: "Timp Mediu Preparare:",
+        delayedOrders: "Comenzi Întârziate",
+        kitchenLoad: "Încărcare Bucătărie",
+        barLoad: "Încărcare Bar",
+        alertsTitle: "Alerte",
+        delayedOrdersAlert: "{count} comenzi întârziate necesită atenție!",
+        kitchenLoadAlert: "Bucătăria este încărcată ({count} comenzi)",
+        allOk: "Totul funcționează normal",
+        loading: "Se încarcă...",
+        performanceMetrics: "Metrici Performanță",
+        systemPerformance: "Performanță Sistem",
+        heapUsed: "Memorie Heap Utilizată:",
+        heapTotal: "Memorie Heap Totală:",
+        orderPerformance: "Performanță Comenzi",
+        loadingMetrics: "Se încarcă metrici..."
+      },
+      
+      // Executive Dashboard
+      executive: {
+        title: "Dashboard Executive",
+        subtitle: "KPI-uri critice pentru management",
+        loading: "Se încarcă...",
+        error: "Eroare",
+        retry: "Reîncearcă",
+        todaySales: "Vânzări Astăzi",
+        todayOrders: "Comenzi astăzi",
+        updateData: "Actualizează datele",
+        updating: "Se actualizează...",
+        criticalStockTable: "Stocuri Critice",
+        noCriticalStock: "Nu există stocuri critice",
+        ingredient: "Ingredient",
+        stock: "Stoc",
+        minimum: "Minim",
+        unit: "Unit.",
+        pendingOrders: "Comenzi în așteptare",
+        noPendingOrders: "Nu există comenzi în așteptare",
+        orderId: "ID",
+        platform: "Platformă",
+        waiting: "Așteptare",
+        total: "Total",
+        platformMobileApp: "Aplicația Mobilă",
+        platformPOS: "POS Restaurant",
+        platformKIOSK: "KIOSK Self-Service"
+      },
+      
+      // Hostess Dashboard
+      hostess: {
+        title: "📊 Hostess Dashboard",
+        subtitle: "Analytics ocupare mese și sesiuni",
+        totalSessions: "Total Sesiuni",
+        totalCovers: "Total Covers",
+        avgDuration: "Durată Medie (min)",
+        coversPerSession: "Covers / Sesiune",
+        zoneDistribution: "distributie pe zone",
+        sessionsPerHour: "Sesiuni pe Oră (zi aleasă)",
+        sessions: "Sesiuni",
+        covers: "Covers",
+        selectDay: "zi pentru grafic orar"
+      },
+      
+      // Coatroom Dashboard
+      coatroom: {
+        title: "📊 Coatroom Dashboard",
+        subtitle: "Analytics tichete garderobă și valet",
+        totalTickets: "Total Tichete",
+        open: "Deschise",
+        closed: "Închise",
+        lost: "Pierdute",
+        ticketsPerHour: "tichete pe ora",
+        statusDistribution: "distributie status",
+        tickets: "Tichete"
+      },
+      
+      // Lost & Found Dashboard
+      lostFound: {
+        title: "📊 Lost & Found Dashboard",
+        subtitle: "Analytics obiecte găsite și pierdute",
+        totalItems: "Total Obiecte",
+        stored: "in depozit",
+        returned: "Returnate",
+        returnRate: "Return Rate",
+        itemsByLocation: "obiecte pe locatii",
+        itemStatus: "Status Obiecte",
+        items: "Obiecte",
+        inStorage: "În Depozit",
+        returnedStatus: "Returnate",
+        disposed: "Eliminate"
       }
     },
     
@@ -2054,7 +2223,51 @@ export const translations = {
         margin: "Margin",
         growth: "Growth",
         change: "Change",
-        vs: "vs"
+        vs: "vs",
+        revenueToday: "Revenue Today",
+        ordersToday: "Orders Today",
+        profitToday: "Profit Today",
+        cogsToday: "COGS Today",
+        cogsDescription: "Cost of goods sold",
+        marginLabel: "Margin",
+        vsYesterday: "vs yesterday",
+        salesToday: "Sales Today",
+        estimatedProfit: "Estimated Profit",
+        criticalStock: "Critical Stock",
+        warnings: "warnings"
+      },
+      
+      // KPI Business
+      kpi: {
+        loading: "Loading business KPIs...",
+        error: "Error loading KPIs:",
+        stockAlerts: "Stock Alerts",
+        lowStockProducts: "Products below minimum stock",
+        customerRetention: "Customer Retention",
+        returningCustomers: "Returning customers",
+        tableRotation: "Table Rotation",
+        groupsPerTable: "Groups per occupied table",
+        tableUtilization: "Table Utilization",
+        tablesUsed: "Tables used out of 200",
+        overallRating: "Overall Average Rating",
+        overallRatings: "overall ratings",
+        excellentRatings: "5★ Ratings (OVERALL)",
+        veryHappyCustomers: "Very satisfied customers",
+        lowRatings: "≤2★ Ratings (OVERALL)",
+        needsAttention: "Needs urgent attention",
+        revenueChart: "Revenue & Gross Margin Evolution (Last 7 days)",
+        revenueLabel: "Revenue (RON)",
+        grossMargin: "Gross Margin (%)",
+        revenueTooltip: "Revenue:",
+        marginTooltip: "Margin:",
+        top5Products: "Top 5 Products Today",
+        product: "Product",
+        quantity: "Quantity",
+        revenue: "Revenue",
+        percentage: "%",
+        noData: "No data available",
+        topProductsDistribution: "Top Products - Revenue Distribution",
+        revenueRon: "Revenue (RON)"
       },
       
       // Charts
@@ -2066,7 +2279,11 @@ export const translations = {
         hourlyActivity: "Hourly Activity",
         dailyActivity: "Daily Activity",
         weeklyTrend: "Weekly Trend",
-        monthlyTrend: "Monthly Trend"
+        monthlyTrend: "Monthly Trend",
+        dailySalesPerPlatform: "Daily Sales per Platform",
+        salesPerPlatformToday: "Sales per Platform (Today)",
+        top10Products: "Top 10 Sold Products",
+        cancellationRatePerPlatform: "Cancellation Rate per Platform"
       },
       
       // Widgets
@@ -2088,7 +2305,128 @@ export const translations = {
         paymentMethod: "Payment Method",
         orderType: "Order Type",
         apply: "Apply Filters",
-        reset: "Reset Filters"
+        reset: "Reset Filters",
+        from: "From",
+        to: "To",
+        date: "Date"
+      },
+      
+      // PIN Rotation (DashboardPage)
+      pinRotation: {
+        title: "PIN Rotation Audit",
+        subtitle: "Automated monitoring Admin · POS · KDS",
+        interface: "Interface",
+        category: "Category",
+        status: "Status",
+        lastRotation: "Last Rotation",
+        summary: "Summary",
+        errorLoading: "Could not load PIN statuses:",
+        retry: "Retry",
+        updating: "Updating PIN statuses...",
+        filterPlaceholder: "Filter by interface, category or status",
+        urgentRotations: "Urgent Rotations",
+        noUrgentRotations: "No urgent rotations identified at this time."
+      },
+      
+      // Monitoring
+      monitoring: {
+        title: "Monitoring & Performance Dashboard",
+        refresh: "Refresh",
+        tabOverview: "Overview",
+        tabQueue: "Queue Monitor",
+        tabPerformance: "Performance Metrics",
+        systemMetrics: "System Metrics",
+        responseTime: "Response Time:",
+        activeConnections: "Active Connections:",
+        memoryUsage: "Memory Usage:",
+        orderMetrics: "Order Metrics",
+        avgPrepTime: "Avg Preparation Time:",
+        delayedOrders: "Delayed Orders",
+        kitchenLoad: "Kitchen Load",
+        barLoad: "Bar Load",
+        alertsTitle: "Alerts",
+        delayedOrdersAlert: "{count} delayed orders need attention!",
+        kitchenLoadAlert: "Kitchen is loaded ({count} orders)",
+        allOk: "Everything is running normally",
+        loading: "Loading...",
+        performanceMetrics: "Performance Metrics",
+        systemPerformance: "System Performance",
+        heapUsed: "Heap Memory Used:",
+        heapTotal: "Total Heap Memory:",
+        orderPerformance: "Order Performance",
+        loadingMetrics: "Loading metrics..."
+      },
+      
+      // Executive Dashboard
+      executive: {
+        title: "Executive Dashboard",
+        subtitle: "Critical KPIs for management",
+        loading: "Loading...",
+        error: "Error",
+        retry: "Retry",
+        todaySales: "Sales Today",
+        todayOrders: "Orders today",
+        updateData: "Update data",
+        updating: "Updating...",
+        criticalStockTable: "Critical Stock",
+        noCriticalStock: "No critical stock",
+        ingredient: "Ingredient",
+        stock: "Stock",
+        minimum: "Minimum",
+        unit: "Unit",
+        pendingOrders: "Pending orders",
+        noPendingOrders: "No pending orders",
+        orderId: "ID",
+        platform: "Platform",
+        waiting: "Waiting",
+        total: "Total",
+        platformMobileApp: "Mobile App",
+        platformPOS: "POS Restaurant",
+        platformKIOSK: "KIOSK Self-Service"
+      },
+      
+      // Hostess Dashboard
+      hostess: {
+        title: "📊 Hostess Dashboard",
+        subtitle: "Table occupancy and session analytics",
+        totalSessions: "Total Sessions",
+        totalCovers: "Total Covers",
+        avgDuration: "Avg Duration (min)",
+        coversPerSession: "Covers / Session",
+        zoneDistribution: "distribution by zones",
+        sessionsPerHour: "Sessions per Hour (selected day)",
+        sessions: "Sessions",
+        covers: "Covers",
+        selectDay: "day for hourly chart"
+      },
+      
+      // Coatroom Dashboard
+      coatroom: {
+        title: "📊 Coatroom Dashboard",
+        subtitle: "Coatroom and valet ticket analytics",
+        totalTickets: "Total Tickets",
+        open: "Open",
+        closed: "Closed",
+        lost: "Lost",
+        ticketsPerHour: "tickets per hour",
+        statusDistribution: "status distribution",
+        tickets: "Tickets"
+      },
+      
+      // Lost & Found Dashboard
+      lostFound: {
+        title: "📊 Lost & Found Dashboard",
+        subtitle: "Lost and found items analytics",
+        totalItems: "Total Items",
+        stored: "in storage",
+        returned: "Returned",
+        returnRate: "Return Rate",
+        itemsByLocation: "items by locations",
+        itemStatus: "Item Status",
+        items: "Items",
+        inStorage: "In Storage",
+        returnedStatus: "Returned",
+        disposed: "Disposed"
       }
     },
     
