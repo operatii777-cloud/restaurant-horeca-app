@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 import React, { useEffect, useState } from 'react';
 import { Card, Form, Row, Col } from 'react-bootstrap';
 import {
@@ -29,7 +29,7 @@ const LF_COLORS: Record<string, string> = {
 };
 
 export const LostFoundDashboardPage = () => {
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
   const [overview, setOverview] = useState<LFOverview | null>(null);
@@ -60,9 +60,9 @@ export const LostFoundDashboardPage = () => {
   }, [from, to]);
 
   const pieData = overview ? [
-    { name: 'În Depozit', value: overview.stored, status: 'STORED' },
-    { name: 'Returnate', value: overview.returned, status: 'RETURNED' },
-    { name: 'Eliminate', value: overview.discarded, status: 'DISCARDED' }
+    { name: t('dashboard.lostFound.inStorage'), value: overview.stored, status: 'STORED' },
+    { name: t('dashboard.lostFound.returnedStatus'), value: overview.returned, status: 'RETURNED' },
+    { name: t('dashboard.lostFound.disposed'), value: overview.discarded, status: 'DISCARDED' }
   ] : [];
 
   const returnRate = overview && overview.total > 0
@@ -72,8 +72,8 @@ export const LostFoundDashboardPage = () => {
   return (
     <div className="lostfound-dashboard-page">
       <PageHeader
-        title="📊 Lost & Found Dashboard"
-        description="Analytics obiecte găsite și pierdute"
+        title={t('dashboard.lostFound.title')}
+        description={t('dashboard.lostFound.subtitle')}
       />
 
       {/* Filters */}
@@ -82,7 +82,7 @@ export const LostFoundDashboardPage = () => {
           <Row>
             <Col md={6}>
               <Form.Group>
-                <Form.Label>De la</Form.Label>
+                <Form.Label>{t('dashboard.filters.from')}</Form.Label>
                 <Form.Control
                   type="datetime-local"
                   value={from}
@@ -92,7 +92,7 @@ export const LostFoundDashboardPage = () => {
             </Col>
             <Col md={6}>
               <Form.Group>
-                <Form.Label>Până la</Form.Label>
+                <Form.Label>{t('dashboard.filters.to')}</Form.Label>
                 <Form.Control
                   type="datetime-local"
                   value={to}
@@ -110,7 +110,7 @@ export const LostFoundDashboardPage = () => {
           <Col md={3}>
             <Card className="kpi-card text-center">
               <Card.Body>
-                <div className="kpi-label">Total Obiecte</div>
+                <div className="kpi-label">{t('dashboard.lostFound.totalItems')}</div>
                 <div className="kpi-value">{overview.total}</div>
               </Card.Body>
             </Card>
@@ -118,7 +118,7 @@ export const LostFoundDashboardPage = () => {
           <Col md={3}>
             <Card className="kpi-card text-center border-warning">
               <Card.Body>
-                <div className="kpi-label">"in depozit"</div>
+                <div className="kpi-label">{t('dashboard.lostFound.stored')}</div>
                 <div className="kpi-value text-warning">{overview.stored}</div>
               </Card.Body>
             </Card>
@@ -126,7 +126,7 @@ export const LostFoundDashboardPage = () => {
           <Col md={3}>
             <Card className="kpi-card text-center border-success">
               <Card.Body>
-                <div className="kpi-label">Returnate</div>
+                <div className="kpi-label">{t('dashboard.lostFound.returned')}</div>
                 <div className="kpi-value text-success">{overview.returned}</div>
               </Card.Body>
             </Card>
@@ -134,7 +134,7 @@ export const LostFoundDashboardPage = () => {
           <Col md={3}>
             <Card className="kpi-card text-center">
               <Card.Body>
-                <div className="kpi-label">Return Rate</div>
+                <div className="kpi-label">{t('dashboard.lostFound.returnRate')}</div>
                 <div className="kpi-value">{returnRate}%</div>
               </Card.Body>
             </Card>
@@ -147,7 +147,7 @@ export const LostFoundDashboardPage = () => {
         <Col md={6}>
           <Card className="chart-card">
             <Card.Body>
-              <h5 className="chart-title">"obiecte pe locatii"</h5>
+              <h5 className="chart-title">{t('dashboard.lostFound.itemsByLocation')}</h5>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={locations}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
@@ -161,7 +161,7 @@ export const LostFoundDashboardPage = () => {
                     }}
                   />
                   <Legend wrapperStyle={{ color: '#f1f5f9' }} />
-                  <Bar dataKey="count" name="Obiecte" fill="#3b82f6" />
+                  <Bar dataKey="count" name={t('dashboard.lostFound.items')} fill="#3b82f6" />
                 </BarChart>
               </ResponsiveContainer>
             </Card.Body>
@@ -171,7 +171,7 @@ export const LostFoundDashboardPage = () => {
         <Col md={6}>
           <Card className="chart-card">
             <Card.Body>
-              <h5 className="chart-title">Status Obiecte</h5>
+              <h5 className="chart-title">{t('dashboard.lostFound.itemStatus')}</h5>
               <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
                   <Pie 

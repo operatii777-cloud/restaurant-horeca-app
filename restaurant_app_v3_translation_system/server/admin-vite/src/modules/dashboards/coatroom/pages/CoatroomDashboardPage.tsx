@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 import React, { useEffect, useState } from 'react';
 import { Card, Form, Row, Col } from 'react-bootstrap';
 import {
@@ -29,7 +29,7 @@ const STATUS_COLORS: Record<string, string> = {
 };
 
 export const CoatroomDashboardPage = () => {
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const [overview, setOverview] = useState<CoatOverview | null>(null);
   const [hourly, setHourly] = useState<HourlyStat[]>([]);
@@ -59,23 +59,23 @@ export const CoatroomDashboardPage = () => {
   }, [date]);
 
   const pieData = overview ? [
-    { name: 'Deschise', value: overview.open, status: 'OPEN' },
-    { name: 'Închise', value: overview.closed, status: 'CLOSED' },
-    { name: 'Pierdute', value: overview.lost, status: 'LOST' }
+    { name: t('dashboard.coatroom.open'), value: overview.open, status: 'OPEN' },
+    { name: t('dashboard.coatroom.closed'), value: overview.closed, status: 'CLOSED' },
+    { name: t('dashboard.coatroom.lost'), value: overview.lost, status: 'LOST' }
   ] : [];
 
   return (
     <div className="coatroom-dashboard-page">
       <PageHeader
-        title="📊 Coatroom Dashboard"
-        description="Analytics tichete garderobă și valet"
+        title={t('dashboard.coatroom.title')}
+        description={t('dashboard.coatroom.subtitle')}
       />
 
       {/* Date Filter */}
       <Card className="mb-4">
         <Card.Body>
           <Form.Group>
-            <Form.Label>Data</Form.Label>
+            <Form.Label>{t('dashboard.filters.date')}</Form.Label>
             <Form.Control
               type="date"
               value={date}
@@ -91,7 +91,7 @@ export const CoatroomDashboardPage = () => {
           <Col md={3}>
             <Card className="kpi-card text-center">
               <Card.Body>
-                <div className="kpi-label">Total Tichete</div>
+                <div className="kpi-label">{t('dashboard.coatroom.totalTickets')}</div>
                 <div className="kpi-value">{overview.total}</div>
               </Card.Body>
             </Card>
@@ -99,7 +99,7 @@ export const CoatroomDashboardPage = () => {
           <Col md={3}>
             <Card className="kpi-card text-center border-primary">
               <Card.Body>
-                <div className="kpi-label">"Deschise"</div>
+                <div className="kpi-label">{t('dashboard.coatroom.open')}</div>
                 <div className="kpi-value text-primary">{overview.open}</div>
               </Card.Body>
             </Card>
@@ -107,7 +107,7 @@ export const CoatroomDashboardPage = () => {
           <Col md={3}>
             <Card className="kpi-card text-center border-success">
               <Card.Body>
-                <div className="kpi-label">"Închise"</div>
+                <div className="kpi-label">{t('dashboard.coatroom.closed')}</div>
                 <div className="kpi-value text-success">{overview.closed}</div>
               </Card.Body>
             </Card>
@@ -115,7 +115,7 @@ export const CoatroomDashboardPage = () => {
           <Col md={3}>
             <Card className="kpi-card text-center border-danger">
               <Card.Body>
-                <div className="kpi-label">Pierdute</div>
+                <div className="kpi-label">{t('dashboard.coatroom.lost')}</div>
                 <div className="kpi-value text-danger">{overview.lost}</div>
               </Card.Body>
             </Card>
@@ -128,7 +128,7 @@ export const CoatroomDashboardPage = () => {
         <Col md={6}>
           <Card className="chart-card">
             <Card.Body>
-              <h5 className="chart-title">"tichete pe ora"</h5>
+              <h5 className="chart-title">{t('dashboard.coatroom.ticketsPerHour')}</h5>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={hourly}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
@@ -142,7 +142,7 @@ export const CoatroomDashboardPage = () => {
                     }}
                   />
                   <Legend wrapperStyle={{ color: '#f1f5f9' }} />
-                  <Bar dataKey="tickets" name="Tichete" fill="#3b82f6" />
+                  <Bar dataKey="tickets" name={t('dashboard.coatroom.tickets')} fill="#3b82f6" />
                 </BarChart>
               </ResponsiveContainer>
             </Card.Body>
@@ -152,7 +152,7 @@ export const CoatroomDashboardPage = () => {
         <Col md={6}>
           <Card className="chart-card">
             <Card.Body>
-              <h5 className="chart-title">"distributie status"</h5>
+              <h5 className="chart-title">{t('dashboard.coatroom.statusDistribution')}</h5>
               <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
                   <Pie 
