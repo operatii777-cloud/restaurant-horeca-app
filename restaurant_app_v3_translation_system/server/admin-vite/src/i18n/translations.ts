@@ -884,7 +884,270 @@ export const translations = {
         priceUpdated: "Preț actualizat",
         stockUpdated: "Stoc actualizat",
         imageUploaded: "Imagine încărcată",
-        imageUploadFailed: "Încărcare imagine eșuată"
+        imageUploadFailed: "Încărcare imagine eșuată",
+        productAddedSuccess: "Produs adăugat cu succes",
+        productUpdatedSuccess: "Produs actualizat cu succes",
+        customizationsActive: "Personalizări active:",
+        customizationsSynced: "Personalizările au fost sincronizate.",
+        error: "Eroare"
+      },
+
+      // Product Modal
+      productModal: {
+        generalDetails: "Detalii generale",
+        generalDetailsSubtitle: "Completează informațiile de bază afișate clienților",
+        productName: "Nume produs",
+        productNameEn: "Nume produs (EN)",
+        productNamePlaceholder: "Ex: Pizza Quattro Stagioni",
+        productNameEnPlaceholder: "Ex: Four Seasons Pizza",
+        category: "Categorie",
+        categoryEn: "Categorie (EN)",
+        categoryPlaceholder: "Ex: Pizza, Salate",
+        categoryEnPlaceholder: "Ex: Pizza",
+        priceRon: "Preț (RON)",
+        vatPercent: "TVA (%)",
+        unitOfMeasure: "Unitate măsură",
+        weightVolume: "Greutate / Volum",
+        weightVolumePlaceholder: "Ex: 350g, 500ml",
+        displayOrder: "Ordine afișare",
+        displayOrderPlaceholder: "Ordinea în meniu",
+        costPrice: "Cost produs (RON)",
+        costPricePlaceholder: "Ex: 12.50",
+        availableForSale: "Disponibil la vânzare",
+        activeInMenu: "Activ în meniu",
+        allowFractions: "Permite fracții (gramaj)",
+        
+        inventoryPreparation: "Inventar & preparare",
+        inventoryPreparationSubtitle: "Definește gestiunea și secția de pregătire pentru comenzi",
+        stockManagement: "Gestiune stoc",
+        stockManagementPlaceholder: "Ex: Bucătărie, Bar",
+        preparationSection: "Secție preparare",
+        preparationSectionPlaceholder: "Ex: BUCĂTĂRIE, BAR...",
+        preparationTime: "Timp preparare (min)",
+        preparationTimePlaceholder: "Ex: 15",
+        vegetarian: "Vegetarian",
+        spicy: "Picant",
+        takeoutOnly: "Doar la pachet",
+        
+        descriptionInfo: "Descriere & informații",
+        descriptionInfoSubtitle: "Textele afișate în meniurile clienților și aplicații",
+        descriptionRo: "Descriere (RO)",
+        descriptionRoPlaceholder: "Descriere pentru clienți, ingredientele principale",
+        descriptionEn: "Descriere (EN)",
+        descriptionEnPlaceholder: "English description (opțional)",
+        allergens: "Alergeni",
+        additives: "Aditivi",
+        ingredients: "Ingrediente",
+        ingredientsPlaceholder: "Listă ingrediente separate prin virgulă",
+        
+        customizations: "Personalizări",
+        customizationsSubtitle: "Opțiuni de personalizare pentru client (extra sos, adaosuri, etc.)",
+        customizationName: "Nume opțiune",
+        customizationNamePlaceholder: "Ex: Extra bacon",
+        customizationNameEn: "Nume opțiune (EN)",
+        customizationNameEnPlaceholder: "Ex: Extra bacon",
+        customizationPrice: "Preț +",
+        customizationPriceRon: "RON",
+        addCustomization: "Adaugă personalizare",
+        
+        nutritionalInfo: "Informații nutriționale",
+        nutritionalInfoSubtitle: "Detalii opționale pentru clienții atenți la alimentație",
+        spiceLevel: "Nivel iuțeală (1-5)",
+        calories: "Calorii (kcal)",
+        protein: "Proteine (g)",
+        carbs: "Carbohidrați (g)",
+        fat: "Grăsimi (g)",
+        fiber: "Fibre (g)",
+        sodium: "Sodiu (mg)",
+        sugar: "Zahar (g)",
+        salt: "Sare (g)",
+        
+        productImage: "Imagine produs",
+        productImageSubtitle: "Încarcă o imagine reprezentativă (JPG, PNG, max 5MB)",
+        uploadImage: "Încarcă imagine nouă",
+        currentImage: "Imagine curentă",
+        imagePreview: "Previzualizare produs",
+        removeImage: "Elimină imaginea",
+        replaceImage: "Înlocuiește",
+        
+        saveChanges: "Salvează modificările",
+        saving: "Se salvează..."
+      },
+
+      // Product Dependencies Modal
+      dependencies: {
+        title: "Dependențe Produs",
+        subtitle: "Produse care necesită acest ingredient",
+        dependentProducts: "Produse Dependente",
+        noDependencies: "Nu există produse care depind de acest ingredient",
+        productName: "Nume Produs",
+        category: "Categorie",
+        quantity: "Cantitate",
+        unit: "Unitate"
+      },
+
+      // Product Messages Modal
+      productMessages: {
+        title: "Mesaje Produs",
+        subtitle: "Mesaje și notificări pentru",
+        history: "Istoric Mesaje",
+        noMessages: "Nu există mesaje pentru acest produs",
+        date: "Dată",
+        type: "Tip",
+        message: "Mesaj",
+        author: "Autor"
+      },
+
+      // Bulk Price Modal
+      bulkPrice: {
+        title: "Actualizare Preț în Masă",
+        subtitle: "Modifică prețurile pentru produsele selectate",
+        adjustmentType: "Tip Ajustare",
+        percentage: "Procent (%)",
+        fixedAmount: "Sumă Fixă (RON)",
+        increase: "Creștere",
+        decrease: "Scădere",
+        selectedProducts: "Produse Selectate",
+        preview: "Previzualizare Modificări",
+        currentPrice: "Preț Curent",
+        newPrice: "Preț Nou",
+        apply: "Aplică Modificările",
+        applyingChanges: "Se aplică modificările...",
+        success: "Prețurile au fost actualizate cu succes",
+        error: "Eroare la actualizarea prețurilor"
+      },
+
+      // Price History Modal
+      priceHistory: {
+        title: "Istoric Prețuri",
+        subtitle: "Evoluția prețurilor pentru",
+        date: "Dată",
+        oldPrice: "Preț Vechi",
+        newPrice: "Preț Nou",
+        change: "Modificare",
+        changedBy: "Modificat de",
+        noHistory: "Nu există istoric de prețuri pentru acest produs"
+      },
+
+      // Clone Product Modal
+      cloneProduct: {
+        title: "Clonează Produs",
+        subtitle: "Creează o copie a produsului selectat",
+        newProductName: "Nume Produs Nou",
+        newProductNamePlaceholder: "Ex: Pizza Quattro Stagioni - Copie",
+        copyCustomizations: "Copiază Personalizări",
+        copyImage: "Copiază Imaginea",
+        cloning: "Se clonează...",
+        success: "Produs clonat cu succes",
+        error: "Eroare la clonarea produsului"
+      },
+
+      // Category Advanced Filter
+      categoryFilter: {
+        title: "Filtre Avansate",
+        category: "Categorie",
+        allCategories: "Toate Categoriile",
+        status: "Status",
+        allStatuses: "Toate Statusurile",
+        priceRange: "Interval Preț",
+        minPrice: "Preț Minim",
+        maxPrice: "Preț Maxim",
+        hasImage: "Cu Imagine",
+        isVegetarian: "Vegetarian",
+        isSpicy: "Picant",
+        inStock: "În Stoc",
+        applyFilters: "Aplică Filtre",
+        clearFilters: "Șterge Filtre"
+      },
+
+      // Menu Builder
+      menuBuilder: {
+        title: "Constructor Meniu",
+        subtitle: "Creează și editează produse din meniu",
+        basicInfo: "Informații de Bază",
+        portions: "Porții",
+        modifiers: "Modificatori",
+        allergens: "Alergeni",
+        availability: "Disponibilitate",
+        ingredients: "Ingrediente",
+        preview: "Previzualizare",
+        
+        // Basic Info Card
+        productDetails: "Detalii Produs",
+        generalInformation: "Informații Generale",
+        pricingInfo: "Informații Preț",
+        
+        // Portions Card
+        portionSizes: "Dimensiuni Porții",
+        addPortion: "Adaugă Porție",
+        portionName: "Nume Porție",
+        portionSize: "Dimensiune",
+        portionPrice: "Preț",
+        defaultPortion: "Porție Implicită",
+        noPortion: "Nu există porții definite",
+        
+        // Modifiers Card
+        modifierGroups: "Grupuri Modificatori",
+        addModifier: "Adaugă Modificator",
+        modifierName: "Nume Modificator",
+        modifierPrice: "Preț",
+        modifierRequired: "Obligatoriu",
+        modifierMultiple: "Selecție Multiplă",
+        noModifiers: "Nu există modificatori definiți",
+        
+        // Allergens Card
+        allergensList: "Listă Alergeni",
+        selectAllergens: "Selectează Alergenii",
+        noAllergens: "Fără alergeni",
+        
+        // Availability Card
+        availabilitySchedule: "Program Disponibilitate",
+        availableDays: "Zile Disponibile",
+        availableHours: "Ore Disponibile",
+        alwaysAvailable: "Mereu Disponibil",
+        customSchedule: "Program Personalizat",
+        
+        // Ingredients Card
+        ingredientsList: "Listă Ingrediente",
+        addIngredient: "Adaugă Ingredient",
+        ingredientName: "Nume Ingredient",
+        ingredientQuantity: "Cantitate",
+        noIngredients: "Nu există ingrediente definite",
+        
+        // Preview Card
+        menuPreview: "Previzualizare Meniu",
+        customerView: "Vedere Client",
+        qrCodePreview: "Previzualizare Cod QR"
+      },
+
+      // Menu PDF Builder
+      menuPdf: {
+        title: "Constructor PDF Meniu",
+        subtitle: "Generează meniu în format PDF pentru printare",
+        pdfSettings: "Setări PDF",
+        pageSize: "Dimensiune Pagină",
+        orientation: "Orientare",
+        portrait: "Portret",
+        landscape: "Peisaj",
+        columns: "Coloane",
+        showPrices: "Afișează Prețuri",
+        showImages: "Afișează Imagini",
+        showDescriptions: "Afișează Descrieri",
+        showAllergens: "Afișează Alergeni",
+        categorySettings: "Setări Categorii",
+        selectCategories: "Selectează Categorii",
+        categoryOrder: "Ordine Categorii",
+        generatePdf: "Generează PDF",
+        generating: "Se generează PDF...",
+        downloadPdf: "Descarcă PDF",
+        previewPdf: "Previzualizare PDF",
+        
+        // PDF Category Card
+        categoryCard: "Categorie",
+        includeInPdf: "Include în PDF",
+        productsCount: "Produse",
+        moveUp: "Mută Sus",
+        moveDown: "Mută Jos"
       }
     },
     
@@ -2192,7 +2455,270 @@ export const translations = {
         priceUpdated: "Price updated",
         stockUpdated: "Stock updated",
         imageUploaded: "Image uploaded",
-        imageUploadFailed: "Image upload failed"
+        imageUploadFailed: "Image upload failed",
+        productAddedSuccess: "Product added successfully",
+        productUpdatedSuccess: "Product updated successfully",
+        customizationsActive: "Active customizations:",
+        customizationsSynced: "Customizations have been synchronized.",
+        error: "Error"
+      },
+
+      // Product Modal
+      productModal: {
+        generalDetails: "General Details",
+        generalDetailsSubtitle: "Complete the basic information displayed to customers",
+        productName: "Product Name",
+        productNameEn: "Product Name (EN)",
+        productNamePlaceholder: "Ex: Four Seasons Pizza",
+        productNameEnPlaceholder: "Ex: Four Seasons Pizza",
+        category: "Category",
+        categoryEn: "Category (EN)",
+        categoryPlaceholder: "Ex: Pizza, Salads",
+        categoryEnPlaceholder: "Ex: Pizza",
+        priceRon: "Price (RON)",
+        vatPercent: "VAT (%)",
+        unitOfMeasure: "Unit of Measure",
+        weightVolume: "Weight / Volume",
+        weightVolumePlaceholder: "Ex: 350g, 500ml",
+        displayOrder: "Display Order",
+        displayOrderPlaceholder: "Order in menu",
+        costPrice: "Product Cost (RON)",
+        costPricePlaceholder: "Ex: 12.50",
+        availableForSale: "Available for Sale",
+        activeInMenu: "Active in Menu",
+        allowFractions: "Allow Fractions (weight)",
+        
+        inventoryPreparation: "Inventory & Preparation",
+        inventoryPreparationSubtitle: "Define stock management and preparation section for orders",
+        stockManagement: "Stock Management",
+        stockManagementPlaceholder: "Ex: Kitchen, Bar",
+        preparationSection: "Preparation Section",
+        preparationSectionPlaceholder: "Ex: KITCHEN, BAR...",
+        preparationTime: "Preparation Time (min)",
+        preparationTimePlaceholder: "Ex: 15",
+        vegetarian: "Vegetarian",
+        spicy: "Spicy",
+        takeoutOnly: "Takeout Only",
+        
+        descriptionInfo: "Description & Information",
+        descriptionInfoSubtitle: "Texts displayed in customer menus and applications",
+        descriptionRo: "Description (RO)",
+        descriptionRoPlaceholder: "Description for customers, main ingredients",
+        descriptionEn: "Description (EN)",
+        descriptionEnPlaceholder: "English description (optional)",
+        allergens: "Allergens",
+        additives: "Additives",
+        ingredients: "Ingredients",
+        ingredientsPlaceholder: "Comma-separated ingredient list",
+        
+        customizations: "Customizations",
+        customizationsSubtitle: "Customer customization options (extra sauce, add-ons, etc.)",
+        customizationName: "Option Name",
+        customizationNamePlaceholder: "Ex: Extra bacon",
+        customizationNameEn: "Option Name (EN)",
+        customizationNameEnPlaceholder: "Ex: Extra bacon",
+        customizationPrice: "Price +",
+        customizationPriceRon: "RON",
+        addCustomization: "Add Customization",
+        
+        nutritionalInfo: "Nutritional Information",
+        nutritionalInfoSubtitle: "Optional details for health-conscious customers",
+        spiceLevel: "Spice Level (1-5)",
+        calories: "Calories (kcal)",
+        protein: "Protein (g)",
+        carbs: "Carbohydrates (g)",
+        fat: "Fat (g)",
+        fiber: "Fiber (g)",
+        sodium: "Sodium (mg)",
+        sugar: "Sugar (g)",
+        salt: "Salt (g)",
+        
+        productImage: "Product Image",
+        productImageSubtitle: "Upload a representative image (JPG, PNG, max 5MB)",
+        uploadImage: "Upload New Image",
+        currentImage: "Current Image",
+        imagePreview: "Product Preview",
+        removeImage: "Remove Image",
+        replaceImage: "Replace",
+        
+        saveChanges: "Save Changes",
+        saving: "Saving..."
+      },
+
+      // Product Dependencies Modal
+      dependencies: {
+        title: "Product Dependencies",
+        subtitle: "Products that require this ingredient",
+        dependentProducts: "Dependent Products",
+        noDependencies: "No products depend on this ingredient",
+        productName: "Product Name",
+        category: "Category",
+        quantity: "Quantity",
+        unit: "Unit"
+      },
+
+      // Product Messages Modal
+      productMessages: {
+        title: "Product Messages",
+        subtitle: "Messages and notifications for",
+        history: "Message History",
+        noMessages: "No messages for this product",
+        date: "Date",
+        type: "Type",
+        message: "Message",
+        author: "Author"
+      },
+
+      // Bulk Price Modal
+      bulkPrice: {
+        title: "Bulk Price Update",
+        subtitle: "Modify prices for selected products",
+        adjustmentType: "Adjustment Type",
+        percentage: "Percentage (%)",
+        fixedAmount: "Fixed Amount (RON)",
+        increase: "Increase",
+        decrease: "Decrease",
+        selectedProducts: "Selected Products",
+        preview: "Preview Changes",
+        currentPrice: "Current Price",
+        newPrice: "New Price",
+        apply: "Apply Changes",
+        applyingChanges: "Applying changes...",
+        success: "Prices updated successfully",
+        error: "Error updating prices"
+      },
+
+      // Price History Modal
+      priceHistory: {
+        title: "Price History",
+        subtitle: "Price evolution for",
+        date: "Date",
+        oldPrice: "Old Price",
+        newPrice: "New Price",
+        change: "Change",
+        changedBy: "Changed By",
+        noHistory: "No price history for this product"
+      },
+
+      // Clone Product Modal
+      cloneProduct: {
+        title: "Clone Product",
+        subtitle: "Create a copy of the selected product",
+        newProductName: "New Product Name",
+        newProductNamePlaceholder: "Ex: Four Seasons Pizza - Copy",
+        copyCustomizations: "Copy Customizations",
+        copyImage: "Copy Image",
+        cloning: "Cloning...",
+        success: "Product cloned successfully",
+        error: "Error cloning product"
+      },
+
+      // Category Advanced Filter
+      categoryFilter: {
+        title: "Advanced Filters",
+        category: "Category",
+        allCategories: "All Categories",
+        status: "Status",
+        allStatuses: "All Statuses",
+        priceRange: "Price Range",
+        minPrice: "Min Price",
+        maxPrice: "Max Price",
+        hasImage: "With Image",
+        isVegetarian: "Vegetarian",
+        isSpicy: "Spicy",
+        inStock: "In Stock",
+        applyFilters: "Apply Filters",
+        clearFilters: "Clear Filters"
+      },
+
+      // Menu Builder
+      menuBuilder: {
+        title: "Menu Builder",
+        subtitle: "Create and edit menu products",
+        basicInfo: "Basic Information",
+        portions: "Portions",
+        modifiers: "Modifiers",
+        allergens: "Allergens",
+        availability: "Availability",
+        ingredients: "Ingredients",
+        preview: "Preview",
+        
+        // Basic Info Card
+        productDetails: "Product Details",
+        generalInformation: "General Information",
+        pricingInfo: "Pricing Information",
+        
+        // Portions Card
+        portionSizes: "Portion Sizes",
+        addPortion: "Add Portion",
+        portionName: "Portion Name",
+        portionSize: "Size",
+        portionPrice: "Price",
+        defaultPortion: "Default Portion",
+        noPortion: "No portions defined",
+        
+        // Modifiers Card
+        modifierGroups: "Modifier Groups",
+        addModifier: "Add Modifier",
+        modifierName: "Modifier Name",
+        modifierPrice: "Price",
+        modifierRequired: "Required",
+        modifierMultiple: "Multiple Selection",
+        noModifiers: "No modifiers defined",
+        
+        // Allergens Card
+        allergensList: "Allergen List",
+        selectAllergens: "Select Allergens",
+        noAllergens: "No allergens",
+        
+        // Availability Card
+        availabilitySchedule: "Availability Schedule",
+        availableDays: "Available Days",
+        availableHours: "Available Hours",
+        alwaysAvailable: "Always Available",
+        customSchedule: "Custom Schedule",
+        
+        // Ingredients Card
+        ingredientsList: "Ingredient List",
+        addIngredient: "Add Ingredient",
+        ingredientName: "Ingredient Name",
+        ingredientQuantity: "Quantity",
+        noIngredients: "No ingredients defined",
+        
+        // Preview Card
+        menuPreview: "Menu Preview",
+        customerView: "Customer View",
+        qrCodePreview: "QR Code Preview"
+      },
+
+      // Menu PDF Builder
+      menuPdf: {
+        title: "Menu PDF Builder",
+        subtitle: "Generate menu in PDF format for printing",
+        pdfSettings: "PDF Settings",
+        pageSize: "Page Size",
+        orientation: "Orientation",
+        portrait: "Portrait",
+        landscape: "Landscape",
+        columns: "Columns",
+        showPrices: "Show Prices",
+        showImages: "Show Images",
+        showDescriptions: "Show Descriptions",
+        showAllergens: "Show Allergens",
+        categorySettings: "Category Settings",
+        selectCategories: "Select Categories",
+        categoryOrder: "Category Order",
+        generatePdf: "Generate PDF",
+        generating: "Generating PDF...",
+        downloadPdf: "Download PDF",
+        previewPdf: "Preview PDF",
+        
+        // PDF Category Card
+        categoryCard: "Category",
+        includeInPdf: "Include in PDF",
+        productsCount: "Products",
+        moveUp: "Move Up",
+        moveDown: "Move Down"
       }
     },
     
