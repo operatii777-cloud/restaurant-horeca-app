@@ -4,12 +4,12 @@ import { useTranslation } from '@/i18n/I18nContext';
  * Data: 04 Decembrie 2025
  * CRITICAL FEATURE - Lipsea complet din aplicație
  */
-  const { t } = useTranslation();
 import React, { useState } from 'react';
 import { useMenuBuilderStore } from '../store/useMenuBuilderStore';
 import { useShallow } from 'zustand/react/shallow';
 
 export function ModifiersCard() {
+  const { t } = useTranslation();
   const {
     modifiers,
     modifierGroupsAvailable,

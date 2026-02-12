@@ -17,6 +17,7 @@ import { ModifiersCard } from '../components/ModifiersCard';
 import { AvailabilityCard } from '../components/AvailabilityCard';
 import { PreviewCard } from '../components/PreviewCard';
 
+export function MenuBuilderPage() {
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
 

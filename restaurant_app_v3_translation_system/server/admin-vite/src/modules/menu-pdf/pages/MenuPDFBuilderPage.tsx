@@ -5,11 +5,10 @@ import { PageHeader } from '@/shared/components/PageHeader';
 import { StatCard } from '@/shared/components/StatCard';
 import { InlineAlert } from '@/shared/components/InlineAlert';
 import { usePdfConfig, type PdfMenuType, type PdfCategory, type PdfProduct } from '../hooks/usePdfConfig';
-  const { t } = useTranslation();
 import './MenuPDFBuilderPage.css';
 
 export const MenuPDFBuilderPage = () => {
-// ...existing code...
+  const { t } = useTranslation();
   const [activeType, setActiveType] = useState<PdfMenuType>('food');
   const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
   const [regenerating, setRegenerating] = useState(false);

@@ -19,9 +19,9 @@ type CloneResponse = {
   message?: string;
   new_product_id?: number;
 };
-  const { t } = useTranslation();
+
 export function CloneProductModal({ open, product, onClose, onCloned }: CloneProductModalProps) {
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
   const { mutate, loading, error, reset } = useApiMutation<CloneResponse>();
   const [newName, setNewName] = useState('');
   const [localError, setLocalError] = useState<string | null>(null);

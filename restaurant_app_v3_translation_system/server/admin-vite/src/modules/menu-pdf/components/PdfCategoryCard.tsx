@@ -1,4 +1,3 @@
-// import { useTranslation } from '@/i18n/I18nContext';
 import { useTranslation } from '@/i18n/I18nContext';
 // components/PdfCategoryCard.tsx
 import { useState } from 'react';
@@ -14,7 +13,7 @@ interface PdfCategoryCardProps {
   onUploadImage: (categoryId: number, file: File) => void;
   onDeleteImage: (categoryId: number) => void;
   onReorder?: (categoryId: number, newIndex: number) => void;
-  const { t } = useTranslation();
+}
 
 export const PdfCategoryCard = ({
   category,
@@ -25,12 +24,11 @@ export const PdfCategoryCard = ({
   onUploadImage,
   onDeleteImage,
 }: PdfCategoryCardProps) => {
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
   const [uploading, setUploading] = useState(false);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-//   const { t } = useTranslation();
     const file = e.target.files?.[0];
     if (file) {
       setUploading(true);

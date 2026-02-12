@@ -4,7 +4,6 @@ import { useTranslation } from '@/i18n/I18nContext';
  * Data: 04 Decembrie 2025
  */
 
-  const { t } = useTranslation();
 import { useMenuBuilderStore } from '../store/useMenuBuilderStore';
 import { useShallow } from 'zustand/react/shallow';
 
@@ -26,6 +25,7 @@ const ALLERGEN_ICON_MAP = {
 };
 
 export function AllergensCard() {
+  const { t } = useTranslation();
   const { allergens, setAllergens } = useMenuBuilderStore(
     useShallow((s) => ({
       allergens: s.allergens,

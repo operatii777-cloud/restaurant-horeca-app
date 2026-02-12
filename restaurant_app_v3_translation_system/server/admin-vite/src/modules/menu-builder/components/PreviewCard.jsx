@@ -4,11 +4,11 @@ import { useTranslation } from '@/i18n/I18nContext';
  * Data: 04 Decembrie 2025
  */
 
-  const { t } = useTranslation();
 import { useMenuBuilderStore } from '../store/useMenuBuilderStore';
 import { useShallow } from 'zustand/react/shallow';
 
 export function PreviewCard() {
+  const { t } = useTranslation();
   const { basicInfo, pricing, portions, allergens, media } =
     useMenuBuilderStore(
       useShallow((s) => ({
