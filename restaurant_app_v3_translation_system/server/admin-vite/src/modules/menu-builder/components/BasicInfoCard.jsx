@@ -1,9 +1,10 @@
 /**
+import { useTranslation } from '@/i18n/I18nContext';
  * BASIC INFO CARD - Nume, Categorie, Descriere
  * Data: 04 Decembrie 2025
  */
 
-import React from 'react';
+  const { t } = useTranslation();
 import { useMenuBuilderStore } from '../store/useMenuBuilderStore';
 import { useShallow } from 'zustand/react/shallow';
 
@@ -49,7 +50,7 @@ export function BasicInfoCard() {
             className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             value={basicInfo.displayName}
             onChange={handleChange('displayName')}
-            placeholder="Ex: Pizza Margherita"
+            placeholder={t('menu.productModal.productNamePlaceholder')}
           />
           {validationErrors.basicInfo_displayName && (
             <p className="text-xs text-red-400 mt-1">
@@ -67,7 +68,7 @@ export function BasicInfoCard() {
             className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-100"
             value={basicInfo.internalName}
             onChange={handleChange('internalName')}
-            placeholder="Lăsat gol = preia numele din meniu"
+            placeholder={t('menu.productModal.productNameEnPlaceholder')}
           />
         </div>
 
@@ -112,7 +113,7 @@ export function BasicInfoCard() {
                   .filter(Boolean),
               })
             }
-            placeholder="Ex: vegetarian, special, promo"
+            placeholder={t('common.category')}
           />
         </div>
 
@@ -125,7 +126,7 @@ export function BasicInfoCard() {
             className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-100"
             value={basicInfo.descriptionShort}
             onChange={handleChange('descriptionShort')}
-            placeholder="Ex: Pizza clasică cu sos de roșii și mozzarella."
+            placeholder={t('menu.productModal.descriptionRoPlaceholder')}
           />
         </div>
 
@@ -138,7 +139,7 @@ export function BasicInfoCard() {
             className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-100"
             value={basicInfo.descriptionLong}
             onChange={handleChange('descriptionLong')}
-            placeholder="Detalii extra, povestea produsului, recomandări..."
+            placeholder={t('menu.productModal.descriptionEnPlaceholder')}
           />
         </div>
       </div>

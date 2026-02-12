@@ -5,6 +5,7 @@
  */
 
 import React, { useEffect } from 'react';
+import { useTranslation } from '@/i18n/I18nContext';
 import { useSearchParams } from 'react-router-dom';
 import { useMenuBuilderStore } from '../store/useMenuBuilderStore';
 import { useShallow } from 'zustand/react/shallow';
@@ -16,7 +17,7 @@ import { ModifiersCard } from '../components/ModifiersCard';
 import { AvailabilityCard } from '../components/AvailabilityCard';
 import { PreviewCard } from '../components/PreviewCard';
 
-export function MenuBuilderPage() {
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
 
   const {
@@ -48,7 +49,7 @@ export function MenuBuilderPage() {
   const handleSave = async () => {
     const result = await save();
     if (!result.ok) {
-      console.error('Save error', result);
+      alert(t('menu.messages.error') + ': ' + (result.error?.message || result.reason));
       alert('Eroare la salvare: ' + (result.error?.message || result.reason));
     } else {
       alert('✅ Produs salvat cu succes!');
@@ -65,8 +66,8 @@ export function MenuBuilderPage() {
           </h1>
           <p className="text-xs text-slate-400">
             {mode === 'create'
-              ? 'Creează un produs complet de meniu plecând de la rețetă și fișa tehnică.'
-              : 'Editează configurarea produsului în meniu.'}
+              ? t('menu.menuBuilder.subtitle')
+              : t('menu.products.edit')}
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -81,7 +82,7 @@ export function MenuBuilderPage() {
             disabled={saving}
             className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 disabled:opacity-60 text-xs font-semibold text-white transition-colors"
           >
-            {saving ? 'Se salvează...' : '💾 Salvează produsul'}
+            {saving ? t('menu.productModal.saving') : t('menu.productModal.saveChanges')}
           </button>
         </div>
       </div>

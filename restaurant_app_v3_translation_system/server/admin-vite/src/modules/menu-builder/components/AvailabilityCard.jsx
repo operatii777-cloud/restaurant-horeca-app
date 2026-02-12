@@ -1,9 +1,10 @@
 /**
+import { useTranslation } from '@/i18n/I18nContext';
  * AVAILABILITY CARD - Service types & availability rules
  * Data: 04 Decembrie 2025
  */
 
-import React from 'react';
+  const { t } = useTranslation();
 import { useMenuBuilderStore } from '../store/useMenuBuilderStore';
 import { useShallow } from 'zustand/react/shallow';
 

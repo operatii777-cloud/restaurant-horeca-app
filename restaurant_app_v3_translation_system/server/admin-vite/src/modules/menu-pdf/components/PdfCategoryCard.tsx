@@ -1,4 +1,5 @@
 // import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 // components/PdfCategoryCard.tsx
 import { useState } from 'react';
 import type { PdfCategory, PdfProduct } from '../hooks/usePdfConfig';
@@ -13,7 +14,7 @@ interface PdfCategoryCardProps {
   onUploadImage: (categoryId: number, file: File) => void;
   onDeleteImage: (categoryId: number) => void;
   onReorder?: (categoryId: number, newIndex: number) => void;
-}
+  const { t } = useTranslation();
 
 export const PdfCategoryCard = ({
   category,
@@ -66,7 +67,7 @@ export const PdfCategoryCard = ({
         <button
           type="button"
           className="pdf-category-card__expand"
-          onClick={() => setExpanded(!expanded)}
+          title={expanded ? t('actions.close') : t('actions.view')}
           title={expanded ? 'Ascunde' : 'Afișează'}
         >
           {expanded ? '▼' : '▶'}

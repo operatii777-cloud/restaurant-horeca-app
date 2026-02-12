@@ -1,9 +1,10 @@
 /**
+import { useTranslation } from '@/i18n/I18nContext';
  * PREVIEW CARD - Live client preview
  * Data: 04 Decembrie 2025
  */
 
-import React from 'react';
+  const { t } = useTranslation();
 import { useMenuBuilderStore } from '../store/useMenuBuilderStore';
 import { useShallow } from 'zustand/react/shallow';
 
@@ -54,7 +55,7 @@ export function PreviewCard() {
             <div className="flex items-center justify-between gap-2">
               <div>
                 <div className="text-slate-100 font-semibold text-sm">
-                  {basicInfo.displayName || 'Nume produs'}
+                  {basicInfo.displayName || t('menu.productModal.productName')}
                 </div>
                 {basicInfo.descriptionShort && (
                   <div className="text-slate-400 text-xs line-clamp-2">

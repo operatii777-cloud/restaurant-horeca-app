@@ -1,10 +1,11 @@
 // ...existing code...
+import { useTranslation } from '@/i18n/I18nContext';
 import { useState, useCallback, useMemo } from 'react';
 import { PageHeader } from '@/shared/components/PageHeader';
 import { StatCard } from '@/shared/components/StatCard';
 import { InlineAlert } from '@/shared/components/InlineAlert';
 import { usePdfConfig, type PdfMenuType, type PdfCategory, type PdfProduct } from '../hooks/usePdfConfig';
-import { PdfCategoryCard } from '../components/PdfCategoryCard';
+  const { t } = useTranslation();
 import './MenuPDFBuilderPage.css';
 
 export const MenuPDFBuilderPage = () => {
@@ -18,9 +19,9 @@ export const MenuPDFBuilderPage = () => {
 
   const stats = useMemo(() => {
     if (!config) {
-      return [
-        { label: 'Categorii configurate', value: '0', helper: 'Se încarcă...', icon: '🖨️' },
-        { label: 'Produse active', value: '0', helper: 'Se încarcă...', icon: '📄' },
+        { label: t('menu.menuPdf.categorySettings'), value: '0', helper: t('common.loading'), icon: '🖨️' },
+        { label: t('menu.products.title'), value: '0', helper: t('common.loading'), icon: '📄' },
+        { label: t('menu.menuPdf.generating'), value: '—', helper: 'N/A', icon: '⏱️' },
         { label: 'Ultima regenerare', value: '—', helper: 'N/A', icon: '⏱️' },
       ];
     }
@@ -34,21 +35,21 @@ export const MenuPDFBuilderPage = () => {
     );
 
     return [
-      {
+        label: t('menu.menuPdf.categorySettings'),
         label: 'Categorii configurate',
         value: `${visibleCategories}/${totalCategories}`,
         helper: `${totalCategories} total`,
         icon: '🖨️',
       },
-      {
+        label: t('menu.products.title'),
         label: 'Produse active',
         value: `${visibleProducts}/${totalProducts}`,
         helper: `${totalProducts} total`,
         icon: '📄',
       },
-      {
+        label: t('menu.menuPdf.generating'),
         label: 'Ultima regenerare',
-        value: config.lastRegenerated ? new Date(config.lastRegenerated).toLocaleDateString('ro-RO') : '—',
+        helper: config.lastRegenerated ? t('common.active') : t('common.inactive'),
         helper: config.lastRegenerated ? 'PDF actualizat' : 'Nu s-a generat',
         icon: '⏱️',
       },
@@ -68,11 +69,11 @@ export const MenuPDFBuilderPage = () => {
             id: categoryId,
             display_in_pdf: visible,
           },
-        ]);
+        setFeedback({ type: 'success', message: t('menu.messages.categoryUpdated') });
         setFeedback({ type: 'success', message: 'Categoria a fost actualizată' });
       } catch (err) {
         setFeedback({
-          type: 'error',
+          message: err instanceof Error ? err.message : t('menu.messages.error'),
           message: err instanceof Error ? err.message : 'Eroare la actualizarea categoriei',
         });
       }
@@ -90,11 +91,11 @@ export const MenuPDFBuilderPage = () => {
             id: categoryId,
             page_break_after: pageBreak,
           },
-        ]);
+        setFeedback({ type: 'success', message: t('menu.messages.productUpdated') });
         setFeedback({ type: 'success', message: 'Page break actualizat' });
       } catch (err) {
         setFeedback({
-          type: 'error',
+          message: err instanceof Error ? err.message : t('menu.messages.error'),
           message: err instanceof Error ? err.message : 'Eroare la actualizarea page break',
         });
       }
@@ -112,11 +113,11 @@ export const MenuPDFBuilderPage = () => {
             id: productId,
             display_in_pdf: visible,
           },
-        ]);
+        setFeedback({ type: 'success', message: t('menu.messages.productUpdated') });
         setFeedback({ type: 'success', message: 'Produsul a fost actualizat' });
       } catch (err) {
         setFeedback({
-          type: 'error',
+          message: err instanceof Error ? err.message : t('menu.messages.error'),
           message: err instanceof Error ? err.message : 'Eroare la actualizarea produsului',
         });
       }
@@ -141,7 +142,7 @@ export const MenuPDFBuilderPage = () => {
         setFeedback({ type: 'success', message: `Toate produsele au fost ${visible ? 'activate' : 'dezactivate'}` });
       } catch (err) {
         setFeedback({
-          type: 'error',
+          message: err instanceof Error ? err.message : t('menu.messages.error'),
           message: err instanceof Error ? err.message : 'Eroare la actualizarea produselor',
         });
       }
@@ -152,11 +153,11 @@ export const MenuPDFBuilderPage = () => {
   const handleUploadImage = useCallback(
     async (categoryId: number, file: File) => {
       try {
-        await uploadImage(categoryId, file);
+        setFeedback({ type: 'success', message: t('menu.messages.imageUploaded') });
         setFeedback({ type: 'success', message: 'Imaginea a fost încărcată cu succes' });
       } catch (err) {
         setFeedback({
-          type: 'error',
+          message: err instanceof Error ? err.message : t('menu.messages.error'),
           message: err instanceof Error ? err.message : 'Eroare la upload-ul imaginii',
         });
       }
@@ -171,11 +172,11 @@ export const MenuPDFBuilderPage = () => {
       }
 
       try {
-        await deleteImage(categoryId);
+        setFeedback({ type: 'success', message: t('menu.messages.productDeleted') });
         setFeedback({ type: 'success', message: 'Imaginea a fost ștearsă' });
       } catch (err) {
         setFeedback({
-          type: 'error',
+          message: err instanceof Error ? err.message : t('menu.messages.error'),
           message: err instanceof Error ? err.message : 'Eroare la ștergerea imaginii',
         });
       }
@@ -190,11 +191,11 @@ export const MenuPDFBuilderPage = () => {
 
     setRegenerating(true);
     try {
-      await regenerate(activeType);
+      setFeedback({ type: 'success', message: t('common.success') });
       setFeedback({ type: 'success', message: 'PDF-urile au fost regenerate cu succes' });
     } catch (err) {
       setFeedback({
-        type: 'error',
+        message: err instanceof Error ? err.message : t('menu.messages.error'),
         message: err instanceof Error ? err.message : 'Eroare la regenerarea PDF-urilor',
       });
     } finally {
@@ -209,11 +210,11 @@ export const MenuPDFBuilderPage = () => {
 
     setRegenerating(true);
     try {
-      await regenerate('all');
+      setFeedback({ type: 'success', message: t('common.success') });
       setFeedback({ type: 'success', message: 'Toate PDF-urile au fost regenerate cu succes' });
     } catch (err) {
       setFeedback({
-        type: 'error',
+        message: err instanceof Error ? err.message : t('menu.messages.error'),
         message: err instanceof Error ? err.message : 'Eroare la regenerarea PDF-urilor',
       });
     } finally {
@@ -223,8 +224,8 @@ export const MenuPDFBuilderPage = () => {
 
   return (
     <div className="menu-pdf-page" data-page-ready={!loading}>
-      <PageHeader
-        title='Generator PDF Meniu'
+        title={t('menu.menuPdf.title')}
+        description={t('menu.menuPdf.subtitle')}
         description="Administrează template-urile de meniu, sincronizează conținutul cu Catalogul și exportă PDF-uri gata de tipar sau distribuție digitală."
         actions={[
           {
@@ -301,7 +302,7 @@ export const MenuPDFBuilderPage = () => {
           ))}
         </section>
       ) : (
-        <div className="menu-pdf-empty">
+          <p>{t('menu.categories.noCategories')}</p>
           <p>📋 Nicio categorie configurată pentru {activeType === 'food' ? 'Mâncare' : 'Băuturi'}.</p>
         </div>
       )}
