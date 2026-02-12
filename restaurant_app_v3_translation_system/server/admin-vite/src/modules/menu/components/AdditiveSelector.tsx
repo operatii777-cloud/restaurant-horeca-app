@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 import { useState, useEffect } from 'react';
 import { Form, Badge } from 'react-bootstrap';
 import { httpClient } from '@/shared/api/httpClient';
@@ -19,8 +19,8 @@ interface AdditiveSelectorProps {
   placeholder?: string;
 }
 
-export const AdditiveSelector = ({ value, onChange, label = 'Aditivi', placeholder = 'Selectează aditivi...' }: AdditiveSelectorProps) => {
-  //   const { t } = useTranslation();
+export const AdditiveSelector = ({ value, onChange, label, placeholder }: AdditiveSelectorProps) => {
+  const { t } = useTranslation();
   const [additives, setAdditives] = useState<Additive[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
@@ -93,7 +93,7 @@ export const AdditiveSelector = ({ value, onChange, label = 'Aditivi', placehold
               style={{ cursor: 'pointer', fontSize: '0.875rem', padding: '0.5rem' }}
               onClick={() => handleToggle(additive.id)}
             >
-              {additive.e_code || additive.name}
+      <Form.Label>{label || t('menu.productModal.additives')}</Form.Label>
               {additive.name && additive.e_code && ` - ${additive.name}`}
               <i className="fas fa-times ms-2"></i>
             </Badge>
@@ -117,7 +117,7 @@ export const AdditiveSelector = ({ value, onChange, label = 'Aditivi', placehold
       ) : (
         <div className="additives-list">
           {filteredAdditives.length === 0 ? (
-            <div className="text-muted text-center py-2">
+        placeholder={placeholder || t('menu.productModal.additives')}
               {searchTerm ? 'Nu s-au găsit aditivi.' : 'Nu există aditivi în catalog.'}
             </div>
           ) : (
@@ -126,12 +126,12 @@ export const AdditiveSelector = ({ value, onChange, label = 'Aditivi', placehold
                 key={additive.id}
                 className={`additive-item ${selectedIds.includes(additive.id) ? 'selected' : ''}`}
                 onClick={() => handleToggle(additive.id)}
-              >
+          <i className="fas fa-spinner fa-spin me-2"></i>{t('common.loading')}</div>
                 <Form.Check
                   type="checkbox"
                   checked={selectedIds.includes(additive.id)}
                   onChange={() => handleToggle(additive.id)}
-                  label={
+              {searchTerm ? t('common.noData') : t('menu.productModal.additives')}
                     <span>
                       <strong>{additive.e_code || additive.name}</strong>
                       {additive.name && additive.e_code && <span className="ms-2">{additive.name}</span>}
