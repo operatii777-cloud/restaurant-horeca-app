@@ -286,7 +286,7 @@ export const RecipesCatalogPage: React.FC = () => {
 
       processed++;
       setBulkProgress({ processed, total: selectedRows.length });
-      setBulkResults([...results]);
+      setBulkResults([...results]); // Update progress display
     }
 
     const successCount = results.filter(r => r.success).length;
