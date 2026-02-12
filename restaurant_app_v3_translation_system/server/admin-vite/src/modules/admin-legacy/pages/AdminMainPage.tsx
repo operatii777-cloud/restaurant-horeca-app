@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from '@/i18n/I18nContext';
 import { 
   LayoutDashboard, 
   ShoppingCart, 
@@ -14,91 +15,92 @@ import {
 
 interface MenuItem {
   id: string;
-  label: string;
+  labelKey: string;
   icon: React.ReactNode;
-  description: string;
+  descriptionKey: string;
   route?: string;
 }
 
 export const AdminMainPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const menuItems: MenuItem[] = [
     {
       id: 'dashboard',
-      label: 'Dashboard',
+      labelKey: 'adminMain.dashboard.title',
       icon: <LayoutDashboard className="w-6 h-6" />,
-      description: 'Vizualizare generală și statistici',
+      descriptionKey: 'adminMain.dashboard.description',
       route: '/dashboard'
     },
     {
       id: 'catalog',
-      label: 'Catalog Produse',
+      labelKey: 'adminMain.catalog.title',
       icon: <ShoppingCart className="w-6 h-6" />,
-      description: 'Gestionare produse și categorii',
+      descriptionKey: 'adminMain.catalog.description',
       route: '/catalog'
     },
     {
       id: 'menu',
-      label: 'Management Meniu',
+      labelKey: 'adminMain.menu.title',
       icon: <Package className="w-6 h-6" />,
-      description: 'Configurare meniu restaurant',
+      descriptionKey: 'adminMain.menu.description',
       route: '/menu'
     },
     {
       id: 'waiters',
-      label: 'Ospătari',
+      labelKey: 'adminMain.waiters.title',
       icon: <Users className="w-6 h-6" />,
-      description: 'Gestionare personal',
+      descriptionKey: 'adminMain.waiters.description',
       route: '/waiters'
     },
     {
       id: 'orders',
-      label: 'Comenzi',
+      labelKey: 'adminMain.orders.title',
       icon: <ShoppingCart className="w-6 h-6" />,
-      description: 'Vizualizare și gestionare comenzi',
+      descriptionKey: 'adminMain.orders.description',
       route: '/orders/manage'
     },
     {
       id: 'reservations',
-      label: 'Rezervări',
+      labelKey: 'adminMain.reservations.title',
       icon: <Calendar className="w-6 h-6" />,
-      description: 'Sistem de rezervări',
+      descriptionKey: 'adminMain.reservations.description',
       route: '/reservations'
     },
     {
       id: 'stocks',
-      label: 'Stocuri',
+      labelKey: 'adminMain.stocks.title',
       icon: <Package className="w-6 h-6" />,
-      description: 'Management stocuri și inventar',
+      descriptionKey: 'adminMain.stocks.description',
       route: '/stocks'
     },
     {
       id: 'analytics',
-      label: 'Analize',
+      labelKey: 'adminMain.analytics.title',
       icon: <TrendingUp className="w-6 h-6" />,
-      description: 'Rapoarte și analize',
+      descriptionKey: 'adminMain.analytics.description',
       route: '/reports'
     },
     {
       id: 'daily-offer',
-      label: 'Oferta Zilei',
+      labelKey: 'adminMain.dailyOffers.title',
       icon: <Gift className="w-6 h-6" />,
-      description: 'Configurare oferte speciale',
+      descriptionKey: 'adminMain.dailyOffers.description',
       route: '/promotions/daily-offer'
     },
     {
       id: 'messages',
-      label: 'Mesaje',
+      labelKey: 'adminMain.messages.title',
       icon: <MessageSquare className="w-6 h-6" />,
-      description: 'Mesaje și notificări',
+      descriptionKey: 'adminMain.messages.description',
       route: '/internal-messaging'
     },
     {
       id: 'settings',
-      label: 'Setări',
+      labelKey: 'adminMain.settings.title',
       icon: <Settings className="w-6 h-6" />,
-      description: 'Configurări sistem',
+      descriptionKey: 'adminMain.settings.description',
       route: '/settings'
     },
   ];
@@ -115,10 +117,10 @@ export const AdminMainPage: React.FC = () => {
       <div className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-            Panou Administrare Restaurant
+            {t('adminMain.title')}
           </h1>
           <p className="mt-2 text-gray-600">
-            Gestionare completă pentru restaurantul tău
+            {t('adminMain.subtitle')}
           </p>
         </div>
       </div>
@@ -154,10 +156,10 @@ export const AdminMainPage: React.FC = () => {
                   </svg>
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  {item.label}
+                  {t(item.labelKey)}
                 </h3>
                 <p className="text-sm text-gray-600">
-                  {item.description}
+                  {t(item.descriptionKey)}
                 </p>
               </div>
             </div>
