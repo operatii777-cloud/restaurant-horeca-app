@@ -7,7 +7,7 @@ import { useTranslation } from '@/i18n/I18nContext';
  * ═══════════════════════════════════════════════════════════════════════════
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Card, Row, Col, Spinner, Badge, Table, Button } from 'react-bootstrap';
 import {
   LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
@@ -80,7 +80,7 @@ export const ExecutiveDashboardPage: React.FC = () => {
     return `${sign}${value.toFixed(2)}%`;
   };
 
-  const PLATFORM_LABELS: Record<string, string> = {
+  const PLATFORM_LABELS = useMemo<Record<string, string>>(() => ({
     'MOBILE_APP': t('dashboard.executive.platformMobileApp'),
     'FRIENDSRIDE': 'Friends Ride',
     'GLOVO': 'Glovo',
@@ -89,8 +89,8 @@ export const ExecutiveDashboardPage: React.FC = () => {
     'BOLT_FOOD': 'Bolt Food',
     'POS': t('dashboard.executive.platformPOS'),
     'KIOSK': t('dashboard.executive.platformKIOSK'),
-    'PHONE': 'Telefon',
-  };
+    'PHONE': t('dashboard.executive.platformPhone'),
+  }), [t]);
 
   if (loading && !metrics) {
     return (

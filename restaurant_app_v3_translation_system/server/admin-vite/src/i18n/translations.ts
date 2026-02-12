@@ -1075,7 +1075,8 @@ export const translations = {
         total: "Total",
         platformMobileApp: "Aplicația Mobilă",
         platformPOS: "POS Restaurant",
-        platformKIOSK: "KIOSK Self-Service"
+        platformKIOSK: "KIOSK Self-Service",
+        platformPhone: "Telefon"
       },
       
       // Hostess Dashboard
@@ -1086,11 +1087,11 @@ export const translations = {
         totalCovers: "Total Covers",
         avgDuration: "Durată Medie (min)",
         coversPerSession: "Covers / Sesiune",
-        zoneDistribution: "distributie pe zone",
+        zoneDistribution: "Distribuție pe zone",
         sessionsPerHour: "Sesiuni pe Oră (zi aleasă)",
         sessions: "Sesiuni",
         covers: "Covers",
-        selectDay: "zi pentru grafic orar"
+        selectDay: "Zi pentru grafic orar"
       },
       
       // Coatroom Dashboard
@@ -1101,8 +1102,8 @@ export const translations = {
         open: "Deschise",
         closed: "Închise",
         lost: "Pierdute",
-        ticketsPerHour: "tichete pe ora",
-        statusDistribution: "distributie status",
+        ticketsPerHour: "Tichete pe oră",
+        statusDistribution: "Distribuție status",
         tickets: "Tichete"
       },
       
@@ -1111,10 +1112,10 @@ export const translations = {
         title: "📊 Lost & Found Dashboard",
         subtitle: "Analytics obiecte găsite și pierdute",
         totalItems: "Total Obiecte",
-        stored: "in depozit",
+        stored: "În depozit",
         returned: "Returnate",
-        returnRate: "Return Rate",
-        itemsByLocation: "obiecte pe locatii",
+        returnRate: "Rată returnare",
+        itemsByLocation: "Obiecte pe locații",
         itemStatus: "Status Obiecte",
         items: "Obiecte",
         inStorage: "În Depozit",
@@ -2382,7 +2383,8 @@ export const translations = {
         total: "Total",
         platformMobileApp: "Mobile App",
         platformPOS: "POS Restaurant",
-        platformKIOSK: "KIOSK Self-Service"
+        platformKIOSK: "KIOSK Self-Service",
+        platformPhone: "Phone"
       },
       
       // Hostess Dashboard

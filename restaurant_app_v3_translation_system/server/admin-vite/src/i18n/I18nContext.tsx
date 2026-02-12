@@ -3,11 +3,12 @@ import { translations } from './translations';
 
 type Language = 'ro' | 'en';
 type TranslationKey = string;
+type TranslationParams = Record<string, string | number>;
 
 interface I18nContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: TranslationKey) => string;
+  t: (key: TranslationKey, params?: TranslationParams) => string;
 }
 
 export const I18nContext = createContext<I18nContextType | undefined>(undefined);
@@ -24,7 +25,7 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem('adminLanguage', lang);
   };
 
-  const t = (key: TranslationKey): string => {
+  const t = (key: TranslationKey, params?: TranslationParams): string => {
     const keys = key.split('.');
     let value: any = translations[language];
 
@@ -37,7 +38,16 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
       }
     }
 
-    return typeof value === 'string' ? value : key; // Return key for non-string values
+    let result = typeof value === 'string' ? value : key;
+    
+    // Replace interpolation placeholders {key} with params
+    if (params) {
+      Object.keys(params).forEach(paramKey => {
+        result = result.replace(new RegExp(`\\{${paramKey}\\}`, 'g'), String(params[paramKey]));
+      });
+    }
+    
+    return result;
   };
 
   return (
