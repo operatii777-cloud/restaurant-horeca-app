@@ -350,7 +350,24 @@ export const translations = {
         allCategories: "Toate Categoriile",
         addToOrder: "Adaugă la Comandă",
         outOfStock: "Stoc Epuizat",
-        price: "Preț"
+        price: "Preț",
+        priceLabel: "Preț",
+        priceTier: "Preț",
+        clearSearch: "Șterge căutarea",
+        dailyMenu: "Meniul Zilei",
+        allergens: "Alergeni",
+        total: "Total",
+        specialPrice: "Preț Ofertă",
+        noDailyMenu: "Nu există meniu al zilei astăzi",
+        noSearchResults: "Nu s-au găsit produse pentru căutarea ta",
+        noProductsAvailable: "Nu există produse disponibile",
+        productUnavailable: "Produs indisponibil",
+        stock: "Stoc",
+        unavailable: "Indisponibil",
+        loadingProducts: "Se încarcă produsele...",
+        errorLoading: "Eroare la încărcarea produselor",
+        productNotActive: "Produsul nu este activ",
+        productOutOfStock: "Produsul nu este în stoc"
       },
       
       // Order
@@ -1360,7 +1377,24 @@ export const translations = {
         allCategories: "All Categories",
         addToOrder: "Add to Order",
         outOfStock: "Out of Stock",
-        price: "Price"
+        price: "Price",
+        priceLabel: "Price",
+        priceTier: "Price",
+        clearSearch: "Clear search",
+        dailyMenu: "Daily Menu",
+        allergens: "Allergens",
+        total: "Total",
+        specialPrice: "Special Price",
+        noDailyMenu: "No daily menu available today",
+        noSearchResults: "No products found for your search",
+        noProductsAvailable: "No products available",
+        productUnavailable: "Product unavailable",
+        stock: "Stock",
+        unavailable: "Unavailable",
+        loadingProducts: "Loading products...",
+        errorLoading: "Error loading products",
+        productNotActive: "Product is not active",
+        productOutOfStock: "Product is out of stock"
       },
       
       // Order
