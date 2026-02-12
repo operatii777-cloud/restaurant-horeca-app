@@ -1075,7 +1075,8 @@ export const translations = {
       create: "Create",
       update: "Update",
       clone: "Clone",
-      duplicate: "Duplicate"
+      duplicate: "Duplicate",
+      retry: "Retry"
     },
     // Common labels
     common: {
@@ -1109,6 +1110,8 @@ export const translations = {
       required: "Required",
       selected: "Selected",
       filtered: "Filtered",
+      product: "Product",
+      processing: "Processing...",
       items: "Items",
       results: "Results",
       showing: "Showing",
@@ -1340,7 +1343,13 @@ export const translations = {
         available: "Available",
         occupied: "Occupied",
         reserved: "Reserved",
-        noTables: "No tables available"
+        noTables: "No tables available",
+        openOrder: "Open order",
+        loading: "Loading tables...",
+        reloadTables: "Reload tables",
+        errorLoading: "Error loading tables",
+        errorProcessing: "Error processing table",
+        clearSelection: "Clear selection"
       },
       
       // Products
