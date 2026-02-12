@@ -66,7 +66,10 @@ export const translations = {
       update: "Actualizează",
       clone: "Clonează",
       duplicate: "Duplică",
-      retry: "Reîncearcă"
+      retry: "Reîncearcă",
+      applyFilters: "Aplicare Filtre",
+      exportCSV: "Export CSV",
+      viewDetails: "Vezi detalii"
     },
     // Common labels
     common: {
@@ -101,12 +104,14 @@ export const translations = {
       selected: "Selectat",
       filtered: "Filtrate",
       product: "Produs",
+      products: "Produse",
       processing: "Se procesează...",
       items: "Articole",
       results: "Rezultate",
       showing: "Afișare",
       of: "din",
       to: "până la",
+      from: "De la",
       per: "pe",
       page: "Pagină",
       perPage: "Pe pagină",
@@ -119,7 +124,14 @@ export const translations = {
       margin: "Marjă",
       vat: "TVA",
       notes: "Notițe",
-      actions: "Acțiuni"
+      actions: "Acțiuni",
+      exporting: "Se exportă...",
+      dateRanges: {
+        today: "Astăzi",
+        yesterday: "Ieri",
+        lastWeek: "Ultima săptămână",
+        lastMonth: "Ultima lună"
+      }
     },
     // Admin Main Page
     adminMain: {
@@ -652,6 +664,21 @@ export const translations = {
     orders: {
       title: "Comenzi",
       subtitle: "Gestiune comenzi",
+      table: "Masă",
+      client: "Client",
+      anonymous: "Anonim",
+      type: "Tip",
+      createdAt: "Creată la",
+      paid: "Achitată",
+      total: "Total",
+      orders: "comenzi",
+      firstOrder: "Prima comandă",
+      lastOrder: "Ultima comandă",
+      visitTotal: "Total Vizită",
+      additionalProducts: "produse suplimentare",
+      markAsPaid: "Marchează achitată",
+      noOrdersForFilter: "Nu există comenzi pentru filtrul selectat.",
+      viewMode: "mod afisare",
       
       // Status
       status: {
@@ -663,7 +690,9 @@ export const translations = {
         delivered: "Livrate",
         completed: "Finalizate",
         cancelled: "Anulate",
-        failed: "Eșuate"
+        failed: "Eșuate",
+        paid: "ACHITAT",
+        unpaid: "NEACHITAT"
       },
       
       // Types
@@ -671,10 +700,23 @@ export const translations = {
         all: "Toate",
         dineIn: "La Masă",
         takeaway: "La Pachet",
+        takeout: "La pachet",
         delivery: "Livrare",
         driveThru: "Drive-Thru",
         online: "Online",
         phone: "Telefon"
+      },
+      
+      // Filters
+      filters: {
+        unpaid: "Neachitate",
+        paid: "Achitate"
+      },
+      
+      // Views
+      views: {
+        table: "Tabel",
+        visits: "Vizite"
       },
       
       // List
@@ -772,7 +814,52 @@ export const translations = {
         confirmCancel: "Sigur vrei să anulezi această comandă?",
         cannotModify: "Comanda nu poate fi modificată",
         printSuccess: "Printat cu succes",
-        printFailed: "Printare eșuată"
+        printFailed: "Printare eșuată",
+        exportError: "Nu s-a putut genera exportul comenzilor.",
+        exportErrorGeneric: "Eroare la exportul comenzilor:",
+        orderMarkedPaid: "Comanda a fost marcată ca achitată.",
+        markPaidError: "Nu s-a putut marca vizita ca achitată.",
+        markPaidErrorGeneric: "Eroare la marcarea vizitei ca achitată:"
+      },
+
+      // Management page
+      management: {
+        title: "Gestionare comenzi",
+        subtitle: "Monitorizează comenzile active, plățile și analizele.",
+        tags: {
+          advancedFiltering: "Filtrare avansată și export CSV",
+          analytics: "Analitice anulări & top produse",
+          archive: "Integrare cu arhiva istoric"
+        },
+        summary: {
+          totalOrders: "Comenzi totale",
+          unpaidOrders: "Neachitate",
+          totalValue: "Valoare totală",
+          resultsForFilter: "Rezultate pentru filtrul curent",
+          ordersSum: "Suma comenzilor",
+          unpaid: "Neachitate",
+          paid: "Achitate",
+          requiresAction: "Necesită acțiune"
+        },
+        tabs: {
+          active: "Comenzi active",
+          cancelled: "Comenzi anulate",
+          analytics: "Analitice anulări",
+          topProducts: "Top produse",
+          archive: "Arhivă comenzi",
+          ariaLabel: "Taburi gestionare comenzi"
+        }
+      },
+      
+      // Summary
+      summary: {
+        totalOrders: "Comenzi totale",
+        resultsForFilter: "Rezultate pentru filtrul curent",
+        totalValue: "valoare totala",
+        ordersSum: "Suma comenzilor",
+        unpaid: "Neachitate",
+        paid: "Achitate",
+        requiresAction: "Necesită acțiune"
       }
     },
     
@@ -2343,7 +2430,36 @@ export const translations = {
         confirmCancel: "Are you sure you want to cancel this order?",
         cannotModify: "Order cannot be modified",
         printSuccess: "Printed successfully",
-        printFailed: "Print failed"
+        printFailed: "Print failed",
+        exportError: "Could not generate order export.",
+        exportErrorGeneric: "Error exporting orders:",
+        orderMarkedPaid: "Order marked as paid.",
+        markPaidError: "Could not mark visit as paid.",
+        markPaidErrorGeneric: "Error marking visit as paid:"
+      },
+
+      // Management page
+      management: {
+        title: "Order Management",
+        subtitle: "Monitor active orders, payments, and analytics.",
+        tags: {
+          advancedFiltering: "Advanced filtering and CSV export",
+          analytics: "Cancellation analytics & top products",
+          archive: "Integration with historical archive"
+        },
+        summary: {
+          totalOrders: "Total Orders",
+          unpaidOrders: "Unpaid",
+          totalValue: "Total Value"
+        },
+        tabs: {
+          active: "Active Orders",
+          cancelled: "Cancelled Orders",
+          analytics: "Cancellation Analytics",
+          topProducts: "Top Products",
+          archive: "Orders Archive",
+          ariaLabel: "Order management tabs"
+        }
       }
     },
     
