@@ -1,0 +1,142 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.translations = void 0;
+// Translation keys for admin-vite interface
+exports.translations = {
+    ro: {
+        // Navigation & Menu
+        nav: {
+            dashboard: "Tablou de bord",
+            orders: "Comenzi",
+            menu: "Meniu",
+            catalog: "Catalog",
+            stocks: "Stocuri",
+            reports: "Rapoarte",
+            settings: "Setări",
+            marketing: "Marketing",
+            enterprise: "Enterprise",
+            logout: "Deconectare"
+        },
+        // Common actions
+        actions: {
+            add: "Adaugă",
+            edit: "Editează",
+            delete: "Șterge",
+            save: "Salvează",
+            cancel: "Anulează",
+            search: "Caută",
+            filter: "Filtrează",
+            export: "Exportă",
+            import: "Importă",
+            refresh: "Reîmprospătează",
+            print: "Printează",
+            download: "Descarcă",
+            upload: "Încarcă",
+            view: "Vizualizează",
+            close: "Închide",
+            back: "Înapoi",
+            next: "Următorul",
+            previous: "Anterior",
+            confirm: "Confirmă",
+            submit: "Trimite",
+            apply: "Aplică",
+            reset: "Resetează"
+        },
+        // Common labels
+        common: {
+            name: "Nume",
+            description: "Descriere",
+            price: "Preț",
+            quantity: "Cantitate",
+            total: "Total",
+            date: "Dată",
+            time: "Oră",
+            status: "Status",
+            category: "Categorie",
+            type: "Tip",
+            image: "Imagine",
+            details: "Detalii",
+            loading: "Se încarcă...",
+            noData: "Nu există date",
+            error: "Eroare",
+            success: "Succes",
+            warning: "Avertisment",
+            info: "Informație",
+            yes: "Da",
+            no: "Nu",
+            all: "Toate",
+            active: "Activ",
+            inactive: "Inactiv",
+            enabled: "Activat",
+            disabled: "Dezactivat"
+        }
+    },
+    en: {
+        // Navigation & Menu
+        nav: {
+            dashboard: "Dashboard",
+            orders: "Orders",
+            menu: "Menu",
+            catalog: "Catalog",
+            stocks: "Stocks",
+            reports: "Reports",
+            settings: "Settings",
+            marketing: "Marketing",
+            enterprise: "Enterprise",
+            logout: "Logout"
+        },
+        // Common actions
+        actions: {
+            add: "Add",
+            edit: "Edit",
+            delete: "Delete",
+            save: "Save",
+            cancel: "Cancel",
+            search: "Search",
+            filter: "Filter",
+            export: "Export",
+            import: "Import",
+            refresh: "Refresh",
+            print: "Print",
+            download: "Download",
+            upload: "Upload",
+            view: "View",
+            close: "Close",
+            back: "Back",
+            next: "Next",
+            previous: "Previous",
+            confirm: "Confirm",
+            submit: "Submit",
+            apply: "Apply",
+            reset: "Reset"
+        },
+        // Common labels
+        common: {
+            name: "Name",
+            description: "Description",
+            price: "Price",
+            quantity: "Quantity",
+            total: "Total",
+            date: "Date",
+            time: "Time",
+            status: "Status",
+            category: "Category",
+            type: "Type",
+            image: "Image",
+            details: "Details",
+            loading: "Loading...",
+            noData: "No data available",
+            error: "Error",
+            success: "Success",
+            warning: "Warning",
+            info: "Information",
+            yes: "Yes",
+            no: "No",
+            all: "All",
+            active: "Active",
+            inactive: "Inactive",
+            enabled: "Enabled",
+            disabled: "Disabled"
+        }
+    }
+};

@@ -1,0 +1,76 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.QueueStatsCards = QueueStatsCards;
+// import { useTranslation } from '@/i18n/I18nContext';
+var react_1 = require("react");
+function QueueStatsCards(_a) {
+    var queueType = _a.queueType, stats = _a.stats;
+    //   const { t } = useTranslation();
+    var queueSize = (stats === null || stats === void 0 ? void 0 : stats.currentQueueSize) || 0;
+    var processed = (stats === null || stats === void 0 ? void 0 : stats.processed) || 0;
+    var failed = (stats === null || stats === void 0 ? void 0 : stats.failed) || 0;
+    var avgTime = (stats === null || stats === void 0 ? void 0 : stats.avgProcessingTime) || 0;
+    var getQueueStatus = function () {
+        if (queueType === 'memory') {
+            return { text: 'Active (In-Memory)', icon: '✅', color: 'text-green-600' };
+        }
+        else if (queueType === 'redis') {
+            return { text: 'Active (Redis)', icon: '✅', color: 'text-green-600' };
+        }
+        else {
+            return { text: 'No queue active', icon: '❌', color: 'text-red-600' };
+        }
+    };
+    var status = getQueueStatus();
+    return (<div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+      {/* Queue System Status */}
+      <div className="bg-gradient-to-br from-purple-600 to-blue-500 text-white rounded-lg p-4 shadow-md">
+        <div className="flex justify-between items-start">
+          <div>
+            <h4 className="text-2xl font-bold">{queueType === 'none' ? 'Disabled' : 'Queue'}</h4>
+            <p className="text-sm opacity-90 mt-1">Queue System</p>
+          </div>
+          <span className="text-3xl">📊</span>
+        </div>
+        <p className={"text-sm mt-2 ".concat(status.color)}>
+          {status.icon} {status.text}
+        </p>
+      </div>
+
+      {/* Queue Size */}
+      <div className="bg-yellow-500 text-white rounded-lg p-4 shadow-md">
+        <div className="flex justify-between items-start">
+          <div>
+            <h4 className="text-2xl font-bold">{queueSize}</h4>
+            <p className="text-sm opacity-90 mt-1">În Coadă</p>
+          </div>
+          <span className="text-3xl">⏰</span>
+        </div>
+        <p className="text-sm mt-2 opacity-90">Comenzi în așteptare</p>
+      </div>
+
+      {/* Processed */}
+      <div className="bg-green-500 text-white rounded-lg p-4 shadow-md">
+        <div className="flex justify-between items-start">
+          <div>
+            <h4 className="text-2xl font-bold">{processed}</h4>
+            <p className="text-sm opacity-90 mt-1">Procesate astazi</p>
+          </div>
+          <span className="text-3xl">✅</span>
+        </div>
+        <p className="text-sm mt-2 opacity-90">~{avgTime}ms avg</p>
+      </div>
+
+      {/* Failed */}
+      <div className="bg-red-500 text-white rounded-lg p-4 shadow-md">
+        <div className="flex justify-between items-start">
+          <div>
+            <h4 className="text-2xl font-bold">{failed}</h4>
+            <p className="text-sm opacity-90 mt-1">Eșuat</p>
+          </div>
+          <span className="text-3xl">⚠️</span>
+        </div>
+        <p className="text-sm mt-2 opacity-90">Necesită atenție</p>
+      </div>
+    </div>);
+}

@@ -7559,6 +7559,12 @@ SELECT * FROM orders
     console.log('✅ Automated backup scheduler initialized (check every hour)');
   });
 
+  // Return a promise that never resolves to keep the async function alive
+  return new Promise(() => {
+    // This promise intentionally never resolves/rejects
+    // The HTTP server and all setIntervals will keep the process running
+  });
+
 }).catch((err) => {
   console.error('❌ CRITICAL: Database connection failed:', err.message);
   console.error('📚 Stack Trace:', err.stack);
@@ -7886,3 +7892,10 @@ console.log('✅ SPA catch-all middleware configured');
 // NOTE: httpServer.listen() is now called INSIDE dbPromise.then()
 // to ensure all routes are loaded before server starts
 module.exports = { app, httpServer };
+
+// CRITICAL: Keep-alive interval to prevent process from exiting
+// This ensures the Node.js event loop stays active
+setInterval(() => {
+  // Intentionally empty - just keeps event loop alive
+}, 60000); // Check every minute
+console.log('✅ Keep-alive interval registered');

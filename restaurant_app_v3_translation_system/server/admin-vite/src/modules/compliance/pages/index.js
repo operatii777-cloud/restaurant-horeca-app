@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.HACCPCorrectiveActionsPage = exports.HACCPMonitoringPage = exports.HACCPProcessesPage = exports.HACCPDashboardPage = void 0;
+var HACCPDashboardPage_1 = require("./HACCPDashboardPage");
+Object.defineProperty(exports, "HACCPDashboardPage", { enumerable: true, get: function () { return HACCPDashboardPage_1.HACCPDashboardPage; } });
+var HACCPProcessesPage_1 = require("./HACCPProcessesPage");
+Object.defineProperty(exports, "HACCPProcessesPage", { enumerable: true, get: function () { return HACCPProcessesPage_1.HACCPProcessesPage; } });
+var HACCPMonitoringPage_1 = require("./HACCPMonitoringPage");
+Object.defineProperty(exports, "HACCPMonitoringPage", { enumerable: true, get: function () { return HACCPMonitoringPage_1.HACCPMonitoringPage; } });
+var HACCPCorrectiveActionsPage_1 = require("./HACCPCorrectiveActionsPage");
+Object.defineProperty(exports, "HACCPCorrectiveActionsPage", { enumerable: true, get: function () { return HACCPCorrectiveActionsPage_1.HACCPCorrectiveActionsPage; } });
