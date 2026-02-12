@@ -9,6 +9,12 @@ import {
   Loader2
 } from 'lucide-react';
 import { httpClient } from '@/shared/api/httpClient';
+import { useToast } from '@/shared/hooks/useToast';
+import {
+  IngredientImportModal,
+  ConfirmationModal,
+  BulkImportProgressModal
+} from '../components';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
@@ -39,6 +45,8 @@ interface Additive {
 }
 
 export const IngredientsCatalogPage: React.FC = () => {
+  const { showToast } = useToast();
+  
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedAllergen, setSelectedAllergen] = useState('all');
@@ -52,26 +60,38 @@ export const IngredientsCatalogPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Load ingredients from API
-  useEffect(() => {
-    const loadIngredients = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const response = await httpClient.get('/api/ingredient-catalog');
-        if (response.data.success && response.data.ingredients) {
-          setIngredientTemplates(response.data.ingredients);
-        }
-      } catch (err: any) {
-        console.error('Error loading ingredients:', err);
-        setError(err.message || 'Failed to load ingredients');
-      } finally {
-        setLoading(false);
-      }
-    };
+  // Modal states
+  const [importModalOpen, setImportModalOpen] = useState(false);
+  const [selectedIngredientForImport, setSelectedIngredientForImport] = useState<IngredientTemplate | null>(null);
+  const [importLoading, setImportLoading] = useState(false);
+  
+  // Bulk import states
+  const [bulkConfirmOpen, setBulkConfirmOpen] = useState(false);
+  const [bulkProgressOpen, setBulkProgressOpen] = useState(false);
+  const [bulkProgress, setBulkProgress] = useState({ processed: 0, total: 0 });
+  const [bulkResults, setBulkResults] = useState<Array<{id: number; name: string; success: boolean; error?: string}>>([]);
 
+  // Load ingredients from API
+  const loadIngredients = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await httpClient.get('/api/ingredient-catalog');
+      if (response.data.success && response.data.ingredients) {
+        setIngredientTemplates(response.data.ingredients);
+      }
+    } catch (err: any) {
+      console.error('Error loading ingredients:', err);
+      setError(err.message || 'Failed to load ingredients');
+      showToast('error', 'Eroare la încărcarea ingredientelor');
+    } finally {
+      setLoading(false);
+    }
+  }, [showToast]);
+
+  useEffect(() => {
     loadIngredients();
-  }, []);
+  }, [loadIngredients]);
 
   // Load allergens from API
   useEffect(() => {
@@ -209,79 +229,112 @@ export const IngredientsCatalogPage: React.FC = () => {
     });
   }, [ingredientTemplates, searchTerm, selectedCategory, selectedAllergen]);
 
-  const handleImportIngredient = useCallback(async (id: number) => {
+  const handleImportIngredient = useCallback((id: number) => {
+    const ingredient = ingredientTemplates.find(i => i.id === id);
+    if (ingredient) {
+      setSelectedIngredientForImport(ingredient);
+      setImportModalOpen(true);
+    }
+  }, [ingredientTemplates]);
+
+  const handleConfirmImport = useCallback(async (data: { costPerUnit?: number; currentStock: number; minStock: number; supplier?: string }) => {
+    if (!selectedIngredientForImport) return;
+
+    setImportLoading(true);
     try {
-      const costPerUnit = prompt('Introduceți costul per unitate (RON):');
-      if (costPerUnit && (isNaN(parseFloat(costPerUnit)) || parseFloat(costPerUnit) < 0)) {
-        alert('Cost invalid');
-        return;
-      }
-      
-      const currentStock = prompt('Introduceți stocul curent:');
-      if (currentStock && (isNaN(parseFloat(currentStock)) || parseFloat(currentStock) < 0)) {
-        alert('Stoc invalid');
-        return;
-      }
-      
-      const response = await httpClient.post(`/api/ingredient-catalog/import/${id}`, {
-        cost_per_unit: costPerUnit ? parseFloat(costPerUnit) : undefined,
-        current_stock: currentStock ? parseFloat(currentStock) : 0,
-        min_stock: 0
+      const response = await httpClient.post(`/api/ingredient-catalog/import/${selectedIngredientForImport.id}`, {
+        cost_per_unit: data.costPerUnit,
+        current_stock: data.currentStock,
+        min_stock: data.minStock,
+        supplier: data.supplier
       });
 
       if (response.data.success) {
-        alert(response.data.message || 'Ingredientul a fost importat cu succes!');
+        showToast('success', response.data.message || 'Ingredientul a fost importat cu succes!');
+        setImportModalOpen(false);
+        setSelectedIngredientForImport(null);
+        // Reload ingredients to update the list
+        await loadIngredients();
       }
     } catch (err: any) {
       console.error('Error importing ingredient:', err);
-      alert(err.response?.data?.error || 'Eroare la importarea ingredientului');
+      showToast('error', err.response?.data?.error || 'Eroare la importarea ingredientului');
+    } finally {
+      setImportLoading(false);
     }
-  }, []);
+  }, [selectedIngredientForImport, showToast, loadIngredients]);
 
   const handleViewDetails = useCallback(async (id: number) => {
     try {
       const response = await httpClient.get(`/api/ingredient-catalog/${id}`);
       if (response.data.success) {
         const { ingredient } = response.data;
-        alert(`${ingredient.name}\n\nCategorie: ${ingredient.category}\nAlergeni: ${JSON.stringify(ingredient.allergens)}\n\nDetalii complete în consolă`);
+        showToast('info', `${ingredient.name} - ${ingredient.category}`);
         console.log('Ingredient details:', response.data);
       }
     } catch (err) {
       console.error('Error loading ingredient details:', err);
+      showToast('error', 'Eroare la încărcarea detaliilor');
     }
-  }, []);
+  }, [showToast]);
+
+  const handleStartBulkImport = useCallback(() => {
+    if (selectedRows.length === 0) {
+      showToast('warning', 'Selectați cel puțin un ingredient pentru import.');
+      return;
+    }
+    setBulkConfirmOpen(true);
+  }, [selectedRows, showToast]);
 
   const handleBulkImport = useCallback(async () => {
-    if (selectedRows.length === 0) {
-      alert('Selectați cel puțin un ingredient pentru import.');
-      return;
-    }
-    
-    const costPerUnit = prompt(`Introduceți costul per unitate pentru ${selectedRows.length} ingrediente (RON):`);
-    if (!costPerUnit || isNaN(parseFloat(costPerUnit)) || parseFloat(costPerUnit) <= 0) {
-      alert('Cost invalid');
-      return;
-    }
+    setBulkConfirmOpen(false);
+    setBulkProgressOpen(true);
+    setBulkProgress({ processed: 0, total: selectedRows.length });
+    setBulkResults([]);
 
-    let successCount = 0;
-    let errorCount = 0;
+    const results: Array<{id: number; name: string; success: boolean; error?: string}> = [];
+    let processed = 0;
 
     for (const id of selectedRows) {
+      const ingredient = ingredientTemplates.find(i => i.id === id);
+      if (!ingredient) continue;
+
       try {
-        await httpClient.post(`/api/ingredient-catalog/import/${id}`, {
-          cost_per_unit: parseFloat(costPerUnit),
+        const response = await httpClient.post(`/api/ingredient-catalog/import/${id}`, {
+          cost_per_unit: ingredient.estimated_cost_per_kg,
           current_stock: 0,
           min_stock: 0
         });
-        successCount++;
-      } catch (err) {
-        errorCount++;
+
+        if (response.data.success) {
+          results.push({ id, name: ingredient.name, success: true });
+        }
+      } catch (err: any) {
         console.error(`Error importing ingredient ${id}:`, err);
+        results.push({ 
+          id, 
+          name: ingredient.name, 
+          success: false, 
+          error: err.response?.data?.error || 'Eroare'
+        });
       }
+
+      processed++;
+      setBulkProgress({ processed, total: selectedRows.length });
+      setBulkResults([...results]);
     }
 
-    alert(`Import complet!\n${successCount} ingrediente importate cu succes\n${errorCount} erori`);
-  }, [selectedRows]);
+    const successCount = results.filter(r => r.success).length;
+    const errorCount = results.filter(r => !r.success).length;
+
+    showToast(
+      errorCount > 0 ? 'warning' : 'success',
+      `Import complet: ${successCount} succes, ${errorCount} erori`
+    );
+
+    // Reload ingredients after bulk import
+    await loadIngredients();
+  }, [selectedRows, ingredientTemplates, showToast, loadIngredients]);
 
   const categories = useMemo(() => {
     const cats = ingredientTemplates.map(i => i.category).filter(Boolean);
@@ -433,7 +486,7 @@ export const IngredientsCatalogPage: React.FC = () => {
                   ))}
                 </select>
                 <button
-                  onClick={handleBulkImport}
+                  onClick={handleStartBulkImport}
                   disabled={selectedRows.length === 0}
                   className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
@@ -530,6 +583,43 @@ export const IngredientsCatalogPage: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Modals */}
+      <IngredientImportModal
+        isOpen={importModalOpen}
+        onClose={() => {
+          setImportModalOpen(false);
+          setSelectedIngredientForImport(null);
+        }}
+        onConfirm={handleConfirmImport}
+        ingredientName={selectedIngredientForImport?.name || ''}
+        estimatedCost={selectedIngredientForImport?.estimated_cost_per_kg}
+        loading={importLoading}
+      />
+
+      <ConfirmationModal
+        isOpen={bulkConfirmOpen}
+        onClose={() => setBulkConfirmOpen(false)}
+        onConfirm={handleBulkImport}
+        title="Confirmare Import Bulk"
+        message={`Doriți să importați ${selectedRows.length} ingrediente în stoc? Fiecare va folosi costul estimat.`}
+        confirmText="Importă"
+        type="info"
+      />
+
+      <BulkImportProgressModal
+        isOpen={bulkProgressOpen}
+        onClose={() => {
+          setBulkProgressOpen(false);
+          setBulkResults([]);
+          setBulkProgress({ processed: 0, total: 0 });
+        }}
+        title="Import Ingrediente în Stoc"
+        totalItems={bulkProgress.total}
+        processedItems={bulkProgress.processed}
+        results={bulkResults}
+        isComplete={bulkProgress.processed === bulkProgress.total && bulkProgress.total > 0}
+      />
     </div>
   );
 };
