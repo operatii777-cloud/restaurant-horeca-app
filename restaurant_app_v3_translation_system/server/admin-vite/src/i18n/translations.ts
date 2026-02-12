@@ -381,6 +381,7 @@ export const translations = {
         items: "Produse",
         subtotal: "Subtotal",
         tax: "TVA",
+        vat: "TVA",
         discount: "Discount",
         total: "Total",
         empty: "Coș gol",
@@ -390,7 +391,11 @@ export const translations = {
         removeItem: "Elimină Produs",
         quantity: "Cantitate",
         notes: "Observații",
-        addNotes: "Adaugă observații..."
+        addNotes: "Adaugă observații...",
+        summary: "Sumar Comandă",
+        products: "produse",
+        noProducts: "Nu există produse în comandă",
+        closeAndReleaseTable: "Închide Comandă & Eliberează Masa"
       },
       
       // Payment
@@ -444,7 +449,18 @@ export const translations = {
         check: "Verifică Conexiunea",
         printInvoice: "Printează Factură",
         fiscalCode: "Cod Fiscal",
-        missingCodes: "Coduri Lipsă"
+        missingCodes: "Coduri Lipsă",
+        fiscalizing: "Se fiscalizează...",
+        fiscalizeOrder: "Fiscalizează Comandă",
+        fiscalized: "Fiscalizat",
+        updatingStock: "Actualizare stoc...",
+        stockBeingUpdated: "Se actualizează stocul...",
+        stockUpdated: "Stoc actualizat",
+        fiscalReceipt: "Bon Fiscal",
+        date: "Data",
+        retrying: "Se reîncearcă...",
+        retryPrint: "Retrimite Print",
+        retryAnaf: "Retrimite ANAF"
       },
       
       // Customer
@@ -1408,6 +1424,7 @@ export const translations = {
         items: "Items",
         subtotal: "Subtotal",
         tax: "Tax",
+        vat: "VAT",
         discount: "Discount",
         total: "Total",
         empty: "Cart empty",
@@ -1417,7 +1434,11 @@ export const translations = {
         removeItem: "Remove Item",
         quantity: "Quantity",
         notes: "Notes",
-        addNotes: "Add notes..."
+        addNotes: "Add notes...",
+        summary: "Order Summary",
+        products: "products",
+        noProducts: "No products in order",
+        closeAndReleaseTable: "Close Order & Release Table"
       },
       
       // Payment
@@ -1471,7 +1492,18 @@ export const translations = {
         check: "Check Connection",
         printInvoice: "Print Invoice",
         fiscalCode: "Fiscal Code",
-        missingCodes: "Missing Codes"
+        missingCodes: "Missing Codes",
+        fiscalizing: "Fiscalizing...",
+        fiscalizeOrder: "Fiscalize Order",
+        fiscalized: "Fiscalized",
+        updatingStock: "Updating stock...",
+        stockBeingUpdated: "Stock is being updated...",
+        stockUpdated: "Stock updated",
+        fiscalReceipt: "Fiscal Receipt",
+        date: "Date",
+        retrying: "Retrying...",
+        retryPrint: "Retry Print",
+        retryAnaf: "Retry ANAF"
       },
       
       // Customer
