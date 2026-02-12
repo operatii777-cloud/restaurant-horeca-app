@@ -89,9 +89,16 @@ exports.getConfig = (req, res) => {
 
     // Obține categorii
     db.all(`
-        SELECT * FROM menu_pdf_categories
-        WHERE category_type = ?
-        ORDER BY order_index ASC
+        SELECT 
+            c.*,
+            s.name as section_name,
+            s.order_index as section_order
+        FROM menu_pdf_categories c
+        LEFT JOIN menu_pdf_sections s ON c.section_id = s.id
+        WHERE c.category_type = ?
+        ORDER BY 
+            COALESCE(s.order_index, 999) ASC,
+            c.order_index ASC
     `, [type], (err, categories) => {
         if (err) {
             console.error('❌ [PDF Config] Query error:', err.message);
@@ -691,6 +698,315 @@ exports.updateSettings = (req, res) => {
             res.json({
                 success: true,
                 message: 'Setările au fost salvate cu succes'
+            });
+        });
+    });
+};
+
+/**
+ * GET /api/menu/pdf/builder/sections
+ * 
+ * Returnează secțiunile pentru un tip de meniu
+ */
+exports.getSections = (req, res) => {
+    const type = req.query.type || 'food';
+
+    if (!['food', 'drinks'].includes(type)) {
+        return res.status(400).json({
+            success: false,
+            error: 'Tipul trebuie să fie "food" sau "drinks"'
+        });
+    }
+
+    const db = new sqlite3.Database(DB_PATH, (err) => {
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la conectarea la baza de date'
+            });
+        }
+    });
+
+    // Create table if not exists
+    db.run(`
+        CREATE TABLE IF NOT EXISTS menu_pdf_sections (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            type TEXT NOT NULL CHECK(type IN ('food', 'drinks')),
+            order_index INTEGER DEFAULT 0,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+        )
+    `, (err) => {
+        if (err) {
+            db.close();
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la crearea tabelei sections'
+            });
+        }
+
+        db.all(`
+            SELECT * FROM menu_pdf_sections
+            WHERE type = ?
+            ORDER BY order_index ASC
+        `, [type], (err, rows) => {
+            db.close();
+
+            if (err) {
+                return res.status(500).json({
+                    success: false,
+                    error: 'Eroare la încărcarea secțiunilor'
+                });
+            }
+
+            res.json({
+                success: true,
+                sections: rows || []
+            });
+        });
+    });
+};
+
+/**
+ * POST /api/menu/pdf/builder/sections
+ * 
+ * Creează o secțiune nouă
+ */
+exports.createSection = (req, res) => {
+    const { name, type } = req.body;
+
+    if (!name || !type) {
+        return res.status(400).json({
+            success: false,
+            error: 'Numele și tipul sunt obligatorii'
+        });
+    }
+
+    if (!['food', 'drinks'].includes(type)) {
+        return res.status(400).json({
+            success: false,
+            error: 'Tipul trebuie să fie "food" sau "drinks"'
+        });
+    }
+
+    const db = new sqlite3.Database(DB_PATH, (err) => {
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la conectarea la baza de date'
+            });
+        }
+    });
+
+    // Get max order_index
+    db.get(`
+        SELECT COALESCE(MAX(order_index), -1) + 1 as next_order
+        FROM menu_pdf_sections
+        WHERE type = ?
+    `, [type], (err, row) => {
+        if (err) {
+            db.close();
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la obținerea ordinei'
+            });
+        }
+
+        const nextOrder = row.next_order;
+
+        db.run(`
+            INSERT INTO menu_pdf_sections (name, type, order_index)
+            VALUES (?, ?, ?)
+        `, [name, type, nextOrder], function(err) {
+            db.close();
+
+            if (err) {
+                return res.status(500).json({
+                    success: false,
+                    error: 'Eroare la crearea secțiunii'
+                });
+            }
+
+            res.json({
+                success: true,
+                id: this.lastID,
+                message: 'Secțiune creată cu succes'
+            });
+        });
+    });
+};
+
+/**
+ * PUT /api/menu/pdf/builder/sections/:id
+ * 
+ * Actualizează o secțiune
+ */
+exports.updateSection = (req, res) => {
+    const { id } = req.params;
+    const { name, order_index } = req.body;
+
+    const db = new sqlite3.Database(DB_PATH, (err) => {
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la conectarea la baza de date'
+            });
+        }
+    });
+
+    const updates = [];
+    const values = [];
+
+    if (name !== undefined) {
+        updates.push('name = ?');
+        values.push(name);
+    }
+
+    if (order_index !== undefined) {
+        updates.push('order_index = ?');
+        values.push(order_index);
+    }
+
+    if (updates.length === 0) {
+        db.close();
+        return res.status(400).json({
+            success: false,
+            error: 'Nicio actualizare specificată'
+        });
+    }
+
+    updates.push('updated_at = CURRENT_TIMESTAMP');
+    values.push(id);
+
+    db.run(`
+        UPDATE menu_pdf_sections
+        SET ${updates.join(', ')}
+        WHERE id = ?
+    `, values, (err) => {
+        db.close();
+
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la actualizarea secțiunii'
+            });
+        }
+
+        res.json({
+            success: true,
+            message: 'Secțiune actualizată cu succes'
+        });
+    });
+};
+
+/**
+ * DELETE /api/menu/pdf/builder/sections/:id
+ * 
+ * Șterge o secțiune
+ */
+exports.deleteSection = (req, res) => {
+    const { id } = req.params;
+
+    const db = new sqlite3.Database(DB_PATH, (err) => {
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la conectarea la baza de date'
+            });
+        }
+    });
+
+    // First, remove section_id from categories
+    db.run(`
+        UPDATE menu_pdf_categories
+        SET section_id = NULL
+        WHERE section_id = ?
+    `, [id], (err) => {
+        if (err) {
+            db.close();
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la actualizarea categoriilor'
+            });
+        }
+
+        // Then delete section
+        db.run(`
+            DELETE FROM menu_pdf_sections
+            WHERE id = ?
+        `, [id], (err) => {
+            db.close();
+
+            if (err) {
+                return res.status(500).json({
+                    success: false,
+                    error: 'Eroare la ștergerea secțiunii'
+                });
+            }
+
+            res.json({
+                success: true,
+                message: 'Secțiune ștearsă cu succes'
+            });
+        });
+    });
+};
+
+/**
+ * POST /api/menu/pdf/builder/categories/assign-section
+ * 
+ * Atribuie categorii la o secțiune
+ */
+exports.assignCategoriesToSection = (req, res) => {
+    const { categoryIds, sectionId } = req.body;
+
+    if (!Array.isArray(categoryIds)) {
+        return res.status(400).json({
+            success: false,
+            error: 'categoryIds trebuie să fie un array'
+        });
+    }
+
+    const db = new sqlite3.Database(DB_PATH, (err) => {
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la conectarea la baza de date'
+            });
+        }
+    });
+
+    // Ensure section_id column exists
+    db.run(`
+        CREATE TABLE IF NOT EXISTS menu_pdf_categories (
+            id INTEGER PRIMARY KEY,
+            category_name TEXT,
+            section_id INTEGER REFERENCES menu_pdf_sections(id)
+        )
+    `, (err) => {
+        // Ignore error if table already exists
+        
+        const placeholders = categoryIds.map(() => '?').join(',');
+        const values = [...categoryIds, sectionId];
+
+        db.run(`
+            UPDATE menu_pdf_categories
+            SET section_id = ?
+            WHERE id IN (${placeholders})
+        `, [sectionId, ...categoryIds], (err) => {
+            db.close();
+
+            if (err) {
+                return res.status(500).json({
+                    success: false,
+                    error: 'Eroare la atribuirea categoriilor'
+                });
+            }
+
+            res.json({
+                success: true,
+                message: 'Categorii atribuite cu succes'
             });
         });
     });

@@ -78,5 +78,44 @@ router.get('/settings', controller.getSettings);
  */
 router.post('/settings', controller.updateSettings);
 
+/**
+ * GET /api/menu/pdf/builder/sections
+ * 
+ * Returnează secțiunile pentru un tip de meniu
+ * Query params: ?type=food|drinks
+ */
+router.get('/sections', controller.getSections);
+
+/**
+ * POST /api/menu/pdf/builder/sections
+ * 
+ * Creează o secțiune nouă
+ * Body: { name, type }
+ */
+router.post('/sections', controller.createSection);
+
+/**
+ * PUT /api/menu/pdf/builder/sections/:id
+ * 
+ * Actualizează o secțiune
+ * Body: { name?, order_index? }
+ */
+router.put('/sections/:id', controller.updateSection);
+
+/**
+ * DELETE /api/menu/pdf/builder/sections/:id
+ * 
+ * Șterge o secțiune
+ */
+router.delete('/sections/:id', controller.deleteSection);
+
+/**
+ * POST /api/menu/pdf/builder/categories/assign-section
+ * 
+ * Atribuie categorii la o secțiune
+ * Body: { categoryIds: [], sectionId: number }
+ */
+router.post('/categories/assign-section', controller.assignCategoriesToSection);
+
 module.exports = router;
 
