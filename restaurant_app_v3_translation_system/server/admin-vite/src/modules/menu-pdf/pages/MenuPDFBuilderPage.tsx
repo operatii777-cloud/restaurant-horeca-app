@@ -17,12 +17,55 @@ export const MenuPDFBuilderPage = () => {
   const [regenerating, setRegenerating] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [filteredCategories, setFilteredCategories] = useState<PdfCategory[] | null>(null);
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 
   const { config, loading, error, refetch, updateCategories, updateProducts, uploadImage, deleteImage, regenerate } =
     usePdfConfig(activeType);
 
   // Use filtered categories if available, otherwise use config categories
   const displayCategories = filteredCategories || config?.categories || [];
+
+  // Drag and drop handlers
+  const handleDragStart = useCallback((e: React.DragEvent, index: number) => {
+    setDraggedIndex(index);
+    e.dataTransfer.effectAllowed = 'move';
+  }, []);
+
+  const handleDragOver = useCallback((e: React.DragEvent, index: number) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+  }, []);
+
+  const handleDrop = useCallback(async (e: React.DragEvent, dropIndex: number) => {
+    e.preventDefault();
+    
+    if (draggedIndex === null || draggedIndex === dropIndex || !config) {
+      return;
+    }
+
+    const categories = [...config.categories];
+    const [draggedItem] = categories.splice(draggedIndex, 1);
+    categories.splice(dropIndex, 0, draggedItem);
+
+    // Update order_index for all affected categories
+    const updates = categories.map((cat, idx) => ({
+      id: cat.id,
+      order_index: idx,
+    }));
+
+    try {
+      await updateCategories(updates);
+      setFeedback({ type: 'success', message: 'Ordinea categoriilor a fost actualizată' });
+      setTimeout(() => setFeedback(null), 3000);
+    } catch (err) {
+      setFeedback({
+        type: 'error',
+        message: err instanceof Error ? err.message : 'Eroare la reordonare',
+      });
+    } finally {
+      setDraggedIndex(null);
+    }
+  }, [draggedIndex, config, updateCategories]);
 
   const stats = useMemo(() => {
     if (!config) {
@@ -314,10 +357,15 @@ export const MenuPDFBuilderPage = () => {
             </div>
           ) : config && displayCategories.length > 0 ? (
             <section className="menu-pdf-categories">
-              {displayCategories.map((category) => (
+              {displayCategories.map((category, index) => (
                 <PdfCategoryCard
                   key={category.id}
                   category={category}
+                  index={index}
+                  draggable={filteredCategories === null}
+                  onDragStart={handleDragStart}
+                  onDragOver={handleDragOver}
+                  onDrop={handleDrop}
                   onToggleVisibility={handleToggleCategoryVisibility}
                   onTogglePageBreak={handleTogglePageBreak}
                   onToggleProduct={handleToggleProduct}
