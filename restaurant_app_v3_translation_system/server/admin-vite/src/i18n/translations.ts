@@ -988,6 +988,16 @@ export const translations = {
         noReservations: "Nu există rezervări"
       },
       
+      // Filters
+      filters: {
+        from: "De la",
+        to: "Până la",
+        next7Days: "Următoarele 7 zile",
+        searchPlaceholder: "Caută după client, telefon, email sau cod",
+        includeCancelled: "Include anulările",
+        exportCsv: "Export CSV"
+      },
+      
       // New Reservation
       new: {
         title: "Rezervare Nouă",
@@ -2061,6 +2071,16 @@ export const translations = {
         status: "Status",
         actions: "Actions",
         noReservations: "No reservations"
+      },
+      
+      // Filters
+      filters: {
+        from: "From",
+        to: "To",
+        next7Days: "Next 7 days",
+        searchPlaceholder: "Search by customer, phone, email or code",
+        includeCancelled: "Include cancelled",
+        exportCsv: "Export CSV"
       },
       
       // New Reservation
