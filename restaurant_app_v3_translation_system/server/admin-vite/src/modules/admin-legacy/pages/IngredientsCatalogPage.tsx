@@ -15,6 +15,7 @@ import {
   ConfirmationModal,
   BulkImportProgressModal
 } from '../components';
+import { exportToCSV } from '../utils/exportToCSV';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
@@ -365,6 +366,27 @@ export const IngredientsCatalogPage: React.FC = () => {
     return (total / filteredIngredients.length).toFixed(1);
   }, [filteredIngredients]);
 
+  const handleExportCSV = useCallback(() => {
+    if (filteredIngredients.length === 0) {
+      showToast('warning', 'Nu există date de exportat');
+      return;
+    }
+    
+    const exportData = filteredIngredients.map(ingredient => ({
+      ID: ingredient.id,
+      'Nume': ingredient.name,
+      'Nume EN': ingredient.name_en || '',
+      'Categorie': ingredient.category,
+      'Alergeni': Array.isArray(ingredient.allergens) ? ingredient.allergens.join(', ') : ingredient.allergens || '',
+      'Procent Deșeu': ingredient.processing_loss_percentage || 0,
+      'U.M.': ingredient.standard_unit,
+      'Cost Estimat': ingredient.estimated_cost_per_kg || ''
+    }));
+    
+    exportToCSV(exportData, `ingrediente-catalog-${new Date().toISOString().split('T')[0]}`);
+    showToast('success', `Exportat ${exportData.length} ingrediente`);
+  }, [filteredIngredients, showToast]);
+
   if (error) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50 flex items-center justify-center">
@@ -399,7 +421,10 @@ export const IngredientsCatalogPage: React.FC = () => {
               </p>
             </div>
             <div className="flex gap-3">
-              <button className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center gap-2">
+              <button 
+                onClick={handleExportCSV}
+                className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center gap-2"
+              >
                 <Download className="w-4 h-4" />
                 Export CSV
               </button>

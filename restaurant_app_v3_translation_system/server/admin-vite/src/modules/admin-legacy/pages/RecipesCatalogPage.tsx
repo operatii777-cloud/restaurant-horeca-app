@@ -15,6 +15,7 @@ import {
   ConfirmationModal,
   BulkImportProgressModal 
 } from '../components';
+import { exportToCSV } from '../utils/exportToCSV';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
@@ -323,6 +324,26 @@ export const RecipesCatalogPage: React.FC = () => {
     return ['all', ...Array.from(new Set(allAllergens))];
   }, [recipeTemplates]);
 
+  const handleExportCSV = useCallback(() => {
+    if (filteredRecipes.length === 0) {
+      showToast('warning', 'Nu există date de exportat');
+      return;
+    }
+    
+    const exportData = filteredRecipes.map(recipe => ({
+      ID: recipe.id,
+      'Nume': recipe.name,
+      'Nume EN': recipe.name_en || '',
+      'Categorie': recipe.category,
+      'Alergeni': Array.isArray(recipe.allergens) ? recipe.allergens.join(', ') : recipe.allergens || '',
+      'Preț Sugerat': recipe.suggested_price || '',
+      'Cost Estimat': recipe.estimated_cost || ''
+    }));
+    
+    exportToCSV(exportData, `retete-catalog-${new Date().toISOString().split('T')[0]}`);
+    showToast('success', `Exportat ${exportData.length} rețete`);
+  }, [filteredRecipes, showToast]);
+
   if (error) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50 flex items-center justify-center">
@@ -357,7 +378,10 @@ export const RecipesCatalogPage: React.FC = () => {
               </p>
             </div>
             <div className="flex gap-3">
-              <button className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center gap-2">
+              <button 
+                onClick={handleExportCSV}
+                className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center gap-2"
+              >
                 <Download className="w-4 h-4" />
                 Export CSV
               </button>
