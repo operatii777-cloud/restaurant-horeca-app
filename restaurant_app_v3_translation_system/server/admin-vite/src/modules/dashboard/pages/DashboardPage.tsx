@@ -9,6 +9,7 @@ import { DataGrid } from '@/shared/components/DataGrid';
 import { TableFilter } from '@/shared/components/TableFilter';
 import { useDebouncedValue } from '@/shared/hooks/useDebouncedValue';
 import { KPIBusinessSection } from '@/modules/dashboard/components/KPIBusinessSection';
+import { useTranslation } from '@/i18n/I18nContext';
 import './DashboardPage.css';
 
 const getRotationPriority = (rotation: RotationStatus) => {
@@ -28,6 +29,7 @@ type RotationRow = {
 };
 
 export const DashboardPage = () => {
+  const { t } = useTranslation();
   const { pins, loading: pinsLoading, error: pinsError, refresh: refreshPins } = useInterfacePins();
   const [rotationFilter, setRotationFilter] = useState('');
   const debouncedFilter = useDebouncedValue(rotationFilter, 200);
@@ -56,18 +58,18 @@ export const DashboardPage = () => {
   const rotationColumns = useMemo<ColDef<RotationRow>[]>(() => {
     return [
       {
-        headerName: 'Interfață',
+        headerName: t('dashboard.pinRotation.interface'),
         valueGetter: (params) => params.data?.metadata.label ?? '',
         minWidth: 200,
         pinned: 'left',
       },
       {
-        headerName: 'Categorie',
+        headerName: t('dashboard.pinRotation.category'),
         valueGetter: (params) => params.data?.metadata.category ?? '',
         minWidth: 160,
       },
       {
-        headerName: 'Status',
+        headerName: t('dashboard.pinRotation.status'),
         valueGetter: (params) => params.data?.rotation.label ?? '',
         minWidth: 150,
         cellRenderer: (params: ICellRendererParams<RotationRow>) => {
@@ -85,12 +87,12 @@ export const DashboardPage = () => {
         },
       },
       {
-        headerName: 'Ultima rotație',
+        headerName: t('dashboard.pinRotation.lastRotation'),
         valueGetter: (params) => params.data?.rotation.lastRotatedLabel ?? '—',
         minWidth: 190,
       },
       {
-        headerName: 'Sumar',
+        headerName: t('dashboard.pinRotation.summary'),
         valueGetter: (params) => params.data?.rotation.summary ?? '',
         flex: 1,
         minWidth: 220,
@@ -98,7 +100,7 @@ export const DashboardPage = () => {
         autoHeight: true,
       },
     ];
-  }, []);
+  }, [t]);
 
   const filteredRotationRows = useMemo(() => {
     if (!debouncedFilter) {
@@ -124,24 +126,24 @@ export const DashboardPage = () => {
       <section className="dashboard__grid">
         <article className="dashboard__card dashboard__card--pins">
           <header>
-            <h3>Audit rotație PIN-uri</h3>
-            <span>Monitorizare automată Admin · POS · KDS</span>
+            <h3>{t('dashboard.pinRotation.title')}</h3>
+            <span>{t('dashboard.pinRotation.subtitle')}</span>
           </header>
 
           {pinsError ? (
             <InlineAlert
               type="error"
-              message={`Nu am putut încărca statusurile PIN: ${pinsError}`}
-              actionLabel="Reîncearcă"
+              message={`${t('dashboard.pinRotation.errorLoading')} ${pinsError}`}
+              actionLabel={t('dashboard.pinRotation.retry')}
               onAction={refreshPins}
             />
           ) : null}
 
-          {pinsLoading ? <InlineAlert type="info" message="Se actualizează statusurile PIN..." /> : null}
+          {pinsLoading ? <InlineAlert type="info" message={t('dashboard.pinRotation.updating')} /> : null}
 
           {!pinsLoading && !pinsError ? (
             <>
-              <TableFilter value={rotationFilter} onChange={setRotationFilter} placeholder="Filtrează după interfață, categorie sau status" />
+              <TableFilter value={rotationFilter} onChange={setRotationFilter} placeholder={t('dashboard.pinRotation.filterPlaceholder')} />
               <DataGrid
                 columnDefs={rotationColumns}
                 rowData={filteredRotationRows}
@@ -154,9 +156,9 @@ export const DashboardPage = () => {
                 }}
               />
               <section>
-                <h4 style={{ marginBottom: '8px' }}>Rotații urgente</h4>
+                <h4 style={{ marginBottom: '8px' }}>{t('dashboard.pinRotation.urgentRotations')}</h4>
                 {upcomingRotations.length === 0 ? (
-                  <InlineAlert type="success" message="Nicio rotație urgentă identificată în acest moment." />
+                  <InlineAlert type="success" message={t('dashboard.pinRotation.noUrgentRotations')} />
                 ) : (
                   <DataGrid
                     columnDefs={rotationColumns}
