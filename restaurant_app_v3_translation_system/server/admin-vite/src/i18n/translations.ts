@@ -1084,6 +1084,16 @@ export const translations = {
         confirmCancel: "Sigur vrei să anulezi această rezervare?",
         noTablesAvailable: "Nu există mese disponibile",
         alreadyBooked: "Intervalul este deja rezervat"
+      },
+      
+      // Timeline
+      timeline: {
+        title: "Timeline rezervare",
+        loading: "Se încarcă istoricul evenimentelor...",
+        errorLoading: "Nu am putut încărca timeline-ul",
+        noEvents: "Nu există evenimente înregistrate pentru această rezervare",
+        operatedBy: "Operat de",
+        systemOperation: "Operat din sistem"
       }
     }
   },
@@ -2169,6 +2179,16 @@ export const translations = {
         confirmCancel: "Are you sure you want to cancel this reservation?",
         noTablesAvailable: "No tables available",
         alreadyBooked: "Time slot already booked"
+      },
+      
+      // Timeline
+      timeline: {
+        title: "Reservation timeline",
+        loading: "Loading event history...",
+        errorLoading: "Could not load timeline",
+        noEvents: "No events recorded for this reservation",
+        operatedBy: "Operated by",
+        systemOperation: "System operation"
       }
     }
   }
