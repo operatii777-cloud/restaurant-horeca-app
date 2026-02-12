@@ -1116,6 +1116,27 @@ export const translations = {
         noEvents: "Nu există evenimente înregistrate pentru această rezervare",
         operatedBy: "Operat de",
         systemOperation: "Operat din sistem"
+      },
+      
+      // Page
+      page: {
+        title: "Gestionare Rezervări",
+        subtitle: "Planifică, confirmă și urmărește rezervările din restaurant",
+        refreshData: "Reîmprospătează datele",
+        reservationsToday: "Rezervări Astăzi",
+        totalScheduledToday: "Total programate pentru azi",
+        confirmed: "Confirmate",
+        cancelled: "Anulate",
+        selectedInterval: "Interval selectat",
+        includesNoShow: "Include no-show",
+        occupancyRate: "Grad Ocupare",
+        tablesToday: "mese astăzi",
+        capacity: "Capacitate",
+        markCompleted: "Marchează finalizat",
+        sendReminder: "Trimite reminder",
+        confirmationCode: "Cod Confirmare",
+        dateTime: "Data & Oră",
+        notSet: "Nesetat"
       }
     }
   },
@@ -2233,6 +2254,27 @@ export const translations = {
         noEvents: "No events recorded for this reservation",
         operatedBy: "Operated by",
         systemOperation: "System operation"
+      },
+      
+      // Page
+      page: {
+        title: "Reservation Management",
+        subtitle: "Plan, confirm and track restaurant reservations",
+        refreshData: "Refresh data",
+        reservationsToday: "Reservations Today",
+        totalScheduledToday: "Total scheduled for today",
+        confirmed: "Confirmed",
+        cancelled: "Cancelled",
+        selectedInterval: "Selected interval",
+        includesNoShow: "Includes no-show",
+        occupancyRate: "Occupancy Rate",
+        tablesToday: "tables today",
+        capacity: "Capacity",
+        markCompleted: "Mark completed",
+        sendReminder: "Send reminder",
+        confirmationCode: "Confirmation Code",
+        dateTime: "Date & Time",
+        notSet: "Not set"
       }
     }
   }
