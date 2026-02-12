@@ -1,13 +1,14 @@
-// import { useTranslation } from '@/i18n/I18nContext';
 import { useState, useEffect } from 'react';
 import { httpClient } from '@/shared/api/httpClient';
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
+import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
+import { useTranslation } from '@/i18n/I18nContext';
 
 // LocationSwitcher moved to Transfer and Stocks pages
 import './TopBar.css';
 
 export const TopBar = () => {
-  //   const { t } = useTranslation();
+  const { t } = useTranslation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [username, setUsername] = useState('');
@@ -70,6 +71,17 @@ export const TopBar = () => {
       <header className="topbar topbar--compact">
         <div className="topbar__spacer" />
         <div className="topbar__right">
+          {/* Language Switcher */}
+          <div style={{
+            marginRight: '12px',
+            display: 'flex',
+            alignItems: 'center',
+            visibility: window.location.pathname.startsWith('/kiosk') ? 'hidden' : 'visible',
+            minWidth: '140px'
+          }}>
+            <LanguageSwitcher size="md" />
+          </div>
+
           {/* Theme Switcher */}
           <div style={{
             marginRight: '12px',
