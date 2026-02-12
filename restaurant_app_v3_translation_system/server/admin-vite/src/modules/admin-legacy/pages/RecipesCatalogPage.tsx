@@ -9,6 +9,12 @@ import {
   Loader2
 } from 'lucide-react';
 import { httpClient } from '@/shared/api/httpClient';
+import { useToast } from '@/shared/hooks/useToast';
+import { 
+  PriceInputModal, 
+  ConfirmationModal,
+  BulkImportProgressModal 
+} from '../components';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
@@ -34,6 +40,8 @@ interface Allergen {
 }
 
 export const RecipesCatalogPage: React.FC = () => {
+  const { showToast } = useToast();
+  
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedAllergen, setSelectedAllergen] = useState('all');
@@ -46,26 +54,38 @@ export const RecipesCatalogPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Load recipes from API
-  useEffect(() => {
-    const loadRecipes = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const response = await httpClient.get('/api/recipe-templates');
-        if (response.data.success && response.data.recipes) {
-          setRecipeTemplates(response.data.recipes);
-        }
-      } catch (err: any) {
-        console.error('Error loading recipes:', err);
-        setError(err.message || 'Failed to load recipes');
-      } finally {
-        setLoading(false);
-      }
-    };
+  // Modal states
+  const [priceModalOpen, setPriceModalOpen] = useState(false);
+  const [selectedRecipeForImport, setSelectedRecipeForImport] = useState<RecipeTemplate | null>(null);
+  const [importLoading, setImportLoading] = useState(false);
+  
+  // Bulk import states
+  const [bulkConfirmOpen, setBulkConfirmOpen] = useState(false);
+  const [bulkProgressOpen, setBulkProgressOpen] = useState(false);
+  const [bulkProgress, setBulkProgress] = useState({ processed: 0, total: 0 });
+  const [bulkResults, setBulkResults] = useState<Array<{id: number; name: string; success: boolean; error?: string}>>([]);
 
+  // Load recipes from API
+  const loadRecipes = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await httpClient.get('/api/recipe-templates');
+      if (response.data.success && response.data.recipes) {
+        setRecipeTemplates(response.data.recipes);
+      }
+    } catch (err: any) {
+      console.error('Error loading recipes:', err);
+      setError(err.message || 'Failed to load recipes');
+      showToast('error', 'Eroare la încărcarea rețetelor');
+    } finally {
+      setLoading(false);
+    }
+  }, [showToast]);
+
+  useEffect(() => {
     loadRecipes();
-  }, []);
+  }, [loadRecipes]);
 
   // Load allergens from API
   useEffect(() => {
@@ -173,70 +193,112 @@ export const RecipesCatalogPage: React.FC = () => {
     });
   }, [recipeTemplates, searchTerm, selectedCategory, selectedAllergen]);
 
-  const handleImportRecipe = useCallback(async (id: number) => {
-    try {
-      // In a real implementation, you'd show a modal to get the price
-      const price = prompt('Introduceți prețul de vânzare (RON):');
-      if (!price || isNaN(parseFloat(price)) || parseFloat(price) <= 0) {
-        alert('Preț invalid');
-        return;
-      }
+  const handleImportRecipe = useCallback((id: number) => {
+    const recipe = recipeTemplates.find(r => r.id === id);
+    if (recipe) {
+      setSelectedRecipeForImport(recipe);
+      setPriceModalOpen(true);
+    }
+  }, [recipeTemplates]);
 
-      const response = await httpClient.post(`/api/recipe-templates/import/${id}`, {
-        price: parseFloat(price)
+  const handleConfirmImport = useCallback(async (price: number, imageUrl?: string, description?: string) => {
+    if (!selectedRecipeForImport) return;
+
+    setImportLoading(true);
+    try {
+      const response = await httpClient.post(`/api/recipe-templates/import/${selectedRecipeForImport.id}`, {
+        price,
+        image_url: imageUrl,
+        description_custom: description
       });
 
       if (response.data.success) {
-        alert(response.data.message || 'Rețeta a fost importată cu succes!');
+        showToast('success', response.data.message || 'Rețeta a fost importată cu succes!');
+        setPriceModalOpen(false);
+        setSelectedRecipeForImport(null);
+        // Reload recipes to update the list
+        await loadRecipes();
       }
     } catch (err: any) {
       console.error('Error importing recipe:', err);
-      alert(err.response?.data?.error || 'Eroare la importarea rețetei');
+      showToast('error', err.response?.data?.error || 'Eroare la importarea rețetei');
+    } finally {
+      setImportLoading(false);
     }
-  }, []);
+  }, [selectedRecipeForImport, showToast, loadRecipes]);
 
   const handleViewDetails = useCallback(async (id: number) => {
     try {
       const response = await httpClient.get(`/api/recipe-templates/${id}`);
       if (response.data.success) {
         const { template, ingredients } = response.data;
-        alert(`${template.name}\n\nIngrediente: ${ingredients.length}\n\nDetalii complete în consolă`);
+        showToast('info', `${template.name} - ${ingredients.length} ingrediente`);
         console.log('Recipe details:', response.data);
       }
     } catch (err) {
       console.error('Error loading recipe details:', err);
+      showToast('error', 'Eroare la încărcarea detaliilor');
     }
-  }, []);
+  }, [showToast]);
+
+  const handleStartBulkImport = useCallback(() => {
+    if (selectedRows.length === 0) {
+      showToast('warning', 'Selectați cel puțin o rețetă pentru import.');
+      return;
+    }
+    setBulkConfirmOpen(true);
+  }, [selectedRows, showToast]);
 
   const handleBulkImport = useCallback(async () => {
-    if (selectedRows.length === 0) {
-      alert('Selectați cel puțin o rețetă pentru import.');
-      return;
-    }
-    
-    const price = prompt(`Introduceți prețul pentru ${selectedRows.length} rețete (RON):`);
-    if (!price || isNaN(parseFloat(price)) || parseFloat(price) <= 0) {
-      alert('Preț invalid');
-      return;
-    }
+    setBulkConfirmOpen(false);
+    setBulkProgressOpen(true);
+    setBulkProgress({ processed: 0, total: selectedRows.length });
+    setBulkResults([]);
 
-    let successCount = 0;
-    let errorCount = 0;
+    const results: Array<{id: number; name: string; success: boolean; error?: string}> = [];
+    let processed = 0;
+
+    // Get a default price - in a real implementation, you might want another modal for this
+    const defaultPrice = 10; // Or get from first recipe's suggested price
 
     for (const id of selectedRows) {
+      const recipe = recipeTemplates.find(r => r.id === id);
+      if (!recipe) continue;
+
       try {
-        await httpClient.post(`/api/recipe-templates/import/${id}`, {
-          price: parseFloat(price)
+        const response = await httpClient.post(`/api/recipe-templates/import/${id}`, {
+          price: recipe.suggested_price || defaultPrice
         });
-        successCount++;
-      } catch (err) {
-        errorCount++;
+
+        if (response.data.success) {
+          results.push({ id, name: recipe.name, success: true });
+        }
+      } catch (err: any) {
         console.error(`Error importing recipe ${id}:`, err);
+        results.push({ 
+          id, 
+          name: recipe.name, 
+          success: false, 
+          error: err.response?.data?.error || 'Eroare'
+        });
       }
+
+      processed++;
+      setBulkProgress({ processed, total: selectedRows.length });
+      setBulkResults([...results]);
     }
 
-    alert(`Import complet!\n${successCount} rețete importate cu succes\n${errorCount} erori`);
-  }, [selectedRows]);
+    const successCount = results.filter(r => r.success).length;
+    const errorCount = results.filter(r => !r.success).length;
+
+    showToast(
+      errorCount > 0 ? 'warning' : 'success',
+      `Import complet: ${successCount} succes, ${errorCount} erori`
+    );
+
+    // Reload recipes after bulk import
+    await loadRecipes();
+  }, [selectedRows, recipeTemplates, showToast, loadRecipes]);
 
   const categories = useMemo(() => {
     const cats = recipeTemplates.map(r => r.category).filter(Boolean);
@@ -380,7 +442,7 @@ export const RecipesCatalogPage: React.FC = () => {
                   ))}
                 </select>
                 <button
-                  onClick={handleBulkImport}
+                  onClick={handleStartBulkImport}
                   disabled={selectedRows.length === 0}
                   className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
@@ -466,6 +528,43 @@ export const RecipesCatalogPage: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Modals */}
+      <PriceInputModal
+        isOpen={priceModalOpen}
+        onClose={() => {
+          setPriceModalOpen(false);
+          setSelectedRecipeForImport(null);
+        }}
+        onConfirm={handleConfirmImport}
+        recipeName={selectedRecipeForImport?.name || ''}
+        suggestedPrice={selectedRecipeForImport?.suggested_price}
+        loading={importLoading}
+      />
+
+      <ConfirmationModal
+        isOpen={bulkConfirmOpen}
+        onClose={() => setBulkConfirmOpen(false)}
+        onConfirm={handleBulkImport}
+        title="Confirmare Import Bulk"
+        message={`Doriți să importați ${selectedRows.length} rețete în meniu? Fiecare va folosi prețul sugerat.`}
+        confirmText="Importă"
+        type="info"
+      />
+
+      <BulkImportProgressModal
+        isOpen={bulkProgressOpen}
+        onClose={() => {
+          setBulkProgressOpen(false);
+          setBulkResults([]);
+          setBulkProgress({ processed: 0, total: 0 });
+        }}
+        title="Import Rețete în Meniu"
+        totalItems={bulkProgress.total}
+        processedItems={bulkProgress.processed}
+        results={bulkResults}
+        isComplete={bulkProgress.processed === bulkProgress.total && bulkProgress.total > 0}
+      />
     </div>
   );
 };
