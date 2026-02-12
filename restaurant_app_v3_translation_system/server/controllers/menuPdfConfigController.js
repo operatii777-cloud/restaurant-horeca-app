@@ -515,3 +515,185 @@ exports.getRegenerationHistory = (req, res) => {
     });
 };
 
+/**
+ * GET /api/menu/pdf/builder/settings
+ * 
+ * Returnează setările globale pentru PDF
+ */
+exports.getSettings = (req, res) => {
+    const db = new sqlite3.Database(DB_PATH, (err) => {
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la conectarea la baza de date'
+            });
+        }
+    });
+
+    db.get('SELECT * FROM menu_pdf_settings WHERE id = 1', [], (err, row) => {
+        db.close();
+
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la încărcarea setărilor'
+            });
+        }
+
+        if (!row) {
+            // Return default settings if none exist
+            return res.json({
+                success: true,
+                settings: null
+            });
+        }
+
+        // Parse JSON fields
+        const settings = {
+            fontFamily: row.font_family,
+            fontSize: row.font_size,
+            fontWeight: row.font_weight,
+            headerColor: row.header_color,
+            backgroundColor: row.background_color,
+            textColor: row.text_color,
+            priceColor: row.price_color,
+            layout: row.layout,
+            orientation: row.orientation,
+            marginTop: row.margin_top,
+            marginBottom: row.margin_bottom,
+            marginLeft: row.margin_left,
+            marginRight: row.margin_right,
+            categorySpacing: row.category_spacing,
+            productSpacing: row.product_spacing,
+            showPrices: row.show_prices === 1,
+            showDescriptions: row.show_descriptions === 1,
+            showImages: row.show_images === 1,
+            pageSize: row.page_size,
+            template: row.template,
+        };
+
+        res.json({
+            success: true,
+            settings
+        });
+    });
+};
+
+/**
+ * POST /api/menu/pdf/builder/settings
+ * 
+ * Salvează setările globale pentru PDF
+ */
+exports.updateSettings = (req, res) => {
+    const { settings } = req.body;
+
+    if (!settings) {
+        return res.status(400).json({
+            success: false,
+            error: 'Setările sunt obligatorii'
+        });
+    }
+
+    const db = new sqlite3.Database(DB_PATH, (err) => {
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la conectarea la baza de date'
+            });
+        }
+    });
+
+    // Check if table exists, if not create it
+    db.run(`
+        CREATE TABLE IF NOT EXISTS menu_pdf_settings (
+            id INTEGER PRIMARY KEY DEFAULT 1,
+            font_family TEXT DEFAULT 'Arial, sans-serif',
+            font_size INTEGER DEFAULT 12,
+            font_weight TEXT DEFAULT 'normal',
+            header_color TEXT DEFAULT '#2c3e50',
+            background_color TEXT DEFAULT '#ffffff',
+            text_color TEXT DEFAULT '#333333',
+            price_color TEXT DEFAULT '#27ae60',
+            layout TEXT DEFAULT 'single-column',
+            orientation TEXT DEFAULT 'portrait',
+            margin_top INTEGER DEFAULT 20,
+            margin_bottom INTEGER DEFAULT 20,
+            margin_left INTEGER DEFAULT 20,
+            margin_right INTEGER DEFAULT 20,
+            category_spacing INTEGER DEFAULT 15,
+            product_spacing INTEGER DEFAULT 8,
+            show_prices INTEGER DEFAULT 1,
+            show_descriptions INTEGER DEFAULT 0,
+            show_images INTEGER DEFAULT 1,
+            page_size TEXT DEFAULT 'A4',
+            template TEXT DEFAULT 'modern',
+            updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+        )
+    `, (err) => {
+        if (err) {
+            db.close();
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la crearea tabelei de setări'
+            });
+        }
+
+        // Insert or replace settings
+        db.run(`
+            INSERT OR REPLACE INTO menu_pdf_settings (
+                id, font_family, font_size, font_weight,
+                header_color, background_color, text_color, price_color,
+                layout, orientation,
+                margin_top, margin_bottom, margin_left, margin_right,
+                category_spacing, product_spacing,
+                show_prices, show_descriptions, show_images,
+                page_size, template, updated_at
+            ) VALUES (
+                1, ?, ?, ?,
+                ?, ?, ?, ?,
+                ?, ?,
+                ?, ?, ?, ?,
+                ?, ?,
+                ?, ?, ?,
+                ?, ?, CURRENT_TIMESTAMP
+            )
+        `, [
+            settings.fontFamily || 'Arial, sans-serif',
+            settings.fontSize || 12,
+            settings.fontWeight || 'normal',
+            settings.headerColor || '#2c3e50',
+            settings.backgroundColor || '#ffffff',
+            settings.textColor || '#333333',
+            settings.priceColor || '#27ae60',
+            settings.layout || 'single-column',
+            settings.orientation || 'portrait',
+            settings.marginTop || 20,
+            settings.marginBottom || 20,
+            settings.marginLeft || 20,
+            settings.marginRight || 20,
+            settings.categorySpacing || 15,
+            settings.productSpacing || 8,
+            settings.showPrices ? 1 : 0,
+            settings.showDescriptions ? 1 : 0,
+            settings.showImages ? 1 : 0,
+            settings.pageSize || 'A4',
+            settings.template || 'modern',
+        ], (err) => {
+            db.close();
+
+            if (err) {
+                return res.status(500).json({
+                    success: false,
+                    error: 'Eroare la salvarea setărilor'
+                });
+            }
+
+            res.json({
+                success: true,
+                message: 'Setările au fost salvate cu succes'
+            });
+        });
+    });
+};
+
+

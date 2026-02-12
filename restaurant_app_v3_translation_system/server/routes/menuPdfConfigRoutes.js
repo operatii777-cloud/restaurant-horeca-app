@@ -63,5 +63,20 @@ router.post('/regenerate', controller.regeneratePDFs);
  */
 router.get('/history', controller.getRegenerationHistory);
 
+/**
+ * GET /api/menu/pdf/builder/settings
+ * 
+ * Returnează setările globale pentru PDF (font, culori, layout)
+ */
+router.get('/settings', controller.getSettings);
+
+/**
+ * POST /api/menu/pdf/builder/settings
+ * 
+ * Salvează setările globale pentru PDF
+ * Body: { settings: {...} }
+ */
+router.post('/settings', controller.updateSettings);
+
 module.exports = router;
 
