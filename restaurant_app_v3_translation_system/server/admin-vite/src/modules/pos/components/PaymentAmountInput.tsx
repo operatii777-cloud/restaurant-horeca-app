@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 /**
  * FAZA 2.D - Payment Amount Input Component
  * 
@@ -27,11 +27,10 @@ export function PaymentAmountInput({
   onClear,
   disabled = false,
 }: PaymentAmountInputProps) {
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
   const [localValue, setLocalValue] = useState(value);
 
   const handleValueChange = (newValue: string) => {
-//   const { t } = useTranslation();
     setLocalValue(newValue);
     onChange(newValue);
   };
@@ -62,8 +61,9 @@ export function PaymentAmountInput({
   return (
     <div className="payment-amount-input">
       <div className="payment-amount-header">
-        <label className="payment-amount-label">"suma plata"</label>
-        <div className="payment-amount-remaining">"Rămas:"<strong>{remainingAmount.toFixed(2)} RON</strong>
+        <label className="payment-amount-label">{t('pos.payment.amount')}</label>
+        <div className="payment-amount-remaining">
+          {t('pos.payment.remaining')}: <strong>{remainingAmount.toFixed(2)} RON</strong>
         </div>
       </div>
 
@@ -90,15 +90,15 @@ export function PaymentAmountInput({
           disabled={disabled || remainingAmount <= 0}
           className="payment-amount-exact-btn"
         >
-          Exact
+          {t('pos.payment.exact')}
         </Button>
       </div>
 
       {amount > 0 && !isValid && (
         <div className="payment-amount-error">
           {amount > remainingAmount
-            ? `Suma depășește rămasul (${remainingAmount.toFixed(2)} RON)`
-            : 'Sumă invalidă'}
+            ? t('pos.payment.amountExceedsRemaining', { remaining: remainingAmount.toFixed(2) })
+            : t('pos.payment.invalidAmount')}
         </div>
       )}
 

@@ -376,9 +376,13 @@ export const translations = {
           card: "Card",
           voucher: "Voucher",
           online: "Online",
-          account: "Cont"
+          account: "Cont",
+          protocol: "Protocol",
+          degustare: "Degustare"
         },
         amount: "Sumă",
+        remaining: "Rămas",
+        exact: "Exact",
         received: "Primit",
         change: "Rest",
         tip: "Bacșiș",
@@ -392,7 +396,10 @@ export const translations = {
         processing: "Se procesează...",
         success: "Plată Efectuată",
         failed: "Plată Eșuată",
-        enterAmount: "Introdu suma"
+        enterAmount: "Introdu suma",
+        clearAll: "Șterge tot",
+        invalidAmount: "Sumă invalidă",
+        amountExceedsRemaining: "Suma depășește rămasul ({remaining} RON)"
       },
       
       // Fiscal
@@ -1366,9 +1373,13 @@ export const translations = {
           card: "Card",
           voucher: "Voucher",
           online: "Online",
-          account: "Account"
+          account: "Account",
+          protocol: "Protocol",
+          degustare: "Tasting"
         },
         amount: "Amount",
+        remaining: "Remaining",
+        exact: "Exact",
         received: "Received",
         change: "Change",
         tip: "Tip",
@@ -1382,7 +1393,10 @@ export const translations = {
         processing: "Processing...",
         success: "Payment Successful",
         failed: "Payment Failed",
-        enterAmount: "Enter amount"
+        enterAmount: "Enter amount",
+        clearAll: "Clear all",
+        invalidAmount: "Invalid amount",
+        amountExceedsRemaining: "Amount exceeds remaining ({remaining} RON)"
       },
       
       // Fiscal

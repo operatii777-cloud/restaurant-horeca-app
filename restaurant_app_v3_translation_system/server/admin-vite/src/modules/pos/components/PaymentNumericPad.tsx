@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 /**
  * FAZA 2.D - Payment Numeric Pad Component
  * 
@@ -24,11 +24,10 @@ export function PaymentNumericPad({
   onClear,
   disabled = false,
 }: PaymentNumericPadProps) {
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
   const safeValue = value || '';
 
   const handleDigit = (digit: string) => {
-//   const { t } = useTranslation();
     if (disabled) return;
     let next = safeValue;
     if (next === '0') {
@@ -105,7 +104,7 @@ export function PaymentNumericPad({
         onClick={onClear}
         disabled={disabled}
       >
-        C – Șterge tot
+        {t('pos.payment.clearAll')}
       </Button>
     </div>
   );
