@@ -8,6 +8,7 @@ import { usePdfConfig, type PdfMenuType, type PdfCategory, type PdfProduct } fro
 import { PdfCategoryCard } from '../components/PdfCategoryCard';
 import { PdfSettingsPanel } from '../components/PdfSettingsPanel';
 import { ProductSearchFilter } from '../components/ProductSearchFilter';
+import { BulkImageUploadModal } from '../components/BulkImageUploadModal';
 import './MenuPDFBuilderPage.css';
 
 export const MenuPDFBuilderPage = () => {
@@ -18,6 +19,7 @@ export const MenuPDFBuilderPage = () => {
   const [showSettings, setShowSettings] = useState(false);
   const [filteredCategories, setFilteredCategories] = useState<PdfCategory[] | null>(null);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+  const [showBulkUpload, setShowBulkUpload] = useState(false);
 
   const { config, loading, error, refetch, updateCategories, updateProducts, uploadImage, deleteImage, regenerate } =
     usePdfConfig(activeType);
@@ -285,6 +287,12 @@ export const MenuPDFBuilderPage = () => {
             icon: <i className="fas fa-cog" />,
           },
           {
+            label: 'Upload în Masă',
+            variant: 'outline-success',
+            onClick: () => setShowBulkUpload(true),
+            icon: <i className="fas fa-images" />,
+          },
+          {
             label: '↻ Reîmprospătează',
             variant: 'secondary',
             onClick: refetch,
@@ -389,6 +397,19 @@ export const MenuPDFBuilderPage = () => {
           )}
         </Col>
       </Row>
+
+      {/* Bulk Upload Modal */}
+      {config && (
+        <BulkImageUploadModal
+          show={showBulkUpload}
+          categories={config.categories}
+          onClose={() => setShowBulkUpload(false)}
+          onUploadComplete={() => {
+            refetch();
+            setFeedback({ type: 'success', message: 'Imaginile au fost încărcate cu succes!' });
+          }}
+        />
+      )}
     </div>
   );
 };
