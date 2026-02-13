@@ -13,7 +13,6 @@ import { InternalMessagingPage } from "@/modules/internal-messaging/pages/Intern
 import { BackupPage } from "@/modules/backup/pages/BackupPage";
 import { MenuManagementPage } from "@/modules/menu/pages/MenuManagementPage";
 import { RecipesPage } from "@/modules/recipes/pages/RecipesPage";
-import { LegacyPagesDemo } from "@/components/LegacyPagesDemo";
 // Reservations redirects to admin.html - using legacy component
 // import { ReservationsPage } from "@/modules/reservations/pages/ReservationsPage";
 import { ReservationsPage } from "@/modules/reservations/pages/ReservationsPage";
@@ -307,6 +306,7 @@ import { AdminPage } from '@/modules/admin-legacy/pages/AdminPage';
 import { AdminAdvancedPage } from '@/modules/admin-legacy/pages/AdminAdvancedPage';
 import { CatalogRetetePage } from '@/modules/catalog-legacy/pages/CatalogRetetePage';
 import { CatalogIngredientePage } from '@/modules/catalog-legacy/pages/CatalogIngredientePage';
+import { LegacyPagesDemo } from '@/components/LegacyPagesDemo';
 
 // Lazy load ANAF (large)
 const CertificateManagerPage = lazy(() => import('@/modules/anaf/pages/CertificateManagerPage').then(m => ({ default: m.CertificateManagerPage })));
