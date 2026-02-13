@@ -138,7 +138,7 @@ const dbPromise = new Promise((resolve, reject) => {
           console.log('✅ Foreign keys active pentru integritatea bazei de date');
         }
 
-        // Continuă cu inițializarea după ce foreign keys sunt dezactivate
+        // Continuă cu inițializarea după ce foreign keys sunt activate
         initializeDb(db)
           .then(() => {
             // Creează tabelele Enterprise
