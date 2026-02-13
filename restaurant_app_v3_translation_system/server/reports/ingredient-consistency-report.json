@@ -1,0 +1,142 @@
+{
+  "timestamp": "2026-02-13T04:39:24.582Z",
+  "totalIngredients": 1500,
+  "validation": {
+    "diacriticIssues": 6,
+    "pepperVariations": 21,
+    "meatVariations": 252,
+    "dairyVariations": 94
+  },
+  "details": {
+    "diacriticIssues": [
+      {
+        "pair": "ceapă/ceapa",
+        "withDiacritic": 165,
+        "withoutDiacritic": 317,
+        "examples": {
+          "with": [
+            "Carne de vită tocată",
+            "Mușchi de vită",
+            "Ribeye vită"
+          ],
+          "without": [
+            "Aripioare de pui",
+            "Coaste de porc",
+            "Bacon"
+          ]
+        }
+      },
+      {
+        "pair": "pâine/paine",
+        "withDiacritic": 14,
+        "withoutDiacritic": 415,
+        "examples": {
+          "with": [
+            "Cârnați",
+            "Smântână",
+            "Pâine albă"
+          ],
+          "without": [
+            "Aripioare de pui",
+            "Carne de vită tocată",
+            "Ceafă de porc"
+          ]
+        }
+      },
+      {
+        "pair": "făină/faina",
+        "withDiacritic": 165,
+        "withoutDiacritic": 317,
+        "examples": {
+          "with": [
+            "Carne de vită tocată",
+            "Mușchi de vită",
+            "Ribeye vită"
+          ],
+          "without": [
+            "Aripioare de pui",
+            "Coaste de porc",
+            "Bacon"
+          ]
+        }
+      },
+      {
+        "pair": "mușchi/muschi",
+        "withDiacritic": 48,
+        "withoutDiacritic": 200,
+        "examples": {
+          "with": [
+            "Mușchi de vită",
+            "Șuncă",
+            "Perișoare de porc"
+          ],
+          "without": [
+            "Coaste de porc",
+            "Prosciutto crudo",
+            "Salam"
+          ]
+        }
+      },
+      {
+        "pair": "ceafă/ceafa",
+        "withDiacritic": 165,
+        "withoutDiacritic": 317,
+        "examples": {
+          "with": [
+            "Carne de vită tocată",
+            "Mușchi de vită",
+            "Ribeye vită"
+          ],
+          "without": [
+            "Aripioare de pui",
+            "Coaste de porc",
+            "Bacon"
+          ]
+        }
+      },
+      {
+        "pair": "pulpă/pulpa",
+        "withDiacritic": 165,
+        "withoutDiacritic": 317,
+        "examples": {
+          "with": [
+            "Carne de vită tocată",
+            "Mușchi de vită",
+            "Ribeye vită"
+          ],
+          "without": [
+            "Aripioare de pui",
+            "Coaste de porc",
+            "Bacon"
+          ]
+        }
+      }
+    ],
+    "pepperGroups": {
+      "Bell Pepper (ardei gras)": 7,
+      "Hot Pepper (ardei iute)": 10
+    },
+    "meatTypes": {
+      "Chicken": 29,
+      "Pork": 29,
+      "Beef": 38
+    }
+  },
+  "recommendations": [
+    {
+      "priority": "HIGH",
+      "item": "Unify bell pepper variations",
+      "action": "Map ardei roșu, ardei galben, ardei verde → ardei gras"
+    },
+    {
+      "priority": "MEDIUM",
+      "item": "Normalize diacritics",
+      "action": "Ensure consistent use of Romanian diacritics (ă, â, î, ș, ț)"
+    },
+    {
+      "priority": "LOW",
+      "item": "Review variant suffixes",
+      "action": "Consider if Bio, Premium, Organic variants should be separate or attributes"
+    }
+  ]
+}

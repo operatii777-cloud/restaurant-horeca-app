@@ -1,0 +1,846 @@
+{
+  "timestamp": "2026-02-13T04:38:43.737Z",
+  "analysis": {
+    "totalIngredients": 1500,
+    "uniqueNormalized": 1497,
+    "duplicateCount": 3,
+    "ignoredCount": 0,
+    "duplicates": [
+      {
+        "normalized": "ardei gras",
+        "existing": {
+          "name": "Ardei gras",
+          "name_en": "Bell Pepper",
+          "unit": "kg",
+          "category": "Legume",
+          "category_en": "Vegetables",
+          "current_stock": 0,
+          "min_stock": 6,
+          "cost_per_unit": 10,
+          "allergens": "",
+          "description": "Ardei gras",
+          "purchase_unit": "kg",
+          "recipe_unit": "g",
+          "inventory_unit": "kg",
+          "purchase_to_inventory_factor": 1,
+          "inventory_to_recipe_factor": 1000,
+          "max_stock": 18,
+          "safety_stock": 3,
+          "reorder_quantity": 12,
+          "avg_price": 10,
+          "last_purchase_price": 10,
+          "energy_kcal": 0,
+          "fat": 0,
+          "saturated_fat": 0,
+          "carbs": 0,
+          "sugars": 0,
+          "protein": 0,
+          "salt": 0,
+          "fiber": 0,
+          "potential_allergens": "",
+          "additives": "",
+          "notes": "",
+          "official_name": null,
+          "category_id": null,
+          "subcategory_id": null,
+          "origin_country": "RO",
+          "traceability_code": "",
+          "supplier": "",
+          "default_supplier_id": null,
+          "location_id": 1,
+          "is_available": true,
+          "is_hidden": false,
+          "haccp_notes": null
+        },
+        "duplicate": {
+          "name": "Ardei roșu",
+          "name_en": "Ardei roșu",
+          "official_name": null,
+          "unit": "buc",
+          "purchase_unit": "buc",
+          "recipe_unit": "buc",
+          "inventory_unit": "buc",
+          "purchase_to_inventory_factor": 1,
+          "inventory_to_recipe_factor": 1,
+          "category": "Legume",
+          "category_en": "Vegetables",
+          "category_id": null,
+          "subcategory_id": null,
+          "current_stock": 0,
+          "min_stock": 1,
+          "max_stock": 30,
+          "safety_stock": 1,
+          "reorder_quantity": 21,
+          "cost_per_unit": 23.58,
+          "avg_price": 23.58,
+          "last_purchase_price": 23.58,
+          "last_purchase_date": null,
+          "allergens": "",
+          "potential_allergens": "",
+          "energy_kcal": 324,
+          "fat": 17.5,
+          "saturated_fat": 2.3,
+          "carbs": 63.9,
+          "sugars": 36.8,
+          "protein": 25.6,
+          "salt": 1.65,
+          "fiber": 6.7,
+          "additives": "",
+          "description": "Ardei roșu proaspăt",
+          "notes": "bio",
+          "storage_temp_min": null,
+          "storage_temp_max": null,
+          "haccp_notes": null,
+          "origin_country": "RO",
+          "traceability_code": "",
+          "supplier": "",
+          "default_supplier_id": null,
+          "location_id": 1,
+          "is_available": true,
+          "is_hidden": false
+        }
+      },
+      {
+        "normalized": "ardei gras",
+        "existing": {
+          "name": "Ardei gras",
+          "name_en": "Bell Pepper",
+          "unit": "kg",
+          "category": "Legume",
+          "category_en": "Vegetables",
+          "current_stock": 0,
+          "min_stock": 6,
+          "cost_per_unit": 10,
+          "allergens": "",
+          "description": "Ardei gras",
+          "purchase_unit": "kg",
+          "recipe_unit": "g",
+          "inventory_unit": "kg",
+          "purchase_to_inventory_factor": 1,
+          "inventory_to_recipe_factor": 1000,
+          "max_stock": 18,
+          "safety_stock": 3,
+          "reorder_quantity": 12,
+          "avg_price": 10,
+          "last_purchase_price": 10,
+          "energy_kcal": 0,
+          "fat": 0,
+          "saturated_fat": 0,
+          "carbs": 0,
+          "sugars": 0,
+          "protein": 0,
+          "salt": 0,
+          "fiber": 0,
+          "potential_allergens": "",
+          "additives": "",
+          "notes": "",
+          "official_name": null,
+          "category_id": null,
+          "subcategory_id": null,
+          "origin_country": "RO",
+          "traceability_code": "",
+          "supplier": "",
+          "default_supplier_id": null,
+          "location_id": 1,
+          "is_available": true,
+          "is_hidden": false,
+          "haccp_notes": null
+        },
+        "duplicate": {
+          "name": "Ardei galben",
+          "name_en": "Ardei galben",
+          "official_name": null,
+          "unit": "kg",
+          "purchase_unit": "kg",
+          "recipe_unit": "g",
+          "inventory_unit": "kg",
+          "purchase_to_inventory_factor": 1,
+          "inventory_to_recipe_factor": 1000,
+          "category": "Legume",
+          "category_en": "Vegetables",
+          "category_id": null,
+          "subcategory_id": null,
+          "current_stock": 0,
+          "min_stock": 2,
+          "max_stock": 50,
+          "safety_stock": 5,
+          "reorder_quantity": 14,
+          "cost_per_unit": 17.23,
+          "avg_price": 17.23,
+          "last_purchase_price": 17.23,
+          "last_purchase_date": null,
+          "allergens": "",
+          "potential_allergens": "",
+          "energy_kcal": 169,
+          "fat": 28.4,
+          "saturated_fat": 5.7,
+          "carbs": 75.1,
+          "sugars": 4.2,
+          "protein": 20.4,
+          "salt": 0.56,
+          "fiber": 5.4,
+          "additives": "",
+          "description": "Ardei galben proaspăt",
+          "notes": "bio",
+          "storage_temp_min": null,
+          "storage_temp_max": null,
+          "haccp_notes": null,
+          "origin_country": "RO",
+          "traceability_code": "",
+          "supplier": "",
+          "default_supplier_id": null,
+          "location_id": 1,
+          "is_available": true,
+          "is_hidden": false
+        }
+      },
+      {
+        "normalized": "ardei gras",
+        "existing": {
+          "name": "Ardei gras",
+          "name_en": "Bell Pepper",
+          "unit": "kg",
+          "category": "Legume",
+          "category_en": "Vegetables",
+          "current_stock": 0,
+          "min_stock": 6,
+          "cost_per_unit": 10,
+          "allergens": "",
+          "description": "Ardei gras",
+          "purchase_unit": "kg",
+          "recipe_unit": "g",
+          "inventory_unit": "kg",
+          "purchase_to_inventory_factor": 1,
+          "inventory_to_recipe_factor": 1000,
+          "max_stock": 18,
+          "safety_stock": 3,
+          "reorder_quantity": 12,
+          "avg_price": 10,
+          "last_purchase_price": 10,
+          "energy_kcal": 0,
+          "fat": 0,
+          "saturated_fat": 0,
+          "carbs": 0,
+          "sugars": 0,
+          "protein": 0,
+          "salt": 0,
+          "fiber": 0,
+          "potential_allergens": "",
+          "additives": "",
+          "notes": "",
+          "official_name": null,
+          "category_id": null,
+          "subcategory_id": null,
+          "origin_country": "RO",
+          "traceability_code": "",
+          "supplier": "",
+          "default_supplier_id": null,
+          "location_id": 1,
+          "is_available": true,
+          "is_hidden": false,
+          "haccp_notes": null
+        },
+        "duplicate": {
+          "name": "Ardei verde",
+          "name_en": "Ardei verde",
+          "official_name": null,
+          "unit": "kg",
+          "purchase_unit": "kg",
+          "recipe_unit": "g",
+          "inventory_unit": "kg",
+          "purchase_to_inventory_factor": 1,
+          "inventory_to_recipe_factor": 1000,
+          "category": "Legume",
+          "category_en": "Vegetables",
+          "category_id": null,
+          "subcategory_id": null,
+          "current_stock": 0,
+          "min_stock": 2,
+          "max_stock": 49,
+          "safety_stock": 5,
+          "reorder_quantity": 20,
+          "cost_per_unit": 28.02,
+          "avg_price": 28.02,
+          "last_purchase_price": 28.02,
+          "last_purchase_date": null,
+          "allergens": "",
+          "potential_allergens": "",
+          "energy_kcal": 59,
+          "fat": 1.6,
+          "saturated_fat": 1.8,
+          "carbs": 22.7,
+          "sugars": 39.6,
+          "protein": 24.9,
+          "salt": 0.27,
+          "fiber": 1.5,
+          "additives": "",
+          "description": "Ardei verde proaspăt",
+          "notes": "",
+          "storage_temp_min": null,
+          "storage_temp_max": null,
+          "haccp_notes": null,
+          "origin_country": "RO",
+          "traceability_code": "",
+          "supplier": "",
+          "default_supplier_id": null,
+          "location_id": 1,
+          "is_available": true,
+          "is_hidden": false
+        }
+      }
+    ],
+    "variantGroups": [
+      {
+        "baseName": "Carne De Vită Tocată",
+        "count": 5,
+        "variants": [
+          "Carne de vită tocată",
+          "Carne de vită tocată - Porție",
+          "Carne de vită tocată - File",
+          "Carne de vită tocată - Premium",
+          "Carne de vită tocată - Bio"
+        ]
+      },
+      {
+        "baseName": "Mușchi De Vită",
+        "count": 5,
+        "variants": [
+          "Mușchi de vită",
+          "Mușchi de vită - Porție",
+          "Mușchi de vită - File",
+          "Mușchi de vită - Premium",
+          "Mușchi de vită - Bio"
+        ]
+      },
+      {
+        "baseName": "Ribeye Vită",
+        "count": 5,
+        "variants": [
+          "Ribeye vită",
+          "Ribeye vită - Porție",
+          "Ribeye vită - File",
+          "Ribeye vită - Premium",
+          "Ribeye vită - Bio"
+        ]
+      },
+      {
+        "baseName": "Ceafă De Porc",
+        "count": 5,
+        "variants": [
+          "Ceafă de porc",
+          "Ceafă de porc - Porție",
+          "Ceafă de porc - File",
+          "Ceafă de porc - Premium",
+          "Ceafă de porc - Bio"
+        ]
+      },
+      {
+        "baseName": "Coaste De Porc",
+        "count": 5,
+        "variants": [
+          "Coaste de porc",
+          "Coaste de porc - Porție",
+          "Coaste de porc - File",
+          "Coaste de porc - Premium",
+          "Coaste de porc - Bio"
+        ]
+      },
+      {
+        "baseName": "Bacon",
+        "count": 5,
+        "variants": [
+          "Bacon",
+          "Bacon - Porție",
+          "Bacon - File",
+          "Bacon - Premium",
+          "Bacon - Bio"
+        ]
+      },
+      {
+        "baseName": "Șuncă",
+        "count": 5,
+        "variants": [
+          "Șuncă",
+          "Șuncă - Porție",
+          "Șuncă - File",
+          "Șuncă - Premium",
+          "Șuncă - Bio"
+        ]
+      },
+      {
+        "baseName": "Prosciutto Crudo",
+        "count": 5,
+        "variants": [
+          "Prosciutto crudo",
+          "Prosciutto crudo - Porție",
+          "Prosciutto crudo - File",
+          "Prosciutto crudo - Premium",
+          "Prosciutto crudo - Bio"
+        ]
+      },
+      {
+        "baseName": "Salam",
+        "count": 5,
+        "variants": [
+          "Salam",
+          "Salam - Porție",
+          "Salam - File",
+          "Salam - Premium",
+          "Salam - Bio"
+        ]
+      },
+      {
+        "baseName": "Salam Picant",
+        "count": 5,
+        "variants": [
+          "Salam picant",
+          "Salam picant - Porție",
+          "Salam picant - File",
+          "Salam picant - Premium",
+          "Salam picant - Bio"
+        ]
+      },
+      {
+        "baseName": "Guanciale",
+        "count": 5,
+        "variants": [
+          "Guanciale",
+          "Guanciale - Porție",
+          "Guanciale - File",
+          "Guanciale - Premium",
+          "Guanciale - Bio"
+        ]
+      },
+      {
+        "baseName": "Pancetta",
+        "count": 5,
+        "variants": [
+          "Pancetta",
+          "Pancetta - Porție",
+          "Pancetta - File",
+          "Pancetta - Premium",
+          "Pancetta - Bio"
+        ]
+      },
+      {
+        "baseName": "Mici",
+        "count": 5,
+        "variants": [
+          "Mici",
+          "Mici - Porție",
+          "Mici - File",
+          "Mici - Premium",
+          "Mici - Bio"
+        ]
+      },
+      {
+        "baseName": "Cârnați",
+        "count": 5,
+        "variants": [
+          "Cârnați",
+          "Cârnați - Porție",
+          "Cârnați - File",
+          "Cârnați - Premium",
+          "Cârnați - Bio"
+        ]
+      },
+      {
+        "baseName": "Burtă De Vită",
+        "count": 5,
+        "variants": [
+          "Burtă de vită",
+          "Burtă de vită - Porție",
+          "Burtă de vită - File",
+          "Burtă de vită - Premium",
+          "Burtă de vită - Bio"
+        ]
+      },
+      {
+        "baseName": "Pulpă De Vită",
+        "count": 5,
+        "variants": [
+          "Pulpă de vită",
+          "Pulpă de vită - Porție",
+          "Pulpă de vită - File",
+          "Pulpă de vită - Premium",
+          "Pulpă de vită - Bio"
+        ]
+      },
+      {
+        "baseName": "Perișoare De Porc",
+        "count": 5,
+        "variants": [
+          "Perișoare de porc",
+          "Perișoare de porc - Porție",
+          "Perișoare de porc - File",
+          "Perișoare de porc - Premium",
+          "Perișoare de porc - Bio"
+        ]
+      },
+      {
+        "baseName": "Mozzarella",
+        "count": 4,
+        "variants": [
+          "Mozzarella",
+          "Mozzarella - Maturat",
+          "Mozzarella - Premium",
+          "Mozzarella - Artizanal"
+        ]
+      },
+      {
+        "baseName": "Mozzarella Di Bufala",
+        "count": 4,
+        "variants": [
+          "Mozzarella di bufala",
+          "Mozzarella di bufala - Maturat",
+          "Mozzarella di bufala - Premium",
+          "Mozzarella di bufala - Artizanal"
+        ]
+      },
+      {
+        "baseName": "Parmezan",
+        "count": 4,
+        "variants": [
+          "Parmezan",
+          "Parmezan - Maturat",
+          "Parmezan - Premium",
+          "Parmezan - Artizanal"
+        ]
+      },
+      {
+        "baseName": "Gorgonzola",
+        "count": 4,
+        "variants": [
+          "Gorgonzola",
+          "Gorgonzola - Maturat",
+          "Gorgonzola - Premium",
+          "Gorgonzola - Artizanal"
+        ]
+      },
+      {
+        "baseName": "Cheddar",
+        "count": 4,
+        "variants": [
+          "Cheddar",
+          "Cheddar - Maturat",
+          "Cheddar - Premium",
+          "Cheddar - Artizanal"
+        ]
+      },
+      {
+        "baseName": "Telemea",
+        "count": 4,
+        "variants": [
+          "Telemea",
+          "Telemea - Maturat",
+          "Telemea - Premium",
+          "Telemea - Artizanal"
+        ]
+      },
+      {
+        "baseName": "Cașcaval",
+        "count": 4,
+        "variants": [
+          "Cașcaval",
+          "Cașcaval - Maturat",
+          "Cașcaval - Premium",
+          "Cașcaval - Artizanal"
+        ]
+      },
+      {
+        "baseName": "Halloumi",
+        "count": 4,
+        "variants": [
+          "Halloumi",
+          "Halloumi - Maturat",
+          "Halloumi - Premium",
+          "Halloumi - Artizanal"
+        ]
+      },
+      {
+        "baseName": "Brie",
+        "count": 4,
+        "variants": [
+          "Brie",
+          "Brie - Maturat",
+          "Brie - Premium",
+          "Brie - Artizanal"
+        ]
+      },
+      {
+        "baseName": "Mascarpone",
+        "count": 4,
+        "variants": [
+          "Mascarpone",
+          "Mascarpone - Maturat",
+          "Mascarpone - Premium",
+          "Mascarpone - Artizanal"
+        ]
+      },
+      {
+        "baseName": "Roșii",
+        "count": 4,
+        "variants": [
+          "Roșii",
+          "Roșii - Bio",
+          "Roșii - Organic",
+          "Roșii - Proaspăt"
+        ]
+      },
+      {
+        "baseName": "Roșii Cherry",
+        "count": 4,
+        "variants": [
+          "Roșii cherry",
+          "Roșii cherry - Bio",
+          "Roșii cherry - Organic",
+          "Roșii cherry - Proaspăt"
+        ]
+      },
+      {
+        "baseName": "Usturoi",
+        "count": 4,
+        "variants": [
+          "Usturoi",
+          "Usturoi - Bio",
+          "Usturoi - Organic",
+          "Usturoi - Proaspăt"
+        ]
+      },
+      {
+        "baseName": "Morcov",
+        "count": 4,
+        "variants": [
+          "Morcov",
+          "Morcov - Bio",
+          "Morcov - Organic",
+          "Morcov - Proaspăt"
+        ]
+      },
+      {
+        "baseName": "ardei gras",
+        "count": 4,
+        "variants": [
+          "Ardei gras",
+          "Ardei roșu",
+          "Ardei galben",
+          "Ardei verde"
+        ]
+      },
+      {
+        "baseName": "Ardei Kapia",
+        "count": 4,
+        "variants": [
+          "Ardei kapia",
+          "Ardei kapia - Bio",
+          "Ardei kapia - Organic",
+          "Ardei kapia - Proaspăt"
+        ]
+      },
+      {
+        "baseName": "Jalapeño",
+        "count": 4,
+        "variants": [
+          "Jalapeño",
+          "Jalapeño - Bio",
+          "Jalapeño - Organic",
+          "Jalapeño - Proaspăt"
+        ]
+      },
+      {
+        "baseName": "Castraveți",
+        "count": 4,
+        "variants": [
+          "Castraveți",
+          "Castraveți - Bio",
+          "Castraveți - Organic",
+          "Castraveți - Proaspăt"
+        ]
+      },
+      {
+        "baseName": "Castraveți Murați",
+        "count": 4,
+        "variants": [
+          "Castraveți murați",
+          "Castraveți murați - Bio",
+          "Castraveți murați - Organic",
+          "Castraveți murați - Proaspăt"
+        ]
+      },
+      {
+        "baseName": "Salată Iceberg",
+        "count": 4,
+        "variants": [
+          "Salată iceberg",
+          "Salată iceberg - Bio",
+          "Salată iceberg - Organic",
+          "Salată iceberg - Proaspăt"
+        ]
+      },
+      {
+        "baseName": "Salată Verde",
+        "count": 4,
+        "variants": [
+          "Salată verde",
+          "Salată verde - Bio",
+          "Salată verde - Organic",
+          "Salată verde - Proaspăt"
+        ]
+      },
+      {
+        "baseName": "Rucola",
+        "count": 4,
+        "variants": [
+          "Rucola",
+          "Rucola - Bio",
+          "Rucola - Organic",
+          "Rucola - Proaspăt"
+        ]
+      },
+      {
+        "baseName": "Spanac",
+        "count": 4,
+        "variants": [
+          "Spanac",
+          "Spanac - Bio",
+          "Spanac - Organic",
+          "Spanac - Proaspăt"
+        ]
+      },
+      {
+        "baseName": "Ciuperci Champinion",
+        "count": 4,
+        "variants": [
+          "Ciuperci champinion",
+          "Ciuperci champinion - Bio",
+          "Ciuperci champinion - Organic",
+          "Ciuperci champinion - Proaspăt"
+        ]
+      },
+      {
+        "baseName": "Ciuperci Porcini",
+        "count": 4,
+        "variants": [
+          "Ciuperci porcini",
+          "Ciuperci porcini - Bio",
+          "Ciuperci porcini - Organic",
+          "Ciuperci porcini - Proaspăt"
+        ]
+      },
+      {
+        "baseName": "Dovlecel",
+        "count": 4,
+        "variants": [
+          "Dovlecel",
+          "Dovlecel - Bio",
+          "Dovlecel - Organic",
+          "Dovlecel - Proaspăt"
+        ]
+      },
+      {
+        "baseName": "Vinete",
+        "count": 4,
+        "variants": [
+          "Vinete",
+          "Vinete - Bio",
+          "Vinete - Organic",
+          "Vinete - Proaspăt"
+        ]
+      },
+      {
+        "baseName": "Cartofi",
+        "count": 4,
+        "variants": [
+          "Cartofi",
+          "Cartofi - Bio",
+          "Cartofi - Organic",
+          "Cartofi - Proaspăt"
+        ]
+      },
+      {
+        "baseName": "Cartofi Noi",
+        "count": 4,
+        "variants": [
+          "Cartofi noi",
+          "Cartofi noi - Bio",
+          "Cartofi noi - Organic",
+          "Cartofi noi - Proaspăt"
+        ]
+      },
+      {
+        "baseName": "Broccoli",
+        "count": 4,
+        "variants": [
+          "Broccoli",
+          "Broccoli - Bio",
+          "Broccoli - Organic",
+          "Broccoli - Proaspăt"
+        ]
+      },
+      {
+        "baseName": "Conopidă",
+        "count": 4,
+        "variants": [
+          "Conopidă",
+          "Conopidă - Bio",
+          "Conopidă - Organic",
+          "Conopidă - Proaspăt"
+        ]
+      },
+      {
+        "baseName": "Fasole Verde",
+        "count": 4,
+        "variants": [
+          "Fasole verde",
+          "Fasole verde - Bio",
+          "Fasole verde - Organic",
+          "Fasole verde - Proaspăt"
+        ]
+      },
+      {
+        "baseName": "Mazăre",
+        "count": 4,
+        "variants": [
+          "Mazăre",
+          "Mazăre - Bio",
+          "Mazăre - Organic",
+          "Mazăre - Proaspăt"
+        ]
+      }
+    ],
+    "summary": {
+      "needsNormalization": true,
+      "hasVariants": true,
+      "hasIgnoredItems": false
+    }
+  },
+  "mapping": [
+    {
+      "fromName": "Ardei roșu",
+      "toName": "Ardei gras",
+      "normalizedName": "ardei gras"
+    },
+    {
+      "fromName": "Ardei galben",
+      "toName": "Ardei gras",
+      "normalizedName": "ardei gras"
+    },
+    {
+      "fromName": "Ardei verde",
+      "toName": "Ardei gras",
+      "normalizedName": "ardei gras"
+    }
+  ],
+  "recommendations": [
+    {
+      "type": "CRITICAL",
+      "message": "Found 3 duplicate ingredients that should be merged",
+      "action": "Review duplicate mappings and update recipes to use canonical names"
+    },
+    {
+      "type": "ACTION",
+      "message": "Database normalization is required",
+      "action": "Apply the generated SQL script to unify ingredients"
+    }
+  ]
+}
