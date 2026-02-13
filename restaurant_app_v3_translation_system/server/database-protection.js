@@ -24,13 +24,13 @@ const PROTECTION_CONFIG = {
     // Activează foreign keys enforcement
     enableForeignKeys: true,
     // Activează backup automat înainte de modificări critice
-    enableAutoBackup: false, // Dezactivat temporar pentru customer operations
+    enableAutoBackup: false, // Backup automat dezactivat pentru performanță
     // Activează write protection (doar admin poate modifica)
     enableWriteProtection: false, // Set to true dacă vrei protecție strictă
     // Activează journal mode WAL pentru siguranță
     enableWALMode: true,
-    // Backup înainte de modificări critice (TEMPORAR dezactivat)
-    backupBeforeCriticalOps: [] // Golit pentru a permite operațiuni customer
+    // Backup înainte de modificări critice
+    backupBeforeCriticalOps: [] // Listă goală - backup dezactivat
 };
 
 // ============================================================================
