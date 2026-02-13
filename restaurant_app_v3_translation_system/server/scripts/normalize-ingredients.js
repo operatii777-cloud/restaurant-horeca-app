@@ -62,6 +62,10 @@ async function main() {
     // Generate normalization mapping
     const mapping = normalizationService.generateUnificationMapping(analysis.duplicates);
     
+    // NOTE: Seed file data doesn't include database IDs
+    // The mapping will have undefined 'from'/'to' values
+    // For database migration, use normalize-database.js instead
+    
     // Save analysis report
     const reportPath = path.join(__dirname, '../reports/ingredient-normalization-report.json');
     const reportDir = path.dirname(reportPath);
@@ -85,6 +89,8 @@ async function main() {
     const sqlScript = generateNormalizationSQL(mapping, normalizationService);
     fs.writeFileSync(sqlPath, sqlScript);
     console.log(`✅ SQL script saved to: ${sqlPath}`);
+    console.log(`   ⚠️  NOTE: Script contains template placeholders (undefined IDs)`);
+    console.log(`   📌 For actual migration, use normalize-database.js`);
     
     console.log('\n' + '='.repeat(80));
     console.log('✨ Normalization analysis complete!');
