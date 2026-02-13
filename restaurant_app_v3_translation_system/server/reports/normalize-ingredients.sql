@@ -1,5 +1,5 @@
 -- Ingredient Normalization SQL Script
--- Generated: 2026-02-13T04:49:27.674Z
+-- Generated: 2026-02-13T04:50:48.275Z
 -- Purpose: Standardize and unify ingredient names
 -- 
 -- ⚠️  IMPORTANT: Backup your database before running this script!
