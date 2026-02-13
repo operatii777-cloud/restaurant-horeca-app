@@ -12,7 +12,7 @@ const path = require('path');
  */
 async function validateConsistency() {
     console.log('🔍 Ingredient Consistency Validator');
-    console.log('=' . repeat(80));
+    console.log('='.repeat(80));
     
     const normalizationService = new IngredientNormalizationService();
     const ingredientsSeed = require('../seeds/ingredients_seed.js');
@@ -170,12 +170,12 @@ async function validateConsistency() {
     const reportPath = path.join(__dirname, '../reports/ingredient-consistency-report.json');
     fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
     
-    console.log('\n' + '=' . repeat(80));
+    console.log('\n' + '='.repeat(80));
     console.log(`✅ Validation complete! Report saved to: ${reportPath}`);
     
     // Show summary
     console.log('\n📊 SUMMARY');
-    console.log('=' . repeat(80));
+    console.log('='.repeat(80));
     console.log(`Total ingredients: ${report.totalIngredients}`);
     console.log(`Diacritic issues: ${report.validation.diacriticIssues}`);
     console.log(`Pepper variations: ${report.validation.pepperVariations}`);

@@ -13,7 +13,7 @@ const IngredientNormalizationService = require('../services/ingredientNormalizat
  */
 async function normalizeDatabase() {
     console.log('🔍 Database Ingredient Normalization');
-    console.log('=' . repeat(80));
+    console.log('='.repeat(80));
     
     // Check for database file
     const dbPath = path.join(__dirname, '../restaurant.db');
@@ -62,7 +62,7 @@ async function normalizeDatabase() {
                 
                 // Display results
                 console.log('\n📋 ANALYSIS RESULTS');
-                console.log('=' . repeat(80));
+                console.log('='.repeat(80));
                 console.log(`Total ingredients: ${analysis.totalIngredients}`);
                 console.log(`Unique normalized: ${analysis.uniqueNormalized}`);
                 console.log(`Duplicates found: ${analysis.duplicateCount}`);
@@ -70,7 +70,7 @@ async function normalizeDatabase() {
                 
                 if (analysis.duplicates.length > 0) {
                     console.log('\n⚠️  DUPLICATES FOUND:');
-                    console.log('-' .repeat(80));
+                    console.log('-'.repeat(80));
                     analysis.duplicates.forEach((dup, idx) => {
                         console.log(`${idx + 1}. "${dup.duplicate.name}" (ID: ${dup.duplicate.id})`);
                         console.log(`   → "${dup.existing.name}" (ID: ${dup.existing.id})`);

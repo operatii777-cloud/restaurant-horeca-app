@@ -12,7 +12,7 @@ const path = require('path');
  */
 async function main() {
     console.log('🔍 Ingredient Normalization Script');
-    console.log('=' . repeat(80));
+    console.log('='.repeat(80));
     
     const normalizationService = new IngredientNormalizationService();
     
@@ -38,7 +38,7 @@ async function main() {
     // Show duplicates
     if (analysis.duplicates.length > 0) {
         console.log('\n⚠️  DUPLICATES FOUND:');
-        console.log('-' .repeat(80));
+        console.log('-'.repeat(80));
         analysis.duplicates.slice(0, 20).forEach((dup, idx) => {
             console.log(`${idx + 1}. "${dup.duplicate.name}" → "${dup.existing.name}"`);
             console.log(`   Normalized: "${dup.normalized}"`);
@@ -52,7 +52,7 @@ async function main() {
     // Show variant groups
     if (analysis.variantGroups.length > 0) {
         console.log('\n📦 TOP VARIANT GROUPS:');
-        console.log('-' .repeat(80));
+        console.log('-'.repeat(80));
         analysis.variantGroups.slice(0, 10).forEach((group, idx) => {
             console.log(`\n${idx + 1}. "${group.baseName}" (${group.count} variants):`);
             group.variants.forEach(v => console.log(`   - ${v}`));
@@ -86,7 +86,7 @@ async function main() {
     fs.writeFileSync(sqlPath, sqlScript);
     console.log(`✅ SQL script saved to: ${sqlPath}`);
     
-    console.log('\n' + '=' .repeat(80));
+    console.log('\n' + '='.repeat(80));
     console.log('✨ Normalization analysis complete!');
     console.log('\n📌 NEXT STEPS:');
     console.log('1. Review the analysis report');
