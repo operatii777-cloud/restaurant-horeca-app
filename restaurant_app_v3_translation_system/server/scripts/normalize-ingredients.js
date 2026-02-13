@@ -28,7 +28,7 @@ async function main() {
     
     // Display analysis results
     console.log('\n📋 ANALYSIS RESULTS');
-    console.log('=' . repeat(80));
+    console.log('='.repeat(80));
     console.log(`Total ingredients: ${analysis.totalIngredients}`);
     console.log(`Unique normalized: ${analysis.uniqueNormalized}`);
     console.log(`Duplicates found: ${analysis.duplicateCount}`);
