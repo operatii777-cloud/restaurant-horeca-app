@@ -21,9 +21,8 @@ const DB_PATH = path.join(__dirname, 'restaurant.db');
 const PROTECTION_CONFIG = {
     // Activează verificări de integritate
     enableIntegrityChecks: false,
-    // Activează foreign keys enforcement (TEMPORAR dezactivat pentru customer auth)
-    // COMENTAT: enableForeignKeys: true,
-    enableForeignKeys: false, // Dezactivat pentru a permite înregistrarea și autentificarea clienților
+    // Activează foreign keys enforcement
+    enableForeignKeys: true,
     // Activează backup automat înainte de modificări critice
     enableAutoBackup: false, // Dezactivat temporar pentru customer operations
     // Activează write protection (doar admin poate modifica)
