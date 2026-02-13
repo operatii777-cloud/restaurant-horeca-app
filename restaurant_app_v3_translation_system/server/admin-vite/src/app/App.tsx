@@ -301,6 +301,12 @@ const LoginHistoryPage = lazy(() => import('@/modules/audit/login-history/pages/
 const UserActivityPage = lazy(() => import('@/modules/audit/user-activity/pages/UserActivityPage').then(m => ({ default: m.UserActivityPage })));
 const SecurityAlertsPage = lazy(() => import('@/modules/audit/alerts/pages/SecurityAlertsPage').then(m => ({ default: m.SecurityAlertsPage })));
 
+// Legacy HTML pages refactored to React - can be imported when needed
+import { AdminPage } from '@/modules/admin-legacy/pages/AdminPage';
+import { AdminAdvancedPage } from '@/modules/admin-legacy/pages/AdminAdvancedPage';
+import { CatalogRetetePage } from '@/modules/catalog-legacy/pages/CatalogRetetePage';
+import { CatalogIngredientePage } from '@/modules/catalog-legacy/pages/CatalogIngredientePage';
+
 // Lazy load ANAF (large)
 const CertificateManagerPage = lazy(() => import('@/modules/anaf/pages/CertificateManagerPage').then(m => ({ default: m.CertificateManagerPage })));
 const AnafHealthDashboardPage = lazy(() => import('@/modules/anaf/pages/AnafHealthDashboardPage').then(m => ({ default: m.AnafHealthDashboardPage })));
@@ -488,6 +494,13 @@ const App = () => {
         <Route path="platform-sync" element={<PlatformSyncPage />} />
         <Route path="external-delivery/sync" element={<PlatformSyncPage />} />
         <Route path="internal-messaging" element={<InternalMessagingPage />} />
+        
+        {/* Legacy HTML pages refactored to React - importable when needed */}
+        <Route path="legacy/admin" element={<AdminPage />} />
+        <Route path="legacy/admin-advanced" element={<AdminAdvancedPage />} />
+        <Route path="legacy/catalog-retete" element={<CatalogRetetePage />} />
+        <Route path="legacy/catalog-ingrediente" element={<CatalogIngredientePage />} />
+        
         <Route path="menu" element={<MenuManagementPage />} />
         <Route path="catalog" element={<CatalogPage />} />
         <Route path="catalog/online" element={<CatalogOnlinePage />} />
