@@ -13,6 +13,7 @@ import { InternalMessagingPage } from "@/modules/internal-messaging/pages/Intern
 import { BackupPage } from "@/modules/backup/pages/BackupPage";
 import { MenuManagementPage } from "@/modules/menu/pages/MenuManagementPage";
 import { RecipesPage } from "@/modules/recipes/pages/RecipesPage";
+import { LegacyPagesDemo } from "@/components/LegacyPagesDemo";
 // Reservations redirects to admin.html - using legacy component
 // import { ReservationsPage } from "@/modules/reservations/pages/ReservationsPage";
 import { ReservationsPage } from "@/modules/reservations/pages/ReservationsPage";
@@ -500,6 +501,9 @@ const App = () => {
         <Route path="legacy/admin-advanced" element={<AdminAdvancedPage />} />
         <Route path="legacy/catalog-retete" element={<CatalogRetetePage />} />
         <Route path="legacy/catalog-ingrediente" element={<CatalogIngredientePage />} />
+        
+        {/* Demo page showing how to use legacy components */}
+        <Route path="legacy/demo" element={<LegacyPagesDemo />} />
         
         <Route path="menu" element={<MenuManagementPage />} />
         <Route path="catalog" element={<CatalogPage />} />
