@@ -3,6 +3,15 @@
 node_modules/
 package-lock.json
 
+# Exclude build artifacts
+dist/
+build/
+.vite/
+
+# Exclude local environment overrides (but keep .env for development)
+.env.local
+.env.production
+
 # Exclude backup folders
 restaurant_app_backup_*/
 tipizate_fixed_backup_*/

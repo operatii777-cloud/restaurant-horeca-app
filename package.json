@@ -1,4 +1,12 @@
 {
   "name": "restaurant-horeca-app",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "app",
+    "server"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace=app"
+  }
 }
