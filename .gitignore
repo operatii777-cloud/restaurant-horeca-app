@@ -22,11 +22,16 @@ restaurant_app_v3_translation_system/server/backups/bkp-10dec/DEV-REPORTS/backen
 *.csv
 *.txt
 
-# Exclude scripts and analysis
-*.sh
+# Exclude scripts and analysis (but allow setup scripts and documentation)
 *.ps1
 *.py
-*.md
+
+# Allow important setup scripts and documentation
+!setup.sh
+!setup.bat
+!README.md
+!QUICKSTART.md
+!CONTRIBUTING.md
 
 # Exclude dev and test files
 *.test.*

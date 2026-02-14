@@ -1,0 +1,88 @@
+@import url('../modules/shared-legacy-styles.css');
+
+.legacy-pages-demo {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+}
+
+.page-selector {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.page-selector .btn-group {
+  display: flex;
+  gap: 0;
+}
+
+.page-selector .btn {
+  flex: 1;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.page-selector .btn-outline-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+}
+
+.info-banner {
+  animation: slideInDown 0.5s ease-out;
+}
+
+.current-page-info {
+  animation: fadeIn 0.3s ease-in;
+}
+
+.current-page-info code {
+  background-color: #e9ecef;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.page-content {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .legacy-pages-demo {
+    padding: 0.75rem;
+  }
+
+  .page-selector .btn-group {
+    flex-direction: column;
+  }
+
+  .page-selector .btn {
+    font-size: 0.85rem;
+    padding: 0.5rem;
+  }
+
+  .current-page-info .row > div {
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Dark Mode Support (Optional) */
+@media (prefers-color-scheme: dark) {
+  .legacy-pages-demo {
+    background-color: #1a1a1a;
+  }
+
+  .page-selector,
+  .current-page-info {
+    background-color: #2d2d2d !important;
+    color: #ffffff;
+  }
+
+  .current-page-info code {
+    background-color: #3d3d3d;
+    color: #e0e0e0;
+  }
+}

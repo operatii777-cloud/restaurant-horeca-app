@@ -1,0 +1,91 @@
+@import url('../shared-legacy-styles.css');
+
+.catalog-ingrediente-page {
+  min-height: 100vh;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.catalog-header {
+  border-radius: 10px;
+}
+
+.catalog-tabs {
+  border-radius: 10px;
+}
+
+.catalog-tabs .nav-pills .nav-link {
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  color: #333;
+}
+
+.catalog-tabs .nav-pills .nav-link:hover {
+  background-color: #f8f9fa;
+}
+
+.catalog-tabs .nav-pills .nav-link.active {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.catalog-content {
+  min-height: 500px;
+}
+
+.tab-pane-content {
+  animation: fadeIn 0.3s ease-in;
+}
+
+.btn-primary,
+.btn-success,
+.btn-info {
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: #667eea;
+  border: none;
+}
+
+.btn-primary:hover {
+  background: #5568d3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+}
+
+.btn-success {
+  background: #28a745;
+  border: none;
+}
+
+.btn-success:hover {
+  background: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+}
+
+.btn-info {
+  background: #17a2b8;
+  border: none;
+  color: white;
+}
+
+.btn-info:hover {
+  background: #138496;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(23, 162, 184, 0.3);
+}
+
+.btn-outline-primary {
+  color: #667eea;
+  border-color: #667eea;
+}
+
+.btn-outline-primary:hover {
+  background: #667eea;
+  border-color: #667eea;
+  color: white;
+}

@@ -25,13 +25,6 @@ import { DailyMenuPage } from "@/modules/daily-menu/pages/DailyMenuPage";
 import { LotsPage } from "@/modules/lots/pages/LotsPage";
 import { TraceabilityPage } from "@/modules/traceability/pages/TraceabilityPage";
 import { MenuPDFBuilderPage } from "@/modules/menu-pdf/pages/MenuPDFBuilderPage";
-// REFACTORED LEGACY PAGES - React + Vite + AG Grid + Tailwind
-import { 
-  AdminMainPage, 
-  AdminAdvancedPage, 
-  RecipesCatalogPage, 
-  IngredientsCatalogPage 
-} from "@/modules/admin-legacy/pages";
 // LEGACY - PHASE S3: Stocks NIR (legacy component) - REMOVED, using tipizate-enterprise instead
 // import NirListPageLegacy from "@/modules/stocks/nir/pages/NirListPage";
 // import NirCreatePage from "@/modules/stocks/nir/pages/NirCreatePage";
@@ -308,6 +301,13 @@ const LoginHistoryPage = lazy(() => import('@/modules/audit/login-history/pages/
 const UserActivityPage = lazy(() => import('@/modules/audit/user-activity/pages/UserActivityPage').then(m => ({ default: m.UserActivityPage })));
 const SecurityAlertsPage = lazy(() => import('@/modules/audit/alerts/pages/SecurityAlertsPage').then(m => ({ default: m.SecurityAlertsPage })));
 
+// Legacy HTML pages refactored to React - can be imported when needed
+import { AdminPage } from '@/modules/admin-legacy/pages/AdminPage';
+import { AdminAdvancedPage } from '@/modules/admin-legacy/pages/AdminAdvancedPage';
+import { CatalogRetetePage } from '@/modules/catalog-legacy/pages/CatalogRetetePage';
+import { CatalogIngredientePage } from '@/modules/catalog-legacy/pages/CatalogIngredientePage';
+import { LegacyPagesDemo } from '@/components/LegacyPagesDemo';
+
 // Lazy load ANAF (large)
 const CertificateManagerPage = lazy(() => import('@/modules/anaf/pages/CertificateManagerPage').then(m => ({ default: m.CertificateManagerPage })));
 const AnafHealthDashboardPage = lazy(() => import('@/modules/anaf/pages/AnafHealthDashboardPage').then(m => ({ default: m.AnafHealthDashboardPage })));
@@ -486,13 +486,6 @@ const App = () => {
       <Route path="/*" element={<AppLayout />}>
         <Route index element={<Navigate to="/welcome" replace />} />
         <Route path="welcome" element={<WelcomePage />} />
-        
-        {/* REFACTORED LEGACY ADMIN PAGES - React + Vite + AG Grid + Tailwind */}
-        <Route path="admin-main" element={<AdminMainPage />} />
-        <Route path="admin-advanced-menu" element={<AdminAdvancedPage />} />
-        <Route path="catalog-recipes" element={<RecipesCatalogPage />} />
-        <Route path="catalog-ingredients" element={<IngredientsCatalogPage />} />
-        
         <Route path="dashboard" element={<DashboardPage />} />
         <Route path="dashboard/monitoring" element={<MonitoringPage />} />
         <Route path="monitoring/performance" element={<MonitoringPage />} />
@@ -502,6 +495,16 @@ const App = () => {
         <Route path="platform-sync" element={<PlatformSyncPage />} />
         <Route path="external-delivery/sync" element={<PlatformSyncPage />} />
         <Route path="internal-messaging" element={<InternalMessagingPage />} />
+        
+        {/* Legacy HTML pages refactored to React - importable when needed */}
+        <Route path="legacy/admin" element={<AdminPage />} />
+        <Route path="legacy/admin-advanced" element={<AdminAdvancedPage />} />
+        <Route path="legacy/catalog-retete" element={<CatalogRetetePage />} />
+        <Route path="legacy/catalog-ingrediente" element={<CatalogIngredientePage />} />
+        
+        {/* Demo page showing how to use legacy components */}
+        <Route path="legacy/demo" element={<LegacyPagesDemo />} />
+        
         <Route path="menu" element={<MenuManagementPage />} />
         <Route path="catalog" element={<CatalogPage />} />
         <Route path="catalog/online" element={<CatalogOnlinePage />} />
