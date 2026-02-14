@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a51763abe3d9fce42946349a859f043472c5e178ac88cd9ee90aeaea8cf3bcb9
-size 3624
+{"name": "restaurant-app-server", "version": "3.0.0", "type": "commonjs"}

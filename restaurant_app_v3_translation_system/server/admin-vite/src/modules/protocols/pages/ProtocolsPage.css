@@ -1,0 +1,26 @@
+.protocols-page {
+  padding: 20px;
+}
+
+.protocols-page .card {
+  border-radius: 8px;
+}
+
+.protocols-page .card-header {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  border-radius: 8px 8px 0 0 !important;
+}
+
+.protocols-page .table {
+  margin-bottom: 0;
+}
+
+.protocols-page .spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+.protocols-page .text-danger {
+  font-weight: bold;
+}
