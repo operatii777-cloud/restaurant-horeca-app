@@ -1,1 +1,6 @@
-{"name":"restaurant-app","version":"1.0.0"}
+{
+  "name": "restaurant-app-v3-translation-system",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": ["server"]
+}
