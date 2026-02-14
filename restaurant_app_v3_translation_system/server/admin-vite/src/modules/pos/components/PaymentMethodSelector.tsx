@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 /**
  * FAZA 2.D - Payment Method Selector Component
  * 
@@ -17,23 +17,24 @@ interface PaymentMethodSelectorProps {
   disabled?: boolean;
 }
 
-const PAYMENT_METHODS: Array<{ id: PaymentMethod; label: string; icon: string }> = [
-  { id: 'cash', label: 'Cash', icon: '💵' },
-  { id: 'card', label: 'Card', icon: '💳' },
-  { id: 'voucher', label: 'Voucher', icon: '🎫' },
-  { id: 'protocol', label: 'Protocol', icon: '📋' },
-  { id: 'degustare', label: 'Degustare', icon: '🍷' },
-];
-
 export function PaymentMethodSelector({
   selectedMethod,
   onChange,
   disabled = false,
 }: PaymentMethodSelectorProps) {
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
+  
+  const PAYMENT_METHODS: Array<{ id: PaymentMethod; label: string; icon: string }> = [
+    { id: 'cash', label: t('pos.payment.methods.cash'), icon: '💵' },
+    { id: 'card', label: t('pos.payment.methods.card'), icon: '💳' },
+    { id: 'voucher', label: t('pos.payment.methods.voucher'), icon: '🎫' },
+    { id: 'protocol', label: t('pos.payment.methods.protocol'), icon: '📋' },
+    { id: 'degustare', label: t('pos.payment.methods.degustare'), icon: '🍷' },
+  ];
+  
   return (
     <div className="payment-method-selector">
-      <label className="payment-method-label">Metodă de plată</label>
+      <label className="payment-method-label">{t('pos.payment.method')}</label>
       <div className="payment-method-buttons">
         {PAYMENT_METHODS.map((method) => {
           const isSelected = selectedMethod === method.id;

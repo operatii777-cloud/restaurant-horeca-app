@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 import { useEffect, useMemo, useState } from 'react';
 import { Modal } from '@/shared/components/Modal';
 import { InlineAlert } from '@/shared/components/InlineAlert';
@@ -41,7 +41,7 @@ export function PriceHistoryModal({ open, product, onClose }: PriceHistoryModalP
       setError(null);
       setLoading(false);
       return;
-    }
+  const { t } = useTranslation();
 
     let isActive = true;
     setLoading(true);
@@ -68,7 +68,7 @@ export function PriceHistoryModal({ open, product, onClose }: PriceHistoryModalP
         const message =
           requestError?.response?.data?.error ??
           requestError?.message ??
-          'A apărut o eroare la încărcarea istoricului de preț.';
+          t('menu.messages.error');
         setError(message);
         setEntries([]);
       })
@@ -96,24 +96,24 @@ export function PriceHistoryModal({ open, product, onClose }: PriceHistoryModalP
     <Modal
       isOpen={open}
       onClose={onClose}
-      size="lg"
+  const title = product ? `${t('menu.priceHistory.title')} — ${product.name}` : t('menu.priceHistory.title');
       title={title}
-      description="Verifici ultimele modificări de preț și cotă TVA aplicate acestui produs."
+      description={t('menu.priceHistory.subtitle')}
     >
-      {error ? <InlineAlert variant="error" title="Eroare" message={error} /> : null}
+      {error ? <InlineAlert variant="error" title={t('menu.messages.error')} message={error} /> : null}
 
       {loading ? (
-        <div className="price-history-loading">Se încarcă istoricul…</div>
+        <div className="price-history-loading">{t('common.loading')}</div>
       ) : hasEntries ? (
         <div className="price-history-table-wrapper">
           <table className="price-history-table">
             <thead>
               <tr>
                 <th>"data modificarii"</th>
-                <th>"pret vechi"</th>
-                <th>"pret nou"</th>
-                <th>TVA vechi</th>
-                <th>TVA nou</th>
+                <th>{t('common.date')}</th>
+                <th>{t('menu.priceHistory.oldPrice')}</th>
+                <th>{t('menu.priceHistory.newPrice')}</th>
+                <th>{t('menu.priceHistory.changedBy')}</th>
                 <th>"Operator"</th>
               </tr>
             </thead>
@@ -152,7 +152,7 @@ export function PriceHistoryModal({ open, product, onClose }: PriceHistoryModalP
         </div>
       ) : (
         <div className="price-history-empty">
-          <span>Nu există înregistrări pentru acest produs</span>
+        <div className="price-history-empty">{t('menu.priceHistory.noHistory')}</div>
         </div>
       )}
     </Modal>

@@ -1,4 +1,4 @@
-﻿// import { useTranslation } from '@/i18n/I18nContext';
+﻿import { useTranslation } from '@/i18n/I18nContext';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import classNames from 'classnames';
 import type {
@@ -41,15 +41,14 @@ type ActiveOrdersPanelProps = {
 
 const VIEW_MODE_STORAGE_KEY = 'admin_v4_orders_view_mode';
 
-function aggregateVisitItems(visit: OrderVisit) {
-  //   const { t } = useTranslation();
+function aggregateVisitItems(visit: OrderVisit, defaultProductName: string) {
   const map = new Map<string, { name: string; quantity: number; total: number }>();
 
   visit.allItems.forEach((item) => {
     const key = item.name ?? item.itemId;
     if (!map.has(key)) {
       map.set(key, {
-        name: item.name ?? 'Produs',
+        name: item.name ?? defaultProductName,
         quantity: item.quantity ?? 0,
         total: (item.finalPrice ?? item.price ?? 0) * (item.quantity ?? 0),
       });
@@ -107,7 +106,7 @@ export const ActiveOrdersPanel = ({
   onSelectOrder,
   onMarkVisitPaid,
 }: ActiveOrdersPanelProps) => {
-  //   const { t } = useTranslation();
+  const { t } = useTranslation();
   const [activeRange, setActiveRange] = useState<QuickRange | null>(null);
   const [exporting, setExporting] = useState(false);
   const [processingVisit, setProcessingVisit] = useState<string | null>(null);
@@ -141,40 +140,40 @@ export const ActiveOrdersPanel = ({
         sortable: true,
       },
       {
-        headerName: 'Masă',
+        headerName: t('orders.table'),
         field: 'table_number',
         width: 120,
         valueFormatter: ({ value, data }: ValueFormatterParams<Order, Order['table_number']>) => {
           if (!data) return '';
           if (value === null || value === undefined) {
-            return data.type === 'takeout' ? 'La pachet' : '—';
+            return data.type === 'takeout' ? t('orders.types.takeout') : '—';
           }
-          return `Masa ${value}`;
+          return `${t('orders.table')} ${value}`;
         },
       },
       {
-        headerName: 'Client',
+        headerName: t('orders.client'),
         field: 'client_identifier',
         minWidth: 150,
         flex: 1,
-        valueFormatter: ({ value }: ValueFormatterParams<Order, Order['client_identifier']>) => value || 'Anonim',
+        valueFormatter: ({ value }: ValueFormatterParams<Order, Order['client_identifier']>) => value || t('orders.anonymous'),
       },
       {
-        headerName: 'Tip',
+        headerName: t('orders.type'),
         field: 'type',
         width: 130,
         valueFormatter: ({ value }: ValueFormatterParams<Order, Order['type']>) =>
           formatOrderType(value ?? 'here'),
       },
       {
-        headerName: 'Creată la',
+        headerName: t('orders.createdAt'),
         field: 'timestamp',
         width: 190,
         valueFormatter: ({ value }: ValueFormatterParams<Order, Order['timestamp']>) =>
           value ? formatTimestamp(String(value)) : '—',
       },
       {
-        headerName: 'Status',
+        headerName: t('common.status'),
         field: 'status',
         width: 140,
         cellRenderer: ({ value }: ICellRendererParams<Order>) => {
@@ -183,18 +182,18 @@ export const ActiveOrdersPanel = ({
         },
       },
       {
-        headerName: 'Achitată',
+        headerName: t('orders.paid'),
         field: 'is_paid',
         width: 120,
         valueFormatter: ({ value }: ValueFormatterParams<Order, Order['is_paid']>) =>
-          Number(value ?? 0) === 1 ? 'Da' : 'Nu',
+          Number(value ?? 0) === 1 ? t('common.yes') : t('common.no'),
         cellClassRules: {
           'text-success': (params) => Number(params.value) === 1,
           'text-danger': (params) => Number(params.value) === 0,
         },
       },
       {
-        headerName: 'Total',
+        headerName: t('orders.total'),
         field: 'total',
         width: 140,
         type: 'rightAligned',
@@ -202,7 +201,7 @@ export const ActiveOrdersPanel = ({
         valueFormatter: ({ value }: ValueFormatterParams<Order, number>) => `${Number(value ?? 0).toFixed(2)} RON`,
       },
       {
-        headerName: 'Produse',
+        headerName: t('common.products'),
         field: 'items',
         flex: 1.2,
         minWidth: 240,
@@ -212,12 +211,12 @@ export const ActiveOrdersPanel = ({
           if (!items.length) return '—';
           return items
             .slice(0, 3)
-            .map((item) => `${item.quantity}x ${item.name ?? 'Produs'}`)
+            .map((item) => `${item.quantity}x ${item.name ?? t('common.product')}`)
             .join(', ');
         },
       },
       {
-        headerName: 'Acțiuni',
+        headerName: t('common.actions'),
         colId: 'actions',
         width: 150,
         pinned: 'right',
@@ -226,14 +225,14 @@ export const ActiveOrdersPanel = ({
           const isPaid = Number(data.is_paid) === 1;
           return `
             <div class="orders-grid__row-actions">
-              <button type="button" data-action="details" title="Vezi detalii">👁️</button>
-              ${!isPaid ? `<button type="button" data-action="mark-paid" title="Marchează ca achitată">💰</button>` : ''}
+              <button type="button" data-action="details" title="${t('actions.viewDetails')}">👁️</button>
+              ${!isPaid ? `<button type="button" data-action="mark-paid" title="${t('orders.markAsPaid')}">💰</button>` : ''}
             </div>
           `;
         },
       },
     ];
-  }, []);
+  }, [t]);
 
   const handleGridCellClicked = useCallback(
     (event: CellClickedEvent<Order>) => {
@@ -301,13 +300,13 @@ export const ActiveOrdersPanel = ({
       <div className="orders-filters">
         <div className="orders-filters__row">
           <div className="orders-filters__status">
-            <span>Status</span>
+            <span>{t('common.status')}</span>
             <div className="orders-filters__status-buttons">
               {(
                 [
-                  { key: 'all', label: 'Toate' },
-                  { key: 'unpaid', label: 'Neachitate' },
-                  { key: 'paid', label: 'Achitate' },
+                  { key: 'all', label: t('common.all') },
+                  { key: 'unpaid', label: t('orders.filters.unpaid') },
+                  { key: 'paid', label: t('orders.filters.paid') },
                 ] as Array<{ key: OrderFilter['status']; label: string }>
               ).map((item) => (
                 <button
@@ -326,14 +325,14 @@ export const ActiveOrdersPanel = ({
           </div>
 
           <div className="orders-filters__range">
-            <label htmlFor="orders-start-date">De la</label>
+            <label htmlFor="orders-start-date">{t('common.from')}</label>
             <input
               id="orders-start-date"
               type="date"
               value={filtersDraft.startDate ?? ''}
               onChange={(event) => onFilterDraftChange({ startDate: event.target.value || null })}
             />
-            <label htmlFor="orders-end-date">Până la</label>
+            <label htmlFor="orders-end-date">{t('common.to')}</label>
             <input
               id="orders-end-date"
               type="date"
@@ -351,40 +350,40 @@ export const ActiveOrdersPanel = ({
                 onClick={() => handleQuickRange(range)}
               >
                 {range === 'today'
-                  ? 'Astăzi'
+                  ? t('common.dateRanges.today')
                   : range === 'yesterday'
-                    ? 'Ieri'
+                    ? t('common.dateRanges.yesterday')
                     : range === 'week'
-                      ? 'Ultima săptămână'
+                      ? t('common.dateRanges.lastWeek')
                       : range === 'month'
-                        ? 'Ultima lună'
-                        : 'Toate'}
+                        ? t('common.dateRanges.lastMonth')
+                        : t('common.all')}
               </button>
             ))}
           </div>
         </div>
 
         <div className="orders-filters__actions">
-          <button type="button" className="btn btn-primary" onClick={() => onApplyFilters()}>Aplicare Filtre</button>
-          <button type="button" className="btn btn-ghost" onClick={onResetFilters}>Resetează</button>
-          <button type="button" className="btn btn-ghost" onClick={() => onRefresh()}>Reîmprospătează</button>
+          <button type="button" className="btn btn-primary" onClick={() => onApplyFilters()}>{t('actions.applyFilters')}</button>
+          <button type="button" className="btn btn-ghost" onClick={onResetFilters}>{t('actions.reset')}</button>
+          <button type="button" className="btn btn-ghost" onClick={() => onRefresh()}>{t('actions.refresh')}</button>
           <button type="button" className="btn btn-ghost" onClick={handleExport} disabled={exporting}>
-            {exporting ? 'Se exportă...' : 'Export CSV'}
+            {exporting ? t('common.exporting') : t('actions.exportCSV')}
           </button>
-          <div className="orders-filters__view-toggle" role="group" aria-label="mod afisare">
+          <div className="orders-filters__view-toggle" role="group" aria-label={t('orders.viewMode')}>
             <button
               type="button"
               className={classNames('btn btn-chip', { 'is-active': viewMode === 'grid' })}
               onClick={() => setViewMode('grid')}
             >
-              Tabel
+              {t('orders.views.table')}
             </button>
             <button
               type="button"
               className={classNames('btn btn-chip', { 'is-active': viewMode === 'cards' })}
               onClick={() => setViewMode('cards')}
             >
-              Vizite
+              {t('orders.views.visits')}
             </button>
           </div>
         </div>
@@ -392,28 +391,28 @@ export const ActiveOrdersPanel = ({
 
       <div className="orders-summary">
         <StatCard
-          title="Comenzi totale"
-          helper="Rezultate pentru filtrul curent"
+          title={t('orders.summary.totalOrders')}
+          helper={t('orders.summary.resultsForFilter')}
           value={`${summary.totalOrders}`}
           icon={<span>📦</span>}
         />
         <StatCard
-          title="valoare totala"
-          helper="Suma comenzilor"
+          title={t('orders.summary.totalValue')}
+          helper={t('orders.summary.ordersSum')}
           value={formatCurrency(summary.totalAmount)}
           icon={<span>💰</span>}
         />
         <StatCard
-          title="Neachitate"
-          helper={`${summary.unpaidOrders} comenzi`}
+          title={t('orders.summary.unpaid')}
+          helper={`${summary.unpaidOrders} ${t('orders.orders')}`}
           value={formatCurrency(summary.unpaidValue)}
           trendDirection={summary.unpaidOrders > 0 ? 'up' : 'flat'}
-          trendLabel={summary.unpaidOrders > 0 ? 'Necesită acțiune' : 'OK'}
+          trendLabel={summary.unpaidOrders > 0 ? t('orders.summary.requiresAction') : 'OK'}
           icon={<span>⚠️</span>}
         />
         <StatCard
-          title="Achitate"
-          helper={`${summary.paidOrders} comenzi`}
+          title={t('orders.summary.paid')}
+          helper={`${summary.paidOrders} ${t('orders.orders')}`}
           value={formatCurrency(summary.paidValue)}
           icon={<span>✅</span>}
         />
@@ -436,13 +435,13 @@ export const ActiveOrdersPanel = ({
       {viewMode === 'cards' ? (
         <div className="orders-visits">
           {!loading && visits.length === 0 ? (
-            <InlineAlert variant="info" message="Nu există comenzi pentru filtrul selectat." />
+            <InlineAlert variant="info" message={t('orders.noOrdersForFilter')} />
           ) : null}
-          {loading ? <p>"se incarca vizitele"</p> : null}
+          {loading ? <p>{t('common.loading')}</p> : null}
           {!loading && visits.length > 0 ? (
             <div className="orders-visits__grid">
               {visits.map((visit) => {
-                const items = aggregateVisitItems(visit);
+                const items = aggregateVisitItems(visit, t('common.product'));
                 const firstOrder = visit.orders[0];
                 return (
                   <article
@@ -452,19 +451,19 @@ export const ActiveOrdersPanel = ({
                     <header className="order-visit-card__header">
                       <div>
                         <h3>
-                          {visit.tableNumber !== null ? `Masa ${visit.tableNumber}` : 'La pachet'} ·{' '}
-                          {visit.clientIdentifier ?? 'Anonim'}
+                          {visit.tableNumber !== null ? `${t('orders.table')} ${visit.tableNumber}` : t('orders.types.takeout')} ·{' '}
+                          {visit.clientIdentifier ?? t('orders.anonymous')}
                         </h3>
                         <p>{formatOrderType(firstOrder?.type ?? 'here')}</p>
                       </div>
                       <span className={classNames('order-status-badge', visit.isPaid ? 'order-status-badge--paid' : 'order-status-badge--pending')}>
-                        {visit.isPaid ? 'ACHITAT' : 'NEACHITAT'}
+                        {visit.isPaid ? t('orders.status.paid') : t('orders.status.unpaid')}
                       </span>
                     </header>
 
                     <div className="order-visit-card__times">
-                      <span>Prima comandă: {visit.firstTimestamp ? formatTimestamp(visit.firstTimestamp) : '—'}</span>
-                      <span>Ultima comandă: {visit.lastTimestamp ? formatTimestamp(visit.lastTimestamp) : '—'}</span>
+                      <span>{t('orders.firstOrder')}: {visit.firstTimestamp ? formatTimestamp(visit.firstTimestamp) : '—'}</span>
+                      <span>{t('orders.lastOrder')}: {visit.lastTimestamp ? formatTimestamp(visit.lastTimestamp) : '—'}</span>
                     </div>
 
                     <div className="order-visit-card__items">
@@ -477,7 +476,7 @@ export const ActiveOrdersPanel = ({
                         ))}
                       </ul>
                       {items.length > 6 ? (
-                        <small>+ {items.length - 6} produse suplimentare</small>
+                        <small>+ {items.length - 6} {t('orders.additionalProducts')}</small>
                       ) : null}
                     </div>
 
@@ -491,7 +490,7 @@ export const ActiveOrdersPanel = ({
 
                     <footer className="order-visit-card__footer">
                       <div className="order-visit-card__total">
-                        <span>Total Vizită</span>
+                        <span>{t('orders.visitTotal')}</span>
                         <strong>{formatCurrency(visit.totalAmount)}</strong>
                       </div>
                       <div className="order-visit-card__actions">
@@ -501,7 +500,7 @@ export const ActiveOrdersPanel = ({
                           onClick={() => onSelectOrder(firstOrder)}
                           disabled={!firstOrder}
                         >
-                          👁️ Detalii
+                          👁️ {t('common.details')}
                         </button>
                         {!visit.isPaid ? (
                           <button
@@ -510,7 +509,7 @@ export const ActiveOrdersPanel = ({
                             onClick={() => handleMarkVisit(visit)}
                             disabled={processingVisit === visit.key}
                           >
-                            {processingVisit === visit.key ? 'Se procesează...' : '💰 Marchează achitată'}
+                            {processingVisit === visit.key ? t('common.processing') : `💰 ${t('orders.markAsPaid')}`}
                           </button>
                         ) : null}
                       </div>

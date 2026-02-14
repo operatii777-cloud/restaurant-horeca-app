@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 import { useEffect, useMemo, useState } from 'react';
 import type { FormEvent } from 'react';
 import { Modal } from '@/shared/components/Modal';
@@ -53,7 +53,7 @@ const ADMIN_ROLE = 'admin';
 const ADMIN_ID = '1';
 
 export function ProductMessagesModal({ open, product, onClose, onMessageSent }: ProductMessagesModalProps) {
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
   const [receiver, setReceiver] = useState<string>('kitchen');
   const [messageContent, setMessageContent] = useState('');
   const [messages, setMessages] = useState<InternalMessage[]>([]);
@@ -89,7 +89,7 @@ export function ProductMessagesModal({ open, product, onClose, onMessageSent }: 
       });
       setMessages(Array.isArray(response.data) ? response.data : []);
     } catch (error: any) {
-      const message = error?.response?.data?.error ?? error?.message ?? 'Nu am putut încărca mesajele recente.';
+      const message = error?.response?.data?.error ?? error?.message ?? t('menu.messages.error');
       setLoadError(message);
       setMessages([]);
     } finally {
@@ -108,7 +108,7 @@ export function ProductMessagesModal({ open, product, onClose, onMessageSent }: 
 
     const trimmedContent = messageContent.trim();
     if (trimmedContent.length < 5) {
-      setSendError('Mesajul trebuie să conțină cel puțin 5 caractere.');
+      setSendError(t('validation.minLength', { min: 5 }));
       return;
     }
 
@@ -127,12 +127,12 @@ export function ProductMessagesModal({ open, product, onClose, onMessageSent }: 
       if (data?.error) {
         setSendError(data.error);
       } else {
-        onMessageSent(data?.message ?? 'Mesaj trimis cu succes.', data?.messageId);
+        onMessageSent(data?.message ?? t('menu.productMessages.title'), data?.messageId);
         setMessageContent(defaultMessage);
         await loadLatestMessages();
       }
     } catch (error: any) {
-      const message = error?.response?.data?.error ?? error?.message ?? 'Nu am putut trimite mesajul.';
+      const message = error?.response?.data?.error ?? error?.message ?? t('menu.messages.error');
       setSendError(message);
     } finally {
       setSending(false);
@@ -151,18 +151,18 @@ export function ProductMessagesModal({ open, product, onClose, onMessageSent }: 
     <Modal
       isOpen={open}
       onClose={onClose}
-      title={product ? `Mesaje interne · ${product.name}` : 'Mesaje interne'}
-      description="Trimite notificări rapide către echipă: bucătărie, bar sau ospătari. Mesajele sunt livrate instant prin canalul intern."
+      title={product ? `${t('menu.productMessages.title')} · ${product.name}` : t('menu.productMessages.title')}
+      description={t('menu.productMessages.subtitle')}
       size="lg"
     >
-      {loadError ? <InlineAlert variant="error" title="nu am putut incarca istoricul" message={loadError} /> : null}
+      {loadError ? <InlineAlert variant="error" title={t('menu.messages.error')} message={loadError} /> : null}
 
       <div className="product-messages-layout">
         <section className="product-messages-history">
           <header>
             <h4>Istoric recent</h4>
             <button type="button" className="messages-refresh" onClick={loadLatestMessages} disabled={loadingMessages}>
-              {loadingMessages ? 'Se încarcă…' : 'Reîncarcă'}
+              {loadingMessages ? t('common.loading') : t('actions.refresh')}
             </button>
           </header>
 
@@ -209,7 +209,7 @@ export function ProductMessagesModal({ open, product, onClose, onMessageSent }: 
             </label>
 
             <label className="product-messages-field">
-              <span>Mesaj</span>
+              <span>{t('menu.productMessages.message')}</span>
               <textarea
                 rows={4}
                 value={messageContent}
@@ -218,12 +218,12 @@ export function ProductMessagesModal({ open, product, onClose, onMessageSent }: 
               />
             </label>
 
-            {sendError ? <InlineAlert variant="warning" title="verifica mesajul" message={sendError} /> : null}
+            {sendError ? <InlineAlert variant="warning" title={t('common.warning')} message={sendError} /> : null}
 
             <div className="product-messages-actions">
               <button type="button" className="menu-product-button menu-product-button--ghost" onClick={onClose} disabled={sending}>"Închide"</button>
               <button type="submit" className="menu-product-button menu-product-button--primary" disabled={sending}>
-                {sending ? 'Se trimite…' : 'Trimite mesajul'}
+                {sending ? t('common.processing') : t('actions.submit')}
               </button>
             </div>
           </form>

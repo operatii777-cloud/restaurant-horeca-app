@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 import { useMemo } from 'react';
 import { Modal } from '@/shared/components/Modal';
 import { InlineAlert } from '@/shared/components/InlineAlert';
@@ -32,7 +32,7 @@ type DependenciesResponse = {
 };
 
 export function ProductDependenciesModal({ open, product, onClose }: ProductDependenciesModalProps) {
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
   const productId = product?.id;
   const endpoint = useMemo(() => {
     if (!open || !productId) {
@@ -46,37 +46,37 @@ export function ProductDependenciesModal({ open, product, onClose }: ProductDepe
   const ingredients = data?.dependencies?.ingredients ?? [];
   const relatedProducts = data?.dependencies?.related_products ?? [];
 
-  const title = product ? `Dependențe produs — ${product.name}` : 'Dependențe produs';
+  const title = product ? `${t('menu.dependencies.title')} — ${product.name}` : t('menu.dependencies.title');
 
   return (
     <Modal isOpen={open} title={title} size="lg" onClose={onClose}>
-      {error ? <InlineAlert variant="error" title="Eroare" message={error} /> : null}
+      {error ? <InlineAlert variant="error" title={t('menu.messages.error')} message={error} /> : null}
 
       <div className="dependencies-layout">
         <section className="dependencies-section">
           <header className="dependencies-header">
             <div>
-              <h3>"ingrediente reteta"</h3>
-              <p>"lista ingredientelor din reteta asociata produsulu"</p>
+              <h3>{t('menu.productModal.ingredients')}</h3>
+              <p>{t('menu.dependencies.subtitle')}</p>
             </div>
             <button type="button" className="menu-product-button menu-product-button--ghost" onClick={refetch} disabled={loading}>
-              🔄 Reîncarcă
+              🔄 {t('actions.refresh')}
             </button>
           </header>
 
           {loading ? (
-            <div className="dependencies-empty">Se încarcă dependențele…</div>
+            <div className="dependencies-empty">{t('common.loading')}</div>
           ) : ingredients.length === 0 ? (
-            <div className="dependencies-empty">"nu exista ingrediente definite pentru acest produs"</div>
+            <div className="dependencies-empty">{t('menu.dependencies.noDependencies')}</div>
           ) : (
             <div className="dependencies-table-wrapper">
               <table className="dependencies-table">
                 <thead>
                   <tr>
-                    <th>Ingredient</th>
-                    <th>Categorie</th>
-                    <th>Cantitate</th>
-                    <th>"stoc curent"</th>
+                    <th>{t('menu.productModal.ingredients')}</th>
+                    <th>{t('common.category')}</th>
+                    <th>{t('common.quantity')}</th>
+                    <th>{t('common.stock')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -102,21 +102,21 @@ export function ProductDependenciesModal({ open, product, onClose }: ProductDepe
         <section className="dependencies-section">
           <header className="dependencies-header">
             <div>
-              <h3>"produse corelate"</h3>
-              <p>"alte produse care folosesc aceleasi ingrediente"</p>
+              <h3>{t('menu.dependencies.dependentProducts')}</h3>
+              <p>{t('menu.dependencies.subtitle')}</p>
             </div>
           </header>
 
           {loading ? (
-            <div className="dependencies-empty">Se încarcă produsele corelate…</div>
+            <div className="dependencies-empty">{t('common.loading')}</div>
           ) : relatedProducts.length === 0 ? (
-            <div className="dependencies-empty">"nu au fost gasite produse care folosesc ingredient"</div>
+            <div className="dependencies-empty">{t('menu.dependencies.noDependencies')}</div>
           ) : (
             <div className="dependencies-related">
               {relatedProducts.map((related) => (
                 <div key={related.id} className="dependencies-related-item">
                   <div className="dependencies-related-name">{related.name}</div>
-                  <div className="dependencies-related-category">{related.category ?? 'Categorie necunoscută'}</div>
+                  <div className="dependencies-related-category">{related.category ?? t('common.category')}</div>
                 </div>
               ))}
             </div>

@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 import { useEffect, useMemo, useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import { Modal } from '@/shared/components/Modal';
@@ -163,7 +163,7 @@ const mapProductToForm = (product: MenuProduct): MenuProductFormValues => ({
 });
 
 export function MenuProductModal({ open, mode, categories, product, onClose, onSaved }: MenuProductModalProps) {
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
   const { mutate, loading, error, reset } = useApiMutation<{
     message?: string;
     customizations?: ProductCustomizationOption[];
@@ -449,60 +449,60 @@ export function MenuProductModal({ open, mode, categories, product, onClose, onS
     });
 
     if (response !== null) {
-      const baseMessage = response?.message ?? (mode === 'create' ? 'Produs adăugat cu succes' : 'Produs actualizat cu succes');
+      const baseMessage = response?.message ?? (mode === 'create' ? t('menu.messages.productAddedSuccess') : t('menu.messages.productUpdatedSuccess'));
       const customizationSummary =
         Array.isArray(response?.customizations) && response.customizations.length > 0
-          ? ` Personalizări active: ${response.customizations.length}.`
+          ? ` ${t('menu.messages.customizationsActive')} ${response.customizations.length}.`
           : normalizedCustomizations.length > 0
-            ? ` Personalizările au fost sincronizate.`
+            ? ` ${t('menu.messages.customizationsSynced')}`
             : '';
       onSaved(`${baseMessage}${customizationSummary}`.trim());
     }
   };
 
-  const modalTitle = mode === 'create' ? 'Adaugă produs' : `Editează produs — ${product?.name ?? ''}`;
+  const modalTitle = mode === 'create' ? t('menu.products.add') : `${t('menu.products.edit')} — ${product?.name ?? ''}`;
 
   return (
     <Modal isOpen={open} title={modalTitle} size="full" onClose={onClose}>
-      {error ? <InlineAlert variant="error" title="Eroare" message={error} /> : null}
+      {error ? <InlineAlert variant="error" title={t('menu.messages.error')} message={error} /> : null}
 
       <form className="menu-product-form" onSubmit={handleSubmit}>
         <section className="menu-product-section">
           <header>
-            <h3>📋 Detalii generale</h3>
-            <p>"completeaza informatiile de baza afisate clientilo"</p>
+            <h3>📋 {t('menu.productModal.generalDetails')}</h3>
+            <p>{t('menu.productModal.generalDetailsSubtitle')}</p>
           </header>
 
           <div className="menu-product-grid menu-product-grid--two">
             <label className="menu-product-field">
-              <span>Nume produs *</span>
+              <span>{t('menu.productModal.productName')} *</span>
               <input
                 type="text"
                 value={formState.name}
                 onChange={handleInputChange('name')}
                 required
-                placeholder="Ex: Pizza Quattro Stagioni"
+                placeholder={t('menu.productModal.productNamePlaceholder')}
               />
             </label>
 
             <label className="menu-product-field">
-              <span>Nume produs (EN)</span>
+              <span>{t('menu.productModal.productNameEn')}</span>
               <input
                 type="text"
                 value={formState.nameEn}
                 onChange={handleInputChange('nameEn')}
-                placeholder="Ex: Four Seasons Pizza"
+                placeholder={t('menu.productModal.productNameEnPlaceholder')}
               />
             </label>
 
             <label className="menu-product-field">
-              <span>Categorie *</span>
+              <span>{t('menu.productModal.category')} *</span>
               <input
                 list="menu-category-options"
                 value={formState.category}
                 onChange={handleInputChange('category')}
                 required
-                placeholder="ex pizza salate"
+                placeholder={t('menu.productModal.categoryPlaceholder')}
               />
               <datalist id="menu-category-options">
                 {categoryOptions.map((category) => (
@@ -512,17 +512,17 @@ export function MenuProductModal({ open, mode, categories, product, onClose, onS
             </label>
 
             <label className="menu-product-field">
-              <span>Categorie (EN)</span>
+              <span>{t('menu.productModal.categoryEn')}</span>
               <input
                 type="text"
                 value={formState.categoryEn}
                 onChange={handleInputChange('categoryEn')}
-                placeholder="Ex: Pizza"
+                placeholder={t('menu.productModal.categoryEnPlaceholder')}
               />
             </label>
 
             <label className="menu-product-field">
-              <span>Preț (RON) *</span>
+              <span>{t('menu.productModal.priceRon')} *</span>
               <input
                 type="number"
                 min="0"
@@ -534,7 +534,7 @@ export function MenuProductModal({ open, mode, categories, product, onClose, onS
             </label>
 
             <label className="menu-product-field">
-              <span>TVA (%)</span>
+              <span>{t('menu.productModal.vatPercent')}</span>
               <select value={formState.vatRate} onChange={handleInputChange('vatRate')}>
                 {VAT_OPTIONS.map((option) => (
                   <option key={option} value={option}>
@@ -545,7 +545,7 @@ export function MenuProductModal({ open, mode, categories, product, onClose, onS
             </label>
 
             <label className="menu-product-field">
-              <span>"unitate masura"</span>
+              <span>{t('menu.productModal.unitOfMeasure')}</span>
               <select value={formState.unit} onChange={handleInputChange('unit')}>
                 {UNIT_OPTIONS.map((unit) => (
                   <option key={unit} value={unit}>
@@ -556,65 +556,69 @@ export function MenuProductModal({ open, mode, categories, product, onClose, onS
             </label>
 
             <label className="menu-product-field">
-              <span>Greutate / Volum</span>
+              <span>{t('menu.productModal.weightVolume')}</span>
               <input
                 type="text"
                 value={formState.weight}
                 onChange={handleInputChange('weight')}
-                placeholder="Ex: 350g, 500ml"
+                placeholder={t('menu.productModal.weightVolumePlaceholder')}
               />
             </label>
 
             <label className="menu-product-field">
-              <span>"ordine afisare"</span>
+              <span>{t('menu.productModal.displayOrder')}</span>
               <input
                 type="number"
                 min="0"
                 value={formState.displayOrder}
                 onChange={handleInputChange('displayOrder')}
-                placeholder="ordinea in meniu"
+                placeholder={t('menu.productModal.displayOrderPlaceholder')}
               />
             </label>
 
             <label className="menu-product-field">
-              <span>Cost produs (RON)</span>
+              <span>{t('menu.productModal.costPrice')}</span>
               <input
                 type="number"
                 min="0"
                 step="0.01"
                 value={formState.costPrice}
                 onChange={handleInputChange('costPrice')}
-                placeholder="Ex: 12.50"
+                placeholder={t('menu.productModal.costPricePlaceholder')}
               />
             </label>
           </div>
 
           <div className="menu-product-switches">
             <label>
-              <input type="checkbox" checked={formState.isSellable} onChange={handleCheckboxChange('isSellable')} />"disponibil la vanzare"</label>
+              <input type="checkbox" checked={formState.isSellable} onChange={handleCheckboxChange('isSellable')} />
+              {t('menu.productModal.availableForSale')}
+            </label>
             <label>
-              <input type="checkbox" checked={formState.isActive} onChange={handleCheckboxChange('isActive')} />"activ in meniu"</label>
+              <input type="checkbox" checked={formState.isActive} onChange={handleCheckboxChange('isActive')} />
+              {t('menu.productModal.activeInMenu')}
+            </label>
             <label>
               <input type="checkbox" checked={formState.isFraction} onChange={handleCheckboxChange('isFraction')} />
-              Permite fracții (gramaj)
+              {t('menu.productModal.allowFractions')}
             </label>
           </div>
         </section>
 
         <section className="menu-product-section">
           <header>
-            <h3>🏭 Inventar & preparare</h3>
-            <p>"defineste gestiunea si sectia de pregatire pentru "</p>
+            <h3>🏭 {t('menu.productModal.inventoryPreparation')}</h3>
+            <p>{t('menu.productModal.inventoryPreparationSubtitle')}</p>
           </header>
 
           <div className="menu-product-grid menu-product-grid--three">
             <label className="menu-product-field">
-              <span>Gestiune stoc</span>
+              <span>{t('menu.productModal.stockManagement')}</span>
               <input
                 list="menu-stock-options"
                 value={formState.stockManagement}
                 onChange={handleInputChange('stockManagement')}
-                placeholder="ex bucatarie bar"
+                placeholder={t('menu.productModal.stockManagementPlaceholder')}
               />
               <datalist id="menu-stock-options">
                 {STOCK_OPTIONS.map((option) => (
@@ -624,12 +628,12 @@ export function MenuProductModal({ open, mode, categories, product, onClose, onS
             </label>
 
             <label className="menu-product-field">
-              <span>"sectie preparare"</span>
+              <span>{t('menu.productModal.preparationSection')}</span>
               <input
                 list="menu-preparation-options"
                 value={formState.preparationSection}
                 onChange={handleInputChange('preparationSection')}
-                placeholder="Ex: BUCĂTĂRIE, BAR..."
+                placeholder={t('menu.productModal.preparationSectionPlaceholder')}
               />
               <datalist id="menu-preparation-options">
                 {PREPARATION_OPTIONS.map((option) => (
@@ -639,13 +643,13 @@ export function MenuProductModal({ open, mode, categories, product, onClose, onS
             </label>
 
             <label className="menu-product-field">
-              <span>Timp preparare (min)</span>
+              <span>{t('menu.productModal.preparationTime')}</span>
               <input
                 type="number"
                 min="0"
                 value={formState.prepTime}
                 onChange={handleInputChange('prepTime')}
-                placeholder="Ex: 15"
+                placeholder={t('menu.productModal.preparationTimePlaceholder')}
               />
             </label>
           </div>
@@ -653,41 +657,41 @@ export function MenuProductModal({ open, mode, categories, product, onClose, onS
           <div className="menu-product-switches">
             <label>
               <input type="checkbox" checked={formState.isVegetarian} onChange={handleCheckboxChange('isVegetarian')} />
-              🌱 Vegetarian
+              🌱 {t('menu.productModal.vegetarian')}
             </label>
             <label>
               <input type="checkbox" checked={formState.isSpicy} onChange={handleCheckboxChange('isSpicy')} />
-              🌶️ Picant
+              🌶️ {t('menu.productModal.spicy')}
             </label>
             <label>
               <input type="checkbox" checked={formState.isTakeoutOnly} onChange={handleCheckboxChange('isTakeoutOnly')} />
-              📦 Doar la pachet
+              📦 {t('menu.productModal.takeoutOnly')}
             </label>
           </div>
         </section>
 
         <section className="menu-product-section">
           <header>
-            <h3>📝 Descriere & informații</h3>
-            <p>"textele afisate in meniurile clientilor si aplicat"</p>
+            <h3>📝 {t('menu.productModal.descriptionInfo')}</h3>
+            <p>{t('menu.productModal.descriptionInfoSubtitle')}</p>
           </header>
 
           <label className="menu-product-field menu-product-field--full">
-            <span>Descriere (RO)</span>
+            <span>{t('menu.productModal.descriptionRo')}</span>
             <textarea
               value={formState.description}
               onChange={handleInputChange("Description")}
-              placeholder="descriere pentru clienti ingredientele principale "
+              placeholder={t('menu.productModal.descriptionRoPlaceholder')}
               rows={3}
             />
           </label>
 
           <label className="menu-product-field menu-product-field--full">
-            <span>Descriere (EN)</span>
+            <span>{t('menu.productModal.descriptionEn')}</span>
             <textarea
               value={formState.descriptionEn}
               onChange={handleInputChange('descriptionEn')}
-              placeholder="English description (opțional)"
+              placeholder={t('menu.productModal.descriptionEnPlaceholder')}
               rows={3}
             />
           </label>
@@ -698,8 +702,8 @@ export function MenuProductModal({ open, mode, categories, product, onClose, onS
               onChange={(value) => {
                 setFormState((prev) => ({ ...prev, allergens: value }));
               }}
-              label="Alergeni"
-              placeholder="cauta si selecteaza alergeni din catalog"
+              label={t('menu.productModal.allergens')}
+              placeholder={t('menu.productModal.descriptionRoPlaceholder')}
             />
           </div>
           
@@ -710,17 +714,17 @@ export function MenuProductModal({ open, mode, categories, product, onClose, onS
               onChange={(value) => {
                 setFormState((prev) => ({ ...prev, allergensEn: value }));
               }}
-              label="Aditivi"
-              placeholder="cauta si selecteaza aditivi din catalog"
+              label={t('menu.productModal.additives')}
+              placeholder={t('menu.productModal.descriptionRoPlaceholder')}
             />
           </div>
 
           <label className="menu-product-field menu-product-field--full">
-            <span>"informatii suplimentare"</span>
+            <span>{t('menu.productModal.ingredients')}</span>
             <textarea
               value={formState.info}
               onChange={handleInputChange('info')}
-              placeholder="ex preparat la comanda recomandari de servire aver"
+              placeholder={t('menu.productModal.ingredientsPlaceholder')}
               rows={2}
             />
           </label>
@@ -728,25 +732,25 @@ export function MenuProductModal({ open, mode, categories, product, onClose, onS
 
         <section className="menu-product-section">
           <header>
-            <h3>🎛️ Personalizări produs</h3>
-            <p>Definește opțiunile suplimentare (ex: topping-uri, extra-uri) afișate clienților și aplicațiilor de livrare.</p>
+            <h3>🎛️ {t('menu.productModal.customizations')}</h3>
+            <p>{t('menu.productModal.customizationsSubtitle')}</p>
           </header>
 
           {customizationsLoading ? (
-            <div className="menu-customizations-state">Se încarcă personalizările existente…</div>
+            <div className="menu-customizations-state">{t('common.loading')}</div>
           ) : null}
 
           {customizationsError ? (
-            <InlineAlert variant="warning" title="Personalizări" message={customizationsError} />
+            <InlineAlert variant="warning" title={t('menu.productModal.customizations')} message={customizationsError} />
           ) : null}
 
           <div className="menu-customizations-table">
             <div className="menu-customizations-header">
               <span>#</span>
-              <span>Opțiune (RO)</span>
-              <span>Opțiune (EN)</span>
-              <span>Tip</span>
-              <span>Preț extra (RON)</span>
+              <span>{t('menu.productModal.customizationName')} (RO)</span>
+              <span>{t('menu.productModal.customizationNameEn')}</span>
+              <span>{t('common.type')}</span>
+              <span>{t('menu.productModal.customizationPrice')} (RON)</span>
               <span />
             </div>
 
@@ -759,8 +763,8 @@ export function MenuProductModal({ open, mode, categories, product, onClose, onS
                     type="text"
                     value={customization.optionName}
                     onChange={(event) => handleCustomizationChange(index, 'optionName', event.target.value)}
-                    placeholder="Ex: Extra bacon"
-                    aria-label={`Nume personalizare în română ${index + 1}`}
+                    placeholder={t('menu.productModal.customizationNamePlaceholder')}
+                    aria-label={`${t('menu.productModal.customizationName')} ${index + 1}`}
                   />
                   {customization.id ? <small>ID #{customization.id}</small> : null}
                 </div>
@@ -770,8 +774,8 @@ export function MenuProductModal({ open, mode, categories, product, onClose, onS
                     type="text"
                     value={customization.optionNameEn}
                     onChange={(event) => handleCustomizationChange(index, 'optionNameEn', event.target.value)}
-                    placeholder="Ex: Extra bacon"
-                    aria-label={`Nume personalizare în engleză ${index + 1}`}
+                    placeholder={t('menu.productModal.customizationNameEnPlaceholder')}
+                    aria-label={`${t('menu.productModal.customizationNameEn')} ${index + 1}`}
                   />
                 </div>
 
@@ -782,7 +786,7 @@ export function MenuProductModal({ open, mode, categories, product, onClose, onS
                     value={customization.optionType}
                     onChange={(event) => handleCustomizationChange(index, 'optionType', event.target.value)}
                     placeholder="option"
-                    aria-label={`Tip personalizare ${index + 1}`}
+                    aria-label={`${t('common.type')} ${index + 1}`}
                   />
                 </div>
 
@@ -794,7 +798,7 @@ export function MenuProductModal({ open, mode, categories, product, onClose, onS
                     value={customization.extraPrice}
                     onChange={(event) => handleCustomizationChange(index, 'extraPrice', event.target.value)}
                     placeholder="0"
-                    aria-label={`Preț suplimentar personalizare ${index + 1}`}
+                    aria-label={`${t('menu.productModal.customizationPrice')} ${index + 1}`}
                   />
                 </div>
 
@@ -803,7 +807,7 @@ export function MenuProductModal({ open, mode, categories, product, onClose, onS
                     type="button"
                     className="menu-product-button menu-product-button--ghost"
                     onClick={() => handleRemoveCustomization(index)}
-                    title="sterge personalizarea"
+                    title={t('actions.delete')}
                   >
                     🗑️
                   </button>
@@ -824,67 +828,66 @@ export function MenuProductModal({ open, mode, categories, product, onClose, onS
               className="menu-product-button menu-product-button--secondary"
               onClick={handleAddCustomization}
             >
-              ➕ Adaugă opțiune
+              ➕ {t('menu.productModal.addCustomization')}
             </button>
             <p>
-              Opțiunile sunt sincronizate cu aplicațiile client și se regăsesc în rapoarte, bonuri și comenzi online. Lasă prețul la 0 pentru opțiuni
-              fără cost suplimentar.
+              {t('menu.productModal.customizationsSubtitle')}
             </p>
           </div>
         </section>
 
         <section className="menu-product-section">
           <header>
-            <h3>🍽️ Nutriție & rețetă</h3>
-            <p>"valorile nutritionale si configurarea retetei sunt"</p>
+            <h3>🍽️ {t('menu.productModal.nutritionalInfo')}</h3>
+            <p>{t('menu.productModal.nutritionalInfoSubtitle')}</p>
           </header>
 
           <div className="menu-product-grid menu-product-grid--four">
             <label className="menu-product-field">
-              <span>Calorii</span>
+              <span>{t('menu.productModal.calories')}</span>
               <input type="number" value={formState.calories} onChange={handleInputChange('calories')} placeholder="kcal" />
             </label>
             <label className="menu-product-field">
-              <span>Proteine (g)</span>
+              <span>{t('menu.productModal.protein')}</span>
               <input type="number" value={formState.protein} onChange={handleInputChange('protein')} placeholder="g" />
             </label>
             <label className="menu-product-field">
-              <span>Carbohidrați (g)</span>
+              <span>{t('menu.productModal.carbs')}</span>
               <input type="number" value={formState.carbs} onChange={handleInputChange('carbs')} placeholder="g" />
             </label>
             <label className="menu-product-field">
-              <span>Grăsimi (g)</span>
+              <span>{t('menu.productModal.fat')}</span>
               <input type="number" value={formState.fat} onChange={handleInputChange('fat')} placeholder="g" />
             </label>
             <label className="menu-product-field">
-              <span>Fibre (g)</span>
+              <span>{t('menu.productModal.fiber')}</span>
               <input type="number" value={formState.fiber} onChange={handleInputChange('fiber')} placeholder="g" />
             </label>
             <label className="menu-product-field">
-              <span>Sodiu (mg)</span>
+              <span>{t('menu.productModal.sodium')}</span>
               <input type="number" value={formState.sodium} onChange={handleInputChange('sodium')} placeholder="mg" />
             </label>
             <label className="menu-product-field">
-              <span>Zahăr (g)</span>
+              <span>{t('menu.productModal.sugar')}</span>
               <input type="number" value={formState.sugar} onChange={handleInputChange('sugar')} placeholder="g" />
             </label>
             <label className="menu-product-field">
-              <span>Sare (g)</span>
+              <span>{t('menu.productModal.salt')}</span>
               <input type="number" value={formState.salt} onChange={handleInputChange('salt')} placeholder="g" />
             </label>
           </div>
 
           <div className="menu-product-hint">
-            <span>🔗 Status rețetă: {formState.hasRecipe ? 'Configurată' : 'Necalculată'}</span>
-            <span>Utilizează editorul „👨‍🍳 Editor rețetă” pentru a ajusta ingredientele și alergeni.</span>
+            <span>🔗 {t('common.status')}: {formState.hasRecipe ? t('common.active') : t('common.inactive')}</span>
+            <span>{t('menu.productModal.ingredients')}</span>
           </div>
 
           <label className="menu-product-field menu-product-field--full">
-            <span>Ingrediente (JSON / notițe temporare)</span>
+            <span>{t('menu.productModal.ingredients')} (JSON)</span>
             <textarea
               value={formState.ingredients}
               onChange={handleInputChange('ingredients')}
-              placeholder="date brute pentru integrare viitoare recomandam ut"
+              placeholder={t('menu.productModal.ingredientsPlaceholder')}
               rows={3}
             />
           </label>
@@ -892,8 +895,8 @@ export function MenuProductModal({ open, mode, categories, product, onClose, onS
 
         <section className="menu-product-section">
           <header>
-            <h3>📸 Imagine produs</h3>
-            <p>Acceptă fișiere .jpg, .png sau .webp. Dimensiune recomandată 800x600px.</p>
+            <h3>📸 {t('menu.productModal.productImage')}</h3>
+            <p>{t('menu.productModal.productImageSubtitle')}</p>
           </header>
 
           <div className="menu-product-image">
@@ -935,7 +938,7 @@ export function MenuProductModal({ open, mode, categories, product, onClose, onS
                 <div style={{ position: 'relative' }}>
                   <img 
                     src={imagePreview} 
-                    alt="Previzualizare produs" 
+                    alt={t('menu.productModal.imagePreview')}
                     style={{ maxWidth: '100%', maxHeight: '300px', borderRadius: '8px' }}
                   />
                   <button
@@ -965,31 +968,31 @@ export function MenuProductModal({ open, mode, categories, product, onClose, onS
                   <span role="img" aria-label="camera" style={{ fontSize: '48px' }}>
                     📷
                   </span>
-                  <p>Drag & Drop imagine aici sau click pentru a selecta</p>
-                  <small style={{ color: '#666' }}>Acceptă .jpg, .png, .webp (max 5MB)</small>
+                  <p>{t('menu.productModal.uploadImage')}</p>
+                  <small style={{ color: '#666' }}>{t('menu.productModal.productImageSubtitle')}</small>
                 </div>
               )}
             </div>
 
             <div className="menu-product-image__actions">
               <label className="menu-product-button menu-product-button--secondary">
-                <input type="file" accept="image/*" onChange={handleImageChange} hidden />"selecteaza imagine"</label>
-
+                <input type="file" accept="image/*" onChange={handleImageChange} hidden />
+                {t('menu.productModal.uploadImage')}
               {imagePreview ? (
                 <button type="button" className="menu-product-button menu-product-button--ghost" onClick={handleRemoveImage}>"elimina imaginea"</button>
-              ) : null}
-            </div>
-          </div>
+                <button type="button" className="menu-product-button menu-product-button--ghost" onClick={handleRemoveImage}>
+                  {t('menu.productModal.removeImage')}
+                </button>
         </section>
 
         <footer className="menu-product-actions">
-          <button type="button" className="menu-product-button menu-product-button--ghost" onClick={onClose} disabled={loading}>"Anulează"</button>
-          <button
-            type="submit"
-            className="menu-product-button menu-product-button--primary"
+          <button type="button" className="menu-product-button menu-product-button--ghost" onClick={onClose} disabled={loading}>
+          <button type="button" className="menu-product-button menu-product-button--ghost" onClick={onClose} disabled={loading}>
+            {t('actions.cancel')}
+          </button>
             disabled={loading || customizationsLoading}
           >
-            {loading || customizationsLoading ? 'Se salvează…' : 'Salvează produsul'}
+            {loading || customizationsLoading ? t('menu.productModal.saving') : t('menu.productModal.saveChanges')}
           </button>
         </footer>
       </form>

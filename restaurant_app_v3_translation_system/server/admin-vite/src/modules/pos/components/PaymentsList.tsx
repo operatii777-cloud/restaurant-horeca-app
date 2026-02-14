@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 /**
  * FAZA 2.D - Payments List Component
  * 
@@ -16,13 +16,6 @@ interface PaymentsListProps {
   disabled?: boolean;
 }
 
-const METHOD_LABELS: Record<string, string> = {
-  cash: 'Cash',
-  card: 'Card',
-  voucher: 'Voucher',
-  other: 'Altă metodă',
-};
-
 const METHOD_ICONS: Record<string, string> = {
   cash: '💵',
   card: '💳',
@@ -31,11 +24,19 @@ const METHOD_ICONS: Record<string, string> = {
 };
 
 export function PaymentsList({ payments, onRemove, disabled = false }: PaymentsListProps) {
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
+  
+  const METHOD_LABELS: Record<string, string> = {
+    cash: t('pos.payment.methods.cash'),
+    card: t('pos.payment.methods.card'),
+    voucher: t('pos.payment.methods.voucher'),
+    other: t('pos.payment.methods.other'),
+  };
+  
   if (!payments || payments.length === 0) {
     return (
       <div className="payments-list-empty">
-        <p className="text-muted">"nu exista plati inregistrate"</p>
+        <p className="text-muted">{t('pos.payment.noPayments')}</p>
       </div>
     );
   }
@@ -49,7 +50,7 @@ export function PaymentsList({ payments, onRemove, disabled = false }: PaymentsL
   return (
     <div className="payments-list">
       <div className="payments-list-header">
-        <h5 className="payments-list-title">"plati efectuate"</h5>
+        <h5 className="payments-list-title">{t('pos.payment.paymentsRecorded')}</h5>
         <Badge bg="primary">{payments.length}</Badge>
       </div>
       <div className="payments-list-items">
@@ -73,7 +74,7 @@ export function PaymentsList({ payments, onRemove, disabled = false }: PaymentsL
               className="payment-item-remove"
               onClick={() => onRemove(payment.id)}
               disabled={disabled}
-              title="sterge plata"
+              title={t('pos.payment.removePayment')}
             >
               <i className="fas fa-trash"></i>
             </Button>

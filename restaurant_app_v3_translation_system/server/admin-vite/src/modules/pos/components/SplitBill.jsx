@@ -11,6 +11,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { Button, Form, Badge } from 'react-bootstrap';
+import { useTranslation } from '@/i18n/I18nContext';
 import './SplitBill.css';
 
 /**
@@ -35,8 +36,9 @@ import './SplitBill.css';
  * @param {Function} props.onSplitChange - Callback when split changes (receives SplitPayload)
  */
 export default function SplitBill({ total, items = [], onSplit, onSplitChange }) {
+  const { t } = useTranslation();
   const [groups, setGroups] = useState([
-    { id: 'group-1', label: 'Persoana 1', items: [] },
+    { id: 'group-1', label: t('pos.payment.person', { number: 1 }), items: [] },
   ]);
   const [nextGroupId, setNextGroupId] = useState(2);
   const [splitMode, setSplitMode] = useState<'items' | 'amounts'>('items');
@@ -96,7 +98,7 @@ export default function SplitBill({ total, items = [], onSplit, onSplitChange })
   const handleAddGroup = () => {
     const newGroup = {
       id: `group-${nextGroupId}`,
-      label: `Persoana ${nextGroupId}`,
+      label: t('pos.payment.person', { number: nextGroupId }),
       items: [],
     };
     setGroups([...groups, newGroup]);
@@ -205,9 +207,9 @@ export default function SplitBill({ total, items = [], onSplit, onSplitChange })
   return (
     <div className="split-bill">
       <div className="split-bill-header">
-        <h4>Split Bill</h4>
+        <h4>{t('pos.payment.split')}</h4>
         <div className="split-bill-total">
-          Total: <strong>{Number(total || 0).toFixed(2)} RON</strong>
+          {t('pos.payment.total')}: <strong>{Number(total || 0).toFixed(2)} RON</strong>
         </div>
       </div>
 
@@ -215,13 +217,13 @@ export default function SplitBill({ total, items = [], onSplit, onSplitChange })
       <div className="split-bill-mode">
         <Form.Check
           type="radio"
-          label="Pe Articole"
+          label={t('pos.payment.byItems')}
           checked={splitMode === 'items'}
           onChange={() => setSplitMode('items')}
         />
         <Form.Check
           type="radio"
-          label="Pe Sume"
+          label={t('pos.payment.byAmounts')}
           checked={splitMode === 'amounts'}
           onChange={() => setSplitMode('amounts')}
         />
@@ -236,7 +238,7 @@ export default function SplitBill({ total, items = [], onSplit, onSplitChange })
                 type="text"
                 value={group.label}
                 onChange={(e) => handleUpdateGroupLabel(group.id, e.target.value)}
-                placeholder="Nume grup/persoană"
+                placeholder={t('pos.payment.groupPersonName')}
                 style={{ width: 'auto', flex: 1, marginRight: '8px' }}
               />
               <Badge bg="primary">
@@ -256,7 +258,7 @@ export default function SplitBill({ total, items = [], onSplit, onSplitChange })
             {/* Items in this group */}
             <div className="split-bill-group-items">
               {group.items.length === 0 ? (
-                <p className="text-muted small">Nu sunt articole alocate</p>
+                <p className="text-muted small">{t('pos.payment.noItemsAssigned')}</p>
               ) : (
                 group.items.map((item) => {
                   const itemData = items.find((i) => i.productId === item.productId);
@@ -343,7 +345,7 @@ export default function SplitBill({ total, items = [], onSplit, onSplitChange })
       {/* Unassigned Items */}
       {unassignedItems.length > 0 && (
         <div className="split-bill-unassigned">
-          <h5>Articole Nealocate</h5>
+          <h5>{t('pos.payment.unassignedItems')}</h5>
           <div className="split-bill-unassigned-list">
             {unassignedItems.map((item) => (
               <div key={item.productId} className="split-bill-unassigned-item">
@@ -370,18 +372,18 @@ export default function SplitBill({ total, items = [], onSplit, onSplitChange })
       {/* Summary */}
       <div className="split-bill-summary">
         <div className="split-bill-summary-row">
-          <span>Total Alocat:</span>
+          <span>{t('pos.payment.totalAssigned')}:</span>
           <span>{totalAssigned.toFixed(2)} RON</span>
         </div>
         <div className="split-bill-summary-row">
-          <span>Total Nealocat:</span>
+          <span>{t('pos.payment.totalUnassigned')}:</span>
           <span>
             {(total - totalAssigned).toFixed(2)} RON
           </span>
         </div>
         {Math.abs(total - totalAssigned) > 0.01 && (
           <div className="split-bill-summary-warning">
-            ⚠️ Diferență: {Math.abs(total - totalAssigned).toFixed(2)} RON
+            ⚠️ {t('pos.payment.difference')}: {Math.abs(total - totalAssigned).toFixed(2)} RON
           </div>
         )}
       </div>
@@ -390,14 +392,14 @@ export default function SplitBill({ total, items = [], onSplit, onSplitChange })
       <div className="split-bill-actions">
         <Button variant="outline-secondary" onClick={handleAddGroup}>
           <i className="fas fa-plus me-1"></i>
-          Adaugă Grup
+          {t('pos.payment.addGroup')}
         </Button>
         <Button
           variant="primary"
           onClick={handleApplySplit}
           disabled={Math.abs(total - totalAssigned) > 0.01}
         >
-          Aplică Split
+          {t('pos.payment.applySplit')}
         </Button>
       </div>
     </div>

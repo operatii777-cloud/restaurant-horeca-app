@@ -129,17 +129,16 @@ const dbPromise = new Promise((resolve, reject) => {
         }
       });
 
-      // TEMPORAR: Foreign keys dezactivate pentru a permite înregistrarea și autentificarea clienților
-      // Foreign keys vor fi activate doar pentru operațiuni admin
-      db.run("PRAGMA foreign_keys = OFF", (err) => {
+      // Activare foreign keys pentru integritatea bazei de date
+      db.run("PRAGMA foreign_keys = ON", (err) => {
         if (err) {
-          console.error('⚠️ Eroare la dezactivarea foreign_keys:', err.message);
+          console.error('⚠️ Eroare la activarea foreign_keys:', err.message);
           // Continuă chiar dacă eșuează
         } else {
-          console.log('⚠️ Foreign keys TEMPORAR dezactivate pentru customer auth');
+          console.log('✅ Foreign keys active pentru integritatea bazei de date');
         }
 
-        // Continuă cu inițializarea după ce foreign keys sunt dezactivate
+        // Continuă cu inițializarea după ce foreign keys sunt activate
         initializeDb(db)
           .then(() => {
             // Creează tabelele Enterprise
@@ -366,7 +365,7 @@ function initializeDb(db) {
       db.run(`DROP TRIGGER IF EXISTS record_stock_move_on_order`, () => { });
 
       // Creăm direct schema corectă și completă
-      db.run(`CREATE TABLE IF NOT EXISTS menu (id INTEGER PRIMARY KEY, name TEXT, category TEXT, price REAL, description TEXT, weight TEXT, is_vegetarian BOOLEAN DEFAULT 0, is_spicy BOOLEAN DEFAULT 0, is_takeout_only BOOLEAN DEFAULT 0, allergens TEXT, name_en TEXT, description_en TEXT, category_en TEXT, allergens_en TEXT, info TEXT, ingredients TEXT, prep_time INTEGER, spice_level INTEGER DEFAULT 0, calories REAL, protein REAL, carbs REAL, fat REAL, fiber REAL, sodium REAL, sugar REAL, salt REAL, image_url TEXT, is_sellable BOOLEAN DEFAULT 1)`);
+      db.run(`CREATE TABLE IF NOT EXISTS menu (id INTEGER PRIMARY KEY, name TEXT, category TEXT, price REAL, description TEXT, weight TEXT, is_vegetarian BOOLEAN DEFAULT 0, is_spicy BOOLEAN DEFAULT 0, is_takeout_only BOOLEAN DEFAULT 0, allergens TEXT, name_en TEXT, description_en TEXT, category_en TEXT, allergens_en TEXT, info TEXT, ingredients TEXT, prep_time INTEGER, spice_level INTEGER DEFAULT 0, calories REAL, protein REAL, carbs REAL, fat REAL, fiber REAL, sodium REAL, sugar REAL, salt REAL, image_url TEXT, is_sellable BOOLEAN DEFAULT 1, is_active INTEGER DEFAULT 1)`);
       db.run(`CREATE TABLE IF NOT EXISTS customization_options (id INTEGER PRIMARY KEY, menu_item_id INTEGER, option_name TEXT, option_type TEXT, extra_price REAL DEFAULT 0, option_name_en TEXT, FOREIGN KEY (menu_item_id) REFERENCES menu (id))`);
       db.run(`CREATE TABLE IF NOT EXISTS app_settings (key TEXT PRIMARY KEY, value TEXT)`);
       db.run(`CREATE TABLE IF NOT EXISTS orders (id INTEGER PRIMARY KEY, type TEXT, isTogether BOOLEAN, items TEXT, status TEXT, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP, completed_timestamp DATETIME, delivered_timestamp DATETIME, cancelled_timestamp DATETIME, cancelled_reason TEXT, table_number TEXT, client_identifier TEXT, is_paid BOOLEAN DEFAULT 0, paid_timestamp DATETIME, food_notes TEXT, drink_notes TEXT, general_notes TEXT, total REAL, location_id INTEGER DEFAULT 1, friendsride_order_id TEXT, friendsride_restaurant_id TEXT, delivery_pickup_code TEXT, delivery_pickup_code_verified BOOLEAN DEFAULT 0, delivery_pickup_code_verified_at DATETIME, friendsride_webhook_url TEXT, delivery_address TEXT, payment_method TEXT, customer_phone TEXT, customer_name TEXT, split_bill TEXT)`, (err) => {
@@ -1316,14 +1315,15 @@ function initializeDb(db) {
       });
 
       // Tabelă pentru configurarea TVA
-      db.run(`CREATE TABLE IF NOT EXISTS vat_rates (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          rate_name TEXT NOT NULL,
-          rate_percentage REAL NOT NULL,
-          rate_code TEXT NOT NULL,
-          is_active BOOLEAN DEFAULT 1,
-          created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-      )`);
+      // COMMENTED OUT: Duplicate table definition - using enterprise multi-tenant version at line ~3612
+      // db.run(`CREATE TABLE IF NOT EXISTS vat_rates (
+      //     id INTEGER PRIMARY KEY AUTOINCREMENT,
+      //     rate_name TEXT NOT NULL,
+      //     rate_percentage REAL NOT NULL,
+      //     rate_code TEXT NOT NULL,
+      //     is_active BOOLEAN DEFAULT 1,
+      //     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      // )`);
 
       // Tabelă pentru Happy Hour
       db.run(`CREATE TABLE IF NOT EXISTS happy_hour_settings (
@@ -5532,7 +5532,8 @@ function initializeDb(db) {
               console.log(`✅ ${insertedCount} produse seed-uite cu succes!`);
 
               // Adaugă produsele pentru ambalaje și accesorii
-              return insertPackagingItems(db);
+              // FIXED: Packaging items are managed via FTP system, not auto-inserted
+              return Promise.resolve();
             })
             .then(() => {
               // Inițializează stocurile pentru toate produsele
@@ -5550,7 +5551,8 @@ function initializeDb(db) {
               // Fallback la insertRealMenu dacă seedProducts eșuează
               insertRealMenu(db)
                 .then(() => {
-                  return insertPackagingItems(db);
+                  // FIXED: Packaging items are managed via FTP system, not auto-inserted
+                  return Promise.resolve();
                 })
                 .then(() => {
                   return initializeStockForAllProducts(db);

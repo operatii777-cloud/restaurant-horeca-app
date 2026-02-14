@@ -7,13 +7,10 @@
 const express = require('express');
 const router = express.Router();
 const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
-
-// Database connection
-const dbPath = path.join(__dirname, '../restaurant.db');
+const { DB_PATH } = require('../config/db-constants');
 
 function getDb() {
-    return new sqlite3.Database(dbPath, (err) => {
+    return new sqlite3.Database(DB_PATH, (err) => {
         if (err) {
             console.error('Error opening database:', err);
         }
