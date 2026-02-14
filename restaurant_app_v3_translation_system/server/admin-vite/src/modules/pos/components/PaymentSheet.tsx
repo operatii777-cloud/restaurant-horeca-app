@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 /**
  * FAZA 2.D - Payment Sheet Component (Main Payment Orchestrator)
  * 
@@ -28,7 +28,7 @@ export function PaymentSheet({
   orderId,
   onPaymentCompleted,
 }: PaymentSheetProps) {
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
   const {
     payments,
     addPayment,
@@ -101,7 +101,6 @@ export function PaymentSheet({
   }, [isOpen, displayRemaining]);
 
   const parseAmount = (): number => {
-//   const { t } = useTranslation();
     if (!amount) return 0;
     const normalized = amount.replace(',', '.');
     const parsed = parseFloat(normalized);
@@ -115,18 +114,18 @@ export function PaymentSheet({
     try {
       // Validation
       if (!selectedMethod) {
-        setError('Selectează metoda de plată');
+        setError(t('pos.payment.selectMethod'));
         return;
       }
 
       const numericAmount = parseAmount();
       const isProtocolOrDegustare = selectedMethod === 'protocol' || selectedMethod === 'degustare';
       if (numericAmount < 0) {
-        setError('Suma nu poate fi negativă');
+        setError(t('pos.payment.amountCannotBeNegative'));
         return;
       }
       if (numericAmount <= 0 && !isProtocolOrDegustare) {
-        setError('Introdu o sumă mai mare decât 0');
+        setError(t('pos.payment.enterAmountGreaterThanZero'));
         return;
       }
 
@@ -136,7 +135,7 @@ export function PaymentSheet({
         : remaining;
       
       if (numericAmount > maxAmount) {
-        setError(`Suma depășește rămasul de încasat (${maxAmount.toFixed(2)} RON)`);
+        setError(t('pos.payment.amountExceedsRemaining', { remaining: maxAmount.toFixed(2) }));
         return;
       }
       
@@ -144,19 +143,19 @@ export function PaymentSheet({
       if (isSplitMode && selectedGroupId) {
         const groupRemaining = getGroupRemaining(selectedGroupId);
         if (groupRemaining <= 0.01) {
-          setError('Acest grup este deja plătit complet');
+          setError(t('pos.payment.groupAlreadyPaid'));
           return;
         }
       }
 
       if (!orderId && !currentOrderId) {
-        setError('Nu există o comandă activă');
+        setError(t('pos.payment.noActiveOrder'));
         return;
       }
 
       const activeOrderId = orderId || currentOrderId;
       if (!activeOrderId) {
-        setError('Nu există o comandă activă');
+        setError(t('pos.payment.noActiveOrder'));
         return;
       }
 
@@ -217,7 +216,7 @@ export function PaymentSheet({
       }
     } catch (err: any) {
       console.error('PaymentSheet Error adding payment:', err);
-      setError(err.response?.data?.error || err.message || 'Eroare la adăugarea plății');
+      setError(err.response?.data?.error || err.message || t('pos.payment.errorAddingPayment'));
     } finally {
       setIsAdding(false);
     }
@@ -231,7 +230,7 @@ export function PaymentSheet({
       // await posApi.removePayment(orderId, paymentId);
     } catch (err: any) {
       console.error('PaymentSheet Error removing payment:', err);
-      setError(err.message || 'Eroare la ștergerea plății');
+      setError(err.message || t('pos.payment.errorRemovingPayment'));
     } finally {
       setLoading(false);
     }
@@ -279,7 +278,7 @@ export function PaymentSheet({
   return (
     <Modal show={isOpen} onHide={onClose} size="lg" centered>
       <Modal.Header closeButton>
-        <Modal.Title>"plata comanda"</Modal.Title>
+        <Modal.Title>{t('pos.payment.orderPayment')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {error && (
@@ -298,7 +297,7 @@ export function PaymentSheet({
               className="w-100 mb-3"
             >
               <i className="fas fa-users me-2"></i>
-              Split Bill
+              {t('pos.payment.split')}
             </Button>
           </div>
         )}
@@ -306,7 +305,7 @@ export function PaymentSheet({
         {/* Split Bill Groups Selector */}
         {isSplitMode && splitBill && (
           <div className="payment-sheet-groups">
-            <label className="payment-groups-label">"selecteaza grup pentru plata"</label>
+            <label className="payment-groups-label">{t('pos.payment.selectGroupForPayment')}</label>
             <div className="payment-groups-list">
               {splitBill.groups.map((group) => {
                 const groupPaid = getGroupPaid(group.id);
@@ -327,10 +326,10 @@ export function PaymentSheet({
                       <div className="payment-group-amounts">
                         <span className="payment-group-total">{group.total.toFixed(2)} RON</span>
                         {isPaid ? (
-                          <Badge bg="success">Plătit</Badge>
+                          <Badge bg="success">{t('pos.payment.paid')}</Badge>
                         ) : (
                           <span className="payment-group-remaining">
-                            Rămas: {groupRemaining.toFixed(2)} RON
+                            {t('pos.payment.remaining')}: {groupRemaining.toFixed(2)} RON
                           </span>
                         )}
                       </div>
@@ -345,15 +344,15 @@ export function PaymentSheet({
         {/* Order Summary */}
         <div className="payment-sheet-summary">
           <div className="payment-summary-row">
-            <span>{isSplitMode ? 'Total grup selectat' : 'Total comandă'}:</span>
+            <span>{isSplitMode ? t('pos.payment.selectedGroupTotal') : t('pos.payment.orderTotal')}:</span>
             <strong>{displayTotal.toFixed(2)} RON</strong>
           </div>
           <div className="payment-summary-row">
-            <span>"Plătit:"</span>
+            <span>{t('pos.payment.paidAmount')}:</span>
             <strong className="text-success">{displayPaid.toFixed(2)} RON</strong>
           </div>
           <div className="payment-summary-row payment-summary-row--remaining">
-            <span>"ramas de incasat"</span>
+            <span>{t('pos.payment.remainingToCollect')}</span>
             <strong className={displayRemaining > 0 ? 'text-danger' : 'text-success'}>
               {displayRemaining.toFixed(2)} RON
             </strong>
@@ -363,8 +362,8 @@ export function PaymentSheet({
         {isFullyPaid ? (
           <Alert variant="success" className="mt-3">
             <i className="fas fa-check-circle me-2"></i>
-            <strong>"comanda este platita complet"</strong>
-            <p className="mb-0 mt-2">"poti proceda la fiscalizare"</p>
+            <strong>{t('pos.payment.orderFullyPaid')}</strong>
+            <p className="mb-0 mt-2">{t('pos.payment.canProceedToFiscalization')}</p>
           </Alert>
         ) : (
           <>
@@ -396,10 +395,14 @@ export function PaymentSheet({
               >
                 {isAdding ? (
                   <>
-                    <span className="spinner-border spinner-border-sm me-2" />"se proceseaza"</>
+                    <span className="spinner-border spinner-border-sm me-2" />
+                    {t('pos.payment.processing')}
+                  </>
                 ) : (
                   <>
-                    <i className="fas fa-plus me-2"></i>"adauga plata"</>
+                    <i className="fas fa-plus me-2"></i>
+                    {t('pos.payment.addPayment')}
+                  </>
                 )}
               </Button>
             </div>
@@ -421,7 +424,7 @@ export function PaymentSheet({
       {/* Split Bill Modal */}
       <Modal show={showSplitBill} onHide={() => setShowSplitBill(false)} size="xl" centered>
         <Modal.Header closeButton>
-          <Modal.Title>Split Bill</Modal.Title>
+          <Modal.Title>{t('pos.payment.split')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <SplitBill
@@ -432,7 +435,9 @@ export function PaymentSheet({
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowSplitBill(false)}>"Anulează"</Button>
+          <Button variant="secondary" onClick={() => setShowSplitBill(false)}>
+            {t('pos.payment.cancel')}
+          </Button>
           <Button
             variant="primary"
             onClick={() => {
@@ -440,12 +445,14 @@ export function PaymentSheet({
                 handleSplitBillApply(splitBill);
               }
             }}
-          >"aplica split"</Button>
+          >
+            {t('pos.payment.applySplit')}
+          </Button>
         </Modal.Footer>
       </Modal>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose} disabled={loading || isAdding}>
-          {isFullyPaid ? 'Închide' : 'Anulează'}
+          {isFullyPaid ? t('pos.payment.close') : t('pos.payment.cancel')}
         </Button>
         {isFullyPaid && onPaymentCompleted && (
           <Button
@@ -454,7 +461,9 @@ export function PaymentSheet({
               onPaymentCompleted();
               onClose();
             }}
-          >"continua la fiscalizare"</Button>
+          >
+            {t('pos.payment.continueToFiscalization')}
+          </Button>
         )}
       </Modal.Footer>
     </Modal>

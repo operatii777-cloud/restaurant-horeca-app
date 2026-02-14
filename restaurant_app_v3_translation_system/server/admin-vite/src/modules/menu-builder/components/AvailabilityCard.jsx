@@ -1,13 +1,14 @@
 /**
+import { useTranslation } from '@/i18n/I18nContext';
  * AVAILABILITY CARD - Service types & availability rules
  * Data: 04 Decembrie 2025
  */
 
-import React from 'react';
 import { useMenuBuilderStore } from '../store/useMenuBuilderStore';
 import { useShallow } from 'zustand/react/shallow';
 
 export function AvailabilityCard() {
+  const { t } = useTranslation();
   const { availability, setAvailability } = useMenuBuilderStore(
     useShallow((s) => ({
       availability: s.availability,

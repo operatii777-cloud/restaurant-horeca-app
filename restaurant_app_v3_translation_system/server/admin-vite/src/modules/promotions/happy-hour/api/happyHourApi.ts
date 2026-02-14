@@ -29,19 +29,6 @@ export interface HappyHourStats {
   avg_discount: number;
 }
 
-export interface Product {
-  id: number;
-  name: string;
-  category?: string;
-  price?: number;
-}
-
-export interface Category {
-  id: number;
-  name: string;
-  description?: string;
-}
-
 export const happyHourApi = {
   // Listă Happy Hour-uri
   async getAll(): Promise<HappyHour[]> {
@@ -89,28 +76,6 @@ export const happyHourApi = {
   async toggleStatus(id: number): Promise<{ message: string; is_active: boolean }> {
     const response = await httpClient.put<{ message: string; is_active: boolean }>(`/api/admin/happy-hour/${id}/toggle`);
     return response.data;
-  },
-
-  // Încarcă produse pentru selecție în Happy Hour
-  async getProducts(): Promise<Product[]> {
-    try {
-      const response = await httpClient.get<Product[]>('/api/admin/products');
-      return response.data;
-    } catch (error) {
-      console.error('Error loading products for Happy Hour:', error);
-      return [];
-    }
-  },
-
-  // Încarcă categorii pentru selecție în Happy Hour
-  async getCategories(): Promise<Category[]> {
-    try {
-      const response = await httpClient.get<Category[]>('/api/admin/categories');
-      return response.data;
-    } catch (error) {
-      console.error('Error loading categories for Happy Hour:', error);
-      return [];
-    }
   },
 };
 

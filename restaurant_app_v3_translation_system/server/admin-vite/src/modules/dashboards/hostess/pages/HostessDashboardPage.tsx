@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 import React, { useEffect, useState } from 'react';
 import { Card, Form, Row, Col } from 'react-bootstrap';
 import {
@@ -29,7 +29,7 @@ interface HourlyStat {
 }
 
 export const HostessDashboardPage = () => {
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
   const [day, setDay] = useState('');
@@ -96,8 +96,8 @@ export const HostessDashboardPage = () => {
   return (
     <div className="hostess-dashboard-page">
       <PageHeader
-        title="📊 Hostess Dashboard"
-        description="Analytics ocupare mese și sesiuni"
+        title={t('dashboard.hostess.title')}
+        description={t('dashboard.hostess.subtitle')}
       />
 
       {/* Filters */}
@@ -106,7 +106,7 @@ export const HostessDashboardPage = () => {
           <Row>
             <Col md={4}>
               <Form.Group>
-                <Form.Label>De la</Form.Label>
+                <Form.Label>{t('dashboard.filters.from')}</Form.Label>
                 <Form.Control
                   type="datetime-local"
                   value={from}
@@ -116,7 +116,7 @@ export const HostessDashboardPage = () => {
             </Col>
             <Col md={4}>
               <Form.Group>
-                <Form.Label>Până la</Form.Label>
+                <Form.Label>{t('dashboard.filters.to')}</Form.Label>
                 <Form.Control
                   type="datetime-local"
                   value={to}
@@ -126,7 +126,7 @@ export const HostessDashboardPage = () => {
             </Col>
             <Col md={4}>
               <Form.Group>
-                <Form.Label>"zi pentru grafic orar"</Form.Label>
+                <Form.Label>{t('dashboard.hostess.selectDay')}</Form.Label>
                 <Form.Control
                   type="date"
                   value={day}
@@ -144,7 +144,7 @@ export const HostessDashboardPage = () => {
           <Col md={3}>
             <Card className="kpi-card text-center">
               <Card.Body>
-                <div className="kpi-label">Total Sesiuni</div>
+                <div className="kpi-label">{t('dashboard.hostess.totalSessions')}</div>
                 <div className="kpi-value">{overview.totalSessions}</div>
               </Card.Body>
             </Card>
@@ -152,7 +152,7 @@ export const HostessDashboardPage = () => {
           <Col md={3}>
             <Card className="kpi-card text-center">
               <Card.Body>
-                <div className="kpi-label">Total Covers</div>
+                <div className="kpi-label">{t('dashboard.hostess.totalCovers')}</div>
                 <div className="kpi-value">{overview.totalCovers}</div>
               </Card.Body>
             </Card>
@@ -160,7 +160,7 @@ export const HostessDashboardPage = () => {
           <Col md={3}>
             <Card className="kpi-card text-center">
               <Card.Body>
-                <div className="kpi-label">Durată Medie (min)</div>
+                <div className="kpi-label">{t('dashboard.hostess.avgDuration')}</div>
                 <div className="kpi-value">{overview.avgDurationMinutes}</div>
               </Card.Body>
             </Card>
@@ -168,7 +168,7 @@ export const HostessDashboardPage = () => {
           <Col md={3}>
             <Card className="kpi-card text-center">
               <Card.Body>
-                <div className="kpi-label">Covers / Sesiune</div>
+                <div className="kpi-label">{t('dashboard.hostess.coversPerSession')}</div>
                 <div className="kpi-value">{overview.avgCoversPerSession}</div>
               </Card.Body>
             </Card>
@@ -181,7 +181,7 @@ export const HostessDashboardPage = () => {
         <Col md={6}>
           <Card className="chart-card">
             <Card.Body>
-              <h5 className="chart-title">"distributie pe zone"</h5>
+              <h5 className="chart-title">{t('dashboard.hostess.zoneDistribution')}</h5>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={byZone}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
@@ -195,8 +195,8 @@ export const HostessDashboardPage = () => {
                     }}
                   />
                   <Legend wrapperStyle={{ color: '#f1f5f9' }} />
-                  <Bar dataKey="sessions" name="Sesiuni" fill="#3b82f6" />
-                  <Bar dataKey="covers" name="Covers" fill="#22c55e" />
+                  <Bar dataKey="sessions" name={t('dashboard.hostess.sessions')} fill="#3b82f6" />
+                  <Bar dataKey="covers" name={t('dashboard.hostess.covers')} fill="#22c55e" />
                 </BarChart>
               </ResponsiveContainer>
             </Card.Body>
@@ -206,7 +206,7 @@ export const HostessDashboardPage = () => {
         <Col md={6}>
           <Card className="chart-card">
             <Card.Body>
-              <h5 className="chart-title">Sesiuni pe Oră (zi aleasă)</h5>
+              <h5 className="chart-title">{t('dashboard.hostess.sessionsPerHour')}</h5>
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={hourly}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
@@ -222,7 +222,7 @@ export const HostessDashboardPage = () => {
                   <Line 
                     type="monotone" 
                     dataKey="sessions" 
-                    name="Sesiuni" 
+                    name={t('dashboard.hostess.sessions')} 
                     stroke="#3b82f6" 
                     strokeWidth={2}
                   />

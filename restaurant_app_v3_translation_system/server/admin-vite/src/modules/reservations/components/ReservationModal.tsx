@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 import { useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -27,10 +27,10 @@ function getDefaultDate(): string {
   return new Date().toISOString().split('T')[0];
 }
 
-const STATUS_OPTIONS: ReservationStatus[] = ["Pending:", 'confirmed', 'seated', 'completed', 'cancelled', 'no_show'];
+const STATUS_OPTIONS: ReservationStatus[] = ['pending', 'confirmed', 'seated', 'completed', 'cancelled', 'no_show'];
 
 export function ReservationModal({ open, mode, reservation, onClose, onSaved }: ReservationModalProps) {
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
   const [formError, setFormError] = useState<string | null>(null);
 
   const mutation = useApiMutation<Reservation>();
@@ -47,7 +47,7 @@ export function ReservationModal({ open, mode, reservation, onClose, onSaved }: 
         partySize: reservation.party_size ?? 2,
         tableId: reservation.table_id ?? 0,
         specialRequests: reservation.special_requests ?? undefined,
-        status: reservation.status ?? "Pending:",
+        status: reservation.status ?? 'pending',
         notes: undefined,
       };
     }
@@ -62,7 +62,7 @@ export function ReservationModal({ open, mode, reservation, onClose, onSaved }: 
       partySize: 2,
       tableId: 0,
       specialRequests: undefined,
-      status: "Pending:",
+      status: 'pending',
       notes: undefined,
     };
   }, [mode, reservation]);
@@ -106,7 +106,7 @@ export function ReservationModal({ open, mode, reservation, onClose, onSaved }: 
           ...list,
           {
             id: reservation.table_id,
-            tableNumber: reservation.table_number ?? `Masă ${reservation.table_id}`,
+            tableNumber: reservation.table_number ?? `${t('reservations.modal.table')} ${reservation.table_id}`,
             capacity: reservation.capacity ?? reservation.party_size ?? partySize ?? 1,
             location: reservation.location ?? undefined,
             isAvailable: true,
@@ -115,7 +115,7 @@ export function ReservationModal({ open, mode, reservation, onClose, onSaved }: 
       }
     }
     return list;
-  }, [tablesState.tables, mode, reservation, partySize]);
+  }, [tablesState.tables, mode, reservation, partySize, t]);
 
   const onSubmit = async (values: ReservationFormValues) => {
     if (mutation.loading) return;
@@ -151,11 +151,11 @@ export function ReservationModal({ open, mode, reservation, onClose, onSaved }: 
     });
 
     if (!result) {
-      setFormError(mutation.error ?? 'Nu am putut salva rezervarea.');
+      setFormError(mutation.error ?? t('reservations.modal.errorSaving'));
       return;
     }
 
-    const message = mode === 'create' ? 'Rezervare creată cu succes.' : 'Rezervare actualizată.';
+    const message = mode === 'create' ? t('reservations.messages.reservationCreated') : t('reservations.messages.reservationUpdated');
     onSaved(message);
     reset(defaultValues);
     onClose();
@@ -165,7 +165,7 @@ export function ReservationModal({ open, mode, reservation, onClose, onSaved }: 
     <Modal
       isOpen={open}
       onClose={onClose}
-      title={mode === 'create' ? 'Rezervare nouă' : `Editează rezervarea #${reservation?.confirmation_code ?? reservation?.id}`}
+      title={mode === 'create' ? t('reservations.new.title') : `${t('reservations.modal.edit')} #${reservation?.confirmation_code ?? reservation?.id}`}
       size="lg"
     >
       <form className="reservation-modal__form" onSubmit={handleSubmit(onSubmit)}>
@@ -173,47 +173,47 @@ export function ReservationModal({ open, mode, reservation, onClose, onSaved }: 
 
         <div className="reservation-modal__grid">
           <div className="reservation-modal__field">
-            <label htmlFor="reservationCustomerName">Client</label>
+            <label htmlFor="reservationCustomerName">{t('reservations.customer.name')}</label>
             <input
               id="reservationCustomerName"
               type="text"
-              placeholder="Nume complet"
+              placeholder={t('reservations.modal.fullNamePlaceholder')}
               {...register('customerName')}
             />
             {errors.customerName ? <small className="reservation-modal__error">{errors.customerName.message}</small> : null}
           </div>
           <div className="reservation-modal__field">
-            <label htmlFor="reservationCustomerPhone">Telefon</label>
+            <label htmlFor="reservationCustomerPhone">{t('reservations.customer.phone')}</label>
             <input
               id="reservationCustomerPhone"
               type="tel"
-              placeholder="07xx xxx xxx"
+              placeholder={t('reservations.modal.phonePlaceholder')}
               {...register('customerPhone')}
             />
             {errors.customerPhone ? <small className="reservation-modal__error">{errors.customerPhone.message}</small> : null}
           </div>
           <div className="reservation-modal__field">
-            <label htmlFor="reservationCustomerEmail">Email</label>
+            <label htmlFor="reservationCustomerEmail">{t('reservations.customer.email')}</label>
             <input
               id="reservationCustomerEmail"
               type="email"
-              placeholder='[client@emailcom]'
+              placeholder={t('reservations.modal.emailPlaceholder')}
               {...register('customerEmail')}
             />
             {errors.customerEmail ? <small className="reservation-modal__error">{errors.customerEmail.message}</small> : null}
           </div>
           <div className="reservation-modal__field">
-            <label htmlFor="reservationDate">Data</label>
+            <label htmlFor="reservationDate">{t('reservations.list.date')}</label>
             <input id="reservationDate" type="date" {...register('reservationDate')} />
             {errors.reservationDate ? <small className="reservation-modal__error">{errors.reservationDate.message}</small> : null}
           </div>
           <div className="reservation-modal__field">
-            <label htmlFor="reservationTime">Ora</label>
+            <label htmlFor="reservationTime">{t('reservations.list.time')}</label>
             <input id="reservationTime" type="time" {...register('reservationTime')} />
             {errors.reservationTime ? <small className="reservation-modal__error">{errors.reservationTime.message}</small> : null}
           </div>
           <div className="reservation-modal__field">
-            <label htmlFor="reservationPartySize">Persoane</label>
+            <label htmlFor="reservationPartySize">{t('reservations.list.guests')}</label>
             <input
               id="reservationPartySize"
               type="number"
@@ -223,7 +223,7 @@ export function ReservationModal({ open, mode, reservation, onClose, onSaved }: 
             {errors.partySize ? <small className="reservation-modal__error">{errors.partySize.message}</small> : null}
           </div>
           <div className="reservation-modal__field">
-            <label htmlFor="reservationDuration">Durată (minute)</label>
+            <label htmlFor="reservationDuration">{t('reservations.modal.duration')}</label>
             <input
               id="reservationDuration"
               type="number"
@@ -236,7 +236,7 @@ export function ReservationModal({ open, mode, reservation, onClose, onSaved }: 
             ) : null}
           </div>
           <div className="reservation-modal__field">
-            <label htmlFor="reservationTable">Masă</label>
+            <label htmlFor="reservationTable">{t('reservations.list.table')}</label>
             <Controller
               name="tableId"
               control={control}
@@ -246,36 +246,35 @@ export function ReservationModal({ open, mode, reservation, onClose, onSaved }: 
                   value={field.value && field.value > 0 ? field.value : ''}
                   onChange={(event) => field.onChange(Number(event.target.value) || 0)}
                 >
-                  <option value="">Selectează masa</option>
+                  <option value="">{t('reservations.modal.selectTable')}</option>
                   {tableOptions.map((table) => (
                     <option key={table.id} value={table.id}>
-                      {table.tableNumber} • {table.capacity} pers. {table.location ? `• ${table.location}` : ''}' '
-                      {!table.isAvailable && table.id !== reservation?.table_id ? '(ocupată)' : ''}
+                      {table.tableNumber} • {table.capacity} {t('reservations.modal.persons')} {table.location ? `• ${table.location}` : ''} {!table.isAvailable && table.id !== reservation?.table_id ? `(${t('reservations.modal.occupied')})` : ''}
                     </option>
                   ))}
                 </select>
               )}
             />
-            {tablesState.loading ? <small className="reservation-modal__hint">Se verifică disponibilitatea meselor...</small> : null}
-            {tablesState.error ? <small className="reservation-modal__error">Eroare la încărcarea meselor: {tablesState.error}</small> : null}
+            {tablesState.loading ? <small className="reservation-modal__hint">{t('reservations.modal.checkingAvailability')}</small> : null}
+            {tablesState.error ? <small className="reservation-modal__error">{t('reservations.modal.errorLoadingTables')}: {tablesState.error}</small> : null}
             {errors.tableId ? <small className="reservation-modal__error">{errors.tableId.message}</small> : null}
           </div>
           <div className="reservation-modal__field reservation-modal__field--full">
-            <label htmlFor="reservationSpecialRequests">Note client</label>
+            <label htmlFor="reservationSpecialRequests">{t('reservations.modal.customerNotes')}</label>
             <textarea
               id="reservationSpecialRequests"
-              placeholder="Preferințe, alergii, cereri speciale"
+              placeholder={t('reservations.modal.customerNotesPlaceholder')}
               rows={3}
               {...register('specialRequests')}
             />
           </div>
           {mode === 'edit' ? (
             <div className="reservation-modal__field">
-              <label htmlFor="reservationStatus">Status</label>
+              <label htmlFor="reservationStatus">{t('common.status')}</label>
               <select id="reservationStatus" {...register('status')}>
                 {STATUS_OPTIONS.map((status) => (
                   <option key={status} value={status}>
-                    {status}
+                    {t(`reservations.status.${status}`)}
                   </option>
                 ))}
               </select>
@@ -283,10 +282,10 @@ export function ReservationModal({ open, mode, reservation, onClose, onSaved }: 
           ) : null}
           {mode === 'create' ? (
             <div className="reservation-modal__field reservation-modal__field--full">
-              <label htmlFor="reservationNotes">Note interne</label>
+              <label htmlFor="reservationNotes">{t('reservations.modal.internalNotes')}</label>
               <textarea
                 id="reservationNotes"
-                placeholder="Instrucțiuni pentru staff, notificări către host"
+                placeholder={t('reservations.modal.internalNotesPlaceholder')}
                 rows={2}
                 {...register('notes')}
               />
@@ -295,17 +294,12 @@ export function ReservationModal({ open, mode, reservation, onClose, onSaved }: 
         </div>
 
         <footer className="reservation-modal__footer">
-          <button type="button" className="ghost" onClick={onClose} disabled={mutation.loading}>Anulează</button>
+          <button type="button" className="ghost" onClick={onClose} disabled={mutation.loading}>{t('actions.cancel')}</button>
           <button type="submit" className="primary" disabled={mutation.loading}>
-            {mutation.loading ? 'Se salvează...' : mode === 'create' ? 'Creează rezervare' : 'Salvează modificările'}
+            {mutation.loading ? t('reservations.modal.saving') : mode === 'create' ? t('reservations.new.create') : t('reservations.modal.saveChanges')}
           </button>
         </footer>
       </form>
     </Modal>
   );
 }
-
-
-
-
-

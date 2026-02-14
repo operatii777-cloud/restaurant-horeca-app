@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 /**
  * PHASE S12 - POS Order Summary Component
  * 
@@ -43,7 +43,7 @@ export function PosOrderSummary({
   onCloseOrder,
   orderId,
 }: PosOrderSummaryProps) {
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
   const { draftItems, getDraftTotal, getDraftItemCount } = usePosStore();
   const total = getDraftTotal();
   const itemCount = getDraftItemCount();
@@ -55,7 +55,6 @@ export function PosOrderSummary({
 
   // FAZA 1.6 - Retry fiscal operations
   const retryFiscalOperation = async (orderId: number, operationType: 'PRINT' | 'ANAF_SUBMIT') => {
-//   const { t } = useTranslation();
     const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
     const response = await fetch(`${API_BASE_URL}/api/admin/pos/fiscal/retry/${orderId}`, {
       method: 'POST',
@@ -130,13 +129,13 @@ export function PosOrderSummary({
   return (
     <div className="pos-order-summary">
       <div className="pos-order-summary-header">
-        <h3>"sumar comanda"</h3>
-        <span className="pos-order-item-count">{itemCount} produse</span>
+        <h3>{t('pos.order.summary')}</h3>
+        <span className="pos-order-item-count">{itemCount} {t('pos.order.products')}</span>
       </div>
 
       <div className="pos-order-items">
         {draftItems.length === 0 ? (
-          <p className="pos-order-empty">"nu exista produse in comanda"</p>
+          <p className="pos-order-empty">{t('pos.order.noProducts')}</p>
         ) : (
           draftItems.map((item) => (
             <div key={item.productId} className="pos-order-item">
@@ -157,15 +156,15 @@ export function PosOrderSummary({
 
       <div className="pos-order-totals">
         <div className="pos-order-total-row">
-          <span>Subtotal:</span>
+          <span>{t('pos.order.subtotal')}:</span>
           <span>{subtotal.toFixed(2)} RON</span>
         </div>
         <div className="pos-order-total-row">
-          <span>TVA (19%):</span>
+          <span>{t('pos.order.vat')} (19%):</span>
           <span>{vat.toFixed(2)} RON</span>
         </div>
         <div className="pos-order-total-row pos-order-total-row--final">
-          <span>Total:</span>
+          <span>{t('pos.order.total')}:</span>
           <span>{totalWithVat.toFixed(2)} RON</span>
         </div>
       </div>
@@ -178,7 +177,7 @@ export function PosOrderSummary({
             onClick={onPayment}
             disabled={draftItems.length === 0 || fiscalizing || consumingStock}
           >
-            💳 Plată
+            💳 {t('pos.payment.title')}
           </button>
         )}
 
@@ -191,9 +190,9 @@ export function PosOrderSummary({
           >
             {fiscalizing ? (
               <>
-                <span className="spinner-border spinner-border-sm me-2" />"se fiscalizeaza"</>
+                <span className="spinner-border spinner-border-sm me-2" />{t('pos.fiscal.fiscalizing')}</>
             ) : (
-              '✅ Fiscalizează Comandă'
+              `✅ ${t('pos.fiscal.fiscalizeOrder')}`
             )}
           </button>
         )}
@@ -202,16 +201,16 @@ export function PosOrderSummary({
         {isFiscalized && !isStockConsumed && (
           <div className="pos-order-status">
             <div className="pos-status-badge pos-status-badge--fiscalized">
-              ✓ Fiscalizat
+              ✓ {t('pos.fiscal.fiscalized')}
             </div>
             {consumingStock ? (
               <div className="pos-status-badge pos-status-badge--processing">
                 <span className="spinner-border spinner-border-sm me-2" />
-                Actualizare stoc...
+                {t('pos.fiscal.updatingStock')}
               </div>
             ) : (
               <div className="pos-status-badge pos-status-badge--warning">
-                ⚠️ Se actualizează stocul...
+                ⚠️ {t('pos.fiscal.stockBeingUpdated')}
               </div>
             )}
           </div>
@@ -231,7 +230,7 @@ export function PosOrderSummary({
                     onClick={() => retryPrintMutation.mutate()}
                     disabled={retryPrintMutation.isPending}
                   >
-                    {retryPrintMutation.isPending ? 'Se reîncearcă...' : '🔄 Retrimite Print'}
+                    {retryPrintMutation.isPending ? t('pos.fiscal.retrying') : `🔄 ${t('pos.fiscal.retryPrint')}`}
                   </button>
                 )}
                 {fiscalStatus.status === 'REJECTED' && (
@@ -240,7 +239,7 @@ export function PosOrderSummary({
                     onClick={() => retryAnafMutation.mutate()}
                     disabled={retryAnafMutation.isPending}
                   >
-                    {retryAnafMutation.isPending ? 'Se reîncearcă...' : '🔄 Retrimite ANAF'}
+                    {retryAnafMutation.isPending ? t('pos.fiscal.retrying') : `🔄 ${t('pos.fiscal.retryAnaf')}`}
                   </button>
                 )}
               </div>
@@ -252,19 +251,19 @@ export function PosOrderSummary({
         {isFiscalized && isStockConsumed && (
           <div className="pos-order-status">
             <div className="pos-status-badge pos-status-badge--fiscalized">
-              ✓ Fiscalizat
+              ✓ {t('pos.fiscal.fiscalized')}
             </div>
             <div className="pos-status-badge pos-status-badge--success">
-              ✓ Stoc actualizat
+              ✓ {t('pos.fiscal.stockUpdated')}
             </div>
             {fiscalReceiptNumber && (
               <div className="pos-fiscal-info">
                 <div className="pos-fiscal-receipt">
-                  <strong>Bon Fiscal:</strong> {fiscalReceiptNumber}
+                  <strong>{t('pos.fiscal.fiscalReceipt')}:</strong> {fiscalReceiptNumber}
                 </div>
                 {fiscalReceiptDate && (
                   <div className="pos-fiscal-date">
-                    <strong>Data:</strong>' '
+                    <strong>{t('pos.fiscal.date')}:</strong>' '
                     {new Date(fiscalReceiptDate).toLocaleString('ro-RO')}
                   </div>
                 )}
@@ -275,7 +274,7 @@ export function PosOrderSummary({
                 className="pos-action-btn pos-action-btn--close"
                 onClick={onCloseOrder}
               >
-                🚪 Închide Comandă & Eliberează Masa
+                🚪 {t('pos.order.closeAndReleaseTable')}
               </button>
             )}
           </div>

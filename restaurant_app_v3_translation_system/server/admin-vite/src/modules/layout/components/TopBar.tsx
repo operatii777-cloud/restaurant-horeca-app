@@ -1,13 +1,14 @@
-// import { useTranslation } from '@/i18n/I18nContext';
 import { useState, useEffect } from 'react';
 import { httpClient } from '@/shared/api/httpClient';
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
+import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
+import { useTranslation } from '@/i18n/I18nContext';
 
 // LocationSwitcher moved to Transfer and Stocks pages
 import './TopBar.css';
 
 export const TopBar = () => {
-  //   const { t } = useTranslation();
+  const { t } = useTranslation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [username, setUsername] = useState('');
@@ -46,10 +47,10 @@ export const TopBar = () => {
         setUsername('');
         setPassword('');
       } else {
-        setLoginError(response.data?.error || 'Date de autentificare incorecte');
+        setLoginError(response.data?.error || t('auth.invalidCredentials'));
       }
     } catch (error: any) {
-      setLoginError(error.response?.data?.error || 'Eroare la autentificare');
+      setLoginError(error.response?.data?.error || t('auth.authError'));
     }
   };
 
@@ -70,6 +71,17 @@ export const TopBar = () => {
       <header className="topbar topbar--compact">
         <div className="topbar__spacer" />
         <div className="topbar__right">
+          {/* Language Switcher */}
+          <div style={{
+            marginRight: '12px',
+            display: 'flex',
+            alignItems: 'center',
+            visibility: window.location.pathname.startsWith('/kiosk') ? 'hidden' : 'visible',
+            minWidth: '140px'
+          }}>
+            <LanguageSwitcher size="md" />
+          </div>
+
           {/* Theme Switcher */}
           <div style={{
             marginRight: '12px',
@@ -86,9 +98,9 @@ export const TopBar = () => {
               type="button"
               className="topbar__logout-btn"
               onClick={handleLogout}
-              title="Deconectare"
+              title={t('auth.logout')}
             >
-              🚪 Logout
+              🚪 {t('auth.logout')}
             </button>
           ) : (
             <button
@@ -127,7 +139,7 @@ export const TopBar = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="qroms-badge-link"
-              aria-label="Powered by QrOMS"
+              aria-label={t('auth.poweredBy')}
             >
               <img
                 src="/admin-vite/QrOMS.jpg"
@@ -144,7 +156,7 @@ export const TopBar = () => {
                   }
                 }}
               />
-              <span className="qroms-badge-label">Powered by QrOMS</span>
+              <span className="qroms-badge-label">{t('auth.poweredBy')}</span>
             </a>
           </div>
         </div>
@@ -155,7 +167,7 @@ export const TopBar = () => {
         <div className="topbar__login-modal-overlay" onClick={() => setShowLoginModal(false)}>
           <div className="topbar__login-modal" onClick={(e) => e.stopPropagation()}>
             <div className="topbar__login-modal-header">
-              <h3>Conectare Admin</h3>
+              <h3>{t('auth.adminLogin')}</h3>
               <button
                 type="button"
                 className="topbar__login-modal-close"
@@ -169,7 +181,7 @@ export const TopBar = () => {
                 <div className="topbar__login-error">{loginError}</div>
               )}
               <div className="topbar__login-field">
-                <label htmlFor="topbar-username">Utilizator:</label>
+                <label htmlFor="topbar-username">{t('auth.username')}:</label>
                 <input
                   id="topbar-username"
                   type="text"
@@ -180,7 +192,7 @@ export const TopBar = () => {
                 />
               </div>
               <div className="topbar__login-field">
-                <label htmlFor="topbar-password">Parolă:</label>
+                <label htmlFor="topbar-password">{t('auth.password')}:</label>
                 <input
                   id="topbar-password"
                   type="password"
@@ -191,13 +203,15 @@ export const TopBar = () => {
               </div>
               <div className="topbar__login-actions">
                 <button type="submit" className="topbar__login-submit">
-                  Conectare
+                  {t('auth.login')}
                 </button>
                 <button
                   type="button"
                   className="topbar__login-cancel"
                   onClick={() => setShowLoginModal(false)}
-                >Anulează</button>
+                >
+                  {t('actions.cancel')}
+                </button>
               </div>
             </form>
           </div>

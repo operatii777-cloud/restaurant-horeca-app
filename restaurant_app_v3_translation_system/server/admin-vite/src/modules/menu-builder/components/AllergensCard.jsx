@@ -1,9 +1,9 @@
 /**
+import { useTranslation } from '@/i18n/I18nContext';
  * ALLERGENS CARD - Visual allergen display
  * Data: 04 Decembrie 2025
  */
 
-import React from 'react';
 import { useMenuBuilderStore } from '../store/useMenuBuilderStore';
 import { useShallow } from 'zustand/react/shallow';
 
@@ -25,6 +25,7 @@ const ALLERGEN_ICON_MAP = {
 };
 
 export function AllergensCard() {
+  const { t } = useTranslation();
   const { allergens, setAllergens } = useMenuBuilderStore(
     useShallow((s) => ({
       allergens: s.allergens,
@@ -55,10 +56,10 @@ export function AllergensCard() {
       <div className="flex items-center justify-between gap-2">
         <div>
           <h2 className="text-slate-100 font-semibold text-lg">
-            Alergeni & Avertizări
+            {t('menu.productModal.allergens')}
           </h2>
           <p className="text-slate-400 text-xs">
-            Alergenii vin din fișa tehnică. Aici controlezi afișarea și avertizările extra.
+            {t('menu.menuBuilder.allergensList')}
           </p>
         </div>
       </div>
@@ -80,7 +81,7 @@ export function AllergensCard() {
 
         <div>
           <span className="block text-slate-400 mb-1">
-            Alergeni detectați din fișa tehnică:
+            {t('menu.productModal.allergens')}:
           </span>
           <div className="flex flex-wrap gap-1">
             {!(allergens.fromTechnicalSheet || []).length && (
@@ -105,7 +106,7 @@ export function AllergensCard() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
           <div>
             <span className="block text-slate-400 mb-1">
-              Alergeni extra (manual)
+              {t('menu.menuBuilder.allergensList')}
             </span>
             <div className="bg-slate-950 border border-slate-800 rounded-lg p-2 flex flex-wrap gap-1">
               {Object.keys(ALLERGEN_ICON_MAP).map((a) => (

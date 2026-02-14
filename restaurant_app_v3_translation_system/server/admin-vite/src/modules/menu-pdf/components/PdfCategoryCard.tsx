@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 // components/PdfCategoryCard.tsx
 import { useState } from 'react';
 import type { PdfCategory, PdfProduct } from '../hooks/usePdfConfig';
@@ -12,12 +12,7 @@ interface PdfCategoryCardProps {
   onToggleAllProducts: (categoryId: number, visible: boolean) => void;
   onUploadImage: (categoryId: number, file: File) => void;
   onDeleteImage: (categoryId: number) => void;
-  onReorder?: (fromIndex: number, toIndex: number) => void;
-  index?: number;
-  draggable?: boolean;
-  onDragStart?: (e: React.DragEvent, index: number) => void;
-  onDragOver?: (e: React.DragEvent, index: number) => void;
-  onDrop?: (e: React.DragEvent, index: number) => void;
+  onReorder?: (categoryId: number, newIndex: number) => void;
 }
 
 export const PdfCategoryCard = ({
@@ -28,18 +23,12 @@ export const PdfCategoryCard = ({
   onToggleAllProducts,
   onUploadImage,
   onDeleteImage,
-  index = 0,
-  draggable = true,
-  onDragStart,
-  onDragOver,
-  onDrop,
 }: PdfCategoryCardProps) => {
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
   const [uploading, setUploading] = useState(false);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-//   const { t } = useTranslation();
     const file = e.target.files?.[0];
     if (file) {
       setUploading(true);
@@ -52,19 +41,9 @@ export const PdfCategoryCard = ({
   const totalProducts = category.products.length;
 
   return (
-    <div 
-      className="pdf-category-card"
-      draggable={draggable}
-      onDragStart={(e) => onDragStart?.(e, index)}
-      onDragOver={(e) => onDragOver?.(e, index)}
-      onDrop={(e) => onDrop?.(e, index)}
-    >
+    <div className="pdf-category-card">
       <div className="pdf-category-card__header">
-        <div 
-          className="pdf-category-card__drag-handle" 
-          title="Drag pentru reordonare"
-          style={{ cursor: draggable ? 'move' : 'default' }}
-        >
+        <div className="pdf-category-card__drag-handle" title="drag pentru reordonare">
           ⋮⋮
         </div>
 
@@ -86,7 +65,7 @@ export const PdfCategoryCard = ({
         <button
           type="button"
           className="pdf-category-card__expand"
-          onClick={() => setExpanded(!expanded)}
+          title={expanded ? t('actions.close') : t('actions.view')}
           title={expanded ? 'Ascunde' : 'Afișează'}
         >
           {expanded ? '▼' : '▶'}

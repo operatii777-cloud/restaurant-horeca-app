@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 /**
  * PHASE S12 - POS Customer Panel Component
  * 
@@ -10,7 +10,7 @@ import { usePosStore } from '../store/posStore';
 import './PosCustomerPanel.css';
 
 export function PosCustomerPanel() {
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
   const { customer, setCustomer } = usePosStore();
   const [name, setName] = useState(customer?.name || '');
   const [phone, setPhone] = useState(customer?.phone || '');
@@ -33,19 +33,19 @@ export function PosCustomerPanel() {
 
   return (
     <div className="pos-customer-panel">
-      <h4 className="pos-customer-panel-title">"informatii client"</h4>
+      <h4 className="pos-customer-panel-title">{t('pos.customer.title')}</h4>
       <div className="pos-customer-inputs">
         <div className="pos-customer-input-group">
-          <label>"Nume:"</label>
+          <label>{t('pos.customer.name')}:</label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="nume client"
+            placeholder={t('pos.customer.name')}
           />
         </div>
         <div className="pos-customer-input-group">
-          <label>Telefon:</label>
+          <label>{t('pos.customer.phone')}:</label>
           <input
             type="tel"
             value={phone}
@@ -54,20 +54,22 @@ export function PosCustomerPanel() {
           />
         </div>
         <div className="pos-customer-input-group">
-          <label>"Email:"</label>
+          <label>{t('pos.customer.email')}:</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder='[email@examplecom]'
+            placeholder="[email protected]"
           />
         </div>
       </div>
       <div className="pos-customer-actions">
         <button className="pos-customer-btn pos-customer-btn--save" onClick={handleSave}>
-          Salvează
+          {t('actions.save')}
         </button>
-        <button className="pos-customer-btn pos-customer-btn--clear" onClick={handleClear}>"Șterge"</button>
+        <button className="pos-customer-btn pos-customer-btn--clear" onClick={handleClear}>
+          {t('actions.delete')}
+        </button>
       </div>
     </div>
   );

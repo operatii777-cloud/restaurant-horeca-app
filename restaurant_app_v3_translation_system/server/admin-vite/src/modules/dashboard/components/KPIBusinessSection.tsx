@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, Row, Col, Table, Button } from 'react-bootstrap';
 import { Line, Bar } from 'react-chartjs-2';
 import {
@@ -15,7 +15,7 @@ import {
   Filler,
 } from "chart.js";
 import { httpClient } from '@/shared/api/httpClient';
-import { getSocket, isSocketConnected } from '@/core/sockets/socketClient';
+import { useTranslation } from '@/i18n/I18nContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './KPIBusinessSection.css';
@@ -73,13 +73,15 @@ interface KPIData {
 }
 
 export const KPIBusinessSection = () => {
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [kpiData, setKpiData] = useState<KPIData | null>(null);
-  const [socketConnected, setSocketConnected] = useState(false);
 
-  // Load KPI data (wrapped in useCallback for stability)
-  const loadKPIData = useCallback(async () => {
+  useEffect(() => {
+    loadKPIData();
+  }, []);
+
+  const loadKPIData = async () => {
     setLoading(true);
     try {
       const response = await httpClient.get('/api/admin/dashboard/kpi');
@@ -169,7 +171,7 @@ export const KPIBusinessSection = () => {
         });
       }
     } catch (error) {
-      console.error('❌ Eroare la încărcarea KPI-urilor:', error);
+      console.error('❌ ' + t('dashboard.kpi.error'), error);
       // Fallback: use mock data
       setKpiData({
         todayRevenue: 12500,
@@ -207,55 +209,7 @@ export const KPIBusinessSection = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
-
-  // Initial load
-  useEffect(() => {
-    loadKPIData();
-  }, [loadKPIData]);
-
-  // Socket.IO real-time updates
-  useEffect(() => {
-    const socket = getSocket();
-    setSocketConnected(isSocketConnected());
-
-    // Handle connection status
-    const handleConnect = () => {
-      console.log('✅ Dashboard: Socket.IO connected');
-      setSocketConnected(true);
-    };
-
-    const handleDisconnect = () => {
-      console.log('⚠️ Dashboard: Socket.IO disconnected');
-      setSocketConnected(false);
-    };
-
-    // Handle order updates - refresh dashboard when orders change
-    const handleOrderUpdate = () => {
-      console.log('📊 Dashboard: Order updated, refreshing KPIs...');
-      loadKPIData();
-    };
-
-    // Handle stock updates - refresh dashboard when inventory changes
-    const handleStockUpdate = () => {
-      console.log('📦 Dashboard: Stock updated, refreshing KPIs...');
-      loadKPIData();
-    };
-
-    // Register event listeners
-    socket.on('connect', handleConnect);
-    socket.on('disconnect', handleDisconnect);
-    socket.on('orderUpdated', handleOrderUpdate);
-    socket.on('stockUpdated', handleStockUpdate);
-
-    // Cleanup on unmount
-    return () => {
-      socket.off('connect', handleConnect);
-      socket.off('disconnect', handleDisconnect);
-      socket.off('orderUpdated', handleOrderUpdate);
-      socket.off('stockUpdated', handleStockUpdate);
-    };
-  }, [loadKPIData]);
+  };
 
   if (loading) {
     return (
@@ -263,7 +217,7 @@ export const KPIBusinessSection = () => {
         <Card className="shadow-sm">
           <Card.Body>
               <div className="text-center">
-                <i className="fas fa-spinner fa-spin me-2"></i>Se încarcă KPI-urile business...</div>
+                <i className="fas fa-spinner fa-spin me-2"></i>{t('dashboard.kpi.loading')}</div>
           </Card.Body>
         </Card>
       </div>
@@ -284,7 +238,7 @@ export const KPIBusinessSection = () => {
     ),
     datasets: [
       {
-        label: 'Venituri (RON)',
+        label: t('dashboard.kpi.revenueLabel'),
         data: revenueMarginData.map((item) => item.revenue),
         borderColor: 'rgb(37, 99, 235)',
         backgroundColor: 'rgba(37, 99, 235, 0.1)',
@@ -293,7 +247,7 @@ export const KPIBusinessSection = () => {
         yAxisID: 'y',
       },
       {
-        label: 'Marjă Brută (%)',
+        label: t('dashboard.kpi.grossMargin'),
         data: revenueMarginData.map((item) => item.margin),
         borderColor: 'rgb(34, 197, 94)',
         backgroundColor: 'rgba(34, 197, 94, 0.1)',
@@ -322,9 +276,9 @@ export const KPIBusinessSection = () => {
         callbacks: {
           label: function (context: any) {
             if (context.datasetIndex === 0) {
-              return `Venituri: ${context.parsed.y.toFixed(2)} RON`;
+              return `${t('dashboard.kpi.revenueTooltip')} ${context.parsed.y.toFixed(2)} RON`;
             } else {
-              return `Marjă: ${context.parsed.y.toFixed(2)}%`;
+              return `${t('dashboard.kpi.marginTooltip')} ${context.parsed.y.toFixed(2)}%`;
             }
           },
         },
@@ -337,7 +291,7 @@ export const KPIBusinessSection = () => {
         position: 'left' as const,
         title: {
           display: true,
-          text: 'Venituri (RON)',
+          text: t('dashboard.kpi.revenueLabel'),
         },
         ticks: {
           callback: function (value: any) {
@@ -379,7 +333,7 @@ export const KPIBusinessSection = () => {
               <div className="d-flex justify-content-between">
                 <div>
                   <h4>{kpiData.todayRevenue.toFixed(2)} RON</h4>
-                  <small>Venituri Astăzi</small>
+                  <small>{t('dashboard.metrics.revenueToday')}</small>
                 </div>
                 <i className="fas fa-coins fa-2x"></i>
               </div>
@@ -393,7 +347,7 @@ export const KPIBusinessSection = () => {
               <div className="d-flex justify-content-between">
                 <div>
                   <h4>{kpiData.todayOrders}</h4>
-                  <small>Comenzi Astăzi</small>
+                  <small>{t('dashboard.metrics.ordersToday')}</small>
                 </div>
                 <i className="fas fa-shopping-cart fa-2x"></i>
               </div>
@@ -407,11 +361,11 @@ export const KPIBusinessSection = () => {
               <div className="d-flex justify-content-between">
                 <div>
                   <h4>{kpiData.todayProfit.toFixed(2)} RON</h4>
-                  <small>Profit Astăzi</small>
+                  <small>{t('dashboard.metrics.profitToday')}</small>
                 </div>
                 <i className="fas fa-chart-line fa-2x"></i>
               </div>
-              <small className="mt-2 d-block">Marjă: {kpiData.profitMargin.toFixed(1)}%</small>
+              <small className="mt-2 d-block">{t('dashboard.metrics.marginLabel')}: {kpiData.profitMargin.toFixed(1)}%</small>
             </Card.Body>
           </Card>
         </Col>
@@ -421,11 +375,11 @@ export const KPIBusinessSection = () => {
               <div className="d-flex justify-content-between">
                 <div>
                   <h4>{kpiData.cogsToday.toFixed(2)} RON</h4>
-                  <small>COGS Astăzi</small>
+                  <small>{t('dashboard.metrics.cogsToday')}</small>
                 </div>
                 <i className="fas fa-calculator fa-2x"></i>
               </div>
-              <small className="mt-2 d-block">Cost ingrediente vândute</small>
+              <small className="mt-2 d-block">{t('dashboard.metrics.cogsDescription')}</small>
             </Card.Body>
           </Card>
         </Col>
@@ -439,11 +393,11 @@ export const KPIBusinessSection = () => {
               <div className="d-flex justify-content-between">
                 <div>
                   <h4>{kpiData.inventoryAlerts}</h4>
-                  <small>Alerte Stoc</small>
+                  <small>{t('dashboard.kpi.stockAlerts')}</small>
                 </div>
                 <i className="fas fa-exclamation-triangle fa-2x"></i>
               </div>
-              <small className="mt-2 d-block">Produse sub minim stoc</small>
+              <small className="mt-2 d-block">{t('dashboard.kpi.lowStockProducts')}</small>
             </Card.Body>
           </Card>
         </Col>
@@ -453,11 +407,11 @@ export const KPIBusinessSection = () => {
               <div className="d-flex justify-content-between">
                 <div>
                   <h4>{kpiData.customerRetention}%</h4>
-                  <small>Retenție Clienți</small>
+                  <small>{t('dashboard.kpi.customerRetention')}</small>
                 </div>
                 <i className="fas fa-users fa-2x"></i>
               </div>
-              <small className="mt-2 d-block">Clienți care revin</small>
+              <small className="mt-2 d-block">{t('dashboard.kpi.returningCustomers')}</small>
             </Card.Body>
           </Card>
         </Col>
@@ -474,11 +428,11 @@ export const KPIBusinessSection = () => {
               <div className="d-flex justify-content-between">
                 <div>
                   <h4>{kpiData.tableTurnover}</h4>
-                  <small>🔄 Rotație Mese</small>
+                  <small>🔄 {t('dashboard.kpi.tableRotation')}</small>
                 </div>
                 <i className="fas fa-sync-alt fa-2x"></i>
               </div>
-              <small className="mt-2 d-block">Grupuri per masă ocupată</small>
+              <small className="mt-2 d-block">{t('dashboard.kpi.groupsPerTable')}</small>
             </Card.Body>
           </Card>
         </Col>
@@ -491,11 +445,11 @@ export const KPIBusinessSection = () => {
               <div className="d-flex justify-content-between">
                 <div>
                   <h4>{kpiData.tableUtilization}</h4>
-                  <small>📊 Utilizare Mese</small>
+                  <small>📊 {t('dashboard.kpi.tableUtilization')}</small>
                 </div>
                 <i className="fas fa-table fa-2x"></i>
               </div>
-              <small className="mt-2 d-block">Mese folosite din 200</small>
+              <small className="mt-2 d-block">{t('dashboard.kpi.tablesUsed')}</small>
             </Card.Body>
           </Card>
         </Col>
@@ -555,11 +509,11 @@ export const KPIBusinessSection = () => {
               <div className="d-flex justify-content-between">
                 <div>
                   <h4>{kpiData.avgRating.toFixed(1)}★</h4>
-                  <small>🌍 Rating Mediu OVERALL</small>
+                  <small>🌍 {t('dashboard.kpi.overallRating')}</small>
                 </div>
                 <i className="fas fa-star fa-2x"></i>
               </div>
-              <small className="mt-2 d-block">{kpiData.totalFeedback} evaluări (overall)</small>
+              <small className="mt-2 d-block">{kpiData.totalFeedback} {t('dashboard.kpi.overallRatings')}</small>
             </Card.Body>
           </Card>
         </Col>
@@ -572,11 +526,11 @@ export const KPIBusinessSection = () => {
               <div className="d-flex justify-content-between">
                 <div>
                   <h4>{kpiData.excellentCount}</h4>
-                  <small>⭐ Rating-uri 5★ (OVERALL)</small>
+                  <small>⭐ {t('dashboard.kpi.excellentRatings')}</small>
                 </div>
                 <i className="fas fa-heart fa-2x"></i>
               </div>
-              <small className="mt-2 d-block">Clienți foarte mulțumiți</small>
+              <small className="mt-2 d-block">{t('dashboard.kpi.veryHappyCustomers')}</small>
             </Card.Body>
           </Card>
         </Col>
@@ -586,11 +540,11 @@ export const KPIBusinessSection = () => {
               <div className="d-flex justify-content-between">
                 <div>
                   <h4>{kpiData.lowRatingCount}</h4>
-                  <small>⚠️ Rating-uri ≤2★ (OVERALL)</small>
+                  <small>⚠️ {t('dashboard.kpi.lowRatings')}</small>
                 </div>
                 <i className="fas fa-exclamation-circle fa-2x"></i>
               </div>
-              <small className="mt-2 d-block">Necesită atenție urgentă</small>
+              <small className="mt-2 d-block">{t('dashboard.kpi.needsAttention')}</small>
             </Card.Body>
           </Card>
         </Col>
@@ -602,7 +556,7 @@ export const KPIBusinessSection = () => {
           <Card className="shadow-sm">
             <Card.Header className="bg-white">
               <h5 className="mb-0">
-                <i className="fas fa-chart-area me-1"></i> Evoluție Venituri & Marjă Brută (Ultimele 7 zile)
+                <i className="fas fa-chart-area me-1"></i> {t('dashboard.kpi.revenueChart')}
               </h5>
             </Card.Header>
             <Card.Body>
@@ -616,7 +570,7 @@ export const KPIBusinessSection = () => {
           <Card className="shadow-sm">
             <Card.Header className="bg-white d-flex justify-content-between align-items-center">
               <h5 className="mb-0">
-                <i className="fas fa-trophy me-1"></i> Top 5 Produse Astăzi
+                <i className="fas fa-trophy me-1"></i> {t('dashboard.kpi.top5Products')}
               </h5>
               <Button variant="link" size="sm" onClick={loadKPIData}>
                 <i className="fas fa-sync-alt"></i>
@@ -627,16 +581,16 @@ export const KPIBusinessSection = () => {
                 <Table hover size="sm">
                   <thead>
                     <tr>
-                      <th>Produs</th>
-                      <th>Cantitate</th>
-                      <th>Venit</th>
-                      <th>%</th>
+                      <th>{t('dashboard.kpi.product')}</th>
+                      <th>{t('dashboard.kpi.quantity')}</th>
+                      <th>{t('dashboard.kpi.revenue')}</th>
+                      <th>{t('dashboard.kpi.percentage')}</th>
                     </tr>
                   </thead>
                   <tbody>
                     {topProducts.length === 0 ? (
                       <tr>
-                        <td colSpan={4} className="text-center text-muted">Nu există date disponibile</td>
+                        <td colSpan={4} className="text-center text-muted">{t('dashboard.kpi.noData')}</td>
                       </tr>
                     ) : (
                       topProducts.map((product, index) => {
@@ -672,7 +626,7 @@ export const KPIBusinessSection = () => {
           <Card className="shadow-sm">
             <Card.Header className="bg-white">
               <h5 className="mb-0">
-                <i className="fas fa-chart-bar me-1"></i>Top Produse - Distribuție Venituri</h5>
+                <i className="fas fa-chart-bar me-1"></i>{t('dashboard.kpi.topProductsDistribution')}</h5>
             </Card.Header>
             <Card.Body>
               <div style={{ height: '250px' }}>
@@ -681,7 +635,7 @@ export const KPIBusinessSection = () => {
                     labels: topProducts.map((p) => p.product_name),
                     datasets: [
                       {
-                        label: 'Venit (RON)',
+                        label: t('dashboard.kpi.revenueRon'),
                         data: topProducts.map((p) => p.revenue),
                         backgroundColor: [
                           'rgba(37, 99, 235, 0.8)',
@@ -704,9 +658,9 @@ export const KPIBusinessSection = () => {
                         callbacks: {
                           label: function (context: any) {
                             const product = topProducts[context.dataIndex];
-                            if (!product) return `Venit: ${context.parsed.y.toFixed(2)} RON`;
+                            if (!product) return `${t('dashboard.kpi.revenue')}: ${context.parsed.y.toFixed(2)} RON`;
                             const percentage = typeof product.percentage === 'number' ? product.percentage : (parseFloat(String(product.percentage || 0)) || 0);
-                            return `Venit: ${context.parsed.y.toFixed(2)} RON (${percentage.toFixed(1)}%)`;
+                            return `${t('dashboard.kpi.revenue')}: ${context.parsed.y.toFixed(2)} RON (${percentage.toFixed(1)}%)`;
                           },
                         },
                       },
@@ -716,7 +670,7 @@ export const KPIBusinessSection = () => {
                         beginAtZero: true,
                         title: {
                           display: true,
-                          text: 'Venit (RON)',
+                          text: t('dashboard.kpi.revenueRon'),
                         },
                       },
                     },

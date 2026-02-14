@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 import { useState, useEffect } from 'react';
 import { Form, Badge, Button } from 'react-bootstrap';
 import { httpClient } from '@/shared/api/httpClient';
@@ -19,8 +19,8 @@ interface AllergenSelectorProps {
   placeholder?: string;
 }
 
-export const AllergenSelector = ({ value, onChange, label = 'Alergeni', placeholder = 'Selectează alergeni...' }: AllergenSelectorProps) => {
-  //   const { t } = useTranslation();
+export const AllergenSelector = ({ value, onChange, label, placeholder }: AllergenSelectorProps) => {
+  const { t } = useTranslation();
   const [allergens, setAllergens] = useState<Allergen[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
@@ -93,7 +93,7 @@ export const AllergenSelector = ({ value, onChange, label = 'Alergeni', placehol
 
   return (
     <div className="allergen-selector">
-      <Form.Label>{label}</Form.Label>
+      <Form.Label>{label || t('menu.productModal.allergens')}</Form.Label>
 
       {/* Selected allergens display */}
       {selectedAllergens.length > 0 && (
@@ -117,7 +117,7 @@ export const AllergenSelector = ({ value, onChange, label = 'Alergeni', placehol
       {/* Search input */}
       <Form.Control
         type="text"
-        placeholder={placeholder}
+        placeholder={placeholder || t('menu.productModal.allergens')}
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         className="mb-2"
@@ -126,12 +126,12 @@ export const AllergenSelector = ({ value, onChange, label = 'Alergeni', placehol
       {/* Allergens list */}
       {loading ? (
         <div className="text-muted text-center py-2">
-          <i className="fas fa-spinner fa-spin me-2"></i>"se incarca alergenii"</div>
+          <i className="fas fa-spinner fa-spin me-2"></i>{t('common.loading')}</div>
       ) : (
         <div className="allergens-list">
           {filteredAllergens.length === 0 ? (
             <div className="text-muted text-center py-2">
-              {searchTerm ? 'Nu s-au găsit alergeni.' : 'Nu există alergeni în catalog.'}
+              {searchTerm ? t('common.noData') : t('menu.productModal.allergens')}
             </div>
           ) : (
             filteredAllergens.map(allergen => (

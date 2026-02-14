@@ -1,9 +1,24 @@
-// Translation keys for admin-vite interface
+// Complete translations for admin-vite interface
+// Base translations + Tier 1 comprehensive module translations (POS, KIOSK, Orders, Menu, Dashboard, Reservations)
+
 export const translations = {
   ro: {
+
+    // TopBar & Authentication
+    auth: {
+      login: "Conectare",
+      logout: "Deconectare",
+      username: "Utilizator",
+      password: "Parolă",
+      adminLogin: "Conectare Admin",
+      invalidCredentials: "Date de autentificare incorecte",
+      authError: "Eroare la autentificare",
+      poweredBy: "Powered by QrOMS"
+    },
     // Navigation & Menu
     nav: {
       dashboard: "Tablou de bord",
+      home: "Acasă",
       orders: "Comenzi",
       menu: "Meniu",
       catalog: "Catalog",
@@ -12,6 +27,11 @@ export const translations = {
       settings: "Setări",
       marketing: "Marketing",
       enterprise: "Enterprise",
+      management: "Gestiune",
+      accounting: "Contabilitate",
+      recipes: "Rețete",
+      fiscal: "Fiscal",
+      audit: "Audit & Security",
       logout: "Deconectare"
     },
     // Common actions
@@ -39,12 +59,17 @@ export const translations = {
       apply: "Aplică",
       reset: "Resetează",
       select: "Selectează",
+      selectAll: "Selectează tot",
+      deselectAll: "Deselectează tot",
+      clear: "Șterge",
       create: "Creează",
       update: "Actualizează",
-      remove: "Elimină",
-      copy: "Copiază",
-      paste: "Lipește",
-      duplicate: "Duplică"
+      clone: "Clonează",
+      duplicate: "Duplică",
+      retry: "Reîncearcă",
+      applyFilters: "Aplicare Filtre",
+      exportCSV: "Export CSV",
+      viewDetails: "Vezi detalii"
     },
     // Common labels
     common: {
@@ -53,6 +78,7 @@ export const translations = {
       price: "Preț",
       quantity: "Cantitate",
       total: "Total",
+      subtotal: "Subtotal",
       date: "Dată",
       time: "Oră",
       status: "Status",
@@ -73,283 +99,1584 @@ export const translations = {
       inactive: "Inactiv",
       enabled: "Activat",
       disabled: "Dezactivat",
+      optional: "Opțional",
+      required: "Obligatoriu",
+      selected: "Selectat",
+      filtered: "Filtrate",
+      product: "Produs",
+      products: "Produse",
+      processing: "Se procesează...",
+      items: "Articole",
+      results: "Rezultate",
+      showing: "Afișare",
+      of: "din",
+      to: "până la",
+      from: "De la",
+      per: "pe",
+      page: "Pagină",
+      perPage: "Pe pagină",
       id: "ID",
       code: "Cod",
       unit: "Unitate",
-      notes: "Notițe",
-      actions: "Acțiuni",
-      order: "Comandă",
-      customer: "Client",
-      table: "Masă",
-      waiter: "Chelner",
-      kitchen: "Bucătărie"
-    },
-    // Table headers
-    table: {
-      category: "Categorie",
-      product: "Produs",
-      price_ron: "Preț (RON)",
-      price: "Preț",
-      name: "Nume",
-      quantity: "Cantitate",
       stock: "Stoc",
-      status: "Status",
-      ingredient: "Ingredient",
-      current_stock: "Stoc curent",
-      minimum_stock: "Stoc minim",
-      ingredients: "Ingrediente",
-      unit: "U.M.",
-      actions: "Acțiuni",
-      date: "Dată",
-      time: "Oră",
-      amount: "Sumă",
-      total: "Total",
-      description: "Descriere",
-      code: "Cod",
-      barcode: "Cod de bare",
       supplier: "Furnizor",
       cost: "Cost",
-      allergens: "Alergeni",
-      additives: "Aditivi",
-      recipe: "Rețetă",
-      portion: "Porție",
-      weight: "Greutate"
+      margin: "Marjă",
+      vat: "TVA",
+      notes: "Notițe",
+      actions: "Acțiuni",
+      exporting: "Se exportă...",
+      dateRanges: {
+        today: "Astăzi",
+        yesterday: "Ieri",
+        lastWeek: "Ultima săptămână",
+        lastMonth: "Ultima lună"
+      }
     },
-    // Product management
-    product: {
-      kitchen_section: "Bucătărie",
-      section_bar: "BAR",
-      section_pizzeria: "PIZZERIE",
-      section_pastry: "PATISERIE",
-      section_delivery: "Delivery",
-      section_dine_in: "La masă",
-      unit_piece: "buc",
-      unit_grams: "g",
-      unit_kilograms: "kg",
-      unit_milliliters: "ml",
-      unit_liters: "l",
-      unit_portion: "porție",
-      no_allergens_declared: "Fără alergeni declarați",
-      active: "Activ",
-      inactive: "Inactiv",
-      available: "Disponibil",
-      unavailable: "Indisponibil",
-      in_stock: "În stoc",
-      out_of_stock: "Stoc epuizat",
-      add_product: "Adaugă produs",
-      edit_product: "Editează produs",
-      delete_product: "Șterge produs",
-      product_details: "Detalii produs",
-      product_name: "Nume produs",
-      product_code: "Cod produs",
-      product_price: "Preț produs",
-      product_category: "Categorie produs",
-      product_image: "Imagine produs"
+    // Admin Main Page
+    adminMain: {
+      title: "Meniu Principal Admin",
+      subtitle: "Selectează o opțiune pentru a continua",
+      dashboard: {
+        title: "Dashboard",
+        description: "Vizualizare generală și statistici"
+      },
+      catalog: {
+        title: "Catalog",
+        description: "Gestionare catalog produse"
+      },
+      menu: {
+        title: "Meniu",
+        description: "Gestionare meniu restaurant"
+      },
+      waiters: {
+        title: "Chelneri",
+        description: "Gestionare personal servire"
+      },
+      orders: {
+        title: "Comenzi",
+        description: "Vizualizare și gestionare comenzi"
+      },
+      reservations: {
+        title: "Rezervări",
+        description: "Gestionare rezervări mese"
+      },
+      stocks: {
+        title: "Stocuri",
+        description: "Gestionare inventar și stocuri"
+      },
+      analytics: {
+        title: "Analiză",
+        description: "Rapoarte și analize detaliate"
+      },
+      dailyOffers: {
+        title: "Oferte Zilnice",
+        description: "Gestionare meniu zilei și promoții"
+      },
+      messages: {
+        title: "Mesaje",
+        description: "Comunicare internă"
+      },
+      settings: {
+        title: "Setări",
+        description: "Configurare sistem"
+      }
     },
-    // Orders
+    // Admin Advanced Page
+    adminAdvanced: {
+      title: "Funcții Avansate",
+      subtitle: "Instrumente și rapoarte avansate pentru analiza business-ului",
+      filters: {
+        all: "Toate",
+        analytics: "Analiză",
+        operations: "Operațiuni",
+        reports: "Rapoarte"
+      }
+    },
+    // Recipes Catalog Page
+    recipesCatalog: {
+      title: "Catalog Rețete",
+      subtitle: "Gestionare și import rețete din catalog",
+      tabs: {
+        recipes: "Rețete",
+        allergens: "Alergeni Referință",
+        additives: "Aditivi"
+      },
+      stats: {
+        total: "Total Rețete",
+        filtered: "Filtrate",
+        selected: "Selectate",
+        avgMargin: "Marjă Medie"
+      },
+      filters: {
+        search: "Caută rețetă...",
+        industry: "Industrie",
+        allergen: "Alergen",
+        allIndustries: "Toate industriile",
+        allAllergens: "Toți alergenii"
+      },
+      columns: {
+        name: "Nume Rețetă",
+        industry: "Industrie",
+        allergens: "Alergeni",
+        suggestedPrice: "Preț Sugerat",
+        costPerPortion: "Cost/Porție",
+        margin: "Marjă %",
+        actions: "Acțiuni"
+      },
+      importModal: {
+        title: "Import Rețetă",
+        price: "Preț de vânzare (RON)",
+        imageUrl: "URL Imagine (opțional)",
+        customDescription: "Descriere personalizată (opțional)",
+        importing: "Import în curs...",
+        success: "Rețetă importată cu succes!",
+        error: "Eroare la import rețetă"
+      },
+      bulkImport: {
+        confirm: "Confirmare Import în Masă",
+        message: "Sigur doriți să importați {count} rețete?",
+        progress: "Import în Masă",
+        completed: "Finalizat",
+        success: "{success} rețete importate cu succes",
+        errors: "{errors} erori",
+        details: "Detalii import"
+      },
+      exportCsv: "Export CSV",
+      exportSuccess: "CSV exportat cu succes!",
+      loading: "Se încarcă rețetele...",
+      loadError: "Eroare la încărcarea rețetelor",
+      noData: "Nu există rețete disponibile"
+    },
+    // Ingredients Catalog Page
+    ingredientsCatalog: {
+      title: "Catalog Ingrediente",
+      subtitle: "Gestionare și import ingrediente din catalog",
+      tabs: {
+        ingredients: "Ingrediente",
+        allergens: "Alergeni Referință",
+        additives: "Aditivi Referință"
+      },
+      stats: {
+        total: "Total Ingrediente",
+        filtered: "Filtrate",
+        selected: "Selectate",
+        avgWaste: "Deșeu Mediu %"
+      },
+      filters: {
+        search: "Caută ingredient...",
+        category: "Categorie",
+        allergen: "Alergen",
+        allCategories: "Toate categoriile",
+        allAllergens: "Toți alergenii",
+        noAllergens: "Fără Alergeni"
+      },
+      columns: {
+        name: "Nume Ingredient",
+        category: "Categorie",
+        allergens: "Alergeni",
+        estimatedCost: "Cost Estimat",
+        wastePercentage: "Deșeu %",
+        actions: "Acțiuni"
+      },
+      importModal: {
+        title: "Import Ingredient",
+        cost: "Cost unitar (RON)",
+        stock: "Cantitate stoc inițial",
+        supplier: "Furnizor (opțional)",
+        importing: "Import în curs...",
+        success: "Ingredient importat cu succes!",
+        error: "Eroare la import ingredient"
+      },
+      bulkImport: {
+        confirm: "Confirmare Import în Masă",
+        message: "Sigur doriți să importați {count} ingrediente?",
+        progress: "Import în Masă Ingrediente",
+        completed: "Finalizat",
+        success: "{success} ingrediente importate cu succes",
+        errors: "{errors} erori",
+        details: "Detalii import"
+      },
+      exportCsv: "Export CSV",
+      exportSuccess: "CSV exportat cu succes!",
+      loading: "Se încarcă ingredientele...",
+      loadError: "Eroare la încărcarea ingredientelor",
+      noData: "Nu există ingrediente disponibile"
+    },
+    // Confirmation Modal
+    confirmModal: {
+      warning: "Atenție",
+      info: "Informație",
+      danger: "Pericol",
+      success: "Confirmare"
+    },
+    // Validation messages
+    validation: {
+      required: "Acest câmp este obligatoriu",
+      invalidNumber: "Introduceți un număr valid",
+      positiveNumber: "Numărul trebuie să fie pozitiv",
+      invalidEmail: "Introduceți o adresă de email validă",
+      minLength: "Minim {min} caractere",
+      maxLength: "Maxim {max} caractere"
+    },
+    
+    // ========== TIER 1 MODULES - COMPREHENSIVE TRANSLATIONS ==========
+
+    // ========== POS MODULE ==========
+    pos: {
+      title: "Punct de Vânzare",
+      subtitle: "Sistem POS complet",
+      
+      // Modes
+      modes: {
+        dineIn: "La Masă",
+        takeaway: "La Pachet",
+        delivery: "Livrare",
+        driveThru: "Drive-Thru"
+      },
+      
+      // Table selection
+      tables: {
+        selectTable: "Selectează Masa",
+        table: "Masa",
+        tables: "Mese",
+        floor: "Etaj",
+        section: "Secțiune",
+        available: "Disponibilă",
+        occupied: "Ocupată",
+        reserved: "Rezervată",
+        noTables: "Nu există mese disponibile",
+        openOrder: "Comandă deschisă",
+        loading: "Se încarcă mesele...",
+        reloadTables: "Reîncarcă mesele",
+        errorLoading: "Eroare la încărcarea meselor",
+        errorProcessing: "Eroare la procesarea mesei",
+        clearSelection: "Șterge selecția"
+      },
+      
+      // Products
+      products: {
+        title: "Produse",
+        search: "Caută produse...",
+        category: "Categorie",
+        allCategories: "Toate Categoriile",
+        addToOrder: "Adaugă la Comandă",
+        outOfStock: "Stoc Epuizat",
+        price: "Preț",
+        priceLabel: "Preț",
+        priceTier: "Preț",
+        clearSearch: "Șterge căutarea",
+        dailyMenu: "Meniul Zilei",
+        allergens: "Alergeni",
+        total: "Total",
+        specialPrice: "Preț Ofertă",
+        noDailyMenu: "Nu există meniu al zilei astăzi",
+        noSearchResults: "Nu s-au găsit produse pentru căutarea ta",
+        noProductsAvailable: "Nu există produse disponibile",
+        productUnavailable: "Produs indisponibil",
+        stock: "Stoc",
+        unavailable: "Indisponibil",
+        loadingProducts: "Se încarcă produsele...",
+        errorLoading: "Eroare la încărcarea produselor",
+        productNotActive: "Produsul nu este activ",
+        productOutOfStock: "Produsul nu este în stoc"
+      },
+      
+      // Order
+      order: {
+        title: "Comandă",
+        newOrder: "Comandă Nouă",
+        currentOrder: "Comandă Curentă",
+        orderNumber: "Nr. Comandă",
+        table: "Masă",
+        covers: "Persoane",
+        items: "Produse",
+        subtotal: "Subtotal",
+        tax: "TVA",
+        vat: "TVA",
+        discount: "Discount",
+        total: "Total",
+        empty: "Coș gol",
+        addProducts: "Adaugă produse la comandă",
+        clearOrder: "Golește Comanda",
+        confirmClear: "Sigur vrei să golești comanda?",
+        removeItem: "Elimină Produs",
+        quantity: "Cantitate",
+        notes: "Observații",
+        addNotes: "Adaugă observații...",
+        summary: "Sumar Comandă",
+        products: "produse",
+        noProducts: "Nu există produse în comandă",
+        closeAndReleaseTable: "Închide Comandă & Eliberează Masa"
+      },
+      
+      // Payment
+      payment: {
+        title: "Plată",
+        method: "Metodă de Plată",
+        methods: {
+          cash: "Numerar",
+          card: "Card",
+          voucher: "Voucher",
+          online: "Online",
+          account: "Cont",
+          protocol: "Protocol",
+          degustare: "Degustare",
+          other: "Altă metodă"
+        },
+        amount: "Sumă",
+        remaining: "Rămas",
+        exact: "Exact",
+        received: "Primit",
+        change: "Rest",
+        tip: "Bacșiș",
+        total: "Total de Plată",
+        pay: "Plătește",
+        split: "Împarte Nota",
+        printReceipt: "Printează Bon",
+        emailReceipt: "Trimite Email",
+        complete: "Finalizează",
+        cancel: "Anulează",
+        processing: "Se procesează...",
+        success: "Plată Efectuată",
+        failed: "Plată Eșuată",
+        enterAmount: "Introdu suma",
+        clearAll: "Șterge tot",
+        invalidAmount: "Sumă invalidă",
+        amountExceedsRemaining: "Suma depășește rămasul ({remaining} RON)",
+        noPayments: "Nu există plăți înregistrate",
+        paymentsRecorded: "Plăți efectuate",
+        removePayment: "Șterge plată",
+        // New keys for PaymentSheet and SplitBill
+        orderPayment: "Plata Comanda",
+        selectMethod: "Selectează metoda de plată",
+        amountCannotBeNegative: "Suma nu poate fi negativă",
+        enterAmountGreaterThanZero: "Introdu o sumă mai mare decât 0",
+        groupAlreadyPaid: "Acest grup este deja plătit complet",
+        noActiveOrder: "Nu există o comandă activă",
+        errorAddingPayment: "Eroare la adăugarea plății",
+        errorRemovingPayment: "Eroare la ștergerea plății",
+        selectGroupForPayment: "Selectează grup pentru plată",
+        paid: "Plătit",
+        selectedGroupTotal: "Total grup selectat",
+        orderTotal: "Total comandă",
+        paidAmount: "Plătit",
+        remainingToCollect: "Rămas de încasat",
+        orderFullyPaid: "Comanda este plătită complet",
+        canProceedToFiscalization: "Poți proceda la fiscalizare",
+        addPayment: "Adaugă plată",
+        applySplit: "Aplică Split",
+        close: "Închide",
+        continueToFiscalization: "Continuă la fiscalizare",
+        // SplitBill specific keys
+        person: "Persoana {{number}}",
+        byItems: "Pe Articole",
+        byAmounts: "Pe Sume",
+        groupPersonName: "Nume grup/persoană",
+        noItemsAssigned: "Nu sunt articole alocate",
+        unassignedItems: "Articole Nealocate",
+        totalAssigned: "Total Alocat",
+        totalUnassigned: "Total Nealocat",
+        difference: "Diferență",
+        addGroup: "Adaugă Grup"
+      },
+      
+      // Fiscal
+      fiscal: {
+        title: "Fiscal",
+        printer: "Imprimantă Fiscală",
+        printerError: "Eroare Imprimantă",
+        anafError: "Eroare ANAF",
+        nomenclatorError: "Coduri Fiscale Lipsă",
+        genericError: "Eroare Generică",
+        reconnect: "Reconectează",
+        check: "Verifică Conexiunea",
+        printInvoice: "Printează Factură",
+        fiscalCode: "Cod Fiscal",
+        missingCodes: "Coduri Lipsă",
+        fiscalizing: "Se fiscalizează...",
+        fiscalizeOrder: "Fiscalizează Comandă",
+        fiscalized: "Fiscalizat",
+        updatingStock: "Actualizare stoc...",
+        stockBeingUpdated: "Se actualizează stocul...",
+        stockUpdated: "Stoc actualizat",
+        fiscalReceipt: "Bon Fiscal",
+        date: "Data",
+        retrying: "Se reîncearcă...",
+        retryPrint: "Retrimite Print",
+        retryAnaf: "Retrimite ANAF"
+      },
+      
+      // Customer
+      customer: {
+        title: "Client",
+        name: "Nume Client",
+        phone: "Telefon",
+        email: "Email",
+        address: "Adresă",
+        notes: "Observații",
+        searchCustomer: "Caută client...",
+        newCustomer: "Client Nou",
+        selectCustomer: "Selectează Client",
+        loyaltyPoints: "Puncte Fidelitate"
+      },
+      
+      // Offline
+      offline: {
+        title: "Mod Offline",
+        warning: "Nu există conexiune la internet",
+        ordersSaved: "Comenzile sunt salvate local",
+        willSync: "Se vor sincroniza când conexiunea revine",
+        syncNow: "Sincronizează Acum",
+        pendingOrders: "Comenzi în Așteptare"
+      },
+      
+      // Messages
+      messages: {
+        orderCreated: "Comandă creată cu succes",
+        orderUpdated: "Comandă actualizată",
+        orderDeleted: "Comandă ștearsă",
+        paymentSuccess: "Plata a fost procesată cu succes",
+        paymentFailed: "Plata a eșuat",
+        printerConnected: "Imprimantă conectată",
+        printerDisconnected: "Imprimantă deconectată",
+        selectTable: "Selectează o masă",
+        selectProducts: "Adaugă produse la comandă",
+        confirmDelete: "Sigur vrei să ștergi această comandă?"
+      }
+    },
+    
+    // ========== KIOSK MODULE ==========
+    kiosk: {
+      title: "Chioșc Auto-Servire",
+      subtitle: "Comandă la chioșc",
+      
+      // Welcome
+      welcome: {
+        title: "Bun Venit!",
+        subtitle: "Atinge ecranul pentru a începe",
+        startOrder: "Începe Comanda",
+        scanQr: "Scanează QR Code",
+        chooseLanguage: "Alege Limba"
+      },
+      
+      // Menu
+      menu: {
+        title: "Meniu",
+        categories: "Categorii",
+        popular: "Populare",
+        new: "Noutăți",
+        deals: "Oferte",
+        search: "Caută...",
+        filter: "Filtrează",
+        viewAll: "Vezi Tot"
+      },
+      
+      // Product
+      product: {
+        details: "Detalii Produs",
+        ingredients: "Ingrediente",
+        allergens: "Alergeni",
+        nutrition: "Informații Nutriționale",
+        calories: "Calorii",
+        addToCart: "Adaugă în Coș",
+        customize: "Personalizează",
+        extras: "Extra",
+        remove: "Elimină",
+        quantity: "Cantitate",
+        size: {
+          small: "Mic",
+          medium: "Mediu",
+          large: "Mare"
+        }
+      },
+      
+      // Cart
+      cart: {
+        title: "Coșul Tău",
+        empty: "Coșul este gol",
+        items: "Produse",
+        subtotal: "Subtotal",
+        tax: "TVA",
+        total: "Total",
+        checkout: "Plătește",
+        continueShopping: "Continuă Cumpărăturile",
+        clear: "Golește Coșul",
+        modify: "Modifică"
+      },
+      
+      // Checkout
+      checkout: {
+        title: "Finalizare Comandă",
+        orderType: "Tip Comandă",
+        dineIn: "Aici",
+        takeaway: "La Pachet",
+        tableNumber: "Număr Masă",
+        name: "Nume",
+        phone: "Telefon",
+        email: "Email",
+        paymentMethod: "Metodă Plată",
+        payNow: "Plătește Acum",
+        payAtCounter: "Plătește la Casă",
+        confirmOrder: "Confirmă Comanda",
+        processing: "Se procesează..."
+      },
+      
+      // Payment
+      payment: {
+        title: "Plată",
+        insertCard: "Introdu Cardul",
+        tapCard: "Apropie Cardul",
+        enterPin: "Introdu PIN-ul",
+        processing: "Se procesează plata...",
+        approved: "Plată Aprobată",
+        declined: "Plată Refuzată",
+        tryAgain: "Încearcă Din Nou",
+        cancel: "Anulează",
+        receipt: "Bon Fiscal",
+        print: "Printează",
+        email: "Trimite Email"
+      },
+      
+      // Confirmation
+      confirmation: {
+        title: "Comanda Confirmată!",
+        orderNumber: "Număr Comandă",
+        thankyou: "Mulțumim!",
+        estimatedTime: "Timp Estimat",
+        minutes: "minute",
+        trackOrder: "Urmărește Comanda",
+        newOrder: "Comandă Nouă",
+        printReceipt: "Printează Bon"
+      },
+      
+      // Messages
+      messages: {
+        selectCategory: "Selectează o categorie",
+        addItems: "Adaugă produse în coș",
+        minimumOrder: "Comandă minimă",
+        sessionTimeout: "Sesiunea expiră în",
+        returning: "Revenire la ecranul principal..."
+      }
+    },
+    
+    // ========== ORDERS MODULE ==========
     orders: {
-      order_details: "Detalii Comandă",
-      mark_paid: "Marchează achitată",
-      mark_paid_button: "Marchează achitată",
-      general_info: "Informații generale",
-      table_type_here: "La masă",
-      table_type_takeout: "La pachet",
-      table_type_delivery: "Livrare",
-      order_number: "Număr comandă",
-      order_status: "Status comandă",
-      order_total: "Total comandă",
-      order_date: "Dată comandă",
-      order_time: "Oră comandă",
-      customer_name: "Nume client",
-      customer_phone: "Telefon client",
-      delivery_address: "Adresă livrare",
-      payment_method: "Metodă de plată",
-      payment_status: "Status plată",
+      title: "Comenzi",
+      subtitle: "Gestiune comenzi",
+      table: "Masă",
+      client: "Client",
+      anonymous: "Anonim",
+      type: "Tip",
+      createdAt: "Creată la",
       paid: "Achitată",
-      unpaid: "Neachitată",
-      pending: "În așteptare",
-      confirmed: "Confirmată",
-      preparing: "În pregătire",
-      ready: "Gata",
-      delivered: "Livrată",
-      cancelled: "Anulată",
-      new_order: "Comandă nouă",
-      view_order: "Vezi comandă",
-      edit_order: "Editează comandă",
-      cancel_order: "Anulează comandă",
-      order_items: "Produse comandă",
-      add_item: "Adaugă produs",
-      remove_item: "Elimină produs"
+      total: "Total",
+      orders: "comenzi",
+      firstOrder: "Prima comandă",
+      lastOrder: "Ultima comandă",
+      visitTotal: "Total Vizită",
+      additionalProducts: "produse suplimentare",
+      markAsPaid: "Marchează achitată",
+      noOrdersForFilter: "Nu există comenzi pentru filtrul selectat.",
+      viewMode: "mod afisare",
+      
+      // Status
+      status: {
+        all: "Toate",
+        pending: "În Așteptare",
+        confirmed: "Confirmate",
+        preparing: "În Preparare",
+        ready: "Gata",
+        delivered: "Livrate",
+        completed: "Finalizate",
+        cancelled: "Anulate",
+        failed: "Eșuate",
+        paid: "ACHITAT",
+        unpaid: "NEACHITAT"
+      },
+      
+      // Types
+      types: {
+        all: "Toate",
+        dineIn: "La Masă",
+        takeaway: "La Pachet",
+        takeout: "La pachet",
+        delivery: "Livrare",
+        driveThru: "Drive-Thru",
+        online: "Online",
+        phone: "Telefon"
+      },
+      
+      // Filters
+      filters: {
+        unpaid: "Neachitate",
+        paid: "Achitate"
+      },
+      
+      // Views
+      views: {
+        table: "Tabel",
+        visits: "Vizite"
+      },
+      
+      // List
+      list: {
+        title: "Listă Comenzi",
+        search: "Caută comenzi...",
+        filter: "Filtrează",
+        sort: "Sortează",
+        orderNumber: "Nr. Comandă",
+        customer: "Client",
+        table: "Masă",
+        items: "Produse",
+        total: "Total",
+        time: "Oră",
+        status: "Status",
+        actions: "Acțiuni",
+        noOrders: "Nu există comenzi"
+      },
+      
+      // Details
+      details: {
+        title: "Detalii Comandă",
+        orderInfo: "Informații Comandă",
+        customerInfo: "Informații Client",
+        items: "Produse Comandate",
+        product: "Produs",
+        quantity: "Cantitate",
+        price: "Preț",
+        subtotal: "Subtotal",
+        total: "Total",
+        tax: "TVA",
+        discount: "Discount",
+        notes: "Observații",
+        timeline: "Istoric",
+        print: "Printează",
+        email: "Trimite Email"
+      },
+      
+      // Actions
+      actions: {
+        confirm: "Confirmă",
+        prepare: "Începe Prepararea",
+        ready: "Marchează Gata",
+        deliver: "Livrează",
+        complete: "Finalizează",
+        cancel: "Anulează",
+        edit: "Editează",
+        duplicate: "Duplică",
+        refund: "Rambursare",
+        printKitchen: "Printează Bucătărie",
+        printReceipt: "Printează Bon"
+      },
+      
+      // Takeaway
+      takeaway: {
+        title: "Comenzi La Pachet",
+        newOrder: "Comandă Nouă",
+        pickupTime: "Ora Ridicare",
+        customerName: "Nume Client",
+        customerPhone: "Telefon Client",
+        estimatedTime: "Timp Estimat",
+        readyAt: "Gata La",
+        pickedUp: "Ridicată",
+        notPickedUp: "Neridicată"
+      },
+      
+      // Analytics
+      analytics: {
+        title: "Analiză Comenzi",
+        todayOrders: "Comenzi Azi",
+        revenue: "Venituri",
+        avgOrderValue: "Valoare Medie Comandă",
+        topProducts: "Produse Populare",
+        byHour: "Pe Ore",
+        byDay: "Pe Zile",
+        byType: "Pe Tipuri",
+        chart: "Grafic"
+      },
+      
+      // Archive
+      archive: {
+        title: "Arhivă Comenzi",
+        dateRange: "Interval Date",
+        searchArchive: "Caută în arhivă...",
+        exportData: "Exportă Date",
+        restore: "Restaurează"
+      },
+      
+      // Messages
+      messages: {
+        orderConfirmed: "Comandă confirmată",
+        orderCancelled: "Comandă anulată",
+        orderCompleted: "Comandă finalizată",
+        statusUpdated: "Status actualizat",
+        confirmCancel: "Sigur vrei să anulezi această comandă?",
+        cannotModify: "Comanda nu poate fi modificată",
+        printSuccess: "Printat cu succes",
+        printFailed: "Printare eșuată",
+        exportError: "Nu s-a putut genera exportul comenzilor.",
+        exportErrorGeneric: "Eroare la exportul comenzilor:",
+        orderMarkedPaid: "Comanda a fost marcată ca achitată.",
+        markPaidError: "Nu s-a putut marca vizita ca achitată.",
+        markPaidErrorGeneric: "Eroare la marcarea vizitei ca achitată:"
+      },
+
+      // Management page
+      management: {
+        title: "Gestionare comenzi",
+        subtitle: "Monitorizează comenzile active, plățile și analizele.",
+        tags: {
+          advancedFiltering: "Filtrare avansată și export CSV",
+          analytics: "Analitice anulări & top produse",
+          archive: "Integrare cu arhiva istoric"
+        },
+        summary: {
+          totalOrders: "Comenzi totale",
+          unpaidOrders: "Neachitate",
+          totalValue: "Valoare totală",
+          resultsForFilter: "Rezultate pentru filtrul curent",
+          ordersSum: "Suma comenzilor",
+          unpaid: "Neachitate",
+          paid: "Achitate",
+          requiresAction: "Necesită acțiune"
+        },
+        tabs: {
+          active: "Comenzi active",
+          cancelled: "Comenzi anulate",
+          analytics: "Analitice anulări",
+          topProducts: "Top produse",
+          archive: "Arhivă comenzi",
+          ariaLabel: "Taburi gestionare comenzi"
+        }
+      },
+      
+      // Summary
+      summary: {
+        totalOrders: "Comenzi totale",
+        resultsForFilter: "Rezultate pentru filtrul curent",
+        totalValue: "valoare totala",
+        ordersSum: "Suma comenzilor",
+        unpaid: "Neachitate",
+        paid: "Achitate",
+        requiresAction: "Necesită acțiune"
+      }
     },
-    // Stock Management
-    stocks: {
-      page_title: "Gestionare stocuri",
-      page_subtitle: "Admin V4",
-      page_description: "Monitorizează și actualizează ingredientele produselor.",
-      tab_ingredients: "Ingrediente",
-      tab_finished_products: "Produse finite",
-      tab_recipes: "Rețete & F.T.P.",
-      tab_hidden_ingredients: "Ingrediente ascunse",
-      current_stock: "Stoc curent",
-      minimum_stock: "Stoc minim",
-      unit_measure: "U.M.",
-      stock_value: "Valoare stoc",
-      last_update: "Ultima actualizare",
-      add_stock: "Adaugă stoc",
-      remove_stock: "Scade stoc",
-      adjust_stock: "Ajustează stoc",
-      stock_movement: "Mișcare stoc",
-      stock_history: "Istoric stoc",
-      low_stock: "Stoc scăzut",
-      critical_stock: "Stoc critic",
-      out_of_stock: "Fără stoc",
-      in_stock: "În stoc",
-      stock_alert: "Alertă stoc"
+    
+    // ========== MENU MODULE ==========
+    menu: {
+      title: "Meniu",
+      subtitle: "Gestiune meniu",
+      
+      // Categories
+      categories: {
+        title: "Categorii",
+        add: "Adaugă Categorie",
+        edit: "Editează Categorie",
+        delete: "Șterge Categorie",
+        name: "Nume Categorie",
+        description: "Descriere",
+        icon: "Iconiță",
+        order: "Ordine",
+        active: "Activ",
+        products: "Produse",
+        noCategories: "Nu există categorii"
+      },
+      
+      // Products
+      products: {
+        title: "Produse",
+        add: "Adaugă Produs",
+        edit: "Editează Produs",
+        delete: "Șterge Produs",
+        name: "Nume Produs",
+        description: "Descriere",
+        category: "Categorie",
+        price: "Preț",
+        cost: "Cost",
+        margin: "Marjă",
+        image: "Imagine",
+        sku: "SKU",
+        barcode: "Cod de Bare",
+        stock: "Stoc",
+        available: "Disponibil",
+        outOfStock: "Stoc Epuizat",
+        active: "Activ",
+        inactive: "Inactiv",
+        noProducts: "Nu există produse",
+        search: "Caută produse..."
+      },
+      
+      // Variants
+      variants: {
+        title: "Variante",
+        add: "Adaugă Variantă",
+        size: "Mărime",
+        color: "Culoare",
+        price: "Preț",
+        sku: "SKU",
+        stock: "Stoc"
+      },
+      
+      // Modifiers
+      modifiers: {
+        title: "Modificatori",
+        add: "Adaugă Modificator",
+        group: "Grup Modificatori",
+        name: "Nume",
+        price: "Preț Adițional",
+        required: "Obligatoriu",
+        multiple: "Selecție Multiplă",
+        min: "Minim",
+        max: "Maxim"
+      },
+      
+      // Pricing
+      pricing: {
+        title: "Prețuri",
+        basePrice: "Preț de Bază",
+        costPrice: "Preț Cost",
+        salePrice: "Preț Vânzare",
+        margin: "Marjă",
+        marginPercent: "Marjă %",
+        tax: "TVA",
+        taxIncluded: "TVA Inclus",
+        priceHistory: "Istoric Prețuri",
+        bulkUpdate: "Actualizare în Masă"
+      },
+      
+      // Import/Export
+      importExport: {
+        title: "Import/Export",
+        import: "Importă",
+        export: "Exportă",
+        template: "Șablon",
+        download: "Descarcă Șablon",
+        upload: "Încarcă Fișier",
+        format: "Format",
+        csv: "CSV",
+        excel: "Excel",
+        json: "JSON"
+      },
+      
+      // Messages
+      messages: {
+        productAdded: "Produs adăugat",
+        productUpdated: "Produs actualizat",
+        productDeleted: "Produs șters",
+        categoryAdded: "Categorie adăugată",
+        categoryUpdated: "Categorie actualizată",
+        categoryDeleted: "Categorie ștearsă",
+        confirmDelete: "Sigur vrei să ștergi?",
+        priceUpdated: "Preț actualizat",
+        stockUpdated: "Stoc actualizat",
+        imageUploaded: "Imagine încărcată",
+        imageUploadFailed: "Încărcare imagine eșuată",
+        productAddedSuccess: "Produs adăugat cu succes",
+        productUpdatedSuccess: "Produs actualizat cu succes",
+        customizationsActive: "Personalizări active:",
+        customizationsSynced: "Personalizările au fost sincronizate.",
+        error: "Eroare"
+      },
+
+      // Product Modal
+      productModal: {
+        generalDetails: "Detalii generale",
+        generalDetailsSubtitle: "Completează informațiile de bază afișate clienților",
+        productName: "Nume produs",
+        productNameEn: "Nume produs (EN)",
+        productNamePlaceholder: "Ex: Pizza Quattro Stagioni",
+        productNameEnPlaceholder: "Ex: Four Seasons Pizza",
+        category: "Categorie",
+        categoryEn: "Categorie (EN)",
+        categoryPlaceholder: "Ex: Pizza, Salate",
+        categoryEnPlaceholder: "Ex: Pizza",
+        priceRon: "Preț (RON)",
+        vatPercent: "TVA (%)",
+        unitOfMeasure: "Unitate măsură",
+        weightVolume: "Greutate / Volum",
+        weightVolumePlaceholder: "Ex: 350g, 500ml",
+        displayOrder: "Ordine afișare",
+        displayOrderPlaceholder: "Ordinea în meniu",
+        costPrice: "Cost produs (RON)",
+        costPricePlaceholder: "Ex: 12.50",
+        availableForSale: "Disponibil la vânzare",
+        activeInMenu: "Activ în meniu",
+        allowFractions: "Permite fracții (gramaj)",
+        
+        inventoryPreparation: "Inventar & preparare",
+        inventoryPreparationSubtitle: "Definește gestiunea și secția de pregătire pentru comenzi",
+        stockManagement: "Gestiune stoc",
+        stockManagementPlaceholder: "Ex: Bucătărie, Bar",
+        preparationSection: "Secție preparare",
+        preparationSectionPlaceholder: "Ex: BUCĂTĂRIE, BAR...",
+        preparationTime: "Timp preparare (min)",
+        preparationTimePlaceholder: "Ex: 15",
+        vegetarian: "Vegetarian",
+        spicy: "Picant",
+        takeoutOnly: "Doar la pachet",
+        
+        descriptionInfo: "Descriere & informații",
+        descriptionInfoSubtitle: "Textele afișate în meniurile clienților și aplicații",
+        descriptionRo: "Descriere (RO)",
+        descriptionRoPlaceholder: "Descriere pentru clienți, ingredientele principale",
+        descriptionEn: "Descriere (EN)",
+        descriptionEnPlaceholder: "English description (opțional)",
+        allergens: "Alergeni",
+        additives: "Aditivi",
+        ingredients: "Ingrediente",
+        ingredientsPlaceholder: "Listă ingrediente separate prin virgulă",
+        
+        customizations: "Personalizări",
+        customizationsSubtitle: "Opțiuni de personalizare pentru client (extra sos, adaosuri, etc.)",
+        customizationName: "Nume opțiune",
+        customizationNamePlaceholder: "Ex: Extra bacon",
+        customizationNameEn: "Nume opțiune (EN)",
+        customizationNameEnPlaceholder: "Ex: Extra bacon",
+        customizationPrice: "Preț +",
+        customizationPriceRon: "RON",
+        addCustomization: "Adaugă personalizare",
+        
+        nutritionalInfo: "Informații nutriționale",
+        nutritionalInfoSubtitle: "Detalii opționale pentru clienții atenți la alimentație",
+        spiceLevel: "Nivel iuțeală (1-5)",
+        calories: "Calorii (kcal)",
+        protein: "Proteine (g)",
+        carbs: "Carbohidrați (g)",
+        fat: "Grăsimi (g)",
+        fiber: "Fibre (g)",
+        sodium: "Sodiu (mg)",
+        sugar: "Zahar (g)",
+        salt: "Sare (g)",
+        
+        productImage: "Imagine produs",
+        productImageSubtitle: "Încarcă o imagine reprezentativă (JPG, PNG, max 5MB)",
+        uploadImage: "Încarcă imagine nouă",
+        currentImage: "Imagine curentă",
+        imagePreview: "Previzualizare produs",
+        removeImage: "Elimină imaginea",
+        replaceImage: "Înlocuiește",
+        
+        saveChanges: "Salvează modificările",
+        saving: "Se salvează..."
+      },
+
+      // Product Dependencies Modal
+      dependencies: {
+        title: "Dependențe Produs",
+        subtitle: "Produse care necesită acest ingredient",
+        dependentProducts: "Produse Dependente",
+        noDependencies: "Nu există produse care depind de acest ingredient",
+        productName: "Nume Produs",
+        category: "Categorie",
+        quantity: "Cantitate",
+        unit: "Unitate"
+      },
+
+      // Product Messages Modal
+      productMessages: {
+        title: "Mesaje Produs",
+        subtitle: "Mesaje și notificări pentru",
+        history: "Istoric Mesaje",
+        noMessages: "Nu există mesaje pentru acest produs",
+        date: "Dată",
+        type: "Tip",
+        message: "Mesaj",
+        author: "Autor"
+      },
+
+      // Bulk Price Modal
+      bulkPrice: {
+        title: "Actualizare Preț în Masă",
+        subtitle: "Modifică prețurile pentru produsele selectate",
+        adjustmentType: "Tip Ajustare",
+        percentage: "Procent (%)",
+        fixedAmount: "Sumă Fixă (RON)",
+        increase: "Creștere",
+        decrease: "Scădere",
+        selectedProducts: "Produse Selectate",
+        preview: "Previzualizare Modificări",
+        currentPrice: "Preț Curent",
+        newPrice: "Preț Nou",
+        apply: "Aplică Modificările",
+        applyingChanges: "Se aplică modificările...",
+        success: "Prețurile au fost actualizate cu succes",
+        error: "Eroare la actualizarea prețurilor"
+      },
+
+      // Price History Modal
+      priceHistory: {
+        title: "Istoric Prețuri",
+        subtitle: "Evoluția prețurilor pentru",
+        date: "Dată",
+        oldPrice: "Preț Vechi",
+        newPrice: "Preț Nou",
+        change: "Modificare",
+        changedBy: "Modificat de",
+        noHistory: "Nu există istoric de prețuri pentru acest produs"
+      },
+
+      // Clone Product Modal
+      cloneProduct: {
+        title: "Clonează Produs",
+        subtitle: "Creează o copie a produsului selectat",
+        newProductName: "Nume Produs Nou",
+        newProductNamePlaceholder: "Ex: Pizza Quattro Stagioni - Copie",
+        copyCustomizations: "Copiază Personalizări",
+        copyImage: "Copiază Imaginea",
+        cloning: "Se clonează...",
+        success: "Produs clonat cu succes",
+        error: "Eroare la clonarea produsului"
+      },
+
+      // Category Advanced Filter
+      categoryFilter: {
+        title: "Filtre Avansate",
+        category: "Categorie",
+        allCategories: "Toate Categoriile",
+        status: "Status",
+        allStatuses: "Toate Statusurile",
+        priceRange: "Interval Preț",
+        minPrice: "Preț Minim",
+        maxPrice: "Preț Maxim",
+        hasImage: "Cu Imagine",
+        isVegetarian: "Vegetarian",
+        isSpicy: "Picant",
+        inStock: "În Stoc",
+        applyFilters: "Aplică Filtre",
+        clearFilters: "Șterge Filtre"
+      },
+
+      // Menu Builder
+      menuBuilder: {
+        title: "Constructor Meniu",
+        subtitle: "Creează și editează produse din meniu",
+        basicInfo: "Informații de Bază",
+        portions: "Porții",
+        modifiers: "Modificatori",
+        allergens: "Alergeni",
+        availability: "Disponibilitate",
+        ingredients: "Ingrediente",
+        preview: "Previzualizare",
+        
+        // Basic Info Card
+        productDetails: "Detalii Produs",
+        generalInformation: "Informații Generale",
+        pricingInfo: "Informații Preț",
+        
+        // Portions Card
+        portionSizes: "Dimensiuni Porții",
+        addPortion: "Adaugă Porție",
+        portionName: "Nume Porție",
+        portionSize: "Dimensiune",
+        portionPrice: "Preț",
+        defaultPortion: "Porție Implicită",
+        noPortion: "Nu există porții definite",
+        
+        // Modifiers Card
+        modifierGroups: "Grupuri Modificatori",
+        addModifier: "Adaugă Modificator",
+        modifierName: "Nume Modificator",
+        modifierPrice: "Preț",
+        modifierRequired: "Obligatoriu",
+        modifierMultiple: "Selecție Multiplă",
+        noModifiers: "Nu există modificatori definiți",
+        
+        // Allergens Card
+        allergensList: "Listă Alergeni",
+        selectAllergens: "Selectează Alergenii",
+        noAllergens: "Fără alergeni",
+        
+        // Availability Card
+        availabilitySchedule: "Program Disponibilitate",
+        availableDays: "Zile Disponibile",
+        availableHours: "Ore Disponibile",
+        alwaysAvailable: "Mereu Disponibil",
+        customSchedule: "Program Personalizat",
+        
+        // Ingredients Card
+        ingredientsList: "Listă Ingrediente",
+        addIngredient: "Adaugă Ingredient",
+        ingredientName: "Nume Ingredient",
+        ingredientQuantity: "Cantitate",
+        noIngredients: "Nu există ingrediente definite",
+        
+        // Preview Card
+        menuPreview: "Previzualizare Meniu",
+        customerView: "Vedere Client",
+        qrCodePreview: "Previzualizare Cod QR"
+      },
+
+      // Menu PDF Builder
+      menuPdf: {
+        title: "Constructor PDF Meniu",
+        subtitle: "Generează meniu în format PDF pentru printare",
+        pdfSettings: "Setări PDF",
+        pageSize: "Dimensiune Pagină",
+        orientation: "Orientare",
+        portrait: "Portret",
+        landscape: "Peisaj",
+        columns: "Coloane",
+        showPrices: "Afișează Prețuri",
+        showImages: "Afișează Imagini",
+        showDescriptions: "Afișează Descrieri",
+        showAllergens: "Afișează Alergeni",
+        categorySettings: "Setări Categorii",
+        selectCategories: "Selectează Categorii",
+        categoryOrder: "Ordine Categorii",
+        generatePdf: "Generează PDF",
+        generating: "Se generează PDF...",
+        downloadPdf: "Descarcă PDF",
+        previewPdf: "Previzualizare PDF",
+        
+        // PDF Category Card
+        categoryCard: "Categorie",
+        includeInPdf: "Include în PDF",
+        productsCount: "Produse",
+        moveUp: "Mută Sus",
+        moveDown: "Mută Jos"
+      }
     },
-    // Recipes
-    recipe: {
-      no_recipe: "Fără rețetă",
-      recipe_name: "Nume rețetă",
-      recipe_ingredients: "Ingrediente rețetă",
-      recipe_steps: "Pași rețetă",
-      add_recipe: "Adaugă rețetă",
-      edit_recipe: "Editează rețetă",
-      delete_recipe: "Șterge rețetă",
-      view_recipe: "Vezi rețetă",
-      recipe_details: "Detalii rețetă",
-      ingredient_quantity: "Cantitate ingredient",
-      preparation_time: "Timp preparare",
-      cooking_time: "Timp gătire",
-      total_time: "Timp total",
-      servings: "Porții",
-      difficulty: "Dificultate",
-      cost_per_portion: "Cost per porție",
-      selling_price: "Preț vânzare",
-      profit_margin: "Marjă profit"
+    
+    // ========== DASHBOARD MODULE ==========
+    dashboard: {
+      title: "Tablou de Bord",
+      subtitle: "Prezentare generală",
+      
+      // Overview
+      overview: {
+        title: "Prezentare Generală",
+        today: "Azi",
+        yesterday: "Ieri",
+        thisWeek: "Săptămâna Aceasta",
+        lastWeek: "Săptămâna Trecută",
+        thisMonth: "Luna Aceasta",
+        lastMonth: "Luna Trecută",
+        compare: "Compară"
+      },
+      
+      // Metrics
+      metrics: {
+        revenue: "Venituri",
+        orders: "Comenzi",
+        customers: "Clienți",
+        avgOrder: "Comandă Medie",
+        sales: "Vânzări",
+        profit: "Profit",
+        margin: "Marjă",
+        growth: "Creștere",
+        change: "Schimbare",
+        vs: "vs",
+        revenueToday: "Venituri Astăzi",
+        ordersToday: "Comenzi Astăzi",
+        profitToday: "Profit Astăzi",
+        cogsToday: "COGS Astăzi",
+        cogsDescription: "Cost ingrediente vândute",
+        marginLabel: "Marjă",
+        vsYesterday: "față de ieri",
+        salesToday: "Vânzări Astăzi",
+        estimatedProfit: "Profit Estimat",
+        criticalStock: "Stocuri Critice",
+        warnings: "avertismente"
+      },
+      
+      // KPI Business
+      kpi: {
+        loading: "Se încarcă KPI-urile business...",
+        error: "Eroare la încărcarea KPI-urilor:",
+        stockAlerts: "Alerte Stoc",
+        lowStockProducts: "Produse sub minim stoc",
+        customerRetention: "Retenție Clienți",
+        returningCustomers: "Clienți care revin",
+        tableRotation: "Rotație Mese",
+        groupsPerTable: "Grupuri per masă ocupată",
+        tableUtilization: "Utilizare Mese",
+        tablesUsed: "Mese folosite din 200",
+        overallRating: "Rating Mediu OVERALL",
+        overallRatings: "evaluări (overall)",
+        excellentRatings: "Rating-uri 5★ (OVERALL)",
+        veryHappyCustomers: "Clienți foarte mulțumiți",
+        lowRatings: "Rating-uri ≤2★ (OVERALL)",
+        needsAttention: "Necesită atenție urgentă",
+        revenueChart: "Evoluție Venituri & Marjă Brută (Ultimele 7 zile)",
+        revenueLabel: "Venituri (RON)",
+        grossMargin: "Marjă Brută (%)",
+        revenueTooltip: "Venituri:",
+        marginTooltip: "Marjă:",
+        top5Products: "Top 5 Produse Astăzi",
+        product: "Produs",
+        quantity: "Cantitate",
+        revenue: "Venit",
+        percentage: "%",
+        noData: "Nu există date disponibile",
+        topProductsDistribution: "Top Produse - Distribuție Venituri",
+        revenueRon: "Venit (RON)"
+      },
+      
+      // Charts
+      charts: {
+        salesOverTime: "Vânzări în Timp",
+        ordersByType: "Comenzi pe Tipuri",
+        topProducts: "Produse Populare",
+        revenueByCategory: "Venituri pe Categorii",
+        hourlyActivity: "Activitate pe Ore",
+        dailyActivity: "Activitate Zilnică",
+        weeklyTrend: "Trend Săptămânal",
+        monthlyTrend: "Trend Lunar",
+        dailySalesPerPlatform: "Vânzări Zilnice per Platformă",
+        salesPerPlatformToday: "Vânzări per Platformă (Astăzi)",
+        top10Products: "Top 10 Produse Vândute",
+        cancellationRatePerPlatform: "Rată Anulare per Platformă"
+      },
+      
+      // Widgets
+      widgets: {
+        liveOrders: "Comenzi Live",
+        recentActivity: "Activitate Recentă",
+        alerts: "Alerte",
+        notifications: "Notificări",
+        tasks: "Sarcini",
+        quickActions: "Acțiuni Rapide",
+        performance: "Performanță"
+      },
+      
+      // Filters
+      filters: {
+        dateRange: "Interval Date",
+        location: "Locație",
+        category: "Categorie",
+        paymentMethod: "Metodă Plată",
+        orderType: "Tip Comandă",
+        apply: "Aplică Filtre",
+        reset: "Resetează Filtre",
+        from: "De la",
+        to: "Până la",
+        date: "Data"
+      },
+      
+      // PIN Rotation (DashboardPage)
+      pinRotation: {
+        title: "Audit rotație PIN-uri",
+        subtitle: "Monitorizare automată Admin · POS · KDS",
+        interface: "Interfață",
+        category: "Categorie",
+        status: "Status",
+        lastRotation: "Ultima rotație",
+        summary: "Sumar",
+        errorLoading: "Nu am putut încărca statusurile PIN:",
+        retry: "Reîncearcă",
+        updating: "Se actualizează statusurile PIN...",
+        filterPlaceholder: "Filtrează după interfață, categorie sau status",
+        urgentRotations: "Rotații urgente",
+        noUrgentRotations: "Nicio rotație urgentă identificată în acest moment."
+      },
+      
+      // Monitoring
+      monitoring: {
+        title: "Dashboard Monitorizare și Performanță",
+        refresh: "Reîncarcă",
+        tabOverview: "Prezentare Generală",
+        tabQueue: "Monitor Coadă",
+        tabPerformance: "Performance Metrics",
+        systemMetrics: "Metrici Sistem",
+        responseTime: "Timp de Răspuns:",
+        activeConnections: "Conexiuni Active:",
+        memoryUsage: "Utilizare Memorie:",
+        orderMetrics: "Metrici Comenzi",
+        avgPrepTime: "Timp Mediu Preparare:",
+        delayedOrders: "Comenzi Întârziate",
+        kitchenLoad: "Încărcare Bucătărie",
+        barLoad: "Încărcare Bar",
+        alertsTitle: "Alerte",
+        delayedOrdersAlert: "{count} comenzi întârziate necesită atenție!",
+        kitchenLoadAlert: "Bucătăria este încărcată ({count} comenzi)",
+        allOk: "Totul funcționează normal",
+        loading: "Se încarcă...",
+        performanceMetrics: "Metrici Performanță",
+        systemPerformance: "Performanță Sistem",
+        heapUsed: "Memorie Heap Utilizată:",
+        heapTotal: "Memorie Heap Totală:",
+        orderPerformance: "Performanță Comenzi",
+        loadingMetrics: "Se încarcă metrici..."
+      },
+      
+      // Executive Dashboard
+      executive: {
+        title: "Dashboard Executive",
+        subtitle: "KPI-uri critice pentru management",
+        loading: "Se încarcă...",
+        error: "Eroare",
+        retry: "Reîncearcă",
+        todaySales: "Vânzări Astăzi",
+        todayOrders: "Comenzi astăzi",
+        updateData: "Actualizează datele",
+        updating: "Se actualizează...",
+        criticalStockTable: "Stocuri Critice",
+        noCriticalStock: "Nu există stocuri critice",
+        ingredient: "Ingredient",
+        stock: "Stoc",
+        minimum: "Minim",
+        unit: "Unit.",
+        pendingOrders: "Comenzi în așteptare",
+        noPendingOrders: "Nu există comenzi în așteptare",
+        orderId: "ID",
+        platform: "Platformă",
+        waiting: "Așteptare",
+        total: "Total",
+        platformMobileApp: "Aplicația Mobilă",
+        platformPOS: "POS Restaurant",
+        platformKIOSK: "KIOSK Self-Service",
+        platformPhone: "Telefon"
+      },
+      
+      // Hostess Dashboard
+      hostess: {
+        title: "📊 Hostess Dashboard",
+        subtitle: "Analytics ocupare mese și sesiuni",
+        totalSessions: "Total Sesiuni",
+        totalCovers: "Total Covers",
+        avgDuration: "Durată Medie (min)",
+        coversPerSession: "Covers / Sesiune",
+        zoneDistribution: "Distribuție pe zone",
+        sessionsPerHour: "Sesiuni pe Oră (zi aleasă)",
+        sessions: "Sesiuni",
+        covers: "Covers",
+        selectDay: "Zi pentru grafic orar"
+      },
+      
+      // Coatroom Dashboard
+      coatroom: {
+        title: "📊 Coatroom Dashboard",
+        subtitle: "Analytics tichete garderobă și valet",
+        totalTickets: "Total Tichete",
+        open: "Deschise",
+        closed: "Închise",
+        lost: "Pierdute",
+        ticketsPerHour: "Tichete pe oră",
+        statusDistribution: "Distribuție status",
+        tickets: "Tichete"
+      },
+      
+      // Lost & Found Dashboard
+      lostFound: {
+        title: "📊 Lost & Found Dashboard",
+        subtitle: "Analytics obiecte găsite și pierdute",
+        totalItems: "Total Obiecte",
+        stored: "În depozit",
+        returned: "Returnate",
+        returnRate: "Rată returnare",
+        itemsByLocation: "Obiecte pe locații",
+        itemStatus: "Status Obiecte",
+        items: "Obiecte",
+        inStorage: "În Depozit",
+        returnedStatus: "Returnate",
+        disposed: "Eliminate"
+      }
     },
-    // Forms
-    form: {
-      required: "Obligatoriu",
-      optional: "Opțional",
-      select_option: "Selectează o opțiune",
-      select_category: "Selectează categoria",
-      select_product: "Selectează produsul",
-      enter_name: "Introdu numele",
-      enter_description: "Introdu descrierea",
-      enter_price: "Introdu prețul",
-      enter_quantity: "Introdu cantitatea",
-      enter_code: "Introdu codul",
-      search_placeholder: "Caută...",
-      filter_placeholder: "Filtrează...",
-      no_results: "Nu există rezultate",
-      validation_required: "Acest câmp este obligatoriu",
-      validation_min_length: "Lungime minimă: {min} caractere",
-      validation_max_length: "Lungime maximă: {max} caractere",
-      validation_min_value: "Valoare minimă: {min}",
-      validation_max_value: "Valoare maximă: {max}",
-      validation_invalid_email: "Email invalid",
-      validation_invalid_phone: "Telefon invalid",
-      validation_invalid_number: "Număr invalid"
-    },
-    // Messages
-    messages: {
-      save_success: "Salvat cu succes",
-      save_error: "Eroare la salvare",
-      delete_success: "Șters cu succes",
-      delete_error: "Eroare la ștergere",
-      update_success: "Actualizat cu succes",
-      update_error: "Eroare la actualizare",
-      create_success: "Creat cu succes",
-      create_error: "Eroare la creare",
-      load_error: "Eroare la încărcare",
-      network_error: "Eroare de rețea",
-      confirm_delete: "Ești sigur că vrei să ștergi?",
-      confirm_cancel: "Ești sigur că vrei să anulezi?",
-      unsaved_changes: "Ai modificări nesalvate",
-      operation_success: "Operațiune realizată cu succes",
-      operation_failed: "Operațiunea a eșuat",
-      no_permission: "Nu ai permisiunea necesară",
-      session_expired: "Sesiunea a expirat",
-      please_login: "Te rugăm să te autentifici"
-    },
-    // Menu PDF
-    menuPdf: {
-      generate_pdf: "Generează PDF",
-      pdf_settings: "Setări PDF",
-      font_family: "Familie font",
-      font_size: "Dimensiune font",
-      show_prices: "Afișează prețuri",
-      show_descriptions: "Afișează descrieri",
-      show_images: "Afișează imagini",
-      upload_bulk: "Upload în masă",
-      category_image: "Imagine categorie",
-      section_grouping: "Grupare secțiuni",
-      preview_pdf: "Previzualizare PDF"
-    },
-    // Ingredients
-    ingredients: {
-      ingredient_name: "Nume ingredient",
-      ingredient_code: "Cod ingredient",
-      unit_measure: "Unitate de măsură",
-      current_stock: "Stoc curent",
-      minimum_stock: "Stoc minim",
-      add_ingredient: "Adaugă ingredient",
-      edit_ingredient: "Editează ingredient",
-      delete_ingredient: "Șterge ingredient",
-      ingredient_category: "Categorie ingredient",
-      supplier: "Furnizor",
-      unit_cost: "Cost unitar",
-      last_purchase: "Ultima achiziție"
-    },
-    // Catalog
-    catalog: {
-      catalog_title: "Catalog produse",
-      product_grid: "Grilă produse",
-      product_list: "Listă produse",
-      filter_by_category: "Filtrează după categorie",
-      sort_by: "Sortează după",
-      sort_name: "Nume",
-      sort_price: "Preț",
-      sort_category: "Categorie",
-      view_details: "Vezi detalii",
-      add_to_menu: "Adaugă în meniu",
-      remove_from_menu: "Elimină din meniu"
-    },
-    // Waiters
-    waiters: {
-      waiter_name: "Nume chelner",
-      waiter_code: "Cod chelner",
-      active_waiters: "Chelneri activi",
-      add_waiter: "Adaugă chelner",
-      edit_waiter: "Editează chelner",
-      delete_waiter: "Șterge chelner",
-      waiter_performance: "Performanță chelner",
-      total_orders: "Total comenzi",
-      total_sales: "Total vânzări"
-    },
-    // Reservations
+    
+    // ========== RESERVATIONS MODULE ==========
     reservations: {
-      reservation_details: "Detalii rezervare",
-      new_reservation: "Rezervare nouă",
-      edit_reservation: "Editează rezervare",
-      cancel_reservation: "Anulează rezervare",
-      customer_name: "Nume client",
-      customer_phone: "Telefon client",
-      reservation_date: "Dată rezervare",
-      reservation_time: "Oră rezervare",
-      number_of_guests: "Număr persoane",
-      table_number: "Număr masă",
-      special_requests: "Cerințe speciale",
-      confirmed: "Confirmată",
-      pending: "În așteptare",
-      cancelled: "Anulată",
-      completed: "Finalizată"
+      title: "Rezervări",
+      subtitle: "Gestiune rezervări",
+      
+      // Status
+      status: {
+        all: "Toate",
+        pending: "În Așteptare",
+        confirmed: "Confirmate",
+        seated: "Așezați",
+        completed: "Finalizate",
+        cancelled: "Anulate",
+        noShow: "Nu S-au Prezentat"
+      },
+      
+      // List
+      list: {
+        title: "Listă Rezervări",
+        search: "Caută rezervări...",
+        filter: "Filtrează",
+        today: "Astăzi",
+        upcoming: "Viitoare",
+        past: "Anterioare",
+        date: "Dată",
+        time: "Oră",
+        customer: "Client",
+        guests: "Persoane",
+        table: "Masă",
+        status: "Status",
+        actions: "Acțiuni",
+        noReservations: "Nu există rezervări"
+      },
+      
+      // Filters
+      filters: {
+        from: "De la",
+        to: "Până la",
+        next7Days: "Următoarele 7 zile",
+        searchPlaceholder: "Caută după client, telefon, email sau cod",
+        includeCancelled: "Include anulările",
+        exportCsv: "Export CSV"
+      },
+      
+      // New Reservation
+      new: {
+        title: "Rezervare Nouă",
+        customer: "Client",
+        date: "Dată",
+        time: "Oră",
+        guests: "Număr Persoane",
+        duration: "Durată",
+        table: "Masă",
+        autoAssign: "Alocare Automată",
+        notes: "Observații",
+        specialRequests: "Cerințe Speciale",
+        occasion: "Ocazie",
+        create: "Creează Rezervare",
+        cancel: "Anulează"
+      },
+      
+      // Modal
+      modal: {
+        edit: "Editează rezervarea",
+        table: "Masă",
+        fullNamePlaceholder: "Nume complet",
+        phonePlaceholder: "07xx xxx xxx",
+        emailPlaceholder: "client@email.com",
+        duration: "Durată (minute)",
+        persons: "pers.",
+        selectTable: "Selectează masa",
+        occupied: "ocupată",
+        checkingAvailability: "Se verifică disponibilitatea meselor...",
+        errorLoadingTables: "Eroare la încărcarea meselor",
+        customerNotes: "Note client",
+        customerNotesPlaceholder: "Preferințe, alergii, cereri speciale",
+        internalNotes: "Note interne",
+        internalNotesPlaceholder: "Instrucțiuni pentru staff, notificări către host",
+        saving: "Se salvează...",
+        saveChanges: "Salvează modificările",
+        errorSaving: "Nu am putut salva rezervarea"
+      },
+      
+      // Calendar
+      calendar: {
+        title: "Calendar Rezervări",
+        day: "Zi",
+        week: "Săptămână",
+        month: "Lună",
+        timeline: "Timeline",
+        today: "Astăzi",
+        next: "Următoarea",
+        previous: "Anterior",
+        slot: "Interval",
+        available: "Disponibil",
+        booked: "Rezervat",
+        blocked: "Blocat"
+      },
+      
+      // Tables
+      tables: {
+        title: "Gestiune Mese",
+        tableNumber: "Număr Masă",
+        capacity: "Capacitate",
+        section: "Secțiune",
+        floor: "Etaj",
+        available: "Disponibilă",
+        occupied: "Ocupată",
+        reserved: "Rezervată",
+        blocked: "Blocată",
+        combine: "Combină Mese",
+        split: "Separă Mese"
+      },
+      
+      // Customer
+      customer: {
+        name: "Nume",
+        phone: "Telefon",
+        email: "Email",
+        vip: "VIP",
+        notes: "Note despre Client",
+        preferences: "Preferințe",
+        allergies: "Alergii",
+        history: "Istoric Rezervări",
+        visits: "Vizite",
+        lastVisit: "Ultima Vizită"
+      },
+      
+      // Actions
+      actions: {
+        confirm: "Confirmă",
+        seat: "Așează",
+        complete: "Finalizează",
+        cancel: "Anulează",
+        noShow: "Nu S-a Prezentat",
+        edit: "Editează",
+        reschedule: "Reprogramează",
+        sendReminder: "Trimite Memento",
+        printConfirmation: "Printează Confirmare"
+      },
+      
+      // Messages
+      messages: {
+        reservationCreated: "Rezervare creată",
+        reservationUpdated: "Rezervare actualizată",
+        reservationCancelled: "Rezervare anulată",
+        reservationConfirmed: "Rezervare confirmată",
+        tableAssigned: "Masă alocată",
+        reminderSent: "Memento trimis",
+        confirmCancel: "Sigur vrei să anulezi această rezervare?",
+        noTablesAvailable: "Nu există mese disponibile",
+        alreadyBooked: "Intervalul este deja rezervat"
+      },
+      
+      // Timeline
+      timeline: {
+        title: "Timeline rezervare",
+        loading: "Se încarcă istoricul evenimentelor...",
+        errorLoading: "Nu am putut încărca timeline-ul",
+        noEvents: "Nu există evenimente înregistrate pentru această rezervare",
+        operatedBy: "Operat de",
+        systemOperation: "Operat din sistem"
+      },
+      
+      // Page
+      page: {
+        title: "Gestionare Rezervări",
+        subtitle: "Planifică, confirmă și urmărește rezervările din restaurant",
+        refreshData: "Reîmprospătează datele",
+        reservationsToday: "Rezervări Astăzi",
+        totalScheduledToday: "Total programate pentru azi",
+        confirmed: "Confirmate",
+        cancelled: "Anulate",
+        selectedInterval: "Interval selectat",
+        includesNoShow: "Include no-show",
+        occupancyRate: "Grad Ocupare",
+        tablesToday: "mese astăzi",
+        capacity: "Capacitate",
+        markCompleted: "Marchează finalizat",
+        sendReminder: "Trimite reminder",
+        confirmationCode: "Cod Confirmare",
+        dateTime: "Data & Oră",
+        notSet: "Nesetat"
+      }
     }
   },
   en: {
+
+    // TopBar & Authentication
+    auth: {
+      login: "Login",
+      logout: "Logout",
+      username: "Username",
+      password: "Password",
+      adminLogin: "Admin Login",
+      invalidCredentials: "Invalid credentials",
+      authError: "Authentication error",
+      poweredBy: "Powered by QrOMS"
+    },
     // Navigation & Menu
     nav: {
       dashboard: "Dashboard",
+      home: "Home",
       orders: "Orders",
       menu: "Menu",
       catalog: "Catalog",
@@ -358,6 +1685,11 @@ export const translations = {
       settings: "Settings",
       marketing: "Marketing",
       enterprise: "Enterprise",
+      management: "Management",
+      accounting: "Accounting",
+      recipes: "Recipes",
+      fiscal: "Fiscal",
+      audit: "Audit & Security",
       logout: "Logout"
     },
     // Common actions
@@ -385,12 +1717,14 @@ export const translations = {
       apply: "Apply",
       reset: "Reset",
       select: "Select",
+      selectAll: "Select All",
+      deselectAll: "Deselect All",
+      clear: "Clear",
       create: "Create",
       update: "Update",
-      remove: "Remove",
-      copy: "Copy",
-      paste: "Paste",
-      duplicate: "Duplicate"
+      clone: "Clone",
+      duplicate: "Duplicate",
+      retry: "Retry"
     },
     // Common labels
     common: {
@@ -399,6 +1733,7 @@ export const translations = {
       price: "Price",
       quantity: "Quantity",
       total: "Total",
+      subtotal: "Subtotal",
       date: "Date",
       time: "Time",
       status: "Status",
@@ -419,277 +1754,1510 @@ export const translations = {
       inactive: "Inactive",
       enabled: "Enabled",
       disabled: "Disabled",
+      optional: "Optional",
+      required: "Required",
+      selected: "Selected",
+      filtered: "Filtered",
+      product: "Product",
+      processing: "Processing...",
+      items: "Items",
+      results: "Results",
+      showing: "Showing",
+      of: "of",
+      to: "to",
+      per: "per",
+      page: "Page",
+      perPage: "Per Page",
       id: "ID",
       code: "Code",
       unit: "Unit",
-      notes: "Notes",
-      actions: "Actions",
-      order: "Order",
-      customer: "Customer",
-      table: "Table",
-      waiter: "Waiter",
-      kitchen: "Kitchen"
-    },
-    // Table headers
-    table: {
-      category: "Category",
-      product: "Product",
-      price_ron: "Price (RON)",
-      price: "Price",
-      name: "Name",
-      quantity: "Quantity",
       stock: "Stock",
-      status: "Status",
-      ingredient: "Ingredient",
-      current_stock: "Current Stock",
-      minimum_stock: "Minimum Stock",
-      ingredients: "Ingredients",
-      unit: "Unit",
-      actions: "Actions",
-      date: "Date",
-      time: "Time",
-      amount: "Amount",
-      total: "Total",
-      description: "Description",
-      code: "Code",
-      barcode: "Barcode",
       supplier: "Supplier",
       cost: "Cost",
-      allergens: "Allergens",
-      additives: "Additives",
-      recipe: "Recipe",
-      portion: "Portion",
-      weight: "Weight"
+      margin: "Margin",
+      vat: "VAT",
+      notes: "Notes",
+      actions: "Actions"
     },
-    // Product management
-    product: {
-      kitchen_section: "Kitchen",
-      section_bar: "BAR",
-      section_pizzeria: "PIZZERIA",
-      section_pastry: "PASTRY",
-      section_delivery: "Delivery",
-      section_dine_in: "Dine In",
-      unit_piece: "pcs",
-      unit_grams: "g",
-      unit_kilograms: "kg",
-      unit_milliliters: "ml",
-      unit_liters: "l",
-      unit_portion: "portion",
-      no_allergens_declared: "No allergens declared",
-      active: "Active",
-      inactive: "Inactive",
-      available: "Available",
-      unavailable: "Unavailable",
-      in_stock: "In Stock",
-      out_of_stock: "Out of Stock",
-      add_product: "Add Product",
-      edit_product: "Edit Product",
-      delete_product: "Delete Product",
-      product_details: "Product Details",
-      product_name: "Product Name",
-      product_code: "Product Code",
-      product_price: "Product Price",
-      product_category: "Product Category",
-      product_image: "Product Image"
+    // Admin Main Page
+    adminMain: {
+      title: "Main Admin Menu",
+      subtitle: "Select an option to continue",
+      dashboard: {
+        title: "Dashboard",
+        description: "Overview and statistics"
+      },
+      catalog: {
+        title: "Catalog",
+        description: "Product catalog management"
+      },
+      menu: {
+        title: "Menu",
+        description: "Restaurant menu management"
+      },
+      waiters: {
+        title: "Waiters",
+        description: "Service staff management"
+      },
+      orders: {
+        title: "Orders",
+        description: "View and manage orders"
+      },
+      reservations: {
+        title: "Reservations",
+        description: "Table reservation management"
+      },
+      stocks: {
+        title: "Stocks",
+        description: "Inventory and stock management"
+      },
+      analytics: {
+        title: "Analytics",
+        description: "Detailed reports and analysis"
+      },
+      dailyOffers: {
+        title: "Daily Offers",
+        description: "Daily menu and promotions management"
+      },
+      messages: {
+        title: "Messages",
+        description: "Internal communication"
+      },
+      settings: {
+        title: "Settings",
+        description: "System configuration"
+      }
     },
-    // Orders
+    // Admin Advanced Page
+    adminAdvanced: {
+      title: "Advanced Features",
+      subtitle: "Advanced tools and reports for business analysis",
+      filters: {
+        all: "All",
+        analytics: "Analytics",
+        operations: "Operations",
+        reports: "Reports"
+      }
+    },
+    // Recipes Catalog Page
+    recipesCatalog: {
+      title: "Recipes Catalog",
+      subtitle: "Manage and import recipes from catalog",
+      tabs: {
+        recipes: "Recipes",
+        allergens: "Allergens Reference",
+        additives: "Additives"
+      },
+      stats: {
+        total: "Total Recipes",
+        filtered: "Filtered",
+        selected: "Selected",
+        avgMargin: "Avg Margin"
+      },
+      filters: {
+        search: "Search recipe...",
+        industry: "Industry",
+        allergen: "Allergen",
+        allIndustries: "All industries",
+        allAllergens: "All allergens"
+      },
+      columns: {
+        name: "Recipe Name",
+        industry: "Industry",
+        allergens: "Allergens",
+        suggestedPrice: "Suggested Price",
+        costPerPortion: "Cost/Portion",
+        margin: "Margin %",
+        actions: "Actions"
+      },
+      importModal: {
+        title: "Import Recipe",
+        price: "Sale price (RON)",
+        imageUrl: "Image URL (optional)",
+        customDescription: "Custom description (optional)",
+        importing: "Importing...",
+        success: "Recipe imported successfully!",
+        error: "Error importing recipe"
+      },
+      bulkImport: {
+        confirm: "Confirm Bulk Import",
+        message: "Are you sure you want to import {count} recipes?",
+        progress: "Bulk Import",
+        completed: "Completed",
+        success: "{success} recipes imported successfully",
+        errors: "{errors} errors",
+        details: "Import details"
+      },
+      exportCsv: "Export CSV",
+      exportSuccess: "CSV exported successfully!",
+      loading: "Loading recipes...",
+      loadError: "Error loading recipes",
+      noData: "No recipes available"
+    },
+    // Ingredients Catalog Page
+    ingredientsCatalog: {
+      title: "Ingredients Catalog",
+      subtitle: "Manage and import ingredients from catalog",
+      tabs: {
+        ingredients: "Ingredients",
+        allergens: "Allergens Reference",
+        additives: "Additives Reference"
+      },
+      stats: {
+        total: "Total Ingredients",
+        filtered: "Filtered",
+        selected: "Selected",
+        avgWaste: "Avg Waste %"
+      },
+      filters: {
+        search: "Search ingredient...",
+        category: "Category",
+        allergen: "Allergen",
+        allCategories: "All categories",
+        allAllergens: "All allergens",
+        noAllergens: "No Allergens"
+      },
+      columns: {
+        name: "Ingredient Name",
+        category: "Category",
+        allergens: "Allergens",
+        estimatedCost: "Estimated Cost",
+        wastePercentage: "Waste %",
+        actions: "Actions"
+      },
+      importModal: {
+        title: "Import Ingredient",
+        cost: "Unit cost (RON)",
+        stock: "Initial stock quantity",
+        supplier: "Supplier (optional)",
+        importing: "Importing...",
+        success: "Ingredient imported successfully!",
+        error: "Error importing ingredient"
+      },
+      bulkImport: {
+        confirm: "Confirm Bulk Import",
+        message: "Are you sure you want to import {count} ingredients?",
+        progress: "Bulk Import Ingredients",
+        completed: "Completed",
+        success: "{success} ingredients imported successfully",
+        errors: "{errors} errors",
+        details: "Import details"
+      },
+      exportCsv: "Export CSV",
+      exportSuccess: "CSV exported successfully!",
+      loading: "Loading ingredients...",
+      loadError: "Error loading ingredients",
+      noData: "No ingredients available"
+    },
+    // Confirmation Modal
+    confirmModal: {
+      warning: "Warning",
+      info: "Information",
+      danger: "Danger",
+      success: "Confirmation"
+    },
+    // Validation messages
+    validation: {
+      required: "This field is required",
+      invalidNumber: "Please enter a valid number",
+      positiveNumber: "Number must be positive",
+      invalidEmail: "Please enter a valid email address",
+      minLength: "Minimum {min} characters",
+      maxLength: "Maximum {max} characters"
+    },
+    
+    // ========== TIER 1 MODULES - COMPREHENSIVE TRANSLATIONS ==========
+
+    // ========== POS MODULE ==========
+    pos: {
+      title: "Point of Sale",
+      subtitle: "Complete POS system",
+      
+      // Modes
+      modes: {
+        dineIn: "Dine In",
+        takeaway: "Takeaway",
+        delivery: "Delivery",
+        driveThru: "Drive-Thru"
+      },
+      
+      // Table selection
+      tables: {
+        selectTable: "Select Table",
+        table: "Table",
+        tables: "Tables",
+        floor: "Floor",
+        section: "Section",
+        available: "Available",
+        occupied: "Occupied",
+        reserved: "Reserved",
+        noTables: "No tables available",
+        openOrder: "Open order",
+        loading: "Loading tables...",
+        reloadTables: "Reload tables",
+        errorLoading: "Error loading tables",
+        errorProcessing: "Error processing table",
+        clearSelection: "Clear selection"
+      },
+      
+      // Products
+      products: {
+        title: "Products",
+        search: "Search products...",
+        category: "Category",
+        allCategories: "All Categories",
+        addToOrder: "Add to Order",
+        outOfStock: "Out of Stock",
+        price: "Price",
+        priceLabel: "Price",
+        priceTier: "Price",
+        clearSearch: "Clear search",
+        dailyMenu: "Daily Menu",
+        allergens: "Allergens",
+        total: "Total",
+        specialPrice: "Special Price",
+        noDailyMenu: "No daily menu available today",
+        noSearchResults: "No products found for your search",
+        noProductsAvailable: "No products available",
+        productUnavailable: "Product unavailable",
+        stock: "Stock",
+        unavailable: "Unavailable",
+        loadingProducts: "Loading products...",
+        errorLoading: "Error loading products",
+        productNotActive: "Product is not active",
+        productOutOfStock: "Product is out of stock"
+      },
+      
+      // Order
+      order: {
+        title: "Order",
+        newOrder: "New Order",
+        currentOrder: "Current Order",
+        orderNumber: "Order No.",
+        table: "Table",
+        covers: "Covers",
+        items: "Items",
+        subtotal: "Subtotal",
+        tax: "Tax",
+        vat: "VAT",
+        discount: "Discount",
+        total: "Total",
+        empty: "Cart empty",
+        addProducts: "Add products to order",
+        clearOrder: "Clear Order",
+        confirmClear: "Are you sure you want to clear the order?",
+        removeItem: "Remove Item",
+        quantity: "Quantity",
+        notes: "Notes",
+        addNotes: "Add notes...",
+        summary: "Order Summary",
+        products: "products",
+        noProducts: "No products in order",
+        closeAndReleaseTable: "Close Order & Release Table"
+      },
+      
+      // Payment
+      payment: {
+        title: "Payment",
+        method: "Payment Method",
+        methods: {
+          cash: "Cash",
+          card: "Card",
+          voucher: "Voucher",
+          online: "Online",
+          account: "Account",
+          protocol: "Protocol",
+          degustare: "Tasting",
+          other: "Other method"
+        },
+        amount: "Amount",
+        remaining: "Remaining",
+        exact: "Exact",
+        received: "Received",
+        change: "Change",
+        tip: "Tip",
+        total: "Total Payment",
+        pay: "Pay",
+        split: "Split Bill",
+        printReceipt: "Print Receipt",
+        emailReceipt: "Email Receipt",
+        complete: "Complete",
+        cancel: "Cancel",
+        processing: "Processing...",
+        success: "Payment Successful",
+        failed: "Payment Failed",
+        enterAmount: "Enter amount",
+        clearAll: "Clear all",
+        invalidAmount: "Invalid amount",
+        amountExceedsRemaining: "Amount exceeds remaining ({remaining} RON)",
+        noPayments: "No payments recorded",
+        paymentsRecorded: "Payments recorded",
+        removePayment: "Remove payment",
+        // New keys for PaymentSheet and SplitBill
+        orderPayment: "Order Payment",
+        selectMethod: "Select payment method",
+        amountCannotBeNegative: "Amount cannot be negative",
+        enterAmountGreaterThanZero: "Enter an amount greater than 0",
+        groupAlreadyPaid: "This group is already fully paid",
+        noActiveOrder: "No active order",
+        errorAddingPayment: "Error adding payment",
+        errorRemovingPayment: "Error removing payment",
+        selectGroupForPayment: "Select group for payment",
+        paid: "Paid",
+        selectedGroupTotal: "Selected group total",
+        orderTotal: "Order total",
+        paidAmount: "Paid",
+        remainingToCollect: "Remaining to collect",
+        orderFullyPaid: "Order is fully paid",
+        canProceedToFiscalization: "You can proceed to fiscalization",
+        addPayment: "Add payment",
+        applySplit: "Apply Split",
+        close: "Close",
+        continueToFiscalization: "Continue to fiscalization",
+        // SplitBill specific keys
+        person: "Person {{number}}",
+        byItems: "By Items",
+        byAmounts: "By Amounts",
+        groupPersonName: "Group/person name",
+        noItemsAssigned: "No items assigned",
+        unassignedItems: "Unassigned Items",
+        totalAssigned: "Total Assigned",
+        totalUnassigned: "Total Unassigned",
+        difference: "Difference",
+        addGroup: "Add Group"
+      },
+      
+      // Fiscal
+      fiscal: {
+        title: "Fiscal",
+        printer: "Fiscal Printer",
+        printerError: "Printer Error",
+        anafError: "ANAF Error",
+        nomenclatorError: "Missing Fiscal Codes",
+        genericError: "Generic Error",
+        reconnect: "Reconnect",
+        check: "Check Connection",
+        printInvoice: "Print Invoice",
+        fiscalCode: "Fiscal Code",
+        missingCodes: "Missing Codes",
+        fiscalizing: "Fiscalizing...",
+        fiscalizeOrder: "Fiscalize Order",
+        fiscalized: "Fiscalized",
+        updatingStock: "Updating stock...",
+        stockBeingUpdated: "Stock is being updated...",
+        stockUpdated: "Stock updated",
+        fiscalReceipt: "Fiscal Receipt",
+        date: "Date",
+        retrying: "Retrying...",
+        retryPrint: "Retry Print",
+        retryAnaf: "Retry ANAF"
+      },
+      
+      // Customer
+      customer: {
+        title: "Customer",
+        name: "Customer Name",
+        phone: "Phone",
+        email: "Email",
+        address: "Address",
+        notes: "Notes",
+        searchCustomer: "Search customer...",
+        newCustomer: "New Customer",
+        selectCustomer: "Select Customer",
+        loyaltyPoints: "Loyalty Points"
+      },
+      
+      // Offline
+      offline: {
+        title: "Offline Mode",
+        warning: "No internet connection",
+        ordersSaved: "Orders are saved locally",
+        willSync: "Will sync when connection returns",
+        syncNow: "Sync Now",
+        pendingOrders: "Pending Orders"
+      },
+      
+      // Messages
+      messages: {
+        orderCreated: "Order created successfully",
+        orderUpdated: "Order updated",
+        orderDeleted: "Order deleted",
+        paymentSuccess: "Payment processed successfully",
+        paymentFailed: "Payment failed",
+        printerConnected: "Printer connected",
+        printerDisconnected: "Printer disconnected",
+        selectTable: "Select a table",
+        selectProducts: "Add products to order",
+        confirmDelete: "Are you sure you want to delete this order?"
+      }
+    },
+    
+    // ========== KIOSK MODULE ==========
+    kiosk: {
+      title: "Self-Service Kiosk",
+      subtitle: "Order at kiosk",
+      
+      // Welcome
+      welcome: {
+        title: "Welcome!",
+        subtitle: "Touch screen to start",
+        startOrder: "Start Order",
+        scanQr: "Scan QR Code",
+        chooseLanguage: "Choose Language"
+      },
+      
+      // Menu
+      menu: {
+        title: "Menu",
+        categories: "Categories",
+        popular: "Popular",
+        new: "New",
+        deals: "Deals",
+        search: "Search...",
+        filter: "Filter",
+        viewAll: "View All"
+      },
+      
+      // Product
+      product: {
+        details: "Product Details",
+        ingredients: "Ingredients",
+        allergens: "Allergens",
+        nutrition: "Nutrition Information",
+        calories: "Calories",
+        addToCart: "Add to Cart",
+        customize: "Customize",
+        extras: "Extras",
+        remove: "Remove",
+        quantity: "Quantity",
+        size: {
+          small: "Small",
+          medium: "Medium",
+          large: "Large"
+        }
+      },
+      
+      // Cart
+      cart: {
+        title: "Your Cart",
+        empty: "Cart is empty",
+        items: "Items",
+        subtotal: "Subtotal",
+        tax: "Tax",
+        total: "Total",
+        checkout: "Checkout",
+        continueShopping: "Continue Shopping",
+        clear: "Clear Cart",
+        modify: "Modify"
+      },
+      
+      // Checkout
+      checkout: {
+        title: "Checkout",
+        orderType: "Order Type",
+        dineIn: "Dine In",
+        takeaway: "Takeaway",
+        tableNumber: "Table Number",
+        name: "Name",
+        phone: "Phone",
+        email: "Email",
+        paymentMethod: "Payment Method",
+        payNow: "Pay Now",
+        payAtCounter: "Pay at Counter",
+        confirmOrder: "Confirm Order",
+        processing: "Processing..."
+      },
+      
+      // Payment
+      payment: {
+        title: "Payment",
+        insertCard: "Insert Card",
+        tapCard: "Tap Card",
+        enterPin: "Enter PIN",
+        processing: "Processing payment...",
+        approved: "Payment Approved",
+        declined: "Payment Declined",
+        tryAgain: "Try Again",
+        cancel: "Cancel",
+        receipt: "Receipt",
+        print: "Print",
+        email: "Email"
+      },
+      
+      // Confirmation
+      confirmation: {
+        title: "Order Confirmed!",
+        orderNumber: "Order Number",
+        thankyou: "Thank you!",
+        estimatedTime: "Estimated Time",
+        minutes: "minutes",
+        trackOrder: "Track Order",
+        newOrder: "New Order",
+        printReceipt: "Print Receipt"
+      },
+      
+      // Messages
+      messages: {
+        selectCategory: "Select a category",
+        addItems: "Add items to cart",
+        minimumOrder: "Minimum order",
+        sessionTimeout: "Session expires in",
+        returning: "Returning to main screen..."
+      }
+    },
+    
+    // ========== ORDERS MODULE ==========
     orders: {
-      order_details: "Order Details",
-      mark_paid: "Mark as Paid",
-      mark_paid_button: "Mark as Paid",
-      general_info: "General Information",
-      table_type_here: "Dine In",
-      table_type_takeout: "Takeout",
-      table_type_delivery: "Delivery",
-      order_number: "Order Number",
-      order_status: "Order Status",
-      order_total: "Order Total",
-      order_date: "Order Date",
-      order_time: "Order Time",
-      customer_name: "Customer Name",
-      customer_phone: "Customer Phone",
-      delivery_address: "Delivery Address",
-      payment_method: "Payment Method",
-      payment_status: "Payment Status",
-      paid: "Paid",
-      unpaid: "Unpaid",
-      pending: "Pending",
-      confirmed: "Confirmed",
-      preparing: "Preparing",
-      ready: "Ready",
-      delivered: "Delivered",
-      cancelled: "Cancelled",
-      new_order: "New Order",
-      view_order: "View Order",
-      edit_order: "Edit Order",
-      cancel_order: "Cancel Order",
-      order_items: "Order Items",
-      add_item: "Add Item",
-      remove_item: "Remove Item"
+      title: "Orders",
+      subtitle: "Order management",
+      
+      // Status
+      status: {
+        all: "All",
+        pending: "Pending",
+        confirmed: "Confirmed",
+        preparing: "Preparing",
+        ready: "Ready",
+        delivered: "Delivered",
+        completed: "Completed",
+        cancelled: "Cancelled",
+        failed: "Failed"
+      },
+      
+      // Types
+      types: {
+        all: "All",
+        dineIn: "Dine In",
+        takeaway: "Takeaway",
+        delivery: "Delivery",
+        driveThru: "Drive-Thru",
+        online: "Online",
+        phone: "Phone"
+      },
+      
+      // List
+      list: {
+        title: "Orders List",
+        search: "Search orders...",
+        filter: "Filter",
+        sort: "Sort",
+        orderNumber: "Order No.",
+        customer: "Customer",
+        table: "Table",
+        items: "Items",
+        total: "Total",
+        time: "Time",
+        status: "Status",
+        actions: "Actions",
+        noOrders: "No orders"
+      },
+      
+      // Details
+      details: {
+        title: "Order Details",
+        orderInfo: "Order Information",
+        customerInfo: "Customer Information",
+        items: "Ordered Items",
+        product: "Product",
+        quantity: "Quantity",
+        price: "Price",
+        subtotal: "Subtotal",
+        total: "Total",
+        tax: "Tax",
+        discount: "Discount",
+        notes: "Notes",
+        timeline: "Timeline",
+        print: "Print",
+        email: "Email"
+      },
+      
+      // Actions
+      actions: {
+        confirm: "Confirm",
+        prepare: "Start Preparing",
+        ready: "Mark Ready",
+        deliver: "Deliver",
+        complete: "Complete",
+        cancel: "Cancel",
+        edit: "Edit",
+        duplicate: "Duplicate",
+        refund: "Refund",
+        printKitchen: "Print Kitchen",
+        printReceipt: "Print Receipt"
+      },
+      
+      // Takeaway
+      takeaway: {
+        title: "Takeaway Orders",
+        newOrder: "New Order",
+        pickupTime: "Pickup Time",
+        customerName: "Customer Name",
+        customerPhone: "Customer Phone",
+        estimatedTime: "Estimated Time",
+        readyAt: "Ready At",
+        pickedUp: "Picked Up",
+        notPickedUp: "Not Picked Up"
+      },
+      
+      // Analytics
+      analytics: {
+        title: "Orders Analytics",
+        todayOrders: "Today's Orders",
+        revenue: "Revenue",
+        avgOrderValue: "Avg Order Value",
+        topProducts: "Top Products",
+        byHour: "By Hour",
+        byDay: "By Day",
+        byType: "By Type",
+        chart: "Chart"
+      },
+      
+      // Archive
+      archive: {
+        title: "Orders Archive",
+        dateRange: "Date Range",
+        searchArchive: "Search archive...",
+        exportData: "Export Data",
+        restore: "Restore"
+      },
+      
+      // Messages
+      messages: {
+        orderConfirmed: "Order confirmed",
+        orderCancelled: "Order cancelled",
+        orderCompleted: "Order completed",
+        statusUpdated: "Status updated",
+        confirmCancel: "Are you sure you want to cancel this order?",
+        cannotModify: "Order cannot be modified",
+        printSuccess: "Printed successfully",
+        printFailed: "Print failed",
+        exportError: "Could not generate order export.",
+        exportErrorGeneric: "Error exporting orders:",
+        orderMarkedPaid: "Order marked as paid.",
+        markPaidError: "Could not mark visit as paid.",
+        markPaidErrorGeneric: "Error marking visit as paid:"
+      },
+
+      // Management page
+      management: {
+        title: "Order Management",
+        subtitle: "Monitor active orders, payments, and analytics.",
+        tags: {
+          advancedFiltering: "Advanced filtering and CSV export",
+          analytics: "Cancellation analytics & top products",
+          archive: "Integration with historical archive"
+        },
+        summary: {
+          totalOrders: "Total Orders",
+          unpaidOrders: "Unpaid",
+          totalValue: "Total Value"
+        },
+        tabs: {
+          active: "Active Orders",
+          cancelled: "Cancelled Orders",
+          analytics: "Cancellation Analytics",
+          topProducts: "Top Products",
+          archive: "Orders Archive",
+          ariaLabel: "Order management tabs"
+        }
+      }
     },
-    // Stock Management
-    stocks: {
-      page_title: "Stock Management",
-      page_subtitle: "Admin V4",
-      page_description: "Monitor and update product ingredients.",
-      tab_ingredients: "Ingredients",
-      tab_finished_products: "Finished Products",
-      tab_recipes: "Recipes & T.S.",
-      tab_hidden_ingredients: "Hidden Ingredients",
-      current_stock: "Current Stock",
-      minimum_stock: "Minimum Stock",
-      unit_measure: "Unit",
-      stock_value: "Stock Value",
-      last_update: "Last Update",
-      add_stock: "Add Stock",
-      remove_stock: "Remove Stock",
-      adjust_stock: "Adjust Stock",
-      stock_movement: "Stock Movement",
-      stock_history: "Stock History",
-      low_stock: "Low Stock",
-      critical_stock: "Critical Stock",
-      out_of_stock: "Out of Stock",
-      in_stock: "In Stock",
-      stock_alert: "Stock Alert"
+    
+    // ========== MENU MODULE ==========
+    menu: {
+      title: "Menu",
+      subtitle: "Menu management",
+      
+      // Categories
+      categories: {
+        title: "Categories",
+        add: "Add Category",
+        edit: "Edit Category",
+        delete: "Delete Category",
+        name: "Category Name",
+        description: "Description",
+        icon: "Icon",
+        order: "Order",
+        active: "Active",
+        products: "Products",
+        noCategories: "No categories"
+      },
+      
+      // Products
+      products: {
+        title: "Products",
+        add: "Add Product",
+        edit: "Edit Product",
+        delete: "Delete Product",
+        name: "Product Name",
+        description: "Description",
+        category: "Category",
+        price: "Price",
+        cost: "Cost",
+        margin: "Margin",
+        image: "Image",
+        sku: "SKU",
+        barcode: "Barcode",
+        stock: "Stock",
+        available: "Available",
+        outOfStock: "Out of Stock",
+        active: "Active",
+        inactive: "Inactive",
+        noProducts: "No products",
+        search: "Search products..."
+      },
+      
+      // Variants
+      variants: {
+        title: "Variants",
+        add: "Add Variant",
+        size: "Size",
+        color: "Color",
+        price: "Price",
+        sku: "SKU",
+        stock: "Stock"
+      },
+      
+      // Modifiers
+      modifiers: {
+        title: "Modifiers",
+        add: "Add Modifier",
+        group: "Modifier Group",
+        name: "Name",
+        price: "Additional Price",
+        required: "Required",
+        multiple: "Multiple Selection",
+        min: "Minimum",
+        max: "Maximum"
+      },
+      
+      // Pricing
+      pricing: {
+        title: "Pricing",
+        basePrice: "Base Price",
+        costPrice: "Cost Price",
+        salePrice: "Sale Price",
+        margin: "Margin",
+        marginPercent: "Margin %",
+        tax: "Tax",
+        taxIncluded: "Tax Included",
+        priceHistory: "Price History",
+        bulkUpdate: "Bulk Update"
+      },
+      
+      // Import/Export
+      importExport: {
+        title: "Import/Export",
+        import: "Import",
+        export: "Export",
+        template: "Template",
+        download: "Download Template",
+        upload: "Upload File",
+        format: "Format",
+        csv: "CSV",
+        excel: "Excel",
+        json: "JSON"
+      },
+      
+      // Messages
+      messages: {
+        productAdded: "Product added",
+        productUpdated: "Product updated",
+        productDeleted: "Product deleted",
+        categoryAdded: "Category added",
+        categoryUpdated: "Category updated",
+        categoryDeleted: "Category deleted",
+        confirmDelete: "Are you sure you want to delete?",
+        priceUpdated: "Price updated",
+        stockUpdated: "Stock updated",
+        imageUploaded: "Image uploaded",
+        imageUploadFailed: "Image upload failed",
+        productAddedSuccess: "Product added successfully",
+        productUpdatedSuccess: "Product updated successfully",
+        customizationsActive: "Active customizations:",
+        customizationsSynced: "Customizations have been synchronized.",
+        error: "Error"
+      },
+
+      // Product Modal
+      productModal: {
+        generalDetails: "General Details",
+        generalDetailsSubtitle: "Complete the basic information displayed to customers",
+        productName: "Product Name",
+        productNameEn: "Product Name (EN)",
+        productNamePlaceholder: "Ex: Four Seasons Pizza",
+        productNameEnPlaceholder: "Ex: Four Seasons Pizza",
+        category: "Category",
+        categoryEn: "Category (EN)",
+        categoryPlaceholder: "Ex: Pizza, Salads",
+        categoryEnPlaceholder: "Ex: Pizza",
+        priceRon: "Price (RON)",
+        vatPercent: "VAT (%)",
+        unitOfMeasure: "Unit of Measure",
+        weightVolume: "Weight / Volume",
+        weightVolumePlaceholder: "Ex: 350g, 500ml",
+        displayOrder: "Display Order",
+        displayOrderPlaceholder: "Order in menu",
+        costPrice: "Product Cost (RON)",
+        costPricePlaceholder: "Ex: 12.50",
+        availableForSale: "Available for Sale",
+        activeInMenu: "Active in Menu",
+        allowFractions: "Allow Fractions (weight)",
+        
+        inventoryPreparation: "Inventory & Preparation",
+        inventoryPreparationSubtitle: "Define stock management and preparation section for orders",
+        stockManagement: "Stock Management",
+        stockManagementPlaceholder: "Ex: Kitchen, Bar",
+        preparationSection: "Preparation Section",
+        preparationSectionPlaceholder: "Ex: KITCHEN, BAR...",
+        preparationTime: "Preparation Time (min)",
+        preparationTimePlaceholder: "Ex: 15",
+        vegetarian: "Vegetarian",
+        spicy: "Spicy",
+        takeoutOnly: "Takeout Only",
+        
+        descriptionInfo: "Description & Information",
+        descriptionInfoSubtitle: "Texts displayed in customer menus and applications",
+        descriptionRo: "Description (RO)",
+        descriptionRoPlaceholder: "Description for customers, main ingredients",
+        descriptionEn: "Description (EN)",
+        descriptionEnPlaceholder: "English description (optional)",
+        allergens: "Allergens",
+        additives: "Additives",
+        ingredients: "Ingredients",
+        ingredientsPlaceholder: "Comma-separated ingredient list",
+        
+        customizations: "Customizations",
+        customizationsSubtitle: "Customer customization options (extra sauce, add-ons, etc.)",
+        customizationName: "Option Name",
+        customizationNamePlaceholder: "Ex: Extra bacon",
+        customizationNameEn: "Option Name (EN)",
+        customizationNameEnPlaceholder: "Ex: Extra bacon",
+        customizationPrice: "Price +",
+        customizationPriceRon: "RON",
+        addCustomization: "Add Customization",
+        
+        nutritionalInfo: "Nutritional Information",
+        nutritionalInfoSubtitle: "Optional details for health-conscious customers",
+        spiceLevel: "Spice Level (1-5)",
+        calories: "Calories (kcal)",
+        protein: "Protein (g)",
+        carbs: "Carbohydrates (g)",
+        fat: "Fat (g)",
+        fiber: "Fiber (g)",
+        sodium: "Sodium (mg)",
+        sugar: "Sugar (g)",
+        salt: "Salt (g)",
+        
+        productImage: "Product Image",
+        productImageSubtitle: "Upload a representative image (JPG, PNG, max 5MB)",
+        uploadImage: "Upload New Image",
+        currentImage: "Current Image",
+        imagePreview: "Product Preview",
+        removeImage: "Remove Image",
+        replaceImage: "Replace",
+        
+        saveChanges: "Save Changes",
+        saving: "Saving..."
+      },
+
+      // Product Dependencies Modal
+      dependencies: {
+        title: "Product Dependencies",
+        subtitle: "Products that require this ingredient",
+        dependentProducts: "Dependent Products",
+        noDependencies: "No products depend on this ingredient",
+        productName: "Product Name",
+        category: "Category",
+        quantity: "Quantity",
+        unit: "Unit"
+      },
+
+      // Product Messages Modal
+      productMessages: {
+        title: "Product Messages",
+        subtitle: "Messages and notifications for",
+        history: "Message History",
+        noMessages: "No messages for this product",
+        date: "Date",
+        type: "Type",
+        message: "Message",
+        author: "Author"
+      },
+
+      // Bulk Price Modal
+      bulkPrice: {
+        title: "Bulk Price Update",
+        subtitle: "Modify prices for selected products",
+        adjustmentType: "Adjustment Type",
+        percentage: "Percentage (%)",
+        fixedAmount: "Fixed Amount (RON)",
+        increase: "Increase",
+        decrease: "Decrease",
+        selectedProducts: "Selected Products",
+        preview: "Preview Changes",
+        currentPrice: "Current Price",
+        newPrice: "New Price",
+        apply: "Apply Changes",
+        applyingChanges: "Applying changes...",
+        success: "Prices updated successfully",
+        error: "Error updating prices"
+      },
+
+      // Price History Modal
+      priceHistory: {
+        title: "Price History",
+        subtitle: "Price evolution for",
+        date: "Date",
+        oldPrice: "Old Price",
+        newPrice: "New Price",
+        change: "Change",
+        changedBy: "Changed By",
+        noHistory: "No price history for this product"
+      },
+
+      // Clone Product Modal
+      cloneProduct: {
+        title: "Clone Product",
+        subtitle: "Create a copy of the selected product",
+        newProductName: "New Product Name",
+        newProductNamePlaceholder: "Ex: Four Seasons Pizza - Copy",
+        copyCustomizations: "Copy Customizations",
+        copyImage: "Copy Image",
+        cloning: "Cloning...",
+        success: "Product cloned successfully",
+        error: "Error cloning product"
+      },
+
+      // Category Advanced Filter
+      categoryFilter: {
+        title: "Advanced Filters",
+        category: "Category",
+        allCategories: "All Categories",
+        status: "Status",
+        allStatuses: "All Statuses",
+        priceRange: "Price Range",
+        minPrice: "Min Price",
+        maxPrice: "Max Price",
+        hasImage: "With Image",
+        isVegetarian: "Vegetarian",
+        isSpicy: "Spicy",
+        inStock: "In Stock",
+        applyFilters: "Apply Filters",
+        clearFilters: "Clear Filters"
+      },
+
+      // Menu Builder
+      menuBuilder: {
+        title: "Menu Builder",
+        subtitle: "Create and edit menu products",
+        basicInfo: "Basic Information",
+        portions: "Portions",
+        modifiers: "Modifiers",
+        allergens: "Allergens",
+        availability: "Availability",
+        ingredients: "Ingredients",
+        preview: "Preview",
+        
+        // Basic Info Card
+        productDetails: "Product Details",
+        generalInformation: "General Information",
+        pricingInfo: "Pricing Information",
+        
+        // Portions Card
+        portionSizes: "Portion Sizes",
+        addPortion: "Add Portion",
+        portionName: "Portion Name",
+        portionSize: "Size",
+        portionPrice: "Price",
+        defaultPortion: "Default Portion",
+        noPortion: "No portions defined",
+        
+        // Modifiers Card
+        modifierGroups: "Modifier Groups",
+        addModifier: "Add Modifier",
+        modifierName: "Modifier Name",
+        modifierPrice: "Price",
+        modifierRequired: "Required",
+        modifierMultiple: "Multiple Selection",
+        noModifiers: "No modifiers defined",
+        
+        // Allergens Card
+        allergensList: "Allergen List",
+        selectAllergens: "Select Allergens",
+        noAllergens: "No allergens",
+        
+        // Availability Card
+        availabilitySchedule: "Availability Schedule",
+        availableDays: "Available Days",
+        availableHours: "Available Hours",
+        alwaysAvailable: "Always Available",
+        customSchedule: "Custom Schedule",
+        
+        // Ingredients Card
+        ingredientsList: "Ingredient List",
+        addIngredient: "Add Ingredient",
+        ingredientName: "Ingredient Name",
+        ingredientQuantity: "Quantity",
+        noIngredients: "No ingredients defined",
+        
+        // Preview Card
+        menuPreview: "Menu Preview",
+        customerView: "Customer View",
+        qrCodePreview: "QR Code Preview"
+      },
+
+      // Menu PDF Builder
+      menuPdf: {
+        title: "Menu PDF Builder",
+        subtitle: "Generate menu in PDF format for printing",
+        pdfSettings: "PDF Settings",
+        pageSize: "Page Size",
+        orientation: "Orientation",
+        portrait: "Portrait",
+        landscape: "Landscape",
+        columns: "Columns",
+        showPrices: "Show Prices",
+        showImages: "Show Images",
+        showDescriptions: "Show Descriptions",
+        showAllergens: "Show Allergens",
+        categorySettings: "Category Settings",
+        selectCategories: "Select Categories",
+        categoryOrder: "Category Order",
+        generatePdf: "Generate PDF",
+        generating: "Generating PDF...",
+        downloadPdf: "Download PDF",
+        previewPdf: "Preview PDF",
+        
+        // PDF Category Card
+        categoryCard: "Category",
+        includeInPdf: "Include in PDF",
+        productsCount: "Products",
+        moveUp: "Move Up",
+        moveDown: "Move Down"
+      }
     },
-    // Recipes
-    recipe: {
-      no_recipe: "No Recipe",
-      recipe_name: "Recipe Name",
-      recipe_ingredients: "Recipe Ingredients",
-      recipe_steps: "Recipe Steps",
-      add_recipe: "Add Recipe",
-      edit_recipe: "Edit Recipe",
-      delete_recipe: "Delete Recipe",
-      view_recipe: "View Recipe",
-      recipe_details: "Recipe Details",
-      ingredient_quantity: "Ingredient Quantity",
-      preparation_time: "Preparation Time",
-      cooking_time: "Cooking Time",
-      total_time: "Total Time",
-      servings: "Servings",
-      difficulty: "Difficulty",
-      cost_per_portion: "Cost per Portion",
-      selling_price: "Selling Price",
-      profit_margin: "Profit Margin"
+    
+    // ========== DASHBOARD MODULE ==========
+    dashboard: {
+      title: "Dashboard",
+      subtitle: "Overview",
+      
+      // Overview
+      overview: {
+        title: "Overview",
+        today: "Today",
+        yesterday: "Yesterday",
+        thisWeek: "This Week",
+        lastWeek: "Last Week",
+        thisMonth: "This Month",
+        lastMonth: "Last Month",
+        compare: "Compare"
+      },
+      
+      // Metrics
+      metrics: {
+        revenue: "Revenue",
+        orders: "Orders",
+        customers: "Customers",
+        avgOrder: "Avg Order",
+        sales: "Sales",
+        profit: "Profit",
+        margin: "Margin",
+        growth: "Growth",
+        change: "Change",
+        vs: "vs",
+        revenueToday: "Revenue Today",
+        ordersToday: "Orders Today",
+        profitToday: "Profit Today",
+        cogsToday: "COGS Today",
+        cogsDescription: "Cost of goods sold",
+        marginLabel: "Margin",
+        vsYesterday: "vs yesterday",
+        salesToday: "Sales Today",
+        estimatedProfit: "Estimated Profit",
+        criticalStock: "Critical Stock",
+        warnings: "warnings"
+      },
+      
+      // KPI Business
+      kpi: {
+        loading: "Loading business KPIs...",
+        error: "Error loading KPIs:",
+        stockAlerts: "Stock Alerts",
+        lowStockProducts: "Products below minimum stock",
+        customerRetention: "Customer Retention",
+        returningCustomers: "Returning customers",
+        tableRotation: "Table Rotation",
+        groupsPerTable: "Groups per occupied table",
+        tableUtilization: "Table Utilization",
+        tablesUsed: "Tables used out of 200",
+        overallRating: "Overall Average Rating",
+        overallRatings: "overall ratings",
+        excellentRatings: "5★ Ratings (OVERALL)",
+        veryHappyCustomers: "Very satisfied customers",
+        lowRatings: "≤2★ Ratings (OVERALL)",
+        needsAttention: "Needs urgent attention",
+        revenueChart: "Revenue & Gross Margin Evolution (Last 7 days)",
+        revenueLabel: "Revenue (RON)",
+        grossMargin: "Gross Margin (%)",
+        revenueTooltip: "Revenue:",
+        marginTooltip: "Margin:",
+        top5Products: "Top 5 Products Today",
+        product: "Product",
+        quantity: "Quantity",
+        revenue: "Revenue",
+        percentage: "%",
+        noData: "No data available",
+        topProductsDistribution: "Top Products - Revenue Distribution",
+        revenueRon: "Revenue (RON)"
+      },
+      
+      // Charts
+      charts: {
+        salesOverTime: "Sales Over Time",
+        ordersByType: "Orders by Type",
+        topProducts: "Top Products",
+        revenueByCategory: "Revenue by Category",
+        hourlyActivity: "Hourly Activity",
+        dailyActivity: "Daily Activity",
+        weeklyTrend: "Weekly Trend",
+        monthlyTrend: "Monthly Trend",
+        dailySalesPerPlatform: "Daily Sales per Platform",
+        salesPerPlatformToday: "Sales per Platform (Today)",
+        top10Products: "Top 10 Sold Products",
+        cancellationRatePerPlatform: "Cancellation Rate per Platform"
+      },
+      
+      // Widgets
+      widgets: {
+        liveOrders: "Live Orders",
+        recentActivity: "Recent Activity",
+        alerts: "Alerts",
+        notifications: "Notifications",
+        tasks: "Tasks",
+        quickActions: "Quick Actions",
+        performance: "Performance"
+      },
+      
+      // Filters
+      filters: {
+        dateRange: "Date Range",
+        location: "Location",
+        category: "Category",
+        paymentMethod: "Payment Method",
+        orderType: "Order Type",
+        apply: "Apply Filters",
+        reset: "Reset Filters",
+        from: "From",
+        to: "To",
+        date: "Date"
+      },
+      
+      // PIN Rotation (DashboardPage)
+      pinRotation: {
+        title: "PIN Rotation Audit",
+        subtitle: "Automated monitoring Admin · POS · KDS",
+        interface: "Interface",
+        category: "Category",
+        status: "Status",
+        lastRotation: "Last Rotation",
+        summary: "Summary",
+        errorLoading: "Could not load PIN statuses:",
+        retry: "Retry",
+        updating: "Updating PIN statuses...",
+        filterPlaceholder: "Filter by interface, category or status",
+        urgentRotations: "Urgent Rotations",
+        noUrgentRotations: "No urgent rotations identified at this time."
+      },
+      
+      // Monitoring
+      monitoring: {
+        title: "Monitoring & Performance Dashboard",
+        refresh: "Refresh",
+        tabOverview: "Overview",
+        tabQueue: "Queue Monitor",
+        tabPerformance: "Performance Metrics",
+        systemMetrics: "System Metrics",
+        responseTime: "Response Time:",
+        activeConnections: "Active Connections:",
+        memoryUsage: "Memory Usage:",
+        orderMetrics: "Order Metrics",
+        avgPrepTime: "Avg Preparation Time:",
+        delayedOrders: "Delayed Orders",
+        kitchenLoad: "Kitchen Load",
+        barLoad: "Bar Load",
+        alertsTitle: "Alerts",
+        delayedOrdersAlert: "{count} delayed orders need attention!",
+        kitchenLoadAlert: "Kitchen is loaded ({count} orders)",
+        allOk: "Everything is running normally",
+        loading: "Loading...",
+        performanceMetrics: "Performance Metrics",
+        systemPerformance: "System Performance",
+        heapUsed: "Heap Memory Used:",
+        heapTotal: "Total Heap Memory:",
+        orderPerformance: "Order Performance",
+        loadingMetrics: "Loading metrics..."
+      },
+      
+      // Executive Dashboard
+      executive: {
+        title: "Executive Dashboard",
+        subtitle: "Critical KPIs for management",
+        loading: "Loading...",
+        error: "Error",
+        retry: "Retry",
+        todaySales: "Sales Today",
+        todayOrders: "Orders today",
+        updateData: "Update data",
+        updating: "Updating...",
+        criticalStockTable: "Critical Stock",
+        noCriticalStock: "No critical stock",
+        ingredient: "Ingredient",
+        stock: "Stock",
+        minimum: "Minimum",
+        unit: "Unit",
+        pendingOrders: "Pending orders",
+        noPendingOrders: "No pending orders",
+        orderId: "ID",
+        platform: "Platform",
+        waiting: "Waiting",
+        total: "Total",
+        platformMobileApp: "Mobile App",
+        platformPOS: "POS Restaurant",
+        platformKIOSK: "KIOSK Self-Service",
+        platformPhone: "Phone"
+      },
+      
+      // Hostess Dashboard
+      hostess: {
+        title: "📊 Hostess Dashboard",
+        subtitle: "Table occupancy and session analytics",
+        totalSessions: "Total Sessions",
+        totalCovers: "Total Covers",
+        avgDuration: "Avg Duration (min)",
+        coversPerSession: "Covers / Session",
+        zoneDistribution: "distribution by zones",
+        sessionsPerHour: "Sessions per Hour (selected day)",
+        sessions: "Sessions",
+        covers: "Covers",
+        selectDay: "day for hourly chart"
+      },
+      
+      // Coatroom Dashboard
+      coatroom: {
+        title: "📊 Coatroom Dashboard",
+        subtitle: "Coatroom and valet ticket analytics",
+        totalTickets: "Total Tickets",
+        open: "Open",
+        closed: "Closed",
+        lost: "Lost",
+        ticketsPerHour: "tickets per hour",
+        statusDistribution: "status distribution",
+        tickets: "Tickets"
+      },
+      
+      // Lost & Found Dashboard
+      lostFound: {
+        title: "📊 Lost & Found Dashboard",
+        subtitle: "Lost and found items analytics",
+        totalItems: "Total Items",
+        stored: "in storage",
+        returned: "Returned",
+        returnRate: "Return Rate",
+        itemsByLocation: "items by locations",
+        itemStatus: "Item Status",
+        items: "Items",
+        inStorage: "In Storage",
+        returnedStatus: "Returned",
+        disposed: "Disposed"
+      }
     },
-    // Forms
-    form: {
-      required: "Required",
-      optional: "Optional",
-      select_option: "Select an option",
-      select_category: "Select category",
-      select_product: "Select product",
-      enter_name: "Enter name",
-      enter_description: "Enter description",
-      enter_price: "Enter price",
-      enter_quantity: "Enter quantity",
-      enter_code: "Enter code",
-      search_placeholder: "Search...",
-      filter_placeholder: "Filter...",
-      no_results: "No results",
-      validation_required: "This field is required",
-      validation_min_length: "Minimum length: {min} characters",
-      validation_max_length: "Maximum length: {max} characters",
-      validation_min_value: "Minimum value: {min}",
-      validation_max_value: "Maximum value: {max}",
-      validation_invalid_email: "Invalid email",
-      validation_invalid_phone: "Invalid phone",
-      validation_invalid_number: "Invalid number"
-    },
-    // Messages
-    messages: {
-      save_success: "Saved successfully",
-      save_error: "Error saving",
-      delete_success: "Deleted successfully",
-      delete_error: "Error deleting",
-      update_success: "Updated successfully",
-      update_error: "Error updating",
-      create_success: "Created successfully",
-      create_error: "Error creating",
-      load_error: "Error loading",
-      network_error: "Network error",
-      confirm_delete: "Are you sure you want to delete?",
-      confirm_cancel: "Are you sure you want to cancel?",
-      unsaved_changes: "You have unsaved changes",
-      operation_success: "Operation completed successfully",
-      operation_failed: "Operation failed",
-      no_permission: "You don't have permission",
-      session_expired: "Session expired",
-      please_login: "Please login"
-    },
-    // Menu PDF
-    menuPdf: {
-      generate_pdf: "Generate PDF",
-      pdf_settings: "PDF Settings",
-      font_family: "Font Family",
-      font_size: "Font Size",
-      show_prices: "Show Prices",
-      show_descriptions: "Show Descriptions",
-      show_images: "Show Images",
-      upload_bulk: "Bulk Upload",
-      category_image: "Category Image",
-      section_grouping: "Section Grouping",
-      preview_pdf: "Preview PDF"
-    },
-    // Ingredients
-    ingredients: {
-      ingredient_name: "Ingredient Name",
-      ingredient_code: "Ingredient Code",
-      unit_measure: "Unit of Measure",
-      current_stock: "Current Stock",
-      minimum_stock: "Minimum Stock",
-      add_ingredient: "Add Ingredient",
-      edit_ingredient: "Edit Ingredient",
-      delete_ingredient: "Delete Ingredient",
-      ingredient_category: "Ingredient Category",
-      supplier: "Supplier",
-      unit_cost: "Unit Cost",
-      last_purchase: "Last Purchase"
-    },
-    // Catalog
-    catalog: {
-      catalog_title: "Product Catalog",
-      product_grid: "Product Grid",
-      product_list: "Product List",
-      filter_by_category: "Filter by Category",
-      sort_by: "Sort by",
-      sort_name: "Name",
-      sort_price: "Price",
-      sort_category: "Category",
-      view_details: "View Details",
-      add_to_menu: "Add to Menu",
-      remove_from_menu: "Remove from Menu"
-    },
-    // Waiters
-    waiters: {
-      waiter_name: "Waiter Name",
-      waiter_code: "Waiter Code",
-      active_waiters: "Active Waiters",
-      add_waiter: "Add Waiter",
-      edit_waiter: "Edit Waiter",
-      delete_waiter: "Delete Waiter",
-      waiter_performance: "Waiter Performance",
-      total_orders: "Total Orders",
-      total_sales: "Total Sales"
-    },
-    // Reservations
+    
+    // ========== RESERVATIONS MODULE ==========
     reservations: {
-      reservation_details: "Reservation Details",
-      new_reservation: "New Reservation",
-      edit_reservation: "Edit Reservation",
-      cancel_reservation: "Cancel Reservation",
-      customer_name: "Customer Name",
-      customer_phone: "Customer Phone",
-      reservation_date: "Reservation Date",
-      reservation_time: "Reservation Time",
-      number_of_guests: "Number of Guests",
-      table_number: "Table Number",
-      special_requests: "Special Requests",
-      confirmed: "Confirmed",
-      pending: "Pending",
-      cancelled: "Cancelled",
-      completed: "Completed"
+      title: "Reservations",
+      subtitle: "Reservation management",
+      
+      // Status
+      status: {
+        all: "All",
+        pending: "Pending",
+        confirmed: "Confirmed",
+        seated: "Seated",
+        completed: "Completed",
+        cancelled: "Cancelled",
+        noShow: "No Show"
+      },
+      
+      // List
+      list: {
+        title: "Reservations List",
+        search: "Search reservations...",
+        filter: "Filter",
+        today: "Today",
+        upcoming: "Upcoming",
+        past: "Past",
+        date: "Date",
+        time: "Time",
+        customer: "Customer",
+        guests: "Guests",
+        table: "Table",
+        status: "Status",
+        actions: "Actions",
+        noReservations: "No reservations"
+      },
+      
+      // Filters
+      filters: {
+        from: "From",
+        to: "To",
+        next7Days: "Next 7 days",
+        searchPlaceholder: "Search by customer, phone, email or code",
+        includeCancelled: "Include cancelled",
+        exportCsv: "Export CSV"
+      },
+      
+      // New Reservation
+      new: {
+        title: "New Reservation",
+        customer: "Customer",
+        date: "Date",
+        time: "Time",
+        guests: "Number of Guests",
+        duration: "Duration",
+        table: "Table",
+        autoAssign: "Auto Assign",
+        notes: "Notes",
+        specialRequests: "Special Requests",
+        occasion: "Occasion",
+        create: "Create Reservation",
+        cancel: "Cancel"
+      },
+      
+      // Modal
+      modal: {
+        edit: "Edit reservation",
+        table: "Table",
+        fullNamePlaceholder: "Full name",
+        phonePlaceholder: "07xx xxx xxx",
+        emailPlaceholder: "client@email.com",
+        duration: "Duration (minutes)",
+        persons: "pers.",
+        selectTable: "Select table",
+        occupied: "occupied",
+        checkingAvailability: "Checking table availability...",
+        errorLoadingTables: "Error loading tables",
+        customerNotes: "Customer notes",
+        customerNotesPlaceholder: "Preferences, allergies, special requests",
+        internalNotes: "Internal notes",
+        internalNotesPlaceholder: "Staff instructions, host notifications",
+        saving: "Saving...",
+        saveChanges: "Save changes",
+        errorSaving: "Could not save reservation"
+      },
+      
+      // Calendar
+      calendar: {
+        title: "Reservations Calendar",
+        day: "Day",
+        week: "Week",
+        month: "Month",
+        timeline: "Timeline",
+        today: "Today",
+        next: "Next",
+        previous: "Previous",
+        slot: "Slot",
+        available: "Available",
+        booked: "Booked",
+        blocked: "Blocked"
+      },
+      
+      // Tables
+      tables: {
+        title: "Table Management",
+        tableNumber: "Table Number",
+        capacity: "Capacity",
+        section: "Section",
+        floor: "Floor",
+        available: "Available",
+        occupied: "Occupied",
+        reserved: "Reserved",
+        blocked: "Blocked",
+        combine: "Combine Tables",
+        split: "Split Tables"
+      },
+      
+      // Customer
+      customer: {
+        name: "Name",
+        phone: "Phone",
+        email: "Email",
+        vip: "VIP",
+        notes: "Customer Notes",
+        preferences: "Preferences",
+        allergies: "Allergies",
+        history: "Reservation History",
+        visits: "Visits",
+        lastVisit: "Last Visit"
+      },
+      
+      // Actions
+      actions: {
+        confirm: "Confirm",
+        seat: "Seat",
+        complete: "Complete",
+        cancel: "Cancel",
+        noShow: "No Show",
+        edit: "Edit",
+        reschedule: "Reschedule",
+        sendReminder: "Send Reminder",
+        printConfirmation: "Print Confirmation"
+      },
+      
+      // Messages
+      messages: {
+        reservationCreated: "Reservation created",
+        reservationUpdated: "Reservation updated",
+        reservationCancelled: "Reservation cancelled",
+        reservationConfirmed: "Reservation confirmed",
+        tableAssigned: "Table assigned",
+        reminderSent: "Reminder sent",
+        confirmCancel: "Are you sure you want to cancel this reservation?",
+        noTablesAvailable: "No tables available",
+        alreadyBooked: "Time slot already booked"
+      },
+      
+      // Timeline
+      timeline: {
+        title: "Reservation timeline",
+        loading: "Loading event history...",
+        errorLoading: "Could not load timeline",
+        noEvents: "No events recorded for this reservation",
+        operatedBy: "Operated by",
+        systemOperation: "System operation"
+      },
+      
+      // Page
+      page: {
+        title: "Reservation Management",
+        subtitle: "Plan, confirm and track restaurant reservations",
+        refreshData: "Refresh data",
+        reservationsToday: "Reservations Today",
+        totalScheduledToday: "Total scheduled for today",
+        confirmed: "Confirmed",
+        cancelled: "Cancelled",
+        selectedInterval: "Selected interval",
+        includesNoShow: "Includes no-show",
+        occupancyRate: "Occupancy Rate",
+        tablesToday: "tables today",
+        capacity: "Capacity",
+        markCompleted: "Mark completed",
+        sendReminder: "Send reminder",
+        confirmationCode: "Confirmation Code",
+        dateTime: "Date & Time",
+        notSet: "Not set"
+      }
     }
   }
 };

@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react';
 import { Modal, Form, Button, Alert } from 'react-bootstrap';
 import type { HappyHour } from '../api/happyHourApi';
-import { happyHourApi, type Product, type Category } from '../api/happyHourApi';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 interface HappyHourModalProps {
@@ -27,16 +26,8 @@ export const HappyHourModal = ({ show, happyHour, onClose, onSave }: HappyHourMo
   });
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [loadingProducts, setLoadingProducts] = useState(false);
 
   useEffect(() => {
-    if (show) {
-      // Load products and categories when modal opens
-      loadProductsAndCategories();
-    }
-    
     if (happyHour) {
       const days = typeof happyHour.days_of_week === 'string' 
         ? JSON.parse(happyHour.days_of_week || '[]') 
@@ -74,22 +65,6 @@ export const HappyHourModal = ({ show, happyHour, onClose, onSave }: HappyHourMo
     }
     setError(null);
   }, [happyHour, show]);
-
-  const loadProductsAndCategories = async () => {
-    setLoadingProducts(true);
-    try {
-      const [productsData, categoriesData] = await Promise.all([
-        happyHourApi.getProducts(),
-        happyHourApi.getCategories(),
-      ]);
-      setProducts(productsData);
-      setCategories(categoriesData);
-    } catch (err) {
-      console.error('Error loading products/categories:', err);
-    } finally {
-      setLoadingProducts(false);
-    }
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -232,64 +207,6 @@ export const HappyHourModal = ({ show, happyHour, onClose, onSave }: HappyHourMo
               />
             </Form.Group>
           </div>
-
-          {loadingProducts ? (
-            <div className="text-center my-3">
-              <span className="spinner-border spinner-border-sm me-2"></span>
-              Se încarcă produse și categorii...
-            </div>
-          ) : (
-            <>
-              {categories.length > 0 && (
-                <Form.Group className="mb-3">
-                  <Form.Label>Categorii aplicabile (opțional)</Form.Label>
-                  <Form.Select
-                    multiple
-                    value={formData.applicable_categories}
-                    onChange={(e) => {
-                      const selected = Array.from(e.target.selectedOptions, option => option.value);
-                      setFormData((prev) => ({ ...prev, applicable_categories: selected }));
-                    }}
-                    size={5}
-                  >
-                    {categories.map((cat) => (
-                      <option key={cat.id} value={cat.id.toString()}>
-                        {cat.name}
-                      </option>
-                    ))}
-                  </Form.Select>
-                  <Form.Text className="text-muted">
-                    Ține apăsat Ctrl/Cmd pentru selecție multiplă
-                  </Form.Text>
-                </Form.Group>
-              )}
-
-              {products.length > 0 && (
-                <Form.Group className="mb-3">
-                  <Form.Label>Produse aplicabile (opțional)</Form.Label>
-                  <Form.Select
-                    multiple
-                    value={formData.applicable_products}
-                    onChange={(e) => {
-                      const selected = Array.from(e.target.selectedOptions, option => option.value);
-                      setFormData((prev) => ({ ...prev, applicable_products: selected }));
-                    }}
-                    size={8}
-                  >
-                    {products.map((product) => (
-                      <option key={product.id} value={product.id.toString()}>
-                        {product.name} {product.category ? `(${product.category})` : ''}
-                        {product.price ? ` - ${product.price} RON` : ''}
-                      </option>
-                    ))}
-                  </Form.Select>
-                  <Form.Text className="text-muted">
-                    Ține apăsat Ctrl/Cmd pentru selecție multiplă. Dacă nu selectezi niciun produs, discount-ul se aplică tuturor.
-                  </Form.Text>
-                </Form.Group>
-              )}
-            </>
-          )}
 
           <Form.Group className="mb-3">
             <Form.Check

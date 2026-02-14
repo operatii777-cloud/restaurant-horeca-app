@@ -1,13 +1,14 @@
 /**
+import { useTranslation } from '@/i18n/I18nContext';
  * PORTIONS CARD - S/M/L Portions + Pricing
  * Data: 04 Decembrie 2025
  */
 
-import React from 'react';
 import { useMenuBuilderStore } from '../store/useMenuBuilderStore';
 import { useShallow } from 'zustand/react/shallow';
 
 export function PortionsCard() {
+  const { t } = useTranslation();
   const {
     portions,
     pricing,
@@ -42,14 +43,14 @@ export function PortionsCard() {
           onClick={addPortion}
           className="text-xs bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded-lg transition-colors"
         >
-          + Adaugă porție
+          {t('menu.menuBuilder.addPortion')}
         </button>
       </div>
 
       <div className="border border-slate-800 rounded-xl overflow-hidden divide-y divide-slate-800">
         {!portions.length && (
           <div className="p-3 text-xs text-slate-400">
-            Nu există nicio porție definită. Adaugă cel puțin una (ex: Standard).
+            {t('menu.menuBuilder.noPortion')}
           </div>
         )}
         
@@ -140,7 +141,7 @@ export function PortionsCard() {
               </div>
               <div>
                 <label className="block text-slate-400 mb-1">
-                  Porție implicită
+                  {t('menu.menuBuilder.defaultPortion')}
                 </label>
                 <input
                   type="radio"

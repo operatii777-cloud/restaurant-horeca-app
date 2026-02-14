@@ -8,14 +8,13 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App from '@/app/App';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { ThemeProvider } from '@/shared/context/ThemeContext';
+import { I18nProvider } from '@/i18n/I18nContext';
 import '@/styles/global.css';
 import '@/styles/enterprise-polish.css';
 import '@/shared/styles/inline-styles.css';
 // Enterprise polish: micro-interactions, animations, accessibility
 // PHASE S10 - Initialize Order Event Bridge
 import { initOrderEventBridge } from '@/core/sockets/orderEvents';
-// Centralized application configuration
-import config from '@/config/app.config';
 
 // 🛡️ CRITICAL: Ensure React is available globally for react-bootstrap, zustand, and other hooks
 if (typeof window !== 'undefined') {
@@ -61,13 +60,21 @@ if (!rootElement) {
 console.log('✅ rootElement găsit:', rootElement);
 
 // ✅ Setează tema din localStorage sau default light
-const savedTheme = localStorage.getItem(config.theme.storageKey) || config.theme.default;
+const savedTheme = localStorage.getItem('admin_theme') || 'light';
 rootElement.setAttribute('data-theme', savedTheme);
 document.documentElement.setAttribute('data-theme', savedTheme);
 document.body.setAttribute('data-theme', savedTheme);
 
-// Configurează React Query Client using centralized config
-const queryClient = new QueryClient(config.reactQuery);
+// Configurează React Query Client
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 1,
+      staleTime: 5 * 60 * 1000, // 5 minute
+    },
+  },
+});
 
 // Determină basename dinamic bazat pe URL curent
 // KIOSK la /kiosk/* nu are basename
@@ -88,15 +95,17 @@ console.log('✅ Order Event Bridge initialized');
 try {
   ReactDOM.createRoot(rootElement).render(
     <React.StrictMode>
-      <ThemeProvider>
-        <ErrorBoundary moduleName="Admin-Vite">
-          <QueryClientProvider client={queryClient}>
-            <BrowserRouter basename={basename}>
-              <App />
-            </BrowserRouter>
-          </QueryClientProvider>
-        </ErrorBoundary>
-      </ThemeProvider>
+      <I18nProvider>
+        <ThemeProvider>
+          <ErrorBoundary>
+            <QueryClientProvider client={queryClient}>
+              <BrowserRouter basename={basename}>
+                <App />
+              </BrowserRouter>
+            </QueryClientProvider>
+          </ErrorBoundary>
+        </ThemeProvider>
+      </I18nProvider>
     </React.StrictMode>,
   );
   console.log('✅ React montat cu succes');

@@ -1,3 +1,4 @@
+﻿// import { useTranslation } from '@/i18n/I18nContext';
 /**
  * PHASE S10 - Order Page (Comanda)
  * 
@@ -15,6 +16,7 @@ import './OrderPage.css';
  * Order Page Component
  */
 export function OrderPage() {
+  //   const { t } = useTranslation();
   const {
     menuItems,
     categories,
@@ -318,8 +320,8 @@ export function OrderPage() {
                     <label>Tip Comandă</label>
                     <select value={orderType || ''} onChange={(e) => setOrderType(e.target.value as any)}>
                       <option value="">Selectează...</option>
-                      <option value="dine_in">La Masă</option>
-                      <option value="takeaway">Takeaway</option>
+                      <option value="Dine-In">La Masă</option>
+                      <option value="takeout">Takeaway</option>
                       <option value="delivery">Livrare</option>
                     </select>
                   </div>
