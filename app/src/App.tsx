@@ -1,5 +1,5 @@
-import { Navigate, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 // Lazy imports - loaded on demand
 const KioskTransferIframePage = lazy(() => import('./pages/KioskTransferIframePage'));
