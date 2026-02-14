@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Card, Row, Col, Table, Button } from 'react-bootstrap';
 import { Line, Bar } from 'react-chartjs-2';
 import {
@@ -15,6 +15,7 @@ import {
   Filler,
 } from "chart.js";
 import { httpClient } from '@/shared/api/httpClient';
+import { getSocket, isSocketConnected } from '@/core/sockets/socketClient';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './KPIBusinessSection.css';
@@ -75,12 +76,10 @@ export const KPIBusinessSection = () => {
 //   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [kpiData, setKpiData] = useState<KPIData | null>(null);
+  const [socketConnected, setSocketConnected] = useState(false);
 
-  useEffect(() => {
-    loadKPIData();
-  }, []);
-
-  const loadKPIData = async () => {
+  // Load KPI data (wrapped in useCallback for stability)
+  const loadKPIData = useCallback(async () => {
     setLoading(true);
     try {
       const response = await httpClient.get('/api/admin/dashboard/kpi');
@@ -208,7 +207,55 @@ export const KPIBusinessSection = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  // Initial load
+  useEffect(() => {
+    loadKPIData();
+  }, [loadKPIData]);
+
+  // Socket.IO real-time updates
+  useEffect(() => {
+    const socket = getSocket();
+    setSocketConnected(isSocketConnected());
+
+    // Handle connection status
+    const handleConnect = () => {
+      console.log('✅ Dashboard: Socket.IO connected');
+      setSocketConnected(true);
+    };
+
+    const handleDisconnect = () => {
+      console.log('⚠️ Dashboard: Socket.IO disconnected');
+      setSocketConnected(false);
+    };
+
+    // Handle order updates - refresh dashboard when orders change
+    const handleOrderUpdate = () => {
+      console.log('📊 Dashboard: Order updated, refreshing KPIs...');
+      loadKPIData();
+    };
+
+    // Handle stock updates - refresh dashboard when inventory changes
+    const handleStockUpdate = () => {
+      console.log('📦 Dashboard: Stock updated, refreshing KPIs...');
+      loadKPIData();
+    };
+
+    // Register event listeners
+    socket.on('connect', handleConnect);
+    socket.on('disconnect', handleDisconnect);
+    socket.on('orderUpdated', handleOrderUpdate);
+    socket.on('stockUpdated', handleStockUpdate);
+
+    // Cleanup on unmount
+    return () => {
+      socket.off('connect', handleConnect);
+      socket.off('disconnect', handleDisconnect);
+      socket.off('orderUpdated', handleOrderUpdate);
+      socket.off('stockUpdated', handleStockUpdate);
+    };
+  }, [loadKPIData]);
 
   if (loading) {
     return (

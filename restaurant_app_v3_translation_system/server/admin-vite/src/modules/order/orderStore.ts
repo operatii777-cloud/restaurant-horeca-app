@@ -1,4 +1,3 @@
-// import { useTranslation } from '@/i18n/I18nContext';
 /**
  * PHASE S10 - Order Store (Comanda)
  * 
@@ -51,7 +50,7 @@ interface OrderState {
   
   // Order creation
   selectedTable: string | number | null;
-  orderType: 'dine_in' | 'takeout' | "Delivery" | null;
+  orderType: 'dine_in' | 'takeaway' | 'delivery' | null;
   notes: string;
   
   // UI state
@@ -67,7 +66,7 @@ interface OrderState {
   removeFromCart: (cartId: string) => void;
   clearCart: () => void;
   setSelectedTable: (table: string | number | null) => void;
-  setOrderType: (type: 'dine_in' | 'takeout' | "Delivery" | null) => void;
+  setOrderType: (type: 'dine_in' | 'takeaway' | 'delivery' | null) => void;
   setNotes: (notes: string) => void;
   toggleCart: () => void;
   setLoading: (loading: boolean) => void;

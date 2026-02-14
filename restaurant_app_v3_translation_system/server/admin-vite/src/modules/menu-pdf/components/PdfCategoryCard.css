@@ -4,11 +4,27 @@
   background: white;
   margin-bottom: 1rem;
   overflow: hidden;
-  transition: box-shadow 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .pdf-category-card:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pdf-category-card[draggable="true"]:active {
+  opacity: 0.5;
+  cursor: grabbing;
+}
+
+.pdf-category-card.dragging {
+  opacity: 0.5;
+  transform: scale(0.98);
+}
+
+.pdf-category-card.drag-over {
+  border-color: #3b82f6;
+  border-width: 2px;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
 .pdf-category-card__header {

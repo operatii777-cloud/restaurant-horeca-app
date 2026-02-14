@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"name": "restaurant-app-server", "version": "3.0.0", "type": "commonjs"}
+=======
+{"name":"server","version":"1.0.0"}
+>>>>>>> main

@@ -1,10 +1,14 @@
 // ...existing code...
 import { useState, useCallback, useMemo } from 'react';
+import { Row, Col, Button } from 'react-bootstrap';
 import { PageHeader } from '@/shared/components/PageHeader';
 import { StatCard } from '@/shared/components/StatCard';
 import { InlineAlert } from '@/shared/components/InlineAlert';
 import { usePdfConfig, type PdfMenuType, type PdfCategory, type PdfProduct } from '../hooks/usePdfConfig';
 import { PdfCategoryCard } from '../components/PdfCategoryCard';
+import { PdfSettingsPanel } from '../components/PdfSettingsPanel';
+import { ProductSearchFilter } from '../components/ProductSearchFilter';
+import { BulkImageUploadModal } from '../components/BulkImageUploadModal';
 import './MenuPDFBuilderPage.css';
 
 export const MenuPDFBuilderPage = () => {
@@ -12,9 +16,58 @@ export const MenuPDFBuilderPage = () => {
   const [activeType, setActiveType] = useState<PdfMenuType>('food');
   const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
   const [regenerating, setRegenerating] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [filteredCategories, setFilteredCategories] = useState<PdfCategory[] | null>(null);
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+  const [showBulkUpload, setShowBulkUpload] = useState(false);
 
   const { config, loading, error, refetch, updateCategories, updateProducts, uploadImage, deleteImage, regenerate } =
     usePdfConfig(activeType);
+
+  // Use filtered categories if available, otherwise use config categories
+  const displayCategories = filteredCategories || config?.categories || [];
+
+  // Drag and drop handlers
+  const handleDragStart = useCallback((e: React.DragEvent, index: number) => {
+    setDraggedIndex(index);
+    e.dataTransfer.effectAllowed = 'move';
+  }, []);
+
+  const handleDragOver = useCallback((e: React.DragEvent, index: number) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+  }, []);
+
+  const handleDrop = useCallback(async (e: React.DragEvent, dropIndex: number) => {
+    e.preventDefault();
+    
+    if (draggedIndex === null || draggedIndex === dropIndex || !config) {
+      return;
+    }
+
+    const categories = [...config.categories];
+    const [draggedItem] = categories.splice(draggedIndex, 1);
+    categories.splice(dropIndex, 0, draggedItem);
+
+    // Update order_index for all affected categories
+    const updates = categories.map((cat, idx) => ({
+      id: cat.id,
+      order_index: idx,
+    }));
+
+    try {
+      await updateCategories(updates);
+      setFeedback({ type: 'success', message: 'Ordinea categoriilor a fost actualizată' });
+      setTimeout(() => setFeedback(null), 3000);
+    } catch (err) {
+      setFeedback({
+        type: 'error',
+        message: err instanceof Error ? err.message : 'Eroare la reordonare',
+      });
+    } finally {
+      setDraggedIndex(null);
+    }
+  }, [draggedIndex, config, updateCategories]);
 
   const stats = useMemo(() => {
     if (!config) {
@@ -228,6 +281,18 @@ export const MenuPDFBuilderPage = () => {
         description="Administrează template-urile de meniu, sincronizează conținutul cu Catalogul și exportă PDF-uri gata de tipar sau distribuție digitală."
         actions={[
           {
+            label: showSettings ? 'Ascunde Setări' : 'Setări PDF',
+            variant: 'outline-primary',
+            onClick: () => setShowSettings(!showSettings),
+            icon: <i className="fas fa-cog" />,
+          },
+          {
+            label: 'Upload în Masă',
+            variant: 'outline-success',
+            onClick: () => setShowBulkUpload(true),
+            icon: <i className="fas fa-images" />,
+          },
+          {
             label: '↻ Reîmprospătează',
             variant: 'secondary',
             onClick: refetch,
@@ -279,31 +344,71 @@ export const MenuPDFBuilderPage = () => {
         ))}
       </section>
 
-      {/* Categories List */}
-      {loading ? (
-        <div className="menu-pdf-loading">
-          <div className="spinner"></div>
-          <p>Se încarcă configurația...</p>
-        </div>
-      ) : config && config.categories.length > 0 ? (
-        <section className="menu-pdf-categories">
-          {config.categories.map((category) => (
-            <PdfCategoryCard
-              key={category.id}
-              category={category}
-              onToggleVisibility={handleToggleCategoryVisibility}
-              onTogglePageBreak={handleTogglePageBreak}
-              onToggleProduct={handleToggleProduct}
-              onToggleAllProducts={handleToggleAllProducts}
-              onUploadImage={handleUploadImage}
-              onDeleteImage={handleDeleteImage}
+      {/* Settings Panel (collapsible) */}
+      {showSettings && <PdfSettingsPanel />}
+
+      <Row>
+        <Col lg={12}>
+          {/* Product Search/Filter */}
+          {config && config.categories.length > 0 && (
+            <ProductSearchFilter 
+              categories={config.categories}
+              onFilterChange={setFilteredCategories}
             />
-          ))}
-        </section>
-      ) : (
-        <div className="menu-pdf-empty">
-          <p>📋 Nicio categorie configurată pentru {activeType === 'food' ? 'Mâncare' : 'Băuturi'}.</p>
-        </div>
+          )}
+
+          {/* Categories List */}
+          {loading ? (
+            <div className="menu-pdf-loading">
+              <div className="spinner"></div>
+              <p>Se încarcă configurația...</p>
+            </div>
+          ) : config && displayCategories.length > 0 ? (
+            <section className="menu-pdf-categories">
+              {displayCategories.map((category, index) => (
+                <PdfCategoryCard
+                  key={category.id}
+                  category={category}
+                  index={index}
+                  draggable={filteredCategories === null}
+                  onDragStart={handleDragStart}
+                  onDragOver={handleDragOver}
+                  onDrop={handleDrop}
+                  onToggleVisibility={handleToggleCategoryVisibility}
+                  onTogglePageBreak={handleTogglePageBreak}
+                  onToggleProduct={handleToggleProduct}
+                  onToggleAllProducts={handleToggleAllProducts}
+                  onUploadImage={handleUploadImage}
+                  onDeleteImage={handleDeleteImage}
+                />
+              ))}
+            </section>
+          ) : config && filteredCategories !== null && filteredCategories.length === 0 ? (
+            <div className="menu-pdf-empty">
+              <p>🔍 Niciun rezultat pentru căutarea curentă.</p>
+              <Button variant="link" onClick={() => setFilteredCategories(null)}>
+                Resetează filtrele
+              </Button>
+            </div>
+          ) : (
+            <div className="menu-pdf-empty">
+              <p>📋 Nicio categorie configurată pentru {activeType === 'food' ? 'Mâncare' : 'Băuturi'}.</p>
+            </div>
+          )}
+        </Col>
+      </Row>
+
+      {/* Bulk Upload Modal */}
+      {config && (
+        <BulkImageUploadModal
+          show={showBulkUpload}
+          categories={config.categories}
+          onClose={() => setShowBulkUpload(false)}
+          onUploadComplete={() => {
+            refetch();
+            setFeedback({ type: 'success', message: 'Imaginile au fost încărcate cu succes!' });
+          }}
+        />
       )}
     </div>
   );
