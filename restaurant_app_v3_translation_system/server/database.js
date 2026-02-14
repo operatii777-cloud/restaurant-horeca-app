@@ -129,17 +129,16 @@ const dbPromise = new Promise((resolve, reject) => {
         }
       });
 
-      // TEMPORAR: Foreign keys dezactivate pentru a permite înregistrarea și autentificarea clienților
-      // Foreign keys vor fi activate doar pentru operațiuni admin
-      db.run("PRAGMA foreign_keys = OFF", (err) => {
+      // Activare foreign keys pentru integritatea bazei de date
+      db.run("PRAGMA foreign_keys = ON", (err) => {
         if (err) {
-          console.error('⚠️ Eroare la dezactivarea foreign_keys:', err.message);
+          console.error('⚠️ Eroare la activarea foreign_keys:', err.message);
           // Continuă chiar dacă eșuează
         } else {
-          console.log('⚠️ Foreign keys TEMPORAR dezactivate pentru customer auth');
+          console.log('✅ Foreign keys active pentru integritatea bazei de date');
         }
 
-        // Continuă cu inițializarea după ce foreign keys sunt dezactivate
+        // Continuă cu inițializarea după ce foreign keys sunt activate
         initializeDb(db)
           .then(() => {
             // Creează tabelele Enterprise
