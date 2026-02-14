@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 import { useMemo } from 'react';
 import type { ReservationFilters, ReservationStatus } from '@/types/reservations';
 import './ReservationFilters.css';
@@ -13,16 +13,7 @@ interface ReservationFiltersProps {
   loading?: boolean;
 }
 
-const STATUS_LABELS: Record<ReservationStatus, string> = {
-  pending: 'În așteptare',
-  confirmed: 'Confirmată',
-  seated: 'La masă',
-  completed: 'Finalizată',
-  cancelled: 'Anulată',
-  no_show: 'Nu s-a prezentat',
-};
-
-const STATUS_ORDER: ReservationStatus[] = ["Pending:", 'confirmed', 'seated', 'completed', 'cancelled', 'no_show'];
+const STATUS_ORDER: ReservationStatus[] = ['pending', 'confirmed', 'seated', 'completed', 'cancelled', 'no_show'];
 
 function formatDate(date: Date): string {
   return date.toISOString().split('T')[0];
@@ -37,12 +28,11 @@ export function ReservationFilters({
   onRefresh,
   loading = false,
 }: ReservationFiltersProps) {
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
   const activeStatuses = useMemo(() => new Set(filters.statuses ?? []), [filters.statuses]);
   const searchValue = filters.search ?? '';
 
   const handleStatusToggle = (status: ReservationStatus) => {
-//   const { t } = useTranslation();
     const next = new Set(activeStatuses);
     if (next.has(status)) {
       next.delete(status);
@@ -83,7 +73,7 @@ export function ReservationFilters({
       <div className="reservation-filters__left">
         <div className="reservation-filters__dates">
           <label className="reservation-filters__label">
-            De la
+            {t('reservations.filters.from')}
             <input
               type="date"
               value={filters.startDate ?? ''}
@@ -91,7 +81,7 @@ export function ReservationFilters({
             />
           </label>
           <label className="reservation-filters__label">
-            Până la
+            {t('reservations.filters.to')}
             <input
               type="date"
               value={filters.endDate ?? ''}
@@ -100,12 +90,12 @@ export function ReservationFilters({
           </label>
           <div className="reservation-filters__quick-range">
             <button type="button" onClick={() => handleQuickRange('today')}>
-              Azi
+              {t('reservations.list.today')}
             </button>
             <button type="button" onClick={() => handleQuickRange('next7')}>
-              Următoarele 7 zile
+              {t('reservations.filters.next7Days')}
             </button>
-            <button type="button" onClick={() => handleQuickRange('all')}>Toate</button>
+            <button type="button" onClick={() => handleQuickRange('all')}>{t('common.all')}</button>
           </div>
         </div>
 
@@ -119,7 +109,7 @@ export function ReservationFilters({
                 className={active ? 'status-pill status-pill--active' : 'status-pill'}
                 onClick={() => handleStatusToggle(status)}
               >
-                {STATUS_LABELS[status]}
+                {t(`reservations.status.${status}`)}
               </button>
             );
           })}
@@ -130,7 +120,7 @@ export function ReservationFilters({
         <div className="reservation-filters__search">
           <input
             type="search"
-            placeholder='[🔍_cauta_dupa_client_telefon_email_sau_cod]'
+            placeholder={t('reservations.filters.searchPlaceholder')}
             value={searchValue}
             onChange={(event) => onFiltersChange({ search: event.target.value })}
           />
@@ -139,30 +129,24 @@ export function ReservationFilters({
               type="checkbox"
               checked={Boolean(filters.includeCancelled)}
               onChange={(event) => onFiltersChange({ includeCancelled: event.target.checked })}
-            />Include anulările</label>
+            />{t('reservations.filters.includeCancelled')}</label>
         </div>
 
         <div className="reservation-filters__actions">
           <button type="button" className="ghost" onClick={onRefresh} disabled={loading}>
-            🔄 Reîmprospătează
+            {t('actions.refresh')}
           </button>
           <button type="button" className="ghost" onClick={onExport}>
-            📤 Export CSV
+            {t('reservations.filters.exportCsv')}
           </button>
           <button type="button" className="ghost" onClick={onReset}>
-            â™»ï¸ Reset
+            {t('actions.reset')}
           </button>
           <button type="button" className="primary" onClick={onCreate}>
-            âž• Rezervare nouă
+            {t('reservations.new.title')}
           </button>
         </div>
       </div>
     </section>
   );
 }
-
-
-
-
-
-

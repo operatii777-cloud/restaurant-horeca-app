@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 /**
  * FAZA 2.A - POS Product Grid Component
  * 
@@ -44,7 +44,7 @@ function getEffectivePrice(p: PosProduct, tier: 1 | 2 | 3): number {
 }
 
 export function PosProductGrid() {
-  //   const { t } = useTranslation();
+  const { t } = useTranslation();
   const { addItem, priceTier, setPriceTier } = usePosStore();
   const [products, setProducts] = useState<PosProduct[]>([]);
   const [loading, setLoading] = useState(true);
@@ -101,7 +101,7 @@ export function PosProductGrid() {
       setProducts(Array.isArray(productsData) ? productsData : []);
     } catch (err: any) {
       console.error('PosProductGrid Error loading products:', err);
-      setError(err.response?.data?.error || 'Eroare la încărcarea produselor');
+      setError(err.response?.data?.error || t('pos.products.errorLoading'));
     } finally {
       setLoading(false);
     }
@@ -185,12 +185,12 @@ export function PosProductGrid() {
   const handleProductClick = (product: PosProduct) => {
     // Check if product is available
     if (!product.is_active) {
-      alert('Produsul nu este activ');
+      alert(t('pos.products.productNotActive'));
       return;
     }
 
     if (product.stock_management && (product.current_stock || 0) <= 0) {
-      alert('Produsul nu este în stoc');
+      alert(t('pos.products.productOutOfStock'));
       return;
     }
 
@@ -218,9 +218,9 @@ export function PosProductGrid() {
     return (
       <div className="pos-product-grid-loading">
         <div className="spinner-border text-primary" role="status">
-          <span className="visually-hidden">"se incarca produsele"</span>
+          <span className="visually-hidden">{t('common.loading')}</span>
         </div>
-        <p className="text-muted mt-2">"se incarca produsele"</p>
+        <p className="text-muted mt-2">{t('pos.products.loadingProducts')}</p>
       </div>
     );
   }
@@ -233,7 +233,7 @@ export function PosProductGrid() {
           {error}
         </div>
         <button className="btn btn-outline-primary" onClick={loadProducts}>
-          <i className="fas fa-redo me-1"></i>"Reîncearcă"</button>
+          <i className="fas fa-redo me-1"></i>{t('actions.retry')}</button>
       </div>
     );
   }
@@ -242,7 +242,7 @@ export function PosProductGrid() {
     <div className="pos-product-grid">
       {/* Preț Tier Selector */}
       <div className="pos-product-grid-price-tier mb-2">
-        <span className="me-2" style={{ fontSize: '0.9rem', color: '#666' }}>Preț:</span>
+        <span className="me-2" style={{ fontSize: '0.9rem', color: '#666' }}>{t('pos.products.priceLabel')}:</span>
         {([1, 2, 3] as const).map((tier) => (
           <button
             key={tier}
@@ -250,7 +250,7 @@ export function PosProductGrid() {
             className={`btn btn-sm ${priceTier === tier ? 'btn-primary' : 'btn-outline-secondary'}`}
             onClick={() => setPriceTier(tier)}
           >
-            Preț {tier}
+            {t('pos.products.priceTier')} {tier}
           </button>
         ))}
       </div>
@@ -264,7 +264,7 @@ export function PosProductGrid() {
           <input
             type="text"
             className="form-control"
-            placeholder='[🔍_cauta_produs]'
+            placeholder={t('pos.products.search')}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -272,7 +272,7 @@ export function PosProductGrid() {
             <button
               className="btn btn-outline-secondary"
               onClick={() => setSearchTerm('')}
-              title="Șterge căutarea"
+              title={t('pos.products.clearSearch')}
             >
               <i className="fas fa-times"></i>
             </button>
@@ -288,7 +288,7 @@ export function PosProductGrid() {
             console.log('PosProductGrid Click on "Toate"');
             setSelectedCategory('all');
           }}
-        >"Toate"</button>
+        >{t('pos.products.allCategories')}</button>
         {categories.map((category) => (
           <button
             key={category}
@@ -328,7 +328,7 @@ export function PosProductGrid() {
               }}>
                 <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
                   <h1 style={{ color: '#ff6b35', fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 'bold' }}>
-                    🍲 Meniul Zilei
+                    🍲 {t('pos.products.dailyMenu')}
                   </h1>
                 </div>
 
@@ -367,7 +367,7 @@ export function PosProductGrid() {
                         )}
                         {dailyMenuData.soup.allergens && (
                           <p style={{ color: '#888', margin: 0, marginTop: '0.5rem', fontSize: '0.75rem' }}>
-                            <strong style={{ color: '#333' }}>Alergeni:</strong> {dailyMenuData.soup.allergens}
+                            <strong style={{ color: '#333' }}>{t('pos.products.allergens')}:</strong> {dailyMenuData.soup.allergens}
                           </p>
                         )}
                       </div>
@@ -413,7 +413,7 @@ export function PosProductGrid() {
                         )}
                         {dailyMenuData.mainCourse.allergens && (
                           <p style={{ color: '#888', margin: 0, marginTop: '0.5rem', fontSize: '0.75rem' }}>
-                            <strong style={{ color: '#333' }}>Alergeni:</strong> {dailyMenuData.mainCourse.allergens}
+                            <strong style={{ color: '#333' }}>{t('pos.products.allergens')}:</strong> {dailyMenuData.mainCourse.allergens}
                           </p>
                         )}
                       </div>
@@ -429,11 +429,11 @@ export function PosProductGrid() {
                 <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
                   <div style={{ marginBottom: '0.75rem' }}>
                     <span style={{ fontSize: '0.65rem', color: '#888', textDecoration: 'line-through' }}>
-                      Total: {(dailyMenuData.soup.price + dailyMenuData.mainCourse.price).toFixed(2)} RON
+                      {t('pos.products.total')}: {(dailyMenuData.soup.price + dailyMenuData.mainCourse.price).toFixed(2)} RON
                     </span>
                     <br />
                     <span style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#ff6b35' }}>
-                      Preț Ofertă: {((dailyMenuData.soup.price + dailyMenuData.mainCourse.price) - (dailyMenuData.discount || 0)).toFixed(2)} RON
+                      {t('pos.products.specialPrice')}: {((dailyMenuData.soup.price + dailyMenuData.mainCourse.price) - (dailyMenuData.discount || 0)).toFixed(2)} RON
                     </span>
                   </div>
                 </div>
@@ -473,20 +473,20 @@ export function PosProductGrid() {
                     boxShadow: '0 0 10px rgba(255, 107, 53, 0.6)'
                   }}
                 >
-                  <i className="fas fa-shopping-cart me-2"></i>"adauga in comanda"</button>
+                  <i className="fas fa-shopping-cart me-2"></i>{t('pos.products.addToOrder')}</button>
               </div>
             </div>
           ) : (
             <div className="pos-product-grid-empty">
-              <p className="text-muted">"nu exista meniu al zilei astazi"</p>
+              <p className="text-muted">{t('pos.products.noDailyMenu')}</p>
             </div>
           )
         ) : Object.keys(groupedProducts).length === 0 ? (
           <div className="pos-product-grid-empty">
             <p className="text-muted">
               {searchTerm
-                ? 'Nu s-au găsit produse pentru căutarea ta'
-                : 'Nu există produse disponibile'}
+                ? t('pos.products.noSearchResults')
+                : t('pos.products.noProductsAvailable')}
             </p>
           </div>
         ) : (
@@ -504,7 +504,7 @@ export function PosProductGrid() {
                       disabled={unavailable}
                       title={
                         unavailable
-                          ? 'Produs indisponibil'
+                          ? t('pos.products.productUnavailable')
                           : `${product.name} - ${getEffectivePrice(product, priceTier).toFixed(2)} RON`
                       }
                     >
@@ -527,14 +527,14 @@ export function PosProductGrid() {
                         </div>
                         {product.stock_management && (
                           <div className="pos-product-stock">
-                            Stoc: {product.current_stock || 0}
+                            {t('pos.products.stock')}: {product.current_stock || 0}
                           </div>
                         )}
                       </div>
                       {unavailable && (
                         <div className="pos-product-unavailable-overlay">
                           <i className="fas fa-ban"></i>
-                          Indisponibil
+                          {t('pos.products.unavailable')}
                         </div>
                       )}
                     </button>

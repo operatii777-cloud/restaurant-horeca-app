@@ -1,14 +1,15 @@
 /**
+import { useTranslation } from '@/i18n/I18nContext';
  * MODIFIERS CARD - Extras, Toppings, Combos
  * Data: 04 Decembrie 2025
  * CRITICAL FEATURE - Lipsea complet din aplicație
  */
-
 import React, { useState } from 'react';
 import { useMenuBuilderStore } from '../store/useMenuBuilderStore';
 import { useShallow } from 'zustand/react/shallow';
 
 export function ModifiersCard() {
+  const { t } = useTranslation();
   const {
     modifiers,
     modifierGroupsAvailable,
@@ -46,10 +47,10 @@ export function ModifiersCard() {
       <div className="flex items-center justify-between gap-2">
         <div>
           <h2 className="text-slate-100 font-semibold text-lg">
-            🔥 Modificatori (Extras, Toppings, Combos)
+            {t('menu.modifiers.title')}
           </h2>
           <p className="text-slate-400 text-xs">
-            <strong className="text-amber-400">NOU!</strong> Adaugă extra brânză, sos, băutură, etc.
+            <strong className="text-amber-400">{t('common.info')}</strong> {t('menu.productModal.customizationsSubtitle')}
           </p>
         </div>
         <button
@@ -57,7 +58,7 @@ export function ModifiersCard() {
           onClick={() => setShowAddModal(true)}
           className="text-xs bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded-lg transition-colors"
         >
-          + Adaugă modificator
+          {t('menu.menuBuilder.addModifier')}
         </button>
       </div>
 
@@ -165,7 +166,7 @@ export function ModifiersCard() {
 
             {availableGroups.length === 0 && (
               <p className="text-slate-400 text-sm">
-                Toate grupurile de modificatori sunt deja adăugate.
+                {t('menu.menuBuilder.noModifiers')}
               </p>
             )}
 

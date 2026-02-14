@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 /**
  * ═══════════════════════════════════════════════════════════════════════════
  * EXECUTIVE DASHBOARD PAGE
@@ -7,7 +7,7 @@
  * ═══════════════════════════════════════════════════════════════════════════
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Card, Row, Col, Spinner, Badge, Table, Button } from 'react-bootstrap';
 import {
   LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
@@ -30,20 +30,10 @@ const PLATFORM_COLORS: Record<string, string> = {
   'PHONE': '#6366f1',
 };
 
-const PLATFORM_LABELS: Record<string, string> = {
-  'MOBILE_APP': 'Aplicația Mobilă',
-  'FRIENDSRIDE': 'Friends Ride',
-  'GLOVO': 'Glovo',
-  'WOLT': 'Wolt',
-  'UBER_EATS': 'Uber Eats',
-  'BOLT_FOOD': 'Bolt Food',
-  'POS': 'POS Restaurant',
-  'KIOSK': 'KIOSK Self-Service',
-  'PHONE': 'Telefon',
-};
+
 
 export const ExecutiveDashboardPage: React.FC = () => {
-  //   const { t } = useTranslation();
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [metrics, setMetrics] = useState<ExecutiveMetrics | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -72,7 +62,7 @@ export const ExecutiveDashboardPage: React.FC = () => {
       }
     } catch (err: any) {
       console.error('Error loading executive metrics:', err);
-      setError(err.message || 'Eroare la încărcarea metricilor');
+      setError(err.message || t('dashboard.executive.error'));
     } finally {
       setLoading(false);
     }
@@ -90,11 +80,23 @@ export const ExecutiveDashboardPage: React.FC = () => {
     return `${sign}${value.toFixed(2)}%`;
   };
 
+  const PLATFORM_LABELS = useMemo<Record<string, string>>(() => ({
+    'MOBILE_APP': t('dashboard.executive.platformMobileApp'),
+    'FRIENDSRIDE': 'Friends Ride',
+    'GLOVO': 'Glovo',
+    'WOLT': 'Wolt',
+    'UBER_EATS': 'Uber Eats',
+    'BOLT_FOOD': 'Bolt Food',
+    'POS': t('dashboard.executive.platformPOS'),
+    'KIOSK': t('dashboard.executive.platformKIOSK'),
+    'PHONE': t('dashboard.executive.platformPhone'),
+  }), [t]);
+
   if (loading && !metrics) {
     return (
       <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '400px' }}>
         <Spinner animation="border" role="status">
-          <span className="visually-hidden">Se încarcă...</span>
+          <span className="visually-hidden">{t('dashboard.executive.loading')}</span>
         </Spinner>
       </div>
     );
@@ -103,9 +105,9 @@ export const ExecutiveDashboardPage: React.FC = () => {
   if (error && !metrics) {
     return (
       <div className="alert alert-danger">
-        <h4>Eroare</h4>
+        <h4>{t('dashboard.executive.error')}</h4>
         <p>{error}</p>
-        <Button onClick={loadMetrics}>Reîncearcă</Button>
+        <Button onClick={loadMetrics}>{t('dashboard.executive.retry')}</Button>
       </div>
     );
   }
@@ -148,8 +150,8 @@ export const ExecutiveDashboardPage: React.FC = () => {
   return (
     <div className="executive-dashboard-page">
       <PageHeader
-        title='Dashboard Executive'
-        subtitle='KPI-uri critice pentru management'
+        title={t('dashboard.executive.title')}
+        subtitle={t('dashboard.executive.subtitle')}
       />
 
       {/* Alerts Display */}
@@ -162,10 +164,10 @@ export const ExecutiveDashboardPage: React.FC = () => {
             <Card.Body>
               <div className="d-flex justify-content-between align-items-start">
                 <div>
-                  <h6 className="text-muted mb-1">Vânzări Astăzi</h6>
+                  <h6 className="text-muted mb-1">{t('dashboard.executive.todaySales')}</h6>
                   <h3 className="mb-0">{formatCurrency(metrics.today.total_revenue)}</h3>
                   <small className={`d-block mt-1 ${metrics.today.revenue_change_percent >= 0 ? 'text-success' : 'text-danger'}`}>
-                    {formatPercent(metrics.today.revenue_change_percent)} față de ieri
+                    {formatPercent(metrics.today.revenue_change_percent)} {t('dashboard.metrics.vsYesterday')}
                   </small>
                 </div>
                 <div className="kpi-icon">💰</div>
@@ -178,10 +180,10 @@ export const ExecutiveDashboardPage: React.FC = () => {
             <Card.Body>
               <div className="d-flex justify-content-between align-items-start">
                 <div>
-                  <h6 className="text-muted mb-1">Comenzi astăzi</h6>
+                  <h6 className="text-muted mb-1">{t('dashboard.executive.todayOrders')}</h6>
                   <h3 className="mb-0">{metrics.today.total_orders}</h3>
                   <small className={`d-block mt-1 ${metrics.today.orders_change_percent >= 0 ? 'text-success' : 'text-danger'}`}>
-                    {formatPercent(metrics.today.orders_change_percent)} față de ieri
+                    {formatPercent(metrics.today.orders_change_percent)} {t('dashboard.metrics.vsYesterday')}
                   </small>
                 </div>
                 <div className="kpi-icon">📦</div>
@@ -194,10 +196,10 @@ export const ExecutiveDashboardPage: React.FC = () => {
             <Card.Body>
               <div className="d-flex justify-content-between align-items-start">
                 <div>
-                  <h6 className="text-muted mb-1">Profit Estimat</h6>
+                  <h6 className="text-muted mb-1">{t('dashboard.metrics.estimatedProfit')}</h6>
                   <h3 className="mb-0">{formatCurrency(metrics.profitability.estimated_gross_profit)}</h3>
                   <small className="text-muted d-block mt-1">
-                    {metrics.profitability.profit_margin_percent}% marjă
+                    {metrics.profitability.profit_margin_percent}% {t('dashboard.metrics.margin')}
                   </small>
                 </div>
                 <div className="kpi-icon">📈</div>
@@ -210,10 +212,10 @@ export const ExecutiveDashboardPage: React.FC = () => {
             <Card.Body>
               <div className="d-flex justify-content-between align-items-start">
                 <div>
-                  <h6 className="text-muted mb-1">Stocuri Critice</h6>
+                  <h6 className="text-muted mb-1">{t('dashboard.metrics.criticalStock')}</h6>
                   <h3 className="mb-0">{metrics.critical_stock.count}</h3>
                   <small className="text-muted d-block mt-1">
-                    {metrics.warning_stock.count} avertismente
+                    {metrics.warning_stock.count} {t('dashboard.metrics.warnings')}
                   </small>
                 </div>
                 <div className="kpi-icon">⚠️</div>
@@ -228,7 +230,7 @@ export const ExecutiveDashboardPage: React.FC = () => {
         <Col md={8}>
           <Card>
             <Card.Header>
-              <h5 className="mb-0">Vânzări Zilnice per Platformă</h5>
+              <h5 className="mb-0">{t('dashboard.charts.dailySalesPerPlatform')}</h5>
             </Card.Header>
             <Card.Body>
               <ResponsiveContainer width="100%" height={300}>
@@ -255,7 +257,7 @@ export const ExecutiveDashboardPage: React.FC = () => {
         <Col md={4}>
           <Card>
             <Card.Header>
-              <h5 className="mb-0">Vânzări per Platformă (Astăzi)</h5>
+              <h5 className="mb-0">{t('dashboard.charts.salesPerPlatformToday')}</h5>
             </Card.Header>
             <Card.Body>
               <ResponsiveContainer width="100%" height={300}>
@@ -286,7 +288,7 @@ export const ExecutiveDashboardPage: React.FC = () => {
         <Col md={6}>
           <Card>
             <Card.Header>
-              <h5 className="mb-0">Top 10 Produse Vândute</h5>
+              <h5 className="mb-0">{t('dashboard.charts.top10Products')}</h5>
             </Card.Header>
             <Card.Body>
               <ResponsiveContainer width="100%" height={300}>
@@ -304,7 +306,7 @@ export const ExecutiveDashboardPage: React.FC = () => {
         <Col md={6}>
           <Card>
             <Card.Header>
-              <h5 className="mb-0">Rată Anulare per Platformă</h5>
+              <h5 className="mb-0">{t('dashboard.charts.cancellationRatePerPlatform')}</h5>
             </Card.Header>
             <Card.Body>
               <ResponsiveContainer width="100%" height={300}>
@@ -331,21 +333,21 @@ export const ExecutiveDashboardPage: React.FC = () => {
           <Card>
             <Card.Header>
               <h5 className="mb-0">
-                Stocuri Critice
+                {t('dashboard.executive.criticalStockTable')}
                 <Badge bg="danger" className="ms-2">{metrics.critical_stock.count}</Badge>
               </h5>
             </Card.Header>
             <Card.Body>
               {metrics.critical_stock.items.length === 0 ? (
-                <p className="text-muted mb-0">Nu există stocuri critice</p>
+                <p className="text-muted mb-0">{t('dashboard.executive.noCriticalStock')}</p>
               ) : (
                 <Table striped hover size="sm">
                   <thead>
                     <tr>
-                      <th>Ingredient</th>
-                      <th>Stoc</th>
-                      <th>Minim</th>
-                      <th>Unit.</th>
+                      <th>{t('dashboard.executive.ingredient')}</th>
+                      <th>{t('dashboard.executive.stock')}</th>
+                      <th>{t('dashboard.executive.minimum')}</th>
+                      <th>{t('dashboard.executive.unit')}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -367,21 +369,21 @@ export const ExecutiveDashboardPage: React.FC = () => {
           <Card>
             <Card.Header>
               <h5 className="mb-0">
-                Comenzi în așteptare
+                {t('dashboard.executive.pendingOrders')}
                 <Badge bg="warning" className="ms-2">{metrics.pending_orders.count}</Badge>
               </h5>
             </Card.Header>
             <Card.Body>
               {metrics.pending_orders.orders.length === 0 ? (
-                <p className="text-muted mb-0">Nu există comenzi în așteptare</p>
+                <p className="text-muted mb-0">{t('dashboard.executive.noPendingOrders')}</p>
               ) : (
                 <Table striped hover size="sm">
                   <thead>
                     <tr>
-                      <th>ID</th>
-                      <th>Platformă</th>
-                      <th>Așteptare</th>
-                      <th>Total</th>
+                      <th>{t('dashboard.executive.orderId')}</th>
+                      <th>{t('dashboard.executive.platform')}</th>
+                      <th>{t('dashboard.executive.waiting')}</th>
+                      <th>{t('dashboard.executive.total')}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -406,9 +408,9 @@ export const ExecutiveDashboardPage: React.FC = () => {
         <Button onClick={loadMetrics} disabled={loading}>
           {loading ? (
             <>
-              <Spinner size="sm" className="me-2" />Se actualizează...</>
+              <Spinner size="sm" className="me-2" />{t('dashboard.executive.updating')}</>
           ) : (
-            'Actualizează datele'
+            t('dashboard.executive.updateData')
           )}
         </Button>
       </div>

@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 // components/PdfCategoryCard.tsx
 import { useState } from 'react';
 import type { PdfCategory, PdfProduct } from '../hooks/usePdfConfig';
@@ -24,12 +24,11 @@ export const PdfCategoryCard = ({
   onUploadImage,
   onDeleteImage,
 }: PdfCategoryCardProps) => {
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
   const [uploading, setUploading] = useState(false);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-//   const { t } = useTranslation();
     const file = e.target.files?.[0];
     if (file) {
       setUploading(true);
@@ -66,7 +65,7 @@ export const PdfCategoryCard = ({
         <button
           type="button"
           className="pdf-category-card__expand"
-          onClick={() => setExpanded(!expanded)}
+          title={expanded ? t('actions.close') : t('actions.view')}
           title={expanded ? 'Ascunde' : 'Afișează'}
         >
           {expanded ? '▼' : '▶'}

@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 /**
  * FAZA 3.B - Offline Banner Component
  * 
@@ -14,7 +14,7 @@ interface OfflineBannerProps {
 }
 
 export function OfflineBanner({ isOffline, syncStatus }: OfflineBannerProps) {
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
   if (!isOffline) {
     return null;
   }
@@ -23,9 +23,9 @@ export function OfflineBanner({ isOffline, syncStatus }: OfflineBannerProps) {
     <Alert variant="warning" className="mb-3 d-flex align-items-center gap-2">
       <WifiOff size={20} />
       <div className="flex-grow-1">
-        <strong>Mod Offline Activ</strong>
+        <strong>{t('pos.offline.title')}</strong>
         <br />
-        <small>"comenzile vor fi salvate local si sincronizate aut"</small>
+        <small>{t('pos.offline.ordersSaved')}</small>
       </div>
     </Alert>
   );

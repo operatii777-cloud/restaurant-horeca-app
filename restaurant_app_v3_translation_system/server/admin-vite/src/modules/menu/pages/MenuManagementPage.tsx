@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 import { useCallback, useEffect, useMemo, useState, type ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type {
@@ -52,7 +52,7 @@ export function MenuManagementPage() {
 
   const navigate = useNavigate();
   const { products, analytics, loading, error, refetch } = useMenuProducts(categoryFilter || undefined);
-  const { categories, error: categoriesError, refetch: refetchCategories } = useMenuCategories();
+  const { t } = useTranslation();
   const {
     mutate: deleteProduct,
     loading: deleting,
@@ -308,28 +308,28 @@ export function MenuManagementPage() {
 
         <div className="menu-management-stats">
           <StatCard
-            title="Produse listate"
-            helper="Număr total în meniul curent"
+            title={t('menu.products.title')}
+            helper={t('menu.products.search')}
             value={`${analytics.totalProducts}`}
-            trendLabel="Doar la pachet"
+            trendLabel={t('menu.productModal.takeoutOnly')}
             trendValue={`${analytics.takeoutOnlyCount}`}
             trendDirection={analytics.takeoutOnlyCount > 0 ? 'up' : 'flat'}
             icon={<span>🍽️</span>}
           />
           <StatCard
-            title="Preț mediu"
-            helper="Pe produs listat"
+            title={t('common.price')}
+            helper={t('menu.products.search')}
             value={`${analytics.averagePrice.toFixed(2)} RON`}
-            trendLabel="Opțiuni vegetariene"
+            trendLabel={t('menu.productModal.vegetarian')}
             trendValue={`${analytics.vegetarianCount}`}
             trendDirection={analytics.vegetarianCount > 0 ? 'up' : 'flat'}
             icon={<span>💶</span>}
           />
           <StatCard
-            title="Produse picante"
-            helper="Marcaj intern pentru alergeni"
+            title={t('menu.productModal.spicy')}
+            helper={t('menu.productModal.allergens')}
             value={`${analytics.spicyCount}`}
-            trendLabel="Top categorie"
+            trendLabel={t('common.category')}
             trendValue={analytics.topCategories[0] ? `${analytics.topCategories[0].raw} items` : 'N/A'}
             trendDirection={analytics.topCategories.length > 0 ? 'up' : 'flat'}
             icon={<span>🌶️</span>}
@@ -418,7 +418,7 @@ export function MenuManagementPage() {
             value={quickFilter}
             onChange={setQuickFilter}
             placeholder={'[cauta_produs_dupa_nume_categorie_sau_alergeni]'}
-            aria-label="Filtru rapid produse meniu"
+            aria-label={t('actions.filter')}
           />
           <div className="menu-management-filter-select">
             <label htmlFor="menu-category-filter">Categorie</label>
@@ -488,8 +488,8 @@ export function MenuManagementPage() {
 
       <div className="menu-management-feedback">
         {feedback ? <InlineAlert variant={feedback.type} title={feedback.type === 'success' ? 'Succes' : 'Atenție'} message={feedback.message} /> : null}
-        {error ? <InlineAlert variant="error" title="Eroare produse" message={error} /> : null}
-        {categoriesError ? <InlineAlert variant="error" title="Eroare categorii" message={categoriesError} /> : null}
+        {error ? <InlineAlert variant="error" title={t('menu.messages.error')} message={error} /> : null}
+        {categoriesError ? <InlineAlert variant="error" title={t('menu.messages.error')} message={categoriesError} /> : null}
         {deleteError ? <InlineAlert variant="error" title={'[eroare_stergere]'} message={deleteError} /> : null}
         {!hasToolbarErrors ? null : <div className="menu-management-spacer" />}
       </div>

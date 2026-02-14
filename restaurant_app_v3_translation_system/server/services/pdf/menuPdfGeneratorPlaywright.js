@@ -84,7 +84,7 @@ async function loadTemplate() {
 }
 
 /**
- * ✅ FUNCȚIA OPTIMIZATĂ - Încarcă logo Base64
+ * Încarcă logo Base64
  * Convertește logo-ul QrOMS în base64 pentru injectare în PDF
  */
 async function getQrOMSLogoBase64() {
@@ -114,6 +114,79 @@ async function getQrOMSLogoBase64() {
 }
 
 /**
+ * Încarcă setările PDF din baza de date
+ */
+async function loadPDFSettings() {
+  const sqlite3 = require('sqlite3').verbose();
+  const dbPath = path.join(__dirname, '..', '..', 'restaurant.db');
+  
+  return new Promise((resolve, reject) => {
+    const db = new sqlite3.Database(dbPath, (err) => {
+      if (err) {
+        console.error('❌ Eroare conectare DB pentru setări:', err);
+        // Return default settings if error
+        resolve({
+          showPrices: true,
+          showDescriptions: false,
+          showImages: true,
+          fontFamily: 'Arial, sans-serif',
+          fontSize: 12,
+          headerColor: '#2c3e50',
+          backgroundColor: '#ffffff',
+          textColor: '#333333',
+          priceColor: '#27ae60',
+        });
+        return;
+      }
+
+      db.get('SELECT * FROM menu_pdf_settings WHERE id = 1', [], (err, row) => {
+        db.close();
+
+        if (err || !row) {
+          console.log('   ℹ️  Nu există setări salvate, folosesc valori implicite');
+          // Default settings
+          resolve({
+            showPrices: true,
+            showDescriptions: false,
+            showImages: true,
+            fontFamily: 'Arial, sans-serif',
+            fontSize: 12,
+            headerColor: '#2c3e50',
+            backgroundColor: '#ffffff',
+            textColor: '#333333',
+            priceColor: '#27ae60',
+          });
+        } else {
+          console.log('   ✅ Setări PDF încărcate din DB');
+          resolve({
+            showPrices: row.show_prices === 1,
+            showDescriptions: row.show_descriptions === 1,
+            showImages: row.show_images === 1,
+            fontFamily: row.font_family || 'Arial, sans-serif',
+            fontSize: row.font_size || 12,
+            fontWeight: row.font_weight || 'normal',
+            headerColor: row.header_color || '#2c3e50',
+            backgroundColor: row.background_color || '#ffffff',
+            textColor: row.text_color || '#333333',
+            priceColor: row.price_color || '#27ae60',
+            layout: row.layout || 'single-column',
+            orientation: row.orientation || 'portrait',
+            marginTop: row.margin_top || 20,
+            marginBottom: row.margin_bottom || 20,
+            marginLeft: row.margin_left || 20,
+            marginRight: row.margin_right || 20,
+            categorySpacing: row.category_spacing || 15,
+            productSpacing: row.product_spacing || 8,
+            pageSize: row.page_size || 'A4',
+            template: row.template || 'modern',
+          });
+        }
+      });
+    });
+  });
+}
+
+/**
  * Generează HTML din template + date
  */
 async function generateHTML(type, lang) {
@@ -127,6 +200,10 @@ async function generateHTML(type, lang) {
   
   // Obține logo-ul QrOMS în base64
   const qrOMSLogoBase64 = await getQrOMSLogoBase64();
+  
+  // Încarcă setările PDF
+  const settings = await loadPDFSettings();
+  console.log(`   🎨 Setări PDF: Prețuri=${settings.showPrices}, Descrieri=${settings.showDescriptions}, Imagini=${settings.showImages}`);
   
   // Titluri
   const titles = {
@@ -150,6 +227,7 @@ async function generateHTML(type, lang) {
       ...menuData.metadata,
       lang: lang  // IMPORTANT: Asigur că limba e setată corect
     },
+    settings: settings,  // Pass settings to template
     css: css,
     menu_title: titleData.title,
     menu_subtitle: titleData.subtitle,

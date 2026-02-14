@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
 import { Modal } from '@/shared/components/Modal';
@@ -15,7 +15,7 @@ type BulkPriceModalProps = {
 };
 
 export function BulkPriceModal({ open, productCount, productIds, onClose, onApplied }: BulkPriceModalProps) {
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
   const { mutate, loading, error, reset } = useApiMutation<{ message?: string; updated_count?: number }>();
   const [newPrice, setNewPrice] = useState<string>('');
   const [newVatRate, setNewVatRate] = useState<string>('');
@@ -37,12 +37,12 @@ export function BulkPriceModal({ open, productCount, productIds, onClose, onAppl
     setLocalError(null);
 
     if (!productIds.length) {
-      setLocalError('Selectează cel puțin un produs pentru actualizare.');
+      setLocalError(t('menu.bulkPrice.error'));
       return;
     }
 
     if (newPrice.trim() === '' && newVatRate.trim() === '') {
-      setLocalError('Completează fie noul preț, fie noua cotă TVA (sau ambele).');
+      setLocalError(t('menu.bulkPrice.error'));
       return;
     }
 
@@ -75,29 +75,29 @@ export function BulkPriceModal({ open, productCount, productIds, onClose, onAppl
   return (
     <Modal
       isOpen={open}
-      title="schimbare pret in masa"
-      description={`Vor fi actualizate ${productCount} produse selectate.`}
+      title={t('menu.bulkPrice.title')}
+      description={`${t('menu.bulkPrice.subtitle')} ${productCount} ${t('menu.products.title').toLowerCase()}.`}
       size="md"
       onClose={onClose}
     >
-      {localError ? <InlineAlert variant="warning" title="verifica datele" message={localError} /> : null}
-      {error ? <InlineAlert variant="error" title="Eroare" message={error} /> : null}
+      {localError ? <InlineAlert variant="warning" title={t('common.warning')} message={localError} /> : null}
+      {error ? <InlineAlert variant="error" title={t('menu.messages.error')} message={error} /> : null}
 
       <form className="bulk-price-form" onSubmit={handleSubmit}>
         <label className="bulk-price-field">
-          <span>Preț nou (RON)</span>
+          <span>{t('menu.productModal.priceRon')}</span>
           <input
             type="number"
             min="0"
             step="0.1"
             value={newPrice}
             onChange={(event) => setNewPrice(event.target.value)}
-            placeholder="lasa gol pentru a pastra pretul"
+            placeholder={t('menu.pricing.basePrice')}
           />
         </label>
 
         <label className="bulk-price-field">
-          <span>TVA nou (%)</span>
+          <span>{t('menu.productModal.vatPercent')}</span>
           <input
             type="number"
             min="0"
@@ -105,24 +105,24 @@ export function BulkPriceModal({ open, productCount, productIds, onClose, onAppl
             step="1"
             value={newVatRate}
             onChange={(event) => setNewVatRate(event.target.value)}
-            placeholder="lasa gol pentru a pastra cota existenta"
+            placeholder={t('common.optional')}
           />
         </label>
 
         <label className="bulk-price-field">
-          <span>Operator (opțional)</span>
+          <span>{t('common.notes')}</span>
           <input
             type="text"
             value={changedBy}
             onChange={(event) => setChangedBy(event.target.value)}
-            placeholder="ex super admin"
+            placeholder={t('common.notes')}
           />
         </label>
 
         <footer className="bulk-price-actions">
-          <button type="button" className="menu-product-button menu-product-button--ghost" onClick={onClose} disabled={loading}>"Anulează"</button>
+          <button type="button" className="menu-product-button menu-product-button--ghost" onClick={onClose} disabled={loading}>{t('actions.cancel')}</button>
           <button type="submit" className="menu-product-button menu-product-button--primary" disabled={loading}>
-            {loading ? 'Se aplică…' : 'Aplică modificările'}
+            {loading ? t('menu.bulkPrice.applyingChanges') : t('menu.bulkPrice.apply')}
           </button>
         </footer>
       </form>

@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 /**
  * PHASE S12 - POS Mode Switcher Component
  * 
@@ -10,14 +10,14 @@ import { usePosStore, type PosMode } from '../store/posStore';
 import './PosModeSwitcher.css';
 
 export function PosModeSwitcher() {
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
   const { currentMode, setMode } = usePosStore();
 
-  const modes: Array<{ key: PosMode; label: string; icon: string }> = [
-    { key: 'TABLES', label: 'Mese', icon: '🍽️' },
-    { key: 'FAST_SALE', label: 'Vânzare Rapidă', icon: '⚡' },
-    { key: 'KIOSK', label: 'Kiosk', icon: '📱' },
-    { key: 'DELIVERY', label: 'Livrare', icon: '🚚' },
+  const modes: Array<{ key: PosMode; labelKey: string; icon: string }> = [
+    { key: 'TABLES', labelKey: 'pos.modes.dineIn', icon: '🍽️' },
+    { key: 'FAST_SALE', labelKey: 'pos.modes.takeaway', icon: '⚡' },
+    { key: 'KIOSK', labelKey: 'pos.modes.kiosk', icon: '📱' },
+    { key: 'DELIVERY', labelKey: 'pos.modes.delivery', icon: '🚚' },
   ];
 
   return (
@@ -29,7 +29,7 @@ export function PosModeSwitcher() {
           onClick={() => setMode(mode.key)}
         >
           <span className="pos-mode-icon">{mode.icon}</span>
-          <span className="pos-mode-label">{mode.label}</span>
+          <span className="pos-mode-label">{t(mode.labelKey)}</span>
         </button>
       ))}
     </div>

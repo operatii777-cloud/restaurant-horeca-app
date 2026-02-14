@@ -89,9 +89,16 @@ exports.getConfig = (req, res) => {
 
     // Obține categorii
     db.all(`
-        SELECT * FROM menu_pdf_categories
-        WHERE category_type = ?
-        ORDER BY order_index ASC
+        SELECT 
+            c.*,
+            s.name as section_name,
+            s.order_index as section_order
+        FROM menu_pdf_categories c
+        LEFT JOIN menu_pdf_sections s ON c.section_id = s.id
+        WHERE c.category_type = ?
+        ORDER BY 
+            COALESCE(s.order_index, 999) ASC,
+            c.order_index ASC
     `, [type], (err, categories) => {
         if (err) {
             console.error('❌ [PDF Config] Query error:', err.message);
@@ -514,4 +521,495 @@ exports.getRegenerationHistory = (req, res) => {
         });
     });
 };
+
+/**
+ * GET /api/menu/pdf/builder/settings
+ * 
+ * Returnează setările globale pentru PDF
+ */
+exports.getSettings = (req, res) => {
+    const db = new sqlite3.Database(DB_PATH, (err) => {
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la conectarea la baza de date'
+            });
+        }
+    });
+
+    db.get('SELECT * FROM menu_pdf_settings WHERE id = 1', [], (err, row) => {
+        db.close();
+
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la încărcarea setărilor'
+            });
+        }
+
+        if (!row) {
+            // Return default settings if none exist
+            return res.json({
+                success: true,
+                settings: null
+            });
+        }
+
+        // Parse JSON fields
+        const settings = {
+            fontFamily: row.font_family,
+            fontSize: row.font_size,
+            fontWeight: row.font_weight,
+            headerColor: row.header_color,
+            backgroundColor: row.background_color,
+            textColor: row.text_color,
+            priceColor: row.price_color,
+            layout: row.layout,
+            orientation: row.orientation,
+            marginTop: row.margin_top,
+            marginBottom: row.margin_bottom,
+            marginLeft: row.margin_left,
+            marginRight: row.margin_right,
+            categorySpacing: row.category_spacing,
+            productSpacing: row.product_spacing,
+            showPrices: row.show_prices === 1,
+            showDescriptions: row.show_descriptions === 1,
+            showImages: row.show_images === 1,
+            pageSize: row.page_size,
+            template: row.template,
+        };
+
+        res.json({
+            success: true,
+            settings
+        });
+    });
+};
+
+/**
+ * POST /api/menu/pdf/builder/settings
+ * 
+ * Salvează setările globale pentru PDF
+ */
+exports.updateSettings = (req, res) => {
+    const { settings } = req.body;
+
+    if (!settings) {
+        return res.status(400).json({
+            success: false,
+            error: 'Setările sunt obligatorii'
+        });
+    }
+
+    const db = new sqlite3.Database(DB_PATH, (err) => {
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la conectarea la baza de date'
+            });
+        }
+    });
+
+    // Check if table exists, if not create it
+    db.run(`
+        CREATE TABLE IF NOT EXISTS menu_pdf_settings (
+            id INTEGER PRIMARY KEY DEFAULT 1,
+            font_family TEXT DEFAULT 'Arial, sans-serif',
+            font_size INTEGER DEFAULT 12,
+            font_weight TEXT DEFAULT 'normal',
+            header_color TEXT DEFAULT '#2c3e50',
+            background_color TEXT DEFAULT '#ffffff',
+            text_color TEXT DEFAULT '#333333',
+            price_color TEXT DEFAULT '#27ae60',
+            layout TEXT DEFAULT 'single-column',
+            orientation TEXT DEFAULT 'portrait',
+            margin_top INTEGER DEFAULT 20,
+            margin_bottom INTEGER DEFAULT 20,
+            margin_left INTEGER DEFAULT 20,
+            margin_right INTEGER DEFAULT 20,
+            category_spacing INTEGER DEFAULT 15,
+            product_spacing INTEGER DEFAULT 8,
+            show_prices INTEGER DEFAULT 1,
+            show_descriptions INTEGER DEFAULT 0,
+            show_images INTEGER DEFAULT 1,
+            page_size TEXT DEFAULT 'A4',
+            template TEXT DEFAULT 'modern',
+            updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+        )
+    `, (err) => {
+        if (err) {
+            db.close();
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la crearea tabelei de setări'
+            });
+        }
+
+        // Insert or replace settings
+        db.run(`
+            INSERT OR REPLACE INTO menu_pdf_settings (
+                id, font_family, font_size, font_weight,
+                header_color, background_color, text_color, price_color,
+                layout, orientation,
+                margin_top, margin_bottom, margin_left, margin_right,
+                category_spacing, product_spacing,
+                show_prices, show_descriptions, show_images,
+                page_size, template, updated_at
+            ) VALUES (
+                1, ?, ?, ?,
+                ?, ?, ?, ?,
+                ?, ?,
+                ?, ?, ?, ?,
+                ?, ?,
+                ?, ?, ?,
+                ?, ?, CURRENT_TIMESTAMP
+            )
+        `, [
+            settings.fontFamily || 'Arial, sans-serif',
+            settings.fontSize || 12,
+            settings.fontWeight || 'normal',
+            settings.headerColor || '#2c3e50',
+            settings.backgroundColor || '#ffffff',
+            settings.textColor || '#333333',
+            settings.priceColor || '#27ae60',
+            settings.layout || 'single-column',
+            settings.orientation || 'portrait',
+            settings.marginTop || 20,
+            settings.marginBottom || 20,
+            settings.marginLeft || 20,
+            settings.marginRight || 20,
+            settings.categorySpacing || 15,
+            settings.productSpacing || 8,
+            settings.showPrices ? 1 : 0,
+            settings.showDescriptions ? 1 : 0,
+            settings.showImages ? 1 : 0,
+            settings.pageSize || 'A4',
+            settings.template || 'modern',
+        ], (err) => {
+            db.close();
+
+            if (err) {
+                return res.status(500).json({
+                    success: false,
+                    error: 'Eroare la salvarea setărilor'
+                });
+            }
+
+            res.json({
+                success: true,
+                message: 'Setările au fost salvate cu succes'
+            });
+        });
+    });
+};
+
+/**
+ * GET /api/menu/pdf/builder/sections
+ * 
+ * Returnează secțiunile pentru un tip de meniu
+ */
+exports.getSections = (req, res) => {
+    const type = req.query.type || 'food';
+
+    if (!['food', 'drinks'].includes(type)) {
+        return res.status(400).json({
+            success: false,
+            error: 'Tipul trebuie să fie "food" sau "drinks"'
+        });
+    }
+
+    const db = new sqlite3.Database(DB_PATH, (err) => {
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la conectarea la baza de date'
+            });
+        }
+    });
+
+    // Create table if not exists
+    db.run(`
+        CREATE TABLE IF NOT EXISTS menu_pdf_sections (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            type TEXT NOT NULL CHECK(type IN ('food', 'drinks')),
+            order_index INTEGER DEFAULT 0,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+        )
+    `, (err) => {
+        if (err) {
+            db.close();
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la crearea tabelei sections'
+            });
+        }
+
+        db.all(`
+            SELECT * FROM menu_pdf_sections
+            WHERE type = ?
+            ORDER BY order_index ASC
+        `, [type], (err, rows) => {
+            db.close();
+
+            if (err) {
+                return res.status(500).json({
+                    success: false,
+                    error: 'Eroare la încărcarea secțiunilor'
+                });
+            }
+
+            res.json({
+                success: true,
+                sections: rows || []
+            });
+        });
+    });
+};
+
+/**
+ * POST /api/menu/pdf/builder/sections
+ * 
+ * Creează o secțiune nouă
+ */
+exports.createSection = (req, res) => {
+    const { name, type } = req.body;
+
+    if (!name || !type) {
+        return res.status(400).json({
+            success: false,
+            error: 'Numele și tipul sunt obligatorii'
+        });
+    }
+
+    if (!['food', 'drinks'].includes(type)) {
+        return res.status(400).json({
+            success: false,
+            error: 'Tipul trebuie să fie "food" sau "drinks"'
+        });
+    }
+
+    const db = new sqlite3.Database(DB_PATH, (err) => {
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la conectarea la baza de date'
+            });
+        }
+    });
+
+    // Get max order_index
+    db.get(`
+        SELECT COALESCE(MAX(order_index), -1) + 1 as next_order
+        FROM menu_pdf_sections
+        WHERE type = ?
+    `, [type], (err, row) => {
+        if (err) {
+            db.close();
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la obținerea ordinei'
+            });
+        }
+
+        const nextOrder = row.next_order;
+
+        db.run(`
+            INSERT INTO menu_pdf_sections (name, type, order_index)
+            VALUES (?, ?, ?)
+        `, [name, type, nextOrder], function(err) {
+            db.close();
+
+            if (err) {
+                return res.status(500).json({
+                    success: false,
+                    error: 'Eroare la crearea secțiunii'
+                });
+            }
+
+            res.json({
+                success: true,
+                id: this.lastID,
+                message: 'Secțiune creată cu succes'
+            });
+        });
+    });
+};
+
+/**
+ * PUT /api/menu/pdf/builder/sections/:id
+ * 
+ * Actualizează o secțiune
+ */
+exports.updateSection = (req, res) => {
+    const { id } = req.params;
+    const { name, order_index } = req.body;
+
+    const db = new sqlite3.Database(DB_PATH, (err) => {
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la conectarea la baza de date'
+            });
+        }
+    });
+
+    const updates = [];
+    const values = [];
+
+    if (name !== undefined) {
+        updates.push('name = ?');
+        values.push(name);
+    }
+
+    if (order_index !== undefined) {
+        updates.push('order_index = ?');
+        values.push(order_index);
+    }
+
+    if (updates.length === 0) {
+        db.close();
+        return res.status(400).json({
+            success: false,
+            error: 'Nicio actualizare specificată'
+        });
+    }
+
+    updates.push('updated_at = CURRENT_TIMESTAMP');
+    values.push(id);
+
+    db.run(`
+        UPDATE menu_pdf_sections
+        SET ${updates.join(', ')}
+        WHERE id = ?
+    `, values, (err) => {
+        db.close();
+
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la actualizarea secțiunii'
+            });
+        }
+
+        res.json({
+            success: true,
+            message: 'Secțiune actualizată cu succes'
+        });
+    });
+};
+
+/**
+ * DELETE /api/menu/pdf/builder/sections/:id
+ * 
+ * Șterge o secțiune
+ */
+exports.deleteSection = (req, res) => {
+    const { id } = req.params;
+
+    const db = new sqlite3.Database(DB_PATH, (err) => {
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la conectarea la baza de date'
+            });
+        }
+    });
+
+    // First, remove section_id from categories
+    db.run(`
+        UPDATE menu_pdf_categories
+        SET section_id = NULL
+        WHERE section_id = ?
+    `, [id], (err) => {
+        if (err) {
+            db.close();
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la actualizarea categoriilor'
+            });
+        }
+
+        // Then delete section
+        db.run(`
+            DELETE FROM menu_pdf_sections
+            WHERE id = ?
+        `, [id], (err) => {
+            db.close();
+
+            if (err) {
+                return res.status(500).json({
+                    success: false,
+                    error: 'Eroare la ștergerea secțiunii'
+                });
+            }
+
+            res.json({
+                success: true,
+                message: 'Secțiune ștearsă cu succes'
+            });
+        });
+    });
+};
+
+/**
+ * POST /api/menu/pdf/builder/categories/assign-section
+ * 
+ * Atribuie categorii la o secțiune
+ */
+exports.assignCategoriesToSection = (req, res) => {
+    const { categoryIds, sectionId } = req.body;
+
+    if (!Array.isArray(categoryIds)) {
+        return res.status(400).json({
+            success: false,
+            error: 'categoryIds trebuie să fie un array'
+        });
+    }
+
+    const db = new sqlite3.Database(DB_PATH, (err) => {
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                error: 'Eroare la conectarea la baza de date'
+            });
+        }
+    });
+
+    // Ensure section_id column exists
+    db.run(`
+        CREATE TABLE IF NOT EXISTS menu_pdf_categories (
+            id INTEGER PRIMARY KEY,
+            category_name TEXT,
+            section_id INTEGER REFERENCES menu_pdf_sections(id)
+        )
+    `, (err) => {
+        // Ignore error if table already exists
+        
+        const placeholders = categoryIds.map(() => '?').join(',');
+        const values = [...categoryIds, sectionId];
+
+        db.run(`
+            UPDATE menu_pdf_categories
+            SET section_id = ?
+            WHERE id IN (${placeholders})
+        `, [sectionId, ...categoryIds], (err) => {
+            db.close();
+
+            if (err) {
+                return res.status(500).json({
+                    success: false,
+                    error: 'Eroare la atribuirea categoriilor'
+                });
+            }
+
+            res.json({
+                success: true,
+                message: 'Categorii atribuite cu succes'
+            });
+        });
+    });
+};
+
 

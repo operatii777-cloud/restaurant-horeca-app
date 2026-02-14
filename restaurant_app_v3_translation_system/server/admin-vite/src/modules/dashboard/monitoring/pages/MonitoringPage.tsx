@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import QueueMonitorPage from '@/modules/queue-monitor/pages/QueueMonitorPage';
@@ -22,7 +22,7 @@ interface OrderMetrics {
 }
 
 export const MonitoringPage: React.FC = () => {
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
   const location = useLocation();
   const [systemMetrics, setSystemMetrics] = useState<SystemMetrics | null>(null);
   const [orderMetrics, setOrderMetrics] = useState<OrderMetrics | null>(null);
@@ -113,9 +113,9 @@ export const MonitoringPage: React.FC = () => {
   return (
     <div className="padding-20">
       <div className="page-header margin-bottom-20">
-        <h1><i className="fas fa-tachometer-alt me-2"></i>Dashboard Monitorizare și Performanță</h1>
+        <h1><i className="fas fa-tachometer-alt me-2"></i>{t('dashboard.monitoring.title')}</h1>
         <button className="btn btn-primary" onClick={loadMetrics}>
-          <i className="fas fa-sync me-1"></i>Reîncarcă</button>
+          <i className="fas fa-sync me-1"></i>{t('dashboard.monitoring.refresh')}</button>
       </div>
 
       {/* Tabs */}
@@ -125,7 +125,7 @@ export const MonitoringPage: React.FC = () => {
             className={`nav-link ${activeTab === 'overview' ? 'active' : ''}`}
             onClick={() => setActiveTab('overview')}
           >
-            Prezentare Generală
+            {t('dashboard.monitoring.tabOverview')}
           </button>
         </li>
         <li className="nav-item">
@@ -133,14 +133,14 @@ export const MonitoringPage: React.FC = () => {
             className={`nav-link ${activeTab === 'queue' ? 'active' : ''}`}
             onClick={() => setActiveTab('queue')}
           >
-            Monitor Coadă
+            {t('dashboard.monitoring.tabQueue')}
           </button>
         </li>
         <li className="nav-item">
           <button
             className={`nav-link ${activeTab === 'performance' ? 'active' : ''}`}
             onClick={() => setActiveTab('performance')}
-          >Performance Metrics</button>
+          >{t('dashboard.monitoring.tabPerformance')}</button>
         </li>
       </ul>
 
@@ -152,23 +152,23 @@ export const MonitoringPage: React.FC = () => {
             <div className="col-md-4">
               <div className="card">
                 <div className="card-header bg-primary text-white">
-                  <h5><i className="fas fa-server me-2"></i>Metrici Sistem</h5>
+                  <h5><i className="fas fa-server me-2"></i>{t('dashboard.monitoring.systemMetrics')}</h5>
                 </div>
                 <div className="card-body">
                   {systemMetrics ? (
                     <>
                       <div className="mb-3">
-                        <strong>Timp de Răspuns:</strong> {systemMetrics.response_time || 0}ms
+                        <strong>{t('dashboard.monitoring.responseTime')}</strong> {systemMetrics.response_time || 0}ms
                       </div>
                       <div className="mb-3">
-                        <strong>Conexiuni Active:</strong> {systemMetrics.active_connections || 0}
+                        <strong>{t('dashboard.monitoring.activeConnections')}</strong> {systemMetrics.active_connections || 0}
                       </div>
                       <div className="mb-3">
-                        <strong>Utilizare Memorie:</strong> {Math.round((systemMetrics.memory?.heapUsed || 0) / 1024 / 1024)}MB
+                        <strong>{t('dashboard.monitoring.memoryUsage')}</strong> {Math.round((systemMetrics.memory?.heapUsed || 0) / 1024 / 1024)}MB
                       </div>
                     </>
                   ) : (
-                    <p>Se încarcă...</p>
+                    <p>{t('dashboard.monitoring.loading')}</p>
                   )}
                 </div>
               </div>
@@ -178,26 +178,26 @@ export const MonitoringPage: React.FC = () => {
             <div className="col-md-4">
               <div className="card">
                 <div className="card-header bg-success text-white">
-                  <h5><i className="fas fa-utensils me-2"></i>Metrici Comenzi</h5>
+                  <h5><i className="fas fa-utensils me-2"></i>{t('dashboard.monitoring.orderMetrics')}</h5>
                 </div>
                 <div className="card-body">
                   {orderMetrics ? (
                     <>
                       <div className="mb-3">
-                        <strong>Timp Mediu Preparare:</strong> {orderMetrics.avg_preparation_time.toFixed(1)} min
+                        <strong>{t('dashboard.monitoring.avgPrepTime')}</strong> {orderMetrics.avg_preparation_time.toFixed(1)} min
                       </div>
                       <div className="mb-3">
-                        <strong>Comenzi Întârziate</strong> <span className="text-danger">{orderMetrics.delayed_orders}</span>
+                        <strong>{t('dashboard.monitoring.delayedOrders')}</strong> <span className="text-danger">{orderMetrics.delayed_orders}</span>
                       </div>
                       <div className="mb-3">
-                        <strong>Încărcare Bucătărie</strong> {orderMetrics.kitchen_load} comenzi
+                        <strong>{t('dashboard.monitoring.kitchenLoad')}</strong> {orderMetrics.kitchen_load} {t('dashboard.metrics.orders')}
                       </div>
                       <div className="mb-3">
-                        <strong>Încărcare Bar</strong> {orderMetrics.bar_load} comenzi
+                        <strong>{t('dashboard.monitoring.barLoad')}</strong> {orderMetrics.bar_load} {t('dashboard.metrics.orders')}
                       </div>
                     </>
                   ) : (
-                    <p>Se încarcă...</p>
+                    <p>{t('dashboard.monitoring.loading')}</p>
                   )}
                 </div>
               </div>
@@ -207,24 +207,24 @@ export const MonitoringPage: React.FC = () => {
             <div className="col-md-4">
               <div className="card">
                 <div className="card-header bg-warning text-dark">
-                  <h5><i className="fas fa-exclamation-triangle me-2"></i>Alerte</h5>
+                  <h5><i className="fas fa-exclamation-triangle me-2"></i>{t('dashboard.monitoring.alertsTitle')}</h5>
                 </div>
                 <div className="card-body">
                   {orderMetrics && orderMetrics.delayed_orders > 0 && (
                     <div className="alert alert-danger">
                       <i className="fas fa-exclamation-circle me-2"></i>
-                      {orderMetrics.delayed_orders} comenzi întârziate necesită atenție!
+                      {t('dashboard.monitoring.delayedOrdersAlert', { count: orderMetrics.delayed_orders })}
                     </div>
                   )}
                   {orderMetrics && orderMetrics.kitchen_load > 10 && (
                     <div className="alert alert-warning">
                       <i className="fas fa-clock me-2"></i>
-                      Bucătăria este încărcată ({orderMetrics.kitchen_load} comenzi)
+                      {t('dashboard.monitoring.kitchenLoadAlert', { count: orderMetrics.kitchen_load })}
                     </div>
                   )}
                   {!orderMetrics || (orderMetrics.delayed_orders === 0 && orderMetrics.kitchen_load <= 10) && (
                     <div className="alert alert-success">
-                      <i className="fas fa-check-circle me-2"></i>Totul funcționează normal</div>
+                      <i className="fas fa-check-circle me-2"></i>{t('dashboard.monitoring.allOk')}</div>
                   )}
                 </div>
               </div>
@@ -243,60 +243,60 @@ export const MonitoringPage: React.FC = () => {
         <div>
           <div className="card">
             <div className="card-header">
-              <h5><i className="fas fa-chart-line me-2"></i>Metrici Performanță</h5>
+              <h5><i className="fas fa-chart-line me-2"></i>{t('dashboard.monitoring.performanceMetrics')}</h5>
             </div>
             <div className="card-body">
               {systemMetrics ? (
                 <div className="row">
                   <div className="col-md-6">
-                    <h6>Performanță Sistem</h6>
+                    <h6>{t('dashboard.monitoring.systemPerformance')}</h6>
                     <ul className="list-group">
                       <li className="list-group-item d-flex justify-content-between">
-                        <span>Timp de Răspuns:</span>
+                        <span>{t('dashboard.monitoring.responseTime')}</span>
                         <strong>{systemMetrics.response_time || 0}ms</strong>
                       </li>
                       <li className="list-group-item d-flex justify-content-between">
-                        <span>Conexiuni Active:</span>
+                        <span>{t('dashboard.monitoring.activeConnections')}</span>
                         <strong>{systemMetrics.active_connections || 0}</strong>
                       </li>
                       <li className="list-group-item d-flex justify-content-between">
-                        <span>Memorie Heap Utilizată:</span>
+                        <span>{t('dashboard.monitoring.heapUsed')}</span>
                         <strong>{Math.round((systemMetrics.memory?.heapUsed || 0) / 1024 / 1024)}MB</strong>
                       </li>
                       <li className="list-group-item d-flex justify-content-between">
-                        <span>Memorie Heap Totală:</span>
+                        <span>{t('dashboard.monitoring.heapTotal')}</span>
                         <strong>{Math.round((systemMetrics.memory?.heapTotal || 0) / 1024 / 1024)}MB</strong>
                       </li>
                     </ul>
                   </div>
                   <div className="col-md-6">
-                    <h6>Performanță Comenzi</h6>
+                    <h6>{t('dashboard.monitoring.orderPerformance')}</h6>
                     {orderMetrics ? (
                       <ul className="list-group">
                         <li className="list-group-item d-flex justify-content-between">
-                          <span>Timp Mediu Preparare:</span>
+                          <span>{t('dashboard.monitoring.avgPrepTime')}</span>
                           <strong>{orderMetrics.avg_preparation_time.toFixed(1)} min</strong>
                         </li>
                         <li className="list-group-item d-flex justify-content-between">
-                          <span>Comenzi Întârziate</span>
+                          <span>{t('dashboard.monitoring.delayedOrders')}</span>
                           <strong className="text-danger">{orderMetrics.delayed_orders}</strong>
                         </li>
                         <li className="list-group-item d-flex justify-content-between">
-                          <span>Încărcare Bucătărie</span>
-                          <strong>{orderMetrics.kitchen_load} comenzi</strong>
+                          <span>{t('dashboard.monitoring.kitchenLoad')}</span>
+                          <strong>{orderMetrics.kitchen_load} {t('dashboard.metrics.orders')}</strong>
                         </li>
                         <li className="list-group-item d-flex justify-content-between">
-                          <span>Încărcare Bar</span>
-                          <strong>{orderMetrics.bar_load} comenzi</strong>
+                          <span>{t('dashboard.monitoring.barLoad')}</span>
+                          <strong>{orderMetrics.bar_load} {t('dashboard.metrics.orders')}</strong>
                         </li>
                       </ul>
                     ) : (
-                      <p>Se încarcă...</p>
+                      <p>{t('dashboard.monitoring.loading')}</p>
                     )}
                   </div>
                 </div>
               ) : (
-                <p>Se încarcă metrici...</p>
+                <p>{t('dashboard.monitoring.loadingMetrics')}</p>
               )}
             </div>
           </div>

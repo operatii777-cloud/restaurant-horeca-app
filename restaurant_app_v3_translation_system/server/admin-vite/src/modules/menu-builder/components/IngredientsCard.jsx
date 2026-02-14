@@ -1,13 +1,14 @@
 /**
+import { useTranslation } from '@/i18n/I18nContext';
  * INGREDIENTS CARD - Auto from Technical Sheet
  * Data: 04 Decembrie 2025
  */
 
-import React from 'react';
 import { useMenuBuilderStore } from '../store/useMenuBuilderStore';
 import { useShallow } from 'zustand/react/shallow';
 
 export function IngredientsCard() {
+  const { t } = useTranslation();
   const { ingredientsSummary, setIngredientsSummary } = useMenuBuilderStore(
     useShallow((s) => ({
       ingredientsSummary: s.ingredientsSummary,
@@ -60,7 +61,7 @@ export function IngredientsCard() {
                 onChange={(e) =>
                   setIngredientsSummary({ customLabel: e.target.value })
                 }
-                placeholder="Ex: Ingrediente: ..."
+                placeholder={t('menu.productModal.ingredientsPlaceholder')}
               />
             </div>
 

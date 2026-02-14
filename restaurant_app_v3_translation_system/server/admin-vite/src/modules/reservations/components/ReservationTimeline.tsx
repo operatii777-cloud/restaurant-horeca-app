@@ -1,4 +1,4 @@
-// import { useTranslation } from '@/i18n/I18nContext';
+import { useTranslation } from '@/i18n/I18nContext';
 import { useMemo } from 'react';
 import { Modal } from '@/shared/components/Modal';
 import { InlineAlert } from '@/shared/components/InlineAlert';
@@ -43,7 +43,7 @@ function stringifyPayload(payload?: Record<string, unknown> | null): string | nu
 }
 
 export function ReservationTimeline({ open, reservationId, confirmationCode, onClose }: ReservationTimelineProps) {
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
   const endpoint = reservationId ? `/api/admin/reservations/${reservationId}/timeline` : null;
   const { data, loading, error, refetch } = useApiQuery<ReservationTimelineEvent[]>(endpoint);
 
@@ -59,17 +59,17 @@ export function ReservationTimeline({ open, reservationId, confirmationCode, onC
       isOpen={open}
       onClose={onClose}
       size="md"
-      title={`Timeline rezervare ${confirmationCode ? `#${confirmationCode}` : ''}`}
+      title={`${t('reservations.timeline.title')} ${confirmationCode ? `#${confirmationCode}` : ''}`}
     >
       <div className="reservation-timeline">
-        {loading ? <InlineAlert type="info" message="Se încarcă istoricul evenimentelor..." /> : null}
+        {loading ? <InlineAlert type="info" message={t('reservations.timeline.loading')} /> : null}
         {error ? (
           <div className="reservation-timeline__error">
-            <InlineAlert type="error" message={`Nu am putut încărca timeline-ul: "Error"`} />
-            <button type="button" className="reservation-timeline__retry" onClick={() => void refetch()}>Reîncearcă</button>
+            <InlineAlert type="error" message={`${t('reservations.timeline.errorLoading')}: ${error}`} />
+            <button type="button" className="reservation-timeline__retry" onClick={() => void refetch()}>{t('actions.retry')}</button>
           </div>
         ) : null}
-        {!loading && events.length === 0 ? <InlineAlert type="info" message="Nu există evenimente înregistrate pentru această rezervare." /> : null}
+        {!loading && events.length === 0 ? <InlineAlert type="info" message={t('reservations.timeline.noEvents')} /> : null}
 
         <ol className="reservation-timeline__list">
           {events.map((event) => {
@@ -84,7 +84,7 @@ export function ReservationTimeline({ open, reservationId, confirmationCode, onC
                     <time>{formatDateTime(event.createdAt)}</time>
                   </header>
                   <p className="reservation-timeline__meta">
-                    {event.createdBy ? `Operat de ${event.createdBy}` : 'Operat din sistem'}
+                    {event.createdBy ? `${t('reservations.timeline.operatedBy')} ${event.createdBy}` : t('reservations.timeline.systemOperation')}
                   </p>
                   {payload ? (
                     <pre className="reservation-timeline__payload">
@@ -100,8 +100,3 @@ export function ReservationTimeline({ open, reservationId, confirmationCode, onC
     </Modal>
   );
 }
-
-
-
-
-

@@ -1,3 +1,4 @@
+import { useTranslation } from '@/i18n/I18nContext';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import type {
@@ -18,15 +19,6 @@ import { useApiMutation } from '@/shared/hooks/useApiMutation';
 import type { Reservation, ReservationStatus } from '@/types/reservations';
 import './ReservationsPage.css';
 
-const STATUS_LABELS: Record<ReservationStatus, string> = {
-  pending: 'În așteptare',
-  confirmed: 'Confirmată',
-  seated: 'La masă',
-  completed: 'Finalizată',
-  cancelled: 'Anulată',
-  no_show: 'Nu s-a prezentat',
-};
-
 function formatDateTime(date: string, time: string): string {
   const dateObj = new Date(`${date}T${time}`);
   if (Number.isNaN(dateObj.getTime())) {
@@ -39,6 +31,7 @@ function formatDateTime(date: string, time: string): string {
 }
 
 function buildColumnDefs(
+  t: (key: string) => string,
   openTimeline: (reservation: Reservation) => void,
   onCancel: (reservation: Reservation) => void,
   onComplete: (reservation: Reservation) => void,
@@ -47,64 +40,64 @@ function buildColumnDefs(
 ): ColDef<Reservation>[] {
   return [
     {
-      headerName: 'Cod Confirmare',
+      headerName: t('reservations.page.confirmationCode'),
       field: 'confirmation_code',
       width: 140,
       valueFormatter: (params: ValueFormatterParams<Reservation, Reservation['confirmation_code']>) =>
         params.value || '—',
     },
     {
-      headerName: 'Client',
+      headerName: t('reservations.customer.name'),
       field: 'customer_name',
       flex: 1,
       minWidth: 150,
       valueFormatter: (params: ValueFormatterParams<Reservation>) => params.value || '—',
     },
     {
-      headerName: 'Telefon',
+      headerName: t('reservations.customer.phone'),
       field: 'customer_phone',
       width: 130,
       valueFormatter: (params: ValueFormatterParams<Reservation>) => params.value || '—',
     },
     {
-      headerName: 'Email',
+      headerName: t('reservations.customer.email'),
       field: 'customer_email',
       minWidth: 200,
       valueFormatter: (params: ValueFormatterParams<Reservation>) => params.value || '—',
     },
     {
-      headerName: 'Data & Time',
+      headerName: t('reservations.page.dateTime'),
       field: 'reservation_date',
       minWidth: 180,
       valueFormatter: (params: ValueFormatterParams<Reservation>) =>
         params.data ? formatDateTime(params.data.reservation_date, params.data.reservation_time) : '',
     },
     {
-      headerName: 'Persoane',
+      headerName: t('reservations.list.guests'),
       field: 'party_size',
       width: 100,
       valueFormatter: (params: ValueFormatterParams<Reservation, Reservation['party_size']>) =>
         `${params.value ?? 0}`,
     },
     {
-      headerName: 'Masă',
+      headerName: t('reservations.list.table'),
       field: 'table_number',
       width: 100,
       valueFormatter: (params: ValueFormatterParams<Reservation>) =>
-        params.data?.table_number ? `Masa ${params.data.table_number}` : 'Nesetat',
+        params.data?.table_number ? `${t('reservations.modal.table')} ${params.data.table_number}` : t('reservations.page.notSet'),
     },
     {
-      headerName: 'Status',
+      headerName: t('common.status'),
       field: 'status',
       width: 130,
       cellRenderer: (params: ICellRendererParams<Reservation>) => {
         const status = params.value as ReservationStatus;
-        const label = STATUS_LABELS[status] ?? status;
+        const label = t(`reservations.status.${status}`);
         return `<span className="reservation-status-badge reservation-status-${status}">${label}</span>`;
       },
     },
     {
-      headerName: 'Timeline',
+      headerName: t('reservations.calendar.timeline'),
       field: 'id',
       width: 120,
       cellRenderer: (params: ICellRendererParams<Reservation>) => {
@@ -120,8 +113,7 @@ function buildColumnDefs(
 }
 
 export function ReservationsPage() {
-  // Temporary fallback translation function
-  const t = (key: string) => key;
+  const { t } = useTranslation();
   const reservationsState = useReservations();
   const metricsState = useReservationMetrics(reservationsState.filters);
 
@@ -164,13 +156,14 @@ Email: contact@trattoria.ro`);
   const columnDefs = useMemo(
     () =>
       buildColumnDefs(
+        t,
         (reservation) => setTimelineReservation(reservation),
         (reservation) => void reservation,
         (reservation) => void reservation,
         (reservation) => void reservation,
         (reservation) => void reservation,
       ),
-    [],
+    [t],
   );
 
   const selectedReservation = selectedReservations[0] ?? null;
@@ -278,15 +271,15 @@ Email: contact@trattoria.ro`);
     <div className="reservations-page">
       <header className="reservations-page__header">
         <div>
-          <h1>Gestionare Rezervări</h1>
-          <p>Planifică, confirmă și urmărește rezervările din restaurant</p>
+          <h1>{t('reservations.page.title')}</h1>
+          <p>{t('reservations.page.subtitle')}</p>
         </div>
         <div className="reservations-page__header-actions">
           <button type="button" onClick={() => setModalOpen(true)}>
-            <i className="fas fa-plus me-1"></i> Rezervare nouă
+            <i className="fas fa-plus me-1"></i> {t('reservations.new.title')}
           </button>
           <button type="button" onClick={refreshAll}>
-            <i className="fas fa-sync-alt me-1"></i> Reîmprospătează datele
+            <i className="fas fa-sync-alt me-1"></i> {t('reservations.page.refreshData')}
           </button>
         </div>
       </header>
@@ -294,35 +287,35 @@ Email: contact@trattoria.ro`);
       <section className="reservations-page__stats">
         <StatCard
           icon={<i className="fas fa-calendar-day"></i>}
-          title="Rezervări Astăzi"
+          title={t('reservations.page.reservationsToday')}
           value={metrics ? String(metrics.today.total) : '—'}
-          helper="Total programate pentru azi"
+          helper={t('reservations.page.totalScheduledToday')}
           footer={
             <span>
-              Confirmate: <strong>{metrics ? metrics.today.confirmed : '—'}</strong> • Anulate: <strong>{metrics ? metrics.today.cancelled : '—'}</strong>
+              {t('reservations.page.confirmed')}: <strong>{metrics ? metrics.today.confirmed : '—'}</strong> • {t('reservations.page.cancelled')}: <strong>{metrics ? metrics.today.cancelled : '—'}</strong>
             </span>
           }
         />
         <StatCard
           icon={<i className="fas fa-check-circle"></i>}
-          title="Confirmați"
+          title={t('reservations.page.confirmed')}
           value={metrics ? String(metrics.stats.confirmed_reservations) : '—'}
-          helper="Interval selectat"
+          helper={t('reservations.page.selectedInterval')}
         />
         <StatCard
           icon={<i className="fas fa-ban"></i>}
-          title="Anulați"
+          title={t('reservations.page.cancelled')}
           value={metrics ? String(metrics.stats.cancelled_reservations) : '—'}
-          helper="Include no-show"
+          helper={t('reservations.page.includesNoShow')}
         />
         <StatCard
           icon={<i className="fas fa-chart-line"></i>}
-          title="Grad Ocupare"
+          title={t('reservations.page.occupancyRate')}
           value={metrics ? `${metrics.occupancy.percentage}%` : '—'}
           helper={
             metrics
-              ? `${metrics.occupancy.reservationsToday}/${metrics.occupancy.totalTables} mese astăzi`
-              : 'Capacitate'
+              ? `${metrics.occupancy.reservationsToday}/${metrics.occupancy.totalTables} ${t('reservations.page.tablesToday')}`
+              : t('reservations.page.capacity')
           }
         />
       </section>
@@ -332,7 +325,7 @@ Email: contact@trattoria.ro`);
         <InlineAlert
           type="error"
           message={reservationsState.error}
-          actionLabel="Reîncearcă"
+          actionLabel={t('actions.retry')}
           onAction={reservationsState.refetch}
         />
       ) : null}
@@ -359,22 +352,22 @@ Email: contact@trattoria.ro`);
 
       <section className="reservations-page__actions">
         <button type="button" onClick={() => void 0} disabled={!selectedReservation}>
-          <i className="fas fa-edit me-1"></i> Editează
+          <i className="fas fa-edit me-1"></i> {t('actions.edit')}
         </button>
         <button type="button" onClick={() => void 0} disabled={!selectedReservation}>
-          <i className="fas fa-check me-1"></i> Confirmă
+          <i className="fas fa-check me-1"></i> {t('reservations.actions.confirm')}
         </button>
         <button type="button" onClick={() => void 0} disabled={!selectedReservation}>
-          <i className="fas fa-times me-1"></i> Anulează
+          <i className="fas fa-times me-1"></i> {t('actions.cancel')}
         </button>
         <button type="button" onClick={() => void 0} disabled={!selectedReservation}>
-          <i className="fas fa-flag-checkered me-1"></i> Marchează finalizat
+          <i className="fas fa-flag-checkered me-1"></i> {t('reservations.page.markCompleted')}
         </button>
         <button type="button" onClick={() => void 0} disabled={!selectedReservation}>
-          <i className="fas fa-paper-plane me-1"></i> Trimite reminder
+          <i className="fas fa-paper-plane me-1"></i> {t('reservations.page.sendReminder')}
         </button>
         <button type="button" onClick={() => setTimelineReservation(selectedReservation)} disabled={!selectedReservation}>
-          <i className="fas fa-stream me-1"></i> Timeline
+          <i className="fas fa-stream me-1"></i> {t('reservations.calendar.timeline')}
         </button>
       </section>
 
@@ -437,13 +430,3 @@ Email: contact@trattoria.ro`);
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
