@@ -89,7 +89,7 @@ try {
   ReactDOM.createRoot(rootElement).render(
     <React.StrictMode>
       <ThemeProvider>
-        <ErrorBoundary>
+        <ErrorBoundary moduleName="Admin-Vite">
           <QueryClientProvider client={queryClient}>
             <BrowserRouter basename={basename}>
               <App />
