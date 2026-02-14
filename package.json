@@ -7,7 +7,6 @@
     "server"
   ],
   "scripts": {
-    "install": "npm install --workspaces",
     "build": "npm run build --workspace=app"
   }
 }
