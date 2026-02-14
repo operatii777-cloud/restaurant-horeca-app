@@ -12,7 +12,12 @@ interface PdfCategoryCardProps {
   onToggleAllProducts: (categoryId: number, visible: boolean) => void;
   onUploadImage: (categoryId: number, file: File) => void;
   onDeleteImage: (categoryId: number) => void;
-  onReorder?: (categoryId: number, newIndex: number) => void;
+  onReorder?: (fromIndex: number, toIndex: number) => void;
+  index?: number;
+  draggable?: boolean;
+  onDragStart?: (e: React.DragEvent, index: number) => void;
+  onDragOver?: (e: React.DragEvent, index: number) => void;
+  onDrop?: (e: React.DragEvent, index: number) => void;
 }
 
 export const PdfCategoryCard = ({
@@ -23,6 +28,11 @@ export const PdfCategoryCard = ({
   onToggleAllProducts,
   onUploadImage,
   onDeleteImage,
+  index = 0,
+  draggable = true,
+  onDragStart,
+  onDragOver,
+  onDrop,
 }: PdfCategoryCardProps) => {
 //   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
@@ -42,9 +52,19 @@ export const PdfCategoryCard = ({
   const totalProducts = category.products.length;
 
   return (
-    <div className="pdf-category-card">
+    <div 
+      className="pdf-category-card"
+      draggable={draggable}
+      onDragStart={(e) => onDragStart?.(e, index)}
+      onDragOver={(e) => onDragOver?.(e, index)}
+      onDrop={(e) => onDrop?.(e, index)}
+    >
       <div className="pdf-category-card__header">
-        <div className="pdf-category-card__drag-handle" title="drag pentru reordonare">
+        <div 
+          className="pdf-category-card__drag-handle" 
+          title="Drag pentru reordonare"
+          style={{ cursor: draggable ? 'move' : 'default' }}
+        >
           ⋮⋮
         </div>
 
