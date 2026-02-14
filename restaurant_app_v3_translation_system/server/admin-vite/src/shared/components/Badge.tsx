@@ -20,7 +20,7 @@ export const Badge = ({
   className = '',
 }: BadgeProps) => {
 //   const { t } = useTranslation();
-  const classes = ['badge', `badge--"Variant"`];
+  const classes = ['badge', `badge--${variant}`];
   if (pill) {
     classes.push('badge--pill');
   }

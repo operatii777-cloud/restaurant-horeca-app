@@ -1,3 +1,4 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b43ab32550081d2a125f436dbf00dc753674b1a892a0cf64a9b35f9e7c480626
-size 53
+{
+  "name": "restaurant-horeca-app",
+  "version": "1.0.0"
+}

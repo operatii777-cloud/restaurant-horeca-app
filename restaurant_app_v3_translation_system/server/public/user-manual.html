@@ -1,0 +1,2059 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Utilizator - Restaurant HORECA App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        nav {
+            background: #f8f9fa;
+            padding: 20px 40px;
+            border-bottom: 3px solid #667eea;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        nav li a {
+            color: #667eea;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            display: inline-block;
+            font-weight: 500;
+        }
+        
+        nav li a:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        section {
+            margin-bottom: 60px;
+            scroll-margin-top: 80px;
+        }
+        
+        h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin: 30px 0 15px 0;
+        }
+        
+        h4 {
+            color: #555;
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .feature-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .feature-card h4 {
+            margin-top: 0;
+            color: #667eea;
+        }
+        
+        .steps {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .steps ol {
+            margin-left: 20px;
+        }
+        
+        .steps li {
+            margin: 10px 0;
+            padding-left: 10px;
+        }
+        
+        .tip {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .tip::before {
+            content: "💡 Sfat: ";
+            font-weight: bold;
+            color: #2196f3;
+        }
+        
+        .warning {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .warning::before {
+            content: "⚠️ Atenție: ";
+            font-weight: bold;
+            color: #ff9800;
+        }
+        
+        .module-path {
+            background: #e8eaf6;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            display: inline-block;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            nav {
+                position: static;
+            }
+            
+            .no-print {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📖 Manual Utilizator Complet</h1>
+            <p>Restaurant HORECA Management System</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Ghid complet pentru toate funcționalitățile aplicației</p>
+        </header>
+        
+        <nav class="no-print">
+            <ul>
+                <li><a href="#introducere">Introducere</a></li>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#comenzi">Comenzi</a></li>
+                <li><a href="#meniu">Meniu</a></li>
+                <li><a href="#catalog">Catalog</a></li>
+                <li><a href="#stocuri">Stocuri</a></li>
+                <li><a href="#pos">POS</a></li>
+                <li><a href="#kiosk">Kiosk</a></li>
+                <li><a href="#kds">KDS</a></li>
+                <li><a href="#rapoarte">Rapoarte</a></li>
+                <li><a href="#financiar">Financiar</a></li>
+                <li><a href="#personal">Personal</a></li>
+                <li><a href="#setari">Setări</a></li>
+            </ul>
+        </nav>
+        
+        <div class="content">
+            <input type="text" class="search-box no-print" placeholder="🔍 Căutare în manual..." id="searchBox">
+            
+            <!-- INTRODUCERE -->
+            <section id="introducere">
+                <h2>1. Introducere și Prezentare Generală</h2>
+                
+                <h3>1.1 Despre Aplicație</h3>
+                <p>Restaurant HORECA Management System este o platformă completă de management pentru restaurante, baruri, pizzerii, cafenele și alte unități din industria HoReCa (Hoteluri, Restaurante, Catering).</p>
+                
+                <h3>1.2 Interfețe Disponibile</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Admin-Vite</h4>
+                        <p>Interfața principală de administrare cu acces complet la toate funcționalitățile sistemului.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>POS (Point of Sale)</h4>
+                        <p>Interfața pentru ospătari și casieri pentru procesarea comenzilor și plăților.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Kiosk</h4>
+                        <p>Peste 40 de interfețe specializate pentru diferite zone operaționale (self-service, bucătărie, bar, etc.).</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>KDS (Kitchen Display System)</h4>
+                        <p>Sistem de afișare pentru bucătărie cu gestionarea comenzilor în timp real.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Bar Display</h4>
+                        <p>Interfață specializată pentru baruri și prepararea băuturilor.</p>
+                    </div>
+                </div>
+                
+                <h3>1.3 Caracteristici Principale</h3>
+                <ul>
+                    <li>✅ Gestionare completă comenzi și mese</li>
+                    <li>✅ Management meniu și catalog produse</li>
+                    <li>✅ Control stocuri și ingrediente</li>
+                    <li>✅ Rețete și fișe tehnice</li>
+                    <li>✅ Raportare și analiză avansată</li>
+                    <li>✅ Integrare ANAF și fiscalizare</li>
+                    <li>✅ Marketing și promoții</li>
+                    <li>✅ Management personal</li>
+                    <li>✅ Rezervări și comenzi online</li>
+                    <li>✅ Multi-limbă și multi-locație</li>
+                </ul>
+            </section>
+            
+            <!-- DASHBOARD -->
+            <section id="dashboard">
+                <h2>2. Dashboard și Monitorizare</h2>
+                
+                <div class="module-path">📍 Acces: Dashboard (pagina principală după autentificare)</div>
+                
+                <h3>2.1 Dashboard Principal</h3>
+                <p>Dashboard-ul oferă o vedere de ansamblu asupra operațiunilor zilnice.</p>
+                
+                <h4>KPI-uri Afișate:</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Indicator</th>
+                            <th>Descriere</th>
+                            <th>Actualizare</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Vânzări Astăzi</td>
+                            <td>Total vânzări din ziua curentă</td>
+                            <td>Real-time (Socket.IO)</td>
+                        </tr>
+                        <tr>
+                            <td>Comenzi Active</td>
+                            <td>Număr comenzi în curs de procesare</td>
+                            <td>Real-time</td>
+                        </tr>
+                        <tr>
+                            <td>Stoc Critic</td>
+                            <td>Produse sub limita minimă</td>
+                            <td>La 5 minute</td>
+                        </tr>
+                        <tr>
+                            <td>Mese Ocupate</td>
+                            <td>Status mese în restaurant</td>
+                            <td>Real-time</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>2.2 Executive Dashboard</h3>
+                <div class="module-path">📍 Acces: Dashboard → Executive Dashboard</div>
+                <p>Rapoarte pentru management cu indicatori financiari și operaționali cheie.</p>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Analiză Vânzări</h4>
+                        <p>Grafice comparative pe zile, săptămâni, luni</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Profitabilitate</h4>
+                        <p>Marje de profit pe categorii și produse</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Performanță Personal</h4>
+                        <p>Top ospătari și productivitate</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Tendințe</h4>
+                        <p>Produse populare și comenzi frecvente</p>
+                    </div>
+                </div>
+                
+                <h3>2.3 Queue Monitor</h3>
+                <div class="module-path">📍 Acces: Dashboard → Queue Monitor</div>
+                <p>Monitorizare coadă comenzi în timp real.</p>
+                
+                <div class="steps">
+                    <strong>Funcționalități:</strong>
+                    <ul>
+                        <li>Vizualizare comenzi în așteptare</li>
+                        <li>Timp de pregătire estimat</li>
+                        <li>Prioritizare comenzi</li>
+                        <li>Alerte întârzieri</li>
+                        <li>Actualizare automată la 3 secunde</li>
+                    </ul>
+                </div>
+                
+                <div class="tip">
+                    Folosiți Queue Monitor pe un ecran dedicat în bucătărie pentru monitorizare continuă.
+                </div>
+            </section>
+            
+            <!-- COMENZI -->
+            <section id="comenzi">
+                <h2>3. Gestionare Comenzi și Vânzări</h2>
+                
+                <h3>3.1 Orders Management</h3>
+                <div class="module-path">📍 Acces: Meniu Principal → Comenzi</div>
+                
+                <h4>3.1.1 Crearea Comenzilor</h4>
+                <div class="steps">
+                    <strong>Pași pentru creare comandă nouă:</strong>
+                    <ol>
+                        <li>Click pe butonul "Comandă Nouă"</li>
+                        <li>Selectați tipul comenzii (La masă / La pachet / Delivery)</li>
+                        <li>Alegeți masa (pentru comenzi la masă)</li>
+                        <li>Adăugați produse din catalog</li>
+                        <li>Configurați opțiuni și observații</li>
+                        <li>Confirmați comanda</li>
+                    </ol>
+                </div>
+                
+                <h4>3.1.2 Tipuri de Comenzi</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tip</th>
+                            <th>Descriere</th>
+                            <th>Cazuri de Utilizare</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>La Masă</td>
+                            <td>Comenzi pentru consumul la restaurant</td>
+                            <td>Mese, terrase, dining in</td>
+                        </tr>
+                        <tr>
+                            <td>La Pachet (Takeout)</td>
+                            <td>Comenzi pentru ridicare</td>
+                            <td>Take-away, fast food</td>
+                        </tr>
+                        <tr>
+                            <td>Delivery</td>
+                            <td>Comenzi cu livrare la domiciliu</td>
+                            <td>Livrări externe, curieri</td>
+                        </tr>
+                        <tr>
+                            <td>Drive-Thru</td>
+                            <td>Comenzi la mașină</td>
+                            <td>Fast food, servicii rapide</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h4>3.1.3 Statusuri Comenzi</h4>
+                <ul>
+                    <li><strong>Nouă:</strong> Comandă creată, neconfirmată</li>
+                    <li><strong>Confirmată:</strong> Comandă acceptată în sistem</li>
+                    <li><strong>În Pregătire:</strong> Comandă în lucru la bucătărie/bar</li>
+                    <li><strong>Gata:</strong> Comandă finalizată, pregătită pentru servire</li>
+                    <li><strong>Livrată:</strong> Comandă servită/livrată clientului</li>
+                    <li><strong>Anulată:</strong> Comandă anulată</li>
+                </ul>
+                
+                <h3>3.2 Order Details Drawer</h3>
+                <p>Vizualizare detaliată a comenzilor cu toate informațiile relevante.</p>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Informații Generale</h4>
+                        <ul>
+                            <li>Număr comandă</li>
+                            <li>Data și ora</li>
+                            <li>Status curent</li>
+                            <li>Ospătar responsabil</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Detalii Client</h4>
+                        <ul>
+                            <li>Nume client</li>
+                            <li>Telefon</li>
+                            <li>Adresă livrare</li>
+                            <li>Observații</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Produse Comandate</h4>
+                        <ul>
+                            <li>Listă produse</li>
+                            <li>Cantități</li>
+                            <li>Prețuri</li>
+                            <li>Opțiuni/Modificări</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Plată și Finalizare</h4>
+                        <ul>
+                            <li>Total comandă</li>
+                            <li>Metodă plată</li>
+                            <li>Status plată</li>
+                            <li>Acțiuni disponibile</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3>3.3 External Delivery Integration</h3>
+                <div class="module-path">📍 Acces: Comenzi → External Delivery</div>
+                <p>Integrare cu platforme de livrare externe (Glovo, Bolt Food, Tazz).</p>
+                
+                <h4>Funcționalități:</h4>
+                <ul>
+                    <li>Sincronizare automată comenzi</li>
+                    <li>Gestionare meniu pe platforme</li>
+                    <li>Actualizare stocuri în timp real</li>
+                    <li>Raportare vânzări consolidată</li>
+                    <li>Management disponibilitate produse</li>
+                </ul>
+                
+                <div class="warning">
+                    Asigurați-vă că stocurile sunt actualizate pentru a evita comenzi pentru produse indisponibile.
+                </div>
+                
+                <h3>3.4 Order Archive</h3>
+                <div class="module-path">📍 Acces: Comenzi → Arhivă</div>
+                <p>Arhivă completă cu toate comenzile istorice.</p>
+                
+                <h4>Opțiuni de Căutare și Filtrare:</h4>
+                <ul>
+                    <li>Perioadă (dată început - dată sfârșit)</li>
+                    <li>Status comandă</li>
+                    <li>Tip comandă</li>
+                    <li>Ospătar</li>
+                    <li>Client</li>
+                    <li>Număr comandă</li>
+                    <li>Sumă minimă/maximă</li>
+                </ul>
+                
+                <h4>Export Date:</h4>
+                <ul>
+                    <li>Export Excel (.xlsx)</li>
+                    <li>Export CSV</li>
+                    <li>Export PDF</li>
+                    <li>Rapoarte personalizate</li>
+                </ul>
+            </section>
+            
+            <!-- MENIU -->
+            <section id="meniu">
+                <h2>4. Gestionare Meniu</h2>
+                
+                <h3>4.1 Menu Management</h3>
+                <div class="module-path">📍 Acces: Meniu Principal → Meniu</div>
+                <p>Construiți și gestionați meniurile restaurantului.</p>
+                
+                <h4>4.1.1 Organizare Meniu</h4>
+                <div class="steps">
+                    <strong>Structură Meniu:</strong>
+                    <ul>
+                        <li><strong>Categorii:</strong> Pizza, Paste, Salate, Băuturi, etc.</li>
+                        <li><strong>Subcategorii:</strong> Grupări mai detaliate</li>
+                        <li><strong>Produse:</strong> Articole individuale</li>
+                        <li><strong>Variante:</strong> Mărimi, opțiuni (S, M, L)</li>
+                    </ul>
+                </div>
+                
+                <h4>4.1.2 Adăugare Produse în Meniu</h4>
+                <div class="steps">
+                    <ol>
+                        <li>Navigați la secțiunea Meniu</li>
+                        <li>Click "Adaugă Produs"</li>
+                        <li>Selectați din catalog sau creați nou</li>
+                        <li>Configurați:
+                            <ul>
+                                <li>Nume produs</li>
+                                <li>Descriere</li>
+                                <li>Preț</li>
+                                <li>Categorie</li>
+                                <li>Imagine</li>
+                                <li>Alergeni</li>
+                                <li>Disponibilitate</li>
+                            </ul>
+                        </li>
+                        <li>Salvați modificările</li>
+                    </ol>
+                </div>
+                
+                <h3>4.2 Menu Builder</h3>
+                <div class="module-path">📍 Acces: Meniu → Menu Builder</div>
+                <p>Constructor vizual de meniu cu drag-and-drop.</p>
+                
+                <h4>Funcționalități:</h4>
+                <ul>
+                    <li>Drag-and-drop pentru reordonare</li>
+                    <li>Previzualizare în timp real</li>
+                    <li>Template-uri predefinite</li>
+                    <li>Personalizare culori și stiluri</li>
+                    <li>Export în multiple formate</li>
+                </ul>
+                
+                <h3>4.3 Menu PDF Generator</h3>
+                <div class="module-path">📍 Acces: Meniu → PDF Builder</div>
+                <p>Generator profesional de meniuri PDF printabile.</p>
+                
+                <h4>4.3.1 Setări PDF</h4>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Font și Tipografie</h4>
+                        <ul>
+                            <li>Familie font (Arial, Times, etc.)</li>
+                            <li>Mărime font (8-24px)</li>
+                            <li>Greutate font (Normal/Bold)</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Culori</h4>
+                        <ul>
+                            <li>Culoare antet</li>
+                            <li>Culoare fundal</li>
+                            <li>Culoare text</li>
+                            <li>Culoare prețuri</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Layout</h4>
+                        <ul>
+                            <li>1/2/3 coloane</li>
+                            <li>Portrait/Landscape</li>
+                            <li>A4/Letter/A5</li>
+                            <li>Template-uri</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Spațiere</h4>
+                        <ul>
+                            <li>Margini pagină (0-50mm)</li>
+                            <li>Spațiere categorii</li>
+                            <li>Spațiere produse</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h4>4.3.2 Control Conținut</h4>
+                <ul>
+                    <li>✓ Afișare/Ascundere prețuri</li>
+                    <li>✓ Afișare/Ascundere descrieri</li>
+                    <li>✓ Afișare/Ascundere imagini</li>
+                </ul>
+                
+                <h4>4.3.3 Funcții Avansate</h4>
+                <ul>
+                    <li><strong>Sortare Drag-and-Drop:</strong> Reordonare categorii prin tragere</li>
+                    <li><strong>Căutare Produse:</strong> Filtrare rapidă în meniu</li>
+                    <li><strong>Upload în Masă:</strong> Încărcare multiplă imagini categorii (până la 10)</li>
+                    <li><strong>Secțiuni (Chapters):</strong> Grupare categorii în secțiuni (ex: Aperitive, Fel Principal, Desert)</li>
+                </ul>
+                
+                <div class="tip">
+                    Folosiți template-urile predefinite pentru un design profesional rapid.
+                </div>
+                
+                <h3>4.4 Daily Menu</h3>
+                <div class="module-path">📍 Acces: Meniu → Meniu Zilei</div>
+                <p>Planificare meniu zilnic cu oferte speciale.</p>
+                
+                <div class="steps">
+                    <strong>Configurare Meniu Zilei:</strong>
+                    <ol>
+                        <li>Selectați data</li>
+                        <li>Alegeți produse pentru meniul zilei</li>
+                        <li>Setați preț special (opțional)</li>
+                        <li>Adăugați descriere/observații</li>
+                        <li>Activați/Dezactivați meniul</li>
+                    </ol>
+                </div>
+                
+                <h4>Beneficii:</h4>
+                <ul>
+                    <li>Promovare produse sezoniere</li>
+                    <li>Gestionare oferte temporare</li>
+                    <li>Planificare în avans</li>
+                    <li>Tracking popularitate</li>
+                </ul>
+            </section>
+            
+            <!-- CATALOG -->
+            <section id="catalog">
+                <h2>5. Catalog Produse</h2>
+                
+                <h3>5.1 Product Catalog</h3>
+                <div class="module-path">📍 Acces: Meniu Principal → Catalog</div>
+                <p>Catalogul central cu toate produsele disponibile.</p>
+                
+                <h4>5.1.1 Structură Catalog</h4>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Categorii Principale</h4>
+                        <ul>
+                            <li>Bucătărie</li>
+                            <li>Bar</li>
+                            <li>Pizzerie</li>
+                            <li>Patiserie</li>
+                            <li>Delivery</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Informații Produs</h4>
+                        <ul>
+                            <li>Cod produs</li>
+                            <li>Nume</li>
+                            <li>Descriere</li>
+                            <li>Preț</li>
+                            <li>Imagine</li>
+                            <li>Status</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Detalii Nutriționale</h4>
+                        <ul>
+                            <li>Alergeni</li>
+                            <li>Aditivi</li>
+                            <li>Valori nutriționale</li>
+                            <li>Ingrediente</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Gestionare</h4>
+                        <ul>
+                            <li>Disponibilitate</li>
+                            <li>Vizibilitate meniu</li>
+                            <li>Opțiuni și variante</li>
+                            <li>Tags și etichete</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h4>5.1.2 Adăugare Produs Nou</h4>
+                <div class="steps">
+                    <ol>
+                        <li>Click "Adaugă Produs"</li>
+                        <li>Completați informații de bază:
+                            <ul>
+                                <li>Nume produs (obligatoriu)</li>
+                                <li>Cod produs (generat automat sau manual)</li>
+                                <li>Categorie</li>
+                                <li>Preț</li>
+                            </ul>
+                        </li>
+                        <li>Adăugați imagine produs</li>
+                        <li>Completați descriere detaliată</li>
+                        <li>Selectați alergeni și aditivi</li>
+                        <li>Configurați opțiuni:
+                            <ul>
+                                <li>Mărimi (S, M, L)</li>
+                                <li>Extra ingredients</li>
+                                <li>Personalizări</li>
+                            </ul>
+                        </li>
+                        <li>Setați disponibilitate</li>
+                        <li>Salvați produsul</li>
+                    </ol>
+                </div>
+                
+                <h3>5.2 Ingredients Management</h3>
+                <div class="module-path">📍 Acces: Catalog → Ingrediente</div>
+                <p>Gestionare completă a ingredientelor folosite în rețete.</p>
+                
+                <h4>5.2.1 Funcționalități Ingrediente</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Funcție</th>
+                            <th>Descriere</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Adăugare Ingredient</td>
+                            <td>Creare ingredient nou cu cod, nume, UM</td>
+                        </tr>
+                        <tr>
+                            <td>Stoc Curent</td>
+                            <td>Vizualizare și actualizare stoc</td>
+                        </tr>
+                        <tr>
+                            <td>Stoc Minim</td>
+                            <td>Configurare prag alertă</td>
+                        </tr>
+                        <tr>
+                            <td>Furnizor</td>
+                            <td>Asociere furnizor principal</td>
+                        </tr>
+                        <tr>
+                            <td>Cost Unitar</td>
+                            <td>Preț achiziție pe UM</td>
+                        </tr>
+                        <tr>
+                            <td>Date Nutriționale</td>
+                            <td>Informații nutriționale detaliate</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h4>5.2.2 Căutare Nutrițională</h4>
+                <p>Funcție de căutare automată a informațiilor nutriționale.</p>
+                <ul>
+                    <li>Bază de date nutrițională integrată</li>
+                    <li>Căutare după nume ingredient</li>
+                    <li>Import automat valori nutriționale</li>
+                    <li>Conversie unități de măsură</li>
+                </ul>
+                
+                <h3>5.3 Recipes Management</h3>
+                <div class="module-path">📍 Acces: Catalog → Rețete</div>
+                <p>Creați și gestionați rețetele produselor.</p>
+                
+                <h4>5.3.1 Creare Rețetă</h4>
+                <div class="steps">
+                    <ol>
+                        <li>Selectați produsul pentru care creați rețeta</li>
+                        <li>Adăugați ingrediente:
+                            <ul>
+                                <li>Selectați ingredient din listă</li>
+                                <li>Introduceți cantitate</li>
+                                <li>Selectați unitate măsură</li>
+                                <li>Sistem conversie automată în grame</li>
+                            </ul>
+                        </li>
+                        <li>Calculator nutrițional automat:
+                            <ul>
+                                <li>Calcul valori nutriționale totale</li>
+                                <li>Sumă pe bază ingrediente</li>
+                                <li>Valori per porție</li>
+                            </ul>
+                        </li>
+                        <li>Adăugați pași preparare (opțional)</li>
+                        <li>Setați:
+                            <ul>
+                                <li>Timp preparare</li>
+                                <li>Timp gătire</li>
+                                <li>Număr porții</li>
+                                <li>Dificultate</li>
+                            </ul>
+                        </li>
+                        <li>Calculați cost per porție</li>
+                        <li>Salvați rețeta</li>
+                    </ol>
+                </div>
+                
+                <h4>5.3.2 Analiză Rețetă</h4>
+                <ul>
+                    <li><strong>Cost per Porție:</strong> Calcul automat bazat pe prețuri ingrediente</li>
+                    <li><strong>Preț Vânzare:</strong> Preț recomandat cu marjă profit</li>
+                    <li><strong>Marjă Profit:</strong> Procent profit calculat</li>
+                    <li><strong>Impact Stoc:</strong> Ingrediente consumate la fiecare vânzare</li>
+                </ul>
+                
+                <div class="tip">
+                    Actualizați periodic prețurile ingredientelor pentru calcule corecte ale costurilor.
+                </div>
+                
+                <h3>5.4 Technical Sheets (Fișe Tehnice)</h3>
+                <div class="module-path">📍 Acces: Catalog → Fișe Tehnice</div>
+                <p>Documentație tehnică completă pentru fiecare produs.</p>
+                
+                <h4>Conținut Fișă Tehnică:</h4>
+                <ul>
+                    <li>Denumire produs</li>
+                    <li>Cod intern</li>
+                    <li>Categorie</li>
+                    <li>Ingrediente detaliate</li>
+                    <li>Cantități exacte</li>
+                    <li>Mod de preparare</li>
+                    <li>Alergeni identificați</li>
+                    <li>Valori nutriționale</li>
+                    <li>Informații suplimentare</li>
+                    <li>Imagine produs</li>
+                </ul>
+                
+                <h4>Export Fișe Tehnice:</h4>
+                <ul>
+                    <li>PDF individual sau în masă</li>
+                    <li>Format printabil</li>
+                    <li>Versiune pentru afișare</li>
+                    <li>Conformitate reglementări</li>
+                </ul>
+            </section>
+            
+            <!-- STOCURI -->
+            <section id="stocuri">
+                <h2>6. Gestionare Stocuri și Inventar</h2>
+                
+                <h3>6.1 Stock Management</h3>
+                <div class="module-path">📍 Acces: Meniu Principal → Stocuri</div>
+                <p>Sistem complet de gestionare a stocurilor cu tracking în timp real.</p>
+                
+                <h4>6.1.1 Tab-uri Disponibile</h4>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Ingrediente</h4>
+                        <p>Stocuri materii prime și ingrediente</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Produse Finite</h4>
+                        <p>Produse preparate stocate</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Rețete</h4>
+                        <p>Rețete și fișe tehnice</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Ingrediente Ascunse</h4>
+                        <p>Ingrediente neafișate în meniu</p>
+                    </div>
+                </div>
+                
+                <h4>6.1.2 Operații Stoc</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Operație</th>
+                            <th>Descriere</th>
+                            <th>Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Intrare Stoc</td>
+                            <td>Adăugare cantități la recepție marfă</td>
+                            <td>Crește stocul</td>
+                        </tr>
+                        <tr>
+                            <td>Ieșire Stoc</td>
+                            <td>Diminuare pentru consum/pierderi</td>
+                            <td>Scade stocul</td>
+                        </tr>
+                        <tr>
+                            <td>Ajustare Stoc</td>
+                            <td>Corecție după inventar fizic</td>
+                            <td>Actualizare</td>
+                        </tr>
+                        <tr>
+                            <td>Transfer Stoc</td>
+                            <td>Mișcare între locații/depozite</td>
+                            <td>Redistribuire</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h4>6.1.3 Alerte Stoc</h4>
+                <ul>
+                    <li><strong>Stoc Critic:</strong> Sub 10% din stoc minim</li>
+                    <li><strong>Stoc Scăzut:</strong> Sub 50% din stoc minim</li>
+                    <li><strong>Lipsă Stoc:</strong> Cantitate zero</li>
+                    <li><strong>Stoc în Exces:</strong> Peste limita maximă configurată</li>
+                </ul>
+                
+                <div class="warning">
+                    Verificați zilnic alertele de stoc critic pentru a evita rupturi de stoc.
+                </div>
+                
+                <h3>6.2 NIR (Nota de Intrare-Recepție)</h3>
+                <div class="module-path">📍 Acces: Stocuri → NIR / Fiscal → NIR</div>
+                <p>Gestionare documente de intrare marfă.</p>
+                
+                <h4>Creare NIR:</h4>
+                <div class="steps">
+                    <ol>
+                        <li>Click "NIR Nou"</li>
+                        <li>Selectați furnizor</li>
+                        <li>Introduceți număr document furnizor</li>
+                        <li>Adăugați produse:
+                            <ul>
+                                <li>Selectați ingredient/produs</li>
+                                <li>Cantitate primită</li>
+                                <li>Preț unitar</li>
+                                <li>Lot (opțional)</li>
+                                <li>Dată expirare (opțional)</li>
+                            </ul>
+                        </li>
+                        <li>Verificați totaluri</li>
+                        <li>Salvați și validați NIR</li>
+                    </ol>
+                </div>
+                
+                <h3>6.3 Lot Tracking</h3>
+                <div class="module-path">📍 Acces: Stocuri → Loturi</div>
+                <p>Urmărire loturi pentru trasabilitate completă.</p>
+                
+                <h4>Funcționalități:</h4>
+                <ul>
+                    <li>Identificare unică lot</li>
+                    <li>Data primirii</li>
+                    <li>Data expirării</li>
+                    <li>Furnizor</li>
+                    <li>Cantitate inițială și rămasă</li>
+                    <li>Istoric utilizare</li>
+                    <li>Alerte expirare</li>
+                </ul>
+                
+                <h3>6.4 Variance Analysis</h3>
+                <div class="module-path">📍 Acces: Stocuri → Analiză Varianță</div>
+                <p>Analiză diferențelor între stoc teoretic și fizic.</p>
+                
+                <h4>Tipuri Varianță:</h4>
+                <ul>
+                    <li><strong>Pozitivă:</strong> Stoc fizic > teoretic</li>
+                    <li><strong>Negativă:</strong> Stoc fizic < teoretic (pierderi/furt)</li>
+                    <li><strong>Acceptabilă:</strong> În limita toleranței (±2%)</li>
+                </ul>
+                
+                <h3>6.5 Stock Prediction</h3>
+                <div class="module-path">📍 Acces: Rapoarte → Stock Prediction</div>
+                <p>Predicție stocuri folosind machine learning.</p>
+                
+                <h4>Funcționalități:</h4>
+                <ul>
+                    <li>Analiză istoric vânzări</li>
+                    <li>Identificare tendințe sezoniere</li>
+                    <li>Predicție consum următoarele 7/14/30 zile</li>
+                    <li>Recomandări comandă</li>
+                    <li>Optimizare stocuri</li>
+                </ul>
+            </section>
+            
+            <!-- POS -->
+            <section id="pos">
+                <h2>7. POS (Point of Sale)</h2>
+                
+                <h3>7.1 Interfața POS</h3>
+                <div class="module-path">📍 Acces: Meniu Principal → POS</div>
+                <p>Interfață optimizată pentru ospătari și casieri.</p>
+                
+                <h4>7.1.1 Layout POS</h4>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Selector Mese</h4>
+                        <p>Vizualizare plan restaurant cu statusuri mese</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Grid Produse</h4>
+                        <p>Catalog produse organizat pe categorii</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Sumar Comandă</h4>
+                        <p>Coș curent cu produse adăugate</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Plăți</h4>
+                        <p>Procesare plăți multiple metode</p>
+                    </div>
+                </div>
+                
+                <h4>7.1.2 Flux Lucru POS</h4>
+                <div class="steps">
+                    <ol>
+                        <li>Selectează masă sau comandă nouă</li>
+                        <li>Adaugă produse din grid</li>
+                        <li>Configurează opțiuni/personalizări</li>
+                        <li>Verifică sumar comandă</li>
+                        <li>Trimite comandă la bucătărie/bar</li>
+                        <li>La finalizare, procesează plată</li>
+                        <li>Printează bon/factură</li>
+                        <li>Închide comanda</li>
+                    </ol>
+                </div>
+                
+                <h4>7.1.3 Scurtături Tastatură</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tastă</th>
+                            <th>Acțiune</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>F1</td>
+                            <td>Comandă nouă</td>
+                        </tr>
+                        <tr>
+                            <td>F2</td>
+                            <td>Căutare produs</td>
+                        </tr>
+                        <tr>
+                            <td>F3</td>
+                            <td>Aplică discount</td>
+                        </tr>
+                        <tr>
+                            <td>F4</td>
+                            <td>Plată cash</td>
+                        </tr>
+                        <tr>
+                            <td>F5</td>
+                            <td>Plată card</td>
+                        </tr>
+                        <tr>
+                            <td>ESC</td>
+                            <td>Anulează</td>
+                        </tr>
+                        <tr>
+                            <td>Enter</td>
+                            <td>Confirmă</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>7.2 Metode de Plată</h3>
+                <ul>
+                    <li><strong>Cash:</strong> Numerar cu rest automat</li>
+                    <li><strong>Card:</strong> Integrare POS terminal</li>
+                    <li><strong>Voucher:</strong> Vouchere cadou/reducere</li>
+                    <li><strong>Split Payment:</strong> Împărțire plată între mai multe persoane</li>
+                    <li><strong>Pe Cont:</strong> Client cu cont deschis</li>
+                </ul>
+                
+                <h3>7.3 Tipărire și Raportare</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Bon Fiscal</h4>
+                        <p>Generare automată bon fiscal conform ANAF</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Bon Bucătărie</h4>
+                        <p>Comandă printată în bucătărie</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Bon Bar</h4>
+                        <p>Băuturi printate la bar</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Raport Z</h4>
+                        <p>Închidere casă la final de tură</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- KIOSK -->
+            <section id="kiosk">
+                <h2>8. Interfețe Kiosk (40+ Module)</h2>
+                
+                <h3>8.1 Self-Service Kiosk</h3>
+                <div class="module-path">📍 Acces: /kiosk sau URL dedicat</div>
+                <p>Kiosk autoservire pentru clienți.</p>
+                
+                <h4>Funcționalități:</h4>
+                <ul>
+                    <li>Interfață touch-friendly cu butoane mari</li>
+                    <li>Navigare simplificată prin meniu</li>
+                    <li>Personalizare produse (extra ingredients, mărimi)</li>
+                    <li>Vizualizare coș în timp real</li>
+                    <li>Plată integrată (card, cash, contactless)</li>
+                    <li>Printare bon/cod ridicare</li>
+                    <li>Multi-limbă (RO/EN)</li>
+                </ul>
+                
+                <h3>8.2 Kitchen Expeditor</h3>
+                <div class="module-path">📍 Acces: /kiosk/kitchen-expeditor</div>
+                <p>Expediere comenzi din bucătărie.</p>
+                
+                <h4>Ecrane:</h4>
+                <ul>
+                    <li>Comenzi în pregătire</li>
+                    <li>Comenzi gata de servit</li>
+                    <li>Timp de pregătire per comandă</li>
+                    <li>Prioritizare comenzi urgente</li>
+                    <li>Notificări pentru ospătari</li>
+                </ul>
+                
+                <h3>8.3 Customer Display</h3>
+                <div class="module-path">📍 Acces: /kiosk/customer-display</div>
+                <p>Afișaj pentru clienți la casa de marcat.</p>
+                
+                <h4>Informații Afișate:</h4>
+                <ul>
+                    <li>Produse adăugate în comandă</li>
+                    <li>Prețuri individuale</li>
+                    <li>Total comandă în timp real</li>
+                    <li>Promoții active</li>
+                    <li>Mesaje personalizate</li>
+                </ul>
+                
+                <h3>8.4 Hostess Map</h3>
+                <div class="module-path">📍 Acces: /kiosk/hostess-map</div>
+                <p>Hartă restaurant pentru hostess/gazdă.</p>
+                
+                <h4>Funcționalități:</h4>
+                <ul>
+                    <li>Plan vizual restaurant</li>
+                    <li>Status mese (liber, ocupat, rezervat)</li>
+                    <li>Alocare mese</li>
+                    <li>Gestionare rezervări</li>
+                    <li>Listă de așteptare</li>
+                    <li>Timp estimat eliberare masă</li>
+                </ul>
+                
+                <h3>8.5 More Kiosk Modules (35+ additional)</h3>
+                
+                <h4>Operațiuni Zilnice:</h4>
+                <ul>
+                    <li><strong>Client Monitor:</strong> Monitorizare clienți în restaurant</li>
+                    <li><strong>Tables Manager:</strong> Gestionare avansată mese</li>
+                    <li><strong>Coat Check:</strong> Garderobă</li>
+                    <li><strong>Lost and Found:</strong> Obiecte pierdute/găsite</li>
+                    <li><strong>Laundry:</strong> Gestionare spălătorie</li>
+                </ul>
+                
+                <h4>Personal și Training:</h4>
+                <ul>
+                    <li><strong>Pontaj:</strong> Pontare angajați</li>
+                    <li><strong>Training Mode:</strong> Modul antrenament pentru personal nou</li>
+                    <li><strong>Scoreboard:</strong> Tabel performanță angajați</li>
+                    <li><strong>Staff Schedule:</strong> Program personal</li>
+                </ul>
+                
+                <h4>Marketing și Feedback:</h4>
+                <ul>
+                    <li><strong>Feedback Terminal:</strong> Chestionar satisfacție</li>
+                    <li><strong>Loyalty Program:</strong> Puncte fidelitate</li>
+                    <li><strong>Promotions Display:</strong> Afișaj promoții</li>
+                    <li><strong>Menu Board:</strong> Panou meniu digital</li>
+                </ul>
+                
+                <h4>Comenzi și Delivery:</h4>
+                <ul>
+                    <li><strong>QR Ordering:</strong> Comandă prin QR code</li>
+                    <li><strong>Delivery Tracker:</strong> Tracking livrări</li>
+                    <li><strong>Drive-Thru:</strong> Serviciu mașină</li>
+                    <li><strong>Pickup Station:</strong> Punct ridicare comenzi</li>
+                </ul>
+                
+                <h4>Management și Monitorizare:</h4>
+                <ul>
+                    <li><strong>Network Health:</strong> Status rețea și dispozitive</li>
+                    <li><strong>HQ Dashboard:</strong> Dashboard sediu central</li>
+                    <li><strong>Events Management:</strong> Evenimente și petreceri</li>
+                    <li><strong>Production Planning:</strong> Planificare producție</li>
+                    <li><strong>Waste Tracking:</strong> Urmărire deșeuri</li>
+                </ul>
+                
+                <div class="tip">
+                    Fiecare interfață kiosk poate fi configurată independent pe dispozitive dedicate (tablete, ecrane touch, monitoare).
+                </div>
+            </section>
+            
+            <!-- KDS -->
+            <section id="kds">
+                <h2>9. KDS (Kitchen Display System)</h2>
+                
+                <h3>9.1 Interfața KDS</h3>
+                <div class="module-path">📍 Acces: /kds sau URL dedicat</div>
+                <p>Sistem de afișare pentru bucătărie.</p>
+                
+                <h4>9.1.1 Layout KDS</h4>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Comenzi Noi</h4>
+                        <p>Comenzi recent primite</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>În Pregătire</h4>
+                        <p>Comenzi în lucru</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Gata</h4>
+                        <p>Comenzi finalizate</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Urgente</h4>
+                        <p>Comenzi cu prioritate</p>
+                    </div>
+                </div>
+                
+                <h4>9.1.2 Informații Comandă</h4>
+                <ul>
+                    <li>Număr comandă (mare, vizibil)</li>
+                    <li>Masă/Locație</li>
+                    <li>Timp așteptare (timer)</li>
+                    <li>Produse de preparat</li>
+                    <li>Cantități</li>
+                    <li>Modificări/Observații (evidențiate)</li>
+                    <li>Alergeni (avertizare)</li>
+                </ul>
+                
+                <h4>9.1.3 Culori și Priorități</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Culoare</th>
+                            <th>Semnificație</th>
+                            <th>Acțiune</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="background:#4caf50;color:white;">Verde</td>
+                            <td>Comandă nouă (< 5 min)</td>
+                            <td>Normal</td>
+                        </tr>
+                        <tr>
+                            <td style="background:#ff9800;color:white;">Portocaliu</td>
+                            <td>Atenție (5-10 min)</td>
+                            <td>Prioritizare</td>
+                        </tr>
+                        <tr>
+                            <td style="background:#f44336;color:white;">Roșu</td>
+                            <td>Întârziere (> 10 min)</td>
+                            <td>Urgență</td>
+                        </tr>
+                        <tr>
+                            <td style="background:#2196f3;color:white;">Albastru</td>
+                            <td>Comandă specială</td>
+                            <td>Atenție deosebită</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>9.2 Operare KDS</h3>
+                <div class="steps">
+                    <strong>Flux Lucru Bucătărie:</strong>
+                    <ol>
+                        <li>Comandă apare automat în "Comenzi Noi"</li>
+                        <li>Bucătar selectează comandă → mută în "În Pregătire"</li>
+                        <li>Timer pornește automat</li>
+                        <li>La finalizare → marchează "Gata"</li>
+                        <li>Notificare către ospătar</li>
+                        <li>După servire → comandă dispare din ecran</li>
+                    </ol>
+                </div>
+                
+                <h3>9.3 Funcții Avansate KDS</h3>
+                <ul>
+                    <li><strong>Split Screen:</strong> Afișare multiplă pentru mai multe stații</li>
+                    <li><strong>Bump Bar:</strong> Suport pentru bump bar hardware</li>
+                    <li><strong>Audio Alerts:</strong> Alerte sonore pentru comenzi noi/urgente</li>
+                    <li><strong>Recipe View:</strong> Vizualizare rețete la apăsare</li>
+                    <li><strong>Recall:</strong> Re-afișare comenzi recente</li>
+                </ul>
+                
+                <div class="warning">
+                    KDS necesită conectare stabilă la internet. Configurați backup pe caz de pierdere conexiune.
+                </div>
+            </section>
+            
+            <!-- RAPOARTE -->
+            <section id="rapoarte">
+                <h2>10. Rapoarte și Analize</h2>
+                
+                <h3>10.1 Sales Reports</h3>
+                <div class="module-path">📍 Acces: Rapoarte → Vânzări</div>
+                
+                <h4>Tipuri Rapoarte Vânzări:</h4>
+                <ul>
+                    <li><strong>Daily Sales:</strong> Vânzări zilnice detaliate</li>
+                    <li><strong>Weekly Summary:</strong> Rezumat săptămânal</li>
+                    <li><strong>Monthly Report:</strong> Raport lunar complet</li>
+                    <li><strong>Yearly Overview:</strong> Prezentare anuală</li>
+                </ul>
+                
+                <h3>10.2 P&L Report (Profit & Loss)</h3>
+                <div class="module-path">📍 Acces: Rapoarte → P&L</div>
+                <p>Raport profit și pierdere detaliat.</p>
+                
+                <h4>Componente:</h4>
+                <ul>
+                    <li>Venituri totale</li>
+                    <li>Cost bunuri vândute (COGS)</li>
+                    <li>Marjă brută</li>
+                    <li>Cheltuieli operaționale</li>
+                    <li>Profit net</li>
+                    <li>Grafice evolutive</li>
+                </ul>
+                
+                <h3>10.3 ABC Analysis</h3>
+                <div class="module-path">📍 Acces: Rapoarte → ABC Analysis</div>
+                <p>Clasificare produse după importanță economică.</p>
+                
+                <h4>Categorii:</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Categorie</th>
+                            <th>Criteriu</th>
+                            <th>Acțiune</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>A - Premium</td>
+                            <td>Top 20% vânzări (80% venit)</td>
+                            <td>Menținere stoc ridicat</td>
+                        </tr>
+                        <tr>
+                            <td>B - Standard</td>
+                            <td>Următoarele 30% (15% venit)</td>
+                            <td>Stoc moderat</td>
+                        </tr>
+                        <tr>
+                            <td>C - Low</td>
+                            <td>Ultimele 50% (5% venit)</td>
+                            <td>Stoc minim/eliminare</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>10.4 Advanced Reports</h3>
+                <div class="module-path">📍 Acces: Rapoarte → Advanced</div>
+                
+                <h4>Tab-uri Disponibile:</h4>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Sales Analytics</h4>
+                        <p>Analize detaliate vânzări</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Profitability</h4>
+                        <p>Analiză profitabilitate pe produse</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Customer Insights</h4>
+                        <p>Comportament și preferințe clienți</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Time Trends</h4>
+                        <p>Tendințe temporale și sezonalitate</p>
+                    </div>
+                </div>
+                
+                <h3>10.5 Top Products Report</h3>
+                <div class="module-path">📍 Acces: Rapoarte → Top Produse</div>
+                <p>Clasament best-sellers.</p>
+                
+                <h4>Metrici:</h4>
+                <ul>
+                    <li>Cantitate vândută</li>
+                    <li>Venit generat</li>
+                    <li>Profit adus</li>
+                    <li>Frecvență comandă</li>
+                    <li>Rating clienți</li>
+                </ul>
+                
+                <h3>10.6 Cancellation Analysis</h3>
+                <div class="module-path">📍 Acces: Rapoarte → Analiză Anulări</div>
+                <p>Analiză comenzi anulate.</p>
+                
+                <h4>Informații:</h4>
+                <ul>
+                    <li>Număr anulări per perioadă</li>
+                    <li>Motive anulare</li>
+                    <li>Produse cel mai des anulate</li>
+                    <li>Impact financiar</li>
+                    <li>Recomandări îmbunătățire</li>
+                </ul>
+            </section>
+            
+            <!-- FINANCIAR -->
+            <section id="financiar">
+                <h2>11. Management Financiar și Fiscal</h2>
+                
+                <h3>11.1 Invoicing (Facturare)</h3>
+                <div class="module-path">📍 Acces: Financiar → Facturi</div>
+                
+                <h4>Tipuri Facturi:</h4>
+                <ul>
+                    <li><strong>Factură Fiscală:</strong> Document fiscal conform legislației</li>
+                    <li><strong>Factură Proformă:</strong> Ofertă de preț</li>
+                    <li><strong>Chitanță:</strong> Confirmare plată</li>
+                    <li><strong>Aviz:</strong> Document însoțire marfă</li>
+                </ul>
+                
+                <h4>Creare Factură:</h4>
+                <div class="steps">
+                    <ol>
+                        <li>Selectați client (companie sau persoană fizică)</li>
+                        <li>Adăugați produse/servicii</li>
+                        <li>Configurați TVA și taxe</li>
+                        <li>Adăugați discount (opțional)</li>
+                        <li>Generați factură</li>
+                        <li>Trimiteți prin email</li>
+                        <li>Exportați PDF</li>
+                    </ol>
+                </div>
+                
+                <h3>11.2 E-Factura (ANAF Integration)</h3>
+                <div class="module-path">📍 Acces: Financiar → E-Factura</div>
+                <p>Integrare cu sistemul RO e-Factura ANAF.</p>
+                
+                <h4>Funcționalități:</h4>
+                <ul>
+                    <li>Generare automată XML e-Factura</li>
+                    <li>Validare format conform ANAF</li>
+                    <li>Upload securizat către SPV ANAF</li>
+                    <li>Descărcare facturi primite</li>
+                    <li>Status tracking (trimisă, validată, respinsă)</li>
+                    <li>Arhivă completă e-facturi</li>
+                </ul>
+                
+                <h3>11.3 ANAF Integration</h3>
+                <div class="module-path">📍 Acces: Fiscal → ANAF</div>
+                
+                <h4>11.3.1 Certificat Digital</h4>
+                <p>Upload și management certificat calificat ANAF.</p>
+                <ul>
+                    <li>Upload certificat .p12/.pfx</li>
+                    <li>Validare certificat</li>
+                    <li>Verificare data expirare</li>
+                    <li>Alerte înainte de expirare</li>
+                </ul>
+                
+                <h4>11.3.2 Health Check</h4>
+                <p>Verificare status conexiune cu serverele ANAF.</p>
+                <ul>
+                    <li>Test conectivitate</li>
+                    <li>Validare autentificare</li>
+                    <li>Status servicii ANAF</li>
+                    <li>Log erori comunicare</li>
+                </ul>
+                
+                <h4>11.3.3 ANAF Submissions</h4>
+                <p>Trimiteri către ANAF (D406, SAF-T, etc.).</p>
+                
+                <h3>11.4 Fiscal Reports</h3>
+                <div class="module-path">📍 Acces: Fiscal → Rapoarte</div>
+                
+                <h4>Rapoarte Disponibile:</h4>
+                <ul>
+                    <li><strong>Raport X:</strong> Raport intermediar casă (fără închidere)</li>
+                    <li><strong>Raport Z:</strong> Închidere casă zilnică</li>
+                    <li><strong>Raport Lunar:</strong> Rezumat fiscal lunar</li>
+                    <li><strong>Jurnal Casă:</strong> Toate tranzacțiile zilnice</li>
+                    <li><strong>TVA Colectat:</strong> Raport TVA pentru declarație</li>
+                </ul>
+                
+                <h3>11.5 Cash Register Management</h3>
+                <div class="module-path">📍 Acces: Fiscal → Casa de Marcat</div>
+                
+                <h4>Funcționalități:</h4>
+                <ul>
+                    <li>Deschidere casă (fond de casă inițial)</li>
+                    <li>Înregistrare toate tranzacțiile</li>
+                    <li>Reconciliere cash vs. sistem</li>
+                    <li>Închidere casă (raport Z)</li>
+                    <li>Istoric case închise</li>
+                    <li>Audit trail complet</li>
+                </ul>
+                
+                <h3>11.6 SAF-T Romania</h3>
+                <div class="module-path">📍 Acces: Fiscal → SAF-T</div>
+                <p>Generare fișier SAF-T conform cerințelor ANAF.</p>
+                
+                <h4>Conținut SAF-T:</h4>
+                <ul>
+                    <li>Header informații firmă</li>
+                    <li>Master Files (produse, clienți, furnizori)</li>
+                    <li>Tranzacții vânzări</li>
+                    <li>Tranzacții cumpărări</li>
+                    <li>Plăți</li>
+                    <li>Asset transactions</li>
+                </ul>
+            </section>
+            
+            <!-- PERSONAL -->
+            <section id="personal">
+                <h2>12. Gestionare Personal și Operațiuni</h2>
+                
+                <h3>12.1 Waiters Management</h3>
+                <div class="module-path">📍 Acces: Personal → Ospătari</div>
+                
+                <h4>Profil Ospătar:</h4>
+                <ul>
+                    <li>Nume și cod unic</li>
+                    <li>PIN acces (4-6 cifre)</li>
+                    <li>Fotografie</li>
+                    <li>Contact (telefon, email)</li>
+                    <li>Status (activ/inactiv)</li>
+                    <li>Secțiune asignată</li>
+                    <li>Limba preferată</li>
+                </ul>
+                
+                <h4>Performance Metrics:</h4>
+                <ul>
+                    <li>Total comenzi procesate</li>
+                    <li>Vânzări generate</li>
+                    <li>Rating mediu de la clienți</li>
+                    <li>Timp mediu servire</li>
+                    <li>Bacșiș mediu</li>
+                </ul>
+                
+                <h3>12.2 Reservations</h3>
+                <div class="module-path">📍 Acces: Operațiuni → Rezervări</div>
+                
+                <h4>Creare Rezervare:</h4>
+                <div class="steps">
+                    <ol>
+                        <li>Selectați data și ora</li>
+                        <li>Introduceți detalii client:
+                            <ul>
+                                <li>Nume</li>
+                                <li>Telefon</li>
+                                <li>Email (opțional)</li>
+                            </ul>
+                        </li>
+                        <li>Număr persoane</li>
+                        <li>Preferințe masă (zonă, fereastră, etc.)</li>
+                        <li>Cerințe speciale (alergii, aniversare, etc.)</li>
+                        <li>Confirmați rezervarea</li>
+                        <li>Trimiteți confirmare automată prin SMS/Email</li>
+                    </ol>
+                </div>
+                
+                <h4>Status Rezervări:</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Status</th>
+                            <th>Descriere</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Pending</td>
+                            <td>Rezervare creată, neconfirmată</td>
+                        </tr>
+                        <tr>
+                            <td>Confirmed</td>
+                            <td>Rezervare confirmată de client</td>
+                        </tr>
+                        <tr>
+                            <td>Seated</td>
+                            <td>Client sosit și așezat la masă</td>
+                        </tr>
+                        <tr>
+                            <td>Completed</td>
+                            <td>Rezervare finalizată</td>
+                        </tr>
+                        <tr>
+                            <td>No-Show</td>
+                            <td>Client nu s-a prezentat</td>
+                        </tr>
+                        <tr>
+                            <td>Cancelled</td>
+                            <td>Rezervare anulată</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>12.3 Training Module</h3>
+                <div class="module-path">📍 Acces: Personal → Training</div>
+                <p>Modul de antrenament pentru personalul nou.</p>
+                
+                <h4>Conținut Training:</h4>
+                <ul>
+                    <li>Ghid utilizare POS</li>
+                    <li>Proceduri operaționale</li>
+                    <li>Standarde serviciu</li>
+                    <li>Meniul restaurantului</li>
+                    <li>Alergeni și informații produse</li>
+                    <li>Gestionare situații speciale</li>
+                    <li>Teste evaluare</li>
+                </ul>
+                
+                <h3>12.4 Internal Messaging</h3>
+                <div class="module-path">📍 Acces: Personal → Mesaje</div>
+                <p>Sistem intern de comunicare.</p>
+                
+                <h4>Funcționalități:</h4>
+                <ul>
+                    <li>Mesaje directe între angajați</li>
+                    <li>Grupuri de chat (echipă bucătărie, sala, etc.)</li>
+                    <li>Anunțuri generale</li>
+                    <li>Notificări push</li>
+                    <li>Istoric conversații</li>
+                </ul>
+            </section>
+            
+            <!-- SETĂRI -->
+            <section id="setari">
+                <h2>13. Configurare și Setări</h2>
+                
+                <h3>13.1 General Settings</h3>
+                <div class="module-path">📍 Acces: Setări → General</div>
+                
+                <h4>Setări Disponibile:</h4>
+                <ul>
+                    <li><strong>Restaurant Info:</strong> Nume, adresă, CUI, telefon</li>
+                    <li><strong>Business Hours:</strong> Program funcționare</li>
+                    <li><strong>Currency:</strong> Monedă (RON, EUR, USD)</li>
+                    <li><strong>Language:</strong> Limba interfață (RO/EN)</li>
+                    <li><strong>Time Zone:</strong> Fus orar</li>
+                    <li><strong>Tax Settings:</strong> TVA și alte taxe</li>
+                </ul>
+                
+                <h3>13.2 Printing Setup</h3>
+                <div class="module-path">📍 Acces: Setări → Printare</div>
+                
+                <h4>Configurare Printere:</h4>
+                <ul>
+                    <li><strong>Printer Bon Fiscal:</strong> Casă de marcat</li>
+                    <li><strong>Printer Bucătărie:</strong> Comenzi bucătărie</li>
+                    <li><strong>Printer Bar:</strong> Comenzi bar</li>
+                    <li><strong>Printer Facturi:</strong> Documente oficiale</li>
+                    <li><strong>Format Hârtie:</strong> 80mm, A4, etc.</li>
+                    <li><strong>Template-uri:</strong> Personalizare layout bonuri</li>
+                </ul>
+                
+                <h3>13.3 Backup & Restore</h3>
+                <div class="module-path">📍 Acces: Setări → Backup</div>
+                
+                <h4>13.3.1 Database Backup</h4>
+                <div class="steps">
+                    <strong>Creare Backup:</strong>
+                    <ol>
+                        <li>Navigați la Backup & Restore</li>
+                        <li>Click "Create Backup"</li>
+                        <li>Alegeți ce să includeți:
+                            <ul>
+                                <li>Database complet</li>
+                                <li>Doar configurări</li>
+                                <li>Doar tranzacții</li>
+                                <li>Imagini produse</li>
+                            </ul>
+                        </li>
+                        <li>Setați locație salvare</li>
+                        <li>Configurați backup automat (zilnic, săptămânal)</li>
+                    </ol>
+                </div>
+                
+                <h4>13.3.2 Restore Database</h4>
+                <div class="warning">
+                    Restaurarea va suprascrie datele curente! Creați backup înainte de restore.
+                </div>
+                
+                <div class="steps">
+                    <ol>
+                        <li>Selectați fișier backup</li>
+                        <li>Verificați integritate</li>
+                        <li>Confirmați restaurare</li>
+                        <li>Așteptați finalizare</li>
+                        <li>Restart aplicație</li>
+                    </ol>
+                </div>
+                
+                <h3>13.4 Alerts Configuration</h3>
+                <div class="module-path">📍 Acces: Setări → Alerte</div>
+                
+                <h4>Tipuri Alerte:</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Alertă</th>
+                            <th>Trigger</th>
+                            <th>Notificare</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Stoc Scăzut</td>
+                            <td>Sub prag minim</td>
+                            <td>Email, SMS, Push</td>
+                        </tr>
+                        <tr>
+                            <td>Comandă Întârziată</td>
+                            <td>> 15 minute</td>
+                            <td>Push, Sonor</td>
+                        </tr>
+                        <tr>
+                            <td>Rezervare Nouă</td>
+                            <td>Rezervare primită</td>
+                            <td>Email, SMS</td>
+                        </tr>
+                        <tr>
+                            <td>Expirare Produse</td>
+                            <td>3 zile până expirare</td>
+                            <td>Email</td>
+                        </tr>
+                        <tr>
+                            <td>Eroare Plată</td>
+                            <td>Tranzacție eșuată</td>
+                            <td>Push urgent</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>13.5 User Management</h3>
+                <div class="module-path">📍 Acces: Setări → Utilizatori</div>
+                
+                <h4>Roluri și Permisiuni:</h4>
+                <ul>
+                    <li><strong>Administrator:</strong> Acces complet</li>
+                    <li><strong>Manager:</strong> Toate funcțiile, fără setări sistem</li>
+                    <li><strong>Ospătar:</strong> POS și comenzi</li>
+                    <li><strong>Bucătar:</strong> KDS și producție</li>
+                    <li><strong>Casier:</strong> Plăți și rapoarte casă</li>
+                    <li><strong>Vizualizare:</strong> Doar consultare rapoarte</li>
+                </ul>
+                
+                <div class="tip">
+                    Configurați permisiuni granulare pentru fiecare rol în funcție de necesitățile organizației.
+                </div>
+                
+                <h3>13.6 Integrations</h3>
+                <div class="module-path">📍 Acces: Setări → Integrări</div>
+                
+                <h4>Integrări Disponibile:</h4>
+                <ul>
+                    <li><strong>Payment Gateways:</strong> Stripe, PayPal, Netopia</li>
+                    <li><strong>Delivery Platforms:</strong> Glovo, Bolt Food, Tazz</li>
+                    <li><strong>Accounting Software:</strong> Saga, SmartBill</li>
+                    <li><strong>Email Services:</strong> SendGrid, Mailgun</li>
+                    <li><strong>SMS Providers:</strong> Twilio, SMS.ro</li>
+                    <li><strong>Analytics:</strong> Google Analytics, Mixpanel</li>
+                </ul>
+            </section>
+            
+            <!-- TROUBLESHOOTING -->
+            <section id="troubleshooting">
+                <h2>14. Depanare și Întrebări Frecvente</h2>
+                
+                <h3>14.1 Probleme Comune</h3>
+                
+                <h4>Nu se afișează comenzile în KDS</h4>
+                <div class="steps">
+                    <strong>Verificați:</strong>
+                    <ul>
+                        <li>Conexiune internet activă</li>
+                        <li>Browser actualizat</li>
+                        <li>URL corect (verificați /kds)</li>
+                        <li>Comenzi trimise din POS</li>
+                        <li>Setări printer bucătărie</li>
+                    </ul>
+                </div>
+                
+                <h4>Printerul nu tipărește</h4>
+                <div class="steps">
+                    <ul>
+                        <li>Verificați conexiune USB/Ethernet</li>
+                        <li>Printer pornit și cu hârtie</li>
+                        <li>Driver instalat corect</li>
+                        <li>Test print din setări</li>
+                        <li>Restart printer și aplicație</li>
+                    </ul>
+                </div>
+                
+                <h4>Stocul nu se actualizează</h4>
+                <div class="steps">
+                    <ul>
+                        <li>Verificați rețeta are ingrediente configurate</li>
+                        <li>Control dacă auto-deduct este activ</li>
+                        <li>NIR validat corect</li>
+                        <li>Sincronizare cu server</li>
+                    </ul>
+                </div>
+                
+                <h3>14.2 Erori ANAF E-Factura</h3>
+                
+                <h4>Eroare "Certificat invalid"</h4>
+                <ul>
+                    <li>Verificați certificat nu este expirat</li>
+                    <li>Re-uploadați certificat</li>
+                    <li>Verificați parolă certificat</li>
+                    <li>Contactați furnizor certificat</li>
+                </ul>
+                
+                <h4>Eroare "XML invalid"</h4>
+                <ul>
+                    <li>Verificați CUI complet și corect</li>
+                    <li>Toate câmpurile obligatorii completate</li>
+                    <li>Caractere speciale în descrieri</li>
+                    <li>Format dată corect (YYYY-MM-DD)</li>
+                </ul>
+                
+                <h3>14.3 Performance Issues</h3>
+                
+                <h4>Aplicația încarcă lent</h4>
+                <ul>
+                    <li>Clear browser cache</li>
+                    <li>Verificați conexiune internet (min 10 Mbps)</li>
+                    <li>Închideți tab-uri neutilizate</li>
+                    <li>Restart browser</li>
+                    <li>Actualizați browser la ultima versiune</li>
+                </ul>
+                
+                <h4>Database growing too large</h4>
+                <ul>
+                    <li>Arhivați comenzi vechi (> 6 luni)</li>
+                    <li>Rulați cleanup scripts</li>
+                    <li>Optimizați imagini produse</li>
+                    <li>Configurați auto-archive</li>
+                </ul>
+                
+                <h3>14.4 Întrebări Frecvente (FAQ)</h3>
+                
+                <h4>Cum resetez parola unui utilizator?</h4>
+                <p>Setări → Utilizatori → Selectați utilizator → "Reset Password"</p>
+                
+                <h4>Cum adaug un nou ospătar?</h4>
+                <p>Personal → Ospătari → "Adaugă Ospătar" → Completați formular → Setați PIN</p>
+                
+                <h4>Cum modific prețul unui produs?</h4>
+                <p>Catalog → Selectați produs → Edit → Modificați preț → Save</p>
+                
+                <h4>Cum generez raportul Z?</h4>
+                <p>Fiscal → Rapoarte → Raport Z → Selectați data → Generate</p>
+                
+                <h4>Cum configurez o promoție?</h4>
+                <p>Marketing → Promoții → "Promoție Nouă" → Configurați condiții → Activați</p>
+                
+                <h3>14.5 Suport Tehnic</h3>
+                
+                <h4>Contact:</h4>
+                <ul>
+                    <li><strong>Email:</strong> support@horeca-app.com</li>
+                    <li><strong>Telefon:</strong> +40 XXX XXX XXX</li>
+                    <li><strong>Chat Live:</strong> Disponibil în aplicație (icon bottom-right)</li>
+                    <li><strong>Documentație:</strong> docs.horeca-app.com</li>
+                    <li><strong>Video Tutorials:</strong> youtube.com/horeca-app</li>
+                </ul>
+                
+                <h4>Program Suport:</h4>
+                <p>Luni - Vineri: 08:00 - 20:00<br>
+                Sâmbătă: 10:00 - 18:00<br>
+                Duminică: Suport urgențe (email)</p>
+                
+                <div class="tip">
+                    Pentru probleme critice (aplicație nefuncțională, erori plată), contactați urgent la telefonul de urgență disponibil 24/7.
+                </div>
+            </section>
+            
+            <!-- CONCLUZIE -->
+            <section>
+                <h2>15. Concluzie</h2>
+                
+                <p>Acest manual acoperă toate funcționalitățile majore ale Restaurant HORECA Management System. Pentru informații detaliate despre funcții specifice, consultați secțiunea relevantă din manual.</p>
+                
+                <h3>Resurse Adiționale</h3>
+                <ul>
+                    <li><strong>Setup Guide:</strong> Ghid instalare și configurare inițială</li>
+                    <li><strong>API Documentation:</strong> Pentru dezvoltatori și integrări</li>
+                    <li><strong>Best Practices:</strong> Recomandări optimizare utilizare</li>
+                    <li><strong>Release Notes:</strong> Noutăți și actualizări</li>
+                    <li><strong>Community Forum:</strong> Comunitate utilizatori</li>
+                </ul>
+                
+                <h3>Actualizări Manual</h3>
+                <p>Acest manual este actualizat continuu cu noile funcționalități ale aplicației. Versiune curentă: <strong>3.0</strong> (2024)</p>
+                
+                <p><strong>Ultima actualizare:</strong> <span id="lastUpdate"></span></p>
+                
+                <div class="tip">
+                    Bookmark acest manual pentru acces rapid. Folosiți funcția de căutare (Ctrl+F sau search box) pentru a găsi rapid informații specifice.
+                </div>
+                
+                <p style="text-align: center; margin-top: 40px; font-size: 1.2em;">
+                    <strong>Vă dorim succes în gestionarea restaurantului dumneavoastră! 🎉</strong>
+                </p>
+            </section>
+            
+        </div>
+        
+        <footer>
+            <p>&copy; 2024 Restaurant HORECA Management System</p>
+            <p>Manual Utilizator v3.0 - Toate drepturile rezervate</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Set last update date
+        document.addEventListener('DOMContentLoaded', function() {
+            const lastUpdateEl = document.getElementById('lastUpdate');
+            if (lastUpdateEl) {
+                lastUpdateEl.textContent = new Date().toLocaleDateString('ro-RO', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            }
+        });
+        
+        // Funcție căutare
+        document.getElementById('searchBox').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const sections = document.querySelectorAll('section');
+            
+            sections.forEach(section => {
+                const text = section.textContent.toLowerCase();
+                if (text.includes(searchTerm) || searchTerm === '') {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+        });
+        
+        // Smooth scroll pentru linkuri
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Print button functionality
+        function printManual() {
+            window.print();
+        }
+        
+        // Highlight current section in nav
+        window.addEventListener('scroll', function() {
+            let current = '';
+            const sections = document.querySelectorAll('section');
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            document.querySelectorAll('nav a').forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href') === '#' + current) {
+                    a.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
