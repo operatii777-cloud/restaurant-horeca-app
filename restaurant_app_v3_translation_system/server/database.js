@@ -20,6 +20,7 @@ try {
 
 const { createEnterpriseTables } = require('./database-enterprise-tables.js');
 const { createHaccpTables } = require('./database-haccp-tables.js');
+const { createDiscountProtocolTables } = require('./database-discount-protocol.js');
 
 const PIN_SALT_BYTES = 16;
 const PIN_SCRYPT_KEY_LENGTH = 64;
@@ -147,6 +148,10 @@ const dbPromise = new Promise((resolve, reject) => {
           .then(() => {
             // Creează tabelele HACCP
             return createHaccpTables(db);
+          })
+          .then(() => {
+            // Creează tabelele pentru Discount & Protocol Sales
+            return createDiscountProtocolTables();
           })
           .then(async () => {
             // FIX: Verificare și reparare schemă ingredients (coloana code) - Rulat DUPĂ creare tabele
