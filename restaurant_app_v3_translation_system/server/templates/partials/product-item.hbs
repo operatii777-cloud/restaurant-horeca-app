@@ -1,12 +1,20 @@
 <div class="product-item{{#if should_break_after}} break-after{{/if}}" data-index="{{index_in_category}}"{{#if should_break_after}} data-break-after="true"{{/if}}>
   
-  <!-- Product Image - DEZACTIVAT COMPLET (nici food, nici drinks) -->
-  {{!-- ELIMINAT: Imaginile apar greșit (burgeri în meniul de băuturi) --}}
+  <!-- Product Image - CONDITIONAL based on settings.showImages -->
+  {{#if ../../../settings.showImages}}
+    {{#if image_url}}
+      <div class="product-image">
+        <img src="{{image_url}}" alt="{{name}}" />
+      </div>
+    {{/if}}
+  {{/if}}
   
   <!-- Product Header: Name + Price -->
   <div class="product-header">
     <span class="product-name">{{name}}</span>
-    <span class="product-price">{{price}} RON</span>
+    {{#if ../../../settings.showPrices}}
+      <span class="product-price">{{price}} RON</span>
+    {{/if}}
   </div>
   
   <!-- Product Meta: Portion + Allergens + Additives -->
@@ -24,9 +32,11 @@
     </span>
   </div>
   
-  <!-- Description (if available) -->
-  {{#if description}}
-    <p class="product-description">{{description}}</p>
+  <!-- Description (if available AND settings.showDescriptions is true) -->
+  {{#if ../../../settings.showDescriptions}}
+    {{#if description}}
+      <p class="product-description">{{description}}</p>
+    {{/if}}
   {{/if}}
   
 </div>

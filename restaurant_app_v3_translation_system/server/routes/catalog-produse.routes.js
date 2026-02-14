@@ -9,11 +9,10 @@
 
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
+const { DB_PATH } = require('../config/db-constants');
 
 // Database connection
-const dbPath = path.join(__dirname, '..', 'restaurant.db');
-const db = new sqlite3.Database(dbPath);
+const db = new sqlite3.Database(DB_PATH);
 
 // Helper function to promisify database queries
 function dbAll(query, params = []) {

@@ -1,3 +1,10 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e0eee7b6cb65b5e9f5976422384208b8db353f28ceee3600deba7c6bf6a5d9e5
-size 20549
+{
+  "common": {
+    "loading": "Se încarcă...",
+    "save": "Salvează",
+    "cancel": "Anulează",
+    "delete": "Șterge",
+    "edit": "Editează",
+    "search": "Caută"
+  }
+}

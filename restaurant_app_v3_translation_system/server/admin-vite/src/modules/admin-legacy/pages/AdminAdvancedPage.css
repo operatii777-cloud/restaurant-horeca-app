@@ -1,0 +1,127 @@
+@import url('../../modules/shared-legacy-styles.css');
+
+.admin-advanced-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e3a8a 0%, #312e81 100%);
+  padding-bottom: 2rem;
+}
+
+.admin-advanced-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 2px solid #6366f1;
+}
+
+.admin-advanced-sidebar {
+  position: sticky;
+  top: 80px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+
+.advanced-nav-btn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  border: none;
+  background: transparent;
+  color: #495057;
+  text-align: left;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.advanced-nav-btn:hover {
+  background: linear-gradient(90deg, #e0e7ff 0%, #ddd6fe 100%);
+  color: #6366f1;
+  transform: translateX(5px);
+}
+
+.advanced-nav-btn.active {
+  background: linear-gradient(45deg, #6366f1, #8b5cf6);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 8px rgba(99, 102, 241, 0.3);
+}
+
+.advanced-nav-btn i {
+  width: 20px;
+  text-align: center;
+}
+
+.admin-advanced-content {
+  min-height: 600px;
+}
+
+.section-content {
+  animation: fadeInSlide 0.4s ease-out;
+}
+
+.btn-outline-warning {
+  border-color: #ffc107;
+  color: #856404;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-warning:hover {
+  background-color: #ffc107;
+  border-color: #ffc107;
+  color: #212529;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255, 193, 7, 0.3);
+}
+
+.btn-outline-info {
+  border-color: #17a2b8;
+  color: #17a2b8;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-info:hover {
+  background-color: #17a2b8;
+  border-color: #17a2b8;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(23, 162, 184, 0.3);
+}
+
+.btn-outline-danger {
+  border-color: #dc3545;
+  color: #dc3545;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}
+
+/* Professional styling */
+.admin-advanced-page .bg-white {
+  background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .admin-advanced-sidebar {
+    position: static;
+    margin-bottom: 1rem;
+  }
+
+  .advanced-nav-btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .admin-advanced-page {
+    background: #1e3a8a;
+  }
+}
