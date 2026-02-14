@@ -42,6 +42,20 @@ fi
 echo -e "${GREEN}✓ npm $(npm -v) detected${NC}"
 echo ""
 
+# Check if git-lfs is installed and pull LFS files
+echo -e "${BLUE}Step 0: Pulling Git LFS files...${NC}"
+if command -v git-lfs &> /dev/null; then
+    echo -e "${YELLOW}Git LFS detected, pulling files...${NC}"
+    git lfs install > /dev/null 2>&1 || true
+    git lfs pull > /dev/null 2>&1 || echo -e "${YELLOW}Warning: Some LFS files might not be available${NC}"
+    echo -e "${GREEN}✓ Git LFS files pulled${NC}"
+else
+    echo -e "${YELLOW}⚠ Git LFS not installed - package.json files might be LFS pointers${NC}"
+    echo -e "${YELLOW}  Install Git LFS from: https://git-lfs.github.com/${NC}"
+    echo -e "${YELLOW}  Then run: git lfs install && git lfs pull${NC}"
+    echo ""
+fi
+
 # Navigate to server directory
 cd restaurant_app_v3_translation_system/server
 

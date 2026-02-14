@@ -2,6 +2,19 @@
 
 🍽️ Comprehensive Restaurant Management System with Admin Panel, POS, Kiosk, and Mobile Apps
 
+## Prerequisites
+
+Before running the setup script, ensure you have:
+
+- **Node.js:** Version 18 or higher ([Download](https://nodejs.org/))
+- **Git LFS:** For large file storage ([Download](https://git-lfs.github.com/))
+
+To install Git LFS after cloning:
+```bash
+git lfs install
+git lfs pull
+```
+
 ## Quick Start
 
 After cloning this repository, simply run the setup script to install all dependencies, configure the environment, and build the application:
@@ -19,6 +32,7 @@ setup.bat
 ```
 
 The setup script will:
+- ✅ Pull Git LFS files (if Git LFS is installed)
 - ✅ Install all npm dependencies (backend + frontend)
 - ✅ Create .env configuration file with default values
 - ✅ Build the frontend (admin-vite) application
@@ -213,10 +227,17 @@ rm -rf node_modules admin-vite/node_modules
 ### Git LFS Files
 
 If package.json files show as LFS pointers instead of actual content:
+
+**Option 1: Install Git LFS and pull files**
 ```bash
+# Install Git LFS from https://git-lfs.github.com/
 git lfs install
 git lfs pull
 ```
+
+**Option 2: If Git LFS is not available, contact the repository maintainer**
+
+The repository uses Git LFS to store package.json files due to their size and frequent changes. Without Git LFS, you won't be able to install dependencies.
 
 ## Development
 
