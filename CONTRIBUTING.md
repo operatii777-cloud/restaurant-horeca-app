@@ -14,7 +14,9 @@ Thank you for your interest in contributing to the Restaurant HORECA App!
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/operatii777-cloud/restaurant-horeca-app.git
+git clone https://github.com/YOUR_USERNAME/restaurant-horeca-app.git
+# Or if you're a contributor to the main repository:
+# git clone https://github.com/operatii777-cloud/restaurant-horeca-app.git
 cd restaurant-horeca-app
 ```
 

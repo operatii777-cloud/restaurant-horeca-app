@@ -77,7 +77,8 @@ TZ=Europe/Bucharest
 DATABASE_PATH=./restaurant.db
 
 # Session Configuration
-SESSION_SECRET=$(openssl rand -hex 32)
+# IMPORTANT: This is a randomly generated secret. Regenerate for production!
+SESSION_SECRET=$(openssl rand -hex 32 2>/dev/null || echo "INSECURE_DEFAULT_CHANGE_ME_$(date +%s)_$(( RANDOM * RANDOM ))")
 
 # Optional: Queue Configuration (uncomment if using Redis)
 # REDIS_URL=redis://127.0.0.1:6379

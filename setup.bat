@@ -67,7 +67,7 @@ if not exist .env (
         echo DATABASE_PATH=./restaurant.db
         echo.
         echo # Session Configuration
-        echo SESSION_SECRET=CHANGE_THIS_TO_A_RANDOM_SECRET_IN_PRODUCTION
+        echo SESSION_SECRET=INSECURE_DEFAULT_CHANGE_ME_IN_PRODUCTION_%RANDOM%%RANDOM%%RANDOM%
         echo.
         echo # Optional: Queue Configuration (uncomment if using Redis^)
         echo # REDIS_URL=redis://127.0.0.1:6379
