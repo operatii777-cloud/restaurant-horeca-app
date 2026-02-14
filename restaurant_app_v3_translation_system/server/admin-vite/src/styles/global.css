@@ -1,8 +1,3 @@
-/* ==================== TAILWIND CSS ==================== */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 /* ==================== THEME TOKENS - SINGLE SOURCE OF TRUTH ==================== */
 @import './theme-tokens.css';
 

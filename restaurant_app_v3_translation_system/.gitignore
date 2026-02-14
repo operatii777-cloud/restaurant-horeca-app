@@ -103,5 +103,6 @@ railway-logs-extracted.txt
 railway-variables.png
 erver
 
-docs/
+# Exclude root-level auto-generated docs, but keep server/docs/
+/docs/
 dev-files/
