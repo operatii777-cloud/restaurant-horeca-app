@@ -4597,6 +4597,19 @@ dbPromise.then(async (db) => {
   app.use('/api/reports', reportsRoutes);
   console.log('✅ Reports routes mounted: /api/admin/reports/* and /api/reports/* (includes sales-detailed, profitability, customer-behavior, time-trends, stock-prediction)');
 
+  // PHASE S20 - Discount & Protocol Sales Module
+  const discountsRoutes = require('./src/modules/discounts/routes');
+  app.use('/api/discounts', discountsRoutes);
+  console.log('✅ Discounts routes mounted: /api/discounts/*');
+
+  const protocolsRoutes = require('./src/modules/protocols/routes');
+  app.use('/api/protocols', protocolsRoutes);
+  console.log('✅ Protocols routes mounted: /api/protocols/*');
+
+  const servingOrderRoutes = require('./src/modules/serving-order/routes');
+  app.use('/api/serving-order', servingOrderRoutes);
+  console.log('✅ Serving Order routes mounted: /api/serving-order/*');
+
   // Alias /api/reports/sales -> /api/reports/sales-detailed for benchmark compatibility
   app.get('/api/reports/sales', async (req, res, next) => {
     const reportsController = require('./src/modules/reports/reports.controller');
