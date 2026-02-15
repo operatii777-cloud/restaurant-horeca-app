@@ -127,6 +127,80 @@
   background: rgba(239, 68, 68, 0.12);
 }
 
+/* ==================== NESTED MENU / SUBMENU STYLES ==================== */
+
+.sidebar__menu-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sidebar__link--expandable {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  text-align: left;
+  width: 100%;
+  position: relative;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.sidebar__link--expandable .sidebar__label {
+  flex: 1;
+}
+
+.sidebar__expand-icon {
+  font-size: 0.7rem;
+  margin-left: auto;
+  transition: transform 0.2s ease;
+  color: #6b7280;
+}
+
+.sidebar__expand-icon--rotated {
+  transform: rotate(-180deg);
+}
+
+.sidebar__link--expanded {
+  background: rgba(51, 65, 85, 0.05);
+}
+
+.sidebar__submenu {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 2px;
+  padding-left: 0;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 500px;
+  }
+}
+
+/* Nested link indentation and styling */
+.sidebar__submenu .sidebar__link {
+  font-size: 0.9rem;
+  padding: 8px 12px;
+  border-left: 2px solid transparent;
+  margin-left: 8px;
+}
+
+.sidebar__submenu .sidebar__link:hover {
+  border-left-color: rgba(59, 130, 246, 0.3);
+}
+
+.sidebar__submenu .sidebar__link--active {
+  border-left-color: #2563eb;
+}
+
 /* ==================== RESPONSIVE SIDEBAR ==================== */
 
 /* Tablets și ecrane medii (max 1024px) */
