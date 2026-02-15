@@ -125,28 +125,7 @@ export function renderFacturaTemplate(doc: PDFDocument, data: FacturaTemplateDat
       };
       doc.text(`Tip Client: ${typeMap[facturaDoc.clientType] || facturaDoc.clientType}`);
     }
-    doc.moveDown();
-  }
-    // PHASE S6.3 - Adresă completă client
-    let clientAddressParts = [];
-    if (facturaDoc.clientAddress) clientAddressParts.push(facturaDoc.clientAddress);
-    if (facturaDoc.clientCity) clientAddressParts.push(facturaDoc.clientCity);
-    if (facturaDoc.clientPostalCode) clientAddressParts.push(facturaDoc.clientPostalCode);
-    if (facturaDoc.clientCountry) clientAddressParts.push(facturaDoc.clientCountry);
-    if (clientAddressParts.length > 0) {
-      doc.text(`Adresă: ${clientAddressParts.join(', ')}`);
-    }
     
-    if (facturaDoc.clientPhone) doc.text(`Telefon: ${facturaDoc.clientPhone}`);
-    if (facturaDoc.clientEmail) doc.text(`Email: ${facturaDoc.clientEmail}`);
-    if (facturaDoc.clientRepresentative) doc.text(`Reprezentant: ${facturaDoc.clientRepresentative}`);
-    if (facturaDoc.clientType) {
-      const typeMap: Record<string, string> = {
-        'juridic': 'Persoană Juridică',
-        'fizic': 'Persoană Fizică'
-      };
-      doc.text(`Tip: ${typeMap[facturaDoc.clientType] || facturaDoc.clientType}`);
-    }
     if (facturaDoc.clientStatus) {
       const statusMap: Record<string, string> = {
         'regular': 'Client Regular',
@@ -155,6 +134,7 @@ export function renderFacturaTemplate(doc: PDFDocument, data: FacturaTemplateDat
       };
       doc.text(`Status: ${statusMap[facturaDoc.clientStatus] || facturaDoc.clientStatus}`);
     }
+    
     doc.moveDown();
   }
 
