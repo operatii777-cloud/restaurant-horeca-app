@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-02-15T08:25:24.738Z",
+  "summary": {
+    "passed": 44,
+    "failed": 3,
+    "warnings": 7,
+    "passRate": 81.48
+  },
+  "details": [
+    "Missing: Legacy Admin interface (public/admin.html)",
+    "Missing: Backup system component (src/modules/backup/backup.controller.js)",
+    "Missing: Integration module: routes/integrations.js (routes/integrations.js)"
+  ]
+}
