@@ -20,7 +20,28 @@ try {
 
 const { createEnterpriseTables } = require('./database-enterprise-tables.js');
 const { createHaccpTables } = require('./database-haccp-tables.js');
-const { createDiscountProtocolTables } = require('./database-discount-protocol.js');
+
+// Load discount protocol tables module with circular dependency handling
+let createDiscountProtocolTables;
+try {
+  const discountProtocol = require('./database-discount-protocol.js');
+  createDiscountProtocolTables = discountProtocol.createDiscountProtocolTables;
+  if (!createDiscountProtocolTables) {
+    console.warn('⚠️ createDiscountProtocolTables not available due to circular dependency, will skip');
+    createDiscountProtocolTables = async () => {
+      console.log('ℹ️ Discount protocol tables initialization skipped (circular dependency)');
+      return Promise.resolve();
+    };
+  } else {
+    console.log('✅ database-discount-protocol.js loaded');
+  }
+} catch (error) {
+  console.warn('⚠️ database-discount-protocol.js not found, continuing without it:', error.message);
+  createDiscountProtocolTables = async () => {
+    console.log('ℹ️ Discount protocol tables not available (database-discount-protocol.js missing)');
+    return Promise.resolve();
+  };
+}
 
 const PIN_SALT_BYTES = 16;
 const PIN_SCRYPT_KEY_LENGTH = 64;
@@ -151,7 +172,7 @@ const dbPromise = new Promise((resolve, reject) => {
           })
           .then(() => {
             // Creează tabelele pentru Discount & Protocol Sales
-            return createDiscountProtocolTables();
+            return createDiscountProtocolTables(db);
           })
           .then(async () => {
             // FIX: Verificare și reparare schemă ingredients (coloana code) - Rulat DUPĂ creare tabele
