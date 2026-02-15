@@ -1,0 +1,129 @@
+{
+  "timestamp": "2026-02-15T08:40:47.514Z",
+  "summary": {
+    "interfaces": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passRate": "NaN%"
+    },
+    "apiEndpoints": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "passRate": "NaN%"
+    },
+    "security": {
+      "sqlInjectionTests": 0,
+      "sqlVulnerabilities": 0,
+      "xssTests": 0,
+      "xssVulnerabilities": 0,
+      "csrfTests": 0,
+      "csrfVulnerabilities": 0
+    },
+    "performance": {
+      "fastResponses": 0,
+      "slowResponses": 0
+    },
+    "uiux": {
+      "issues": 0,
+      "warnings": 9
+    },
+    "integrations": {
+      "tested": 3,
+      "working": 3,
+      "failed": 0
+    }
+  },
+  "details": {
+    "timestamp": "2026-02-15T08:40:47.514Z",
+    "interfaces": {
+      "total": 0,
+      "tested": 0,
+      "passed": 0,
+      "failed": 0,
+      "errors": []
+    },
+    "apiEndpoints": {
+      "total": 0,
+      "tested": 0,
+      "passed": 0,
+      "failed": 0,
+      "errors": []
+    },
+    "security": {
+      "sqlInjection": {
+        "tested": 0,
+        "vulnerabilities": []
+      },
+      "xss": {
+        "tested": 0,
+        "vulnerabilities": []
+      },
+      "csrf": {
+        "tested": 0,
+        "vulnerabilities": []
+      }
+    },
+    "performance": {
+      "loadTests": [],
+      "responseTimesOk": 0,
+      "responsTimesSlow": 0
+    },
+    "uiux": {
+      "issues": [],
+      "warnings": [
+        {
+          "file": "/legacy/admin/admin.html",
+          "issue": "Too many inline styles (278)",
+          "severity": "low"
+        },
+        {
+          "file": "/legacy/admin/admin-advanced.html",
+          "issue": "Too many inline styles (95)",
+          "severity": "low"
+        },
+        {
+          "file": "/legacy/orders/comanda.html",
+          "issue": "Too many inline styles (123)",
+          "severity": "low"
+        },
+        {
+          "file": "/legacy/orders/comanda-supervisor1.html",
+          "issue": "Too many inline styles (172)",
+          "severity": "low"
+        },
+        {
+          "file": "/legacy/orders/comanda-supervisor2.html",
+          "issue": "Too many inline styles (172)",
+          "severity": "low"
+        },
+        {
+          "file": "/legacy/orders/comanda-supervisor3.html",
+          "issue": "Too many inline styles (172)",
+          "severity": "low"
+        },
+        {
+          "file": "/legacy/orders/comanda-supervisor4.html",
+          "issue": "Too many inline styles (172)",
+          "severity": "low"
+        },
+        {
+          "file": "/legacy/orders/comanda-supervisor5.html",
+          "issue": "Too many inline styles (172)",
+          "severity": "low"
+        },
+        {
+          "file": "/legacy/orders/comanda-supervisor6.html",
+          "issue": "Too many inline styles (172)",
+          "severity": "low"
+        }
+      ]
+    },
+    "integrations": {
+      "tested": 3,
+      "working": 3,
+      "failed": 0
+    }
+  }
+}

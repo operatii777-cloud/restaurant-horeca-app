@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-02-15T08:38:05.571Z",
+  "summary": {
+    "serverStatus": "stopped",
+    "apiTestsPassed": 0,
+    "apiTestsTotal": 0,
+    "playwrightStatus": "not_run",
+    "performanceResults": []
+  },
+  "details": {
+    "timestamp": "2026-02-15T08:38:05.571Z",
+    "serverStatus": "stopped",
+    "playwrightTests": null,
+    "apiTests": null,
+    "performanceTests": null
+  }
+}

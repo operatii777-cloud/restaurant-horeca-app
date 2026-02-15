@@ -1,0 +1,16 @@
+{
+  "timestamp": "2026-02-15T08:38:08.198Z",
+  "summary": {
+    "passed": 38,
+    "failed": 5,
+    "warnings": 7,
+    "passRate": 76
+  },
+  "details": [
+    "Missing: Legacy Admin interface (public/admin.html)",
+    "Missing: Environment configuration (.env)",
+    "Missing: Comprehensive E2E test suite (tests/e2e/comprehensive-e2e-test.spec.js)",
+    "Missing: Backup system component (src/modules/backup/backup.controller.js)",
+    "Missing: Integration module: routes/integrations.js (routes/integrations.js)"
+  ]
+}

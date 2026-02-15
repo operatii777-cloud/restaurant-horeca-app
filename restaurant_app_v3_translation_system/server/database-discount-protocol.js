@@ -15,6 +15,11 @@ const { dbPromise } = require('./database');
 async function createDiscountProtocolTables() {
   const db = await dbPromise;
   
+  if (!db || typeof db.serialize !== 'function') {
+    console.error('❌ Database connection not available for discount protocol tables');
+    return Promise.resolve(); // Skip gracefully
+  }
+  
   return new Promise((resolve, reject) => {
     db.serialize(() => {
       console.log('🔧 Initializing discount and protocol tables...');
