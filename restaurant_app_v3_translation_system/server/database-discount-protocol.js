@@ -7,14 +7,12 @@
  * Data: 14 Februarie 2026
  */
 
-const { dbPromise } = require('./database');
-
 /**
  * Initialize discount and protocol tables
+ * @param {Object} db - SQLite database instance (required to avoid circular dependency)
  */
-async function createDiscountProtocolTables() {
-  const db = await dbPromise;
-  
+async function createDiscountProtocolTables(db) {
+  // Add null check - db can be undefined due to circular dependency
   if (!db || typeof db.serialize !== 'function') {
     console.error('❌ Database connection not available for discount protocol tables');
     return Promise.resolve(); // Skip gracefully
