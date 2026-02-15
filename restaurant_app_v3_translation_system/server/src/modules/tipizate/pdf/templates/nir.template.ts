@@ -58,15 +58,28 @@ export function renderNirTemplate(doc: PDFDocument, data: NirTemplateData): void
     doc.moveDown();
   }
 
-  // PHASE S6.2 - Furnizor (cu adresă și contact)
+  // PHASE S6.2 - Furnizor (cu adresă și contact) + PHASE S8.9 ANAF enhancements
   if (nirDoc.supplierName) {
     doc.fontSize(11).font('Helvetica-Bold').text('FURNIZOR:', { underline: true });
     doc.fontSize(10).font('Helvetica');
     doc.text(`Denumire: ${nirDoc.supplierName}`);
     if (nirDoc.supplierCUI) doc.text(`CUI: ${nirDoc.supplierCUI}`);
-    if (nirDoc.supplierAddress) doc.text(`Adresă: ${nirDoc.supplierAddress}`);
+    if (nirDoc.supplierRegCom) doc.text(`Reg. Com.: ${nirDoc.supplierRegCom}`); // PHASE S8.9 - ANAF required
+    
+    // PHASE S8.9 - Complete address block
+    let addressParts = [];
+    if (nirDoc.supplierAddress) addressParts.push(nirDoc.supplierAddress);
+    if (nirDoc.supplierCity) addressParts.push(nirDoc.supplierCity);
+    if (nirDoc.supplierPostalCode) addressParts.push(nirDoc.supplierPostalCode);
+    if (nirDoc.supplierCountry) addressParts.push(nirDoc.supplierCountry);
+    if (addressParts.length > 0) {
+      doc.text(`Adresă: ${addressParts.join(', ')}`);
+    }
+    
     if (nirDoc.supplierContact) doc.text(`Contact: ${nirDoc.supplierContact}`);
     if (nirDoc.supplierEmail) doc.text(`E-mail: ${nirDoc.supplierEmail}`);
+    if (nirDoc.supplierBankAccount) doc.text(`IBAN: ${nirDoc.supplierBankAccount}`); // PHASE S8.9 - ANAF required
+    if (nirDoc.supplierBankName) doc.text(`Bancă: ${nirDoc.supplierBankName}`); // PHASE S8.9
     doc.moveDown();
   }
 
@@ -94,6 +107,63 @@ export function renderNirTemplate(doc: PDFDocument, data: NirTemplateData): void
       };
       doc.text(`Status Factură: ${statusMap[nirDoc.invoiceStatus] || nirDoc.invoiceStatus}`);
     }
+    doc.moveDown();
+  }
+
+  // PHASE S8.9 - Transport & Delivery (ANAF e-Transport compliance)
+  if (nirDoc.transportDocumentNumber || nirDoc.transportCompany || nirDoc.driverName || nirDoc.vehicleRegistration) {
+    doc.fontSize(11).font('Helvetica-Bold').text('INFORMAȚII TRANSPORT:', { underline: true });
+    doc.fontSize(10).font('Helvetica');
+    if (nirDoc.transportDocumentNumber) {
+      const typeMap: Record<string, string> = {
+        'CMR': 'CMR',
+        'AWB': 'AWB (Air Waybill)',
+        'INTERNAL': 'Document Intern',
+        'OTHER': 'Altul'
+      };
+      const docType = nirDoc.transportDocumentType ? ` (${typeMap[nirDoc.transportDocumentType]})` : '';
+      doc.text(`Document Transport: ${nirDoc.transportDocumentNumber}${docType}`);
+    }
+    if (nirDoc.transportCompany) doc.text(`Companie Transport: ${nirDoc.transportCompany}`);
+    if (nirDoc.transportDate) {
+      const transportDateTime = nirDoc.transportTime 
+        ? `${new Date(nirDoc.transportDate).toLocaleDateString('ro-RO')} ${nirDoc.transportTime}`
+        : new Date(nirDoc.transportDate).toLocaleDateString('ro-RO');
+      doc.text(`Data/Ora Transport: ${transportDateTime}`);
+    }
+    if (nirDoc.driverName) doc.text(`Șofer: ${nirDoc.driverName}`);
+    if (nirDoc.driverLicense) doc.text(`Permis Conducere: ${nirDoc.driverLicense}`);
+    if (nirDoc.vehicleRegistration) doc.text(`Vehicul: ${nirDoc.vehicleRegistration}`);
+    doc.moveDown();
+  }
+
+  // PHASE S8.9 - Quality Control & Acceptance (ANAF/HACCP compliance)
+  if (nirDoc.acceptanceStatus || nirDoc.qualityInspectionRequired || nirDoc.temperatureAtReceipt !== null) {
+    doc.fontSize(11).font('Helvetica-Bold').text('CONTROL CALITATE:', { underline: true });
+    doc.fontSize(10).font('Helvetica');
+    if (nirDoc.acceptanceStatus) {
+      const statusMap: Record<string, string> = {
+        'ACCEPTED': '✓ Acceptat',
+        'REJECTED': '✗ Respins',
+        'CONDITIONAL': '⚠ Condiționat',
+        'PENDING': '⌛ În Așteptare'
+      };
+      doc.text(`Status Acceptare: ${statusMap[nirDoc.acceptanceStatus] || nirDoc.acceptanceStatus}`);
+    }
+    if (nirDoc.qualityInspectionRequired) {
+      doc.text(`Inspecție Calitate: ${nirDoc.qualityInspectionRequired ? 'Necesară' : 'Nu este necesară'}`);
+    }
+    if (nirDoc.qualityInspectionDate) {
+      const inspectionDateTime = nirDoc.qualityInspectionTime 
+        ? `${new Date(nirDoc.qualityInspectionDate).toLocaleDateString('ro-RO')} ${nirDoc.qualityInspectionTime}`
+        : new Date(nirDoc.qualityInspectionDate).toLocaleDateString('ro-RO');
+      doc.text(`Data/Ora Inspecție: ${inspectionDateTime}`);
+    }
+    if (nirDoc.qualityInspectorName) doc.text(`Inspector: ${nirDoc.qualityInspectorName}`);
+    if (nirDoc.temperatureAtReceipt !== null && nirDoc.temperatureAtReceipt !== undefined) {
+      doc.text(`Temperatură la Primire: ${nirDoc.temperatureAtReceipt.toFixed(1)}°C`);
+    }
+    if (nirDoc.qualityNotes) doc.text(`Observații: ${nirDoc.qualityNotes}`);
     doc.moveDown();
   }
 
@@ -247,12 +317,55 @@ export function renderNirTemplate(doc: PDFDocument, data: NirTemplateData): void
   doc.text(`TOTAL: ${totals.total?.toFixed(2) || '0.00'} RON`, { align: 'right' });
   doc.moveDown();
 
-  // Semnături
+  // PHASE S8.9 - Enhanced Signatures Section (ANAF legal compliance)
   doc.moveDown(2);
+  doc.fontSize(11).font('Helvetica-Bold').text('SEMNĂTURI ȘI AUTORIZĂRI:', { underline: true });
+  doc.moveDown(0.5);
   doc.fontSize(9).font('Helvetica');
-  doc.text('Primit de:', 50, doc.y);
-  doc.text('___________________', 50, doc.y + 20);
-  doc.text('Livrat de:', 350, doc.y - 20);
-  doc.text('___________________', 350, doc.y);
+  
+  const startY = doc.y;
+  
+  // Primire (Receiver signature) - Left column
+  doc.text('PRIMIT DE:', 50, startY);
+  if (nirDoc.receivedByName) {
+    doc.text(`Nume: ${nirDoc.receivedByName}`, 50, startY + 15);
+  } else {
+    doc.text('Nume: ___________________', 50, startY + 15);
+  }
+  if (nirDoc.receivedSignatureDate) {
+    doc.text(`Data: ${new Date(nirDoc.receivedSignatureDate).toLocaleDateString('ro-RO')}`, 50, startY + 35);
+  } else {
+    doc.text('Semnătură: ___________________', 50, startY + 35);
+  }
+  
+  // Livrare (Supplier representative signature) - Right column
+  doc.text('LIVRAT DE:', 350, startY);
+  if (nirDoc.deliveredByName) {
+    doc.text(`Nume: ${nirDoc.deliveredByName}`, 350, startY + 15);
+  } else {
+    doc.text('Nume: ___________________', 350, startY + 15);
+  }
+  if (nirDoc.deliveredSignatureDate) {
+    doc.text(`Data: ${new Date(nirDoc.deliveredSignatureDate).toLocaleDateString('ro-RO')}`, 350, startY + 35);
+  } else {
+    doc.text('Semnătură: ___________________', 350, startY + 35);
+  }
+  
+  // Autorizare (Manager/Approver signature) - Bottom
+  if (nirDoc.approvedByName || nirDoc.approvedSignatureDate) {
+    doc.moveDown(3);
+    const approverY = doc.y;
+    doc.text('AUTORIZAT DE:', 50, approverY);
+    if (nirDoc.approvedByName) {
+      doc.text(`Nume: ${nirDoc.approvedByName}`, 50, approverY + 15);
+    } else {
+      doc.text('Nume: ___________________', 50, approverY + 15);
+    }
+    if (nirDoc.approvedSignatureDate) {
+      doc.text(`Data: ${new Date(nirDoc.approvedSignatureDate).toLocaleDateString('ro-RO')}`, 50, approverY + 35);
+    } else {
+      doc.text('Semnătură: ___________________', 50, approverY + 35);
+    }
+  }
 }
 
