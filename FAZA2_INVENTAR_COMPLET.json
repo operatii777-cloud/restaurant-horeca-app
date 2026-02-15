@@ -1,0 +1,2924 @@
+{
+  "timestamp": "2026-02-15T08:37:11.031Z",
+  "summary": {
+    "totalInterfaces": 118,
+    "totalRouteFiles": 56,
+    "totalEndpoints": 344,
+    "totalServerMounts": 53,
+    "totalComponents": 545
+  },
+  "interfaces": [
+    {
+      "name": "INSTRUCTIUNI-FIX-CACHE.html",
+      "path": "public/INSTRUCTIUNI-FIX-CACHE.html",
+      "url": "/INSTRUCTIUNI-FIX-CACHE.html",
+      "size": 4274,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "casa-marcat.html",
+      "path": "public/admin-modules/casa-marcat.html",
+      "url": "/admin-modules/casa-marcat.html",
+      "size": 36006,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "comenzi-furnizori.html",
+      "path": "public/admin-modules/comenzi-furnizori.html",
+      "url": "/admin-modules/comenzi-furnizori.html",
+      "size": 33234,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "etichete-produse.html",
+      "path": "public/admin-modules/etichete-produse.html",
+      "url": "/admin-modules/etichete-produse.html",
+      "size": 18291,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "food-cost.html",
+      "path": "public/admin-modules/food-cost.html",
+      "url": "/admin-modules/food-cost.html",
+      "size": 31323,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "furnizori.html",
+      "path": "public/admin-modules/furnizori.html",
+      "url": "/admin-modules/furnizori.html",
+      "size": 31610,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "vouchere.html",
+      "path": "public/admin-modules/vouchere.html",
+      "url": "/admin-modules/vouchere.html",
+      "size": 28201,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "barcode-scanner.html",
+      "path": "public/barcode-scanner.html",
+      "url": "/barcode-scanner.html",
+      "size": 22524,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "index.html",
+      "path": "public/bi-dashboard/index.html",
+      "url": "/bi-dashboard/index.html",
+      "size": 6183,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "bi-dashboard-simple.html",
+      "path": "public/bi-dashboard-simple.html",
+      "url": "/bi-dashboard-simple.html",
+      "size": 10306,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "catalog-produse-section.html",
+      "path": "public/catalog-produse-section.html",
+      "url": "/catalog-produse-section.html",
+      "size": 12237,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "coming-soon.html",
+      "path": "public/coming-soon.html",
+      "url": "/coming-soon.html",
+      "size": 7995,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "contact.html",
+      "path": "public/contact.html",
+      "url": "/contact.html",
+      "size": 30385,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "dashboard.html",
+      "path": "public/dashboard.html",
+      "url": "/dashboard.html",
+      "size": 36410,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "despre-noi.html",
+      "path": "public/despre-noi.html",
+      "url": "/despre-noi.html",
+      "size": 29202,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "documentatie-iframe.html",
+      "path": "public/documentatie-iframe.html",
+      "url": "/documentatie-iframe.html",
+      "size": 12702,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "ghid-documentatie.html",
+      "path": "public/ghid-documentatie.html",
+      "url": "/ghid-documentatie.html",
+      "size": 14399,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "header-template-staff.html",
+      "path": "public/header-template-staff.html",
+      "url": "/header-template-staff.html",
+      "size": 3927,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "help-documentation.html",
+      "path": "public/help-documentation.html",
+      "url": "/help-documentation.html",
+      "size": 4192,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "history.html",
+      "path": "public/history.html",
+      "url": "/history.html",
+      "size": 70166,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "admin-advanced.html",
+      "path": "public/legacy/admin/admin-advanced.html",
+      "url": "/legacy/admin/admin-advanced.html",
+      "size": 875214,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "admin-catalog-ingrediente.html",
+      "path": "public/legacy/admin/admin-catalog-ingrediente.html",
+      "url": "/legacy/admin/admin-catalog-ingrediente.html",
+      "size": 57799,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "admin-catalog-retete.html",
+      "path": "public/legacy/admin/admin-catalog-retete.html",
+      "url": "/legacy/admin/admin-catalog-retete.html",
+      "size": 45648,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "admin-v4-loader.html",
+      "path": "public/legacy/admin/admin-v4-loader.html",
+      "url": "/legacy/admin/admin-v4-loader.html",
+      "size": 16031,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "admin-v4-modular.html",
+      "path": "public/legacy/admin/admin-v4-modular.html",
+      "url": "/legacy/admin/admin-v4-modular.html",
+      "size": 121085,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "admin-v4.html",
+      "path": "public/legacy/admin/admin-v4.html",
+      "url": "/legacy/admin/admin-v4.html",
+      "size": 77636,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "admin.html",
+      "path": "public/legacy/admin/admin.html",
+      "url": "/legacy/admin/admin.html",
+      "size": 857613,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "courier-app.html",
+      "path": "public/legacy/delivery/courier-app.html",
+      "url": "/legacy/delivery/courier-app.html",
+      "size": 27481,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "courier.html",
+      "path": "public/legacy/delivery/courier.html",
+      "url": "/legacy/delivery/courier.html",
+      "size": 3370,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "livrare.html",
+      "path": "public/legacy/delivery/livrare.html",
+      "url": "/legacy/delivery/livrare.html",
+      "size": 66276,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "livrare1.html",
+      "path": "public/legacy/delivery/livrare1.html",
+      "url": "/legacy/delivery/livrare1.html",
+      "size": 244189,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "livrare10.html",
+      "path": "public/legacy/delivery/livrare10.html",
+      "url": "/legacy/delivery/livrare10.html",
+      "size": 240612,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "livrare2.html",
+      "path": "public/legacy/delivery/livrare2.html",
+      "url": "/legacy/delivery/livrare2.html",
+      "size": 242770,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "livrare3.html",
+      "path": "public/legacy/delivery/livrare3.html",
+      "url": "/legacy/delivery/livrare3.html",
+      "size": 243096,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "livrare4.html",
+      "path": "public/legacy/delivery/livrare4.html",
+      "url": "/legacy/delivery/livrare4.html",
+      "size": 240552,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "livrare5.html",
+      "path": "public/legacy/delivery/livrare5.html",
+      "url": "/legacy/delivery/livrare5.html",
+      "size": 240612,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "livrare6.html",
+      "path": "public/legacy/delivery/livrare6.html",
+      "url": "/legacy/delivery/livrare6.html",
+      "size": 240612,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "livrare7.html",
+      "path": "public/legacy/delivery/livrare7.html",
+      "url": "/legacy/delivery/livrare7.html",
+      "size": 240612,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "livrare8.html",
+      "path": "public/legacy/delivery/livrare8.html",
+      "url": "/legacy/delivery/livrare8.html",
+      "size": 240612,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "livrare9.html",
+      "path": "public/legacy/delivery/livrare9.html",
+      "url": "/legacy/delivery/livrare9.html",
+      "size": 240612,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "kds.html",
+      "path": "public/legacy/kds/kds.html",
+      "url": "/legacy/kds/kds.html",
+      "size": 162969,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "clear-cache-kiosk.html",
+      "path": "public/legacy/orders/clear-cache-kiosk.html",
+      "url": "/legacy/orders/clear-cache-kiosk.html",
+      "size": 7221,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "comanda-supervisor.html",
+      "path": "public/legacy/orders/comanda-supervisor.html",
+      "url": "/legacy/orders/comanda-supervisor.html",
+      "size": 164881,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "comanda-supervisor1.html",
+      "path": "public/legacy/orders/comanda-supervisor1.html",
+      "url": "/legacy/orders/comanda-supervisor1.html",
+      "size": 202916,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "comanda-supervisor10.html",
+      "path": "public/legacy/orders/comanda-supervisor10.html",
+      "url": "/legacy/orders/comanda-supervisor10.html",
+      "size": 203327,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "comanda-supervisor11.html",
+      "path": "public/legacy/orders/comanda-supervisor11.html",
+      "url": "/legacy/orders/comanda-supervisor11.html",
+      "size": 204710,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "comanda-supervisor2.html",
+      "path": "public/legacy/orders/comanda-supervisor2.html",
+      "url": "/legacy/orders/comanda-supervisor2.html",
+      "size": 203339,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "comanda-supervisor3.html",
+      "path": "public/legacy/orders/comanda-supervisor3.html",
+      "url": "/legacy/orders/comanda-supervisor3.html",
+      "size": 203345,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "comanda-supervisor4.html",
+      "path": "public/legacy/orders/comanda-supervisor4.html",
+      "url": "/legacy/orders/comanda-supervisor4.html",
+      "size": 203345,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "comanda-supervisor5.html",
+      "path": "public/legacy/orders/comanda-supervisor5.html",
+      "url": "/legacy/orders/comanda-supervisor5.html",
+      "size": 203321,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "comanda-supervisor6.html",
+      "path": "public/legacy/orders/comanda-supervisor6.html",
+      "url": "/legacy/orders/comanda-supervisor6.html",
+      "size": 203321,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "comanda-supervisor7.html",
+      "path": "public/legacy/orders/comanda-supervisor7.html",
+      "url": "/legacy/orders/comanda-supervisor7.html",
+      "size": 203321,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "comanda-supervisor8.html",
+      "path": "public/legacy/orders/comanda-supervisor8.html",
+      "url": "/legacy/orders/comanda-supervisor8.html",
+      "size": 203321,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "comanda-supervisor9.html",
+      "path": "public/legacy/orders/comanda-supervisor9.html",
+      "url": "/legacy/orders/comanda-supervisor9.html",
+      "size": 203345,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "comanda.html",
+      "path": "public/legacy/orders/comanda.html",
+      "url": "/legacy/orders/comanda.html",
+      "size": 324722,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "comanda_delivery.html",
+      "path": "public/legacy/orders/comanda_delivery.html",
+      "url": "/legacy/orders/comanda_delivery.html",
+      "size": 322671,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "comenzi bar.html",
+      "path": "public/legacy/orders/comenzi bar.html",
+      "url": "/legacy/orders/comenzi bar.html",
+      "size": 202683,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "kiosk-tables-ui-preview.html",
+      "path": "public/legacy/orders/kiosk-tables-ui-preview.html",
+      "url": "/legacy/orders/kiosk-tables-ui-preview.html",
+      "size": 33192,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "kiosk.html",
+      "path": "public/legacy/orders/kiosk.html",
+      "url": "/legacy/orders/kiosk.html",
+      "size": 18374,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "index.html",
+      "path": "public/legacy/react-modules/anaf/index.html",
+      "url": "/legacy/react-modules/anaf/index.html",
+      "size": 12272,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "index.html",
+      "path": "public/legacy/react-modules/casa-marcat/index.html",
+      "url": "/legacy/react-modules/casa-marcat/index.html",
+      "size": 14723,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "index.html",
+      "path": "public/legacy/react-modules/comenzi-furnizori/index.html",
+      "url": "/legacy/react-modules/comenzi-furnizori/index.html",
+      "size": 4261,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "index.html",
+      "path": "public/legacy/react-modules/dashboard-executiv/index.html",
+      "url": "/legacy/react-modules/dashboard-executiv/index.html",
+      "size": 5422,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "index.html",
+      "path": "public/legacy/react-modules/dashboard-global/index.html",
+      "url": "/legacy/react-modules/dashboard-global/index.html",
+      "size": 10358,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "index.html",
+      "path": "public/legacy/react-modules/furnizori/index.html",
+      "url": "/legacy/react-modules/furnizori/index.html",
+      "size": 9529,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "index.html",
+      "path": "public/legacy/react-modules/import-export/index.html",
+      "url": "/legacy/react-modules/import-export/index.html",
+      "size": 5695,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "index.html",
+      "path": "public/legacy/react-modules/program-orar/index.html",
+      "url": "/legacy/react-modules/program-orar/index.html",
+      "size": 2501,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "index.html",
+      "path": "public/legacy/react-modules/rapoarte-financiare/index.html",
+      "url": "/legacy/react-modules/rapoarte-financiare/index.html",
+      "size": 4410,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "index.html",
+      "path": "public/legacy/react-modules/rapoarte-personal/index.html",
+      "url": "/legacy/react-modules/rapoarte-personal/index.html",
+      "size": 3669,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "index.html",
+      "path": "public/legacy/react-modules/rapoarte-stoc/index.html",
+      "url": "/legacy/react-modules/rapoarte-stoc/index.html",
+      "size": 3138,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "index.html",
+      "path": "public/legacy/react-modules/rapoarte-vanzari/index.html",
+      "url": "/legacy/react-modules/rapoarte-vanzari/index.html",
+      "size": 3788,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "index.html",
+      "path": "public/legacy/react-modules/waste/index.html",
+      "url": "/legacy/react-modules/waste/index.html",
+      "size": 5784,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "testare-manuala-ghidata.html",
+      "path": "public/legacy/testare-manuala-ghidata.html",
+      "url": "/legacy/testare-manuala-ghidata.html",
+      "size": 29650,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "manual-instructiuni-complet.html",
+      "path": "public/manual-instructiuni-complet.html",
+      "url": "/manual-instructiuni-complet.html",
+      "size": 145331,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "menu-qr.html",
+      "path": "public/menu-qr.html",
+      "url": "/menu-qr.html",
+      "size": 13075,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "ingrediente.html",
+      "path": "public/modules/ingrediente.html",
+      "url": "/modules/ingrediente.html",
+      "size": 15664,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "multi-location.html",
+      "path": "public/multi-location.html",
+      "url": "/multi-location.html",
+      "size": 6666,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "pdf-builder-modal.html",
+      "path": "public/pdf-builder-modal.html",
+      "url": "/pdf-builder-modal.html",
+      "size": 3037,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "pdf-dashboard.html",
+      "path": "public/pdf-dashboard.html",
+      "url": "/pdf-dashboard.html",
+      "size": 14110,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "politica-confidentialitate-BACKUP.html",
+      "path": "public/politica-confidentialitate-BACKUP.html",
+      "url": "/politica-confidentialitate-BACKUP.html",
+      "size": 69,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "politica-confidentialitate.html",
+      "path": "public/politica-confidentialitate.html",
+      "url": "/politica-confidentialitate.html",
+      "size": 45794,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "preview-extracted-images.html",
+      "path": "public/preview-extracted-images.html",
+      "url": "/preview-extracted-images.html",
+      "size": 8161,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "qr-generator.html",
+      "path": "public/qr-generator.html",
+      "url": "/qr-generator.html",
+      "size": 17220,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "raport-aplicatie.html",
+      "path": "public/raport-aplicatie.html",
+      "url": "/raport-aplicatie.html",
+      "size": 34303,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "index.html",
+      "path": "public/react-modules/alergeni/index.html",
+      "url": "/react-modules/alergeni/index.html",
+      "size": 10110,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "index.html",
+      "path": "public/react-modules/catalog/index.html",
+      "url": "/react-modules/catalog/index.html",
+      "size": 480,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "index.html",
+      "path": "public/react-modules/fise-tehnice/index.html",
+      "url": "/react-modules/fise-tehnice/index.html",
+      "size": 485,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "index.html",
+      "path": "public/react-modules/ingrediente/index.html",
+      "url": "/react-modules/ingrediente/index.html",
+      "size": 474,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "index.html",
+      "path": "public/react-modules/nomenclatoare/index.html",
+      "url": "/react-modules/nomenclatoare/index.html",
+      "size": 7448,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "index.html",
+      "path": "public/react-modules/retete/index.html",
+      "url": "/react-modules/retete/index.html",
+      "size": 488,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "index.html",
+      "path": "public/react-modules/stocuri/index.html",
+      "url": "/react-modules/stocuri/index.html",
+      "size": 470,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "arhiva.html",
+      "path": "public/sections/arhiva.html",
+      "url": "/sections/arhiva.html",
+      "size": 13214,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "istoric.html",
+      "path": "public/sections/istoric.html",
+      "url": "/sections/istoric.html",
+      "size": 16762,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "raport-lunar.html",
+      "path": "public/sections/raport-lunar.html",
+      "url": "/sections/raport-lunar.html",
+      "size": 16736,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "raport-x.html",
+      "path": "public/sections/raport-x.html",
+      "url": "/sections/raport-x.html",
+      "size": 11769,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "raport-z.html",
+      "path": "public/sections/raport-z.html",
+      "url": "/sections/raport-z.html",
+      "size": 18710,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "setup-guide.html",
+      "path": "public/setup-guide.html",
+      "url": "/setup-guide.html",
+      "size": 326697,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "snow-test.html",
+      "path": "public/snow-test.html",
+      "url": "/snow-test.html",
+      "size": 23513,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "raport-lunar.html",
+      "path": "public/templates/fiscal/raport-lunar.html",
+      "url": "/templates/fiscal/raport-lunar.html",
+      "size": 6544,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "raport-x.html",
+      "path": "public/templates/fiscal/raport-x.html",
+      "url": "/templates/fiscal/raport-x.html",
+      "size": 3346,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "raport-z.html",
+      "path": "public/templates/fiscal/raport-z.html",
+      "url": "/templates/fiscal/raport-z.html",
+      "size": 5847,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "termeni-conditii.html",
+      "path": "public/termeni-conditii.html",
+      "url": "/termeni-conditii.html",
+      "size": 29037,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "test-button-simple.html",
+      "path": "public/test-button-simple.html",
+      "url": "/test-button-simple.html",
+      "size": 10669,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "test-fiscal.html",
+      "path": "public/test-fiscal.html",
+      "url": "/test-fiscal.html",
+      "size": 24193,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "test-localization.html",
+      "path": "public/test-localization.html",
+      "url": "/test-localization.html",
+      "size": 6081,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "test-premium-themes.html",
+      "path": "public/test-premium-themes.html",
+      "url": "/test-premium-themes.html",
+      "size": 23299,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "test-reservations.html",
+      "path": "public/test-reservations.html",
+      "url": "/test-reservations.html",
+      "size": 9565,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "test-theme-debug.html",
+      "path": "public/test-theme-debug.html",
+      "url": "/test-theme-debug.html",
+      "size": 5959,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "test-translation.html",
+      "path": "public/test-translation.html",
+      "url": "/test-translation.html",
+      "size": 6081,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "theme-demo.html",
+      "path": "public/theme-demo.html",
+      "url": "/theme-demo.html",
+      "size": 24795,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "transfers.html",
+      "path": "public/transfers.html",
+      "url": "/transfers.html",
+      "size": 17353,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "stock-integration-example.html",
+      "path": "public/translation/stock-integration-example.html",
+      "url": "/translation/stock-integration-example.html",
+      "size": 8277,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "user-manual.html",
+      "path": "public/user-manual.html",
+      "url": "/user-manual.html",
+      "size": 87856,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "ux-demo.html",
+      "path": "public/ux-demo.html",
+      "url": "/ux-demo.html",
+      "size": 22981,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "verify-certificate.html",
+      "path": "public/verify-certificate.html",
+      "url": "/verify-certificate.html",
+      "size": 5759,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "vezi-certificat.html",
+      "path": "public/vezi-certificat.html",
+      "url": "/vezi-certificat.html",
+      "size": 10632,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "waiter-reports.html",
+      "path": "public/waiter-reports.html",
+      "url": "/waiter-reports.html",
+      "size": 24525,
+      "type": "HTML Interface"
+    },
+    {
+      "name": "Admin-Vite",
+      "path": "admin-vite/index.html",
+      "url": "/admin-vite/",
+      "size": 11030,
+      "type": "React SPA"
+    }
+  ],
+  "apiRoutes": [
+    {
+      "file": "allergens.routes.js",
+      "path": "routes/allergens.routes.js",
+      "endpoints": 5,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/:id"
+        },
+        {
+          "method": "POST",
+          "path": "/"
+        },
+        {
+          "method": "PUT",
+          "path": "/:id"
+        },
+        {
+          "method": "DELETE",
+          "path": "/:id"
+        }
+      ]
+    },
+    {
+      "file": "audit.routes.js",
+      "path": "routes/audit.routes.js",
+      "endpoints": 7,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/logs"
+        },
+        {
+          "method": "GET",
+          "path": "/login-history"
+        },
+        {
+          "method": "GET",
+          "path": "/login-history/failed"
+        },
+        {
+          "method": "GET",
+          "path": "/security"
+        },
+        {
+          "method": "GET",
+          "path": "/user-activity"
+        },
+        {
+          "method": "GET",
+          "path": "/user-activity/chart"
+        },
+        {
+          "method": "GET",
+          "path": "/alerts"
+        }
+      ]
+    },
+    {
+      "file": "auto-purchase-orders.js",
+      "path": "routes/auto-purchase-orders.js",
+      "endpoints": 12,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/rules"
+        },
+        {
+          "method": "POST",
+          "path": "/rules"
+        },
+        {
+          "method": "PUT",
+          "path": "/rules/:id"
+        },
+        {
+          "method": "DELETE",
+          "path": "/rules/:id"
+        },
+        {
+          "method": "GET",
+          "path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/:id"
+        },
+        {
+          "method": "POST",
+          "path": "/"
+        },
+        {
+          "method": "POST",
+          "path": "/:id/approve"
+        },
+        {
+          "method": "POST",
+          "path": "/:id/send"
+        },
+        {
+          "method": "POST",
+          "path": "/:id/receive"
+        },
+        {
+          "method": "POST",
+          "path": "/check-reorder"
+        },
+        {
+          "method": "GET",
+          "path": "/suggestions"
+        }
+      ]
+    },
+    {
+      "file": "bi-routes.js",
+      "path": "routes/bi-routes.js",
+      "endpoints": 7,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/health"
+        },
+        {
+          "method": "GET",
+          "path": "/metrics"
+        },
+        {
+          "method": "GET",
+          "path": "/dashboard"
+        },
+        {
+          "method": "GET",
+          "path": "/kpis/:kpiId"
+        },
+        {
+          "method": "GET",
+          "path": "/trends"
+        },
+        {
+          "method": "GET",
+          "path": "/config"
+        },
+        {
+          "method": "PUT",
+          "path": "/config"
+        }
+      ]
+    },
+    {
+      "file": "bi.js",
+      "path": "routes/bi.js",
+      "endpoints": 10,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/profit-analysis"
+        },
+        {
+          "method": "GET",
+          "path": "/trends"
+        },
+        {
+          "method": "GET",
+          "path": "/performance/staff"
+        },
+        {
+          "method": "GET",
+          "path": "/alerts"
+        },
+        {
+          "method": "POST",
+          "path": "/alerts/:id/acknowledge"
+        },
+        {
+          "method": "GET",
+          "path": "/forecast"
+        },
+        {
+          "method": "GET",
+          "path": "/comparison"
+        },
+        {
+          "method": "GET",
+          "path": "/category-performance"
+        },
+        {
+          "method": "GET",
+          "path": "/expenses-breakdown"
+        },
+        {
+          "method": "GET",
+          "path": "/kds-metrics"
+        }
+      ]
+    },
+    {
+      "file": "cash-register.js",
+      "path": "routes/cash-register.js",
+      "endpoints": 5,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/current"
+        },
+        {
+          "method": "GET",
+          "path": "/sessions"
+        },
+        {
+          "method": "POST",
+          "path": "/open"
+        },
+        {
+          "method": "POST",
+          "path": "/close"
+        },
+        {
+          "method": "GET",
+          "path": "/sessions/:id"
+        }
+      ]
+    },
+    {
+      "file": "catalog-produse.routes.js",
+      "path": "routes/catalog-produse.routes.js",
+      "endpoints": 16,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/categories/tree"
+        },
+        {
+          "method": "GET",
+          "path": "/products"
+        },
+        {
+          "method": "GET",
+          "path": "/products/:id/chef-summary"
+        },
+        {
+          "method": "POST",
+          "path": "/products/reorder"
+        },
+        {
+          "method": "POST",
+          "path": "/categories/reorder"
+        },
+        {
+          "method": "POST",
+          "path": "/products"
+        },
+        {
+          "method": "PUT",
+          "path": "/products/bulk-price-change"
+        },
+        {
+          "method": "PUT",
+          "path": "/products/:id"
+        },
+        {
+          "method": "POST",
+          "path": "/products/:id/clone"
+        },
+        {
+          "method": "DELETE",
+          "path": "/products/:id"
+        },
+        {
+          "method": "GET",
+          "path": "/products/:id/price-history"
+        },
+        {
+          "method": "GET",
+          "path": "/products/:id/dependencies"
+        },
+        {
+          "method": "GET",
+          "path": "/products/export"
+        },
+        {
+          "method": "POST",
+          "path": "/categories"
+        },
+        {
+          "method": "PUT",
+          "path": "/categories/:id"
+        },
+        {
+          "method": "DELETE",
+          "path": "/categories/:id"
+        }
+      ]
+    },
+    {
+      "file": "coatroom-reports.js",
+      "path": "routes/coatroom-reports.js",
+      "endpoints": 1,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/daily/pdf"
+        }
+      ]
+    },
+    {
+      "file": "coatroom-stats.js",
+      "path": "routes/coatroom-stats.js",
+      "endpoints": 3,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/overview"
+        },
+        {
+          "method": "GET",
+          "path": "/hourly"
+        },
+        {
+          "method": "GET",
+          "path": "/by-type"
+        }
+      ]
+    },
+    {
+      "file": "coatroom.js",
+      "path": "routes/coatroom.js",
+      "endpoints": 6,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/tickets"
+        },
+        {
+          "method": "GET",
+          "path": "/tickets/:code"
+        },
+        {
+          "method": "POST",
+          "path": "/checkin"
+        },
+        {
+          "method": "POST",
+          "path": "/checkout"
+        },
+        {
+          "method": "POST",
+          "path": "/mark-lost"
+        },
+        {
+          "method": "GET",
+          "path": "/stats"
+        }
+      ]
+    },
+    {
+      "file": "competitor-tracking.js",
+      "path": "routes/competitor-tracking.js",
+      "endpoints": 7,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/"
+        },
+        {
+          "method": "POST",
+          "path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/:id/prices"
+        },
+        {
+          "method": "POST",
+          "path": "/:id/prices"
+        },
+        {
+          "method": "PUT",
+          "path": "/prices/:priceId"
+        },
+        {
+          "method": "GET",
+          "path": "/comparison"
+        },
+        {
+          "method": "GET",
+          "path": "/alerts"
+        }
+      ]
+    },
+    {
+      "file": "compliance.routes.js",
+      "path": "routes/compliance.routes.js",
+      "endpoints": 15,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/equipment"
+        },
+        {
+          "method": "POST",
+          "path": "/equipment"
+        },
+        {
+          "method": "PUT",
+          "path": "/equipment/:id"
+        },
+        {
+          "method": "GET",
+          "path": "/temperature-log"
+        },
+        {
+          "method": "POST",
+          "path": "/temperature-log"
+        },
+        {
+          "method": "GET",
+          "path": "/cleaning-schedule"
+        },
+        {
+          "method": "POST",
+          "path": "/cleaning-schedule"
+        },
+        {
+          "method": "PUT",
+          "path": "/cleaning-schedule/:id/complete"
+        },
+        {
+          "method": "GET",
+          "path": "/cleaning-schedule/:id/checklist"
+        },
+        {
+          "method": "PUT",
+          "path": "/cleaning-schedule/:id/checklist/:item_id"
+        },
+        {
+          "method": "GET",
+          "path": "/equipment-maintenance"
+        },
+        {
+          "method": "POST",
+          "path": "/equipment-maintenance"
+        },
+        {
+          "method": "PUT",
+          "path": "/equipment-maintenance/:id/complete"
+        },
+        {
+          "method": "GET",
+          "path": "/equipment/:id/maintenance-history"
+        },
+        {
+          "method": "GET",
+          "path": "/dashboard/kpis"
+        }
+      ]
+    },
+    {
+      "file": "couriers.js",
+      "path": "routes/couriers.js",
+      "endpoints": 12,
+      "methods": [
+        {
+          "method": "POST",
+          "path": "/login"
+        },
+        {
+          "method": "GET",
+          "path": "/me"
+        },
+        {
+          "method": "GET",
+          "path": "/me/assignments"
+        },
+        {
+          "method": "PUT",
+          "path": "/me/location"
+        },
+        {
+          "method": "PUT",
+          "path": "/delivery/:id/status"
+        },
+        {
+          "method": "GET",
+          "path": "/available"
+        },
+        {
+          "method": "GET",
+          "path": "/dispatch/pending"
+        },
+        {
+          "method": "GET",
+          "path": "/dispatch/available"
+        },
+        {
+          "method": "GET",
+          "path": "/tracking/live"
+        },
+        {
+          "method": "POST",
+          "path": "/dispatch/assign"
+        },
+        {
+          "method": "GET",
+          "path": "/:id/location"
+        },
+        {
+          "method": "GET",
+          "path": "/:id/deliveries"
+        }
+      ]
+    },
+    {
+      "file": "customers.routes.js",
+      "path": "routes/customers.routes.js",
+      "endpoints": 3,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/:id"
+        },
+        {
+          "method": "PUT",
+          "path": "/:id"
+        }
+      ]
+    },
+    {
+      "file": "delivery-cancellations.js",
+      "path": "routes/delivery-cancellations.js",
+      "endpoints": 3,
+      "methods": [
+        {
+          "method": "POST",
+          "path": "/:id/cancel-delivery"
+        },
+        {
+          "method": "GET",
+          "path": "/cancellations"
+        },
+        {
+          "method": "PUT",
+          "path": "/cancellations/:id/approve"
+        }
+      ]
+    },
+    {
+      "file": "delivery-orders.js",
+      "path": "routes/delivery-orders.js",
+      "endpoints": 5,
+      "methods": [
+        {
+          "method": "POST",
+          "path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/active"
+        },
+        {
+          "method": "GET",
+          "path": "/monitor"
+        },
+        {
+          "method": "PUT",
+          "path": "/:id/delivery-details"
+        },
+        {
+          "method": "GET",
+          "path": "/:id/delivery-timeline"
+        }
+      ]
+    },
+    {
+      "file": "delivery-reports.js",
+      "path": "routes/delivery-reports.js",
+      "endpoints": 1,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/delivery-performance"
+        }
+      ]
+    },
+    {
+      "file": "drive-thru.js",
+      "path": "routes/drive-thru.js",
+      "endpoints": 5,
+      "methods": [
+        {
+          "method": "POST",
+          "path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/queue"
+        },
+        {
+          "method": "PUT",
+          "path": "/:id/drive-thru-status"
+        },
+        {
+          "method": "GET",
+          "path": "/stats"
+        },
+        {
+          "method": "POST",
+          "path": "/:id/complete"
+        }
+      ]
+    },
+    {
+      "file": "employee-scheduling.js",
+      "path": "routes/employee-scheduling.js",
+      "endpoints": 18,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/shifts"
+        },
+        {
+          "method": "POST",
+          "path": "/shifts"
+        },
+        {
+          "method": "PUT",
+          "path": "/shifts/:id"
+        },
+        {
+          "method": "DELETE",
+          "path": "/shifts/:id"
+        },
+        {
+          "method": "POST",
+          "path": "/shifts/duplicate-week"
+        },
+        {
+          "method": "PUT",
+          "path": "/shifts/:id"
+        },
+        {
+          "method": "DELETE",
+          "path": "/shifts/:id"
+        },
+        {
+          "method": "GET",
+          "path": "/live-stats"
+        },
+        {
+          "method": "POST",
+          "path": "/shifts/generate"
+        },
+        {
+          "method": "POST",
+          "path": "/clock-in"
+        },
+        {
+          "method": "POST",
+          "path": "/clock-out"
+        },
+        {
+          "method": "POST",
+          "path": "/break-start"
+        },
+        {
+          "method": "POST",
+          "path": "/break-end"
+        },
+        {
+          "method": "GET",
+          "path": "/time-entries"
+        },
+        {
+          "method": "GET",
+          "path": "/payroll/summary"
+        },
+        {
+          "method": "POST",
+          "path": "/payroll/export"
+        },
+        {
+          "method": "GET",
+          "path": "/templates"
+        },
+        {
+          "method": "POST",
+          "path": "/templates"
+        }
+      ]
+    },
+    {
+      "file": "employees.js",
+      "path": "routes/employees.js",
+      "endpoints": 5,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/"
+        },
+        {
+          "method": "POST",
+          "path": "/"
+        },
+        {
+          "method": "PUT",
+          "path": "/:id"
+        },
+        {
+          "method": "DELETE",
+          "path": "/:id"
+        },
+        {
+          "method": "GET",
+          "path": "/:id/schedule"
+        }
+      ]
+    },
+    {
+      "file": "events.js",
+      "path": "routes/events.js",
+      "endpoints": 5,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/"
+        },
+        {
+          "method": "POST",
+          "path": "/"
+        },
+        {
+          "method": "PATCH",
+          "path": "/:id"
+        },
+        {
+          "method": "DELETE",
+          "path": "/:id"
+        },
+        {
+          "method": "GET",
+          "path": "db"
+        }
+      ]
+    },
+    {
+      "file": "expiry-alerts.js",
+      "path": "routes/expiry-alerts.js",
+      "endpoints": 3,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/"
+        },
+        {
+          "method": "POST",
+          "path": "/generate"
+        },
+        {
+          "method": "POST",
+          "path": "/:id/resolve"
+        }
+      ]
+    },
+    {
+      "file": "food-cost-dashboard.js",
+      "path": "routes/food-cost-dashboard.js",
+      "endpoints": 5,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/realtime"
+        },
+        {
+          "method": "GET",
+          "path": "/trends"
+        },
+        {
+          "method": "GET",
+          "path": "/by-category"
+        },
+        {
+          "method": "GET",
+          "path": "/top-margin"
+        },
+        {
+          "method": "GET",
+          "path": "/alerts"
+        }
+      ]
+    },
+    {
+      "file": "food-cost.js",
+      "path": "routes/food-cost.js",
+      "endpoints": 4,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/products"
+        },
+        {
+          "method": "GET",
+          "path": "/stats"
+        },
+        {
+          "method": "GET",
+          "path": "/products/:id"
+        },
+        {
+          "method": "POST",
+          "path": "/suggest-price"
+        }
+      ]
+    },
+    {
+      "file": "gift-cards.js",
+      "path": "routes/gift-cards.js",
+      "endpoints": 6,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/"
+        },
+        {
+          "method": "POST",
+          "path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/validate/:code"
+        },
+        {
+          "method": "POST",
+          "path": "/redeem"
+        },
+        {
+          "method": "GET",
+          "path": "/:id/transactions"
+        },
+        {
+          "method": "POST",
+          "path": "/:id/cancel"
+        }
+      ]
+    },
+    {
+      "file": "hostess-reports.js",
+      "path": "routes/hostess-reports.js",
+      "endpoints": 2,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/occupancy"
+        },
+        {
+          "method": "GET",
+          "path": "/occupancy/pdf"
+        }
+      ]
+    },
+    {
+      "file": "hostess-stats.js",
+      "path": "routes/hostess-stats.js",
+      "endpoints": 3,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/overview"
+        },
+        {
+          "method": "GET",
+          "path": "/by-zone"
+        },
+        {
+          "method": "GET",
+          "path": "/hourly"
+        }
+      ]
+    },
+    {
+      "file": "hostess.js",
+      "path": "routes/hostess.js",
+      "endpoints": 5,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/tables"
+        },
+        {
+          "method": "GET",
+          "path": "/stats"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/start"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/:id/close"
+        },
+        {
+          "method": "GET",
+          "path": "/sessions"
+        }
+      ]
+    },
+    {
+      "file": "ingredientCatalogRoutes.js",
+      "path": "routes/ingredientCatalogRoutes.js",
+      "endpoints": 5,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/allergens"
+        },
+        {
+          "method": "GET",
+          "path": "/additives"
+        },
+        {
+          "method": "GET",
+          "path": "/:id"
+        },
+        {
+          "method": "POST",
+          "path": "/import/:id"
+        }
+      ]
+    },
+    {
+      "file": "labels.js",
+      "path": "routes/labels.js",
+      "endpoints": 3,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/products"
+        },
+        {
+          "method": "POST",
+          "path": "/generate"
+        },
+        {
+          "method": "POST",
+          "path": "/print-batch"
+        }
+      ]
+    },
+    {
+      "file": "laundry.js",
+      "path": "routes/laundry.js",
+      "endpoints": 9,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/items"
+        },
+        {
+          "method": "GET",
+          "path": "/items/:id"
+        },
+        {
+          "method": "POST",
+          "path": "/items"
+        },
+        {
+          "method": "PUT",
+          "path": "/items/:id"
+        },
+        {
+          "method": "POST",
+          "path": "/items/:id/wash"
+        },
+        {
+          "method": "POST",
+          "path": "/items/:id/assign"
+        },
+        {
+          "method": "POST",
+          "path": "/items/:id/unassign"
+        },
+        {
+          "method": "GET",
+          "path": "/stats"
+        },
+        {
+          "method": "DELETE",
+          "path": "/items/:id"
+        }
+      ]
+    },
+    {
+      "file": "legacy-endpoints.js",
+      "path": "routes/legacy-endpoints.js",
+      "endpoints": 28,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/admin/categories"
+        },
+        {
+          "method": "GET",
+          "path": "/admin/products"
+        },
+        {
+          "method": "GET",
+          "path": "/admin/products/:id/customizations"
+        },
+        {
+          "method": "GET",
+          "path": "/admin/waiters"
+        },
+        {
+          "method": "GET",
+          "path": "/admin/top-products"
+        },
+        {
+          "method": "GET",
+          "path": "/orders-cancelled"
+        },
+        {
+          "method": "GET",
+          "path": "/orders-display/kitchen/unfinished"
+        },
+        {
+          "method": "GET",
+          "path": "/orders-display/bar"
+        },
+        {
+          "method": "GET",
+          "path": "/orders-display/kitchen"
+        },
+        {
+          "method": "GET",
+          "path": "/orders-display/bar/pending"
+        },
+        {
+          "method": "GET",
+          "path": "/orders-display/bar/unfinished"
+        },
+        {
+          "method": "GET",
+          "path": "/orders-display/bar/recent-completed"
+        },
+        {
+          "method": "GET",
+          "path": "/orders-display/bar/all-daily"
+        },
+        {
+          "method": "GET",
+          "path": "/daily-history/kitchen"
+        },
+        {
+          "method": "GET",
+          "path": "/daily-history/bar"
+        },
+        {
+          "method": "POST",
+          "path": "/verify-pin"
+        },
+        {
+          "method": "POST",
+          "path": "/verify-supervisor-pin"
+        },
+        {
+          "method": "POST",
+          "path": "/orders"
+        },
+        {
+          "method": "GET",
+          "path": "/supervisor/unpaid-orders"
+        },
+        {
+          "method": "GET",
+          "path": "/orders/unpaid/:tableNumber/:clientIdentifier"
+        },
+        {
+          "method": "POST",
+          "path": "/supervisor/orders"
+        },
+        {
+          "method": "GET",
+          "path": "/daily-offer/check"
+        },
+        {
+          "method": "GET",
+          "path": "/daily-menu"
+        },
+        {
+          "method": "GET",
+          "path": "/happy-hour/active"
+        },
+        {
+          "method": "POST",
+          "path": "/missing-translations"
+        },
+        {
+          "method": "GET",
+          "path": "/missing-translations"
+        },
+        {
+          "method": "PUT",
+          "path": "/missing-translations/:key"
+        },
+        {
+          "method": "DELETE",
+          "path": "/missing-translations/:key"
+        }
+      ]
+    },
+    {
+      "file": "lostfound-reports.js",
+      "path": "routes/lostfound-reports.js",
+      "endpoints": 1,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/items/pdf"
+        }
+      ]
+    },
+    {
+      "file": "lostfound-stats.js",
+      "path": "routes/lostfound-stats.js",
+      "endpoints": 3,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/overview"
+        },
+        {
+          "method": "GET",
+          "path": "/by-location"
+        },
+        {
+          "method": "GET",
+          "path": "/return-rate"
+        }
+      ]
+    },
+    {
+      "file": "lostfound.js",
+      "path": "routes/lostfound.js",
+      "endpoints": 7,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/items"
+        },
+        {
+          "method": "GET",
+          "path": "/items/:id"
+        },
+        {
+          "method": "POST",
+          "path": "/items"
+        },
+        {
+          "method": "PUT",
+          "path": "/items/:id"
+        },
+        {
+          "method": "POST",
+          "path": "/items/:id/return"
+        },
+        {
+          "method": "POST",
+          "path": "/items/:id/discard"
+        },
+        {
+          "method": "GET",
+          "path": "/stats"
+        }
+      ]
+    },
+    {
+      "file": "menu-engineering.js",
+      "path": "routes/menu-engineering.js",
+      "endpoints": 4,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/analysis"
+        },
+        {
+          "method": "POST",
+          "path": "/snapshot"
+        },
+        {
+          "method": "GET",
+          "path": "/snapshots"
+        },
+        {
+          "method": "GET",
+          "path": "/snapshot/:id"
+        }
+      ]
+    },
+    {
+      "file": "menuPdfConfigRoutes.js",
+      "path": "routes/menuPdfConfigRoutes.js",
+      "endpoints": 14,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/config"
+        },
+        {
+          "method": "POST",
+          "path": "/config/categories"
+        },
+        {
+          "method": "POST",
+          "path": "/config/products"
+        },
+        {
+          "method": "POST",
+          "path": "/upload-category-image/:categoryId"
+        },
+        {
+          "method": "DELETE",
+          "path": "/delete-category-image/:categoryId"
+        },
+        {
+          "method": "POST",
+          "path": "/regenerate"
+        },
+        {
+          "method": "GET",
+          "path": "/history"
+        },
+        {
+          "method": "GET",
+          "path": "/settings"
+        },
+        {
+          "method": "POST",
+          "path": "/settings"
+        },
+        {
+          "method": "GET",
+          "path": "/sections"
+        },
+        {
+          "method": "POST",
+          "path": "/sections"
+        },
+        {
+          "method": "PUT",
+          "path": "/sections/:id"
+        },
+        {
+          "method": "DELETE",
+          "path": "/sections/:id"
+        },
+        {
+          "method": "POST",
+          "path": "/categories/assign-section"
+        }
+      ]
+    },
+    {
+      "file": "menuPdfRoutes.js",
+      "path": "routes/menuPdfRoutes.js",
+      "endpoints": 4,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/:type/:lang"
+        },
+        {
+          "method": "GET",
+          "path": "/status"
+        },
+        {
+          "method": "POST",
+          "path": "/regenerate"
+        },
+        {
+          "method": "POST",
+          "path": "/regenerate/:type/:lang"
+        }
+      ]
+    },
+    {
+      "file": "modifiers.js",
+      "path": "routes/modifiers.js",
+      "endpoints": 14,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/groups"
+        },
+        {
+          "method": "GET",
+          "path": "/groups/:id"
+        },
+        {
+          "method": "POST",
+          "path": "/groups"
+        },
+        {
+          "method": "PUT",
+          "path": "/groups/:id"
+        },
+        {
+          "method": "DELETE",
+          "path": "/groups/:id"
+        },
+        {
+          "method": "POST",
+          "path": "/groups/:groupId/items"
+        },
+        {
+          "method": "PUT",
+          "path": "/items/:id"
+        },
+        {
+          "method": "DELETE",
+          "path": "/items/:id"
+        },
+        {
+          "method": "GET",
+          "path": "/product/:productId"
+        },
+        {
+          "method": "POST",
+          "path": "/product/:productId"
+        },
+        {
+          "method": "POST",
+          "path": "/product/:productId/link/:groupId"
+        },
+        {
+          "method": "DELETE",
+          "path": "/product/:productId/unlink/:groupId"
+        },
+        {
+          "method": "POST",
+          "path": "/order-item/:orderItemId"
+        },
+        {
+          "method": "GET",
+          "path": "/order-item/:orderItemId"
+        }
+      ]
+    },
+    {
+      "file": "portions.js",
+      "path": "routes/portions.js",
+      "endpoints": 4,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/product/:productId"
+        },
+        {
+          "method": "POST",
+          "path": "/"
+        },
+        {
+          "method": "POST",
+          "path": "/recalculate/:productId"
+        }
+      ]
+    },
+    {
+      "file": "pricing.js",
+      "path": "routes/pricing.js",
+      "endpoints": 1,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/dynamic/:productId"
+        }
+      ]
+    },
+    {
+      "file": "recalls.js",
+      "path": "routes/recalls.js",
+      "endpoints": 3,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/"
+        },
+        {
+          "method": "POST",
+          "path": "/"
+        },
+        {
+          "method": "POST",
+          "path": "/:id/resolve"
+        }
+      ]
+    },
+    {
+      "file": "recipe-scaling.js",
+      "path": "routes/recipe-scaling.js",
+      "endpoints": 1,
+      "methods": [
+        {
+          "method": "POST",
+          "path": "/:id/scale"
+        }
+      ]
+    },
+    {
+      "file": "recipeTemplateRoutes.js",
+      "path": "routes/recipeTemplateRoutes.js",
+      "endpoints": 3,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/:id"
+        },
+        {
+          "method": "POST",
+          "path": "/import/:id"
+        }
+      ]
+    },
+    {
+      "file": "shift-handover.js",
+      "path": "routes/shift-handover.js",
+      "endpoints": 4,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/"
+        },
+        {
+          "method": "POST",
+          "path": "/"
+        },
+        {
+          "method": "DELETE",
+          "path": "/:id"
+        },
+        {
+          "method": "GET",
+          "path": "db"
+        }
+      ]
+    },
+    {
+      "file": "smart-restock-v2.js",
+      "path": "routes/smart-restock-v2.js",
+      "endpoints": 2,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/analysis"
+        },
+        {
+          "method": "POST",
+          "path": "/generate-order"
+        }
+      ]
+    },
+    {
+      "file": "smart-restock.js",
+      "path": "routes/smart-restock.js",
+      "endpoints": 3,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/analysis"
+        },
+        {
+          "method": "POST",
+          "path": "/generate-order"
+        },
+        {
+          "method": "GET",
+          "path": "/trends/:ingredientId"
+        }
+      ]
+    },
+    {
+      "file": "stocks.routes.js",
+      "path": "routes/stocks.routes.js",
+      "endpoints": 5,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/alerts/low"
+        },
+        {
+          "method": "GET",
+          "path": "/ingredient/:ingredientId"
+        },
+        {
+          "method": "GET",
+          "path": "/history/:ingredientId"
+        },
+        {
+          "method": "POST",
+          "path": "/adjust"
+        }
+      ]
+    },
+    {
+      "file": "supplier-orders.js",
+      "path": "routes/supplier-orders.js",
+      "endpoints": 5,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/:id"
+        },
+        {
+          "method": "POST",
+          "path": "/"
+        },
+        {
+          "method": "PUT",
+          "path": "/:id"
+        },
+        {
+          "method": "DELETE",
+          "path": "/:id"
+        }
+      ]
+    },
+    {
+      "file": "suppliers.js",
+      "path": "routes/suppliers.js",
+      "endpoints": 7,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/:id"
+        },
+        {
+          "method": "POST",
+          "path": "/"
+        },
+        {
+          "method": "PUT",
+          "path": "/:id"
+        },
+        {
+          "method": "DELETE",
+          "path": "/:id"
+        },
+        {
+          "method": "GET",
+          "path": "/stats/summary"
+        },
+        {
+          "method": "GET",
+          "path": "/category/:category"
+        }
+      ]
+    },
+    {
+      "file": "technical-sheets.js",
+      "path": "routes/technical-sheets.js",
+      "endpoints": 7,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/:id"
+        },
+        {
+          "method": "POST",
+          "path": "/generate"
+        },
+        {
+          "method": "POST",
+          "path": "/:id/approve-chef"
+        },
+        {
+          "method": "POST",
+          "path": "/:id/approve-manager"
+        },
+        {
+          "method": "POST",
+          "path": "/:id/lock"
+        },
+        {
+          "method": "GET",
+          "path": "/:id/pdf"
+        }
+      ]
+    },
+    {
+      "file": "training.js",
+      "path": "routes/training.js",
+      "endpoints": 10,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/courses"
+        },
+        {
+          "method": "GET",
+          "path": "/courses/:id"
+        },
+        {
+          "method": "GET",
+          "path": "/courses/:courseId/modules/:moduleId"
+        },
+        {
+          "method": "POST",
+          "path": "/courses/:courseId/modules/:moduleId/complete"
+        },
+        {
+          "method": "POST",
+          "path": "/courses/:courseId/modules/:moduleId/quiz"
+        },
+        {
+          "method": "GET",
+          "path": "/progress/:employeeId"
+        },
+        {
+          "method": "GET",
+          "path": "/certifications/:employeeId"
+        },
+        {
+          "method": "GET",
+          "path": "/certifications"
+        },
+        {
+          "method": "GET",
+          "path": "/team-progress"
+        },
+        {
+          "method": "GET",
+          "path": "/flashcards"
+        }
+      ]
+    },
+    {
+      "file": "ubl-routes.js",
+      "path": "routes/ubl-routes.js",
+      "endpoints": 4,
+      "methods": [
+        {
+          "method": "POST",
+          "path": "/generate"
+        },
+        {
+          "method": "GET",
+          "path": "/invoice/:id"
+        },
+        {
+          "method": "GET",
+          "path": "/invoices"
+        },
+        {
+          "method": "POST",
+          "path": "/invoice/:id/upload"
+        }
+      ]
+    },
+    {
+      "file": "variance.js",
+      "path": "routes/variance.js",
+      "endpoints": 2,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/daily"
+        },
+        {
+          "method": "POST",
+          "path": "/calculate"
+        }
+      ]
+    },
+    {
+      "file": "vouchers.js",
+      "path": "routes/vouchers.js",
+      "endpoints": 7,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/:id"
+        },
+        {
+          "method": "POST",
+          "path": "/"
+        },
+        {
+          "method": "PUT",
+          "path": "/:id"
+        },
+        {
+          "method": "DELETE",
+          "path": "/:id"
+        },
+        {
+          "method": "POST",
+          "path": "/validate"
+        },
+        {
+          "method": "POST",
+          "path": "/use"
+        }
+      ]
+    },
+    {
+      "file": "weather-forecast.js",
+      "path": "routes/weather-forecast.js",
+      "endpoints": 5,
+      "methods": [
+        {
+          "method": "GET",
+          "path": "/current"
+        },
+        {
+          "method": "GET",
+          "path": "/predictions"
+        },
+        {
+          "method": "GET",
+          "path": "/history"
+        },
+        {
+          "method": "GET",
+          "path": "/settings"
+        },
+        {
+          "method": "POST",
+          "path": "/settings"
+        }
+      ]
+    }
+  ],
+  "serverMounts": [
+    {
+      "path": "/admin-vite",
+      "handler": "(req, res, next"
+    },
+    {
+      "path": "/admin-vite",
+      "handler": "express.static(path.join(__dirname, 'admin-vite', 'dist'"
+    },
+    {
+      "path": "/admin-vite",
+      "handler": "(req, res, next"
+    },
+    {
+      "path": "/",
+      "handler": "healthRoutes"
+    },
+    {
+      "path": "/api",
+      "handler": "healthRoutes"
+    },
+    {
+      "path": "/api/weather-forecast",
+      "handler": "weatherForecastRoutes"
+    },
+    {
+      "path": "/api",
+      "handler": "stubRoutes"
+    },
+    {
+      "path": "/api/admin",
+      "handler": "nomenclatorStubRoutes"
+    },
+    {
+      "path": "/api/stock",
+      "handler": "stocksRoutes"
+    },
+    {
+      "path": "/api/admin/reservations",
+      "handler": "reservationsRoutes"
+    },
+    {
+      "path": "/api/reservations",
+      "handler": "reservationsRoutes"
+    },
+    {
+      "path": "/api/admin/kiosk/users",
+      "handler": "kioskUsersRoutes"
+    },
+    {
+      "path": "/api/ingredients",
+      "handler": "ingredientsRoutes"
+    },
+    {
+      "path": "/api/admin/ingredients",
+      "handler": "ingredientsRoutes"
+    },
+    {
+      "path": "/api/recipes",
+      "handler": "recipesRoutes"
+    },
+    {
+      "path": "/api/admin/pos",
+      "handler": "posFiscalRoutes"
+    },
+    {
+      "path": "/api/cogs",
+      "handler": "cogsRoutes"
+    },
+    {
+      "path": "/api/monitoring",
+      "handler": "orderHealthRoutes"
+    },
+    {
+      "path": "/api/financial",
+      "handler": "financialRoutes"
+    },
+    {
+      "path": "/api/admin/production",
+      "handler": "productionRoutes"
+    },
+    {
+      "path": "/api/split-bill",
+      "handler": "splitBillRoutes"
+    },
+    {
+      "path": "/api/anaf",
+      "handler": "anafRoutes"
+    },
+    {
+      "path": "/api/settings/notifications",
+      "handler": "notificationsRoutes"
+    },
+    {
+      "path": "/api/settings",
+      "handler": "settingsRoutes"
+    },
+    {
+      "path": "/api/locations",
+      "handler": "locationsRoutes"
+    },
+    {
+      "path": "/api/marketing",
+      "handler": "marketingRoutes"
+    },
+    {
+      "path": "/api/fiscal",
+      "handler": "fiscalRoutes"
+    },
+    {
+      "path": "/api/fiscal",
+      "handler": "eFacturaRoutes"
+    },
+    {
+      "path": "/api/tipizate-legal",
+      "handler": "legalTipizateRoutes"
+    },
+    {
+      "path": "/api/tipizate-anaf",
+      "handler": "anafTipizateRoutes"
+    },
+    {
+      "path": "/api/e-factura",
+      "handler": "(req, res, next"
+    },
+    {
+      "path": "/api/stats",
+      "handler": "statsRoutes"
+    },
+    {
+      "path": "/api/platform-stats",
+      "handler": "platformStatsRoutes"
+    },
+    {
+      "path": "/api/audit",
+      "handler": "auditRoutes"
+    },
+    {
+      "path": "/api/admin/inventory",
+      "handler": "inventoryRoutes"
+    },
+    {
+      "path": "/api/admin/reports",
+      "handler": "reportsRoutes"
+    },
+    {
+      "path": "/api/reports",
+      "handler": "reportsRoutes"
+    },
+    {
+      "path": "/api/discounts",
+      "handler": "discountsRoutes"
+    },
+    {
+      "path": "/api/protocols",
+      "handler": "protocolsRoutes"
+    },
+    {
+      "path": "/api/serving-order",
+      "handler": "servingOrderRoutes"
+    },
+    {
+      "path": "/api/exports",
+      "handler": "exportsRoutes"
+    },
+    {
+      "path": "/api/mobile",
+      "handler": "mobileStatsRoutes"
+    },
+    {
+      "path": "/api/loyalty",
+      "handler": "mobileLoyaltyRoutes"
+    },
+    {
+      "path": "/api/mobile",
+      "handler": "mobileFeaturesRoutes"
+    },
+    {
+      "path": "/api/external-delivery",
+      "handler": "externalDeliveryRoutes"
+    },
+    {
+      "path": "/api",
+      "handler": "legacyEndpoints"
+    },
+    {
+      "path": "/api/menu/pdf/builder",
+      "handler": "menuPdfConfigRoutes"
+    },
+    {
+      "path": "/api/menu/pdf",
+      "handler": "menuPdfRoutes"
+    },
+    {
+      "path": "/api",
+      "handler": "ordersRoutes"
+    },
+    {
+      "path": "/api/couriers",
+      "handler": "couriersRoutes"
+    },
+    {
+      "path": "/screenshots",
+      "handler": "(req, res, next"
+    },
+    {
+      "path": "/screenshots",
+      "handler": "express.static(path.join(__dirname, 'screenshots'"
+    },
+    {
+      "path": "/admin-vite",
+      "handler": "(req, res, next"
+    }
+  ],
+  "components": [
+    {
+      "name": "App.tsx",
+      "path": "src/app/App.tsx",
+      "type": "TypeScript React"
+    },
+    {
+      "name": "ErrorBoundary.tsx",
+      "path": "src/components/ErrorBoundary.tsx",
+      "type": "TypeScript React"
+    },
+    {
+      "name": "LegacyPagesDemo.tsx",
+      "path": "src/components/LegacyPagesDemo.tsx",
+      "type": "TypeScript React"
+    },
+    {
+      "name": "LegacyRedirect.tsx",
+      "path": "src/components/LegacyRedirect.tsx",
+      "type": "TypeScript React"
+    },
+    {
+      "name": "RedirectWithParams.tsx",
+      "path": "src/components/RedirectWithParams.tsx",
+      "type": "TypeScript React"
+    },
+    {
+      "name": "T.tsx",
+      "path": "src/components/T.tsx",
+      "type": "TypeScript React"
+    },
+    {
+      "name": "I18nContext.tsx",
+      "path": "src/i18n/I18nContext.tsx",
+      "type": "TypeScript React"
+    },
+    {
+      "name": "main.tsx",
+      "path": "src/main.tsx",
+      "type": "TypeScript React"
+    },
+    {
+      "name": "DigitalSignaturesPage.tsx",
+      "path": "src/modules/accounting/audit/pages/DigitalSignaturesPage.tsx",
+      "type": "TypeScript React"
+    },
+    {
+      "name": "ClientPaymentsReportPage.tsx",
+      "path": "src/modules/accounting/reports/pages/ClientPaymentsReportPage.tsx",
+      "type": "TypeScript React"
+    },
+    {
+      "name": "ConsumptionReportPage.tsx",
+      "path": "src/modules/accounting/reports/pages/ConsumptionReportPage.tsx",
+      "type": "TypeScript React"
+    },
+    {
+      "name": "DailyBalanceReportPage.tsx",
+      "path": "src/modules/accounting/reports/pages/DailyBalanceReportPage.tsx",
+      "type": "TypeScript React"
+    },
+    {
+      "name": "EntriesByVatReportPage.tsx",
+      "path": "src/modules/accounting/reports/pages/EntriesByVatReportPage.tsx",
+      "type": "TypeScript React"
+    },
+    {
+      "name": "StockBalanceReportPage.tsx",
+      "path": "src/modules/accounting/reports/pages/StockBalanceReportPage.tsx",
+      "type": "TypeScript React"
+    },
+    {
+      "name": "SuppliersReportPage.tsx",
+      "path": "src/modules/accounting/reports/pages/SuppliersReportPage.tsx",
+      "type": "TypeScript React"
+    },
+    {
+      "name": "VatReportPage.tsx",
+      "path": "src/modules/accounting/reports/pages/VatReportPage.tsx",
+      "type": "TypeScript React"
+    },
+    {
+      "name": "AccountingAccountsPage.tsx",
+      "path": "src/modules/accounting/settings/pages/AccountingAccountsPage.tsx",
+      "type": "TypeScript React"
+    },
+    {
+      "name": "AccountingExportPage.tsx",
+      "path": "src/modules/accounting/settings/pages/AccountingExportPage.tsx",
+      "type": "TypeScript React"
+    },
+    {
+      "name": "AccountingPeriodsPage.tsx",
+      "path": "src/modules/accounting/settings/pages/AccountingPeriodsPage.tsx",
+      "type": "TypeScript React"
+    },
+    {
+      "name": "AccountingPermissionsPage.tsx",
+      "path": "src/modules/accounting/settings/pages/AccountingPermissionsPage.tsx",
+      "type": "TypeScript React"
+    }
+  ]
+}
