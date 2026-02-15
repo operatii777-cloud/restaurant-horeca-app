@@ -1,0 +1,501 @@
+{
+  "frontendEndpoints": [
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/core/api/efacturaApi.js",
+      "name": "efacturaApi.js",
+      "relativePath": "core/api/efacturaApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/core/api/efacturaApi.ts",
+      "name": "efacturaApi.ts",
+      "relativePath": "core/api/efacturaApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/core/api/ordersApi.js",
+      "name": "ordersApi.js",
+      "relativePath": "core/api/ordersApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/core/api/ordersApi.ts",
+      "name": "ordersApi.ts",
+      "relativePath": "core/api/ordersApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/accounting/reports/api/accountingReportsApi.js",
+      "name": "accountingReportsApi.js",
+      "relativePath": "modules/accounting/reports/api/accountingReportsApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/accounting/reports/api/accountingReportsApi.ts",
+      "name": "accountingReportsApi.ts",
+      "relativePath": "modules/accounting/reports/api/accountingReportsApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/anaf/api/anaf.api.js",
+      "name": "anaf.api.js",
+      "relativePath": "modules/anaf/api/anaf.api.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/anaf/api/anaf.api.ts",
+      "name": "anaf.api.ts",
+      "relativePath": "modules/anaf/api/anaf.api.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/delivery/dashboard/api/deliveryKpi.api.js",
+      "name": "deliveryKpi.api.js",
+      "relativePath": "modules/delivery/dashboard/api/deliveryKpi.api.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/delivery/dashboard/api/deliveryKpi.api.ts",
+      "name": "deliveryKpi.api.ts",
+      "relativePath": "modules/delivery/dashboard/api/deliveryKpi.api.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/executive-dashboard/api/executiveDashboardApi.js",
+      "name": "executiveDashboardApi.js",
+      "relativePath": "modules/executive-dashboard/api/executiveDashboardApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/executive-dashboard/api/executiveDashboardApi.ts",
+      "name": "executiveDashboardApi.ts",
+      "relativePath": "modules/executive-dashboard/api/executiveDashboardApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/external-delivery/api/externalDeliveryApi.js",
+      "name": "externalDeliveryApi.js",
+      "relativePath": "modules/external-delivery/api/externalDeliveryApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/external-delivery/api/externalDeliveryApi.ts",
+      "name": "externalDeliveryApi.ts",
+      "relativePath": "modules/external-delivery/api/externalDeliveryApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/invoices/invoicesApi.js",
+      "name": "invoicesApi.js",
+      "relativePath": "modules/invoices/invoicesApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/kiosk/api/KioskApi.js",
+      "name": "KioskApi.js",
+      "relativePath": "modules/kiosk/api/KioskApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/kiosk/api/kioskTablesApi.js",
+      "name": "kioskTablesApi.js",
+      "relativePath": "modules/kiosk/api/kioskTablesApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/kiosk/api/splitBillApi.js",
+      "name": "splitBillApi.js",
+      "relativePath": "modules/kiosk/api/splitBillApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/marketing/api/marketingApi.js",
+      "name": "marketingApi.js",
+      "relativePath": "modules/marketing/api/marketingApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/marketing/api/marketingApi.ts",
+      "name": "marketingApi.ts",
+      "relativePath": "modules/marketing/api/marketingApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/marketing/feedback/api/feedbackApi.js",
+      "name": "feedbackApi.js",
+      "relativePath": "modules/marketing/feedback/api/feedbackApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/marketing/feedback/api/feedbackApi.ts",
+      "name": "feedbackApi.ts",
+      "relativePath": "modules/marketing/feedback/api/feedbackApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/monitoring/api/monitoringApi.js",
+      "name": "monitoringApi.js",
+      "relativePath": "modules/monitoring/api/monitoringApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/monitoring/api/monitoringApi.ts",
+      "name": "monitoringApi.ts",
+      "relativePath": "modules/monitoring/api/monitoringApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/order/api/orderApi.js",
+      "name": "orderApi.js",
+      "relativePath": "modules/order/api/orderApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/order/api/orderApi.ts",
+      "name": "orderApi.ts",
+      "relativePath": "modules/order/api/orderApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/payments/api/paymentApi.js",
+      "name": "paymentApi.js",
+      "relativePath": "modules/payments/api/paymentApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/payments/api/paymentApi.ts",
+      "name": "paymentApi.ts",
+      "relativePath": "modules/payments/api/paymentApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/platform-stats/api/platformStatsApi.js",
+      "name": "platformStatsApi.js",
+      "relativePath": "modules/platform-stats/api/platformStatsApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/platform-stats/api/platformStatsApi.ts",
+      "name": "platformStatsApi.ts",
+      "relativePath": "modules/platform-stats/api/platformStatsApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/pos/api/fiscalApi.js",
+      "name": "fiscalApi.js",
+      "relativePath": "modules/pos/api/fiscalApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/pos/api/posApi.js",
+      "name": "posApi.js",
+      "relativePath": "modules/pos/api/posApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/pos/api/posApi.ts",
+      "name": "posApi.ts",
+      "relativePath": "modules/pos/api/posApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/production/api/productionApi.js",
+      "name": "productionApi.js",
+      "relativePath": "modules/production/api/productionApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/profitability/api/profitabilityApi.js",
+      "name": "profitabilityApi.js",
+      "relativePath": "modules/profitability/api/profitabilityApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/profitability/api/profitabilityApi.ts",
+      "name": "profitabilityApi.ts",
+      "relativePath": "modules/profitability/api/profitabilityApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/promotions/happy-hour/api/happyHourApi.js",
+      "name": "happyHourApi.js",
+      "relativePath": "modules/promotions/happy-hour/api/happyHourApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/promotions/happy-hour/api/happyHourApi.ts",
+      "name": "happyHourApi.ts",
+      "relativePath": "modules/promotions/happy-hour/api/happyHourApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/public-ordering/delivery/hooks/useDeliveryOrderApi.js",
+      "name": "useDeliveryOrderApi.js",
+      "relativePath": "modules/public-ordering/delivery/hooks/useDeliveryOrderApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/public-ordering/delivery/hooks/useDeliveryOrderApi.ts",
+      "name": "useDeliveryOrderApi.ts",
+      "relativePath": "modules/public-ordering/delivery/hooks/useDeliveryOrderApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/queue-monitor/api/queueApi.js",
+      "name": "queueApi.js",
+      "relativePath": "modules/queue-monitor/api/queueApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/queue-monitor/api/queueApi.ts",
+      "name": "queueApi.ts",
+      "relativePath": "modules/queue-monitor/api/queueApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/reports/api/financialReportsApi.js",
+      "name": "financialReportsApi.js",
+      "relativePath": "modules/reports/api/financialReportsApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/reports/api/financialReportsApi.ts",
+      "name": "financialReportsApi.ts",
+      "relativePath": "modules/reports/api/financialReportsApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/reports/stock-prediction/api/stockPredictionApi.js",
+      "name": "stockPredictionApi.js",
+      "relativePath": "modules/reports/stock-prediction/api/stockPredictionApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/reports/stock-prediction/api/stockPredictionApi.ts",
+      "name": "stockPredictionApi.ts",
+      "relativePath": "modules/reports/stock-prediction/api/stockPredictionApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/settings/vat/vatApi.js",
+      "name": "vatApi.js",
+      "relativePath": "modules/settings/vat/vatApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/stocks/allergens/api/allergensApi.js",
+      "name": "allergensApi.js",
+      "relativePath": "modules/stocks/allergens/api/allergensApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/stocks/allergens/api/allergensApi.ts",
+      "name": "allergensApi.ts",
+      "relativePath": "modules/stocks/allergens/api/allergensApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/stocks/dashboard/executive/api/executiveDashboardApi.js",
+      "name": "executiveDashboardApi.js",
+      "relativePath": "modules/stocks/dashboard/executive/api/executiveDashboardApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/stocks/dashboard/executive/api/executiveDashboardApi.ts",
+      "name": "executiveDashboardApi.ts",
+      "relativePath": "modules/stocks/dashboard/executive/api/executiveDashboardApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/stocks/labels/api/labelsApi.js",
+      "name": "labelsApi.js",
+      "relativePath": "modules/stocks/labels/api/labelsApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/stocks/labels/api/labelsApi.ts",
+      "name": "labelsApi.ts",
+      "relativePath": "modules/stocks/labels/api/labelsApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/stocks/suppliers/api/suppliersApi.js",
+      "name": "suppliersApi.js",
+      "relativePath": "modules/stocks/suppliers/api/suppliersApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/stocks/suppliers/api/suppliersApi.ts",
+      "name": "suppliersApi.ts",
+      "relativePath": "modules/stocks/suppliers/api/suppliersApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/stocks/suppliers/orders/api/supplierOrdersApi.js",
+      "name": "supplierOrdersApi.js",
+      "relativePath": "modules/stocks/suppliers/orders/api/supplierOrdersApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/stocks/suppliers/orders/api/supplierOrdersApi.ts",
+      "name": "supplierOrdersApi.ts",
+      "relativePath": "modules/stocks/suppliers/orders/api/supplierOrdersApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/stocks/waste/api/wasteApi.js",
+      "name": "wasteApi.js",
+      "relativePath": "modules/stocks/waste/api/wasteApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/stocks/waste/api/wasteApi.ts",
+      "name": "wasteApi.ts",
+      "relativePath": "modules/stocks/waste/api/wasteApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/tipizate-enterprise/api/anafTipizateApi.js",
+      "name": "anafTipizateApi.js",
+      "relativePath": "modules/tipizate-enterprise/api/anafTipizateApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/tipizate-enterprise/api/anafTipizateApi.ts",
+      "name": "anafTipizateApi.ts",
+      "relativePath": "modules/tipizate-enterprise/api/anafTipizateApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/tipizate-enterprise/api/tipizateApi.js",
+      "name": "tipizateApi.js",
+      "relativePath": "modules/tipizate-enterprise/api/tipizateApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/tipizate-enterprise/api/tipizateApi.ts",
+      "name": "tipizateApi.ts",
+      "relativePath": "modules/tipizate-enterprise/api/tipizateApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/tipizate-enterprise/api/ublTipizateApi.js",
+      "name": "ublTipizateApi.js",
+      "relativePath": "modules/tipizate-enterprise/api/ublTipizateApi.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/modules/tipizate-enterprise/api/ublTipizateApi.ts",
+      "name": "ublTipizateApi.ts",
+      "relativePath": "modules/tipizate-enterprise/api/ublTipizateApi.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/shared/hooks/useApiMutation.js",
+      "name": "useApiMutation.js",
+      "relativePath": "shared/hooks/useApiMutation.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/shared/hooks/useApiMutation.ts",
+      "name": "useApiMutation.ts",
+      "relativePath": "shared/hooks/useApiMutation.ts"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/shared/hooks/useApiQuery.js",
+      "name": "useApiQuery.js",
+      "relativePath": "shared/hooks/useApiQuery.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/admin-vite/src/shared/hooks/useApiQuery.ts",
+      "name": "useApiQuery.ts",
+      "relativePath": "shared/hooks/useApiQuery.ts"
+    }
+  ],
+  "backendRoutes": [
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/admin/cashAccounts.routes.js",
+      "name": "cashAccounts.routes.js",
+      "relativePath": "routes/admin/cashAccounts.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/admin/categories.routes.js",
+      "name": "categories.routes.js",
+      "relativePath": "routes/admin/categories.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/admin/gestiuni.routes.js",
+      "name": "gestiuni.routes.js",
+      "relativePath": "routes/admin/gestiuni.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/admin/ingredients-simple.routes.js",
+      "name": "ingredients-simple.routes.js",
+      "relativePath": "routes/admin/ingredients-simple.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/admin/ingredients.routes.js",
+      "name": "ingredients.routes.js",
+      "relativePath": "routes/admin/ingredients.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/admin/inventory.routes.js",
+      "name": "inventory.routes.js",
+      "relativePath": "routes/admin/inventory.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/admin/kiosk-users.routes.js",
+      "name": "kiosk-users.routes.js",
+      "relativePath": "routes/admin/kiosk-users.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/admin/menu.routes.js",
+      "name": "menu.routes.js",
+      "relativePath": "routes/admin/menu.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/admin/nir-simple.routes.js",
+      "name": "nir-simple.routes.js",
+      "relativePath": "routes/admin/nir-simple.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/admin/nir.routes.js",
+      "name": "nir.routes.js",
+      "relativePath": "routes/admin/nir.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/admin/notifications.routes.js",
+      "name": "notifications.routes.js",
+      "relativePath": "routes/admin/notifications.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/admin/products-simple.routes.js",
+      "name": "products-simple.routes.js",
+      "relativePath": "routes/admin/products-simple.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/admin/products.routes.js",
+      "name": "products.routes.js",
+      "relativePath": "routes/admin/products.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/admin/recipes-simple.routes.js",
+      "name": "recipes-simple.routes.js",
+      "relativePath": "routes/admin/recipes-simple.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/admin/recipes.routes.js",
+      "name": "recipes.routes.js",
+      "relativePath": "routes/admin/recipes.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/admin/reservations.routes.js",
+      "name": "reservations.routes.js",
+      "relativePath": "routes/admin/reservations.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/admin/settings.routes.js",
+      "name": "settings.routes.js",
+      "relativePath": "routes/admin/settings.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/admin/stockMovements-simple.routes.js",
+      "name": "stockMovements-simple.routes.js",
+      "relativePath": "routes/admin/stockMovements-simple.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/admin/stockMovements.routes.js",
+      "name": "stockMovements.routes.js",
+      "relativePath": "routes/admin/stockMovements.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/admin/stockTransfers.routes.js",
+      "name": "stockTransfers.routes.js",
+      "relativePath": "routes/admin/stockTransfers.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/admin/suppliers.routes.js",
+      "name": "suppliers.routes.js",
+      "relativePath": "routes/admin/suppliers.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/allergens.routes.js",
+      "name": "allergens.routes.js",
+      "relativePath": "routes/allergens.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/audit.routes.js",
+      "name": "audit.routes.js",
+      "relativePath": "routes/audit.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/bi-routes.js",
+      "name": "bi-routes.js",
+      "relativePath": "routes/bi-routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/catalog-produse.routes.js",
+      "name": "catalog-produse.routes.js",
+      "relativePath": "routes/catalog-produse.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/compliance.routes.js",
+      "name": "compliance.routes.js",
+      "relativePath": "routes/compliance.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/customers.routes.js",
+      "name": "customers.routes.js",
+      "relativePath": "routes/customers.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/stocks.routes.js",
+      "name": "stocks.routes.js",
+      "relativePath": "routes/stocks.routes.js"
+    },
+    {
+      "path": "/home/runner/work/restaurant-horeca-app/restaurant-horeca-app/restaurant_app_v3_translation_system/server/routes/ubl-routes.js",
+      "name": "ubl-routes.js",
+      "relativePath": "routes/ubl-routes.js"
+    }
+  ],
+  "mismatches": [],
+  "databaseConnections": [],
+  "totalChecks": 1,
+  "passedChecks": 0,
+  "failedChecks": 1
+}
