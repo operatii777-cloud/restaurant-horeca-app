@@ -11,6 +11,7 @@ export type TipizatType =
   | 'FACTURA'
   | 'CHITANTA'
   | 'REGISTRU_CASA'
+  | 'REGISTRU_JURNAL'  // PHASE S8.9 - Added
   | 'RAPORT_GESTIUNE'
   | 'AVIZ'
   | 'PROCES_VERBAL'
@@ -20,6 +21,7 @@ export type TipizatType =
   | 'RAPORT_LUNAR';
 
 // PHASE S4.3 - All 13 document types defined
+// PHASE S8.9 - Added REGISTRU_JURNAL (14 types total)
 
 export type TipizatStatus = 'DRAFT' | 'VALIDATED' | 'SIGNED' | 'LOCKED' | 'ARCHIVED' | 'RECEIVED' | 'VARIANCE_CHECK' | 'CANCELLED' | 'EMITTED' | 'PARTIALLY_PAID' | 'PAID';
 

@@ -91,33 +91,41 @@ export function renderFacturaTemplate(doc: PDFDocument, data: FacturaTemplateDat
     doc.moveDown();
   }
 
-  // PHASE S6.3 - Client (extins complet)
+  // PHASE S6.3 - Client (extins complet) + PHASE S8.9 additions
   if (facturaDoc.clientName) {
     doc.fontSize(11).font('Helvetica-Bold').text('CLIENT (CUMPĂRĂTOR):', { underline: true });
     doc.fontSize(10).font('Helvetica');
     doc.text(`Denumire: ${facturaDoc.clientName}`);
     if (facturaDoc.clientCUI) doc.text(`CUI: ${facturaDoc.clientCUI}`);
+    if (facturaDoc.clientRegCom) doc.text(`Reg. Com.: ${facturaDoc.clientRegCom}`); // PHASE S8.9 - ANAF required for B2B
     
-    // PHASE S6.3 - Adresă completă client
-    let clientAddressParts = [];
-    if (facturaDoc.clientAddress) clientAddressParts.push(facturaDoc.clientAddress);
-    if (facturaDoc.clientCity) clientAddressParts.push(facturaDoc.clientCity);
-    if (facturaDoc.clientPostalCode) clientAddressParts.push(facturaDoc.clientPostalCode);
-    if (facturaDoc.clientCountry) clientAddressParts.push(facturaDoc.clientCountry);
-    if (clientAddressParts.length > 0) {
-      doc.text(`Adresă: ${clientAddressParts.join(', ')}`);
+    // PHASE S6.3 - Adresă completă (cu separare)
+    let addressParts = [];
+    if (facturaDoc.clientAddress) addressParts.push(facturaDoc.clientAddress);
+    if (facturaDoc.clientCity) addressParts.push(facturaDoc.clientCity);
+    if (facturaDoc.clientPostalCode) addressParts.push(facturaDoc.clientPostalCode);
+    if (facturaDoc.clientCountry) addressParts.push(facturaDoc.clientCountry);
+    if (addressParts.length > 0) {
+      doc.text(`Adresă: ${addressParts.join(', ')}`);
     }
     
     if (facturaDoc.clientPhone) doc.text(`Telefon: ${facturaDoc.clientPhone}`);
     if (facturaDoc.clientEmail) doc.text(`Email: ${facturaDoc.clientEmail}`);
     if (facturaDoc.clientRepresentative) doc.text(`Reprezentant: ${facturaDoc.clientRepresentative}`);
+    
+    // PHASE S8.9 - Bank account for B2B invoices
+    if (facturaDoc.clientBankAccount) doc.text(`IBAN Client: ${facturaDoc.clientBankAccount}`);
+    if (facturaDoc.clientBankName) doc.text(`Bancă Client: ${facturaDoc.clientBankName}`);
+    
+    // PHASE S6.3 - Tip client
     if (facturaDoc.clientType) {
       const typeMap: Record<string, string> = {
         'juridic': 'Persoană Juridică',
         'fizic': 'Persoană Fizică'
       };
-      doc.text(`Tip: ${typeMap[facturaDoc.clientType] || facturaDoc.clientType}`);
+      doc.text(`Tip Client: ${typeMap[facturaDoc.clientType] || facturaDoc.clientType}`);
     }
+    
     if (facturaDoc.clientStatus) {
       const statusMap: Record<string, string> = {
         'regular': 'Client Regular',
@@ -126,6 +134,39 @@ export function renderFacturaTemplate(doc: PDFDocument, data: FacturaTemplateDat
       };
       doc.text(`Status: ${statusMap[facturaDoc.clientStatus] || facturaDoc.clientStatus}`);
     }
+    
+    doc.moveDown();
+  }
+
+  // PHASE S8.9 - Document References (ANAF Order 208/2022)
+  if (facturaDoc.avizNumber || facturaDoc.orderId || facturaDoc.invoiceRef) {
+    doc.fontSize(11).font('Helvetica-Bold').text('REFERINȚE DOCUMENTE:', { underline: true });
+    doc.fontSize(10).font('Helvetica');
+    
+    if (facturaDoc.avizNumber) {
+      const avizText = facturaDoc.avizSeries 
+        ? `${facturaDoc.avizSeries}${facturaDoc.avizNumber}` 
+        : facturaDoc.avizNumber;
+      doc.text(`Aviz Însoțire: ${avizText}`);
+      if (facturaDoc.avizDate) {
+        doc.text(`Data Aviz: ${new Date(facturaDoc.avizDate).toLocaleDateString('ro-RO')}`);
+      }
+    }
+    
+    if (facturaDoc.orderId) {
+      doc.text(`Comandă ID: ${facturaDoc.orderId}`);
+    }
+    
+    if (facturaDoc.invoiceRef) {
+      const refText = facturaDoc.invoiceRefSeries 
+        ? `${facturaDoc.invoiceRefSeries}${facturaDoc.invoiceRef}` 
+        : facturaDoc.invoiceRef;
+      doc.text(`Referință Factură (notă de credit): ${refText}`);
+      if (facturaDoc.invoiceRefDate) {
+        doc.text(`Data Factură Ref.: ${new Date(facturaDoc.invoiceRefDate).toLocaleDateString('ro-RO')}`);
+      }
+    }
+    
     doc.moveDown();
   }
 
