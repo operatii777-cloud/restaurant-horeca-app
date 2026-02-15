@@ -22,7 +22,7 @@
 
 ## REZUMAT EXECUTIV
 
-Acest document prezintă o analiză exhaustivă a tuturor modificările aduse aplicației Restaurant HORECA Management prin cele 27 pull requests-uri. Aplicația a suferit o transformare completă de la o aplicație legacy bazată pe HTML și JavaScript către o aplicație modernă React + TypeScript, cu:
+Acest document prezintă o analiză exhaustivă a tuturor modificărilor aduse aplicației Restaurant HORECA Management prin cele 27 de pull request-uri. Aplicația a suferit o transformare completă de la o aplicație legacy bazată pe HTML și JavaScript către o aplicație modernă React + TypeScript, cu:
 
 - **Modernizare completă**: Tranziție de la HTML monolitic la React modular
 - **Internationalizare**: Sistem bilingv RO/EN pentru 48+ componente  
@@ -702,7 +702,7 @@ const db = new sqlite3.Database(DB_PATH);
 | Scripturi în root | 111 | 0 | ✅ 100% cleanup |
 | Directoare organizate | 0 | 4 | ✅ Structure clara |
 | Scripturi documentate | ~10% | 100% | ✅ Full docs |
-| Descoperabilitate | ❌ Low | ✅ High | INDEX.md |
+| Ușurință de găsire | ❌ Low | ✅ High | INDEX.md |
 
 **Consistență Bază de Date:**
 
@@ -720,7 +720,7 @@ const db = new sqlite3.Database(DB_PATH);
 - ✅ **Single Responsibility**: Configurare separată de logică
 - ✅ **DRY Principle**: O singură definiție, reutilizată peste tot
 - ✅ **Maintainability**: Schimbări în un singur loc
-- ✅ **Discoverability**: INDEX.md pentru găsire rapidă scripturi
+- ✅ **Ușurință de găsire**: INDEX.md pentru găsire rapidă scripturi
 - ✅ **Documentation**: README-uri și ghiduri de migrare
 
 ---
@@ -1810,7 +1810,7 @@ PRs finale au focusat pe:
 **PR #14:** Setup automation, centralizare config
 
 **Impact:**
-- Cod mai ușor de mențintuit
+- Cod mai ușor de menținut
 - Arhitectură modulară
 - Developer experience îmbunătățit
 - Bilingual support (RO/EN)
@@ -2065,7 +2065,7 @@ Aplicația a suferit o **transformare completă** de la:
 ### Impact Business
 
 **Înainte:**
-- Difficult de mențințut
+- Dificil de menținut
 - Risc de securitate ridicat
 - Limited la piața RO
 - Onboarding developers: zile
