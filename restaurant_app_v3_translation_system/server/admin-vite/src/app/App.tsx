@@ -3,7 +3,6 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { AppLayout } from "@/modules/layout/AppLayout";
 import { RedirectWithParams } from "@/components/RedirectWithParams";
-import { LegacyRedirect } from "@/components/LegacyRedirect";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
 // Critical pages - loaded immediately (dashboard, login, etc.)
@@ -13,7 +12,7 @@ import { InternalMessagingPage } from "@/modules/internal-messaging/pages/Intern
 import { BackupPage } from "@/modules/backup/pages/BackupPage";
 import { MenuManagementPage } from "@/modules/menu/pages/MenuManagementPage";
 import { RecipesPage } from "@/modules/recipes/pages/RecipesPage";
-// Reservations redirects to admin.html - using legacy component
+// Reservations - using React component (migrated from admin.html)
 // import { ReservationsPage } from "@/modules/reservations/pages/ReservationsPage";
 import { ReservationsPage } from "@/modules/reservations/pages/ReservationsPage";
 import { WaitersPage } from "@/modules/waiters/pages/WaitersPage";
@@ -65,8 +64,8 @@ import { SagaExportPage } from "@/modules/saga-export/pages/SagaExportPage";
 import { UnitsOfMeasurePage } from "@/modules/nomenclator/units/pages/UnitsOfMeasurePage";
 import { PriceUtilitiesPage } from "@/modules/nomenclator/prices/pages/PriceUtilitiesPage";
 import { AttributeGroupsPage } from "@/modules/nomenclator/attributes/pages/AttributeGroupsPage";
-// Happy Hour redirects to admin-advanced.html - no longer using React component
-// import { HappyHourPage } from "@/modules/promotions/happy-hour/pages/HappyHourPage";
+// Happy Hour - React component (migrated from admin-advanced.html)
+import { HappyHourPage } from "@/modules/promotions/happy-hour/pages/HappyHourPage";
 import { MarketingPage } from "@/modules/marketing/pages/MarketingPage";
 import { FeedbackPage } from "@/modules/marketing/feedback/pages/FeedbackPage";
 import { ExecutiveDashboardPage } from "@/modules/stocks/dashboard/executive/pages/ExecutiveDashboardPage";
@@ -258,9 +257,9 @@ const DigitalSignaturesPage = lazy(() => import('@/modules/accounting/audit/page
 const AccountingPermissionsPage = lazy(() => import('@/modules/accounting/settings/pages/AccountingPermissionsPage').then(m => ({ default: m.AccountingPermissionsPage })));
 
 // Lazy load Tipizate Enterprise (large module with many pages)
-const NirListPage = lazy(() => import('@/modules/tipizate-enterprise/pages/NirListPage'));
+// NIR - using admin-advanced.html style page with /api/inventory/nir endpoints
+const NirPage = lazy(() => import('@/modules/nir/pages/NirPage'));
 const PrintPreviewPage = lazy(() => import('@/modules/tipizate-enterprise/pages/PrintPreviewPage'));
-const NirEditorPage = lazy(() => import('@/modules/tipizate-enterprise/pages/NirEditorPage'));
 const BonConsumListPage = lazy(() => import('@/modules/tipizate-enterprise/pages/BonConsumListPage'));
 const BonConsumEditorPage = lazy(() => import('@/modules/tipizate-enterprise/pages/BonConsumEditorPage'));
 const TransferListPage = lazy(() => import('@/modules/tipizate-enterprise/pages/TransferListPage'));
@@ -301,6 +300,11 @@ const SecurityEventsPage = lazy(() => import('@/modules/audit/security/pages/Sec
 const LoginHistoryPage = lazy(() => import('@/modules/audit/login-history/pages/LoginHistoryPage').then(m => ({ default: m.LoginHistoryPage })));
 const UserActivityPage = lazy(() => import('@/modules/audit/user-activity/pages/UserActivityPage').then(m => ({ default: m.UserActivityPage })));
 const SecurityAlertsPage = lazy(() => import('@/modules/audit/alerts/pages/SecurityAlertsPage').then(m => ({ default: m.SecurityAlertsPage })));
+
+// Fiscal Overview Page - hub for all fiscal features (replaces admin-advanced.html#fiscal)
+const FiscalOverviewPage = lazy(() => import('@/modules/stocks/fiscal/pages/FiscalOverviewPage').then(m => ({ default: m.FiscalOverviewPage })));
+// Restaurant Config Page (replaces admin-advanced.html#restaurant-config)
+const RestaurantConfigPage = lazy(() => import('@/modules/settings/pages/RestaurantConfigPage').then(m => ({ default: m.RestaurantConfigPage })));
 
 // Legacy HTML pages refactored to React - can be imported when needed
 import { AdminPage } from '@/modules/admin-legacy/pages/AdminPage';
@@ -444,21 +448,21 @@ const App = () => {
         <Route path="tipizate-enterprise/waste/new" element={<LazyRoute component={WasteEditorPage} />} />
         <Route path="tipizate-enterprise/waste/:id" element={<LazyRoute component={WasteEditorPage} />} />
 
-        {/* NIR Enterprise KIOSK: Redirect către admin-advanced.html#inventory?iframe=true */}
-        <Route path="kiosk/tipizate-enterprise/nir" element={<LegacyRedirect url="/admin-advanced.html#inventory" />} />
+        {/* NIR Enterprise KIOSK: Redirect to React NIR page */}
+        <Route path="kiosk/tipizate-enterprise/nir" element={<Navigate to="/tipizate-enterprise/nir" replace />} />
 
-        {/* NIR Enterprise */}
-        <Route path="tipizate-enterprise/nir" element={<LazyRoute component={NirListPage} />} />
-        <Route path="tipizate-enterprise/nir/new" element={<LazyRoute component={NirEditorPage} />} />
-        <Route path="tipizate-enterprise/nir/:id" element={<LazyRoute component={NirEditorPage} />} />
+        {/* NIR - admin-advanced.html style with /api/inventory/nir endpoints */}
+        <Route path="tipizate-enterprise/nir" element={<LazyRoute component={NirPage} />} />
+        <Route path="tipizate-enterprise/nir/new" element={<LazyRoute component={NirPage} />} />
+        <Route path="tipizate-enterprise/nir/:id" element={<LazyRoute component={NirPage} />} />
 
         {/* Transfer Enterprise */}
-        <Route path="tipizate-enterprise/transfer" element={<LazyRoute component={KioskTransferIframePage} />} />
+        <Route path="tipizate-enterprise/transfer" element={<LazyRoute component={TransferListPage} />} />
         <Route path="tipizate-enterprise/transfer/new" element={<LazyRoute component={TransferEditorPage} />} />
         <Route path="tipizate-enterprise/transfer/:id" element={<LazyRoute component={TransferEditorPage} />} />
 
         {/* Inventar Enterprise */}
-        <Route path="tipizate-enterprise/inventar" element={<LazyRoute component={KioskInventarIframePage} />} />
+        <Route path="tipizate-enterprise/inventar" element={<LazyRoute component={InventarListPage} />} />
         <Route path="tipizate-enterprise/inventar/new" element={<LazyRoute component={InventarEditorPage} />} />
         <Route path="tipizate-enterprise/inventar/:id" element={<LazyRoute component={InventarEditorPage} />} />
 
@@ -511,14 +515,14 @@ const App = () => {
         <Route path="catalog/online" element={<CatalogOnlinePage />} />
         <Route path="ingredients" element={<StockManagementPage />} />
         <Route path="stocks" element={<StockManagementPage />} />
-        {/* PHASE S5.5 - Legacy Stocks Routes → Redirect to Admin Advanced */}
-        <Route path="stocks/nir" element={<Navigate to="/admin-advanced/inventory" replace />} />
-        <Route path="stocks/nir/*" element={<Navigate to="/admin-advanced/inventory" replace />} />
+        {/* PHASE S5.5 → S6: Legacy Stocks Routes → Redirect to React components */}
+        <Route path="stocks/nir" element={<Navigate to="/tipizate-enterprise/nir" replace />} />
+        <Route path="stocks/nir/*" element={<Navigate to="/tipizate-enterprise/nir" replace />} />
         <Route path="stocks/consume" element={<Navigate to="/tipizate-enterprise/bon-consum" replace />} />
         <Route path="stocks/consume/new" element={<Navigate to="/tipizate-enterprise/bon-consum/new" replace />} />
         <Route path="stocks/consume/:id" element={<RedirectWithParams to={(p) => `/tipizate-enterprise/bon-consum/${p.id}`} />} />
-        <Route path="stocks/inventory" element={<Navigate to="/admin-advanced/multi-inventory" replace />} />
-        <Route path="stocks/inventory/new" element={<Navigate to="/admin-advanced/multi-inventory" replace />} />
+        <Route path="stocks/inventory" element={<Navigate to="/stocks/inventory/multi" replace />} />
+        <Route path="stocks/inventory/new" element={<Navigate to="/stocks/inventory/multi" replace />} />
         {/* Inventory Dashboard & Multi-Inventory remain (separate functionality) */}
         <Route path="stocks/inventory/:id" element={<InventoryDetailsPage />} />
         <Route path="stocks/inventory/dashboard" element={<InventoryDashboardPage />} />
@@ -534,9 +538,9 @@ const App = () => {
         <Route path="stocks/suppliers" element={<SuppliersPage />} />
         <Route path="stocks/suppliers/orders" element={<SupplierOrdersPage />} />
         <Route path="orders/manage" element={<ManageOrdersPage />} />
-        {/* PHASE S5.5 - Legacy Transfer Routes → Redirect to Admin Advanced */}
-        <Route path="stocks/transfer" element={<Navigate to="/admin-advanced/transfers" replace />} />
-        <Route path="stocks/transfer/*" element={<Navigate to="/admin-advanced/transfers" replace />} />
+        {/* PHASE S5.5 → S6: Legacy Transfer Routes → Redirect to React components */}
+        <Route path="stocks/transfer" element={<Navigate to="/tipizate-enterprise/transfer" replace />} />
+        <Route path="stocks/transfer/*" element={<Navigate to="/tipizate-enterprise/transfer" replace />} />
         {/* PHASE S5.5 - Legacy Waste Route → Redirect to Tipizate Enterprise */}
         <Route path="stocks/waste" element={<Navigate to="/tipizate-enterprise/waste" replace />} />
         <Route path="orders" element={<OrdersManagementPage />} />
@@ -552,7 +556,7 @@ const App = () => {
         <Route path="delivery-dashboard" element={<DeliveryDashboardPage />} />
         <Route path="delivery/kpi" element={<DeliveryKpiDashboardPage />} />
         <Route path="recipes" element={<RecipesPage />} />
-        <Route path="reservations" element={<LegacyRedirect url="/admin.html#reservations" />} />
+        <Route path="reservations" element={<ReservationsPage />} />
         <Route path="daily-menu" element={<DailyMenuPage />} />
         <Route path="lots" element={<LotsPage />} />
         <Route path="traceability" element={<TraceabilityPage />} />
@@ -604,22 +608,22 @@ const App = () => {
         <Route path="accounting/audit/signatures" element={<LazyRoute component={DigitalSignaturesPage} />} />
         <Route path="settings/locations" element={<LocationsPage />} />
 
-        {/* Admin Advanced Routes - Legacy HTML Redirect */}
-        <Route path="admin-advanced/dashboard" element={<LegacyRedirect url="/admin-advanced.html#dashboard" />} />
-        <Route path="admin-advanced/queue-monitor" element={<LegacyRedirect url="/admin-advanced.html#queue-monitor" />} />
-        <Route path="admin-advanced/inventory" element={<LegacyRedirect url="/admin-advanced.html#inventory" />} />
-        <Route path="admin-advanced/transfers" element={<LegacyRedirect url="/admin-advanced.html#transfers" />} />
-        <Route path="admin-advanced/multi-inventory" element={<LegacyRedirect url="/admin-advanced.html#multi-inventory" />} />
-        <Route path="admin-advanced/portion-control" element={<LegacyRedirect url="/admin-advanced.html#portion-control" />} />
-        <Route path="admin-advanced/variance-reporting" element={<LegacyRedirect url="/admin-advanced.html#variance-reporting" />} />
-        <Route path="admin-advanced/executive-dashboard" element={<LegacyRedirect url="/admin-advanced.html#executive-dashboard" />} />
-        <Route path="admin-advanced/reports" element={<LegacyRedirect url="/admin-advanced.html#reports" />} />
-        <Route path="admin-advanced/marketing" element={<LegacyRedirect url="/admin-advanced.html#marketing" />} />
-        <Route path="admin-advanced/happy-hour" element={<LegacyRedirect url="/admin-advanced.html#happy-hour" />} />
-        <Route path="admin-advanced/fiscal" element={<LegacyRedirect url="/admin-advanced.html#fiscal" />} />
-        <Route path="admin-advanced/risk-alerts" element={<LegacyRedirect url="/admin-advanced.html#risk-alerts" />} />
-        <Route path="admin-advanced/restaurant-config" element={<LegacyRedirect url="/admin-advanced.html#restaurant-config" />} />
-        <Route path="admin-advanced/feedback" element={<LegacyRedirect url="/admin-advanced.html#feedback" />} />
+        {/* Admin Advanced Routes - Migrated from legacy HTML to React components */}
+        <Route path="admin-advanced/dashboard" element={<Navigate to="/dashboard" replace />} />
+        <Route path="admin-advanced/queue-monitor" element={<QueueMonitorPage />} />
+        <Route path="admin-advanced/inventory" element={<Navigate to="/tipizate-enterprise/nir" replace />} />
+        <Route path="admin-advanced/transfers" element={<Navigate to="/tipizate-enterprise/transfer" replace />} />
+        <Route path="admin-advanced/multi-inventory" element={<Navigate to="/stocks/inventory/multi" replace />} />
+        <Route path="admin-advanced/portion-control" element={<Navigate to="/portions" replace />} />
+        <Route path="admin-advanced/variance-reporting" element={<Navigate to="/variance-reports" replace />} />
+        <Route path="admin-advanced/executive-dashboard" element={<Navigate to="/stocks/dashboard/executive" replace />} />
+        <Route path="admin-advanced/reports" element={<Navigate to="/reports" replace />} />
+        <Route path="admin-advanced/marketing" element={<Navigate to="/marketing" replace />} />
+        <Route path="admin-advanced/happy-hour" element={<HappyHourPage />} />
+        <Route path="admin-advanced/fiscal" element={<LazyRoute component={FiscalOverviewPage} />} />
+        <Route path="admin-advanced/risk-alerts" element={<Navigate to="/stocks/risk-alerts" replace />} />
+        <Route path="admin-advanced/restaurant-config" element={<LazyRoute component={RestaurantConfigPage} />} />
+        <Route path="admin-advanced/feedback" element={<Navigate to="/marketing/feedback" replace />} />
         <Route path="settings/areas" element={<AreasPage />} />
         <Route path="settings/tables" element={<TablesPage />} />
         <Route path="settings/product-display" element={<ProductDisplayPage />} />
@@ -635,10 +639,12 @@ const App = () => {
         <Route path="settings/ui-customization" element={<UICustomizationPage />} />
         <Route path="settings/import-export" element={<ImportExportPage />} />
         <Route path="settings/branding" element={<BrandingPage />} />
+        <Route path="settings/restaurant-config" element={<LazyRoute component={RestaurantConfigPage} />} />
         <Route path="settings/manual-instructiuni" element={<ManualInstructiuniPage />} />
         <Route path="settings/pins" element={<PINManagementPage />} />
         <Route path="import" element={<ImportPage />} />
         <Route path="export" element={<ExportPage />} />
+        <Route path="stocks/fiscal" element={<LazyRoute component={FiscalOverviewPage} />} />
         <Route path="stocks/fiscal/reports/monthly" element={<LazyRoute component={MonthlyReportPage} />} />
         <Route path="stocks/fiscal/archive" element={<LazyRoute component={FiscalArchivePage} />} />
         <Route path="stocks/fiscal/documents/create" element={<LazyRoute component={FiscalDocumentsCreatePage} />} />
@@ -660,7 +666,7 @@ const App = () => {
         <Route path="nomenclator/units" element={<UnitsOfMeasurePage />} />
         <Route path="catalog/prices" element={<PriceUtilitiesPage />} />
         <Route path="catalog/attributes" element={<AttributeGroupsPage />} />
-        <Route path="promotions/happy-hour" element={<LegacyRedirect url="/admin-advanced.html#happy-hour" />} />
+        <Route path="promotions/happy-hour" element={<HappyHourPage />} />
         <Route path="promotions/daily-offer" element={<DailyOfferPage />} />
         <Route path="marketing" element={<MarketingPage />} />
         <Route path="marketing/feedback" element={<FeedbackPage />} />
@@ -795,17 +801,17 @@ const App = () => {
         {/* LEGACY_ROUTE - PHASE S3: POS (legacy component) */}
         <Route path="pos/:orderId" element={<PosPage />} />
 
-        {/* LEGACY_ROUTE - PHASE S3: Tipizate (redirected to admin-advanced or tipizate-enterprise) */}
-        <Route path="tipizate" element={<Navigate to="/admin-advanced/inventory" replace />} />
-        <Route path="tipizate/nir" element={<Navigate to="/admin-advanced/inventory" replace />} />
+        {/* LEGACY_ROUTE - PHASE S3 → S6: Tipizate (all redirected to React components) */}
+        <Route path="tipizate" element={<Navigate to="/tipizate-enterprise/nir" replace />} />
+        <Route path="tipizate/nir" element={<Navigate to="/tipizate-enterprise/nir" replace />} />
         <Route path="tipizate/bon-consum" element={<Navigate to="/tipizate-enterprise/bon-consum" replace />} />
         <Route path="tipizate/avize" element={<Navigate to="/tipizate-enterprise/aviz" replace />} />
-        <Route path="tipizate/chitante" element={<Navigate to="/admin-advanced/fiscal" replace />} />
-        <Route path="tipizate/registru-casa" element={<Navigate to="/admin-advanced/fiscal" replace />} />
+        <Route path="tipizate/chitante" element={<Navigate to="/tipizate-enterprise/chitanta" replace />} />
+        <Route path="tipizate/registru-casa" element={<Navigate to="/tipizate-enterprise/registru-casa" replace />} />
         <Route path="tipizate/fisa-magazie" element={<Navigate to="/tipizate-enterprise/raport-gestiune" replace />} />
         <Route path="tipizate/raport-gestiune" element={<Navigate to="/tipizate-enterprise/raport-gestiune" replace />} />
-        <Route path="tipizate/transfer" element={<Navigate to="/admin-advanced/transfers" replace />} />
-        <Route path="tipizate/inventar" element={<Navigate to="/admin-advanced/multi-inventory" replace />} />
+        <Route path="tipizate/transfer" element={<Navigate to="/tipizate-enterprise/transfer" replace />} />
+        <Route path="tipizate/inventar" element={<Navigate to="/stocks/inventory/multi" replace />} />
       </Route>
 
       {/* Redirect pentru rute necunoscute - dar NU pentru /kiosk/* (deja procesat mai sus) */}

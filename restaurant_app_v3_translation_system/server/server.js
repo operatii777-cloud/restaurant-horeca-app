@@ -105,6 +105,17 @@ const upload = multer({
   }
 });
 
+// Configure multer for invoice uploads (PDF + XML)
+const uploadInvoice = multer({
+  dest: 'uploads/invoices/',
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
+  fileFilter: (req, file, cb) => {
+    const allowed = ['application/pdf', 'application/xml', 'text/xml'];
+    if (allowed.includes(file.mimetype)) cb(null, true);
+    else cb(new Error('Doar fișiere PDF sau XML sunt permise'), false);
+  }
+});
+
 // ========================================
 // LOADERS
 // ========================================
@@ -4043,9 +4054,598 @@ dbPromise.then(async (db) => {
         sessions: '/api/inventory/sessions',
         nirs: '/api/inventory/nirs',
         createNir: '/api/inventory/nir',
-        searchProducts: '/api/inventory/products/search'
+        searchProducts: '/api/inventory/products/search',
+        lots: '/api/inventory/lots',
+        expiring: '/api/inventory/expiring',
+        invoices: '/api/inventory/invoices',
+        importInvoice: '/api/inventory/import-invoice',
+        exportReport: '/api/admin/inventory/export/:format',
+        nirPdf: '/api/inventory/nir/:nirNumber/pdf',
+        queueMonitor: '/api/queue-monitor'
       }
     });
+  });
+
+  // ========== NEW ROUTES: Inventory Lots, Invoices, Expiring, Export, NIR PDF, Queue ==========
+
+  // POST /api/inventory/lots - Adaugă un lot/batch nou
+  app.post('/api/inventory/lots', async (req, res) => {
+    try {
+      const { dbPromise } = require('./database');
+      const db = await dbPromise;
+
+      const {
+        ingredient_id,
+        batch_number,
+        barcode,
+        quantity,
+        unit_cost,
+        purchase_date,
+        expiry_date,
+        supplier,
+        invoice_number
+      } = req.body;
+
+      if (!ingredient_id || !batch_number || !quantity) {
+        return res.status(400).json({
+          success: false,
+          error: 'ingredient_id, batch_number și quantity sunt obligatorii'
+        });
+      }
+
+      const result = await new Promise((resolve, reject) => {
+        db.run(`
+          INSERT INTO ingredient_batches (
+            ingredient_id, batch_number, barcode, quantity, remaining_quantity,
+            unit_cost, purchase_date, expiry_date, supplier, invoice_number
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `, [
+          ingredient_id,
+          batch_number,
+          barcode || null,
+          parseFloat(quantity),
+          parseFloat(quantity), // remaining = initial quantity
+          parseFloat(unit_cost) || 0,
+          purchase_date || new Date().toISOString().split('T')[0],
+          expiry_date || null,
+          supplier || null,
+          invoice_number || null
+        ], function(err) {
+          if (err) reject(err);
+          else resolve({ id: this.lastID });
+        });
+      });
+
+      // Also update ingredient stock via stock_moves
+      const reason = `Lot adăugat: ${batch_number}`;
+      await new Promise((resolve, reject) => {
+        db.run(`
+          INSERT INTO stock_moves (ingredient_id, type, quantity, reason, date, reference_type, reference_id)
+          VALUES (?, 'IN', ?, ?, datetime('now'), 'batch', ?)
+        `, [ingredient_id, parseFloat(quantity), reason, result.id], function(err) {
+          if (err) {
+            console.warn('⚠️ stock_moves insert warning:', err.message);
+            resolve(null); // Non-critical
+          } else {
+            resolve({ id: this.lastID });
+          }
+        });
+      });
+
+      res.json({
+        success: true,
+        id: result.id,
+        message: 'Lot adăugat cu succes'
+      });
+    } catch (error) {
+      console.error('❌ Error in POST /api/inventory/lots:', error);
+      res.status(500).json({
+        success: false,
+        error: error.message || 'Eroare la adăugarea lotului'
+      });
+    }
+  });
+
+  // GET /api/inventory/expiring - Obține articolele care expiră în curând
+  app.get('/api/inventory/expiring', async (req, res) => {
+    try {
+      const { dbPromise } = require('./database');
+      const db = await dbPromise;
+
+      const days = parseInt(req.query.days) || 30;
+      const futureDate = new Date();
+      futureDate.setDate(futureDate.getDate() + days);
+      const futureDateStr = futureDate.toISOString().split('T')[0];
+
+      const items = await new Promise((resolve, reject) => {
+        db.all(`
+          SELECT 
+            ib.id,
+            i.name as ingredient_name,
+            ib.batch_number,
+            ib.expiry_date,
+            ib.remaining_quantity as quantity,
+            ib.supplier,
+            i.unit,
+            CASE 
+              WHEN ib.expiry_date < date('now') THEN 'expired'
+              WHEN ib.expiry_date <= ? THEN 'expiring'
+              ELSE 'ok'
+            END as status
+          FROM ingredient_batches ib
+          JOIN ingredients i ON i.id = ib.ingredient_id
+          WHERE ib.expiry_date IS NOT NULL 
+            AND ib.expiry_date <= ?
+            AND ib.remaining_quantity > 0
+          ORDER BY ib.expiry_date ASC
+        `, [futureDateStr, futureDateStr], (err, rows) => {
+          if (err) reject(err);
+          else resolve(rows || []);
+        });
+      });
+
+      res.json({
+        success: true,
+        items: items,
+        count: items.length
+      });
+    } catch (error) {
+      console.error('❌ Error in GET /api/inventory/expiring:', error);
+      res.status(500).json({
+        success: false,
+        error: error.message || 'Eroare la obținerea articolelor care expiră'
+      });
+    }
+  });
+
+  // POST /api/inventory/import-invoice - Importă o factură (PDF/XML)
+  app.post('/api/inventory/import-invoice', uploadInvoice.single('file'), async (req, res) => {
+    try {
+      const { dbPromise } = require('./database');
+      const db = await dbPromise;
+
+      const { invoice_number, supplier, date, total, file_type } = req.body;
+      const file = req.file;
+
+      if (!invoice_number || !supplier) {
+        return res.status(400).json({
+          success: false,
+          error: 'invoice_number și supplier sunt obligatorii'
+        });
+      }
+
+      const result = await new Promise((resolve, reject) => {
+        db.run(`
+          INSERT INTO supplier_invoices (
+            invoice_number, supplier_name, invoice_date, total_amount,
+            file_path, file_type, status
+          ) VALUES (?, ?, ?, ?, ?, ?, 'pending')
+        `, [
+          invoice_number,
+          supplier,
+          date || new Date().toISOString().split('T')[0],
+          parseFloat(total) || 0,
+          file ? file.path : null,
+          file_type || (file ? file.mimetype : null)
+        ], function(err) {
+          if (err) reject(err);
+          else resolve({ id: this.lastID });
+        });
+      });
+
+      res.json({
+        success: true,
+        id: result.id,
+        message: 'Factură importată cu succes'
+      });
+    } catch (error) {
+      console.error('❌ Error in POST /api/inventory/import-invoice:', error);
+      res.status(500).json({
+        success: false,
+        error: error.message || 'Eroare la importul facturii'
+      });
+    }
+  });
+
+  // GET /api/inventory/invoices - Listează facturile importate
+  app.get('/api/inventory/invoices', async (req, res) => {
+    try {
+      const { dbPromise } = require('./database');
+      const db = await dbPromise;
+
+      const { status, supplier, start_date, end_date } = req.query;
+
+      let query = `SELECT id, invoice_number, supplier_name as supplier, invoice_date as date,
+                         total_amount as total, status, created_at, processed_at
+                  FROM supplier_invoices WHERE 1=1`;
+      const params = [];
+
+      if (status) {
+        query += ' AND status = ?';
+        params.push(status);
+      }
+      if (supplier) {
+        query += ' AND supplier_name LIKE ?';
+        params.push(`%${supplier}%`);
+      }
+      if (start_date) {
+        query += ' AND invoice_date >= ?';
+        params.push(start_date);
+      }
+      if (end_date) {
+        query += ' AND invoice_date <= ?';
+        params.push(end_date);
+      }
+
+      query += ' ORDER BY created_at DESC';
+
+      const invoices = await new Promise((resolve, reject) => {
+        db.all(query, params, (err, rows) => {
+          if (err) reject(err);
+          else resolve(rows || []);
+        });
+      });
+
+      res.json({
+        success: true,
+        invoices: invoices
+      });
+    } catch (error) {
+      console.error('❌ Error in GET /api/inventory/invoices:', error);
+      res.status(500).json({
+        success: false,
+        error: error.message || 'Eroare la obținerea facturilor'
+      });
+    }
+  });
+
+  // GET /api/admin/inventory/export/:format - Export rapoarte (Excel/PDF)
+  app.get('/api/admin/inventory/export/:format', async (req, res) => {
+    try {
+      const { dbPromise } = require('./database');
+      const db = await dbPromise;
+
+      const { format } = req.params;
+      const { type } = req.query;
+
+      // Build query based on report type
+      let query = '';
+      let params = [];
+      let reportTitle = 'Raport Stocuri';
+
+      switch (type) {
+        case 'stock_overview':
+          reportTitle = 'Stoc General';
+          query = `
+            SELECT i.name, i.category, i.unit, i.min_stock, i.cost_per_unit,
+                   COALESCE(i.current_stock, 0) as current_stock
+            FROM ingredients i
+            ORDER BY i.name ASC
+          `;
+          break;
+        case 'low_stock':
+          reportTitle = 'Stoc Scăzut';
+          query = `
+            SELECT i.name, i.category, i.unit, i.min_stock, i.cost_per_unit,
+                   COALESCE(i.current_stock, 0) as current_stock
+            FROM ingredients i
+            WHERE COALESCE(i.current_stock, 0) <= i.min_stock
+            ORDER BY i.current_stock ASC
+          `;
+          break;
+        case 'expiring':
+          reportTitle = 'Expirări (30 zile)';
+          query = `
+            SELECT i.name as ingredient_name, ib.batch_number, ib.expiry_date,
+                   ib.remaining_quantity, ib.supplier, i.unit
+            FROM ingredient_batches ib
+            JOIN ingredients i ON i.id = ib.ingredient_id
+            WHERE ib.expiry_date IS NOT NULL 
+              AND ib.expiry_date <= date('now', '+30 days')
+              AND ib.remaining_quantity > 0
+            ORDER BY ib.expiry_date ASC
+          `;
+          break;
+        case 'batches':
+          reportTitle = 'Toate Loturile';
+          query = `
+            SELECT i.name as ingredient_name, ib.batch_number, ib.barcode,
+                   ib.quantity, ib.remaining_quantity, ib.unit_cost,
+                   ib.purchase_date, ib.expiry_date, ib.supplier, ib.invoice_number
+            FROM ingredient_batches ib
+            JOIN ingredients i ON i.id = ib.ingredient_id
+            ORDER BY ib.created_at DESC
+          `;
+          break;
+        case 'invoices':
+          reportTitle = 'Facturi Importate';
+          query = `
+            SELECT invoice_number, supplier_name, invoice_date,
+                   total_amount, status, created_at
+            FROM supplier_invoices
+            ORDER BY created_at DESC
+          `;
+          break;
+        default:
+          reportTitle = 'Stoc General';
+          query = `
+            SELECT i.name, i.category, i.unit, i.min_stock, i.cost_per_unit,
+                   COALESCE(i.current_stock, 0) as current_stock
+            FROM ingredients i
+            ORDER BY i.name ASC
+          `;
+      }
+
+      const rows = await new Promise((resolve, reject) => {
+        db.all(query, params, (err, data) => {
+          if (err) reject(err);
+          else resolve(data || []);
+        });
+      });
+
+      if (format === 'excel') {
+        // Generate CSV (Excel-compatible) with BOM for UTF-8
+        const BOM = '\uFEFF';
+        const headers = rows.length > 0 ? Object.keys(rows[0]) : [];
+        const csvContent = BOM + headers.join(',') + '\n' +
+          rows.map(row => headers.map(h => {
+            const val = row[h];
+            if (val === null || val === undefined) return '';
+            const str = String(val);
+            return str.includes(',') || str.includes('"') || str.includes('\n')
+              ? `"${str.replace(/"/g, '""')}"` : str;
+          }).join(',')).join('\n');
+
+        const dateStr = new Date().toISOString().split('T')[0];
+        res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+        res.setHeader('Content-Disposition', `attachment; filename="raport_${type}_${dateStr}.csv"`);
+        res.send(csvContent);
+      } else if (format === 'pdf') {
+        // Generate simple HTML for PDF printing
+        const dateStr = new Date().toLocaleDateString('ro-RO');
+        const headers = rows.length > 0 ? Object.keys(rows[0]) : [];
+        const html = `<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>${reportTitle}</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; }
+  h1 { color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+  th { background: #007bff; color: white; padding: 8px; text-align: left; }
+  td { padding: 6px 8px; border-bottom: 1px solid #ddd; }
+  tr:nth-child(even) { background: #f8f9fa; }
+  .footer { margin-top: 20px; color: #666; font-size: 12px; }
+</style></head><body>
+<h1>${reportTitle}</h1>
+<p>Data generării: ${dateStr} | Total: ${rows.length} înregistrări</p>
+<table>
+  <thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
+  <tbody>${rows.map(row => `<tr>${headers.map(h => `<td>${row[h] ?? ''}</td>`).join('')}</tr>`).join('')}</tbody>
+</table>
+<div class="footer">Generat automat — Restaurant HORECA App</div>
+</body></html>`;
+
+        res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        res.send(html);
+      } else {
+        res.status(400).json({ success: false, error: 'Format invalid. Folosiți "excel" sau "pdf".' });
+      }
+    } catch (error) {
+      console.error('❌ Error in GET /api/admin/inventory/export:', error);
+      res.status(500).json({
+        success: false,
+        error: error.message || 'Eroare la generarea raportului'
+      });
+    }
+  });
+
+  // GET /api/inventory/nir/:nirNumber/pdf - Generare PDF pentru printare NIR
+  app.get('/api/inventory/nir/:nirNumber/pdf', async (req, res) => {
+    try {
+      const { dbPromise } = require('./database');
+      const db = await dbPromise;
+
+      const nirNumber = req.params.nirNumber;
+
+      // Find the NIR by nir_number (try both nir_documents and nir_headers)
+      let nir = await new Promise((resolve, reject) => {
+        db.get(`SELECT * FROM nir_documents WHERE nir_number = ?`, [nirNumber], (err, row) => {
+          if (err) {
+            // Try nir_headers as fallback
+            db.get(`SELECT * FROM nir_headers WHERE nir_number = ?`, [nirNumber], (err2, row2) => {
+              if (err2) reject(err2);
+              else resolve(row2);
+            });
+          } else {
+            resolve(row);
+          }
+        });
+      });
+
+      if (!nir) {
+        return res.status(404).json({ success: false, error: 'NIR-ul nu a fost găsit' });
+      }
+
+      // Get NIR items
+      const items = await new Promise((resolve, reject) => {
+        db.all(`SELECT * FROM nir_items WHERE nir_id = ?`, [nir.id], (err, rows) => {
+          if (err) {
+            // Try nir_lines as fallback
+            db.all(`SELECT * FROM nir_lines WHERE nir_id = ?`, [nir.id], (err2, rows2) => {
+              if (err2) reject(err2);
+              else resolve(rows2 || []);
+            });
+          } else {
+            resolve(rows || []);
+          }
+        });
+      });
+
+      // Generate printable HTML
+      const dateStr = nir.document_date || nir.nir_date || new Date().toLocaleDateString('ro-RO');
+      const totalValue = nir.total_value || items.reduce((s, i) => s + (parseFloat(i.value) || parseFloat(i.quantity) * parseFloat(i.unit_price) || 0), 0);
+
+      const html = `<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>NIR ${nirNumber}</title>
+<style>
+  @media print { body { margin: 0; } @page { margin: 1cm; } }
+  body { font-family: Arial, sans-serif; margin: 20px; font-size: 12px; }
+  .header { text-align: center; margin-bottom: 20px; }
+  .header h1 { margin: 0; color: #333; }
+  .info-grid { display: flex; justify-content: space-between; margin-bottom: 15px; }
+  .info-grid div { flex: 1; }
+  .info-grid p { margin: 2px 0; }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  th { background: #007bff; color: white; padding: 6px; text-align: center; font-size: 11px; }
+  td { padding: 4px 6px; border: 1px solid #ddd; text-align: center; font-size: 11px; }
+  .text-left { text-align: left; }
+  .text-right { text-align: right; }
+  .totals { margin-top: 15px; text-align: right; font-size: 13px; }
+  .totals strong { color: #007bff; }
+  .footer { margin-top: 30px; display: flex; justify-content: space-between; }
+  .footer div { text-align: center; width: 30%; }
+  .signature-line { border-top: 1px solid #333; margin-top: 40px; padding-top: 5px; }
+</style></head><body>
+<div class="header">
+  <h1>NOTĂ DE RECEPȚIE ȘI CONSTATARE DE DIFERENȚE (NIR)</h1>
+  <p>Nr. <strong>${nirNumber}</strong> din ${dateStr}</p>
+</div>
+<div class="info-grid">
+  <div>
+    <p><strong>Unitate:</strong> ${nir.unit_name || 'SC RESTAURANT SRL'}</p>
+    <p><strong>CUI:</strong> ${nir.cui || 'RO12345678'}</p>
+    <p><strong>Gestiune:</strong> ${nir.gestion || 'Bucătărie'}</p>
+  </div>
+  <div>
+    <p><strong>Furnizor:</strong> ${nir.supplier_name || '-'}</p>
+    <p><strong>Nr. Factură:</strong> ${nir.invoice_number || '-'}</p>
+    <p><strong>Data document:</strong> ${dateStr}</p>
+  </div>
+</div>
+<table>
+  <thead><tr>
+    <th>Nr.</th><th class="text-left">Denumire</th><th>U.M.</th>
+    <th>Cant.</th><th>Preț unit.</th><th>Valoare</th>
+    <th>TVA %</th><th>TVA</th><th>Total</th>
+  </tr></thead>
+  <tbody>
+    ${items.map((item, idx) => {
+      const qty = parseFloat(item.quantity) || 0;
+      const price = parseFloat(item.unit_price || item.price_without_vat) || 0;
+      const value = qty * price;
+      const vatPct = parseFloat(item.vat_rate || item.tva_percent) || 19;
+      const vatAmt = value * vatPct / 100;
+      const total = value + vatAmt;
+      return `<tr>
+        <td>${idx + 1}</td>
+        <td class="text-left">${item.product_name || item.official_name || '-'}</td>
+        <td>${item.unit || item.unit_measure || 'buc'}</td>
+        <td>${qty.toFixed(2)}</td>
+        <td class="text-right">${price.toFixed(2)}</td>
+        <td class="text-right">${value.toFixed(2)}</td>
+        <td>${vatPct}%</td>
+        <td class="text-right">${vatAmt.toFixed(2)}</td>
+        <td class="text-right">${total.toFixed(2)}</td>
+      </tr>`;
+    }).join('')}
+  </tbody>
+</table>
+<div class="totals">
+  <p><strong>Total valoare:</strong> ${Number(totalValue).toFixed(2)} RON</p>
+</div>
+<div class="footer">
+  <div><div class="signature-line">Comisia de recepție</div></div>
+  <div><div class="signature-line">Gestionar</div></div>
+  <div><div class="signature-line">Delegat furnizor</div></div>
+</div>
+<script>window.onload = function() { window.print(); }</script>
+</body></html>`;
+
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+      res.send(html);
+    } catch (error) {
+      console.error('❌ Error in GET /api/inventory/nir/:nirNumber/pdf:', error);
+      res.status(500).json({
+        success: false,
+        error: error.message || 'Eroare la generarea PDF-ului NIR'
+      });
+    }
+  });
+
+  // GET /api/queue-monitor - Date monitor coadă comenzi
+  app.get('/api/queue-monitor', async (req, res) => {
+    try {
+      const { dbPromise } = require('./database');
+      const db = await dbPromise;
+
+      // Get current queue stats from orders table
+      const stats = await new Promise((resolve, reject) => {
+        db.get(`
+          SELECT 
+            COUNT(*) as todayTotal,
+            SUM(CASE WHEN status = 'completed' OR status = 'delivered' THEN 1 ELSE 0 END) as processed,
+            SUM(CASE WHEN status = 'cancelled' OR status = 'failed' THEN 1 ELSE 0 END) as failed,
+            SUM(CASE WHEN status IN ('pending', 'preparing', 'new') THEN 1 ELSE 0 END) as currentQueueSize
+          FROM orders
+          WHERE date(created_at) = date('now')
+        `, (err, row) => {
+          if (err) {
+            console.warn('⚠️ queue-monitor orders query:', err.message);
+            resolve({ todayTotal: 0, processed: 0, failed: 0, currentQueueSize: 0 });
+          } else {
+            resolve(row || { todayTotal: 0, processed: 0, failed: 0, currentQueueSize: 0 });
+          }
+        });
+      });
+
+      // Get pending queue items
+      const queueItems = await new Promise((resolve, reject) => {
+        db.all(`
+          SELECT id, order_number, status, table_number, total, created_at
+          FROM orders
+          WHERE status IN ('pending', 'preparing', 'new')
+            AND date(created_at) = date('now')
+          ORDER BY created_at ASC
+          LIMIT 50
+        `, (err, rows) => {
+          if (err) {
+            console.warn('⚠️ queue-monitor items query:', err.message);
+            resolve([]);
+          } else {
+            resolve((rows || []).map(r => ({
+              name: `Comanda #${r.order_number || r.id}`,
+              product: `Masa ${r.table_number || '-'}`,
+              quantity: 1,
+              unit: '',
+              status: r.status,
+              total: r.total,
+              created_at: r.created_at
+            })));
+          }
+        });
+      });
+
+      const DEFAULT_AVG_PROCESSING_TIME_MS = 250;
+      res.json({
+        queueType: 'memory',
+        stats: {
+          currentQueueSize: stats.currentQueueSize || 0,
+          processed: stats.processed || 0,
+          failed: stats.failed || 0,
+          todayTotal: stats.todayTotal || 0,
+          avgProcessingTime: DEFAULT_AVG_PROCESSING_TIME_MS
+        },
+        queueItems: queueItems,
+        failedJobs: []
+      });
+    } catch (error) {
+      console.error('❌ Error in GET /api/queue-monitor:', error);
+      res.json({
+        queueType: 'memory',
+        stats: { currentQueueSize: 0, processed: 0, failed: 0, todayTotal: 0 },
+        queueItems: [],
+        failedJobs: []
+      });
+    }
   });
 
   // DEBUG ENDPOINT - Inspect Ingredients Schema

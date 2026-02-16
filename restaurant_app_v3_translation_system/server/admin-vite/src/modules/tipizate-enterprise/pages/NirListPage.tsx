@@ -1,5 +1,5 @@
 /**
- * PHASE S5.7 - NIR List Page
+ * NIR List Page
  * Enterprise list page for NIR documents
  */
 
@@ -13,8 +13,8 @@ export default function NirListPage() {
   return (
     <TipizateListPage
       type="NIR"
-      newRoute="/kiosk/tipizate-enterprise/nir/new"
-      detailsRouteBase="/kiosk/tipizate-enterprise/nir"
+      newRoute="/tipizate-enterprise/nir/new"
+      detailsRouteBase="/tipizate-enterprise/nir"
       t={t}
     />
   );
