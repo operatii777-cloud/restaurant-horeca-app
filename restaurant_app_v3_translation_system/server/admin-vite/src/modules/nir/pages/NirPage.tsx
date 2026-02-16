@@ -157,6 +157,9 @@ export const NirPage: React.FC = () => {
   const [importedInvoices, setImportedInvoices] = useState<any[]>([]);
   const [invoiceFilters, setInvoiceFilters] = useState({ status: '', supplier: '', startDate: '', endDate: '' });
 
+  // ─── Received Items Queue state ─────────────────────────────────────────
+  const [queueItems, setQueueItems] = useState<any[]>([]);
+
   // ─── Inventory Sessions state ──────────────────────────────────────────
   const [inventorySessions, setInventorySessions] = useState<any[]>([]);
   const [sessionsLoading, setSessionsLoading] = useState(false);
@@ -849,13 +852,39 @@ export const NirPage: React.FC = () => {
     }
   };
 
+  // ─── Queue Items Functions ─────────────────────────────────────────────
+
+  const loadQueueItems = useCallback(async () => {
+    try {
+      const res = await httpClient.get('/api/queue-monitor');
+      const data = res.data;
+      setQueueItems(data.queueItems || []);
+    } catch (e) {
+      console.error('Error loading queue items:', e);
+      setQueueItems([]);
+    }
+  }, []);
+
+  // ─── Print NIR Function ──────────────────────────────────────────────────
+
+  const printNir = (nirNumber: string) => {
+    // Open the NIR PDF in a new window for printing
+    const url = `/api/inventory/nir/${nirNumber}/pdf`;
+    const printWindow = window.open(url, '_blank');
+    if (!printWindow) {
+      // Fallback: print current modal content
+      window.print();
+    }
+  };
+
   // ─── Load data on tab change ─────────────────────────────────────────────
 
   useEffect(() => {
+    if (activeTab === 'form') { loadQueueItems(); }
     if (activeTab === 'reports') { loadQuickFilters(); }
     if (activeTab === 'lots') { loadIngredients(); loadLowStock(); loadExpiringItems(); loadImportedInvoices(); }
     if (activeTab === 'inventory') { loadInventorySessions(); loadLocations(); }
-  }, [activeTab, loadQuickFilters, loadIngredients, loadLowStock, loadExpiringItems, loadImportedInvoices, loadInventorySessions, loadLocations]);
+  }, [activeTab, loadQueueItems, loadQuickFilters, loadIngredients, loadLowStock, loadExpiringItems, loadImportedInvoices, loadInventorySessions, loadLocations]);
 
   // ─── Render ──────────────────────────────────────────────────────────────
 
@@ -1197,6 +1226,41 @@ export const NirPage: React.FC = () => {
             </div>
           </div>
 
+          {/* Articole Recepționate (Queue Items) */}
+          <div className="p-4 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                <i className="fas fa-boxes mr-1" /> Articole Recepționate
+              </h3>
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center justify-center w-6 h-6 bg-blue-600 text-white rounded-full text-xs font-bold">{queueItems.length}</span>
+                <button onClick={loadQueueItems} className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
+                  <i className="fas fa-sync-alt mr-1" /> Reîmprospătează
+                </button>
+              </div>
+            </div>
+            <div className="max-h-[300px] overflow-y-auto">
+              {queueItems.length === 0 ? (
+                <div className="text-center text-gray-400 py-6">
+                  <i className="fas fa-inbox text-3xl mb-2 block" />
+                  <p className="text-sm">Coada este goală</p>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-2">
+                  {queueItems.map((item: any, idx: number) => (
+                    <div key={idx} className="p-2 bg-gray-50 dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-700 text-sm">
+                      <div className="flex justify-between">
+                        <span className="font-medium">{item.name || item.product || `Item #${idx + 1}`}</span>
+                        <span className="text-gray-500">{item.quantity || '-'} {item.unit || ''}</span>
+                      </div>
+                      {item.status && <span className="text-xs text-gray-400">{item.status}</span>}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
           {/* Save Button */}
           <div className="flex justify-end">
             <button
@@ -1283,6 +1347,13 @@ export const NirPage: React.FC = () => {
               </tbody>
             </table>
           )}
+          {/* CAMP Info Notice */}
+          <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-700 mt-4">
+            <p className="text-sm text-blue-700 dark:text-blue-300">
+              <i className="fas fa-info-circle mr-1" />
+              NIR-urile actualizează automat <strong>Costul Mediu Ponderat (CAMP)</strong>.
+            </p>
+          </div>
         </div>
       )}
 
@@ -2030,6 +2101,12 @@ export const NirPage: React.FC = () => {
               )}
             </div>
             <div className="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-end gap-2">
+              <button
+                onClick={() => printNir(detailsNir.nir_number || detailsNir.number || '')}
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                <i className="fas fa-print mr-1" /> Printează
+              </button>
               <button
                 onClick={() => setDetailsModalOpen(false)}
                 className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded hover:bg-gray-300 dark:hover:bg-gray-600"
