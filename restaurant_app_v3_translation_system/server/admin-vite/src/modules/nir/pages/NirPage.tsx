@@ -1708,7 +1708,7 @@ export const NirPage: React.FC = () => {
               </select>
               <select value={sessionFilters.status} onChange={(e) => setSessionFilters({ ...sessionFilters, status: e.target.value })} className="h-9 px-3 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
                 <option value="">Toate statusurile</option>
-                <option value="in_progress">În Progress</option>
+                <option value="in_progress">În Progres</option>
                 <option value="completed">Completate</option>
                 <option value="archived">Arhivate</option>
               </select>
@@ -1754,10 +1754,10 @@ export const NirPage: React.FC = () => {
                       <td className="px-3 py-1.5">{session.completed_at ? new Date(session.completed_at).toLocaleString('ro-RO') : '-'}</td>
                       <td className="px-3 py-1.5 text-center">
                         <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${session.status === 'completed' ? 'bg-green-100 text-green-700' : session.status === 'archived' ? 'bg-gray-100 text-gray-700' : 'bg-yellow-100 text-yellow-700'}`}>
-                          {session.status === 'completed' ? 'Finalizat' : session.status === 'archived' ? 'Arhivat' : 'În Progress'}
+                          {session.status === 'completed' ? 'Finalizat' : session.status === 'archived' ? 'Arhivat' : 'În Progres'}
                         </span>
                       </td>
-                      <td className="px-3 py-1.5 text-right">{session.total_items || session.item_count || 0} / {session.total_items || 'N/A'}</td>
+                      <td className="px-3 py-1.5 text-right">{session.item_count || session.difference_count || 0} / {session.total_items || 'N/A'}</td>
                       <td className="px-3 py-1.5 text-center flex gap-1 justify-center">
                         {session.status === 'in_progress' && (
                           <button onClick={() => navigate(`/stocks/inventory/${session.id}`)} className="px-2 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700">
