@@ -4117,11 +4117,12 @@ dbPromise.then(async (db) => {
       });
 
       // Also update ingredient stock via stock_moves
+      const reason = `Lot adăugat: ${batch_number}`;
       await new Promise((resolve, reject) => {
         db.run(`
           INSERT INTO stock_moves (ingredient_id, type, quantity, reason, date, reference_type, reference_id)
-          VALUES (?, 'IN', ?, 'Lot adăugat: ${batch_number}', datetime('now'), 'batch', ?)
-        `, [ingredient_id, parseFloat(quantity), result.id], function(err) {
+          VALUES (?, 'IN', ?, ?, datetime('now'), 'batch', ?)
+        `, [ingredient_id, parseFloat(quantity), reason, result.id], function(err) {
           if (err) {
             console.warn('⚠️ stock_moves insert warning:', err.message);
             resolve(null); // Non-critical
@@ -4254,7 +4255,9 @@ dbPromise.then(async (db) => {
 
       const { status, supplier, start_date, end_date } = req.query;
 
-      let query = 'SELECT * FROM supplier_invoices WHERE 1=1';
+      let query = `SELECT id, invoice_number, supplier_name as supplier, invoice_date as date,
+                         total_amount as total, status, created_at, processed_at
+                  FROM supplier_invoices WHERE 1=1`;
       const params = [];
 
       if (status) {
@@ -4621,6 +4624,7 @@ dbPromise.then(async (db) => {
         });
       });
 
+      const DEFAULT_AVG_PROCESSING_TIME_MS = 250;
       res.json({
         queueType: 'memory',
         stats: {
@@ -4628,7 +4632,7 @@ dbPromise.then(async (db) => {
           processed: stats.processed || 0,
           failed: stats.failed || 0,
           todayTotal: stats.todayTotal || 0,
-          avgProcessingTime: 250
+          avgProcessingTime: DEFAULT_AVG_PROCESSING_TIME_MS
         },
         queueItems: queueItems,
         failedJobs: []
