@@ -10,7 +10,13 @@ import {
   FileText,
   AlertTriangle,
   PieChart,
-  Calendar
+  Calendar,
+  Truck,
+  Clipboard,
+  Receipt,
+  Settings,
+  MessageSquare,
+  Activity
 } from 'lucide-react';
 
 interface AdvancedMenuItem {
@@ -19,7 +25,7 @@ interface AdvancedMenuItem {
   icon: React.ReactNode;
   description: string;
   route?: string;
-  category: 'analytics' | 'operations' | 'reports';
+  category: 'analytics' | 'operations' | 'reports' | 'fiscal';
 }
 
 export const AdminAdvancedPage: React.FC = () => {
@@ -49,7 +55,7 @@ export const AdminAdvancedPage: React.FC = () => {
       label: 'Predicție Stocuri',
       icon: <Package className="w-6 h-6" />,
       description: 'Predicții consumuri viitoare',
-      route: '/stocks/dashboard',
+      route: '/reports/stock-prediction',
       category: 'analytics'
     },
     {
@@ -57,7 +63,7 @@ export const AdminAdvancedPage: React.FC = () => {
       label: 'Analiză ABC',
       icon: <PieChart className="w-6 h-6" />,
       description: 'Categorizare produse după vânzări',
-      route: '/reports/advanced',
+      route: '/reports/abc-analysis',
       category: 'analytics'
     },
     {
@@ -65,11 +71,59 @@ export const AdminAdvancedPage: React.FC = () => {
       label: 'Raport Profitabilitate',
       icon: <Target className="w-6 h-6" />,
       description: 'Analiză marje și costuri',
-      route: '/reports/profitability',
+      route: '/profitability',
+      category: 'analytics'
+    },
+    {
+      id: 'variance-reporting',
+      label: 'Raport Varianță',
+      icon: <Activity className="w-6 h-6" />,
+      description: 'Analiză varianță stocuri',
+      route: '/variance-reports',
+      category: 'analytics'
+    },
+    {
+      id: 'risk-alerts',
+      label: 'Alerte Risc',
+      icon: <AlertTriangle className="w-6 h-6" />,
+      description: 'Corelație stocuri-anulări',
+      route: '/stocks/risk-alerts',
       category: 'analytics'
     },
     
     // Operations
+    {
+      id: 'nir-management',
+      label: 'Gestiune NIR',
+      icon: <FileText className="w-6 h-6" />,
+      description: 'Note de intrare recepție',
+      route: '/tipizate-enterprise/nir',
+      category: 'operations'
+    },
+    {
+      id: 'transfers',
+      label: 'Transferuri',
+      icon: <Truck className="w-6 h-6" />,
+      description: 'Transfer între locații',
+      route: '/tipizate-enterprise/transfer',
+      category: 'operations'
+    },
+    {
+      id: 'multi-inventory',
+      label: 'Inventar Multi-Locație',
+      icon: <Clipboard className="w-6 h-6" />,
+      description: 'Sesiuni inventar fizic',
+      route: '/stocks/inventory/multi',
+      category: 'operations'
+    },
+    {
+      id: 'portion-control',
+      label: 'Control Porții',
+      icon: <Target className="w-6 h-6" />,
+      description: 'Standarde și conformitate porții',
+      route: '/portions',
+      category: 'operations'
+    },
     {
       id: 'happy-hour',
       label: 'Happy Hour',
@@ -89,18 +143,36 @@ export const AdminAdvancedPage: React.FC = () => {
     {
       id: 'queue-monitor',
       label: 'Monitor Coadă',
-      icon: <AlertTriangle className="w-6 h-6" />,
+      icon: <Activity className="w-6 h-6" />,
       description: 'Monitorizare comenzi în timp real',
       route: '/queue-monitor',
       category: 'operations'
     },
     {
-      id: 'nir-management',
-      label: 'Gestiune NIR',
-      icon: <FileText className="w-6 h-6" />,
-      description: 'Note de intrare/ieșire',
-      route: '/tipizate-enterprise/nir',
+      id: 'restaurant-config',
+      label: 'Configurare Restaurant',
+      icon: <Settings className="w-6 h-6" />,
+      description: 'Date fiscale și setări restaurant',
+      route: '/settings/restaurant-config',
       category: 'operations'
+    },
+    {
+      id: 'feedback',
+      label: 'Feedback Clienți',
+      icon: <MessageSquare className="w-6 h-6" />,
+      description: 'Recenzii și evaluări',
+      route: '/marketing/feedback',
+      category: 'operations'
+    },
+
+    // Fiscal
+    {
+      id: 'fiscal-overview',
+      label: 'Modul Fiscal',
+      icon: <Receipt className="w-6 h-6" />,
+      description: 'Documente fiscale și ANAF',
+      route: '/stocks/fiscal',
+      category: 'fiscal'
     },
     
     // Reports
@@ -109,7 +181,7 @@ export const AdminAdvancedPage: React.FC = () => {
       label: 'Raport Vânzări Detaliat',
       icon: <FileText className="w-6 h-6" />,
       description: 'Export CSV/PDF vânzări',
-      route: '/reports/advanced',
+      route: '/reports/sales',
       category: 'reports'
     },
     {
@@ -133,7 +205,7 @@ export const AdminAdvancedPage: React.FC = () => {
       label: 'Profit & Loss',
       icon: <TrendingUp className="w-6 h-6" />,
       description: 'Raport financiar complet',
-      route: '/reports/advanced',
+      route: '/reports/profit-loss',
       category: 'reports'
     }
   ];
@@ -142,6 +214,7 @@ export const AdminAdvancedPage: React.FC = () => {
     { id: 'all', label: 'Toate', color: 'purple' },
     { id: 'analytics', label: 'Analize', color: 'blue' },
     { id: 'operations', label: 'Operațiuni', color: 'green' },
+    { id: 'fiscal', label: 'Fiscal', color: 'red' },
     { id: 'reports', label: 'Rapoarte', color: 'orange' }
   ];
 
@@ -208,10 +281,12 @@ export const AdminAdvancedPage: React.FC = () => {
                     <span className={`px-2 py-1 text-xs rounded-full ${
                       item.category === 'analytics' ? 'bg-blue-100 text-blue-700' :
                       item.category === 'operations' ? 'bg-green-100 text-green-700' :
+                      item.category === 'fiscal' ? 'bg-red-100 text-red-700' :
                       'bg-orange-100 text-orange-700'
                     }`}>
                       {item.category === 'analytics' ? 'Analiză' :
                        item.category === 'operations' ? 'Operațiuni' :
+                       item.category === 'fiscal' ? 'Fiscal' :
                        'Raport'}
                     </span>
                     <svg 
