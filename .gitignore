@@ -55,3 +55,6 @@ restaurant_app_v3_translation_system/server/backups/bkp-10dec/DEV-REPORTS/backen
 # Exclude other non-essential files
 hs_err_*.log
 replay_*.log
+
+# Uploaded files
+restaurant_app_v3_translation_system/server/uploads/
