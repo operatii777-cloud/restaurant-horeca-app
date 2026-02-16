@@ -868,12 +868,10 @@ export const NirPage: React.FC = () => {
   // ─── Print NIR Function ──────────────────────────────────────────────────
 
   const printNir = (nirNumber: string) => {
-    // Open the NIR PDF in a new window for printing
     const url = `/api/inventory/nir/${nirNumber}/pdf`;
     const printWindow = window.open(url, '_blank');
     if (!printWindow) {
-      // Fallback: print current modal content
-      window.print();
+      alert('Popup-ul a fost blocat. Vă rugăm permiteți popup-urile pentru a printa NIR-ul.');
     }
   };
 
@@ -1233,8 +1231,8 @@ export const NirPage: React.FC = () => {
                 <i className="fas fa-boxes mr-1" /> Articole Recepționate
               </h3>
               <div className="flex items-center gap-2">
-                <span className="inline-flex items-center justify-center w-6 h-6 bg-blue-600 text-white rounded-full text-xs font-bold">{queueItems.length}</span>
-                <button onClick={loadQueueItems} className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
+                <span className="inline-flex items-center justify-center w-6 h-6 bg-blue-600 text-white rounded-full text-xs font-bold" aria-label={`Articole în coadă: ${queueItems.length}`}>{queueItems.length}</span>
+                <button onClick={loadQueueItems} aria-label="Reîmprospătează articolele recepționate" className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
                   <i className="fas fa-sync-alt mr-1" /> Reîmprospătează
                 </button>
               </div>
