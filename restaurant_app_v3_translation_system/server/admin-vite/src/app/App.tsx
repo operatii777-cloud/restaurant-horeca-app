@@ -115,6 +115,7 @@ import { ImportPage } from "@/modules/settings/pages/ImportPage";
 import { ExportPage } from "@/modules/settings/pages/ExportPage";
 import { BrandingPage } from "@/modules/settings/pages/BrandingPage";
 import { ManualInstructiuniPage } from "@/modules/settings/pages/ManualInstructiuniPage";
+import { PINManagementPage } from "@/modules/settings/pins/pages/PINManagementPage";
 // Kiosk - Lazy loaded (mare modul)
 const KioskLayout = lazy(() => import('@/modules/kiosk/layout/KioskLayout').then(m => ({ default: m.KioskLayout })));
 const KioskMainLayout = lazy(() => import('@/modules/kiosk/layout/KioskMainLayout').then(m => ({ default: m.KioskMainLayout })));
@@ -635,6 +636,7 @@ const App = () => {
         <Route path="settings/import-export" element={<ImportExportPage />} />
         <Route path="settings/branding" element={<BrandingPage />} />
         <Route path="settings/manual-instructiuni" element={<ManualInstructiuniPage />} />
+        <Route path="settings/pins" element={<PINManagementPage />} />
         <Route path="import" element={<ImportPage />} />
         <Route path="export" element={<ExportPage />} />
         <Route path="stocks/fiscal/reports/monthly" element={<LazyRoute component={MonthlyReportPage} />} />
