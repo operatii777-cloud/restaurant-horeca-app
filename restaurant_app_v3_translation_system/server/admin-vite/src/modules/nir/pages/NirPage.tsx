@@ -5,6 +5,7 @@
  */
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { httpClient } from '@/shared/api/httpClient';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -81,6 +82,7 @@ const VAT_RATES = [
 // ─── Component ───────────────────────────────────────────────────────────────
 
 export const NirPage: React.FC = () => {
+  const navigate = useNavigate();
   // Form state
   const [unitName, setUnitName] = useState('');
   const [cui, setCui] = useState('');
@@ -132,7 +134,36 @@ export const NirPage: React.FC = () => {
   const [saving, setSaving] = useState(false);
 
   // Active tab
-  const [activeTab, setActiveTab] = useState<'form' | 'history'>('form');
+  const [activeTab, setActiveTab] = useState<'form' | 'history' | 'reports' | 'lots' | 'inventory'>('form');
+
+  // ─── Reports & Filters state ───────────────────────────────────────────
+  const [statsData, setStatsData] = useState({ total_ingredients: 0, out_of_stock: 0, low_stock: 0, ok_stock: 0 });
+  const [filterCategories, setFilterCategories] = useState<string[]>([]);
+  const [filterSuppliers, setFilterSuppliers] = useState<string[]>([]);
+  const [reportFilters, setReportFilters] = useState({ category: '', supplier: '', stockStatus: '', sortBy: 'name', minStock: '', maxStock: '' });
+  const [filteredResults, setFilteredResults] = useState<any[]>([]);
+  const [filteredSummary, setFilteredSummary] = useState<any>(null);
+  const [filtersLoading, setFiltersLoading] = useState(false);
+
+  // ─── Lots & Invoice Import state ───────────────────────────────────────
+  const [lotForm, setLotForm] = useState({ ingredient: '', batchNumber: '', barcode: '', quantity: '', unitCost: '', purchaseDate: new Date().toISOString().split('T')[0], expiryDate: '', supplier: '', invoiceNumber: '' });
+  const [ingredients, setIngredients] = useState<any[]>([]);
+  const [lotSaving, setLotSaving] = useState(false);
+  const [invoiceForm, setInvoiceForm] = useState({ fileType: '', invoiceNumber: '', supplier: '', date: new Date().toISOString().split('T')[0], total: '' });
+  const invoiceFileRef = useRef<HTMLInputElement>(null);
+  const [invoiceImporting, setInvoiceImporting] = useState(false);
+  const [lowStockItems, setLowStockItems] = useState<any[]>([]);
+  const [expiringItems, setExpiringItems] = useState<any[]>([]);
+  const [importedInvoices, setImportedInvoices] = useState<any[]>([]);
+  const [invoiceFilters, setInvoiceFilters] = useState({ status: '', supplier: '', startDate: '', endDate: '' });
+
+  // ─── Inventory Sessions state ──────────────────────────────────────────
+  const [inventorySessions, setInventorySessions] = useState<any[]>([]);
+  const [sessionsLoading, setSessionsLoading] = useState(false);
+  const [sessionFilters, setSessionFilters] = useState({ type: '', status: '', limit: '10' });
+  const [showNewSessionModal, setShowNewSessionModal] = useState(false);
+  const [newSessionForm, setNewSessionForm] = useState({ sessionType: 'daily', scope: 'global', locationIds: [] as number[], startedBy: '' });
+  const [locations, setLocations] = useState<any[]>([]);
 
   // ─── Calculations ────────────────────────────────────────────────────────
 
@@ -589,6 +620,243 @@ export const NirPage: React.FC = () => {
     return () => document.removeEventListener('keydown', handleKey);
   }, [activeTab, addItem]);
 
+  // ─── Reports & Filters Functions ─────────────────────────────────────────
+
+  const loadQuickFilters = useCallback(async () => {
+    try {
+      const res = await httpClient.get('/api/admin/inventory/filters');
+      const result = res.data;
+      if (result.success && result.data) {
+        setFilterCategories(result.data.categories || []);
+        setFilterSuppliers(result.data.suppliers || []);
+        if (result.data.stats) setStatsData(result.data.stats);
+      }
+    } catch (e) {
+      console.error('Error loading filters:', e);
+      // Try loading ingredients for stats as fallback
+      try {
+        const res2 = await httpClient.get('/api/ingredients');
+        const ings = Array.isArray(res2.data) ? res2.data : res2.data?.ingredients || [];
+        const total = ings.length;
+        const outOfStock = ings.filter((i: any) => (i.current_stock || 0) <= 0).length;
+        const lowStock = ings.filter((i: any) => (i.current_stock || 0) > 0 && (i.current_stock || 0) <= (i.min_stock || 5)).length;
+        setStatsData({ total_ingredients: total, out_of_stock: outOfStock, low_stock: lowStock, ok_stock: total - outOfStock - lowStock });
+        const cats = [...new Set(ings.map((i: any) => i.category).filter(Boolean))] as string[];
+        setFilterCategories(cats);
+        const sups = [...new Set(ings.map((i: any) => i.supplier).filter(Boolean))] as string[];
+        setFilterSuppliers(sups);
+      } catch (e2) { /* fallback failed */ }
+    }
+  }, []);
+
+  const applyQuickFilters = useCallback(async () => {
+    setFiltersLoading(true);
+    try {
+      const params = new URLSearchParams();
+      if (reportFilters.category) params.append('category', reportFilters.category);
+      if (reportFilters.supplier) params.append('supplier', reportFilters.supplier);
+      if (reportFilters.stockStatus) params.append('stock_status', reportFilters.stockStatus);
+      if (reportFilters.sortBy) params.append('sort_by', reportFilters.sortBy);
+      if (reportFilters.minStock) params.append('min_stock', reportFilters.minStock);
+      if (reportFilters.maxStock) params.append('max_stock', reportFilters.maxStock);
+
+      const res = await httpClient.get(`/api/admin/inventory/filtered?${params.toString()}`);
+      const result = res.data;
+      if (result.success) {
+        setFilteredResults(result.data || []);
+        setFilteredSummary(result.summary || null);
+      }
+    } catch (e) {
+      console.error('Error applying filters:', e);
+      // Fallback: filter locally from ingredients
+      try {
+        const res2 = await httpClient.get('/api/ingredients');
+        const ings = Array.isArray(res2.data) ? res2.data : res2.data?.ingredients || [];
+        let filtered = [...ings];
+        if (reportFilters.category) filtered = filtered.filter((i: any) => i.category === reportFilters.category);
+        if (reportFilters.supplier) filtered = filtered.filter((i: any) => i.supplier === reportFilters.supplier);
+        if (reportFilters.stockStatus === 'out_of_stock') filtered = filtered.filter((i: any) => (i.current_stock || 0) <= 0);
+        if (reportFilters.stockStatus === 'low_stock') filtered = filtered.filter((i: any) => (i.current_stock || 0) > 0 && (i.current_stock || 0) <= (i.min_stock || 5));
+        if (reportFilters.stockStatus === 'ok_stock') filtered = filtered.filter((i: any) => (i.current_stock || 0) > (i.min_stock || 5));
+        if (reportFilters.minStock) filtered = filtered.filter((i: any) => (i.current_stock || 0) >= parseFloat(reportFilters.minStock));
+        if (reportFilters.maxStock) filtered = filtered.filter((i: any) => (i.current_stock || 0) <= parseFloat(reportFilters.maxStock));
+        setFilteredResults(filtered);
+        setFilteredSummary({ total: filtered.length, out_of_stock: filtered.filter((i: any) => (i.current_stock || 0) <= 0).length, low_stock: filtered.filter((i: any) => (i.current_stock || 0) > 0 && (i.current_stock || 0) <= (i.min_stock || 5)).length, ok_stock: filtered.filter((i: any) => (i.current_stock || 0) > (i.min_stock || 5)).length, total_value: filtered.reduce((s: number, i: any) => s + ((i.current_stock || 0) * (i.cost_per_unit || 0)), 0) });
+      } catch (e2) { /* fallback failed */ }
+    } finally {
+      setFiltersLoading(false);
+    }
+  }, [reportFilters]);
+
+  const exportReport = (format: string, type: string) => {
+    const url = `/api/admin/inventory/export/${format}?type=${type}`;
+    if (format === 'excel') {
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `raport_${type}_${new Date().toISOString().split('T')[0]}.xlsx`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      window.open(url, '_blank');
+    }
+  };
+
+  // ─── Lots & Invoice Functions ────────────────────────────────────────────
+
+  const loadIngredients = useCallback(async () => {
+    try {
+      const res = await httpClient.get('/api/ingredients');
+      const data = Array.isArray(res.data) ? res.data : res.data?.ingredients || [];
+      setIngredients(data);
+    } catch (e) { console.error('Error loading ingredients:', e); }
+  }, []);
+
+  const handleAddLot = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLotSaving(true);
+    try {
+      await httpClient.post('/api/inventory/lots', {
+        ingredient_id: lotForm.ingredient,
+        batch_number: lotForm.batchNumber,
+        barcode: lotForm.barcode,
+        quantity: parseFloat(lotForm.quantity) || 0,
+        unit_cost: parseFloat(lotForm.unitCost) || 0,
+        purchase_date: lotForm.purchaseDate,
+        expiry_date: lotForm.expiryDate,
+        supplier: lotForm.supplier,
+        invoice_number: lotForm.invoiceNumber,
+      });
+      alert('✅ Lot adăugat cu succes!');
+      setLotForm({ ingredient: '', batchNumber: '', barcode: '', quantity: '', unitCost: '', purchaseDate: new Date().toISOString().split('T')[0], expiryDate: '', supplier: '', invoiceNumber: '' });
+      loadLowStock();
+      loadExpiringItems();
+    } catch (e: any) {
+      alert('Eroare la adăugarea lotului: ' + (e?.message || 'Eroare necunoscută'));
+    } finally {
+      setLotSaving(false);
+    }
+  };
+
+  const handleImportInvoice = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const file = invoiceFileRef.current?.files?.[0];
+    if (!file) { alert('Selectați un fișier!'); return; }
+    setInvoiceImporting(true);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('file_type', invoiceForm.fileType);
+      formData.append('invoice_number', invoiceForm.invoiceNumber);
+      formData.append('supplier', invoiceForm.supplier);
+      formData.append('date', invoiceForm.date);
+      formData.append('total', invoiceForm.total);
+      await httpClient.post('/api/inventory/import-invoice', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+      alert('✅ Factură importată cu succes!');
+      setInvoiceForm({ fileType: '', invoiceNumber: '', supplier: '', date: new Date().toISOString().split('T')[0], total: '' });
+      if (invoiceFileRef.current) invoiceFileRef.current.value = '';
+      loadImportedInvoices();
+    } catch (e: any) {
+      alert('Eroare la import: ' + (e?.message || 'Eroare necunoscută'));
+    } finally {
+      setInvoiceImporting(false);
+    }
+  };
+
+  const loadLowStock = useCallback(async () => {
+    try {
+      const res = await httpClient.get('/api/admin/inventory/filtered?stock_status=low_stock');
+      if (res.data?.success) setLowStockItems(res.data.data || []);
+      else {
+        const res2 = await httpClient.get('/api/ingredients');
+        const ings = Array.isArray(res2.data) ? res2.data : res2.data?.ingredients || [];
+        setLowStockItems(ings.filter((i: any) => (i.current_stock || 0) > 0 && (i.current_stock || 0) <= (i.min_stock || 5)));
+      }
+    } catch (e) { console.error('Error loading low stock:', e); }
+  }, []);
+
+  const loadExpiringItems = useCallback(async () => {
+    try {
+      const res = await httpClient.get('/api/inventory/expiring?days=30');
+      setExpiringItems(Array.isArray(res.data) ? res.data : res.data?.items || []);
+    } catch (e) {
+      console.error('Error loading expiring items:', e);
+      setExpiringItems([]);
+    }
+  }, []);
+
+  const loadImportedInvoices = useCallback(async () => {
+    try {
+      const params = new URLSearchParams();
+      if (invoiceFilters.status) params.append('status', invoiceFilters.status);
+      if (invoiceFilters.supplier) params.append('supplier', invoiceFilters.supplier);
+      if (invoiceFilters.startDate) params.append('start_date', invoiceFilters.startDate);
+      if (invoiceFilters.endDate) params.append('end_date', invoiceFilters.endDate);
+      const res = await httpClient.get(`/api/inventory/invoices?${params.toString()}`);
+      setImportedInvoices(Array.isArray(res.data) ? res.data : res.data?.invoices || []);
+    } catch (e) {
+      console.error('Error loading invoices:', e);
+      setImportedInvoices([]);
+    }
+  }, [invoiceFilters]);
+
+  // ─── Inventory Sessions Functions ────────────────────────────────────────
+
+  const loadInventorySessions = useCallback(async () => {
+    setSessionsLoading(true);
+    try {
+      const params = new URLSearchParams();
+      if (sessionFilters.type) params.append('type', sessionFilters.type);
+      if (sessionFilters.status) params.append('status', sessionFilters.status);
+      if (sessionFilters.limit) params.append('limit', sessionFilters.limit);
+      const res = await httpClient.get(`/api/inventory/sessions?${params.toString()}`);
+      const data = res.data;
+      setInventorySessions(data.sessions || (Array.isArray(data) ? data : []));
+    } catch (e) {
+      console.error('Error loading inventory sessions:', e);
+      setInventorySessions([]);
+    } finally {
+      setSessionsLoading(false);
+    }
+  }, [sessionFilters]);
+
+  const loadLocations = useCallback(async () => {
+    try {
+      const res = await httpClient.get('/api/locations');
+      setLocations(res.data?.locations || (Array.isArray(res.data) ? res.data : []));
+    } catch (e) { console.error('Error loading locations:', e); }
+  }, []);
+
+  const handleStartSession = async () => {
+    try {
+      const payload = {
+        session_type: newSessionForm.sessionType,
+        started_by: newSessionForm.startedBy,
+        location_ids: newSessionForm.scope === 'global' ? null : newSessionForm.locationIds,
+      };
+      const res = await httpClient.post('/api/inventory/start', payload);
+      const data = res.data;
+      setShowNewSessionModal(false);
+      setNewSessionForm({ sessionType: 'daily', scope: 'global', locationIds: [], startedBy: '' });
+      if (data.sessionId) {
+        navigate(`/stocks/inventory/${data.sessionId}`);
+      } else {
+        loadInventorySessions();
+      }
+    } catch (e) {
+      console.error('Error starting session:', e);
+      alert('Eroare la crearea sesiunii de inventar');
+    }
+  };
+
+  // ─── Load data on tab change ─────────────────────────────────────────────
+
+  useEffect(() => {
+    if (activeTab === 'reports') { loadQuickFilters(); }
+    if (activeTab === 'lots') { loadIngredients(); loadLowStock(); loadExpiringItems(); loadImportedInvoices(); }
+    if (activeTab === 'inventory') { loadInventorySessions(); loadLocations(); }
+  }, [activeTab, loadQuickFilters, loadIngredients, loadLowStock, loadExpiringItems, loadImportedInvoices, loadInventorySessions, loadLocations]);
+
   // ─── Render ──────────────────────────────────────────────────────────────
 
   return (
@@ -602,10 +870,10 @@ export const NirPage: React.FC = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 border-b border-gray-200 dark:border-gray-700">
+      <div className="flex flex-wrap gap-2 border-b border-gray-200 dark:border-gray-700">
         <button
           onClick={() => setActiveTab('form')}
-          className={`px-4 py-2 font-medium rounded-t-lg ${
+          className={`px-4 py-2 font-medium rounded-t-lg text-sm ${
             activeTab === 'form'
               ? 'bg-blue-600 text-white'
               : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
@@ -618,13 +886,43 @@ export const NirPage: React.FC = () => {
             setActiveTab('history');
             loadHistory();
           }}
-          className={`px-4 py-2 font-medium rounded-t-lg ${
+          className={`px-4 py-2 font-medium rounded-t-lg text-sm ${
             activeTab === 'history'
               ? 'bg-blue-600 text-white'
               : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
           }`}
         >
           <i className="fas fa-history mr-1" /> Istoric NIR-uri
+        </button>
+        <button
+          onClick={() => setActiveTab('reports')}
+          className={`px-4 py-2 font-medium rounded-t-lg text-sm ${
+            activeTab === 'reports'
+              ? 'bg-green-600 text-white'
+              : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+          }`}
+        >
+          <i className="fas fa-chart-bar mr-1" /> Export &amp; Filtre
+        </button>
+        <button
+          onClick={() => setActiveTab('lots')}
+          className={`px-4 py-2 font-medium rounded-t-lg text-sm ${
+            activeTab === 'lots'
+              ? 'bg-purple-600 text-white'
+              : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+          }`}
+        >
+          <i className="fas fa-boxes mr-1" /> Loturi &amp; Facturi
+        </button>
+        <button
+          onClick={() => setActiveTab('inventory')}
+          className={`px-4 py-2 font-medium rounded-t-lg text-sm ${
+            activeTab === 'inventory'
+              ? 'bg-orange-600 text-white'
+              : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+          }`}
+        >
+          <i className="fas fa-clipboard-list mr-1" /> Inventar Avansat
         </button>
       </div>
 
@@ -988,7 +1286,551 @@ export const NirPage: React.FC = () => {
         </div>
       )}
 
-      {/* ─── Stock Selection Modal ────────────────────────────────────── */}
+      {/* ─── Reports & Filters Tab ────────────────────────────────────── */}
+      {activeTab === 'reports' && (
+        <div className="flex flex-col gap-4">
+          {/* Export Buttons */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Excel Export */}
+            <div className="p-4 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700">
+              <h3 className="text-sm font-semibold text-green-700 dark:text-green-300 mb-3">
+                <i className="fas fa-file-excel mr-1" /> Export Excel
+              </h3>
+              <div className="flex flex-col gap-2">
+                <button onClick={() => exportReport('excel', 'stock_overview')} className="px-3 py-2 bg-green-600 text-white rounded text-sm hover:bg-green-700">
+                  <i className="fas fa-file-excel mr-1" /> Stoc General
+                </button>
+                <button onClick={() => exportReport('excel', 'low_stock')} className="px-3 py-2 bg-yellow-600 text-white rounded text-sm hover:bg-yellow-700">
+                  <i className="fas fa-file-excel mr-1" /> Stoc Scăzut
+                </button>
+                <button onClick={() => exportReport('excel', 'expiring')} className="px-3 py-2 bg-red-600 text-white rounded text-sm hover:bg-red-700">
+                  <i className="fas fa-file-excel mr-1" /> Expirări (30 zile)
+                </button>
+                <button onClick={() => exportReport('excel', 'batches')} className="px-3 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">
+                  <i className="fas fa-file-excel mr-1" /> Toate Loturile
+                </button>
+                <button onClick={() => exportReport('excel', 'invoices')} className="px-3 py-2 bg-gray-600 text-white rounded text-sm hover:bg-gray-700">
+                  <i className="fas fa-file-excel mr-1" /> Facturi Importate
+                </button>
+              </div>
+            </div>
+            {/* PDF Export */}
+            <div className="p-4 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700">
+              <h3 className="text-sm font-semibold text-red-700 dark:text-red-300 mb-3">
+                <i className="fas fa-file-pdf mr-1" /> Export PDF
+              </h3>
+              <div className="flex flex-col gap-2">
+                <button onClick={() => exportReport('pdf', 'stock_overview')} className="px-3 py-2 bg-green-600 text-white rounded text-sm hover:bg-green-700">
+                  <i className="fas fa-file-pdf mr-1" /> Stoc General
+                </button>
+                <button onClick={() => exportReport('pdf', 'low_stock')} className="px-3 py-2 bg-yellow-600 text-white rounded text-sm hover:bg-yellow-700">
+                  <i className="fas fa-file-pdf mr-1" /> Stoc Scăzut
+                </button>
+                <button onClick={() => exportReport('pdf', 'expiring')} className="px-3 py-2 bg-red-600 text-white rounded text-sm hover:bg-red-700">
+                  <i className="fas fa-file-pdf mr-1" /> Expirări (30 zile)
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Filters */}
+          <div className="p-4 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700">
+            <h3 className="text-sm font-semibold text-blue-700 dark:text-blue-300 mb-3">
+              <i className="fas fa-filter mr-1" /> Filtre Rapide
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-3 mb-3">
+              <div className="flex flex-col gap-1">
+                <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Categorie</label>
+                <select value={reportFilters.category} onChange={(e) => setReportFilters({ ...reportFilters, category: e.target.value })} className="h-9 px-3 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
+                  <option value="">Toate Categoriile</option>
+                  {filterCategories.map((c) => <option key={c} value={c}>{c}</option>)}
+                </select>
+              </div>
+              <div className="flex flex-col gap-1">
+                <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Furnizor</label>
+                <select value={reportFilters.supplier} onChange={(e) => setReportFilters({ ...reportFilters, supplier: e.target.value })} className="h-9 px-3 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
+                  <option value="">Toți Furnizorii</option>
+                  {filterSuppliers.map((s) => <option key={s} value={s}>{s}</option>)}
+                </select>
+              </div>
+              <div className="flex flex-col gap-1">
+                <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Status Stoc</label>
+                <select value={reportFilters.stockStatus} onChange={(e) => setReportFilters({ ...reportFilters, stockStatus: e.target.value })} className="h-9 px-3 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
+                  <option value="">Toate Statusurile</option>
+                  <option value="out_of_stock">Fără Stoc</option>
+                  <option value="low_stock">Stoc Scăzut</option>
+                  <option value="ok_stock">Stoc OK</option>
+                </select>
+              </div>
+              <div className="flex flex-col gap-1">
+                <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Sortare</label>
+                <select value={reportFilters.sortBy} onChange={(e) => setReportFilters({ ...reportFilters, sortBy: e.target.value })} className="h-9 px-3 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
+                  <option value="name">Nume</option>
+                  <option value="category">Categorie</option>
+                  <option value="current_stock">Stoc Curent</option>
+                  <option value="min_stock">Stoc Minim</option>
+                  <option value="cost_per_unit">Cost/Unit</option>
+                </select>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-gray-500">Stoc Min:</span>
+                <input type="number" value={reportFilters.minStock} onChange={(e) => setReportFilters({ ...reportFilters, minStock: e.target.value })} placeholder="0" className="h-9 px-3 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm flex-1" />
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-gray-500">Stoc Max:</span>
+                <input type="number" value={reportFilters.maxStock} onChange={(e) => setReportFilters({ ...reportFilters, maxStock: e.target.value })} placeholder="1000" className="h-9 px-3 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm flex-1" />
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <button onClick={applyQuickFilters} disabled={filtersLoading} className="px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 disabled:opacity-50">
+                {filtersLoading ? <><i className="fas fa-spinner fa-spin mr-1" /> Se aplică...</> : <><i className="fas fa-filter mr-1" /> Aplică Filtre</>}
+              </button>
+              <button onClick={() => { setReportFilters({ category: '', supplier: '', stockStatus: '', sortBy: 'name', minStock: '', maxStock: '' }); setFilteredResults([]); setFilteredSummary(null); }} className="px-4 py-2 bg-gray-500 text-white rounded text-sm hover:bg-gray-600">
+                <i className="fas fa-times mr-1" /> Șterge Filtre
+              </button>
+            </div>
+          </div>
+
+          {/* Stats Cards */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="p-4 bg-blue-600 text-white rounded-xl text-center">
+              <div className="text-2xl font-bold">{statsData.total_ingredients}</div>
+              <div className="text-xs opacity-80">Total Ingrediente</div>
+            </div>
+            <div className="p-4 bg-red-600 text-white rounded-xl text-center">
+              <div className="text-2xl font-bold">{statsData.out_of_stock}</div>
+              <div className="text-xs opacity-80">Fără Stoc</div>
+            </div>
+            <div className="p-4 bg-yellow-600 text-white rounded-xl text-center">
+              <div className="text-2xl font-bold">{statsData.low_stock}</div>
+              <div className="text-xs opacity-80">Stoc Scăzut</div>
+            </div>
+            <div className="p-4 bg-green-600 text-white rounded-xl text-center">
+              <div className="text-2xl font-bold">{statsData.ok_stock}</div>
+              <div className="text-xs opacity-80">Stoc OK</div>
+            </div>
+          </div>
+
+          {/* Filtered Results */}
+          {filteredResults.length > 0 && (
+            <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 overflow-x-auto">
+              <div className="p-3 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                <h4 className="text-sm font-semibold">Rezultate Filtre</h4>
+                {filteredSummary && (
+                  <span className="text-xs text-gray-500">
+                    Total: {filteredSummary.total} | Fără stoc: {filteredSummary.out_of_stock} | Stoc scăzut: {filteredSummary.low_stock} | Stoc OK: {filteredSummary.ok_stock} | Valoare: {(filteredSummary.total_value || 0).toFixed(2)} RON
+                  </span>
+                )}
+              </div>
+              <table className="w-full text-sm">
+                <thead className="bg-gray-50 dark:bg-gray-800">
+                  <tr>
+                    <th className="px-3 py-2 text-left">Denumire</th>
+                    <th className="px-3 py-2 text-left">Categorie</th>
+                    <th className="px-3 py-2">U.M.</th>
+                    <th className="px-3 py-2 text-right">Stoc</th>
+                    <th className="px-3 py-2 text-right">Minim</th>
+                    <th className="px-3 py-2 text-right">Cost/Unit</th>
+                    <th className="px-3 py-2 text-left">Furnizor</th>
+                    <th className="px-3 py-2 text-center">Status</th>
+                    <th className="px-3 py-2 text-right">Valoare</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredResults.slice(0, 200).map((item, idx) => {
+                    const stock = item.current_stock || 0;
+                    const min = item.min_stock || 5;
+                    const status = stock <= 0 ? 'out_of_stock' : stock <= min ? 'low_stock' : 'ok_stock';
+                    return (
+                      <tr key={idx} className="border-t border-gray-100 dark:border-gray-800">
+                        <td className="px-3 py-1.5 font-medium">{item.name}</td>
+                        <td className="px-3 py-1.5 text-gray-500">{item.category || 'N/A'}</td>
+                        <td className="px-3 py-1.5 text-center">{item.unit}</td>
+                        <td className="px-3 py-1.5 text-right">{stock}</td>
+                        <td className="px-3 py-1.5 text-right">{min}</td>
+                        <td className="px-3 py-1.5 text-right">{(item.cost_per_unit || 0).toFixed(2)}</td>
+                        <td className="px-3 py-1.5 text-gray-500">{item.supplier || 'N/A'}</td>
+                        <td className="px-3 py-1.5 text-center">
+                          <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${status === 'out_of_stock' ? 'bg-red-100 text-red-700' : status === 'low_stock' ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700'}`}>
+                            {status === 'out_of_stock' ? 'Fără Stoc' : status === 'low_stock' ? 'Stoc Scăzut' : 'Stoc OK'}
+                          </span>
+                        </td>
+                        <td className="px-3 py-1.5 text-right">{((stock) * (item.cost_per_unit || 0)).toFixed(2)} RON</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ─── Lots & Invoice Import Tab ────────────────────────────────── */}
+      {activeTab === 'lots' && (
+        <div className="flex flex-col gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Add New Lot */}
+            <div className="p-4 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700">
+              <h3 className="text-sm font-semibold text-blue-700 dark:text-blue-300 mb-3">
+                <i className="fas fa-boxes mr-1" /> Adaugă Lot Nou
+              </h3>
+              <form onSubmit={handleAddLot} className="flex flex-col gap-3">
+                <div className="flex flex-col gap-1">
+                  <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Ingredient</label>
+                  <select value={lotForm.ingredient} onChange={(e) => setLotForm({ ...lotForm, ingredient: e.target.value })} required className="h-9 px-3 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
+                    <option value="">Selectează ingredient...</option>
+                    {ingredients.map((i: any) => <option key={i.id} value={i.id}>{i.name}</option>)}
+                  </select>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <InputField label="Număr Lot" value={lotForm.batchNumber} onChange={(v) => setLotForm({ ...lotForm, batchNumber: v })} required />
+                  <InputField label="Cod Bare" value={lotForm.barcode} onChange={(v) => setLotForm({ ...lotForm, barcode: v })} />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <InputField label="Cantitate" value={lotForm.quantity} onChange={(v) => setLotForm({ ...lotForm, quantity: v })} type="number" required />
+                  <InputField label="Cost Unitar" value={lotForm.unitCost} onChange={(v) => setLotForm({ ...lotForm, unitCost: v })} type="number" />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="flex flex-col gap-1">
+                    <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Data Achiziție</label>
+                    <input type="date" value={lotForm.purchaseDate} onChange={(e) => setLotForm({ ...lotForm, purchaseDate: e.target.value })} required className="h-9 px-3 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm" />
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Data Expirării</label>
+                    <input type="date" value={lotForm.expiryDate} onChange={(e) => setLotForm({ ...lotForm, expiryDate: e.target.value })} className="h-9 px-3 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <InputField label="Furnizor" value={lotForm.supplier} onChange={(v) => setLotForm({ ...lotForm, supplier: v })} />
+                  <InputField label="Număr Factură" value={lotForm.invoiceNumber} onChange={(v) => setLotForm({ ...lotForm, invoiceNumber: v })} />
+                </div>
+                <button type="submit" disabled={lotSaving} className="px-4 py-2 bg-blue-600 text-white rounded text-sm font-medium hover:bg-blue-700 disabled:opacity-50">
+                  {lotSaving ? <><i className="fas fa-spinner fa-spin mr-1" /> Se salvează...</> : <><i className="fas fa-plus mr-1" /> Adaugă Lot</>}
+                </button>
+              </form>
+            </div>
+
+            {/* Invoice Import */}
+            <div className="p-4 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700">
+              <h3 className="text-sm font-semibold text-green-700 dark:text-green-300 mb-3">
+                <i className="fas fa-file-upload mr-1" /> Import Factură
+              </h3>
+              <form onSubmit={handleImportInvoice} className="flex flex-col gap-3">
+                <div className="flex flex-col gap-1">
+                  <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Tip Fișier</label>
+                  <select value={invoiceForm.fileType} onChange={(e) => setInvoiceForm({ ...invoiceForm, fileType: e.target.value })} required className="h-9 px-3 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
+                    <option value="">Selectează tipul...</option>
+                    <option value="pdf">PDF</option>
+                    <option value="xml">XML</option>
+                  </select>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Fișier Factură</label>
+                  <input type="file" ref={invoiceFileRef} accept=".pdf,.xml" required className="text-sm file:mr-2 file:py-1 file:px-3 file:rounded file:border-0 file:bg-green-100 file:text-green-700" />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <InputField label="Număr Factură" value={invoiceForm.invoiceNumber} onChange={(v) => setInvoiceForm({ ...invoiceForm, invoiceNumber: v })} required />
+                  <InputField label="Furnizor" value={invoiceForm.supplier} onChange={(v) => setInvoiceForm({ ...invoiceForm, supplier: v })} required />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="flex flex-col gap-1">
+                    <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Data Factură</label>
+                    <input type="date" value={invoiceForm.date} onChange={(e) => setInvoiceForm({ ...invoiceForm, date: e.target.value })} required className="h-9 px-3 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm" />
+                  </div>
+                  <InputField label="Valoare Totală" value={invoiceForm.total} onChange={(v) => setInvoiceForm({ ...invoiceForm, total: v })} type="number" required />
+                </div>
+                <button type="submit" disabled={invoiceImporting} className="px-4 py-2 bg-green-600 text-white rounded text-sm font-medium hover:bg-green-700 disabled:opacity-50">
+                  {invoiceImporting ? <><i className="fas fa-spinner fa-spin mr-1" /> Se importă...</> : <><i className="fas fa-upload mr-1" /> Importă Factură</>}
+                </button>
+              </form>
+            </div>
+          </div>
+
+          {/* Low Stock & Expiring Alerts */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Low Stock */}
+            <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700">
+              <div className="p-3 bg-yellow-50 dark:bg-yellow-900/20 border-b border-yellow-200 dark:border-yellow-700 flex justify-between items-center">
+                <h4 className="text-sm font-semibold text-yellow-700 dark:text-yellow-300">
+                  <i className="fas fa-exclamation-triangle mr-1" /> Stoc Scăzut
+                </h4>
+                <button onClick={loadLowStock} className="text-xs px-2 py-1 bg-yellow-600 text-white rounded hover:bg-yellow-700">
+                  <i className="fas fa-sync mr-1" /> Actualizează
+                </button>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead className="bg-gray-50 dark:bg-gray-800">
+                    <tr>
+                      <th className="px-3 py-2 text-left">Ingredient</th>
+                      <th className="px-3 py-2 text-right">Stoc</th>
+                      <th className="px-3 py-2 text-right">Minim</th>
+                      <th className="px-3 py-2 text-center">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {lowStockItems.length === 0 ? (
+                      <tr><td colSpan={4} className="text-center py-4 text-gray-400">Nu sunt produse cu stoc scăzut</td></tr>
+                    ) : lowStockItems.map((item, idx) => (
+                      <tr key={idx} className="border-t border-gray-100 dark:border-gray-800">
+                        <td className="px-3 py-1.5 font-medium">{item.name}</td>
+                        <td className="px-3 py-1.5 text-right">{item.current_stock || 0}</td>
+                        <td className="px-3 py-1.5 text-right">{item.min_stock || 5}</td>
+                        <td className="px-3 py-1.5 text-center">
+                          <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-700">Scăzut</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Expiring Soon */}
+            <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700">
+              <div className="p-3 bg-red-50 dark:bg-red-900/20 border-b border-red-200 dark:border-red-700 flex justify-between items-center">
+                <h4 className="text-sm font-semibold text-red-700 dark:text-red-300">
+                  <i className="fas fa-clock mr-1" /> Expiră în Curând
+                </h4>
+                <button onClick={loadExpiringItems} className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700">
+                  <i className="fas fa-sync mr-1" /> Actualizează
+                </button>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead className="bg-gray-50 dark:bg-gray-800">
+                    <tr>
+                      <th className="px-3 py-2 text-left">Ingredient</th>
+                      <th className="px-3 py-2 text-left">Lot</th>
+                      <th className="px-3 py-2 text-left">Expiră</th>
+                      <th className="px-3 py-2 text-center">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {expiringItems.length === 0 ? (
+                      <tr><td colSpan={4} className="text-center py-4 text-gray-400">Nu sunt produse care expiră în curând</td></tr>
+                    ) : expiringItems.map((item, idx) => (
+                      <tr key={idx} className="border-t border-gray-100 dark:border-gray-800">
+                        <td className="px-3 py-1.5 font-medium">{item.ingredient_name || item.name}</td>
+                        <td className="px-3 py-1.5">{item.batch_number || item.lot || '-'}</td>
+                        <td className="px-3 py-1.5">{item.expiry_date ? new Date(item.expiry_date).toLocaleDateString('ro-RO') : '-'}</td>
+                        <td className="px-3 py-1.5 text-center">
+                          <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-700">Expiră</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          {/* Imported Invoices */}
+          <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700">
+            <div className="p-3 bg-blue-50 dark:bg-blue-900/20 border-b border-blue-200 dark:border-blue-700">
+              <h4 className="text-sm font-semibold text-blue-700 dark:text-blue-300">
+                <i className="fas fa-list mr-1" /> Facturi Importate
+              </h4>
+            </div>
+            <div className="p-3">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
+                <select value={invoiceFilters.status} onChange={(e) => setInvoiceFilters({ ...invoiceFilters, status: e.target.value })} className="h-9 px-3 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
+                  <option value="">Toate statusurile</option>
+                  <option value="pending">În așteptare</option>
+                  <option value="processed">Procesate</option>
+                </select>
+                <input type="text" placeholder="Furnizor..." value={invoiceFilters.supplier} onChange={(e) => setInvoiceFilters({ ...invoiceFilters, supplier: e.target.value })} className="h-9 px-3 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm" />
+                <input type="date" value={invoiceFilters.startDate} onChange={(e) => setInvoiceFilters({ ...invoiceFilters, startDate: e.target.value })} className="h-9 px-3 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm" />
+                <input type="date" value={invoiceFilters.endDate} onChange={(e) => setInvoiceFilters({ ...invoiceFilters, endDate: e.target.value })} className="h-9 px-3 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm" />
+              </div>
+              <button onClick={loadImportedInvoices} className="px-3 py-1.5 bg-blue-600 text-white rounded text-xs hover:bg-blue-700 mb-3">
+                <i className="fas fa-sync mr-1" /> Actualizează
+              </button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead className="bg-gray-50 dark:bg-gray-800">
+                  <tr>
+                    <th className="px-3 py-2 text-left">Număr Factură</th>
+                    <th className="px-3 py-2 text-left">Furnizor</th>
+                    <th className="px-3 py-2 text-left">Data</th>
+                    <th className="px-3 py-2 text-right">Valoare</th>
+                    <th className="px-3 py-2 text-center">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {importedInvoices.length === 0 ? (
+                    <tr><td colSpan={5} className="text-center py-4 text-gray-400">Nu sunt facturi importate</td></tr>
+                  ) : importedInvoices.map((inv, idx) => (
+                    <tr key={idx} className="border-t border-gray-100 dark:border-gray-800">
+                      <td className="px-3 py-1.5 font-medium">{inv.invoice_number || inv.number}</td>
+                      <td className="px-3 py-1.5">{inv.supplier}</td>
+                      <td className="px-3 py-1.5">{inv.date ? new Date(inv.date).toLocaleDateString('ro-RO') : '-'}</td>
+                      <td className="px-3 py-1.5 text-right">{(inv.total || 0).toFixed(2)} RON</td>
+                      <td className="px-3 py-1.5 text-center">
+                        <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${inv.status === 'processed' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
+                          {inv.status === 'processed' ? 'Procesat' : 'În așteptare'}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ─── Inventory Sessions Tab ───────────────────────────────────── */}
+      {activeTab === 'inventory' && (
+        <div className="flex flex-col gap-4">
+          {/* Description */}
+          <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-700">
+            <p className="text-sm text-gray-700 dark:text-gray-300">
+              Realizează inventarul fizic (zilnic sau lunar), comparând stocul teoretic cu stocul numărat. Stocurile sunt actualizate automat după finalizare.
+            </p>
+            <button onClick={() => { setShowNewSessionModal(true); loadLocations(); }} className="mt-2 px-4 py-2 bg-green-600 text-white rounded text-sm font-medium hover:bg-green-700">
+              <i className="fas fa-clipboard-list mr-1" /> Inițiază Sesiune Nouă de Inventar
+            </button>
+          </div>
+
+          {/* Session Filters */}
+          <div className="p-4 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700">
+            <h4 className="text-sm font-semibold mb-3">📋 Istoric Sesiuni Inventar</h4>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
+              <select value={sessionFilters.type} onChange={(e) => setSessionFilters({ ...sessionFilters, type: e.target.value })} className="h-9 px-3 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
+                <option value="">Toate tipurile</option>
+                <option value="daily">Zilnic</option>
+                <option value="monthly">Lunar</option>
+              </select>
+              <select value={sessionFilters.status} onChange={(e) => setSessionFilters({ ...sessionFilters, status: e.target.value })} className="h-9 px-3 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
+                <option value="">Toate statusurile</option>
+                <option value="in_progress">În Progress</option>
+                <option value="completed">Completate</option>
+                <option value="archived">Arhivate</option>
+              </select>
+              <select value={sessionFilters.limit} onChange={(e) => setSessionFilters({ ...sessionFilters, limit: e.target.value })} className="h-9 px-3 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
+                <option value="10">Ultimele 10</option>
+                <option value="25">Ultimele 25</option>
+                <option value="50">Ultimele 50</option>
+                <option value="">Toate</option>
+              </select>
+              <button onClick={loadInventorySessions} className="h-9 px-4 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">
+                <i className="fas fa-sync mr-1" /> Reîncarcă
+              </button>
+            </div>
+          </div>
+
+          {/* Sessions Table */}
+          <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 overflow-x-auto">
+            {sessionsLoading ? (
+              <div className="p-8 text-center text-gray-400"><i className="fas fa-spinner fa-spin mr-2" /> Se încarcă sesiunile...</div>
+            ) : inventorySessions.length === 0 ? (
+              <div className="p-8 text-center text-gray-400">Nu există sesiuni de inventar</div>
+            ) : (
+              <table className="w-full text-sm">
+                <thead className="bg-gray-50 dark:bg-gray-800">
+                  <tr>
+                    <th className="px-3 py-2 text-left">ID Sesiune</th>
+                    <th className="px-3 py-2 text-center">Tip</th>
+                    <th className="px-3 py-2 text-left">Data Început</th>
+                    <th className="px-3 py-2 text-left">Data Finalizare</th>
+                    <th className="px-3 py-2 text-center">Status</th>
+                    <th className="px-3 py-2 text-right">Progres</th>
+                    <th className="px-3 py-2 text-center">Acțiuni</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {inventorySessions.map((session, idx) => (
+                    <tr key={idx} className="border-t border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                      <td className="px-3 py-1.5"><code className="text-xs bg-gray-100 dark:bg-gray-800 px-1 rounded">{session.id}</code></td>
+                      <td className="px-3 py-1.5 text-center">
+                        <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-700">{session.session_type === 'daily' ? 'Zilnic' : 'Lunar'}</span>
+                      </td>
+                      <td className="px-3 py-1.5">{session.started_at ? new Date(session.started_at).toLocaleString('ro-RO') : '-'}</td>
+                      <td className="px-3 py-1.5">{session.completed_at ? new Date(session.completed_at).toLocaleString('ro-RO') : '-'}</td>
+                      <td className="px-3 py-1.5 text-center">
+                        <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${session.status === 'completed' ? 'bg-green-100 text-green-700' : session.status === 'archived' ? 'bg-gray-100 text-gray-700' : 'bg-yellow-100 text-yellow-700'}`}>
+                          {session.status === 'completed' ? 'Finalizat' : session.status === 'archived' ? 'Arhivat' : 'În Progress'}
+                        </span>
+                      </td>
+                      <td className="px-3 py-1.5 text-right">{session.total_items || session.item_count || 0} / {session.total_items || 'N/A'}</td>
+                      <td className="px-3 py-1.5 text-center flex gap-1 justify-center">
+                        {session.status === 'in_progress' && (
+                          <button onClick={() => navigate(`/stocks/inventory/${session.id}`)} className="px-2 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700">
+                            <i className="fas fa-clipboard-list mr-1" /> Numără
+                          </button>
+                        )}
+                        <button onClick={() => navigate(`/stocks/inventory/${session.id}`)} className="px-2 py-1 bg-gray-600 text-white rounded text-xs hover:bg-gray-700">
+                          <i className="fas fa-eye mr-1" /> Detalii
+                        </button>
+                        {session.status === 'completed' && (
+                          <a href={`/api/inventory/${session.id}/pdf`} target="_blank" rel="noopener noreferrer" className="px-2 py-1 bg-red-600 text-white rounded text-xs hover:bg-red-700">
+                            <i className="fas fa-file-pdf mr-1" /> PDF
+                          </a>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ─── New Session Modal ─────────────────────────────────────────── */}
+      {showNewSessionModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl w-full max-w-md flex flex-col">
+            <div className="flex items-center justify-between p-4 border-b bg-green-600 text-white rounded-t-xl">
+              <h3 className="text-lg font-bold"><i className="fas fa-warehouse mr-2" /> Sesiune Inventar Nouă</h3>
+              <button onClick={() => setShowNewSessionModal(false)} className="text-white/80 hover:text-white"><i className="fas fa-times text-xl" /></button>
+            </div>
+            <div className="p-4 flex flex-col gap-3">
+              <div className="flex flex-col gap-1">
+                <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Tip Inventar</label>
+                <select value={newSessionForm.sessionType} onChange={(e) => setNewSessionForm({ ...newSessionForm, sessionType: e.target.value })} className="h-9 px-3 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
+                  <option value="daily">Inventar Zilnic</option>
+                  <option value="monthly">Inventar Lunar</option>
+                </select>
+              </div>
+              <div className="flex flex-col gap-1">
+                <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Scope</label>
+                <div className="flex gap-4">
+                  <label className="flex items-center gap-1 text-sm">
+                    <input type="radio" name="scope" value="global" checked={newSessionForm.scope === 'global'} onChange={() => setNewSessionForm({ ...newSessionForm, scope: 'global', locationIds: [] })} /> Toate Gestiunile
+                  </label>
+                  <label className="flex items-center gap-1 text-sm">
+                    <input type="radio" name="scope" value="specific" checked={newSessionForm.scope === 'specific'} onChange={() => setNewSessionForm({ ...newSessionForm, scope: 'specific' })} /> Gestiuni Specifice
+                  </label>
+                </div>
+              </div>
+              {newSessionForm.scope === 'specific' && (
+                <div className="flex flex-col gap-1 max-h-40 overflow-y-auto border border-gray-200 dark:border-gray-700 rounded p-2">
+                  {locations.map((loc: any) => (
+                    <label key={loc.id} className="flex items-center gap-2 text-sm">
+                      <input type="checkbox" checked={newSessionForm.locationIds.includes(loc.id)} onChange={(e) => {
+                        if (e.target.checked) setNewSessionForm({ ...newSessionForm, locationIds: [...newSessionForm.locationIds, loc.id] });
+                        else setNewSessionForm({ ...newSessionForm, locationIds: newSessionForm.locationIds.filter((id) => id !== loc.id) });
+                      }} />
+                      {loc.name}
+                    </label>
+                  ))}
+                </div>
+              )}
+              <InputField label="Responsabil" value={newSessionForm.startedBy} onChange={(v) => setNewSessionForm({ ...newSessionForm, startedBy: v })} placeholder="ex: Maria Ionescu" required />
+            </div>
+            <div className="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-end gap-2">
+              <button onClick={() => setShowNewSessionModal(false)} className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded hover:bg-gray-300">Anulează</button>
+              <button onClick={handleStartSession} className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Pornire Sesiune</button>
+            </div>
+          </div>
+        </div>
+      )
       {stockModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
           <div className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl w-full max-w-4xl max-h-[80vh] flex flex-col">
