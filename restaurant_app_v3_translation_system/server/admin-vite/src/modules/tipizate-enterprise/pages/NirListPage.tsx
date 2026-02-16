@@ -1,5 +1,5 @@
 /**
- * PHASE S5.7 → S6 - NIR List Page
+ * NIR List Page
  * Enterprise list page for NIR documents
  */
 

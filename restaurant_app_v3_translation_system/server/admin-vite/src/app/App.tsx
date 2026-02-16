@@ -3,8 +3,6 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { AppLayout } from "@/modules/layout/AppLayout";
 import { RedirectWithParams } from "@/components/RedirectWithParams";
-// LegacyRedirect no longer needed - all routes migrated to React components
-// import { LegacyRedirect } from "@/components/LegacyRedirect";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
 // Critical pages - loaded immediately (dashboard, login, etc.)
