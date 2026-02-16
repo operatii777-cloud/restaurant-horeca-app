@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from '@/i18n/I18nContext';
 import { AgGridReact } from 'ag-grid-react';
-import { ColDef, GridApi } from 'ag-grid-community';
+import { ColDef, GridApi, ICellRendererParams } from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { Lock, Unlock, Edit, Save, X, RefreshCw, Shield, Users, Key } from 'lucide-react';
@@ -120,6 +120,12 @@ export const PINManagementPage: React.FC = () => {
     setSuccess(null);
 
     try {
+      // SECURITY NOTE: PIN is transmitted over HTTPS (enforced by httpClient)
+      // Server-side validation should enforce:
+      // - PIN strength requirements (min 4, recommended 6+ characters)
+      // - PIN complexity rules if needed
+      // - Rate limiting on PIN update attempts
+      // - Audit logging of all PIN changes
       const response = await httpClient.post('/api/admin/pins/update', {
         interfaceId: interfaceItem.id,
         pin: editingPin,
@@ -184,8 +190,10 @@ export const PINManagementPage: React.FC = () => {
     }
   };
 
-  const ActionsCellRenderer = (props: any) => {
-    const interfaceItem: PINInterface = props.data;
+  const ActionsCellRenderer = (props: ICellRendererParams<PINInterface>) => {
+    const interfaceItem = props.data;
+    if (!interfaceItem) return null;
+    
     const isEditing = editingId === interfaceItem.id;
 
     return (
@@ -243,8 +251,10 @@ export const PINManagementPage: React.FC = () => {
     );
   };
 
-  const PINInputCellRenderer = (props: any) => {
-    const interfaceItem: PINInterface = props.data;
+  const PINInputCellRenderer = (props: ICellRendererParams<PINInterface>) => {
+    const interfaceItem = props.data;
+    if (!interfaceItem) return null;
+    
     const isEditing = editingId === interfaceItem.id;
 
     if (isEditing) {
@@ -256,10 +266,10 @@ export const PINManagementPage: React.FC = () => {
             onChange={(e) => setEditingPin(e.target.value)}
             placeholder={t('pins.enterNewPin') || 'Enter new PIN'}
             className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 w-40"
-            maxLength={8}
+            maxLength={16}
             minLength={4}
           />
-          <span className="text-sm text-gray-500">{t('pins.minLength') || '4-8 characters'}</span>
+          <span className="text-sm text-gray-500">{t('pins.minLength') || '4-16 characters'}</span>
         </div>
       );
     }
@@ -271,8 +281,10 @@ export const PINManagementPage: React.FC = () => {
     );
   };
 
-  const TypeCellRenderer = (props: any) => {
-    const interfaceItem: PINInterface = props.data;
+  const TypeCellRenderer = (props: ICellRendererParams<PINInterface>) => {
+    const interfaceItem = props.data;
+    if (!interfaceItem) return null;
+    
     return (
       <div className="flex items-center gap-2">
         {getTypeIcon(interfaceItem.type)}
@@ -283,8 +295,10 @@ export const PINManagementPage: React.FC = () => {
     );
   };
 
-  const StatusCellRenderer = (props: any) => {
-    const interfaceItem: PINInterface = props.data;
+  const StatusCellRenderer = (props: ICellRendererParams<PINInterface>) => {
+    const interfaceItem = props.data;
+    if (!interfaceItem) return null;
+    
     return (
       <span
         className={`px-2 py-1 rounded-full text-xs font-semibold ${
