@@ -257,9 +257,9 @@ const DigitalSignaturesPage = lazy(() => import('@/modules/accounting/audit/page
 const AccountingPermissionsPage = lazy(() => import('@/modules/accounting/settings/pages/AccountingPermissionsPage').then(m => ({ default: m.AccountingPermissionsPage })));
 
 // Lazy load Tipizate Enterprise (large module with many pages)
-const NirListPage = lazy(() => import('@/modules/tipizate-enterprise/pages/NirListPage'));
+// NIR - using admin-advanced.html style page with /api/inventory/nir endpoints
+const NirPage = lazy(() => import('@/modules/nir/pages/NirPage'));
 const PrintPreviewPage = lazy(() => import('@/modules/tipizate-enterprise/pages/PrintPreviewPage'));
-const NirEditorPage = lazy(() => import('@/modules/tipizate-enterprise/pages/NirEditorPage'));
 const BonConsumListPage = lazy(() => import('@/modules/tipizate-enterprise/pages/BonConsumListPage'));
 const BonConsumEditorPage = lazy(() => import('@/modules/tipizate-enterprise/pages/BonConsumEditorPage'));
 const TransferListPage = lazy(() => import('@/modules/tipizate-enterprise/pages/TransferListPage'));
@@ -451,10 +451,10 @@ const App = () => {
         {/* NIR Enterprise KIOSK: Redirect to React NIR page */}
         <Route path="kiosk/tipizate-enterprise/nir" element={<Navigate to="/tipizate-enterprise/nir" replace />} />
 
-        {/* NIR Enterprise */}
-        <Route path="tipizate-enterprise/nir" element={<LazyRoute component={NirListPage} />} />
-        <Route path="tipizate-enterprise/nir/new" element={<LazyRoute component={NirEditorPage} />} />
-        <Route path="tipizate-enterprise/nir/:id" element={<LazyRoute component={NirEditorPage} />} />
+        {/* NIR - admin-advanced.html style with /api/inventory/nir endpoints */}
+        <Route path="tipizate-enterprise/nir" element={<LazyRoute component={NirPage} />} />
+        <Route path="tipizate-enterprise/nir/new" element={<LazyRoute component={NirPage} />} />
+        <Route path="tipizate-enterprise/nir/:id" element={<LazyRoute component={NirPage} />} />
 
         {/* Transfer Enterprise */}
         <Route path="tipizate-enterprise/transfer" element={<LazyRoute component={TransferListPage} />} />
