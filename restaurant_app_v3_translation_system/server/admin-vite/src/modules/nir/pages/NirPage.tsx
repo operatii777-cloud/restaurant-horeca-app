@@ -194,39 +194,27 @@ export const NirPage: React.FC = () => {
         valueIncVat: 0,
         salePrice: preset.salePrice || 0,
       };
-      setItems((prev) => {
-        const next = [...prev, newItem];
-        const recalced = recalculateTotals(next);
-        // We set items to the recalculated version in a timeout to avoid stale state
-        setTimeout(() => setItems(recalced), 0);
-        return next;
-      });
+      setItems((prev) => recalculateTotals([...prev, newItem]));
     },
     [recalculateTotals]
   );
 
   const removeItem = useCallback(
     (itemId: number) => {
-      setItems((prev) => {
-        const next = prev.filter((i) => i.id !== itemId);
-        const recalced = recalculateTotals(next);
-        setTimeout(() => setItems(recalced), 0);
-        return next;
-      });
+      setItems((prev) => recalculateTotals(prev.filter((i) => i.id !== itemId)));
     },
     [recalculateTotals]
   );
 
   const updateItem = useCallback(
     (itemId: number, field: keyof NirItem, value: any) => {
-      setItems((prev) => {
-        const next = prev.map((item) =>
-          item.id === itemId ? { ...item, [field]: value } : item
-        );
-        const recalced = recalculateTotals(next);
-        setTimeout(() => setItems(recalced), 0);
-        return next;
-      });
+      setItems((prev) =>
+        recalculateTotals(
+          prev.map((item) =>
+            item.id === itemId ? { ...item, [field]: value } : item
+          )
+        )
+      );
     },
     [recalculateTotals]
   );
@@ -1069,6 +1057,11 @@ export const NirPage: React.FC = () => {
                     ))}
                   </tbody>
                 </table>
+                {filteredStock.length > 200 && (
+                  <div className="text-center py-2 text-sm text-gray-500 dark:text-gray-400">
+                    Se afișează primele 200 din {filteredStock.length} rezultate. Rafinați căutarea pentru mai multă precizie.
+                  </div>
+                )}
               )}
             </div>
           </div>
