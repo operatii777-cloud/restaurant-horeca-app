@@ -74,6 +74,7 @@ import { AdvancedReportsPage } from "@/modules/reports/advanced/pages/AdvancedRe
 import { AuditLogsPage as AuditLogsPageComponent } from "@/modules/audit/logs/pages/AuditLogsPage";
 // StockPredictionPage - LAZY LOADED (see lazy imports below)
 import { AllergensPage } from "@/modules/stocks/allergens/pages/AllergensPage";
+const AIAuditPage = lazy(() => import('@/modules/horeca-ai/pages/AIAuditPage').then(m => ({ default: m.default })));
 import { LabelsPage } from "@/modules/stocks/labels/pages/LabelsPage";
 import { WastePage } from "@/modules/stocks/waste/pages/WastePage";
 import { SuppliersPage } from "@/modules/stocks/suppliers/pages/SuppliersPage";
@@ -529,6 +530,7 @@ const App = () => {
         <Route path="stocks/inventory/multi" element={<MultiInventoryPage />} />
         <Route path="stocks/inventory/import" element={<InventoryImportPage />} />
         <Route path="stocks/allergens" element={<AllergensPage />} />
+        <Route path="ai/audit" element={<LazyRoute component={AIAuditPage} />} />
         <Route path="stocks/labels" element={<LabelsPage />} />
         {/* PHASE S5.5 - Legacy Waste Route → Redirect to Tipizate Enterprise */}
         <Route path="stocks/waste" element={<Navigate to="/tipizate-enterprise/waste" replace />} />

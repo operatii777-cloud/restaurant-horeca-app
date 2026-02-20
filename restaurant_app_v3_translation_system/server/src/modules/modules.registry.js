@@ -624,6 +624,16 @@ const modulesRegistry = [
     factory: false,
     enabled: true,
     note: 'Cancellation predictions and business intelligence stats'
+  },
+  // ========================================
+  // HORECA AI ENGINE MODULE
+  // ========================================
+  {
+    name: 'horeca-ai',
+    route: '/api/ai',
+    factory: false,
+    enabled: true,
+    plan: 'pro'
   }
 ];
 
