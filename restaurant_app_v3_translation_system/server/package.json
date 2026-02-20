@@ -8,7 +8,9 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "modulePathIgnorePatterns": ["<rootDir>/react-modules/"]
+    "modulePathIgnorePatterns": [
+      "<rootDir>/react-modules/"
+    ]
   },
   "dependencies": {
     "@apollo/server": "^5.4.0",

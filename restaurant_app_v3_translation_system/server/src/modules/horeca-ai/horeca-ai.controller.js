@@ -48,7 +48,11 @@ async function detectAllergens(req, res) {
           `INSERT INTO allergen_detection_log (product_id, detected_allergens, confidence) VALUES (?, ?, ?)`,
           [product_id, JSON.stringify(allergens), DEFAULT_CONFIDENCE_SCORE]
         );
-      } catch (_) { /* table may not exist yet, non-fatal */ }
+      } catch (logErr) {
+        if (!logErr.message.includes('no such table')) {
+          console.warn('⚠️ allergen_detection_log insert failed:', logErr.message);
+        }
+      }
     }
 
     return res.json({ ok: true, data: { allergens, eu14: AIService.EU14_ALLERGENS } });
@@ -85,7 +89,11 @@ async function audit(req, res) {
         `INSERT INTO ai_audit_log (audit_type, issues_found, health_score) VALUES (?, ?, ?)`,
         ['menu_health', result.issues.length, result.healthScore]
       );
-    } catch (_) { /* non-fatal */ }
+    } catch (logErr) {
+      if (!logErr.message.includes('no such table')) {
+        console.warn('⚠️ ai_audit_log insert failed:', logErr.message);
+      }
+    }
 
     return res.json({ ok: true, data: result });
   } catch (err) {

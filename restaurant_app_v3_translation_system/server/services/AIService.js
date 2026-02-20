@@ -221,7 +221,9 @@ const AIService = {
 List only the EU 14 mandatory allergens present. Reply with a JSON array of allergen keys from: ${EU14_ALLERGENS.join(', ')}.
 Reply ONLY with valid JSON array, e.g. ["milk","eggs"]`;
       const raw = await callAI(prompt);
-      return JSON.parse(raw.match(/\[.*\]/s)[0]);
+      const match = raw.match(/\[.*\]/s);
+      if (!match) throw new Error('No JSON array in AI response');
+      return JSON.parse(match[0]);
     } catch {
       return mockDetectAllergens(ingredients);
     }
@@ -233,7 +235,9 @@ Reply ONLY with valid JSON array, e.g. ["milk","eggs"]`;
       const prompt = `You are a HORECA pricing expert. Given this product: ${JSON.stringify(product)}
 Suggest a selling price in RON. Reply ONLY with JSON: {"suggestedPrice": number, "markup": number, "basis": "string"}`;
       const raw = await callAI(prompt);
-      return JSON.parse(raw.match(/\{.*\}/s)[0]);
+      const match = raw.match(/\{.*\}/s);
+      if (!match) throw new Error('No JSON object in AI response');
+      return JSON.parse(match[0]);
     } catch {
       return mockSuggestPrice(product);
     }
@@ -245,7 +249,9 @@ Suggest a selling price in RON. Reply ONLY with JSON: {"suggestedPrice": number,
       const prompt = `Extract all food products and prices from this menu text: "${text}"
 Reply ONLY with JSON array: [{"name":"string","price":number,"currency":"string"}]`;
       const raw = await callAI(prompt);
-      return JSON.parse(raw.match(/\[.*\]/s)[0]);
+      const match = raw.match(/\[.*\]/s);
+      if (!match) throw new Error('No JSON array in AI response');
+      return JSON.parse(match[0]);
     } catch {
       return mockExtractProducts(text);
     }
@@ -257,7 +263,9 @@ Reply ONLY with JSON array: [{"name":"string","price":number,"currency":"string"
       const prompt = `Audit this restaurant menu for HORECA compliance: ${JSON.stringify(products.slice(0, 20))}
 Check allergens, pricing, and completeness. Reply ONLY with JSON: {"healthScore":number,"issues":[],"totalProducts":number}`;
       const raw = await callAI(prompt);
-      return JSON.parse(raw.match(/\{.*\}/s)[0]);
+      const match = raw.match(/\{.*\}/s);
+      if (!match) throw new Error('No JSON object in AI response');
+      return JSON.parse(match[0]);
     } catch {
       return mockAuditMenu(products);
     }
@@ -270,7 +278,9 @@ Check allergens, pricing, and completeness. Reply ONLY with JSON: {"healthScore"
 Fix allergens (detect from ingredients), set VAT to 9% for food, suggest price if missing.
 Reply ONLY with JSON: {"product":{...},"repairs":["string"]}`;
       const raw = await callAI(prompt);
-      return JSON.parse(raw.match(/\{.*\}/s)[0]);
+      const match = raw.match(/\{.*\}/s);
+      if (!match) throw new Error('No JSON object in AI response');
+      return JSON.parse(match[0]);
     } catch {
       return mockRepairProduct(product);
     }
