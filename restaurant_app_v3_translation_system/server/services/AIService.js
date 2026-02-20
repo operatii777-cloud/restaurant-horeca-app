@@ -28,9 +28,9 @@ const ALLERGEN_KEYWORDS = {
   molluscs: ['squid', 'octopus', 'mussel', 'oyster', 'clam', 'scallop', 'snail',
     'calamari', 'caracatiță', 'caracatita', 'midii', 'scoici', 'stridii', 'melc'],
   nuts: ['almond', 'hazelnut', 'walnut', 'cashew', 'pecan', 'pistachio', 'macadamia', 'pine nut',
-    'migdale', 'migdale', 'alune', 'nuci', 'caju', 'fistic'],
+    'migdale', 'alune', 'nuci', 'caju', 'fistic', 'alune de pădure', 'alune de padure'],
   peanuts: ['peanut', 'groundnut', 'arachid',
-    'arahide', 'alune de pădure', 'alune de padure'],
+    'arahide'],
   sesame: ['sesame', 'tahini',
     'susan', 'tahini'],
   soybeans: ['soy', 'soya', 'tofu', 'edamame', 'miso',
@@ -44,6 +44,9 @@ const ALLERGEN_KEYWORDS = {
   sulphites: ['sulphite', 'sulfite', 'so2', 'wine', 'dried fruit', 'vinegar',
     'sulfit', 'sulfiti', 'vin', 'oțet', 'otet', 'fructe uscate']
 };
+
+// Romanian food VAT rate for default repair
+const ROMANIA_FOOD_VAT_RATE = 9;
 
 // Reference market prices (RON/kg or RON/L) for common ingredients
 const MARKET_PRICES = {
@@ -145,7 +148,7 @@ function mockRepairProduct(product) {
 
   // Default VAT if missing
   if (!repaired.vat_rate && repaired.vat_rate !== 0) {
-    repaired.vat_rate = 9; // Romanian food VAT
+    repaired.vat_rate = ROMANIA_FOOD_VAT_RATE;
     repairs.push('vat_set_to_9');
   }
 

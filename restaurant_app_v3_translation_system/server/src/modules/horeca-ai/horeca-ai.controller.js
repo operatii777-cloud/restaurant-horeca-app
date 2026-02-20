@@ -7,6 +7,8 @@
 const AIService = require('../../../services/AIService');
 const { dbPromise } = require('../../../database');
 
+const DEFAULT_CONFIDENCE_SCORE = 0.9;
+
 async function ingest(req, res) {
   try {
     const text = req.body.text || (req.file ? req.file.buffer.toString('utf8') : '');
@@ -44,7 +46,7 @@ async function detectAllergens(req, res) {
         const db = await dbPromise;
         await db.run(
           `INSERT INTO allergen_detection_log (product_id, detected_allergens, confidence) VALUES (?, ?, ?)`,
-          [product_id, JSON.stringify(allergens), 0.9]
+          [product_id, JSON.stringify(allergens), DEFAULT_CONFIDENCE_SCORE]
         );
       } catch (_) { /* table may not exist yet, non-fatal */ }
     }

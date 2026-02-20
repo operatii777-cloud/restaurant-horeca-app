@@ -5322,6 +5322,36 @@ function initializeDb(db) {
         }
       });
 
+      // Tabelă ALLERGEN_DETECTION_LOG (HORECA AI Engine)
+      db.run(`CREATE TABLE IF NOT EXISTS allergen_detection_log (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        product_id INTEGER,
+        detected_allergens TEXT,
+        confidence REAL DEFAULT 0.9,
+        timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )`, (err) => {
+        if (err) {
+          console.error('❌ Eroare la crearea tabelei allergen_detection_log:', err.message);
+        } else {
+          console.log('✅ Tabelă allergen_detection_log creată/verificată');
+        }
+      });
+
+      // Tabelă AI_AUDIT_LOG (HORECA AI Engine)
+      db.run(`CREATE TABLE IF NOT EXISTS ai_audit_log (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        audit_type TEXT DEFAULT 'menu_health',
+        issues_found INTEGER DEFAULT 0,
+        health_score REAL DEFAULT 100,
+        timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )`, (err) => {
+        if (err) {
+          console.error('❌ Eroare la crearea tabelei ai_audit_log:', err.message);
+        } else {
+          console.log('✅ Tabelă ai_audit_log creată/verificată');
+        }
+      });
+
       // Tabelă PRODUCT_LABELS (pentru etichete produse)
       db.run(`CREATE TABLE IF NOT EXISTS product_labels (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -5541,6 +5571,17 @@ function initializeDb(db) {
       });
       db.run(`ALTER TABLE happy_hour_settings ADD COLUMN end_hour INTEGER`, (err) => {
         if (err && !err.message.includes('duplicate column name')) console.warn('⚠️ Nota migrare happy_hour_settings.end_hour:', err.message);
+      });
+
+      // HORECA AI Engine - products table migrations
+      db.run(`ALTER TABLE products ADD COLUMN ingredients TEXT`, (err) => {
+        if (err && !err.message.includes('duplicate column name')) console.warn('⚠️ Nota migrare products.ingredients:', err.message);
+      });
+      db.run(`ALTER TABLE products ADD COLUMN costPrice REAL DEFAULT 0`, (err) => {
+        if (err && !err.message.includes('duplicate column name')) console.warn('⚠️ Nota migrare products.costPrice:', err.message);
+      });
+      db.run(`ALTER TABLE products ADD COLUMN suggestedPrice REAL DEFAULT 0`, (err) => {
+        if (err && !err.message.includes('duplicate column name')) console.warn('⚠️ Nota migrare products.suggestedPrice:', err.message);
       });
       // ------------------------------------------------
 
