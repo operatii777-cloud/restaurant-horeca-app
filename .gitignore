@@ -35,6 +35,10 @@ restaurant_app_v3_translation_system/server/backups/bkp-10dec/DEV-REPORTS/backen
 *.ps1
 *.py
 
+# Allow NIR extractor Python script
+!nir_extractor/nir_extractor.py
+!nir_extractor/requirements.txt
+
 # Allow important setup scripts and documentation
 !setup.sh
 !setup.bat

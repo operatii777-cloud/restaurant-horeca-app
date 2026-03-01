@@ -28,6 +28,7 @@ const dataNetworkRoutes = require('./routes/dataNetwork');
 const riskRoutes = require('./routes/risk');
 const financialRoutes = require('./routes/financial');
 const superappRoutes = require('./routes/superapp');
+const tipizateRoutes = require('./routes/tipizate');
 
 // Basic health check
 app.get('/api/health', (req, res) => {
@@ -50,6 +51,7 @@ app.use('/api/data-network', dataNetworkRoutes);
 app.use('/api/risk', riskRoutes);
 app.use('/api/financial', financialRoutes);
 app.use('/api/superapp', superappRoutes);
+app.use('/api/tipizate', tipizateRoutes);
 
 // Start server
 app.listen(PORT, () => {
