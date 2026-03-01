@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HorecaAI – Autentificare</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: #0f0f23;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      color: #e2e8f0;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 28px;
+    }
+
+    /* ── Logo ── */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-icon {
+      width: 52px; height: 52px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+    .logo-text { font-size: 1.4rem; font-weight: 700; color: #c7d2fe; letter-spacing: 1px; }
+
+    /* ── PIN display ── */
+    .pin-display {
+      display: flex;
+      gap: 14px;
+      height: 22px;
+      align-items: center;
+      min-height: 32px;
+    }
+    .dot {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      border: 2px solid #475569;
+      background: transparent;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .dot.filled {
+      background: #6366f1;
+      border-color: #6366f1;
+      box-shadow: 0 0 8px rgba(99,102,241,0.6);
+    }
+
+    /* ── Error message ── */
+    .error-msg {
+      height: 24px;
+      font-size: 0.9rem;
+      color: #f87171;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .error-msg.visible { opacity: 1; }
+    .error-msg.shake {
+      animation: shake 0.4s ease;
+    }
+    @keyframes shake {
+      0%,100%  { transform: translateX(0); }
+      20%      { transform: translateX(-8px); }
+      40%      { transform: translateX(8px); }
+      60%      { transform: translateX(-5px); }
+      80%      { transform: translateX(5px); }
+    }
+
+    /* ── Numpad ── */
+    .numpad {
+      display: grid;
+      grid-template-columns: repeat(3, 80px);
+      gap: 12px;
+    }
+    .key {
+      height: 72px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.12s, transform 0.08s;
+    }
+    .key:hover  { background: rgba(255,255,255,0.12); }
+    .key:active { background: rgba(99,102,241,0.35); transform: scale(0.95); }
+
+    .key.del  { font-size: 1.1rem; color: #94a3b8; }
+    .key.ok   {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-color: transparent;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .key.ok:hover  { filter: brightness(1.15); }
+    .key.ok:active { transform: scale(0.95); }
+    .key.empty { visibility: hidden; cursor: default; }
+
+    /* ── Loading spinner ── */
+    .spinner {
+      width: 28px; height: 28px;
+      border: 3px solid rgba(99,102,241,0.2);
+      border-top-color: #6366f1;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="screen" id="screen">
+    <!-- Logo -->
+    <div class="logo">
+      <div class="logo-icon">🍽</div>
+      <span class="logo-text">HORECA AI</span>
+    </div>
+
+    <!-- PIN display (up to 6 dots) -->
+    <div class="pin-display" id="pinDisplay"></div>
+
+    <!-- Error -->
+    <div class="error-msg" id="errMsg">PIN incorect. Încearcă din nou.</div>
+
+    <!-- Numpad -->
+    <div class="numpad" id="numpad">
+      <button class="key" data-digit="1">1</button>
+      <button class="key" data-digit="2">2</button>
+      <button class="key" data-digit="3">3</button>
+      <button class="key" data-digit="4">4</button>
+      <button class="key" data-digit="5">5</button>
+      <button class="key" data-digit="6">6</button>
+      <button class="key" data-digit="7">7</button>
+      <button class="key" data-digit="8">8</button>
+      <button class="key" data-digit="9">9</button>
+      <button class="key del" id="delKey">⌫ DEL</button>
+      <button class="key" data-digit="0">0</button>
+      <button class="key ok"  id="okKey">OK ✓</button>
+    </div>
+
+    <!-- Loading spinner shown while verifying -->
+    <div class="spinner" id="spinner"></div>
+  </div>
+
+  <script>
+    const MAX_LEN    = 6;
+    let pin          = '';
+    let busy         = false;
+
+    const pinDisplay = document.getElementById('pinDisplay');
+    const errMsg     = document.getElementById('errMsg');
+    const spinner    = document.getElementById('spinner');
+    const numpad     = document.getElementById('numpad');
+
+    // Build dot indicators
+    function renderDots() {
+      pinDisplay.innerHTML = '';
+      for (let i = 0; i < MAX_LEN; i++) {
+        const d = document.createElement('div');
+        d.className = 'dot' + (i < pin.length ? ' filled' : '');
+        pinDisplay.appendChild(d);
+      }
+    }
+    renderDots();
+
+    function showError(msg) {
+      errMsg.textContent = msg;
+      errMsg.classList.remove('shake', 'visible');
+      // Force reflow to restart animation
+      void errMsg.offsetWidth;
+      errMsg.classList.add('visible', 'shake');
+    }
+
+    function clearError() {
+      errMsg.classList.remove('visible', 'shake');
+    }
+
+    function setLoading(val) {
+      busy = val;
+      spinner.style.display = val ? 'block' : 'none';
+      numpad.style.opacity  = val ? '0.4' : '1';
+      numpad.style.pointerEvents = val ? 'none' : '';
+    }
+
+    async function submitPin() {
+      if (pin.length < 4 || busy) return;
+      setLoading(true);
+      clearError();
+      try {
+        const res = await window.horeca.submitPin(pin);
+        if (res.success) {
+          // Navigate to app based on role
+          window.horeca.openApp(res.role);
+        } else {
+          pin = '';
+          renderDots();
+          showError(res.message || 'PIN incorect');
+          setLoading(false);
+        }
+      } catch (e) {
+        pin = '';
+        renderDots();
+        showError('Eroare de comunicare cu serverul');
+        setLoading(false);
+      }
+    }
+
+    // Numpad click handlers
+    numpad.addEventListener('click', (e) => {
+      if (busy) return;
+      const btn = e.target.closest('.key');
+      if (!btn) return;
+
+      if (btn.id === 'delKey') {
+        pin = pin.slice(0, -1);
+        clearError();
+        renderDots();
+        return;
+      }
+      if (btn.id === 'okKey') {
+        if (pin.length < 4) { showError('PIN minim 4 cifre'); return; }
+        submitPin();
+        return;
+      }
+      const digit = btn.dataset.digit;
+      if (digit !== undefined && pin.length < MAX_LEN) {
+        pin += digit;
+        clearError();
+        renderDots();
+      }
+    });
+
+    // Keyboard support
+    document.addEventListener('keydown', (e) => {
+      if (busy) return;
+      if (e.key >= '0' && e.key <= '9' && pin.length < MAX_LEN) {
+        pin += e.key;
+        clearError();
+        renderDots();
+      } else if (e.key === 'Backspace') {
+        pin = pin.slice(0, -1);
+        clearError();
+        renderDots();
+      } else if (e.key === 'Enter') {
+        if (pin.length >= 4) submitPin();
+      }
+    });
+  </script>
+</body>
+</html>
