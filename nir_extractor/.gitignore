@@ -1,0 +1,13 @@
+# User invoice documents – do not commit
+invoices/*
+!invoices/.gitkeep
+
+# Processed documents – do not commit
+processed/*
+!processed/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
