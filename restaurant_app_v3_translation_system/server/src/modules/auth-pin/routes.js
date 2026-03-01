@@ -552,5 +552,232 @@ router.post('/clock-out', async (req, res) => {
   }
 });
 
+// ============================================================
+// PIN USERS TABLE - init + seed on first load
+// ============================================================
+(async () => {
+  try {
+    const db = await dbPromise;
+    await new Promise((resolve, reject) => {
+      db.run(`
+        CREATE TABLE IF NOT EXISTS pin_users (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          name TEXT NOT NULL,
+          role TEXT NOT NULL CHECK(role IN ('admin','manager','ospatar')),
+          pin TEXT NOT NULL UNIQUE,
+          active INTEGER DEFAULT 1,
+          auto_lock_seconds INTEGER DEFAULT 60
+        )
+      `, (err) => { if (err) reject(err); else resolve(); });
+    });
+    // Seed initial users if table is empty
+    const count = await new Promise((resolve, reject) => {
+      db.get('SELECT COUNT(*) as cnt FROM pin_users', [], (err, row) => {
+        if (err) reject(err); else resolve(row ? row.cnt : 0);
+      });
+    });
+    if (count === 0) {
+      const seeds = [
+        { name: 'Admin', role: 'admin', pin: '5555', auto_lock_seconds: 120 },
+        { name: 'Manager', role: 'manager', pin: '2222', auto_lock_seconds: 90 },
+        { name: 'Ospatar 1', role: 'ospatar', pin: '1111', auto_lock_seconds: 60 },
+      ];
+      // IMPORTANT: Change these default PINs immediately after first login in production.
+      // These seed values are only for initial setup convenience.
+      for (const s of seeds) {
+        await new Promise((resolve, reject) => {
+          db.run(
+            'INSERT OR IGNORE INTO pin_users (name, role, pin, auto_lock_seconds) VALUES (?, ?, ?, ?)',
+            [s.name, s.role, s.pin, s.auto_lock_seconds],
+            (err) => { if (err) reject(err); else resolve(); }
+          );
+        });
+      }
+      console.log('✅ pin_users table seeded with default users');
+    }
+  } catch (err) {
+    console.error('❌ Failed to initialize pin_users table:', err.message);
+  }
+})();
+
+/**
+ * POST /api/auth/pin/direct-login
+ * Login using only PIN (for Electron launcher kiosk login)
+ * Body: { pin: "1234" }
+ */
+router.post('/direct-login', async (req, res) => {
+  try {
+    const { pin } = req.body;
+    if (!pin || typeof pin !== 'string' || pin.trim() === '') {
+      return res.status(400).json({ success: false, message: 'PIN is required' });
+    }
+    const db = await dbPromise;
+    const user = await new Promise((resolve, reject) => {
+      db.get(
+        'SELECT id, name, role, auto_lock_seconds FROM pin_users WHERE pin = ? AND active = 1',
+        [pin.trim()],
+        (err, row) => { if (err) reject(err); else resolve(row || null); }
+      );
+    });
+    if (!user) {
+      return res.status(401).json({ success: false, message: 'PIN incorect' });
+    }
+    res.json({
+      success: true,
+      role: user.role,
+      userId: user.id,
+      userName: user.name,
+      autoLockSeconds: user.auto_lock_seconds
+    });
+  } catch (error) {
+    console.error('Error in direct PIN login:', error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+/**
+ * GET /api/auth/pin/pin-users
+ * List all pin_users
+ */
+router.get('/pin-users', async (req, res) => {
+  try {
+    const db = await dbPromise;
+    const users = await new Promise((resolve, reject) => {
+      db.all('SELECT id, name, role, active, auto_lock_seconds FROM pin_users ORDER BY id ASC', [], (err, rows) => {
+        if (err) reject(err); else resolve(rows || []);
+      });
+    });
+    res.json({ success: true, data: users });
+  } catch (error) {
+    console.error('Error listing pin_users:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+/**
+ * POST /api/auth/pin/pin-users
+ * Add a new pin user
+ * Body: { name, role, pin }
+ */
+router.post('/pin-users', async (req, res) => {
+  try {
+    const { name, role, pin } = req.body;
+    if (!name || !role || !pin) {
+      return res.status(400).json({ success: false, error: 'name, role and pin are required' });
+    }
+    if (!['admin', 'manager', 'ospatar'].includes(role)) {
+      return res.status(400).json({ success: false, error: 'role must be admin, manager or ospatar' });
+    }
+    if (!/^\d{4,6}$/.test(pin)) {
+      return res.status(400).json({ success: false, error: 'PIN must be 4-6 digits' });
+    }
+    const db = await dbPromise;
+    const result = await new Promise((resolve, reject) => {
+      db.run(
+        'INSERT INTO pin_users (name, role, pin) VALUES (?, ?, ?)',
+        [name, role, pin],
+        function(err) { if (err) reject(err); else resolve({ id: this.lastID }); }
+      );
+    });
+    res.status(201).json({ success: true, data: { id: result.id, name, role, pin, active: 1, auto_lock_seconds: 60 } });
+  } catch (error) {
+    if (error.message && error.message.includes('UNIQUE constraint')) {
+      return res.status(409).json({ success: false, error: 'PIN already in use' });
+    }
+    console.error('Error adding pin_user:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+/**
+ * PUT /api/auth/pin/pin-users/:id
+ * Edit a pin user (name, role, pin)
+ */
+router.put('/pin-users/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, role, pin } = req.body;
+    if (role && !['admin', 'manager', 'ospatar'].includes(role)) {
+      return res.status(400).json({ success: false, error: 'role must be admin, manager or ospatar' });
+    }
+    if (pin && !/^\d{4,6}$/.test(pin)) {
+      return res.status(400).json({ success: false, error: 'PIN must be 4-6 digits' });
+    }
+    const db = await dbPromise;
+    const fields = [];
+    const values = [];
+    if (name) { fields.push('name = ?'); values.push(name); }
+    if (role) { fields.push('role = ?'); values.push(role); }
+    if (pin) { fields.push('pin = ?'); values.push(pin); }
+    if (fields.length === 0) {
+      return res.status(400).json({ success: false, error: 'Nothing to update' });
+    }
+    values.push(id);
+    await new Promise((resolve, reject) => {
+      db.run(`UPDATE pin_users SET ${fields.join(', ')} WHERE id = ?`, values, function(err) {
+        if (err) reject(err); else resolve(this.changes);
+      });
+    });
+    res.json({ success: true });
+  } catch (error) {
+    if (error.message && error.message.includes('UNIQUE constraint')) {
+      return res.status(409).json({ success: false, error: 'PIN already in use' });
+    }
+    console.error('Error updating pin_user:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+/**
+ * PATCH /api/auth/pin/pin-users/:id/toggle
+ * Toggle active/inactive for a pin user
+ */
+router.patch('/pin-users/:id/toggle', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const db = await dbPromise;
+    await new Promise((resolve, reject) => {
+      db.run('UPDATE pin_users SET active = CASE WHEN active = 1 THEN 0 ELSE 1 END WHERE id = ?', [id], function(err) {
+        if (err) reject(err); else resolve(this.changes);
+      });
+    });
+    const user = await new Promise((resolve, reject) => {
+      db.get('SELECT id, name, role, active, auto_lock_seconds FROM pin_users WHERE id = ?', [id], (err, row) => {
+        if (err) reject(err); else resolve(row || null);
+      });
+    });
+    res.json({ success: true, data: user });
+  } catch (error) {
+    console.error('Error toggling pin_user:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+/**
+ * PUT /api/auth/pin/pin-users/:id/autolock
+ * Set auto_lock_seconds for a pin user
+ * Body: { seconds: 60 }
+ */
+router.put('/pin-users/:id/autolock', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { seconds } = req.body;
+    const secs = parseInt(seconds, 10);
+    if (isNaN(secs) || secs < 30 || secs > 120) {
+      return res.status(400).json({ success: false, error: 'seconds must be between 30 and 120' });
+    }
+    const db = await dbPromise;
+    await new Promise((resolve, reject) => {
+      db.run('UPDATE pin_users SET auto_lock_seconds = ? WHERE id = ?', [secs, id], function(err) {
+        if (err) reject(err); else resolve(this.changes);
+      });
+    });
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error setting autolock:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 module.exports = router;
 

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HorecaAI – Loading…</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: #1a1a2e;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      color: #e2e8f0;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 32px;
+    }
+
+    .logo {
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      border-radius: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 64px;
+      box-shadow: 0 20px 60px rgba(99,102,241,0.4);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1);   box-shadow: 0 20px 60px rgba(99,102,241,0.4); }
+      50%       { transform: scale(1.05); box-shadow: 0 24px 70px rgba(99,102,241,0.6); }
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    h2 {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #94a3b8;
+      letter-spacing: 1px;
+    }
+
+    .progress-wrap {
+      width: 360px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #6366f1, #8b5cf6);
+      border-radius: 99px;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    .status {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #64748b;
+      min-height: 1.2em;
+    }
+
+    .error {
+      color: #f87171;
+      font-size: 0.95rem;
+      text-align: center;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">🍽</div>
+    <div>
+      <h1>RESTAURANT APP V3</h1>
+      <h2 style="text-align:center; margin-top:8px;">HorecaAI Management Suite</h2>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-bar">
+        <div class="progress-fill" id="fill"></div>
+      </div>
+      <div class="status" id="status">Se pornește serverul…</div>
+    </div>
+    <div class="error" id="errMsg">
+      ⚠️ Serverul nu a răspuns în 30 de secunde.<br>
+      Verificați că Node.js este instalat și că serverul poate porni.
+    </div>
+  </div>
+
+  <script>
+    const fill    = document.getElementById('fill');
+    const status  = document.getElementById('status');
+    const errMsg  = document.getElementById('errMsg');
+
+    const msgs = [
+      'Se inițializează baza de date…',
+      'Se încarcă modulele…',
+      'Se configurează rețeaua…',
+      'Se pornesc serviciile…',
+      'Aproape gata…',
+    ];
+
+    window.horeca.onProgress((pct) => {
+      fill.style.width = (pct * 100).toFixed(1) + '%';
+      const idx = Math.min(Math.floor(pct * msgs.length), msgs.length - 1);
+      status.textContent = msgs[idx];
+    });
+
+    window.horeca.onServerReady(() => {
+      fill.style.width = '100%';
+      status.textContent = 'Server pornit! Se deschide autentificarea…';
+      setTimeout(() => window.horeca.onProgress && null, 300);
+    });
+
+    window.horeca.onServerTimeout(() => {
+      errMsg.style.display = 'block';
+      status.textContent = 'Eroare la pornire.';
+    });
+  </script>
+</body>
+</html>

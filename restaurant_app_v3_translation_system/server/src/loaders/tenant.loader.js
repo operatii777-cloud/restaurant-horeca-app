@@ -25,6 +25,8 @@ function loadTenantMiddleware(app) {
     '/api/config',                // Mobile app configuration endpoint
     '/api/kiosk/menu',            // Kiosk menu (public pentru meniu)
     '/api/server-info',           // Server info pentru auto-discovery
+    '/api/auth/pin/direct-login', // Electron launcher PIN login
+    '/api/auth/pin/pin-users',    // PIN users management
   ];
   
   // Endpoints that should not have location_id filter applied automatically
