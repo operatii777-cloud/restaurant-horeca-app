@@ -8,22 +8,8 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 // Critical pages - loaded immediately (dashboard, login, etc.)
 import { WelcomePage } from "@/modules/welcome/pages/WelcomePage";
 import { DashboardPage } from "@/modules/dashboard/pages/DashboardPage";
-import { InternalMessagingPage } from "@/modules/internal-messaging/pages/InternalMessagingPage";
-import { BackupPage } from "@/modules/backup/pages/BackupPage";
-import { MenuManagementPage } from "@/modules/menu/pages/MenuManagementPage";
-import { RecipesPage } from "@/modules/recipes/pages/RecipesPage";
 // Reservations - using React component (migrated from admin.html)
 // import { ReservationsPage } from "@/modules/reservations/pages/ReservationsPage";
-import { ReservationsPage } from "@/modules/reservations/pages/ReservationsPage";
-import { WaitersPage } from "@/modules/waiters/pages/WaitersPage";
-import { StockManagementPage } from "@/modules/stocks/pages/StockManagementPage";
-import { OrdersManagementPage } from "@/modules/orders/pages/OrdersManagementPage";
-import { CatalogPage } from "@/modules/catalog/pages/CatalogPage";
-import { CatalogOnlinePage } from "@/modules/catalog/pages/CatalogOnlinePage";
-import { DailyMenuPage } from "@/modules/daily-menu/pages/DailyMenuPage";
-import { LotsPage } from "@/modules/lots/pages/LotsPage";
-import { TraceabilityPage } from "@/modules/traceability/pages/TraceabilityPage";
-import { MenuPDFBuilderPage } from "@/modules/menu-pdf/pages/MenuPDFBuilderPage";
 // LEGACY - PHASE S3: Stocks NIR (legacy component) - REMOVED, using tipizate-enterprise instead
 // import NirListPageLegacy from "@/modules/stocks/nir/pages/NirListPage";
 // import NirCreatePage from "@/modules/stocks/nir/pages/NirCreatePage";
@@ -31,75 +17,32 @@ import { MenuPDFBuilderPage } from "@/modules/menu-pdf/pages/MenuPDFBuilderPage"
 // import ConsumeListPage from "@/modules/stocks/consume/pages/ConsumeListPage";
 // import ConsumeCreatePage from "@/modules/stocks/consume/pages/ConsumeCreatePage";
 // import ConsumeDetailsPage from "@/modules/stocks/consume/pages/ConsumeDetailsPage";
-import InventoryListPage from "@/modules/stocks/inventory/pages/InventoryListPage";
-import InventoryCreatePage from "@/modules/stocks/inventory/pages/InventoryCreatePage";
-import InventoryDetailsPage from "@/modules/stocks/inventory/pages/InventoryDetailsPage";
-import InventoryDashboardPage from "@/modules/stocks/inventory/pages/InventoryDashboardPage";
-import { InventoryImportPage } from "@/modules/stocks/inventory/pages/InventoryImportPage";
-import ManageOrdersPage from "@/modules/orders/manage/ManageOrdersPage";
 // LEGACY - PHASE S3: Stocks Transfer (legacy component) - REMOVED, using tipizate-enterprise instead
 // import TransferListPageLegacy from "@/modules/stocks/transfer/pages/TransferListPage";
 // import TransferCreatePage from "@/modules/stocks/transfer/pages/TransferCreatePage";
 // import TransferDetailsPage from "@/modules/stocks/transfer/pages/TransferDetailsPage";
-import VatRatesPage from "@/modules/settings/vat/VatRatesPage";
 import { SettingsPage } from "@/modules/settings/pages/SettingsPage";
-import InvoicesListPage from "@/modules/invoices/InvoicesListPage";
-import InvoiceDetailsPage from "@/modules/invoices/InvoiceDetailsPage";
-import QueueMonitorPage from "@/modules/queue-monitor/pages/QueueMonitorPage";
 // PHASE S12 - POS React Unificat + Plăți Enterprise
-import { PosPage } from "@/modules/pos/pages/PosPage";
 // PHASE S5.5 - Legacy Tipizate imports removed, using redirects to tipizate-enterprise
 
 // PHASE S4.3 - Tipizate Enterprise (NEW) - LAZY LOADED (see lazy imports below)
-import ProductionBatchesListPage from "@/modules/production/pages/ProductionBatchesListPage";
-import ProductionBatchEditorPage from "@/modules/production/pages/ProductionBatchEditorPage";
 import { LocationsPage } from "@/modules/settings/pages/LocationsPage";
 import { AreasPage } from "@/modules/settings/pages/AreasPage";
 import { TablesPage } from "@/modules/settings/pages/TablesPage";
 // FAZA 1.5 - SAF-T Export
-import { SaftExportPage } from "@/modules/saft/pages/SaftExportPage";
 // SAGA Export
-import { SagaExportPage } from "@/modules/saga-export/pages/SagaExportPage";
 // Portion Control și Variance Reporting - disponibile doar în Admin Advanced
 import { UnitsOfMeasurePage } from "@/modules/nomenclator/units/pages/UnitsOfMeasurePage";
 import { PriceUtilitiesPage } from "@/modules/nomenclator/prices/pages/PriceUtilitiesPage";
 import { AttributeGroupsPage } from "@/modules/nomenclator/attributes/pages/AttributeGroupsPage";
 // Happy Hour - React component (migrated from admin-advanced.html)
-import { HappyHourPage } from "@/modules/promotions/happy-hour/pages/HappyHourPage";
-import { MarketingPage } from "@/modules/marketing/pages/MarketingPage";
-import { FeedbackPage } from "@/modules/marketing/feedback/pages/FeedbackPage";
-import { ExecutiveDashboardPage } from "@/modules/stocks/dashboard/executive/pages/ExecutiveDashboardPage";
-import { AdvancedStockDashboardPage } from "@/modules/stocks/dashboard/pages/AdvancedStockDashboardPage";
-import { AdvancedReportsPage } from "@/modules/reports/advanced/pages/AdvancedReportsPage";
-import { AuditLogsPage as AuditLogsPageComponent } from "@/modules/audit/logs/pages/AuditLogsPage";
 // StockPredictionPage - LAZY LOADED (see lazy imports below)
-import { AllergensPage } from "@/modules/stocks/allergens/pages/AllergensPage";
 const AIAuditPage = lazy(() => import('@/modules/horeca-ai/pages/AIAuditPage').then(m => ({ default: m.default })));
-import { LabelsPage } from "@/modules/stocks/labels/pages/LabelsPage";
-import { WastePage } from "@/modules/stocks/waste/pages/WastePage";
-import { SuppliersPage } from "@/modules/stocks/suppliers/pages/SuppliersPage";
-import { SupplierOrdersPage } from "@/modules/stocks/suppliers/orders/pages/SupplierOrdersPage";
-import { MultiInventoryPage } from "@/modules/stocks/inventory/multi/pages/MultiInventoryPage";
-import { CancellationsPage } from "@/modules/orders/cancellations/pages/CancellationsPage";
-import { DeliveryOrdersPage } from "@/modules/orders/delivery/pages/DeliveryOrdersPage";
 // S17.H - Delivery KPI Dashboard
-import { DeliveryKpiDashboardPage } from "@/modules/delivery/dashboard/pages/DeliveryKpiDashboardPage";
-import { OrdersHistoryPage } from "@/modules/orders/history/pages/OrdersHistoryPage";
-import { DriveThruOrdersPage } from "@/modules/orders/drivethru/pages/DriveThruOrdersPage";
-import { TakeawayOrdersPage } from "@/modules/orders/takeaway/pages/TakeawayOrdersPage";
 // Reports, Profitability, Audit - LAZY LOADED (see lazy imports below)
-import RecipeScalingPage from "@/modules/recipes/pages/RecipeScalingPage";
-import { ArchivePage } from "@/modules/archive/pages/ArchivePage";
-import { VouchersPage } from "@/modules/marketing/vouchers/pages/VouchersPage";
-import { RiskAlertsPage } from "@/modules/stocks/risk-alerts/pages/RiskAlertsPage";
-import { DailyOfferPage } from "@/modules/promotions/daily-offer/pages/DailyOfferPage";
-import { LoyaltyPage } from "@/modules/marketing/loyalty/pages/LoyaltyPage";
 import { MonitoringPage } from "@/modules/dashboard/monitoring/pages/MonitoringPage";
 import { DocumentationPage } from "@/modules/docs/pages/DocumentationPage";
 // Executive Dashboard, Monitoring, Platform Sync (NEW)
-import { ExecutiveDashboardPage as NewExecutiveDashboardPage } from "@/modules/executive-dashboard/pages/ExecutiveDashboardPage";
-import { MonitoringDashboardPage } from "@/modules/monitoring/pages/MonitoringDashboardPage";
-import { PlatformSyncPage } from "@/modules/external-delivery/pages/PlatformSyncPage";
 import { ProductDisplayPage } from "@/modules/settings/pages/ProductDisplayPage";
 import { MissingTranslationsPage } from "@/modules/settings/pages/MissingTranslationsPage";
 import { PaymentMethodsPage } from "@/modules/settings/pages/PaymentMethodsPage";
@@ -115,7 +58,6 @@ import { ImportPage } from "@/modules/settings/pages/ImportPage";
 import { ExportPage } from "@/modules/settings/pages/ExportPage";
 import { BrandingPage } from "@/modules/settings/pages/BrandingPage";
 import { ManualInstructiuniPage } from "@/modules/settings/pages/ManualInstructiuniPage";
-import { PINManagementPage } from "@/modules/settings/pins/pages/PINManagementPage";
 // Kiosk - Lazy loaded (mare modul)
 const KioskLayout = lazy(() => import('@/modules/kiosk/layout/KioskLayout').then(m => ({ default: m.KioskLayout })));
 const KioskMainLayout = lazy(() => import('@/modules/kiosk/layout/KioskMainLayout').then(m => ({ default: m.KioskMainLayout })));
@@ -130,11 +72,6 @@ const KioskStaffLiveReportPage = lazy(() => import('@/modules/kiosk/pages/KioskS
 const KioskEventsPage = lazy(() => import('@/modules/kiosk/pages/KioskEventsPage').then(m => ({ default: m.KioskEventsPage })));
 const KioskShiftHandoverPage = lazy(() => import('@/modules/kiosk/pages/KioskShiftHandoverPage').then(m => ({ default: m.KioskShiftHandoverPage })));
 const KioskMenuBoardPage = lazy(() => import('@/modules/kiosk/pages/KioskMenuBoardPage').then(m => ({ default: m.KioskMenuBoardPage })));
-import { CompliancePage } from "@/modules/compliance/pages/CompliancePage";
-import { HACCPDashboardPage } from "@/modules/compliance/pages/HACCPDashboardPage";
-import { HACCPProcessesPage } from "@/modules/compliance/pages/HACCPProcessesPage";
-import { HACCPMonitoringPage } from "@/modules/compliance/pages/HACCPMonitoringPage";
-import { HACCPCorrectiveActionsPage } from "@/modules/compliance/pages/HACCPCorrectiveActionsPage";
 // Enterprise Pages (30 Nov 2025) - Lazy loaded
 const SmartRestockPage = lazy(() => import('@/modules/enterprise/pages/SmartRestockPage').then(m => ({ default: m.SmartRestockPage })));
 const WeatherForecastPage = lazy(() => import('@/modules/enterprise/pages/WeatherForecastPage').then(m => ({ default: m.WeatherForecastPage })));
@@ -210,11 +147,7 @@ const KioskPOSSplitPage = lazy(() =>
 );
 const KioskPOSSplitWrapper = lazy(() => import('@/modules/kiosk/pages/KioskPOSSplitWrapper'));
 // Delivery/Couriers (01 Dec 2025)
-import { CouriersPage } from "@/modules/delivery/pages/CouriersPage";
-import { DispatchPage } from "@/modules/delivery/pages/DispatchPage";
 import { CourierMobileApp } from "@/modules/delivery/pages/CourierMobileApp";
-import { DeliveryMonitorPage } from "@/modules/delivery/pages/DeliveryMonitorPage";
-import { DeliveryDashboardPage } from "@/modules/delivery/pages/DeliveryDashboardPage";
 // PHASE S10 - React UI Modules
 import { KdsPage } from "@/modules/kds/pages/KdsPage";
 import { BarPage } from "@/modules/bar/pages/BarPage";
@@ -227,6 +160,79 @@ import { KioskTablesPreviewPage } from "@/modules/kiosk/preview/KioskTablesPrevi
 import { ComandaDeliveryPage } from "@/modules/public-ordering/delivery/pages/ComandaDeliveryPage";
 import { TrackOrderPage } from "@/modules/public-ordering/tracking/pages/TrackOrderPage";
 
+
+// T-CL-021 — heavy pages converted to lazy()
+
+const ManagerApprovalsPage = lazy(() => import('@/modules/reports/manager-approvals/pages/ManagerApprovalsPage').then(m => ({ default: m.ManagerApprovalsPage })));
+const CourierWalletPage = lazy(() => import('@/modules/delivery/wallet/pages/CourierWalletPage').then(m => ({ default: m.CourierWalletPage })));
+
+const BackupPage = lazy(() => import('@/modules/backup/pages/BackupPage').then(m => ({ default: m.BackupPage })));
+const MenuManagementPage = lazy(() => import('@/modules/menu/pages/MenuManagementPage').then(m => ({ default: m.MenuManagementPage })));
+const RecipesPage = lazy(() => import('@/modules/recipes/pages/RecipesPage').then(m => ({ default: m.RecipesPage })));
+const ReservationsPage = lazy(() => import('@/modules/reservations/pages/ReservationsPage').then(m => ({ default: m.ReservationsPage })));
+const WaitersPage = lazy(() => import('@/modules/waiters/pages/WaitersPage').then(m => ({ default: m.WaitersPage })));
+const StockManagementPage = lazy(() => import('@/modules/stocks/pages/StockManagementPage').then(m => ({ default: m.StockManagementPage })));
+const OrdersManagementPage = lazy(() => import('@/modules/orders/pages/OrdersManagementPage').then(m => ({ default: m.OrdersManagementPage })));
+const CatalogPage = lazy(() => import('@/modules/catalog/pages/CatalogPage').then(m => ({ default: m.CatalogPage })));
+const CatalogOnlinePage = lazy(() => import('@/modules/catalog/pages/CatalogOnlinePage').then(m => ({ default: m.CatalogOnlinePage })));
+const DailyMenuPage = lazy(() => import('@/modules/daily-menu/pages/DailyMenuPage').then(m => ({ default: m.DailyMenuPage })));
+const LotsPage = lazy(() => import('@/modules/lots/pages/LotsPage').then(m => ({ default: m.LotsPage })));
+const TraceabilityPage = lazy(() => import('@/modules/traceability/pages/TraceabilityPage').then(m => ({ default: m.TraceabilityPage })));
+const MenuPDFBuilderPage = lazy(() => import('@/modules/menu-pdf/pages/MenuPDFBuilderPage').then(m => ({ default: m.MenuPDFBuilderPage })));
+const InternalMessagingPage = lazy(() => import('@/modules/internal-messaging/pages/InternalMessagingPage').then(m => ({ default: m.InternalMessagingPage })));
+const PosPage = lazy(() => import('@/modules/pos/pages/PosPage').then(m => ({ default: m.PosPage })));
+const ExecutiveDashboardPage = lazy(() => import('@/modules/stocks/dashboard/executive/pages/ExecutiveDashboardPage').then(m => ({ default: m.ExecutiveDashboardPage })));
+const AdvancedStockDashboardPage = lazy(() => import('@/modules/stocks/dashboard/pages/AdvancedStockDashboardPage').then(m => ({ default: m.AdvancedStockDashboardPage })));
+const AdvancedReportsPage = lazy(() => import('@/modules/reports/advanced/pages/AdvancedReportsPage').then(m => ({ default: m.AdvancedReportsPage })));
+const AuditLogsPageComponent = lazy(() => import('@/modules/audit/logs/pages/AuditLogsPage').then(m => ({ default: m.AuditLogsPage })));
+const AllergensPage = lazy(() => import('@/modules/stocks/allergens/pages/AllergensPage').then(m => ({ default: m.AllergensPage })));
+const LabelsPage = lazy(() => import('@/modules/stocks/labels/pages/LabelsPage').then(m => ({ default: m.LabelsPage })));
+const WastePage = lazy(() => import('@/modules/stocks/waste/pages/WastePage').then(m => ({ default: m.WastePage })));
+const SuppliersPage = lazy(() => import('@/modules/stocks/suppliers/pages/SuppliersPage').then(m => ({ default: m.SuppliersPage })));
+const SupplierOrdersPage = lazy(() => import('@/modules/stocks/suppliers/orders/pages/SupplierOrdersPage').then(m => ({ default: m.SupplierOrdersPage })));
+const MultiInventoryPage = lazy(() => import('@/modules/stocks/inventory/multi/pages/MultiInventoryPage').then(m => ({ default: m.MultiInventoryPage })));
+const CancellationsPage = lazy(() => import('@/modules/orders/cancellations/pages/CancellationsPage').then(m => ({ default: m.CancellationsPage })));
+const DeliveryOrdersPage = lazy(() => import('@/modules/orders/delivery/pages/DeliveryOrdersPage').then(m => ({ default: m.DeliveryOrdersPage })));
+const DeliveryKpiDashboardPage = lazy(() => import('@/modules/delivery/dashboard/pages/DeliveryKpiDashboardPage').then(m => ({ default: m.DeliveryKpiDashboardPage })));
+const OrdersHistoryPage = lazy(() => import('@/modules/orders/history/pages/OrdersHistoryPage').then(m => ({ default: m.OrdersHistoryPage })));
+const DriveThruOrdersPage = lazy(() => import('@/modules/orders/drivethru/pages/DriveThruOrdersPage').then(m => ({ default: m.DriveThruOrdersPage })));
+const TakeawayOrdersPage = lazy(() => import('@/modules/orders/takeaway/pages/TakeawayOrdersPage').then(m => ({ default: m.TakeawayOrdersPage })));
+const NewExecutiveDashboardPage = lazy(() => import('@/modules/executive-dashboard/pages/ExecutiveDashboardPage').then(m => ({ default: m.ExecutiveDashboardPage })));
+const MonitoringDashboardPage = lazy(() => import('@/modules/monitoring/pages/MonitoringDashboardPage').then(m => ({ default: m.MonitoringDashboardPage })));
+const PlatformSyncPage = lazy(() => import('@/modules/external-delivery/pages/PlatformSyncPage').then(m => ({ default: m.PlatformSyncPage })));
+const CompliancePage = lazy(() => import('@/modules/compliance/pages/CompliancePage').then(m => ({ default: m.CompliancePage })));
+const HACCPDashboardPage = lazy(() => import('@/modules/compliance/pages/HACCPDashboardPage').then(m => ({ default: m.HACCPDashboardPage })));
+const HACCPProcessesPage = lazy(() => import('@/modules/compliance/pages/HACCPProcessesPage').then(m => ({ default: m.HACCPProcessesPage })));
+const HACCPMonitoringPage = lazy(() => import('@/modules/compliance/pages/HACCPMonitoringPage').then(m => ({ default: m.HACCPMonitoringPage })));
+const HACCPCorrectiveActionsPage = lazy(() => import('@/modules/compliance/pages/HACCPCorrectiveActionsPage').then(m => ({ default: m.HACCPCorrectiveActionsPage })));
+const CouriersPage = lazy(() => import('@/modules/delivery/pages/CouriersPage').then(m => ({ default: m.CouriersPage })));
+const DispatchPage = lazy(() => import('@/modules/delivery/pages/DispatchPage').then(m => ({ default: m.DispatchPage })));
+const DeliveryMonitorPage = lazy(() => import('@/modules/delivery/pages/DeliveryMonitorPage').then(m => ({ default: m.DeliveryMonitorPage })));
+const DeliveryDashboardPage = lazy(() => import('@/modules/delivery/pages/DeliveryDashboardPage').then(m => ({ default: m.DeliveryDashboardPage })));
+const HappyHourPage = lazy(() => import('@/modules/promotions/happy-hour/pages/HappyHourPage').then(m => ({ default: m.HappyHourPage })));
+const MarketingPage = lazy(() => import('@/modules/marketing/pages/MarketingPage').then(m => ({ default: m.MarketingPage })));
+const FeedbackPage = lazy(() => import('@/modules/marketing/feedback/pages/FeedbackPage').then(m => ({ default: m.FeedbackPage })));
+const VouchersPage = lazy(() => import('@/modules/marketing/vouchers/pages/VouchersPage').then(m => ({ default: m.VouchersPage })));
+const LoyaltyPage = lazy(() => import('@/modules/marketing/loyalty/pages/LoyaltyPage').then(m => ({ default: m.LoyaltyPage })));
+const DailyOfferPage = lazy(() => import('@/modules/promotions/daily-offer/pages/DailyOfferPage').then(m => ({ default: m.DailyOfferPage })));
+const RiskAlertsPage = lazy(() => import('@/modules/stocks/risk-alerts/pages/RiskAlertsPage').then(m => ({ default: m.RiskAlertsPage })));
+const ArchivePage = lazy(() => import('@/modules/archive/pages/ArchivePage').then(m => ({ default: m.ArchivePage })));
+const SaftExportPage = lazy(() => import('@/modules/saft/pages/SaftExportPage').then(m => ({ default: m.SaftExportPage })));
+const SagaExportPage = lazy(() => import('@/modules/saga-export/pages/SagaExportPage').then(m => ({ default: m.SagaExportPage })));
+const PINManagementPage = lazy(() => import('@/modules/settings/pins/pages/PINManagementPage').then(m => ({ default: m.PINManagementPage })));
+const InvoicesListPage = lazy(() => import('@/modules/invoices/InvoicesListPage'));
+const InvoiceDetailsPage = lazy(() => import('@/modules/invoices/InvoiceDetailsPage'));
+const QueueMonitorPage = lazy(() => import('@/modules/queue-monitor/pages/QueueMonitorPage'));
+const ManageOrdersPage = lazy(() => import('@/modules/orders/manage/ManageOrdersPage'));
+const RecipeScalingPage = lazy(() => import('@/modules/recipes/pages/RecipeScalingPage'));
+const InventoryListPage = lazy(() => import('@/modules/stocks/inventory/pages/InventoryListPage'));
+const InventoryCreatePage = lazy(() => import('@/modules/stocks/inventory/pages/InventoryCreatePage'));
+const InventoryDetailsPage = lazy(() => import('@/modules/stocks/inventory/pages/InventoryDetailsPage'));
+const InventoryDashboardPage = lazy(() => import('@/modules/stocks/inventory/pages/InventoryDashboardPage'));
+const InventoryImportPage = lazy(() => import('@/modules/stocks/inventory/pages/InventoryImportPage').then(m => ({ default: m.InventoryImportPage })));
+const ProductionBatchesListPage = lazy(() => import('@/modules/production/pages/ProductionBatchesListPage'));
+const ProductionBatchEditorPage = lazy(() => import('@/modules/production/pages/ProductionBatchEditorPage'));
+const VatRatesPage = lazy(() => import('@/modules/settings/vat/VatRatesPage'));
 
 // Lazy load large modules - Reports (rarely used, large)
 // const AdvancedReportsPage = lazy(() => import('@/modules/reports/advanced/pages/AdvancedReportsPage').then(m => ({ default: m.AdvancedReportsPage })));
@@ -484,7 +490,7 @@ const App = () => {
 
 
         {/* Stocks - Aceeași componentă ca Admin-vite */}
-        <Route path="stocks" element={<StockManagementPage />} />
+        <Route path="stocks" element={<LazyRoute component={StockManagementPage} />} />
       </Route>
 
       {/* AdminV4 Routes - folosesc AppLayout */}
@@ -495,12 +501,12 @@ const App = () => {
         <Route path="dashboard" element={<DashboardPage />} />
         <Route path="dashboard/monitoring" element={<MonitoringPage />} />
         <Route path="monitoring/performance" element={<MonitoringPage />} />
-        <Route path="monitoring/health" element={<MonitoringDashboardPage />} />
-        <Route path="monitoring/dashboard" element={<MonitoringDashboardPage />} />
-        <Route path="executive-dashboard" element={<NewExecutiveDashboardPage />} />
-        <Route path="platform-sync" element={<PlatformSyncPage />} />
-        <Route path="external-delivery/sync" element={<PlatformSyncPage />} />
-        <Route path="internal-messaging" element={<InternalMessagingPage />} />
+        <Route path="monitoring/health" element={<LazyRoute component={MonitoringDashboardPage} />} />
+        <Route path="monitoring/dashboard" element={<LazyRoute component={MonitoringDashboardPage} />} />
+        <Route path="executive-dashboard" element={<LazyRoute component={NewExecutiveDashboardPage} />} />
+        <Route path="platform-sync" element={<LazyRoute component={PlatformSyncPage} />} />
+        <Route path="external-delivery/sync" element={<LazyRoute component={PlatformSyncPage} />} />
+        <Route path="internal-messaging" element={<LazyRoute component={InternalMessagingPage} />} />
         
         {/* Legacy HTML pages refactored to React - importable when needed */}
         <Route path="legacy/admin" element={<AdminPage />} />
@@ -511,11 +517,11 @@ const App = () => {
         {/* Demo page showing how to use legacy components */}
         <Route path="legacy/demo" element={<LegacyPagesDemo />} />
         
-        <Route path="menu" element={<MenuManagementPage />} />
-        <Route path="catalog" element={<CatalogPage />} />
-        <Route path="catalog/online" element={<CatalogOnlinePage />} />
-        <Route path="ingredients" element={<StockManagementPage />} />
-        <Route path="stocks" element={<StockManagementPage />} />
+        <Route path="menu" element={<LazyRoute component={MenuManagementPage} />} />
+        <Route path="catalog" element={<LazyRoute component={CatalogPage} />} />
+        <Route path="catalog/online" element={<LazyRoute component={CatalogOnlinePage} />} />
+        <Route path="ingredients" element={<LazyRoute component={StockManagementPage} />} />
+        <Route path="stocks" element={<LazyRoute component={StockManagementPage} />} />
         {/* PHASE S5.5 → S6: Legacy Stocks Routes → Redirect to React components */}
         <Route path="stocks/nir" element={<Navigate to="/tipizate-enterprise/nir" replace />} />
         <Route path="stocks/nir/*" element={<Navigate to="/tipizate-enterprise/nir" replace />} />
@@ -525,70 +531,71 @@ const App = () => {
         <Route path="stocks/inventory" element={<Navigate to="/stocks/inventory/multi" replace />} />
         <Route path="stocks/inventory/new" element={<Navigate to="/stocks/inventory/multi" replace />} />
         {/* Inventory Dashboard & Multi-Inventory remain (separate functionality) */}
-        <Route path="stocks/inventory/:id" element={<InventoryDetailsPage />} />
-        <Route path="stocks/inventory/dashboard" element={<InventoryDashboardPage />} />
-        <Route path="stocks/inventory/multi" element={<MultiInventoryPage />} />
-        <Route path="stocks/inventory/import" element={<InventoryImportPage />} />
-        <Route path="stocks/allergens" element={<AllergensPage />} />
+        <Route path="stocks/inventory/:id" element={<LazyRoute component={InventoryDetailsPage} />} />
+        <Route path="stocks/inventory/dashboard" element={<LazyRoute component={InventoryDashboardPage} />} />
+        <Route path="stocks/inventory/multi" element={<LazyRoute component={MultiInventoryPage} />} />
+        <Route path="stocks/inventory/import" element={<LazyRoute component={InventoryImportPage} />} />
+        <Route path="stocks/allergens" element={<LazyRoute component={AllergensPage} />} />
         <Route path="ai/audit" element={<LazyRoute component={AIAuditPage} />} />
-        <Route path="stocks/labels" element={<LabelsPage />} />
+        <Route path="stocks/labels" element={<LazyRoute component={LabelsPage} />} />
         {/* PHASE S5.5 - Legacy Waste Route → Redirect to Tipizate Enterprise */}
         <Route path="stocks/waste" element={<Navigate to="/tipizate-enterprise/waste" replace />} />
         <Route path="stocks/costs" element={<CostsPage />} />
         <Route path="stocks/retur" element={<Navigate to="/tipizate-enterprise/retur" replace />} />
-        <Route path="stocks/risk-alerts" element={<RiskAlertsPage />} />
-        <Route path="stocks/suppliers" element={<SuppliersPage />} />
-        <Route path="stocks/suppliers/orders" element={<SupplierOrdersPage />} />
-        <Route path="orders/manage" element={<ManageOrdersPage />} />
+        <Route path="stocks/risk-alerts" element={<LazyRoute component={RiskAlertsPage} />} />
+        <Route path="stocks/suppliers" element={<LazyRoute component={SuppliersPage} />} />
+        <Route path="stocks/suppliers/orders" element={<LazyRoute component={SupplierOrdersPage} />} />
+        <Route path="orders/manage" element={<LazyRoute component={ManageOrdersPage} />} />
         {/* PHASE S5.5 → S6: Legacy Transfer Routes → Redirect to React components */}
         <Route path="stocks/transfer" element={<Navigate to="/tipizate-enterprise/transfer" replace />} />
         <Route path="stocks/transfer/*" element={<Navigate to="/tipizate-enterprise/transfer" replace />} />
         {/* PHASE S5.5 - Legacy Waste Route → Redirect to Tipizate Enterprise */}
         <Route path="stocks/waste" element={<Navigate to="/tipizate-enterprise/waste" replace />} />
-        <Route path="orders" element={<OrdersManagementPage />} />
-        <Route path="orders/history" element={<OrdersHistoryPage />} />
-        <Route path="orders/delivery" element={<DeliveryOrdersPage />} />
-        <Route path="orders/drive-thru" element={<DriveThruOrdersPage />} />
-        <Route path="orders/takeaway" element={<TakeawayOrdersPage />} />
-        <Route path="orders/cancellations" element={<CancellationsPage />} />
-        <Route path="couriers" element={<CouriersPage />} />
-        <Route path="dispatch" element={<DispatchPage />} />
+        <Route path="orders" element={<LazyRoute component={OrdersManagementPage} />} />
+        <Route path="orders/history" element={<LazyRoute component={OrdersHistoryPage} />} />
+        <Route path="orders/delivery" element={<LazyRoute component={DeliveryOrdersPage} />} />
+        <Route path="orders/drive-thru" element={<LazyRoute component={DriveThruOrdersPage} />} />
+        <Route path="orders/takeaway" element={<LazyRoute component={TakeawayOrdersPage} />} />
+        <Route path="orders/cancellations" element={<LazyRoute component={CancellationsPage} />} />
+        <Route path="couriers" element={<LazyRoute component={CouriersPage} />} />
+        <Route path="dispatch" element={<LazyRoute component={DispatchPage} />} />
         <Route path="drive-thru" element={<DriveThruPage />} />
-        <Route path="delivery-monitor" element={<DeliveryMonitorPage />} />
-        <Route path="delivery-dashboard" element={<DeliveryDashboardPage />} />
-        <Route path="delivery/kpi" element={<DeliveryKpiDashboardPage />} />
-        <Route path="recipes" element={<RecipesPage />} />
-        <Route path="reservations" element={<ReservationsPage />} />
-        <Route path="daily-menu" element={<DailyMenuPage />} />
-        <Route path="lots" element={<LotsPage />} />
-        <Route path="traceability" element={<TraceabilityPage />} />
-        <Route path="backup" element={<BackupPage />} />
-        <Route path="menu-pdf" element={<MenuPDFBuilderPage />} />
-        <Route path="waiters" element={<WaitersPage />} />
-        <Route path="queue-monitor" element={<QueueMonitorPage />} />
+        <Route path="delivery-monitor" element={<LazyRoute component={DeliveryMonitorPage} />} />
+        <Route path="delivery-dashboard" element={<LazyRoute component={DeliveryDashboardPage} />} />
+        <Route path="delivery/kpi" element={<LazyRoute component={DeliveryKpiDashboardPage} />} />
+        <Route path="recipes" element={<LazyRoute component={RecipesPage} />} />
+        <Route path="reservations" element={<LazyRoute component={ReservationsPage} />} />
+        <Route path="daily-menu" element={<LazyRoute component={DailyMenuPage} />} />
+        <Route path="lots" element={<LazyRoute component={LotsPage} />} />
+        <Route path="traceability" element={<LazyRoute component={TraceabilityPage} />} />
+        <Route path="backup" element={<LazyRoute component={BackupPage} />} />
+        <Route path="menu-pdf" element={<LazyRoute component={MenuPDFBuilderPage} />} />
+        <Route path="waiters" element={<LazyRoute component={WaitersPage} />} />
+        <Route path="queue-monitor" element={<LazyRoute component={QueueMonitorPage} />} />
         {/* Queue Monitor direct route - priority over admin-advanced */}
-        <Route path="admin-advanced/queue-monitor" element={<QueueMonitorPage />} />
-        <Route path="compliance" element={<CompliancePage />} />
-        <Route path="compliance/haccp" element={<HACCPDashboardPage />} />
-        <Route path="compliance/haccp/processes" element={<HACCPProcessesPage />} />
-        <Route path="compliance/haccp/monitoring" element={<HACCPMonitoringPage />} />
-        <Route path="compliance/haccp/corrective-actions" element={<HACCPCorrectiveActionsPage />} />
+        <Route path="admin-advanced/queue-monitor" element={<LazyRoute component={QueueMonitorPage} />} />
+        <Route path="compliance" element={<LazyRoute component={CompliancePage} />} />
+        <Route path="compliance/haccp" element={<LazyRoute component={HACCPDashboardPage} />} />
+        <Route path="compliance/haccp/processes" element={<LazyRoute component={HACCPProcessesPage} />} />
+        <Route path="compliance/haccp/monitoring" element={<LazyRoute component={HACCPMonitoringPage} />} />
+        <Route path="compliance/haccp/corrective-actions" element={<LazyRoute component={HACCPCorrectiveActionsPage} />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="tables" element={<TablesPage />} />
         <Route path="profitability" element={<LazyRoute component={ProfitLossPage} />} />
         <Route path="training" element={<TrainingPage />} />
-        <Route path="production/batches" element={<ProductionBatchesListPage />} />
-        <Route path="production/batches/:id" element={<ProductionBatchEditorPage />} />
-        <Route path="reports" element={<AdvancedReportsPage />} />
+        <Route path="production/batches" element={<LazyRoute component={ProductionBatchesListPage} />} />
+        <Route path="production/batches/:id" element={<LazyRoute component={ProductionBatchEditorPage} />} />
+        <Route path="reports" element={<LazyRoute component={AdvancedReportsPage} />} />
         <Route path="reports/profit-loss" element={<LazyRoute component={ProfitLossPage} />} />
         <Route path="reports/abc-analysis" element={<LazyRoute component={ABCAnalysisPage} />} />
         <Route path="reports/staff" element={<LazyRoute component={StaffReportsPage} />} />
+        <Route path="reports/manager-approvals" element={<LazyRoute component={ManagerApprovalsPage} />} />
         <Route path="reports/advanced" element={<LazyRoute component={AdvancedReportsPage} />} />
         <Route path="reports/sales" element={<LazyRoute component={SalesReportsPage} />} />
         <Route path="reports/stock" element={<LazyRoute component={StockReportsPage} />} />
         <Route path="reports/delivery-performance" element={<LazyRoute component={DeliveryPerformanceReportPage} />} />
         <Route path="reports/drive-thru-performance" element={<LazyRoute component={DriveThruPerformanceReportPage} />} />
-        <Route path="archive" element={<ArchivePage />} />
+        <Route path="archive" element={<LazyRoute component={ArchivePage} />} />
         <Route path="reports/top-products" element={<LazyRoute component={TopProductsPage} />} />
         <Route path="reports/financial" element={<LazyRoute component={FinancialReportsPage} />} />
         {/* PHASE S6.3 - Accounting Reports */}
@@ -612,7 +619,7 @@ const App = () => {
 
         {/* Admin Advanced Routes - Migrated from legacy HTML to React components */}
         <Route path="admin-advanced/dashboard" element={<Navigate to="/dashboard" replace />} />
-        <Route path="admin-advanced/queue-monitor" element={<QueueMonitorPage />} />
+        <Route path="admin-advanced/queue-monitor" element={<LazyRoute component={QueueMonitorPage} />} />
         <Route path="admin-advanced/inventory" element={<Navigate to="/tipizate-enterprise/nir" replace />} />
         <Route path="admin-advanced/transfers" element={<Navigate to="/tipizate-enterprise/transfer" replace />} />
         <Route path="admin-advanced/multi-inventory" element={<Navigate to="/stocks/inventory/multi" replace />} />
@@ -621,7 +628,7 @@ const App = () => {
         <Route path="admin-advanced/executive-dashboard" element={<Navigate to="/stocks/dashboard/executive" replace />} />
         <Route path="admin-advanced/reports" element={<Navigate to="/reports" replace />} />
         <Route path="admin-advanced/marketing" element={<Navigate to="/marketing" replace />} />
-        <Route path="admin-advanced/happy-hour" element={<HappyHourPage />} />
+        <Route path="admin-advanced/happy-hour" element={<LazyRoute component={HappyHourPage} />} />
         <Route path="admin-advanced/fiscal" element={<LazyRoute component={FiscalOverviewPage} />} />
         <Route path="admin-advanced/risk-alerts" element={<Navigate to="/stocks/risk-alerts" replace />} />
         <Route path="admin-advanced/restaurant-config" element={<LazyRoute component={RestaurantConfigPage} />} />
@@ -631,7 +638,7 @@ const App = () => {
         <Route path="settings/product-display" element={<ProductDisplayPage />} />
         <Route path="settings/missing-translations" element={<MissingTranslationsPage />} />
         <Route path="settings/payment-methods" element={<PaymentMethodsPage />} />
-        <Route path="settings/vat" element={<VatRatesPage />} />
+        <Route path="settings/vat" element={<LazyRoute component={VatRatesPage} />} />
         <Route path="settings/schedule" element={<SchedulePage />} />
         <Route path="settings/users" element={<UsersPage />} />
         <Route path="settings/printers" element={<PrintersPage />} />
@@ -643,7 +650,7 @@ const App = () => {
         <Route path="settings/branding" element={<BrandingPage />} />
         <Route path="settings/restaurant-config" element={<LazyRoute component={RestaurantConfigPage} />} />
         <Route path="settings/manual-instructiuni" element={<ManualInstructiuniPage />} />
-        <Route path="settings/pins" element={<PINManagementPage />} />
+        <Route path="settings/pins" element={<LazyRoute component={PINManagementPage} />} />
         <Route path="import" element={<ImportPage />} />
         <Route path="export" element={<ExportPage />} />
         <Route path="stocks/fiscal" element={<LazyRoute component={FiscalOverviewPage} />} />
@@ -661,28 +668,28 @@ const App = () => {
         {/* FAZA 1 - ANAF Certificate & Health Management */}
         <Route path="anaf/submissions" element={<LazyRoute component={SubmissionMonitorPage} />} />
         {/* FAZA 1.5 - SAF-T Export */}
-        <Route path="anaf/saft-export" element={<SaftExportPage />} />
+        <Route path="anaf/saft-export" element={<LazyRoute component={SaftExportPage} />} />
         {/* SAGA Export */}
-        <Route path="saga/export" element={<SagaExportPage />} />
+        <Route path="saga/export" element={<LazyRoute component={SagaExportPage} />} />
         {/* Portion Control și Variance - disponibile în Admin Advanced */}
         <Route path="nomenclator/units" element={<UnitsOfMeasurePage />} />
         <Route path="catalog/prices" element={<PriceUtilitiesPage />} />
         <Route path="catalog/attributes" element={<AttributeGroupsPage />} />
-        <Route path="promotions/happy-hour" element={<HappyHourPage />} />
-        <Route path="promotions/daily-offer" element={<DailyOfferPage />} />
-        <Route path="marketing" element={<MarketingPage />} />
-        <Route path="marketing/feedback" element={<FeedbackPage />} />
-        <Route path="marketing/vouchers" element={<VouchersPage />} />
-        <Route path="marketing/loyalty" element={<LoyaltyPage />} />
+        <Route path="promotions/happy-hour" element={<LazyRoute component={HappyHourPage} />} />
+        <Route path="promotions/daily-offer" element={<LazyRoute component={DailyOfferPage} />} />
+        <Route path="marketing" element={<LazyRoute component={MarketingPage} />} />
+        <Route path="marketing/feedback" element={<LazyRoute component={FeedbackPage} />} />
+        <Route path="marketing/vouchers" element={<LazyRoute component={VouchersPage} />} />
+        <Route path="marketing/loyalty" element={<LazyRoute component={LoyaltyPage} />} />
 
         {/* Call Center Simulator */}
         <Route path="call-center-simulator" element={<LazyRoute component={CallCenterSimulatorPage} />} />
 
-        <Route path="marketing/reservations-new" element={<ReservationsPage />} />
-        <Route path="stocks/dashboard/executive" element={<ExecutiveDashboardPage />} />
-        <Route path="stocks/dashboard/advanced" element={<AdvancedStockDashboardPage />} />
+        <Route path="marketing/reservations-new" element={<LazyRoute component={ReservationsPage} />} />
+        <Route path="stocks/dashboard/executive" element={<LazyRoute component={ExecutiveDashboardPage} />} />
+        <Route path="stocks/dashboard/advanced" element={<LazyRoute component={AdvancedStockDashboardPage} />} />
         <Route path="reports/stock-prediction" element={<LazyRoute component={StockPredictionPage} />} />
-        <Route path="audit/logs" element={<AuditLogsPageComponent />} />
+        <Route path="audit/logs" element={<LazyRoute component={AuditLogsPageComponent} />} />
         <Route path="audit/security" element={<LazyRoute component={SecurityEventsPage} />} />
         <Route path="audit/login-history" element={<LazyRoute component={LoginHistoryPage} />} />
         <Route path="audit/user-activity" element={<LazyRoute component={UserActivityPage} />} />
@@ -697,6 +704,7 @@ const App = () => {
         <Route path="competitors" element={<CompetitorTrackingPage />} />
         <Route path="scheduling" element={<EmployeeSchedulingPage />} />
         <Route path="purchase-orders" element={<AutoPurchaseOrdersPage />} />
+        <Route path="delivery/courier-wallet" element={<LazyRoute component={CourierWalletPage} />} />
         <Route path="hostess-map" element={<HostessMapPage />} />
         <Route path="coatroom" element={<CoatroomPage />} />
         <Route path="lost-found" element={<LostFoundPage />} />
@@ -710,7 +718,7 @@ const App = () => {
 
         {/* Enterprise Rebuild Routes (03 Dec 2025) */}
         <Route path="technical-sheets" element={<TechnicalSheetsPage />} />
-        <Route path="recipes/scaling" element={<RecipeScalingPage />} />
+        <Route path="recipes/scaling" element={<LazyRoute component={RecipeScalingPage} />} />
         {/* Menu Builder (04 Dec 2025) - CRITICAL FEATURE */}
         <Route path="menu/builder" element={<MenuBuilderPage />} />
         <Route path="portions" element={<PortionsPage />} />
@@ -792,16 +800,16 @@ const App = () => {
         {/* ------------------------------------------------------------------ */}
 
         {/* LEGACY_ROUTE - PHASE S3: Invoices (legacy component) */}
-        <Route path="invoices" element={<InvoicesListPage />} />
+        <Route path="invoices" element={<LazyRoute component={InvoicesListPage} />} />
         {/* PHASE S11 - e-Factura UBL (ANAF) + UI React */}
         <Route path="efactura" element={<LazyRoute component={EFacturaDashboardPage} />} />
         <Route path="efactura/:id" element={<LazyRoute component={EFacturaDetailsPage} />} />
         {/* PHASE S12 - POS React Unificat + Plăți Enterprise */}
-        <Route path="pos" element={<PosPage />} />
-        <Route path="invoices/:id" element={<InvoiceDetailsPage />} />
+        <Route path="pos" element={<LazyRoute component={PosPage} />} />
+        <Route path="invoices/:id" element={<LazyRoute component={InvoiceDetailsPage} />} />
 
         {/* LEGACY_ROUTE - PHASE S3: POS (legacy component) */}
-        <Route path="pos/:orderId" element={<PosPage />} />
+        <Route path="pos/:orderId" element={<LazyRoute component={PosPage} />} />
 
         {/* LEGACY_ROUTE - PHASE S3 → S6: Tipizate (all redirected to React components) */}
         <Route path="tipizate" element={<Navigate to="/tipizate-enterprise/nir" replace />} />

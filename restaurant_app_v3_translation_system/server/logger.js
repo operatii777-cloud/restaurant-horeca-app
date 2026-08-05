@@ -77,6 +77,8 @@ const logger = winston.createLogger({
   level: process.env.LOG_LEVEL || 'info',
   format: fileFormat,
   defaultMeta: { service: 'restaurant-app' },
+  // Keep process alive on non-critical uncaught errors (server.js already logs them)
+  exitOnError: false,
   transports: [
     consoleTransport,
     errorFileTransport,
