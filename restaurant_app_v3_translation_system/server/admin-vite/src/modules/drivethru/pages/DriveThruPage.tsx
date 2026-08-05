@@ -7,10 +7,12 @@
  */
 
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useDriveThruStore } from '../driveThruStore';
 import { useDriveThruEvents } from '../hooks/useDriveThruEvents';
 import { updateOrderStatus } from '@/core/api/ordersApi';
 import type { CanonicalOrder } from '@/types/order';
+import { safeArr, safeFixed, safeNum } from '@/shared/utils/safe';
 import './DriveThruPage.css';
 
 /**
@@ -93,18 +95,26 @@ export function DriveThruPage() {
   return (
     <div className="drivethru-page">
       <header className="drivethru-header">
-        <h1 className="drivethru-title">Drive-Thru – Comenzi Active</h1>
+        <div className="drivethru-header-row">
+          <h1 className="drivethru-title">Drive-Thru – Comenzi Active</h1>
+          <Link
+            to="/kiosk/pos?mode=drivethru"
+            className="drivethru-btn-new-order"
+          >
+            + Comandă nouă
+          </Link>
+        </div>
         <div className="drivethru-stats">
           <span className="drivethru-stat-item">
-            <span className="drivethru-stat-label">"Pending:"</span>
+            <span className="drivethru-stat-label">Pending</span>
             <span className="drivethru-stat-value">{getPendingCount()}</span>
           </span>
           <span className="drivethru-stat-item">
-            <span className="drivethru-stat-label">Ready:</span>
+            <span className="drivethru-stat-label">Ready</span>
             <span className="drivethru-stat-value">{getReadyCount()}</span>
           </span>
           <span className="drivethru-stat-item">
-            <span className="drivethru-stat-label">Served:</span>
+            <span className="drivethru-stat-label">Served</span>
             <span className="drivethru-stat-value">{getServedCount()}</span>
           </span>
         </div>
@@ -149,16 +159,16 @@ export function DriveThruPage() {
               </div>
               
               <div className="drivethru-order-items">
-                {order.items.map((item) => (
+                {safeArr(order.items).map((item: any) => (
                   <div key={item.id || `${item.product_id}-${item.name}`} className="drivethru-item-row">
-                    <span className="drivethru-item-qty">{item.qty}×</span>
+                    <span className="drivethru-item-qty">{safeNum(item.qty)}×</span>
                     <span className="drivethru-item-name">{item.name}</span>
                   </div>
                 ))}
               </div>
               
               <div className="drivethru-order-total">
-                <strong>Total: {order.totals.total.toFixed(2)} {order.totals.currency}</strong>
+                <strong>Total: {safeFixed(order.totals?.total)} {order.totals?.currency || 'RON'}</strong>
               </div>
               
               {order.notes?.general && (

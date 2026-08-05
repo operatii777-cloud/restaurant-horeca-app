@@ -179,6 +179,7 @@ var KioskHostessMapPage = (0, react_1.lazy)(function () { return Promise.resolve
 var KioskClientMonitorPage = (0, react_1.lazy)(function () { return Promise.resolve().then(function () { return require('@/modules/kiosk/pages/KioskClientMonitorPage'); }).then(function (m) { return ({ default: m.KioskClientMonitorPage }); }); });
 var KioskLaundryPage = (0, react_1.lazy)(function () { return Promise.resolve().then(function () { return require('@/modules/kiosk/pages/KioskLaundryPage'); }).then(function (m) { return ({ default: m.KioskLaundryPage }); }); });
 var KioskWidgetPage = (0, react_1.lazy)(function () { return Promise.resolve().then(function () { return require('@/modules/kiosk/pages/KioskWidgetPage'); }).then(function (m) { return ({ default: m.KioskWidgetPage }); }); });
+var KioskPosEntryPage = (0, react_1.lazy)(function () { return Promise.resolve().then(function () { return require('@/modules/kiosk/pages/KioskPosEntryPage'); }); });
 // KioskPOSSplitPage - folosește default export cu error handling
 var KioskPOSSplitPage = (0, react_1.lazy)(function () {
     return Promise.resolve().then(function () { return require('@/modules/kiosk/pages/KioskPOSSplitPage'); }).then(function (m) { return ({ default: m.default || m.KioskPOSSplitPage }); })
@@ -354,6 +355,7 @@ var App = function () {
         <react_router_dom_1.Route path="dashboard" element={<KioskDashboardPage />}/>
         <react_router_dom_1.Route path="tables" element={<KioskTablesPage2D />}/>
         <react_router_dom_1.Route path="pos-split" element={<KioskPOSSplitPage />}/>
+        <react_router_dom_1.Route path="pos" element={<KioskPosEntryPage />}/>
         <react_router_dom_1.Route path="order/:tableId" element={<KioskOrderPage />}/>
         <react_router_dom_1.Route path="fast-sale" element={<KioskFastSalePage />}/>
         {/* Staff Reports - ambele rute pentru compatibilitate */}
