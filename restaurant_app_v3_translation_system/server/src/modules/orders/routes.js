@@ -10,6 +10,10 @@ const controller = require('./controllers/orders.controller');
 const visitsController = require('./controllers/visits.controller');
 const ordersExportController = require('./controllers/orders-export.controller');
 const displayController = require('./controllers/orders-display.controller');
+const managerApprovalsRoutes = require('./manager-approvals.routes');
+
+// T-CL-018 read-only journal (mounted before :id routes)
+router.use(managerApprovalsRoutes);
 
 // Client Monitor endpoint
 const dbPromise = require('../../../database').dbPromise;

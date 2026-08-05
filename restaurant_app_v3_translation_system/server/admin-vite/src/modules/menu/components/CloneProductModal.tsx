@@ -93,10 +93,12 @@ export function CloneProductModal({ open, product, onClose, onCloned }: ClonePro
 
         <p className="clone-product-hint">
           După salvare, produsul clonat va prelua categoria, prețul, traducerile și rețeta (dacă există) ale produsului original.
-          <button type="button" className="menu-product-button menu-product-button--ghost" onClick={onClose} disabled={loading}>{t('actions.cancel')}</button>
+        </p>
 
         <footer className="clone-product-actions">
-          <button type="button" className="menu-product-button menu-product-button--ghost" onClick={onClose} disabled={loading}>"Anulează"</button>
+          <button type="button" className="menu-product-button menu-product-button--ghost" onClick={onClose} disabled={loading}>
+            {t('actions.cancel')}
+          </button>
           <button type="submit" className="menu-product-button menu-product-button--primary" disabled={loading || !product}>
             {loading ? t('menu.cloneProduct.cloning') : t('menu.cloneProduct.title')}
           </button>

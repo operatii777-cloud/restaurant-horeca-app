@@ -1,11 +1,11 @@
 ﻿// import { useTranslation } from '@/i18n/I18nContext';
 import React, { useState, useCallback, useEffect } from 'react';
-import { Card, Button, Modal, Form, Alert, Spinner, Badge } from 'react-bootstrap';
+import { Card, Button, Modal, Form, Spinner, Badge, Row, Col } from 'react-bootstrap';
 import { PageHeader } from '@/shared/components/PageHeader';
 import { InlineAlert } from '@/shared/components/InlineAlert';
 import { DataGrid } from '@/shared/components/DataGrid';
 import { supplierOrdersApi } from '../api/supplierOrdersApi';
-import type { SupplierOrder } from '../api/supplierOrdersApi';
+import type { SupplierOrder, SupplierOrderItem } from '../api/supplierOrdersApi';
 import { suppliersApi } from '../../api/suppliersApi';
 import type { Supplier } from '../../api/suppliersApi';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -13,16 +13,21 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import './SupplierOrdersPage.css';
 
 const ORDER_STATUSES = [
-  { value: 'draft', label: 'Draft', color: 'secondary' },
-  { value: 'sent', label: 'Trimis', color: 'info' },
+  { value: 'pending', label: 'Pending', color: 'secondary' },
   { value: 'confirmed', label: 'Confirmat', color: 'primary' },
   { value: 'in_transit', label: 'În tranzit', color: 'warning' },
   { value: 'delivered', label: 'Livrat', color: 'success' },
   { value: 'cancelled', label: 'Anulat', color: 'danger' },
 ];
 
+const emptyItem = (): SupplierOrderItem => ({
+  item_name: '',
+  quantity: 1,
+  unit: 'kg',
+  unit_price: 0,
+});
+
 export const SupplierOrdersPage = () => {
-  //   const { t } = useTranslation();
   const [orders, setOrders] = useState<SupplierOrder[]>([]);
   const [suppliers, setSuppliers] = useState<Supplier[]>([]);
   const [loading, setLoading] = useState(true);
@@ -33,8 +38,9 @@ export const SupplierOrdersPage = () => {
   const [formData, setFormData] = useState<Partial<SupplierOrder>>({
     supplier_id: 0,
     order_date: new Date().toISOString().split('T')[0],
-    status: 'draft',
+    status: 'pending',
   });
+  const [items, setItems] = useState<SupplierOrderItem[]>([emptyItem()]);
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -58,17 +64,24 @@ export const SupplierOrdersPage = () => {
     void fetchData();
   }, [fetchData]);
 
-  const handleOpenModal = (order?: SupplierOrder) => {
-    if (order) {
+  const handleOpenModal = async (order?: SupplierOrder) => {
+    if (order?.id) {
       setEditingOrder(order);
       setFormData(order);
+      try {
+        const full = await supplierOrdersApi.fetchOrder(order.id);
+        setItems(full.items && full.items.length > 0 ? full.items : [emptyItem()]);
+      } catch {
+        setItems([emptyItem()]);
+      }
     } else {
       setEditingOrder(null);
       setFormData({
         supplier_id: 0,
         order_date: new Date().toISOString().split('T')[0],
-        status: 'draft',
+        status: 'pending',
       });
+      setItems([emptyItem()]);
     }
     setShowModal(true);
   };
@@ -84,13 +97,25 @@ export const SupplierOrdersPage = () => {
       setFeedback({ type: 'error', message: 'Furnizorul și data sunt obligatorii!' });
       return;
     }
+    const validItems = items.filter((i) => i.item_name.trim() && i.quantity > 0);
+    if (validItems.length === 0) {
+      setFeedback({ type: 'error', message: 'Adaugă cel puțin un articol (nume + cantitate)!' });
+      return;
+    }
 
     try {
+      const payload = {
+        ...formData,
+        supplier_id: Number(formData.supplier_id),
+        order_date: formData.order_date!,
+        status: (formData.status || 'pending') as SupplierOrder['status'],
+        items: validItems,
+      };
       if (editingOrder?.id) {
-        await supplierOrdersApi.updateOrder(editingOrder.id, formData);
+        await supplierOrdersApi.updateOrder(editingOrder.id, payload);
         setFeedback({ type: 'success', message: 'Comandă actualizată cu succes!' });
       } else {
-        await supplierOrdersApi.createOrder(formData as Omit<SupplierOrder, 'id' | 'created_at' | 'updated_at'>);
+        await supplierOrdersApi.createOrder(payload);
         setFeedback({ type: 'success', message: 'Comandă creată cu succes!' });
       }
       handleCloseModal();
@@ -115,12 +140,16 @@ export const SupplierOrdersPage = () => {
   };
 
   const getStatusBadge = (status: string) => {
-    const statusInfo = ORDER_STATUSES.find(s => s.value === status);
+    const statusInfo = ORDER_STATUSES.find((s) => s.value === status);
     return <Badge bg={statusInfo?.color || 'secondary'}>{statusInfo?.label || status}</Badge>;
   };
 
+  const supplierLabel = (supplier: Supplier) =>
+    (supplier as any).company_name || supplier.name || `Furnizor #${supplier.id}`;
+
   const columnDefs = [
     { field: 'id' as any, headerName: 'ID', width: 80 },
+    { field: 'order_number' as any, headerName: 'Nr.', width: 140 },
     { field: 'supplier_name' as any, headerName: 'Furnizor', flex: 1 },
     { field: 'order_date' as any, headerName: 'Data Comandă', width: 120 },
     { field: 'expected_delivery_date' as any, headerName: 'Data Livrare', width: 120 },
@@ -135,6 +164,11 @@ export const SupplierOrdersPage = () => {
       headerName: 'Total',
       width: 120,
       cellRenderer: (params: any) => `${(params.value || 0).toFixed(2)} RON`,
+    },
+    {
+      field: 'items_count' as any,
+      headerName: 'Articole',
+      width: 90,
     },
     {
       field: 'actions' as any,
@@ -156,7 +190,7 @@ export const SupplierOrdersPage = () => {
   return (
     <div className="supplier-orders-page">
       <PageHeader
-        title='📦 Comenzi furnizori'
+        title="📦 Comenzi furnizori"
         description="Gestionare comenzi către furnizori"
         actions={[
           {
@@ -184,13 +218,11 @@ export const SupplierOrdersPage = () => {
         <Card.Body className="p-0">
           {loading ? (
             <div className="text-center p-4">
-              <Spinner animation="border" size="sm" className="me-2" />Se încarcă...</div>
+              <Spinner animation="border" size="sm" className="me-2" />
+              Se încarcă...
+            </div>
           ) : (
-            <DataGrid
-              columnDefs={columnDefs}
-              rowData={orders}
-              height="60vh"
-            />
+            <DataGrid columnDefs={columnDefs} rowData={orders} height="60vh" />
           )}
         </Card.Body>
       </Card>
@@ -211,7 +243,7 @@ export const SupplierOrdersPage = () => {
                 <option value={0}>Selectează furnizor</option>
                 {suppliers.map((supplier) => (
                   <option key={supplier.id} value={supplier.id}>
-                    {supplier.company_name}
+                    {supplierLabel(supplier)}
                   </option>
                 ))}
               </Form.Select>
@@ -239,7 +271,7 @@ export const SupplierOrdersPage = () => {
             <Form.Group className="mb-3">
               <Form.Label>Status</Form.Label>
               <Form.Select
-                value={formData.status || 'draft'}
+                value={formData.status || 'pending'}
                 onChange={(e) => setFormData({ ...formData, status: e.target.value as any })}
               >
                 {ORDER_STATUSES.map((status) => (
@@ -248,6 +280,79 @@ export const SupplierOrdersPage = () => {
                   </option>
                 ))}
               </Form.Select>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Articole *</Form.Label>
+              {items.map((item, idx) => (
+                <Row key={idx} className="g-2 mb-2 align-items-end">
+                  <Col md={4}>
+                    <Form.Control
+                      placeholder="Nume articol"
+                      value={item.item_name}
+                      onChange={(e) => {
+                        const next = [...items];
+                        next[idx] = { ...next[idx], item_name: e.target.value };
+                        setItems(next);
+                      }}
+                      required
+                    />
+                  </Col>
+                  <Col md={2}>
+                    <Form.Control
+                      type="number"
+                      min={0.01}
+                      step="0.01"
+                      placeholder="Cant."
+                      value={item.quantity}
+                      onChange={(e) => {
+                        const next = [...items];
+                        next[idx] = { ...next[idx], quantity: Number(e.target.value) };
+                        setItems(next);
+                      }}
+                      required
+                    />
+                  </Col>
+                  <Col md={2}>
+                    <Form.Control
+                      placeholder="UM"
+                      value={item.unit}
+                      onChange={(e) => {
+                        const next = [...items];
+                        next[idx] = { ...next[idx], unit: e.target.value };
+                        setItems(next);
+                      }}
+                    />
+                  </Col>
+                  <Col md={2}>
+                    <Form.Control
+                      type="number"
+                      min={0}
+                      step="0.01"
+                      placeholder="Preț"
+                      value={item.unit_price}
+                      onChange={(e) => {
+                        const next = [...items];
+                        next[idx] = { ...next[idx], unit_price: Number(e.target.value) };
+                        setItems(next);
+                      }}
+                    />
+                  </Col>
+                  <Col md={2}>
+                    <Button
+                      variant="outline-danger"
+                      size="sm"
+                      disabled={items.length === 1}
+                      onClick={() => setItems(items.filter((_, i) => i !== idx))}
+                    >
+                      Șterge
+                    </Button>
+                  </Col>
+                </Row>
+              ))}
+              <Button variant="outline-secondary" size="sm" onClick={() => setItems([...items, emptyItem()])}>
+                + Adaugă articol
+              </Button>
             </Form.Group>
 
             <Form.Group className="mb-3">
@@ -261,7 +366,9 @@ export const SupplierOrdersPage = () => {
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseModal}>Anulează</Button>
+            <Button variant="secondary" onClick={handleCloseModal}>
+              Anulează
+            </Button>
             <Button variant="primary" type="submit">
               {editingOrder ? 'Actualizează' : 'Creează'}
             </Button>
@@ -271,8 +378,3 @@ export const SupplierOrdersPage = () => {
     </div>
   );
 };
-
-
-
-
-

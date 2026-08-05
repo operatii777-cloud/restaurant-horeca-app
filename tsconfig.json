@@ -2,14 +2,8 @@
   "compilerOptions": {
     "target": "ES2020",
     "module": "ESNext",
-    "lib": ["ES2020", "DOM"],
-    "jsx": "react-jsx",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
+    "moduleResolution": "bundler",
     "strict": true,
-    "resolveJsonModule": true
-  },
-  "include": ["app/src"],
-  "exclude": ["node_modules"]
+    "skipLibCheck": true
+  }
 }

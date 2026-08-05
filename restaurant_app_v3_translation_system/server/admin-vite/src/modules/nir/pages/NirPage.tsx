@@ -1899,7 +1899,7 @@ export const NirPage: React.FC = () => {
             </div>
           </div>
         </div>
-      )
+      )}
       {stockModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
           <div className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl w-full max-w-4xl max-h-[80vh] flex flex-col">
@@ -1934,6 +1934,7 @@ export const NirPage: React.FC = () => {
                   Nu s-au găsit rezultate.
                 </div>
               ) : (
+                <>
                 <table className="w-full text-sm">
                   <thead className="bg-gray-50 dark:bg-gray-800 sticky top-0">
                     <tr>
@@ -1973,6 +1974,7 @@ export const NirPage: React.FC = () => {
                     Se afișează primele 200 din {filteredStock.length} rezultate. Rafinați căutarea pentru mai multă precizie.
                   </div>
                 )}
+                </>
               )}
             </div>
           </div>

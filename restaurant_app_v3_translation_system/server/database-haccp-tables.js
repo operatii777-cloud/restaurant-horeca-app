@@ -35,15 +35,16 @@ function createHaccpTables(db) {
                     // Populate defaults if empty
                     db.get('SELECT COUNT(*) as count FROM haccp_processes', (err, row) => {
                         if (!err && row.count === 0) {
+                            // category MUST match database.js CHECK constraint
                             const defaults = [
-                                ['Recepție', 'Recepția materiilor prime'],
-                                ['Depozitare', 'Depozitare la temperatura controlată'],
-                                ['Preparare', 'Preparare termică și non-termică'],
-                                ['Gătire', 'Procese termice (fierbere, coacere, prăjire)'],
-                                ['Răcire', 'Răcire rapidă'],
-                                ['Servire', 'Menținere la cald și servire']
+                                ['Recepție', 'Recepția materiilor prime', 'receiving'],
+                                ['Depozitare', 'Depozitare la temperatura controlată', 'storage'],
+                                ['Preparare', 'Preparare termică și non-termică', 'preparation'],
+                                ['Gătire', 'Procese termice (fierbere, coacere, prăjire)', 'cooking'],
+                                ['Răcire', 'Răcire rapidă', 'storage'],
+                                ['Servire', 'Menținere la cald și servire', 'serving']
                             ];
-                            const stmt = db.prepare('INSERT INTO haccp_processes (name, description) VALUES (?, ?)');
+                            const stmt = db.prepare('INSERT INTO haccp_processes (name, description, category) VALUES (?, ?, ?)');
                             defaults.forEach(d => stmt.run(d));
                             stmt.finalize();
                             console.log('   -> Populated default HACCP processes');

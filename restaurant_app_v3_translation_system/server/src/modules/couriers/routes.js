@@ -21,6 +21,44 @@ function checkAdminAuth(req, res, next) {
   next();
 }
 
+/** T-CL-020: ensure cash-on-hand columns exist on couriers */
+async function ensureCourierCashColumns(db) {
+  const cols = await new Promise((resolve, reject) => {
+    db.all(`PRAGMA table_info(couriers)`, (err, rows) => (err ? reject(err) : resolve(rows || [])));
+  });
+  const names = new Set(cols.map((c) => c.name));
+  const alters = [];
+  if (!names.has('cash_on_hand')) {
+    alters.push(`ALTER TABLE couriers ADD COLUMN cash_on_hand REAL NOT NULL DEFAULT 0`);
+  }
+  if (!names.has('cash_lifetime_collected')) {
+    alters.push(`ALTER TABLE couriers ADD COLUMN cash_lifetime_collected REAL NOT NULL DEFAULT 0`);
+  }
+  if (!names.has('cash_lifetime_handed_over')) {
+    alters.push(`ALTER TABLE couriers ADD COLUMN cash_lifetime_handed_over REAL NOT NULL DEFAULT 0`);
+  }
+  for (const sql of alters) {
+    await new Promise((resolve, reject) => {
+      db.run(sql, (err) => (err ? reject(err) : resolve()));
+    });
+  }
+}
+
+async function runDb(db, sql, params = []) {
+  return new Promise((resolve, reject) => {
+    db.run(sql, params, function (err) {
+      if (err) reject(err);
+      else resolve({ id: this.lastID, changes: this.changes });
+    });
+  });
+}
+
+async function getDb(db, sql, params = []) {
+  return new Promise((resolve, reject) => {
+    db.get(sql, params, (err, row) => (err ? reject(err) : resolve(row)));
+  });
+}
+
 // =====================================================================
 // GET /api/couriers - Lista curieri (pentru admin)
 // =====================================================================
@@ -606,6 +644,7 @@ router.put('/delivery/:id/status', async (req, res) => {
     });
     
     // Actualizează status order dacă e delivered
+    let cashWallet = null;
     if (status === 'delivered') {
       await new Promise((resolve, reject) => {
         db.run(`
@@ -617,6 +656,39 @@ router.put('/delivery/:id/status', async (req, res) => {
           else resolve();
         });
       });
+
+      // T-CL-020: cash-on-hand wallet — increment when customer paid cash
+      try {
+        await ensureCourierCashColumns(db);
+        const order = await getDb(
+          db,
+          `SELECT id, total, payment_method FROM orders WHERE id = ?`,
+          [assignment.order_id]
+        );
+        const method = String(order?.payment_method || '').toLowerCase();
+        const isCash = method === 'cash' || method === 'numerar' || method.includes('cash');
+        if (order && isCash && assignment.courier_id) {
+          const amount = Number(order.total) || 0;
+          if (amount > 0) {
+            await runDb(
+              db,
+              `UPDATE couriers
+               SET cash_on_hand = COALESCE(cash_on_hand, 0) + ?,
+                   cash_lifetime_collected = COALESCE(cash_lifetime_collected, 0) + ?,
+                   updated_at = datetime('now')
+               WHERE id = ?`,
+              [amount, amount, assignment.courier_id]
+            );
+            cashWallet = await getDb(
+              db,
+              `SELECT id, name, cash_on_hand, cash_lifetime_collected, cash_lifetime_handed_over FROM couriers WHERE id = ?`,
+              [assignment.courier_id]
+            );
+          }
+        }
+      } catch (cashErr) {
+        console.error('Courier cash wallet update failed:', cashErr.message);
+      }
     }
     
     // Emit Socket.io event
@@ -629,10 +701,92 @@ router.put('/delivery/:id/status', async (req, res) => {
       });
     }
     
-    res.json({ success: true, message: `Status schimbat în ${status}` });
+    res.json({
+      success: true,
+      message: `Status schimbat în ${status}`,
+      cash_wallet: cashWallet,
+    });
   } catch (err) {
     console.error('Error updating delivery status:', err);
     res.status(500).json({ error: err.message });
+  }
+});
+
+/**
+ * GET /api/couriers/:id/cash-wallet — sold numerar curier (T-CL-020)
+ */
+router.get('/:id/cash-wallet', async (req, res) => {
+  try {
+    const db = await dbPromise;
+    await ensureCourierCashColumns(db);
+    const courier = await getDb(
+      db,
+      `SELECT id, code, name, cash_on_hand, cash_lifetime_collected, cash_lifetime_handed_over
+       FROM couriers WHERE id = ?`,
+      [req.params.id]
+    );
+    if (!courier) {
+      return res.status(404).json({ success: false, error: 'Courier not found' });
+    }
+    res.json({
+      success: true,
+      data: {
+        courier_id: courier.id,
+        code: courier.code,
+        name: courier.name,
+        cash_on_hand: courier.cash_on_hand || 0,
+        cash_lifetime_collected: courier.cash_lifetime_collected || 0,
+        cash_lifetime_handed_over: courier.cash_lifetime_handed_over || 0,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+/**
+ * POST /api/couriers/:id/cash-wallet/handover — predare numerar (scade soldul)
+ * body: { amount?: number } — omit = predă tot soldul
+ */
+router.post('/:id/cash-wallet/handover', async (req, res) => {
+  try {
+    const db = await dbPromise;
+    await ensureCourierCashColumns(db);
+    const courier = await getDb(
+      db,
+      `SELECT id, cash_on_hand FROM couriers WHERE id = ?`,
+      [req.params.id]
+    );
+    if (!courier) {
+      return res.status(404).json({ success: false, error: 'Courier not found' });
+    }
+    const onHand = Number(courier.cash_on_hand) || 0;
+    const amount =
+      req.body?.amount != null ? Number(req.body.amount) : onHand;
+    if (!(amount > 0) || amount > onHand + 1e-9) {
+      return res.status(400).json({
+        success: false,
+        error: `Invalid amount. cash_on_hand=${onHand}`,
+      });
+    }
+    await runDb(
+      db,
+      `UPDATE couriers
+       SET cash_on_hand = COALESCE(cash_on_hand, 0) - ?,
+           cash_lifetime_handed_over = COALESCE(cash_lifetime_handed_over, 0) + ?,
+           updated_at = datetime('now')
+       WHERE id = ?`,
+      [amount, amount, req.params.id]
+    );
+    const updated = await getDb(
+      db,
+      `SELECT id, code, name, cash_on_hand, cash_lifetime_collected, cash_lifetime_handed_over
+       FROM couriers WHERE id = ?`,
+      [req.params.id]
+    );
+    res.json({ success: true, handed_over: amount, data: updated });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
