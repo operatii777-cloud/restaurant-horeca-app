@@ -7,7 +7,11 @@ import {
   ChefHat, Clock, Check, X, ArrowLeft, Search, Bike, Globe, Smartphone, User, Home, Truck
 } from 'lucide-react';
 import { useHappyHour } from '../hooks/useHappyHour';
+import { useSelfServiceIdleReset } from '../hooks/useSelfServiceIdleReset';
 import './KioskSelfServicePage.css';
+
+/** Idle timeout before resetting self-service session (privacy + cart isolation). */
+const SELF_SERVICE_IDLE_MS = 90_000;
 
 // Unified platform/source badge logic (matches legacy UIs)
 const getPlatformBadge = (platform, orderSource, type) => {
@@ -106,6 +110,29 @@ export const KioskSelfServicePage = () => {
 
   // Get active happy hour with periodic refresh (every 60 seconds)
   const { activeHappyHour, calculateDiscounts, discounts } = useHappyHour();
+
+  // Reset full session after inactivity so the next customer starts clean
+  const resetSelfServiceSession = useCallback(() => {
+    setCart([]);
+    setShowCart(false);
+    setShowConfirmation(false);
+    setShowPaymentModal(false);
+    setShowThankYou(false);
+    setPendingOrder(null);
+    setPaymentOrderId(null);
+    setPaymentCompleted(false);
+    setOrderNumber(null);
+    setSearchTerm('');
+    setSelectedCategory(null);
+    setDailyOfferSelections({ conditions: [], benefits: [] });
+    setCurrentDailyOfferData(null);
+    setOrderType('');
+    setShowOrderTypeModal(true);
+  }, []);
+
+  // Skip idle reset while confirmation/thank-you screens auto-advance
+  const idleEnabled = !loading && !showConfirmation && !showThankYou;
+  useSelfServiceIdleReset(resetSelfServiceSession, SELF_SERVICE_IDLE_MS, idleEnabled);
 
   // Load menu data from /api/menu/all (same as comanda.html)
   const loadMenu = useCallback(async () => {

@@ -53,7 +53,15 @@
 }
 
 .pos-page-summary {
-  overflow-y: auto;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.pos-page-summary > * {
+  flex: 1;
+  min-height: 0;
 }
 
 .pos-page-error {

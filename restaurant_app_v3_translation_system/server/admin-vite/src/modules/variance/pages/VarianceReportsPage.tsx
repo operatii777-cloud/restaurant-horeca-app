@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, Button, Table, Badge, Form, Alert } from 'react-bootstrap';
 import { httpClient } from '@/shared/api/httpClient';
 import { PageHeader } from '@/shared/components/PageHeader';
+import { safeArr, safeFixed, safeNum } from '@/shared/utils/safe';
 
 interface Variance {
   id: number;
@@ -27,7 +28,7 @@ export const VarianceReportsPage = () => {
     setLoading(true);
     try {
       const response = await httpClient.get(`/api/variance/daily?date="Date"`);
-      setVariances(response.data?.data || []);
+      setVariances(safeArr(response.data?.data));
     } catch (error) {
       console.error('Error loading variances:', error);
     } finally {
@@ -98,19 +99,19 @@ export const VarianceReportsPage = () => {
                 {variances.map(v => (
                   <tr key={v.id} className={v.requires_investigation ? 'table-warning' : ''}>
                     <td><strong>{v.ingredient_name}</strong></td>
-                    <td>{v.theoretical_usage.toFixed(2)}</td>
-                    <td>{v.actual_usage.toFixed(2)}</td>
+                    <td>{safeFixed(v.theoretical_usage)}</td>
+                    <td>{safeFixed(v.actual_usage)}</td>
                     <td>
-                      <Badge bg={v.variance_quantity > 0 ? 'success' : 'danger'}>
-                        {v.variance_quantity > 0 ? '+' : ''}{v.variance_quantity.toFixed(2)}
+                      <Badge bg={safeNum(v.variance_quantity) > 0 ? 'success' : 'danger'}>
+                        {safeNum(v.variance_quantity) > 0 ? '+' : ''}{safeFixed(v.variance_quantity)}
                       </Badge>
                     </td>
                     <td>
-                      <Badge bg={Math.abs(v.variance_percentage) > 10 ? 'danger' : 'warning'}>
-                        {v.variance_percentage.toFixed(1)}%
+                      <Badge bg={Math.abs(safeNum(v.variance_percentage)) > 10 ? 'danger' : 'warning'}>
+                        {safeFixed(v.variance_percentage, 1)}%
                       </Badge>
                     </td>
-                    <td>{v.variance_cost.toFixed(2)} RON</td>
+                    <td>{safeFixed(v.variance_cost)} RON</td>
                     <td><Badge bg={v.variance_type === 'shortage' ? 'danger' : 'success'}>{v.variance_type}</Badge></td>
                     <td>{v.requires_investigation ? '⚠️ DA' : '✓ NU'}</td>
                   </tr>

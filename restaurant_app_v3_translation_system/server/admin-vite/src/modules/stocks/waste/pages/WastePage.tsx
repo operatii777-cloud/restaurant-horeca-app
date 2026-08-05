@@ -4,6 +4,7 @@ import { Card, Button, Table, Modal, Form, Alert, Spinner, Badge, Row, Col } fro
 import { PageHeader } from '@/shared/components/PageHeader';
 import { InlineAlert } from '@/shared/components/InlineAlert';
 import { DataGrid } from '@/shared/components/DataGrid';
+import { safeArr, safeFixed } from '@/shared/utils/safe';
 import { wasteApi } from '../api/wasteApi';
 import type { WasteRecord, WasteDashboard } from '../api/wasteApi';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -224,7 +225,7 @@ export const WastePage = () => {
           <Col md={4}>
             <Card className="shadow-sm text-center">
               <Card.Body>
-                <h3 className="mb-0 text-danger">{dashboard.total_waste.toFixed(2)} RON</h3>
+                <h3 className="mb-0 text-danger">{safeFixed(dashboard.total_waste)} RON</h3>
                 <p className="text-muted mb-0">Total Waste ({period === 'today' ? 'Astăzi' : period === 'week' ? 'Săptămâna' : 'Luna'})</p>
               </Card.Body>
             </Card>
@@ -233,10 +234,10 @@ export const WastePage = () => {
             <Card className="shadow-sm">
               <Card.Body>
                 <h6 className="mb-3">Waste pe tip</h6>
-                {dashboard.by_type.map((type) => (
+                {safeArr(dashboard.by_type).map((type) => (
                   <div key={type.waste_type} className="d-flex justify-content-between mb-2">
                     <span>{WASTE_TYPES.find(t => t.value === type.waste_type)?.label || type.waste_type}</span>
-                    <strong>{type.total.toFixed(2)} RON ({type.count} incidente)</strong>
+                    <strong>{safeFixed(type.total)} RON ({type.count} incidente)</strong>
                   </div>
                 ))}
               </Card.Body>
@@ -246,12 +247,12 @@ export const WastePage = () => {
             <Card className="shadow-sm">
               <Card.Body>
                 <h6 className="mb-3">Top 5 Produse cu Waste</h6>
-                {dashboard.top_products.slice(0, 5).map((product, idx) => (
+                {safeArr(dashboard.top_products).slice(0, 5).map((product, idx) => (
                   <div key={idx} className="d-flex justify-content-between mb-2">
                     <span className="text-truncate" style={{ maxWidth: '150px' }} title={product.item_name}>
                       {product.item_name}
                     </span>
-                    <strong>{product.total_cost.toFixed(2)} RON</strong>
+                    <strong>{safeFixed(product.total_cost)} RON</strong>
                   </div>
                 ))}
               </Card.Body>

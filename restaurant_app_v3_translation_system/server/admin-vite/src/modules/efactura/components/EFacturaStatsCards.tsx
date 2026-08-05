@@ -8,6 +8,7 @@
 import React, { useEffect, useState } from 'react';
 import { efacturaApi } from '@/core/api/efacturaApi';
 import type { EFacturaStats } from '@/types/invoice';
+import { safeFixed, safeNum } from '@/shared/utils/safe';
 import './EFacturaStatsCards.css';
 
 export function EFacturaStatsCards() {
@@ -61,7 +62,7 @@ export function EFacturaStatsCards() {
         <div className="stat-label">Acceptate</div>
         <div className="stat-value">{stats.acceptedCount}</div>
         <div className="stat-amount">
-          {stats.totalAmountAccepted.toFixed(2)} RON
+          {safeFixed(stats.totalAmountAccepted)} RON
         </div>
       </div>
 
@@ -69,7 +70,7 @@ export function EFacturaStatsCards() {
         <div className="stat-label">Respinse</div>
         <div className="stat-value">{stats.rejectedCount}</div>
         <div className="stat-amount">
-          {stats.totalAmountRejected.toFixed(2)} RON
+          {safeFixed(stats.totalAmountRejected)} RON
         </div>
       </div>
 
@@ -80,7 +81,7 @@ export function EFacturaStatsCards() {
 
       <div className="efactura-stat-card efactura-stat-card--pending">
         <div className="stat-label">"in coada"</div>
-        <div className="stat-value">{stats.pendingCount + stats.queueCount}</div>
+        <div className="stat-value">{safeNum(stats.pendingCount) + safeNum(stats.queueCount)}</div>
       </div>
     </div>
   );

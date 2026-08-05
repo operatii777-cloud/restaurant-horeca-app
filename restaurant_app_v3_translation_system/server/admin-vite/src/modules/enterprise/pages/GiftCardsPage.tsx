@@ -5,6 +5,7 @@
 
 import { useState, useEffect } from 'react';
 import { PageHeader } from '@/shared/components/PageHeader';
+import { safeArr, safeFixed } from '@/shared/utils/safe';
 import './GiftCardsPage.css';
 
 interface GiftCard {
@@ -42,7 +43,7 @@ export const GiftCardsPage = () => {
       const res = await fetch('/api/gift-cards');
       const data = await res.json();
       if (data.success) {
-        setCards(data.giftCards || []);
+        setCards(safeArr(data.giftCards));
       }
     } catch (err: any) {
       console.error('Error loading gift cards:', err);
@@ -140,11 +141,11 @@ export const GiftCardsPage = () => {
             <div className="card-body">
               <div className="card-stat">
                 <span className="stat-label">"valoare initiala"</span>
-                <span className="stat-value">{card.initial_value.toFixed(2)} RON</span>
+                <span className="stat-value">{safeFixed(card.initial_value)} RON</span>
               </div>
               <div className="card-stat">
                 <span className="stat-label">"sold curent"</span>
-                <span className="stat-value balance">{card.current_balance.toFixed(2)} RON</span>
+                <span className="stat-value balance">{safeFixed(card.current_balance)} RON</span>
               </div>
               {card.recipient_name && (
                 <div className="card-stat">

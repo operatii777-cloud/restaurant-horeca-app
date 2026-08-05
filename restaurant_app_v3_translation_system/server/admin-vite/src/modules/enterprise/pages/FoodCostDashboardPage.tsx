@@ -5,6 +5,7 @@
 
 import { useState, useEffect } from 'react';
 import { PageHeader } from '@/shared/components/PageHeader';
+import { safeArr, safeFixed } from '@/shared/utils/safe';
 import './FoodCostDashboardPage.css';
 
 interface FoodCostData {
@@ -52,14 +53,14 @@ export const FoodCostDashboardPage = () => {
       const categoryRes = await fetch('/api/food-cost/by-category');
       const categoryData = await categoryRes.json();
       if (categoryData.success) {
-        setCategories(categoryData.categories || []);
+        setCategories(safeArr(categoryData.categories));
       }
 
       // Load trends
       const trendsRes = await fetch('/api/food-cost/trends?days=30');
       const trendsData = await trendsRes.json();
       if (trendsData.success) {
-        setTrends(trendsData.trends || []);
+        setTrends(safeArr(trendsData.trends));
       }
     } catch (err: any) {
       console.error('Error loading food cost data:', err);
@@ -126,15 +127,15 @@ export const FoodCostDashboardPage = () => {
               </div>
               <div className="stat-item">
                 <span className="stat-label">Venituri:</span>
-                <span className="stat-value">{dashboard.today.revenue.toFixed(2)} RON</span>
+                <span className="stat-value">{safeFixed(dashboard.today.revenue)} RON</span>
               </div>
               <div className="stat-item">
                 <span className="stat-label">Costuri:</span>
-                <span className="stat-value">{dashboard.today.cost.toFixed(2)} RON</span>
+                <span className="stat-value">{safeFixed(dashboard.today.cost)} RON</span>
               </div>
               <div className="stat-item">
                 <span className="stat-label">Profit:</span>
-                <span className="stat-value profit">{dashboard.today.profit.toFixed(2)} RON</span>
+                <span className="stat-value profit">{safeFixed(dashboard.today.profit)} RON</span>
               </div>
               <div className="stat-item">
                 <span className="stat-label">Comenzi:</span>
@@ -161,15 +162,15 @@ export const FoodCostDashboardPage = () => {
               </div>
               <div className="stat-item">
                 <span className="stat-label">Venituri:</span>
-                <span className="stat-value">{dashboard.week.revenue.toFixed(2)} RON</span>
+                <span className="stat-value">{safeFixed(dashboard.week.revenue)} RON</span>
               </div>
               <div className="stat-item">
                 <span className="stat-label">Costuri:</span>
-                <span className="stat-value">{dashboard.week.cost.toFixed(2)} RON</span>
+                <span className="stat-value">{safeFixed(dashboard.week.cost)} RON</span>
               </div>
               <div className="stat-item">
                 <span className="stat-label">Profit:</span>
-                <span className="stat-value profit">{dashboard.week.profit.toFixed(2)} RON</span>
+                <span className="stat-value profit">{safeFixed(dashboard.week.profit)} RON</span>
               </div>
               <div className="stat-item">
                 <span className="stat-label">Comenzi:</span>
@@ -196,15 +197,15 @@ export const FoodCostDashboardPage = () => {
               </div>
               <div className="stat-item">
                 <span className="stat-label">Venituri:</span>
-                <span className="stat-value">{dashboard.month.revenue.toFixed(2)} RON</span>
+                <span className="stat-value">{safeFixed(dashboard.month.revenue)} RON</span>
               </div>
               <div className="stat-item">
                 <span className="stat-label">Costuri:</span>
-                <span className="stat-value">{dashboard.month.cost.toFixed(2)} RON</span>
+                <span className="stat-value">{safeFixed(dashboard.month.cost)} RON</span>
               </div>
               <div className="stat-item">
                 <span className="stat-label">Profit:</span>
-                <span className="stat-value profit">{dashboard.month.profit.toFixed(2)} RON</span>
+                <span className="stat-value profit">{safeFixed(dashboard.month.profit)} RON</span>
               </div>
               <div className="stat-item">
                 <span className="stat-label">Comenzi:</span>
@@ -239,8 +240,8 @@ export const FoodCostDashboardPage = () => {
                   <tr key={idx}>
                     <td><strong>{cat.category || 'Necategorizat'}</strong></td>
                     <td>{cat.products}</td>
-                    <td>{cat.total_price.toFixed(2)} RON</td>
-                    <td>{cat.total_cost.toFixed(2)} RON</td>
+                    <td>{safeFixed(cat.total_price)} RON</td>
+                    <td>{safeFixed(cat.total_cost)} RON</td>
                     <td>
                       <span
                         className="cost-pct-badge"

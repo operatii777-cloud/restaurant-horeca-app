@@ -276,11 +276,18 @@ export function PaymentSheet({
   };
 
   return (
-    <Modal show={isOpen} onHide={onClose} size="lg" centered>
+    <Modal
+      show={isOpen}
+      onHide={onClose}
+      size="lg"
+      centered
+      dialogClassName="payment-sheet-dialog"
+      contentClassName="payment-sheet-content"
+    >
       <Modal.Header closeButton>
         <Modal.Title>{t('pos.payment.orderPayment')}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body className="payment-sheet-body">
         {error && (
           <Alert variant="danger" dismissible onClose={() => setError(null)}>
             {error}
@@ -383,29 +390,6 @@ export function PaymentSheet({
               onClear={handleClear}
               disabled={loading || isAdding || (isSplitMode && !selectedGroupId)}
             />
-
-            {/* Add Payment Button */}
-            <div className="payment-sheet-actions">
-              <Button
-                variant="primary"
-                size="lg"
-                onClick={handleAddPayment}
-                disabled={!canAddPayment || parseAmount() <= 0 || parseAmount() > displayRemaining || (isSplitMode && !selectedGroupId)}
-                className="w-100"
-              >
-                {isAdding ? (
-                  <>
-                    <span className="spinner-border spinner-border-sm me-2" />
-                    {t('pos.payment.processing')}
-                  </>
-                ) : (
-                  <>
-                    <i className="fas fa-plus me-2"></i>
-                    {t('pos.payment.addPayment')}
-                  </>
-                )}
-              </Button>
-            </div>
           </>
         )}
 
@@ -420,7 +404,7 @@ export function PaymentSheet({
           />
         )}
       </Modal.Body>
-      
+
       {/* Split Bill Modal */}
       <Modal show={showSplitBill} onHide={() => setShowSplitBill(false)} size="xl" centered>
         <Modal.Header closeButton>
@@ -450,7 +434,33 @@ export function PaymentSheet({
           </Button>
         </Modal.Footer>
       </Modal>
-      <Modal.Footer>
+      <Modal.Footer className="payment-sheet-footer">
+        {!isFullyPaid && (
+          <Button
+            variant="primary"
+            size="lg"
+            onClick={handleAddPayment}
+            disabled={
+              !canAddPayment ||
+              (selectedMethod !== 'protocol' && selectedMethod !== 'degustare' && parseAmount() <= 0) ||
+              parseAmount() > displayRemaining ||
+              (isSplitMode && !selectedGroupId)
+            }
+            className="payment-sheet-add-btn"
+          >
+            {isAdding ? (
+              <>
+                <span className="spinner-border spinner-border-sm me-2" />
+                {t('pos.payment.processing')}
+              </>
+            ) : (
+              <>
+                <i className="fas fa-plus me-2"></i>
+                {t('pos.payment.addPayment')}
+              </>
+            )}
+          </Button>
+        )}
         <Button variant="secondary" onClick={onClose} disabled={loading || isAdding}>
           {isFullyPaid ? t('pos.payment.close') : t('pos.payment.cancel')}
         </Button>

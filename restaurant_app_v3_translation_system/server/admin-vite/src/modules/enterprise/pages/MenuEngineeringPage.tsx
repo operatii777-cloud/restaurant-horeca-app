@@ -5,6 +5,7 @@
 
 import { useState, useEffect } from 'react';
 import { PageHeader } from '@/shared/components/PageHeader';
+import { safeArr, safeFixed, safeNum, safeObj } from '@/shared/utils/safe';
 import './MenuEngineeringPage.css';
 
 interface Product {
@@ -64,8 +65,8 @@ export const MenuEngineeringPage = () => {
       const res = await fetch(`/api/menu-engineering/analysis?"Params"`);
       const data = await res.json();
       if (data.success) {
-        setProducts(data.products || []);
-        setSummary(data.summary);
+        setProducts(safeArr(data.products));
+        setSummary(data.summary ? safeObj(data.summary) as Summary : null);
       }
     } catch (err: any) {
       console.error('Error loading analysis:', err);
@@ -157,15 +158,15 @@ export const MenuEngineeringPage = () => {
           </div>
           <div className="summary-card">
             <h3>Venituri Totale</h3>
-            <p className="summary-value">{summary.total_revenue.toFixed(2)} RON</p>
+            <p className="summary-value">{safeFixed(summary.total_revenue)} RON</p>
           </div>
           <div className="summary-card">
             <h3>Food Cost %</h3>
-            <p className="summary-value">{summary.avg_food_cost_percent.toFixed(1)}%</p>
+            <p className="summary-value">{safeFixed(summary.avg_food_cost_percent, 1)}%</p>
           </div>
           <div className="summary-card">
             <h3>Profit Total</h3>
-            <p className="summary-value">{summary.total_contribution.toFixed(2)} RON</p>
+            <p className="summary-value">{safeFixed(summary.total_contribution)} RON</p>
           </div>
         </div>
       )}
@@ -238,12 +239,12 @@ export const MenuEngineeringPage = () => {
                 </td>
                 <td><strong>{product.product_name}</strong></td>
                 <td>{product.category}</td>
-                <td>{product.selling_price.toFixed(2)} RON</td>
-                <td>{product.quantity_sold}</td>
-                <td>{product.revenue.toFixed(2)} RON</td>
-                <td>{product.food_cost.toFixed(2)} RON</td>
-                <td><strong>{product.contribution_margin.toFixed(2)} RON</strong></td>
-                <td>{product.cm_percentage.toFixed(1)}%</td>
+                <td>{safeFixed(product.selling_price)} RON</td>
+                <td>{safeNum(product.quantity_sold)}</td>
+                <td>{safeFixed(product.revenue)} RON</td>
+                <td>{safeFixed(product.food_cost)} RON</td>
+                <td><strong>{safeFixed(product.contribution_margin)} RON</strong></td>
+                <td>{safeFixed(product.cm_percentage, 1)}%</td>
                 <td className="recommendation-cell">
                   <small>{product.recommendation}</small>
                 </td>
