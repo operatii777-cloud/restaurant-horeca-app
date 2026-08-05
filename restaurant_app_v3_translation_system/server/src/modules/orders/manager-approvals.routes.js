@@ -3,12 +3,17 @@
  * GET /api/orders/manager-approvals?from=&to=&type=void|discount|all&limit=&offset=
  *
  * Does NOT create tables / does NOT touch write-path.
- * Maps whatever columns exist on order_voids + discount_approval_log
- * into the normalized response shape.
+ * Defensive 503 when tables missing (kept by design).
+ *
+ * Real Windows columns (live rows 2026-08-05):
+ *   order_voids: order_total, reason, voided_by, voided_at, approved_by_id, approved_by_username
+ *   discount_approval_log: discount_percent, discount_amount, initiated_by, created_at,
+ *                          approved_by_id, approved_by_username
  */
 const express = require('express');
 const router = express.Router();
 const { dbPromise } = require('../../../database');
+const { mapVoidRow, mapDiscountRow } = require('./manager-approvals.mapper');
 
 function all(db, sql, params = []) {
   return new Promise((resolve, reject) => {
@@ -56,9 +61,9 @@ function requireStaffJwt(req, res, next) {
   return res.status(401).json({ success: false, error: 'JWT required (admin/manager)' });
 }
 
-function dateExpr(cols, alias) {
-  const ts = pickCol(cols, ['approved_at', 'created_at', 'at', 'timestamp'], null);
-  return ts ? `${alias}.${ts}` : `NULL`;
+function dateExpr(cols, alias, candidates) {
+  const ts = pickCol(cols, candidates, null);
+  return ts ? `${alias}.${ts}` : 'NULL';
 }
 
 router.get('/manager-approvals', requireStaffJwt, async (req, res) => {
@@ -84,14 +89,7 @@ router.get('/manager-approvals', requireStaffJwt, async (req, res) => {
 
     if ((type === 'all' || type === 'void') && hasVoids) {
       const cols = await pragmaColumns(db, 'order_voids');
-      const amountCol = pickCol(cols, ['order_total', 'amount', 'total'], '0');
-      const reasonCol = pickCol(cols, ['reason_or_percent', 'reason'], `''`);
-      const initiatedCol = pickCol(cols, ['initiated_by', 'initiated_by_name'], `NULL`);
-      const approvedIdCol = pickCol(cols, ['approved_by_id', 'approved_by'], `NULL`);
-      const approvedNameCol = pickCol(cols, ['approved_by_username', 'approved_by_name'], `''`);
-      const orderIdCol = pickCol(cols, ['order_id', 'orderId'], `NULL`);
-      const idCol = pickCol(cols, ['id'], `NULL`);
-      const atExpr = dateExpr(cols, 'v');
+      const atExpr = dateExpr(cols, 'v', ['voided_at', 'approved_at', 'created_at', 'at', 'timestamp']);
 
       const clauses = [];
       const params = [];
@@ -107,34 +105,15 @@ router.get('/manager-approvals', requireStaffJwt, async (req, res) => {
 
       const voids = await all(
         db,
-        `SELECT
-           ${idCol === 'NULL' ? 'NULL' : 'v.' + idCol} as id,
-           'void' as type,
-           ${orderIdCol === 'NULL' ? 'NULL' : 'v.' + orderIdCol} as orderId,
-           ${amountCol === '0' ? '0' : 'v.' + amountCol} as amount,
-           ${reasonCol === `''` ? `''` : 'v.' + reasonCol} as reasonOrPercent,
-           ${initiatedCol === 'NULL' ? 'NULL' : 'v.' + initiatedCol} as initiatedBy,
-           ${approvedIdCol === 'NULL' ? 'NULL' : 'v.' + approvedIdCol} as approvedById,
-           ${approvedNameCol === `''` ? `''` : 'v.' + approvedNameCol} as approvedByUsername,
-           ${atExpr} as at
-         FROM order_voids v
-         ${where}
-         ORDER BY at DESC`,
+        `SELECT v.* FROM order_voids v ${where} ORDER BY ${atExpr === 'NULL' ? 'v.id' : atExpr} DESC`,
         params
       );
-      rows.push(...voids);
+      rows.push(...voids.map(mapVoidRow));
     }
 
     if ((type === 'all' || type === 'discount') && hasDiscounts) {
       const cols = await pragmaColumns(db, 'discount_approval_log');
-      const amountCol = pickCol(cols, ['discount_amount', 'amount'], '0');
-      const reasonCol = pickCol(cols, ['reason_or_percent', 'reason', 'discount_value'], `''`);
-      const initiatedCol = pickCol(cols, ['initiated_by', 'initiated_by_name'], `NULL`);
-      const approvedIdCol = pickCol(cols, ['approved_by_id', 'approved_by'], `NULL`);
-      const approvedNameCol = pickCol(cols, ['approved_by_username', 'approved_by_name'], `''`);
-      const orderIdCol = pickCol(cols, ['order_id', 'orderId'], `NULL`);
-      const idCol = pickCol(cols, ['id'], `NULL`);
-      const atExpr = dateExpr(cols, 'd');
+      const atExpr = dateExpr(cols, 'd', ['created_at', 'approved_at', 'at', 'timestamp']);
 
       const clauses = [];
       const params = [];
@@ -150,37 +129,15 @@ router.get('/manager-approvals', requireStaffJwt, async (req, res) => {
 
       const discounts = await all(
         db,
-        `SELECT
-           ${idCol === 'NULL' ? 'NULL' : 'd.' + idCol} as id,
-           'discount' as type,
-           ${orderIdCol === 'NULL' ? 'NULL' : 'd.' + orderIdCol} as orderId,
-           ${amountCol === '0' ? '0' : 'd.' + amountCol} as amount,
-           ${reasonCol === `''` ? `''` : 'd.' + reasonCol} as reasonOrPercent,
-           ${initiatedCol === 'NULL' ? 'NULL' : 'd.' + initiatedCol} as initiatedBy,
-           ${approvedIdCol === 'NULL' ? 'NULL' : 'd.' + approvedIdCol} as approvedById,
-           ${approvedNameCol === `''` ? `''` : 'd.' + approvedNameCol} as approvedByUsername,
-           ${atExpr} as at
-         FROM discount_approval_log d
-         ${where}
-         ORDER BY at DESC`,
+        `SELECT d.* FROM discount_approval_log d ${where} ORDER BY ${atExpr === 'NULL' ? 'd.id' : atExpr} DESC`,
         params
       );
-      rows.push(...discounts);
+      rows.push(...discounts.map(mapDiscountRow));
     }
 
     rows.sort((a, b) => String(b.at || '').localeCompare(String(a.at || '')));
     const total = rows.length;
-    const page = rows.slice(off, off + lim).map((r) => ({
-      id: r.id,
-      type: r.type,
-      orderId: r.orderId,
-      amount: r.amount,
-      reasonOrPercent: r.reasonOrPercent,
-      initiatedBy: r.initiatedBy,
-      approvedById: r.approvedById,
-      approvedByUsername: r.approvedByUsername,
-      at: r.at,
-    }));
+    const page = rows.slice(off, off + lim);
 
     res.json({
       success: true,

@@ -61,11 +61,51 @@ export const MenuEngineeringPage = () => {
         endDate,
         ...(category !== 'all' && { category })
       });
-      const res = await fetch(`/api/menu-engineering/analysis?"Params"`);
+      // T-CL-019 Minim: read backend contract { data: { items, summary } }
+      // classification arrives UPPERCASE (STAR/…) — normalize to lowercase for UI tabs/filters.
+      const res = await fetch(`/api/menu-engineering/analysis?${params}`);
       const data = await res.json();
       if (data.success) {
-        setProducts(data.products || []);
-        setSummary(data.summary);
+        const payload = data.data || data;
+        const rawItems = payload.items || payload.products || [];
+        setProducts(
+          rawItems.map((item: any) => ({
+            product_id: item.product_id ?? item.id,
+            product_name: item.product_name ?? item.name,
+            category: item.category,
+            selling_price: item.selling_price ?? 0,
+            quantity_sold: item.quantity_sold ?? 0,
+            revenue: item.revenue ?? item.total_revenue ?? 0,
+            food_cost: item.food_cost ?? 0,
+            contribution_margin: item.contribution_margin ?? 0,
+            cm_per_unit: item.cm_per_unit ?? item.contribution_margin ?? 0,
+            cm_percentage: item.cm_percentage ?? 0,
+            classification: String(item.classification || '').toLowerCase() as Product['classification'],
+            recommendation: item.recommendation || '',
+            popularity_index: item.popularity_index ?? 0,
+            profitability_index: item.profitability_index ?? 0,
+          }))
+        );
+        const s = payload.summary;
+        if (s) {
+          const counts = s.classification_counts || {};
+          setSummary({
+            period: s.period,
+            total_products: s.total_products ?? s.total_items ?? 0,
+            total_revenue: s.total_revenue ?? 0,
+            total_food_cost: s.total_food_cost ?? 0,
+            total_contribution: s.total_contribution ?? 0,
+            avg_food_cost_percent: s.avg_food_cost_percent ?? s.avg_contribution_margin ?? 0,
+            classification_counts: {
+              star: counts.star ?? counts.STAR ?? 0,
+              puzzle: counts.puzzle ?? counts.PUZZLE ?? 0,
+              plowhorse: counts.plowhorse ?? counts.PLOWHORSE ?? 0,
+              dog: counts.dog ?? counts.DOG ?? 0,
+            },
+          });
+        } else {
+          setSummary(null);
+        }
       }
     } catch (err: any) {
       console.error('Error loading analysis:', err);
