@@ -360,6 +360,27 @@ const modulesRegistry = [
     plan: 'pro', // Menu Engineering requires Pro plan
     note: 'Menu Engineering with STAR/PUZZLE/PLOWHORSE/DOG classification'
   },
+  {
+    name: 'manager-approvals',
+    route: '/api/manager-approvals',
+    factory: false,
+    enabled: true,
+    note: 'T-CL-018 — void/discount manager approval journal'
+  },
+  {
+    name: 'purchase-orders',
+    route: '/api/purchase-orders',
+    factory: false,
+    enabled: true,
+    note: 'T-CL-020 — supplier purchase order drafts + auto reorder'
+  },
+  {
+    name: 'courier-wallet',
+    route: '/api/courier-wallet',
+    factory: false,
+    enabled: true,
+    note: 'T-CL-020 — courier cashback wallet'
+  },
 
   // ========================================
   // ADDITIONAL MODULES (To be migrated)

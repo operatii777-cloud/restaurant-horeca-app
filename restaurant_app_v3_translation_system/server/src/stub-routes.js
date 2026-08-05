@@ -1502,52 +1502,9 @@ router.get('/employees', async (req, res) => {
 
 // ========================================
 // PURCHASE ORDERS MODULE - /api/purchase-orders
+// NOTE (T-CL-020): Real routes mounted via modules.registry → purchase-orders.
+// Stub removed so GET /api/purchase-orders hits purchase_order_drafts.
 // ========================================
-
-router.get('/purchase-orders', async (req, res) => {
-  try {
-    const { status, startDate, endDate } = req.query;
-    let sql = `
-      SELECT 
-        id, 
-        supplier_id, 
-        po_number, 
-        status, 
-        total_amount,
-        order_date,
-        expected_delivery,
-        received_date
-      FROM purchase_orders
-      WHERE 1=1
-    `;
-    const params = [];
-
-    if (status) {
-      sql += ' AND status = ?';
-      params.push(status);
-    }
-    if (startDate) {
-      sql += ' AND DATE(order_date) >= DATE(?)';
-      params.push(startDate);
-    }
-    if (endDate) {
-      sql += ' AND DATE(order_date) <= DATE(?)';
-      params.push(endDate);
-    }
-
-    sql += ' ORDER BY order_date DESC LIMIT 100';
-
-    const orders = await runQuery(sql, params);
-    res.json({ success: true, data: orders || [] });
-  } catch (error) {
-    console.error('Error in /api/purchase-orders:', error);
-    if (error.message.includes('no such table')) {
-      res.json({ success: true, data: [] });
-    } else {
-      res.status(500).json({ success: false, error: 'Internal server error' });
-    }
-  }
-});
 
 // ========================================
 // HOSTESS STATS FIX - /api/hostess/stats

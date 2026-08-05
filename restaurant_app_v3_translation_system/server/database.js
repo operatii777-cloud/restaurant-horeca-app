@@ -20,6 +20,9 @@ try {
 
 const { createEnterpriseTables } = require('./database-enterprise-tables.js');
 const { createHaccpTables } = require('./database-haccp-tables.js');
+const { createManagerApprovalTables } = require('./database-manager-approvals.js');
+const { createPurchaseOrderTables } = require('./database-purchase-orders.js');
+const { createCourierWalletTables } = require('./database-courier-wallet.js');
 
 // Load discount protocol tables module with circular dependency handling
 let createDiscountProtocolTables;
@@ -174,6 +177,9 @@ const dbPromise = new Promise((resolve, reject) => {
             // Creează tabelele pentru Discount & Protocol Sales
             return createDiscountProtocolTables(db);
           })
+          .then(() => createManagerApprovalTables(db))
+          .then(() => createPurchaseOrderTables(db))
+          .then(() => createCourierWalletTables(db))
           .then(async () => {
             // FIX: Verificare și reparare schemă ingredients (coloana code) - Rulat DUPĂ creare tabele
             try {

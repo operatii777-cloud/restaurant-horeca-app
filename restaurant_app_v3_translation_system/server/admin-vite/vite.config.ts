@@ -65,12 +65,18 @@ const forceUTF8Plugin = () => {
 
 export default defineConfig({
   plugins: [
-    react({ jsxRuntime: 'automatic' }),
+    react({
+      jsxRuntime: 'automatic',
+      include: /\.[jt]sx?$/,
+    }),
     forceUTF8Plugin(),
     redirectPlugin(),
     noCachePlugin(),
   ],
   base: '/admin-vite/',
+  esbuild: {
+    jsx: 'automatic',
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -78,10 +84,12 @@ export default defineConfig({
       'react': path.resolve(__dirname, 'node_modules/react'),
       'react-dom': path.resolve(__dirname, 'node_modules/react-dom'),
       'react/jsx-runtime': path.resolve(__dirname, 'node_modules/react/jsx-runtime.js'),
-      'react/jsx-dev-runtime': path.resolve(__dirname, 'node_modules/react-jsx-dev-runtime.js'),
+      'react/jsx-dev-runtime': path.resolve(__dirname, 'node_modules/react/jsx-dev-runtime.js'),
       'react-dom/client': path.resolve(__dirname, 'node_modules/react-dom/client.js'),
       'react-dom/server': path.resolve(__dirname, 'node_modules/react-dom/server.js'),
     },
+    // Prefer source .tsx/.ts over compiled .js twins so Rollup does not parse JSX-in-.js
+    extensions: ['.mjs', '.mts', '.ts', '.tsx', '.jsx', '.js', '.json'],
     preserveSymlinks: false,
     dedupe: ['react', 'react-dom'],
   },
@@ -139,8 +147,8 @@ export default defineConfig({
     },
     target: 'es2020',
     cssMinify: 'esbuild',
-    minify: false,
-    chunkSizeWarningLimit: 5000,
+    minify: 'esbuild',
+    chunkSizeWarningLimit: 1500,
     sourcemap: true,
     // CRITICAL: Force UTF-8 encoding in all output
     esbuildOptions: {

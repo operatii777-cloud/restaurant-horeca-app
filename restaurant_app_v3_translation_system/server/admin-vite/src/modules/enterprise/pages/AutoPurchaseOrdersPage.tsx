@@ -20,6 +20,7 @@ interface Order {
 export const AutoPurchaseOrdersPage = () => {
   const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState<Order[]>([]);
+  const [actionBusy, setActionBusy] = useState<number | null>(null);
 
   const loadOrders = async () => {
     setLoading(true);
@@ -27,7 +28,7 @@ export const AutoPurchaseOrdersPage = () => {
       const res = await fetch('/api/purchase-orders');
       const data = await res.json();
       if (data.success) {
-        setOrders(data.orders || []);
+        setOrders(data.orders || data.data || []);
       }
     } catch (err: any) {
       console.error('Error loading orders:', err);
@@ -40,6 +41,22 @@ export const AutoPurchaseOrdersPage = () => {
     loadOrders();
   }, []);
 
+  const postAction = async (id: number, action: 'approve' | 'send' | 'receive') => {
+    setActionBusy(id);
+    try {
+      const res = await fetch(`/api/purchase-orders/${id}/${action}`, { method: 'POST' });
+      const data = await res.json();
+      if (!data.success) {
+        alert(data.error || `Eroare la ${action}`);
+      }
+      await loadOrders();
+    } catch (err: any) {
+      alert(err.message);
+    } finally {
+      setActionBusy(null);
+    }
+  };
+
   const handleCheckReorder = async () => {
     try {
       // Folosește Smart Restock V2 pentru analiză inteligentă
@@ -47,6 +64,14 @@ export const AutoPurchaseOrdersPage = () => {
       const analysisData = await analysisRes.json();
       
       if (!analysisData.success || !analysisData.supplier_orders || analysisData.supplier_orders.length === 0) {
+        // Fallback: check-reorder pe reguli PO
+        const fallback = await fetch('/api/purchase-orders/check-reorder', { method: 'POST' });
+        const fbData = await fallback.json();
+        if (fbData.success) {
+          alert(fbData.message || 'Verificare reguli finalizată');
+          loadOrders();
+          return;
+        }
         alert('Nu sunt necesare comenzi în acest moment.');
         return;
       }
@@ -94,6 +119,7 @@ export const AutoPurchaseOrdersPage = () => {
       case 'pending_approval': return '#f59e0b';
       case 'approved': return '#22c55e';
       case 'ordered': return '#3b82f6';
+      case 'sent': return '#3b82f6';
       case 'received': return '#8b5cf6';
       default: return '#6b7280';
     }
@@ -135,6 +161,7 @@ export const AutoPurchaseOrdersPage = () => {
               <th>Total</th>
               <th>Auto-generată</th>
               <th>Data</th>
+              <th>Acțiuni</th>
             </tr>
           </thead>
           <tbody>
@@ -150,9 +177,38 @@ export const AutoPurchaseOrdersPage = () => {
                     {order.status.toUpperCase().replace('_', ' ')}
                   </span>
                 </td>
-                <td>{order.total_value ? `${order.total_value.toFixed(2)} RON` : '-'}</td>
+                <td>{order.total_value ? `${Number(order.total_value).toFixed(2)} RON` : '-'}</td>
                 <td>{order.auto_generated ? '✅ Da' : 'Manual'}</td>
                 <td>{new Date(order.created_at).toLocaleDateString('ro-RO')}</td>
+                <td>
+                  {(order.status === 'draft' || order.status === 'pending_approval') && (
+                    <button
+                      className="btn btn-sm btn-success me-1"
+                      disabled={actionBusy === order.id}
+                      onClick={() => postAction(order.id, 'approve')}
+                    >
+                      Aprobă
+                    </button>
+                  )}
+                  {(order.status === 'approved') && (
+                    <button
+                      className="btn btn-sm btn-primary me-1"
+                      disabled={actionBusy === order.id}
+                      onClick={() => postAction(order.id, 'send')}
+                    >
+                      Trimite
+                    </button>
+                  )}
+                  {(order.status === 'ordered' || order.status === 'sent' || order.status === 'approved') && (
+                    <button
+                      className="btn btn-sm btn-secondary"
+                      disabled={actionBusy === order.id}
+                      onClick={() => postAction(order.id, 'receive')}
+                    >
+                      Recepționează
+                    </button>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>

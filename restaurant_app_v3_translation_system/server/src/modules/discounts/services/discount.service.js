@@ -202,9 +202,30 @@ class DiscountService {
         INSERT INTO order_discounts 
         (order_id, order_item_id, discount_definition_id, type, value, amount, approved_by, approved_at)
         VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
-      `, [orderItem.order_id, orderItemId, discountId, discount.type, discount.value, discountAmount, userId], (err) => {
+      `, [orderItem.order_id, orderItemId, discountId, discount.type, discount.value, discountAmount, userId], function(err) {
         if (err) reject(err);
-        else resolve();
+        else resolve(this.lastID);
+      });
+    }).then(async (orderDiscountId) => {
+      // T-CL-018: also write manager approval journal
+      await new Promise((resolve) => {
+        db.run(`
+          INSERT INTO discount_approval_log
+          (order_id, order_item_id, order_discount_id, discount_definition_id, discount_type,
+           discount_value, discount_amount, initiated_by, approved_by, approved_at, pin_verified, source)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?, 'API')
+        `, [
+          orderItem.order_id,
+          orderItemId,
+          orderDiscountId || null,
+          discountId,
+          discount.type,
+          discount.value,
+          discountAmount,
+          userId,
+          userId,
+          discount.requires_approval ? 1 : 0,
+        ], () => resolve());
       });
     });
     
@@ -268,9 +289,28 @@ class DiscountService {
         INSERT INTO order_discounts 
         (order_id, discount_definition_id, type, value, amount, approved_by, approved_at)
         VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
-      `, [orderId, discountId, discount.type, discount.value, discountAmount, userId], (err) => {
+      `, [orderId, discountId, discount.type, discount.value, discountAmount, userId], function(err) {
         if (err) reject(err);
-        else resolve();
+        else resolve(this.lastID);
+      });
+    }).then(async (orderDiscountId) => {
+      await new Promise((resolve) => {
+        db.run(`
+          INSERT INTO discount_approval_log
+          (order_id, order_discount_id, discount_definition_id, discount_type,
+           discount_value, discount_amount, initiated_by, approved_by, approved_at, pin_verified, source)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?, 'API')
+        `, [
+          orderId,
+          orderDiscountId || null,
+          discountId,
+          discount.type,
+          discount.value,
+          discountAmount,
+          userId,
+          userId,
+          discount.requires_approval ? 1 : 0,
+        ], () => resolve());
       });
     });
     

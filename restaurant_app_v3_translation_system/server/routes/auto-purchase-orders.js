@@ -19,7 +19,7 @@ router.get('/rules', async (req, res) => {
           i.name as ingredient_name, 
           i.current_stock,
           i.unit,
-          s.name as supplier_name
+          COALESCE(s.company_name, s.name) as supplier_name
         FROM auto_reorder_rules arr
         LEFT JOIN ingredients i ON arr.ingredient_id = i.id
         LEFT JOIN suppliers s ON arr.supplier_id = s.id
@@ -117,7 +117,7 @@ router.get('/', async (req, res) => {
     
     let sql = `
       SELECT pod.*, 
-        s.name as supplier_name,
+        COALESCE(s.company_name, s.name) as supplier_name,
         s.email as supplier_email,
         s.phone as supplier_phone,
         (SELECT COUNT(*) FROM purchase_order_items WHERE order_id = pod.id) as item_count
@@ -162,7 +162,7 @@ router.get('/:id', async (req, res) => {
     
     const order = await new Promise((resolve, reject) => {
       db.get(`
-        SELECT pod.*, s.name as supplier_name, s.email as supplier_email
+        SELECT pod.*, COALESCE(s.company_name, s.name) as supplier_name, s.email as supplier_email
         FROM purchase_order_drafts pod
         LEFT JOIN suppliers s ON pod.supplier_id = s.id
         WHERE pod.id = ?
