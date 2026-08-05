@@ -18,11 +18,41 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.drivethru-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
 .drivethru-title {
-  margin: 0 0 15px 0;
+  margin: 0;
   font-size: 28px;
   font-weight: bold;
   color: #f59e0b;
+}
+
+.drivethru-btn-new-order {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px;
+  min-height: 44px;
+  background: #f59e0b;
+  color: #111;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #d97706;
+  white-space: nowrap;
+}
+
+.drivethru-btn-new-order:hover {
+  background: #d97706;
+  color: #fff;
 }
 
 .drivethru-stats {

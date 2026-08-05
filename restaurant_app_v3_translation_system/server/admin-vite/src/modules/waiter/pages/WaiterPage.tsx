@@ -16,6 +16,7 @@ import { useWaiterStore } from '../waiterStore';
 import { useWaiterEvents } from '../hooks/useWaiterEvents';
 import { markOrderPaid } from '@/core/api/ordersApi';
 import type { CanonicalOrder } from '@/types/order';
+import { safeArr, safeFixed, safeNum } from '@/shared/utils/safe';
 import './WaiterPage.css';
 
 /**
@@ -110,7 +111,7 @@ export function WaiterPage() {
           </span>
           <span className="waiter-stat-item">
             <span className="waiter-stat-label">Total:</span>
-            <span className="waiter-stat-value">{getTotalUnpaid().toFixed(2)} RON</span>
+            <span className="waiter-stat-value">{safeFixed(getTotalUnpaid())} RON</span>
           </span>
         </div>
       </header>
@@ -140,24 +141,24 @@ export function WaiterPage() {
             
             {orders.map((order) => {
               const elapsed = getElapsedSeconds(order);
-              const tableTotal = orders.reduce((sum, o) => sum + o.totals.total, 0);
+              const tableTotal = orders.reduce((sum, o) => sum + safeNum(o.totals?.total), 0);
               
               return (
                 <div key={order.id} className="waiter-order-card">
                   <div className="waiter-order-header">
                     <div className="waiter-order-id">#{order.id}</div>
                     <div className="waiter-order-total">
-                      {order.totals.total.toFixed(2)} {order.totals.currency}
+                      {safeFixed(order.totals?.total)} {order.totals?.currency || 'RON'}
                     </div>
                   </div>
                   
                   <div className="waiter-order-items">
-                    {order.items.map((item) => (
+                    {safeArr(order.items).map((item) => (
                       <div key={item.id || `${item.product_id}-${item.name}`} className="waiter-item-row">
-                        <span className="waiter-item-qty">{item.qty}×</span>
+                        <span className="waiter-item-qty">{safeNum(item.qty)}×</span>
                         <span className="waiter-item-name">{item.name}</span>
                         <span className="waiter-item-price">
-                          {(item.unit_price * item.qty).toFixed(2)} {order.totals.currency}
+                          {safeFixed(safeNum(item.unit_price) * safeNum(item.qty))} {order.totals?.currency || 'RON'}
                         </span>
                       </div>
                     ))}

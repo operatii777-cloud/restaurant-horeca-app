@@ -192,6 +192,7 @@ const KioskHostessMapPage = lazy(() => import('@/modules/kiosk/pages/KioskHostes
 const KioskClientMonitorPage = lazy(() => import('@/modules/kiosk/pages/KioskClientMonitorPage').then(m => ({ default: m.KioskClientMonitorPage })));
 const KioskLaundryPage = lazy(() => import('@/modules/kiosk/pages/KioskLaundryPage').then(m => ({ default: m.KioskLaundryPage })));
 const KioskWidgetPage = lazy(() => import('@/modules/kiosk/pages/KioskWidgetPage').then(m => ({ default: m.KioskWidgetPage })));
+const KioskPosEntryPage = lazy(() => import('@/modules/kiosk/pages/KioskPosEntryPage'));
 // KioskPOSSplitPage - folosește default export cu error handling
 const KioskPOSSplitPage = lazy(() =>
   import('@/modules/kiosk/pages/KioskPOSSplitPage')
@@ -411,6 +412,7 @@ const App = () => {
         <Route path="dashboard" element={<KioskDashboardPage />} />
         <Route path="tables" element={<KioskTablesPage2D />} />
         <Route path="pos-split" element={<KioskPOSSplitPage />} />
+        <Route path="pos" element={<KioskPosEntryPage />} />
         <Route path="order/:tableId" element={<KioskOrderPage />} />
         <Route path="fast-sale" element={<KioskFastSalePage />} />
         {/* Staff Reports - ambele rute pentru compatibilitate */}
